@@ -17,4 +17,7 @@ Todas as tabelas serão criadas automaticamente graças ao [mysql_core.pwn](http
 - `sampctl p(ackage) run` - vai rodar o servidor no terminal, simplesmente isso;
 - `sampctl p(ackage) ensure` - vai ter a certeza de que todas includes, dependência, subdependências e plugins estejam 100% atualizados.
 
-- Caso queira saber mais sobre o Sampctl, acesse o [repositório deles](https://github.com/Southclaws/sampctl).
+Caso queira saber mais sobre o Sampctl, acesse o [repositório deles](https://github.com/Southclaws/sampctl).
+
+Seguindo todos os passoas acima (corretamente), você conseguirá executar o servidor sem nenhum problema. 
+Além do mais, todos os problemas, dúvidas ou questões que sejam acerca do **Paradise Roleplay** deverão serem enviadas ao [Raayzeck](https://github.com/Raayzeck/).

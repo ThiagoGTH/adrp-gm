@@ -12,6 +12,9 @@ Todas as tabelas serão criadas automaticamente graças ao *paradise-roleplay/ga
 ## Como utilizar o SampCTL?
 
 `sampctl p(ackage) init` - inicializa um pacote do sampctl, isso é, o pawn.json e outros arquivos opcionais. Mas o pawn.json tem que ser sempre o mesmo pra todos nós, pra não dar conflito;
+
 `sampctl p(ackage) build` - compila o pacote com as informações dadas no pawn.json. Normalmente, você já pode usar esse comando automaticamente com a task gerada automaticamente pelo init. CTRL + SHIFT + B (você pode compilar mesmo com o GM aberto ou rodando no server;
+
 `sampctl p(ackage) run` - vai rodar o servidor no terminal, simplesmente isso;
+
 `sampctl p(ackage) ensure` - vai ter a certeza de que todas includes, dependência, subdependências e plugins estejam 100% atualizados.

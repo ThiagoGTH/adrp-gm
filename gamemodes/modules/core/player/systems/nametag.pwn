@@ -77,7 +77,7 @@ static GetArmorDots(playerid){
  
 hook OnPlayerConnect(playerid)
 {
-    cNametag[playerid] = CreateDynamic3DTextLabel("Loading nametag...", 0xFFFFFFFF, 0.0, 0.0, 0.5, NT_DISTANCE, .attachedplayer = playerid, .testlos = 1);
+    cNametag[playerid] = CreateDynamic3DTextLabel("Loading nametag...", 0xFFFFFFFF, 0.0, 0.0, 0.2, NT_DISTANCE, .attachedplayer = playerid, .testlos = 1);
     return 1;
 }
 

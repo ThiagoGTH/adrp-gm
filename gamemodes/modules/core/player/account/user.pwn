@@ -10,6 +10,11 @@ personagens, talvez seja interessante você dar uma olhada no módulo 'character.p
 
 #include <YSI_Coding\y_hooks>
 
+#define BCRYPT_COST 12
+
+forward OnPasswordHashed(playerid);
+forward OnPasswordChecked(playerid);
+
 enum User_Data {
     uID,
     uName[24],
@@ -52,9 +57,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             CheckUserConditions(playerid);
             return 0;
         }
-
-        CreateUser(playerid, uInfo[playerid][uName], inputtext);
-        CheckUserConditions(playerid);
+        bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
     }
 
     // Interação com o dialog de login
@@ -62,21 +65,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
     if(dialogid == DIALOG_LOGIN) {
         if(!response)
             return Kick(playerid);
-
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
         mysql_query(DBConn, query);
-        cache_get_value_name(0, "senha", uInfo[playerid][uPass]);
+        cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
+        bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
+        printf("1: %s / 2: %s", inputtext, uInfo[playerid][uPass]);
+    }
+    return 1;
+}
 
-        if(!strlen(inputtext) || strcmp(inputtext, uInfo[playerid][uPass]))
-            return NotifyWrongAttempt(playerid);
-        
-        ClearPlayerChat(playerid);
+public OnPasswordHashed(playerid)
+{
+	new hash[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(hash);
+
+    CreateUser(playerid, uInfo[playerid][uName], hash);
+    CheckUserConditions(playerid);
+
+	printf("Password hashed for player %d: %s", playerid, hash);
+	return 1;
+}
+
+public OnPasswordChecked(playerid)
+{
+	new bool:match = bcrypt_is_equal();
+    printf("Password checked for %d: %s", playerid, (match) ? ("Match") : ("No match"));
+
+    if(match){
+		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid);
         ShowUsersCharacters(playerid);
-    }
+	}
+	else return NotifyWrongAttempt(playerid);
+	return 1;
 
-    return 1;
 }
 
 // Simplesmente a função de notificar a senha incorreta digitada pelo jogador, numa tentativa máxima de três vezes.
@@ -99,7 +122,7 @@ NotifyWrongAttempt(playerid) {
 // Função booleana pra checar se o usuário já está registrado
 
 bool:IsUserRegistered(userName[]) {
-    new bool:resultState;
+    new bool: resultState;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", userName);
     mysql_query(DBConn, query);
@@ -168,9 +191,9 @@ SaveUserInfo(playerid) {
         return 0;
 
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET `admin` = %d, \
-    `vip` = %d, \
-    `ft` = %d, \
-    `pt` = %d WHERE `ID` = %d", 
+    `vip` = %d,            \
+    `ft`  = %d,            \
+    `pt`  = %d WHERE `ID` = %d", 
         uInfo[playerid][uAdmin], 
         uInfo[playerid][uVip], 
         uInfo[playerid][uFactionMod],
@@ -216,12 +239,12 @@ hook OnPlayerDisconnect(playerid, reason) {
     
     SaveUserInfo(playerid);
 
-    loginAttempts[playerid] = 
-    uInfo[playerid][uAdmin] = 
-    uInfo[playerid][uID] = 
-    uInfo[playerid][uVip] = 
-    uInfo[playerid][uFactionMod] =
-	uInfo[playerid][uPropertyMod] = 0;
+    loginAttempts[playerid]               = 
+    uInfo        [playerid][uAdmin]       = 
+    uInfo        [playerid][uID]          = 
+    uInfo        [playerid][uVip]         = 
+    uInfo        [playerid][uFactionMod]  = 
+    uInfo        [playerid][uPropertyMod] = 0;
 
     uInfo[playerid][uName][0] = EOS;
 
@@ -259,7 +282,7 @@ CMD:usuario(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
     new characterName[24], userValue[24];
 
-    if(sscanf(params, "s[24]", characterName)) return SendUsageMessage(playerid, "/usuario [personagem]");
+    if(sscanf(params, "s[24]", characterName)) return SendSyntaxMessage(playerid, "/usuario [personagem]");
 
     // Consultar a tabela players com o nome digitado e informar se o nome não existe ou, se sim, o seu usuário.
 
@@ -277,7 +300,7 @@ CMD:personagens(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
     new userName[24], characterValue[24], lastLogin;
 
-    if(sscanf(params, "s[24]", userName)) return SendUsageMessage(playerid, "/personagens [usuario]");
+    if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/personagens [usuario]");
 
     // Checar se existe um usuário no servidor com o nome digitado
 

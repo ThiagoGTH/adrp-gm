@@ -28,7 +28,7 @@ GiveWeaponToPlayer(playerid, weaponid, ammo)
 	return GivePlayerWeapon(playerid, weaponid, ammo);
 }
 
-SetWeapons(playerid)
+/*SetWeapons(playerid)
 {
 	ResetPlayerWeapons(playerid);
 
@@ -36,7 +36,7 @@ SetWeapons(playerid)
 		GivePlayerWeapon(playerid, pInfo[playerid][pGuns][i], pInfo[playerid][pAmmo][i]);
 	}
 	return 1;
-}
+}*/
 
 ResetWeapons(playerid)
 {
@@ -49,7 +49,7 @@ ResetWeapons(playerid)
 	return 1;
 }
 
-ResetWeapon(playerid, weaponid)
+/*esetWeapon(playerid, weaponid)
 {
 	ResetPlayerWeapons(playerid);
 
@@ -64,7 +64,7 @@ ResetWeapon(playerid, weaponid)
 		}
 	}
 	return 1;
-}
+}*/
 
 stock IsPlayerSpawned(playerid)
 {
@@ -121,7 +121,7 @@ stock PlayerHasBeanBag(playerid)
 	return (GetPlayerWeapon(playerid) == 25 && pInfo[playerid][pBeanBag]);
 }
 
-IsNumeric(const str[])
+/*IsNumeric(const str[])
 {
 	for (new i = 0, l = strlen(str); i != l; i ++)
 	{
@@ -132,7 +132,7 @@ else if (str[i] < '0' || str[i] > '9')
 	return 0;
 	}
 	return 1;
-}
+}*/
 
 stock getVehicleName(vehicleid){
 	new vehmodel = GetVehicleModel(vehicleid);
@@ -169,7 +169,7 @@ GiveMoney(playerid, amount)
 	return 1;
 }
 
-GiveMaterial(playerid, amount)
+/*GiveMaterial(playerid, amount)
 {
 	pInfo[playerid][pMaterial] += amount;
 	return 1;
@@ -183,7 +183,7 @@ GetMaterial(playerid)
 GetMoney(playerid)
 {
 	return (pInfo[playerid][pMoney]);
-}
+}*/
 
 stock IsPlayerInWater(playerid)
 {

@@ -12,20 +12,24 @@
 #include <zcmd>
 #include <sscanf2>
 #include <discord-connector>
-#include <dcc>
 #include <eSelection>
 #include <easyDialog>
+#include <bcrypt>
 
-#define LASTEST_RELEASE "19/11/2021"
+#define TYPE (1)
+#define LASTEST_RELEASE "24/06/2022"
 #define VERSIONING "0.0.1a - BETA"
-#define SERVERIP "127.0.0.1"
+#define SERVERIP "localhost"
+
+//new Server_Instability = 0; // 0 = Acesso normal | 1 = Acesso suspenso
+new Server_Type = TYPE; // 0 = localhost | 1  = Oficial | 2  = Sandbox	
+new SERVER_MAINTENANCE = 0;  // 0 = fora de manutenção | 1 = em manutenção
 
 new query[2048];
 
 #define public2:%0(%1) forward %0(%1); public %0(%1)
 
 // Incluindo módulos úteis a diversos sistemas.
-
 #include "modules\utils\utils_colors.pwn"
 #include "modules\utils\utils_player.pwn"
 #include "modules\utils\utils_dialogs.pwn"
@@ -33,72 +37,127 @@ new query[2048];
 #include "modules\utils\utils_discord.pwn"
 
 // Incluindo do setup/core da database
-
 #include "modules\core\database\mysql_core.pwn"
 
-// Inclusão dos modulos de gerenciamento geral da conta (usuário e personagens)
-
+// Inclusão dos módulos de gerenciamento geral da conta (usuário e personagens)
 #include "modules\core\player\account\user.pwn"
 #include "modules\core\discord\discord_core.pwn"
 #include "modules\core\player\account\character.pwn"
 
-// Inclusão de modulos relativos a administração
-
-#include "modules\core\admin\ban.pwn"
-#include "modules\core\admin\ipcheck.pwn"
-
-// Inclusão de modulos relativos a membros
-
+// Inclusão de módulos relativos a membros
 #include "modules\core\player\player_core.pwn"
 #include "modules\core\player\tela.pwn"
 
-#include "modules\core\player\veh\vehicles.pwn"
-
-#include "modules\core\factions\fac.pwn"
-#include "modules\core\factions\tickets.pwn"
-#include "modules\core\factions\wf.pwn"
-
-#include "modules\core\player\house\house.pwn"
-#include "modules\core\player\house\entrance.pwn"
-
-//====
-
+//
 #include "modules\core\player\licences\base_licence.pwn"
-#include "modules\core\player\veh\veh_uniques.pwn"
-#include "modules\core\player\veh\ownveh.pwn"
 
+// Inclusão de módulos relativos a sistemas
+#include "modules\core\player\systems\nametag.pwn"
+
+// Inclusão de módulos relativos a administração
+#include "modules\core\admin\ban.pwn"
+#include "modules\core\admin\ipcheck.pwn"
 #include "modules\core\admin\admin_core.pwn"
-//==
-#include "modules\core\player\fire.pwn"
 
- 
 main() {
     print("\nGamemode conectado\n");
     printf("Última atualização em: %s\n \n", LASTEST_RELEASE);
-
 }
 
-stock pNome(playerid)
-{
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
-	for(new i = 0; i < MAX_PLAYER_NAME; i++)
-	{
-		if(name[i] == '_') name[i] = ' ';
+
+forward OnGamemodeLoad(playerid);
+public OnGamemodeLoad(playerid){
+    new rcon[255];
+
+    if(Server_Type == 1){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
+		else{
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay | SA-MP 0.3.DL-R1");
+		    SendRconCommand(rcon);
+            format(rcon, sizeof(rcon), "password 0");
+            SendRconCommand(rcon);
+            new title[32],
+                text[4900],
+                update1[128],
+                update2[128],
+                versao1[128],
+                versao2[128],
+                ip1[128],
+                ip2[128],
+                footer[128];
+
+            format(title, 32, "Servidor on-line");
+            utf8encode(title, title);
+            new DCC_Embed:embed = DCC_CreateEmbed(title);
+            DCC_SetEmbedColor(embed, 0x238C00);
+            
+            format(text, 4900, "O acesso ao serviço SA-MP foi iniciado, a partir de agora você já pode se conectar com seu personagem.", text);
+            utf8encode(text, text);
+            DCC_SetEmbedDescription(embed, text);
+            
+            format(update1, 128, "%s", LASTEST_RELEASE);
+            utf8encode(update1, update1);
+            format(update2, 128, "Última Atualização", update2);
+            utf8encode(update2, update2);
+            DCC_AddEmbedField(embed, update2, update1, false);
+            
+            format(versao1, 128, "%s", VERSIONING);
+            utf8encode(versao1, versao1);
+            format(versao2, 128, "Versão do Gamemode", versao2);
+            utf8encode(versao2, versao2);
+            DCC_AddEmbedField(embed, versao2, versao1, false);
+
+            format(ip1, 128, "%s", SERVERIP);
+            utf8encode(ip1, ip1);
+            format(ip2, 128, "Endereço de Conexão", ip2);
+            utf8encode(ip2, ip2);
+            DCC_AddEmbedField(embed, ip2, ip1, false);
+            
+            format(footer, 128, "Conexão estabelecida em: %s.", _:Now());
+            utf8encode(footer, footer);
+
+            DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/1DvanXG.png");
+            DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+            DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+            //ServerStatus();
+        } 
 	}
-	return name;
+
+	else if(Server_Type == 2){
+		format(rcon, sizeof(rcon), "hostname Advanced Sandbox | SA-MP 0.3.DL-R1");
+		SendRconCommand(rcon);
+	}
+    
+	else if(Server_Type == 3){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
+		else format(rcon, sizeof(rcon), "hostname Advanced Roleplay | SA-MP 0.3.DL-R1");
+		SendRconCommand(rcon);
+	}
+
+	if(SERVER_MAINTENANCE == 1) 
+        format(rcon, sizeof(rcon), "password adrpthiagao");
+	else{
+		if(Server_Type == 1){
+            format(rcon, sizeof(rcon), "password 0");
+        }
+		else
+			format(rcon, sizeof(rcon), "password sandbox333");
+	}
+	SendRconCommand(rcon);
+
+    return true;
 }
 
 public OnGameModeInit() {
     new gmText[128];
-
-    format(gmText, sizeof(gmText), "P:RP v%s", VERSIONING);
+    format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
 
     SetGameModeText(gmText);
-    SendRconCommand("hostname Paradise Roleplay | SAMP 0.3.DL-R1");
-    SendRconCommand("language Português");
+    SendRconCommand("hostname Advanced Roleplay | Iniciando serviços...");
+    SendRconCommand("language Brazilian Portuguese");
+    SendRconCommand("weburl http://advanced-roleplay.com.br");
+    SendRconCommand("password snd2n189w--");
     
-
     SetNameTagDrawDistance(20);
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
@@ -108,41 +167,14 @@ public OnGameModeInit() {
 	ManualVehicleEngineAndLights();
 	EnableVehicleFriendlyFire();
 
-    new string[256];
-    new DCC_Embed:embed = DCC_CreateEmbed("CONEXAO COM O SERVIDOR REALIZADA");
-    format(string, sizeof string, "%s", LASTEST_RELEASE);
-    DCC_AddEmbedField(embed, "Ultima atualizacao em:", string, false);
-    format(string, sizeof string, "%s", VERSIONING);
-    DCC_AddEmbedField(embed, "Versao do servidor:", string, false);
-    format(string, sizeof string, "%s", SERVERIP);
-    DCC_AddEmbedField(embed, "IP do servidor:", string, false);
-    DCC_SetEmbedColor(embed, 5763719);
-    DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/emojis/894352074907734037.png");
-    DCC_SetEmbedFooter(embed, "Conexao com o servidor estabelecida com sucesso.", "https://cdn.discordapp.com/emojis/894983761878466601.png");
-    DCC_SendChannelEmbedMessage(DC_Status, embed);
-
+    SetTimer("OnGamemodeLoad", 600, false);
     return true;
 }
 
-public OnGameModeExit(){
-    new string[256];
-    new DCC_Embed:embed = DCC_CreateEmbed("CONEXAO COM O SERVIDOR PERDIDA");
-    format(string, sizeof string, "%s", LASTEST_RELEASE);
-    DCC_AddEmbedField(embed, "Ultima atualizacao em:", string, false);
-    format(string, sizeof string, "%s", VERSIONING);
-    DCC_AddEmbedField(embed, "Versao do servidor:", string, false);
-    DCC_AddEmbedField(embed, "Erro:", "0x93", false);
-    DCC_SetEmbedColor(embed, 15548997);
-    DCC_SetEmbedThumbnail(embed, "https://cdn.discordapp.com/emojis/894352074907734037.png");
-    DCC_SetEmbedFooter(embed, "Conexao com o servidor desestabilizada.", "https://cdn.discordapp.com/emojis/894352160479932468.png");
-    DCC_SendChannelEmbedMessage(DC_Status, embed);
-    return true;
-}
 public OnPlayerCommandPerformed(playerid, cmdtext[], success)
 {
     if(!success){
-        va_SendClientMessage(playerid, CINZA,"ERRO:{FFFFFF} O comando '%s' não existe. Use '/ajuda' para ver os comandos ou '/sos' para solicitar ajuda.", cmdtext);
-        return true;
+		SendClientMessage(playerid, COLOR_WHITE, "ERROR: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
     }
     return true;
 }

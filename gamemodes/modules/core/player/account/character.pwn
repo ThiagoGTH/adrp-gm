@@ -384,10 +384,6 @@ SpawnSelectedCharacter(playerid) {
     SetPlayerColor(playerid, 0xFFFFFFFF);
 
     ClearPlayerChat(playerid);
-    new string[128];
-    format(string, sizeof string, "`CONNECT:` [%s] **%s** *(%s)* efetuou o login no personagem **%s**.", ReturnDate(), pInfo[playerid][pUser], PlayerIP(playerid), pInfo[playerid][pName]);
-    DCC_SendChannelMessage(DC_EntrouSaiu, string);
-
     va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s.", pNome(playerid));
     return 1;
 }
@@ -535,12 +531,12 @@ void:ResetCharacterData(playerid) {
     AdminTrabalhando[playerid] = 0;
     pInfo[playerid][pLoopAnim] = 0;
 
-    foreach (new i : Player) if (pInfo[i][pDraggedBy] == playerid) {
+    /*foreach (new i : Player) if (pInfo[i][pDraggedBy] == playerid) {
 	    StopDragging(i);
 	}
 	if (pInfo[playerid][pDragged]) {
 	    StopDragging(playerid);
-	}
+	}*/
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
 		pInfo[playerid][pAmmo][i] = 0;

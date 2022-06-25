@@ -1,6 +1,6 @@
 {
-	"user": "Raayzeck",
-	"repo": "paradise-roleplay",
+	"user": "ThiagoGTH",
+	"repo": "advanced-roleplay",
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [
@@ -13,7 +13,9 @@
 		"samp-incognito/samp-streamer-plugin",
 		"Awsomedude/easyDialog",
 		"maddinat0r/samp-discord-connector",
-		"oscar-broman/strlib"
+		"oscar-broman/strlib",
+		"lassir/bcrypt-samp",
+		"Zeex/samp-plugin-crashdetect"
 	],
 	"local": true,
 	"runtime": {
@@ -21,12 +23,12 @@
 		"mode": "server",
 		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
 		"port": 7777,
-		"hostname": "Paradise Roleplay [RP]",
+		"hostname": "Advanced Roleplay [RP]",
 		"maxplayers": 50,
 		"language": "Brazilian Portuguese",
-		"mapname": "P:RP",
-		"weburl": "www.paradise-roleplay.com",
-		"gamemodetext": "P:RP",
+		"mapname": "AD:RP",
+		"weburl": "www.advanced-roleplay.com.br",
+		"gamemodetext": "AD:RP",
 		"announce": true,
 		"lanmode": false,
 		"query": true,
@@ -43,7 +45,7 @@
 		"timestamp": true,
 		"messageholelimit": 3000,
 		"messageslimit": 500,
-		"ackslimit": 3000,
+		"ackslimit": 6000,
 		"playertimeout": 10000,
 		"minconnectiontime": 0,
 		"lagcompmode": 1,
@@ -54,7 +56,7 @@
 		"cookielogging": false,
 		"output": true,
 		"extra": {
-			"discord_bot_token": "NzQ1MzE5MjY5ODEzOTc3MTU4.XzwCqQ.En2Bf9k-r16KsN4qbY3_UgEmzXg",
+			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.GylSLQ.J1saaptyVCTLd2NRPHqJy734wzKg3VsecrMWI0",
 			"useartwork": "1"
 		}
 	},

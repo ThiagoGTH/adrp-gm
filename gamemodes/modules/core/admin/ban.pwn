@@ -20,8 +20,8 @@ CMD:ban(playerid, params[]) {
 
     // Checar condições anormais
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "us[128]", id, reason)) return SendUsageMessage(playerid, "/ban [player] [motivo]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "us[128]", id, reason)) return SendSyntaxMessage(playerid, "/ban [player] [motivo]");
     if(uInfo[playerid][uAdmin] < uInfo[playerid][uAdmin]) return SendErrorMessage(playerid, "Você não pode banir este jogador!");
     if(!IsPlayerConnected(id)) return SendNotConnectedMessage(playerid);
 
@@ -34,27 +34,26 @@ CMD:ban(playerid, params[]) {
     // Printar
     
     va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s baniu %s (%s) permanentemente. Motivo: %s.", uInfo[playerid][uName], 
-        GetPlayerNameEx(id), uInfo[id][uName], reason);
+    GetPlayerNameEx(id), uInfo[id][uName], reason);
     va_SendClientMessage(playerid, VERDE, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
     SendServerMessage(playerid, "(( Você foi banido do servidor ))");
 
     Kick(id);
-
     return 1;
 }
 
 CMD:banoff(playerid, params[]) {
     new userName[24], reason[128], adminID;
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "s[24]s[128]", userName, reason)) return SendUsageMessage(playerid, "/banoff [usuário] [motivo]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "s[24]s[128]", userName, reason)) return SendSyntaxMessage(playerid, "/banoff [usuário] [motivo]");
     
     // Checar se o usuário já está online em algum dos personagens ou selecionando eles.
 
     foreach(new i : Player) {
         if(!strcmp(uInfo[i][uName], userName)) { 
             va_SendClientMessage(playerid, VERMELHO, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
-            return SendUsageMessage(playerid, "/ban [player] [motivo]");
+            return SendSyntaxMessage(playerid, "/ban [player] [motivo]");
         }
     }
 
@@ -91,8 +90,8 @@ CMD:banoff(playerid, params[]) {
 CMD:bantemp(playerid, params[]) {
     new id, days, reason[128]; 
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "uds[128]", id, days, reason)) return SendUsageMessage(playerid, "/ban [player] [motivo]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "uds[128]", id, days, reason)) return SendSyntaxMessage(playerid, "/ban [player] [motivo]");
     if(uInfo[playerid][uAdmin] < uInfo[playerid][uAdmin]) return SendErrorMessage(playerid, "Você não pode banir este jogador!");
     if(!IsPlayerConnected(id)) return SendNotConnectedMessage(playerid);
     if(!days) return SendErrorMessage(playerid, "Um jogador só pode ser banido temporariamente por, no mínimo, 1 dia.");
@@ -114,8 +113,8 @@ CMD:bantemp(playerid, params[]) {
 CMD:bantempoff(playerid, params[]) {
     new userName[24], reason[128], days, adminID;
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "s[24]ds[128]", userName, days, reason)) return SendUsageMessage(playerid, "/bantempoff [usuário] [dias] [motivo]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "s[24]ds[128]", userName, days, reason)) return SendSyntaxMessage(playerid, "/bantempoff [usuário] [dias] [motivo]");
     if(!days) return SendErrorMessage(playerid, "Um jogador só pode ser banido temporariamente por, no mínimo, 1 dia.");
 
     // Checar se o usuário já está online em algum dos personagens ou selecionando eles.
@@ -123,7 +122,7 @@ CMD:bantempoff(playerid, params[]) {
     foreach(new i : Player) {
         if(!strcmp(uInfo[i][uName], userName)) { 
             va_SendClientMessage(playerid, VERMELHO, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
-            return SendUsageMessage(playerid, "/bantemp [player] [dias] [motivo]");
+            return SendSyntaxMessage(playerid, "/bantemp [player] [dias] [motivo]");
         }
     }
 
@@ -161,8 +160,8 @@ CMD:bantempoff(playerid, params[]) {
 CMD:desban(playerid, params[]) {
     new userName[24];
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "s[24]", userName)) return SendUsageMessage(playerid, "/desban [usuario]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/desban [usuario]");
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s' AND `banned` = 1;", userName);
     mysql_query(DBConn, query);
@@ -182,8 +181,8 @@ CMD:checarbans(playerid, params[]) return cmd_checarban(playerid, params);
 CMD:checarban(playerid, params[]) {
     new userName[24];
 
-    if(uInfo[playerid][uAdmin] < GAME_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "s[24]", userName)) return SendUsageMessage(playerid, "/checarban [usuario]");
+    if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
+    if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/checarban [usuario]");
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s';", userName);
     mysql_query(DBConn, query);
@@ -213,8 +212,8 @@ CMD:limparhistoricoban(playerid, params[]) return cmd_limparhistoricobans(player
 CMD:limparhistoricobans(playerid, params[]) {
     new userName[24];
 
-    if(uInfo[playerid][uAdmin] < HEAD_ADMIN) return SendPermissionMessage(playerid);
-    if(sscanf(params, "s[24]", userName)) return SendUsageMessage(playerid, "/limparhistoricobans [usuario]");
+    if(uInfo[playerid][uAdmin] < 5) return SendPermissionMessage(playerid);
+    if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/limparhistoricobans [usuario]");
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s';", userName);
     mysql_query(DBConn, query);

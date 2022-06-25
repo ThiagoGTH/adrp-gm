@@ -190,32 +190,20 @@ stock RemoveChars(tID)
 	return 1;
 }
 
-CMD:checarip(playerid, params[])
-{
+CMD:checarip(playerid, params[]){
 	if(!pInfo[playerid][pLogged]) return 1;
-    if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
+	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
 
 	new targetid;
-
-	if(sscanf(params, "u", targetid)) return SendUsageMessage(playerid, "/checarip <playerID/nome>");
-    if(!IsPlayerConnected(targetid)) return SendErrorMessage(playerid, "Este jogador não está online.");
+	if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/checarip <playerID/nome>");
+  	if(!IsPlayerConnected(targetid)) return SendErrorMessage(playerid, "Este jogador não está online.");
 		
 	new string[160], playerIP[16];
-	
 	targetID[playerid] = targetid;
-
 	GetPlayerIp(targetid, playerIP, sizeof(playerIP));
-    
-    format(dPlayerInfo[targetid][IP], 16, playerIP);
-
+  	format(dPlayerInfo[targetid][IP], 16, playerIP);
 	format(string, sizeof(string), "%s/%s%s", HTTP_IP_API_URL, playerIP, HTTP_IP_API_END);
 	HTTP(playerid, HTTP_GET, string, "", "HttpIPInfo");
-
-    va_SendClientMessage(playerid, CINZA, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
-
-    format(textdc, sizeof textdc, "`AdminCmd:` [%s] O %s **%s** *(%s)* checou o IP de **%s** *[%s]*.", 
-	ReturnDate(), AdminRankName(playerid), pNome(playerid), pInfo[playerid][pUser], pNome(targetid), playerIP);
-    DCC_SendChannelMessage(DC_AdminCMD, textdc);
-
+  	va_SendClientMessage(playerid, CINZA, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
 	return 1;
 }

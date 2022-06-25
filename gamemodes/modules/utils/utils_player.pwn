@@ -10,16 +10,7 @@ sejam, necessariamente, pertecentes a um sistema especÌfico. S„o funÁıes ˙teis e
 #define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
 #define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
 
-#define HELPER              1
-#define GAME_ADMIN          2
-#define SENIOR_ADMIN        3
-#define LEAD_ADMIN        	4
-#define HEAD_ADMIN          5
-#define MANAGER 			1336
-#define DEVELOPER 			1337
-
 new EmSpec[MAX_PLAYERS],
-	textdc[512],
 	DesarmandoPlayer[MAX_PLAYERS];
 
 enum e_InteriorData {
@@ -29,7 +20,6 @@ enum e_InteriorData {
 	Float:e_InteriorY,
 	Float:e_InteriorZ
 };
-
 
 new const g_arrInteriorData[][e_InteriorData] = {
 	{"24/7 1", 17, -25.884498, -185.868988, 1003.546875},
@@ -147,19 +137,15 @@ new const g_arrInteriorData[][e_InteriorData] = {
 
 GetPlayerNameEx(playerid) {
     new returnString[24];
-
     GetPlayerName(playerid, returnString);
-
     return returnString;
 }
 
-// Basicamente a mesma coisa que a funùùo de cima, mas pegar diretamente o IP do jogador.
+// Basicamente a mesma coisa que a funÁ„o de cima, mas pegar diretamente o IP do jogador.
 
 PlayerIP(playerid) {
     new returnIP[16];
-
     GetPlayerIp(playerid, returnIP, 16);
-
     return returnIP;
 }
 
@@ -196,22 +182,39 @@ forward banfix(playerid); public banfix(playerid){
 
 // PadronizaÁ„o de mensagens ao player
 
-SendErrorMessage(playerid, const string[]) 
-    return va_SendClientMessage(playerid, VERMELHO, "%s", string);
+#define SendServerMessage(%0,%1) \
+	va_SendClientMessage(%0, COLOR_GREEN, "SERVER: "%1)
 
-SendServerMessage(playerid, const string[])
-    return va_SendClientMessage(playerid, -1, "SERVER: %s", string);
+#define SendSyntaxMessage(%0,%1) \
+	va_SendClientMessage(%0, COLOR_BEGE, "USE: "%1)
+
+#define SendErrorMessage(%0,%1) \
+	va_SendClientMessage(%0, COLOR_LIGHTRED, ""%1)
+
+#define SendAdminAction(%0,%1) \
+	va_SendClientMessage(%0, COLOR_LIGHTRED, "AdmCmd: "%1)
+
+#define SendInfoMessage(%0,%1) \
+	va_SendClientMessage(%0, COLOR_WHITE, "* "%1) 
 
 SendPermissionMessage(playerid)
     return SendErrorMessage(playerid, "VocÍ n„o tem permiss„o suficiente para isso.");
-
-SendUsageMessage(playerid, const string[])
-    return va_SendClientMessage(playerid, CINZA, "USE: %s", string);
 
 SendNotConnectedMessage(playerid)
     return SendErrorMessage(playerid, "Este jogador n„o est· conectado ou n„o existe.");
 
 // Checar se um usu·rio est· conectado.
+
+stock pNome(playerid)
+{
+	new name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid, name, sizeof(name));
+	for(new i = 0; i < MAX_PLAYER_NAME; i++)
+	{
+		if(name[i] == '_') name[i] = ' ';
+	}
+	return name;
+}
 
 stock IsUserConnected(const userName[]) {
     new responseValue;
@@ -227,7 +230,6 @@ stock IsUserConnected(const userName[]) {
 }
 
 // Pegar o ID de um jogador pelo nome, ao invÈs do contr·rio
-
 GetPlayerByName(const playerName[]) {
     new returnID = -1;
 
@@ -242,13 +244,10 @@ GetPlayerByName(const playerName[]) {
 }
 
 // Limpar a tela
-
 ClearPlayerChat(playerid, blankLines = 20) {
     for(new i; i < blankLines; i++)
         SendClientMessage(playerid, -1, " ");
 } 
-
-
 
 // Checa proximidade com outro jogador
 forward IsPlayerNearPlayer(playerid, n_playerid, Float:radius);

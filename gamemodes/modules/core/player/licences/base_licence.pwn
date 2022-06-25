@@ -1,10 +1,10 @@
 /*
 
-Modulo destinado a compor todo o sistema de Licen√ßas.
+Modulo destinado a compor todo o sistema de LicenÁas.
 
 
 Legenda:
-STATUS da Licen√ßa
+STATUS da LicenÁa
 
 NENHUM - O
 ATIVA - 1
@@ -12,9 +12,9 @@ SUSPENSA - 2
 REVOGADA - 3
 
 
-Observa√ß√£o de Funcionamento: As licen√ßas n√£o v√£o resetar, apenas mudar de STATUS conforme disposto acima.
-A licen√ßa ser√° gerada quando o jogador escolher qual teste ir√° fazer primeiro (Moto, Carro, Caminh√£o) e
-ir√° sofrer um "UPGRADE" sempre que o jogador for tirar a pr√≥xima.
+ObservaÁ„o de Funcionamento: As licenÁas n„o v„o resetar, apenas mudar de STATUS conforme disposto acima.
+A licenÁa ser· gerada quando o jogador escolher qual teste ir· fazer primeiro (Moto, Carro, Caminh„o) e
+ir· sofrer um "UPGRADE" sempre que o jogador for tirar a pr√≥xima.
 
 */
 #include <YSI_Coding\y_hooks>
@@ -57,7 +57,7 @@ new Float:DMV_Checkpoint[3][9][3] = {
         {1818.3652,-1820.2645,13.1177},
         {1791.8119,-1931.6996,13.0915}
 	},
-	{ //Caminh√£o
+	{ //Caminh„o
         {2233.8418,-2214.8030,13.7208},
         {-69.7697,-1120.3506,1.0781},
 		{},
@@ -99,7 +99,7 @@ hook OnGameModeInit() {
     return 1;
 }
 
-// Checa a tabela e cria, se n√£o existir.
+// Checa a tabela e cria, se n„o existir.
 CheckLicenceTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS character_licences_driver (\
         ID int NOT NULL AUTO_INCREMENT,\
@@ -122,7 +122,7 @@ CreateNewLicence(playerid) {
 
 	new slot = GetFreeLicenceSlot();
 	if(slot == -1) 
-		return SendErrorMessage(playerid, "(Licen√ßa): #ERRO_1: Tire um screenshot desse erro e o encaminhe a um administrador.");
+		return SendErrorMessage(playerid, "(LicenÁa): #ERRO_1: Tire um screenshot desse erro e o encaminhe a um administrador.");
 
 	//===========================================================================================================
 	if(pInfo[playerid][pLicence] == 0){
@@ -135,7 +135,7 @@ CreateNewLicence(playerid) {
 		format(LicencesData[slot][warning_two], MAX_DRIVERLICENCE_WAR, "");
 		format(LicencesData[slot][warning_three], MAX_DRIVERLICENCE_WAR, "");
 
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ terminou o teste com sucesso. Licen√ßa n√∫mero %d.", LicencesData[slot][licence_number]);
+		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ terminou o teste com sucesso. LicenÁa n˙mero %d.", LicencesData[slot][licence_number]);
 		mysql_format(DBConn, query, sizeof(query), "INSERT INTO `character_licences_driver` \
 			( `character_id`, `licence_number`, `licence_status`, `licence_warnings`, `warning_one`, `warning_two`, `warning_three` \
 			, `licence_car`, `licence_bike`, `licence_truck`) \
@@ -160,17 +160,17 @@ CreateNewLicence(playerid) {
 
 	if (DMVTestType[playerid] == 0) { //Carro
 		LicencesData[slot][licence_car] = 1;   
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ terminou o teste com sucesso e recebeu sua licen√ßa para ve√≠culos.");
+		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ terminou o teste com sucesso e recebeu sua licenÁa para veÌculos.");
 	}
 
 	if (DMVTestType[playerid] == 1) { //Moto
 		LicencesData[slot][licence_bike] = 1;  
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ terminou o teste com sucesso e recebeu sua licen√ßa para motos.");
+		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ terminou o teste com sucesso e recebeu sua licenÁa para motos.");
 	}
 
-	if (DMVTestType[playerid] == 2) { //Caminh√£o
+	if (DMVTestType[playerid] == 2) { //Caminh„o
 		LicencesData[slot][licence_truck] = 1;
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ terminou o teste com sucesso e recebeu sua licen√ßa para caminh√µes.");
+		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ terminou o teste com sucesso e recebeu sua licenÁa para caminhıes.");
 	}
 
 	pInfo[playerid][pLicence] = slot;
@@ -227,7 +227,7 @@ LoadLicencesData(playerid) {
 
 			pInfo[playerid][pLicence] = LicencesData[i][licence_owner];
 
-			printf("[Licenca] Licen√ßa carregada com sucesso. (Nome %s | SQL ID %d | Numero Lic %d)", GetPlayerNameEx(playerid), LicencesData[i][licence_id], LicencesData[i][licence_number]);
+			printf("[Licenca] LicenÁa carregada com sucesso. (Nome %s | SQL ID %d | Numero Lic %d)", GetPlayerNameEx(playerid), LicencesData[i][licence_id], LicencesData[i][licence_number]);
 
 		}
 	}	
@@ -265,7 +265,7 @@ CMD:mostrarlicenca(playerid, params[])
 {
 	if(!pInfo[playerid][pLogged]) return 1;
 
-	if(pInfo[playerid][pLicence] == 0) return SendErrorMessage(playerid,"Voc√™ n√£o tem uma licen√ßa de motorista.");
+	if(pInfo[playerid][pLicence] == 0) return SendErrorMessage(playerid,"VocÍ n„o tem uma licenÁa de motorista.");
 	
 	for(new i; i < MAX_DRIVERLICENCE; i++) {
 	if(LicencesData[i][licence_owner] == pInfo[playerid][pID]) {
@@ -282,45 +282,45 @@ CMD:mostrarlicenca(playerid, params[])
 			case 3: status = "REVOGADA";
 		}
 		switch(LicencesData[i][licence_car]){
-			case 0: status_car = "N√£o";
+			case 0: status_car = "N„o";
 			case 1: status_car = "Sim";
 		}
 		switch(LicencesData[i][licence_bike]){
-			case 0: status_bike = "N√£o";
+			case 0: status_bike = "N„o";
 			case 1: status_bike = "Sim";
 		}
 		switch(LicencesData[i][licence_truck]){
-			case 0: status_truck = "N√£o";
+			case 0: status_truck = "N„o";
 			case 1: status_truck = "Sim";
 		}
 		switch(LicencesData[i][licence_gun]){
-			case 0: status_gun = "N√£o";
+			case 0: status_gun = "N„o";
 			case 1: status_gun = "Sim";
 		}
 		new avisos = CountLicenceWarnings(i);
 
 		new targetid;
 		if(sscanf(params, "u", targetid)){
-			va_SendClientMessage(playerid, VERDE,"|_______________Licen√ßas_____________|");
+			va_SendClientMessage(playerid, VERDE,"|_______________LicenÁas_____________|");
 			va_SendClientMessage(playerid, CINZA, "Nome: %s", GetPlayerNameEx(playerid));
-			va_SendClientMessage(playerid, CINZA, "N√∫mero: %d", LicencesData[i][licence_number]);
+			va_SendClientMessage(playerid, CINZA, "N˙mero: %d", LicencesData[i][licence_number]);
 			va_SendClientMessage(playerid, CINZA, "Status: %s", status);
-			va_SendClientMessage(playerid, CINZA, "Tipos: (Ve√≠culos: %s) | (Motos: %s) | (Caminh√µes: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
-			va_SendClientMessage(playerid, CINZA, "Advert√™ncias: (%d/3)", avisos);
-			va_SendClientMessage(playerid, VERDE,"(Licen√ßa Motorista):{FFFFFF} Voc√™ pode mostrar sua licen√ßa para outro jogador. Use '/licencamotorista playerID'.");
+			va_SendClientMessage(playerid, CINZA, "Tipos: (VeÌculos: %s) | (Motos: %s) | (Caminhıes: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
+			va_SendClientMessage(playerid, CINZA, "AdvertÍncias: (%d/3)", avisos);
+			va_SendClientMessage(playerid, VERDE,"(LicenÁa Motorista):{FFFFFF} VocÍ pode mostrar sua licenÁa para outro jogador. Use '/licencamotorista playerID'.");
 		}
 	
 		else{
-			if(!pInfo[targetid][pLogged]) return SendErrorMessage(playerid, "Este jogador n√£o est√° logado.");
-			if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Voc√™ n√£o est√° perto deste player.");
-			if (playerid == targetid) return SendErrorMessage(playerid, "Voc√™ n√£o pode mostrar sua licen√ßa para voc√™ mesmo.");
+			if(!pInfo[targetid][pLogged]) return SendErrorMessage(playerid, "Este jogador n„o est· logado.");
+			if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "VocÍ n„o est· perto deste player.");
+			if (playerid == targetid) return SendErrorMessage(playerid, "VocÍ n„o pode mostrar sua licenÁa para vocÍ mesmo.");
 
-			va_SendClientMessage(targetid, CINZA,"|_______________Licen√ßas_____________|");
+			va_SendClientMessage(targetid, CINZA,"|_______________LicenÁas_____________|");
 			va_SendClientMessage(targetid, CINZA, "Nome: %s", GetPlayerNameEx(playerid));
-			va_SendClientMessage(targetid, CINZA, "N√∫mero: %d", LicencesData[i][licence_number]);
+			va_SendClientMessage(targetid, CINZA, "N˙mero: %d", LicencesData[i][licence_number]);
 			va_SendClientMessage(targetid, CINZA, "Status: %s", status);
-			va_SendClientMessage(playerid, CINZA, "Tipos: (Ve√≠culos: %s) | (Motos: %s) | (Caminh√µes: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
-			va_SendClientMessage(targetid, CINZA, "Advert√™ncias: (%d/3)", avisos);
+			va_SendClientMessage(playerid, CINZA, "Tipos: (VeÌculos: %s) | (Motos: %s) | (Caminhıes: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
+			va_SendClientMessage(targetid, CINZA, "AdvertÍncias: (%d/3)", avisos);
 		}
 
 	}
@@ -328,18 +328,18 @@ CMD:mostrarlicenca(playerid, params[])
 	return 1;
 }
 
-//Lembrar de Adicionar a fun√ß√£o de apenas fac policial poder usar
+//Lembrar de Adicionar a funÁ„o de apenas fac policial poder usar
 CMD:removeravisoslicenca(playerid, params[]) {
     new targetid; 
 
-    if(sscanf(params, "u", targetid)) return SendUsageMessage(playerid, "/removeravisoslicenca [playerID/Nome]");
+    if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/removeravisoslicenca [playerID/Nome]");
 	
-	if(!pInfo[targetid][pLogged]) return SendErrorMessage(playerid, "Este jogador n√£o est√° logado.");
-	if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Voc√™ n√£o est√° perto deste player.");
-	if (playerid == targetid) return SendErrorMessage(playerid, "Voc√™ n√£o pode remover os avisos da sua licen√ßa.");
+	if(!pInfo[targetid][pLogged]) return SendErrorMessage(playerid, "Este jogador n„o est· logado.");
+	if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "VocÍ n„o est· perto deste player.");
+	if (playerid == targetid) return SendErrorMessage(playerid, "VocÍ n„o pode remover os avisos da sua licenÁa.");
   
-    va_SendClientMessage(playerid, VERDE, "(Licen√ßa):{FFFFFF} Voc√™ limpou os avisos da licen√ßa de %s.", GetPlayerNameEx(targetid));
-	va_SendClientMessage(targetid, VERDE, "(Licen√ßa):{FFFFFF} O oficial %s limpou os avisos na sua licen√ßa.", GetPlayerNameEx(playerid));
+    va_SendClientMessage(playerid, VERDE, "(LicenÁa):{FFFFFF} VocÍ limpou os avisos da licenÁa de %s.", GetPlayerNameEx(targetid));
+	va_SendClientMessage(targetid, VERDE, "(LicenÁa):{FFFFFF} O oficial %s limpou os avisos na sua licenÁa.", GetPlayerNameEx(playerid));
     ResetLicenceWarnings(targetid);
 	return 1;
 }
@@ -360,7 +360,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 	if(IsPlayerNPC(playerid)) return 1;		
 
 	if(emExame[playerid] == true) {
-		SendErrorMessage(playerid, "Voc√™ abandonou o carro e por isso reprovou no exame de dire√ß√£o.");
+		SendErrorMessage(playerid, "VocÍ abandonou o carro e por isso reprovou no exame de direÁ„o.");
 		FailedExam(playerid);
 	}
 	return 1;
@@ -382,7 +382,7 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_CAR, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ iniciou o teste de dire√ß√£o para a licen√ßa de Motorista de carros.");
+        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ iniciou o teste de direÁ„o para a licenÁa de Motorista de carros.");
 	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre no manana para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
@@ -396,12 +396,12 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_BIKE, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ iniciou o teste de dire√ß√£o para a licen√ßa de Motorista de carros.");
+        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ iniciou o teste de direÁ„o para a licenÁa de Motorista de carros.");
 	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre na moto para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
     }
-    if(DMVTestType[playerid] == 2){ //Caminh√£o
+    if(DMVTestType[playerid] == 2){ //Caminh„o
 	    pInfo[playerid][pMoney] -= PRECO_EXAME_TRUCK;
 	    SetPlayerInterior(playerid, 0);
 	    SetPlayerVirtualWorld(playerid, playerid+1);
@@ -410,8 +410,8 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_TRUCK, 2174.4653, -2267.1816, 13.3833, 225.5650, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ iniciou o teste de dire√ß√£o para a licen√ßa de Motorista de caminh√£o.");
-	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre no caminh√£o para continuar com o exame.");
+        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ iniciou o teste de direÁ„o para a licenÁa de Motorista de caminh„o.");
+	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre no caminh„o para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
     }
@@ -423,7 +423,7 @@ FinishTestingLicence(playerid){
 	new Float:lataria;
 	GetVehicleHealth(carrodmv[playerid], lataria);
 	if(lataria <= MAX_VEHICLE_HEALTH){
-		SendErrorMessage(playerid, "O ve√≠culo est√° muito danificado e por isso voc√™ reprovou no exame.");
+		SendErrorMessage(playerid, "O veÌculo est· muito danificado e por isso vocÍ reprovou no exame.");
 		FailedExam(playerid);
 		return 1;
 	}
@@ -467,13 +467,13 @@ DMVUpdate(playerid)
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][0], 
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][1], 
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][2]))
-		return SendErrorMessage(playerid, "Voc√™ n√£o est√° no checkpoint correto.");
+		return SendErrorMessage(playerid, "VocÍ n„o est· no checkpoint correto.");
 
     new MaxCheckpoints;
 	switch(DMVTestType[playerid]) {
 		case 0: MaxCheckpoints = 8; //Carro
 		case 1: MaxCheckpoints = 8; //Moto
-		case 2: MaxCheckpoints = 1; //Caminh√£o
+		case 2: MaxCheckpoints = 1; //Caminh„o
 	}
 	if(DMVCheckpoint[playerid] < MaxCheckpoints) {
 		DisablePlayerCheckpoint(playerid);
@@ -498,8 +498,8 @@ DMV_StateChange(playerid, newstate, oldstate)
   		new engine, lights, alarm, doors, bonnet, boot, objective,
   			vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-		if(!(vehicleid == carrodmv[playerid])) return va_SendClientMessage(playerid, VERDE, "Voc√™ precisa entrar no ve√≠culo.");
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Voc√™ iniciou o exame. Siga os checkpoints e n√£o danifique o ve√≠culo.");
+		if(!(vehicleid == carrodmv[playerid])) return va_SendClientMessage(playerid, VERDE, "VocÍ precisa entrar no veÌculo.");
+		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} VocÍ iniciou o exame. Siga os checkpoints e n„o danifique o veÌculo.");
 		SetVehicleParamsEx(carrodmv[playerid], true, lights, alarm, doors, bonnet, boot, objective);
 		SetDMVRoute(playerid);
 	}
@@ -513,19 +513,19 @@ DMV_EnterCheckpoint(playerid)
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(DMVTestType[playerid] == 0){ //Carro
 			if (GetVehicleModel(vehicleid) != DMV_VEICULO_CAR) {
-		    	SendErrorMessage(playerid,"Voc√™ n√£o est√° dirigindo o ve√≠culo correto e por isso o teste foi cancelado.");
+		    	SendErrorMessage(playerid,"VocÍ n„o est· dirigindo o veÌculo correto e por isso o teste foi cancelado.");
 		    	FailedExam(playerid);
 			}
 		}
 		if(DMVTestType[playerid] == 1){ //Moto
 			if (GetVehicleModel(vehicleid) != DMV_VEICULO_BIKE) {
-		    	SendErrorMessage(playerid,"Voc√™ n√£o est√° dirigindo o ve√≠culo correto e por isso o teste foi cancelado.");
+		    	SendErrorMessage(playerid,"VocÍ n„o est· dirigindo o veÌculo correto e por isso o teste foi cancelado.");
 		    	FailedExam(playerid);
 			}
 		}
-		if(DMVTestType[playerid] == 3){ //Caminh√£o
+		if(DMVTestType[playerid] == 3){ //Caminh„o
 			if (GetVehicleModel(vehicleid) != DMV_VEICULO_TRUCK) {
-		    	SendErrorMessage(playerid,"Voc√™ n√£o est√° dirigindo o ve√≠culo correto e por isso o teste foi cancelado.");
+		    	SendErrorMessage(playerid,"VocÍ n„o est· dirigindo o veÌculo correto e por isso o teste foi cancelado.");
 		    	FailedExam(playerid);
 			}
 		}
@@ -541,18 +541,18 @@ CMD:iniciarteste(playerid, params[]){
 	new string [512];
 	
 	//if(!IsPlayerInRangeOfPoint(playerid, 2.0, 1490.3473,1306.2144,1093.2964))
-		//return SendErrorMessage(playerid,"Voc√™ n√£o est√° pr√≥ximo de uma DMV.");
+		//return SendErrorMessage(playerid,"VocÍ n„o est· pr√≥ximo de uma DMV.");
 		
 	format(string, sizeof(string), "ID\tTipo do Teste\tValor\n \
 		1\tCarteira de Carro\t%d\n \
 		2\tCarteira de Moto\t%d\n \
-		3\tCarteira de Caminh√£o\t%d", 
+		3\tCarteira de Caminh„o\t%d", 
 		PRECO_EXAME_CAR,
 		PRECO_EXAME_BIKE,
 		PRECO_EXAME_TRUCK
 	);
 	
-	Dialog_Show(playerid, DIALOG_DMV_ROUTE, DIALOG_STYLE_TABLIST_HEADERS, "Licen√ßas", string, "Selecionar", "Cancelar");
+	Dialog_Show(playerid, DIALOG_DMV_ROUTE, DIALOG_STYLE_TABLIST_HEADERS, "LicenÁas", string, "Selecionar", "Cancelar");
 	return 1;
 }
 Dialog:DIALOG_DMV_ROUTE(playerid, response, listitem, inputtext[]) {
@@ -560,26 +560,26 @@ Dialog:DIALOG_DMV_ROUTE(playerid, response, listitem, inputtext[]) {
 	DMVTestType[playerid] = listitem;
 
 //============================================================================
-// Checar qual licen√ßa ele j√° tem e se tem grana suficiente.
+// Checar qual licenÁa ele j· tem e se tem grana suficiente.
 
 	for(new i; i < MAX_DRIVERLICENCE; i++) {
 		if(LicencesData[i][licence_owner] == pInfo[playerid][pID]) {
 			if(DMVTestType[playerid] == 0){
 				if(LicencesData[i][licence_car] == 1){
-					if(pInfo[playerid][pMoney] < PRECO_EXAME_CAR) return SendErrorMessage(playerid, "Voc√™ n√£o tem dinheiro suficiente.");
-					SendErrorMessage(playerid, "DMV:{FFFFFF} Voc√™ j√° possui uma carteira para carros v√°lida.");
+					if(pInfo[playerid][pMoney] < PRECO_EXAME_CAR) return SendErrorMessage(playerid, "VocÍ n„o tem dinheiro suficiente.");
+					SendErrorMessage(playerid, "DMV:{FFFFFF} VocÍ j· possui uma carteira para carros v·lida.");
 				}
 			}
 			if(DMVTestType[playerid] == 1){
 				if(LicencesData[i][licence_bike] == 1){
-					if(pInfo[playerid][pMoney] < PRECO_EXAME_BIKE) return SendErrorMessage(playerid, "Voc√™ n√£o tem dinheiro suficiente.");
-					SendErrorMessage(playerid, "DMV:{FFFFFF} Voc√™ j√° possui uma carteira para motos v√°lida.");
+					if(pInfo[playerid][pMoney] < PRECO_EXAME_BIKE) return SendErrorMessage(playerid, "VocÍ n„o tem dinheiro suficiente.");
+					SendErrorMessage(playerid, "DMV:{FFFFFF} VocÍ j· possui uma carteira para motos v·lida.");
 				}
 			}
 			if(DMVTestType[playerid] == 2){
 				if(LicencesData[i][licence_truck] == 1){
-					if(pInfo[playerid][pMoney] < PRECO_EXAME_TRUCK) return SendErrorMessage(playerid, "Voc√™ n√£o tem dinheiro suficiente.");
-					SendErrorMessage(playerid, "DMV:{FFFFFF} Voc√™ j√° possui uma carteira para caminh√µes v√°lida.");
+					if(pInfo[playerid][pMoney] < PRECO_EXAME_TRUCK) return SendErrorMessage(playerid, "VocÍ n„o tem dinheiro suficiente.");
+					SendErrorMessage(playerid, "DMV:{FFFFFF} VocÍ j· possui uma carteira para caminhıes v·lida.");
 				}
 			}
 		}

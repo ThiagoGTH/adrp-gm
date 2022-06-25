@@ -113,13 +113,13 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             if(IsPlayerConnected(i)){
                 new nametag[128], Float:armour;
                 GetPlayerArmour(i, armour);
-                if(armour > 1.0){
-                    format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetArmorDots(i), GetHealthDots(i));
-                }
+                if(armour > 1.0)
+                    format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", pNome(i), i, GetArmorDots(i), GetHealthDots(i));
                 else
-                    format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetHealthDots(i));
+                    format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FF0000}%s", pNome(i), i, GetHealthDots(i));
 
                 UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
+                printf("%s is taking damage!", pNome(i));
             }
         }
     }

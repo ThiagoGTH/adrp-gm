@@ -5,7 +5,7 @@ Todas as tabelas serão criadas automaticamente graças ao [mysql_core.pwn](http
 
 ## Como instalar o Sampctl?
 
-1. Abra o PowerShell em modo administrador;
+1. Abra o PowerShell;
 2. Digite `set-executionpolicy remotesigned -scope currentuser`;
 3. Installe o **Scoop** digitando `iex (new-object net.webclient).downloadstring('https://get.scoop.sh')`;
 4. Instale o **SampCTL** digitando `scoop bucket add southclaws https://github.com/Southclaws/scoops.git; scoop install sampctl`.

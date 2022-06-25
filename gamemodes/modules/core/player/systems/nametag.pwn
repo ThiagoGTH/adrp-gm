@@ -14,7 +14,7 @@ hook OnGameModeInit()
 static GetHealthDots(playerid){
     new
         dots[64], Float: HP;
- 
+
     GetPlayerHealth(playerid, HP);
  
     if(HP >= 100)
@@ -96,12 +96,26 @@ public UpdateNametag()
             new nametag[128], Float:armour;
             GetPlayerArmour(i, armour);
             if(armour > 1.0){
-                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetArmorDots(i), GetHealthDots(i));
+                format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetArmorDots(i), GetHealthDots(i));
             }
             else
-                format(nametag, sizeof(nametag), "{%06x}%s {FFFFFF}(%i)\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetHealthDots(i));
+                format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetHealthDots(i));
 
             UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
         }
     }
+}
+
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
+{
+    if (issuerid != INVALID_PLAYER_ID){
+        if(armour > 1.0){
+            format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", pNome(i), i, GetArmorDots(i), GetHealthDots(i));
+        }
+        else
+            format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FF0000}%s", pNome(i), i, GetHealthDots(i));
+
+        UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
+    }
+    return 1;
 }

@@ -171,7 +171,7 @@ public OnGameModeInit() {
 public OnPlayerCommandPerformed(playerid, cmdtext[], success)
 {
     if(!success){
-		SendClientMessage(playerid, COLOR_WHITE, "ERROR: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
+		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
     }
     return true;
 }

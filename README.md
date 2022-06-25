@@ -1,4 +1,4 @@
-# Paradise Roleplay
+# Advanced Roleplay
 #### SA-MP SERVER (0.0.1a - BETA)
  
 Todas as tabelas serão criadas automaticamente graças ao [mysql_core.pwn](https://github.com/Raayzeck/paradise-roleplay/blob/main/gamemodes/modules/core/database/mysql_core.pwn), então isso definitivamente não é uma preocupação. No entanto, o sampctl é uma obrigação, assim como o MySQL.

@@ -109,18 +109,16 @@ public UpdateNametag()
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
     if (issuerid != INVALID_PLAYER_ID){
-        for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
-            if(IsPlayerConnected(i)){
-                new nametag[128], Float:armour;
-                GetPlayerArmour(i, armour);
-                if(armour > 1.0)
-                    format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", pNome(i), i, GetArmorDots(i), GetHealthDots(i));
-                else
-                    format(nametag, sizeof(nametag), "{FF5447}%s (%i){FFFFFF}\n{FF0000}%s", pNome(i), i, GetHealthDots(i));
+        if(IsPlayerConnected(playerid)){
+            new nametag[128], Float:armour;
+            GetPlayerArmour(playerid, armour);
+            if(armour > 1.0)
+                format(nametag, sizeof(nametag), "{660000}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", pNome(playerid), playerid, GetArmorDots(playerid), GetHealthDots(playerid));
+            else
+                format(nametag, sizeof(nametag), "{660000}%s (%i){FFFFFF}\n{FF0000}%s", pNome(playerid), playerid, GetHealthDots(playerid));
 
-                UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
-                printf("%s is taking damage!", pNome(i));
-            }
+            UpdateDynamic3DTextLabelText(cNametag[playerid], 0xFFFFFFFF, nametag);
+            printf("%s is taking damage!", pNome(playerid));
         }
     }
     return 1;

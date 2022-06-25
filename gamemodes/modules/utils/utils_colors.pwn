@@ -1,16 +1,5 @@
 // Módulo de inclusão de cores por constantes
 
-#define VERMELHO                    0xFF5447FF
-#define VERDE                       0x34A216FF
-#define CINZA                       0xAEAEAEFF
-#define COR_ADMINCHAT               0x33EE33FF
-#define VERMELHO                    0xFF5447FF
-#define VERDE                       0x34A216FF
-#define BRANCO                      0xFFFFFFFF
-#define COLOR_ADMIN                 0x3a91ed
-
-
-
 #define COLOR_CLIENT      			(0xAAC4E5FF)
 #define COLOR_BUSINESS				(0xE75132FF)
 #define COLOR_WHITE       			(0xFFFFFFFF)

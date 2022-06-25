@@ -1,11 +1,35 @@
 #include <YSI_Coding\y_hooks>
 
-CMD:ajuda(playerid, params[]) {
-    
-    SendClientMessage(playerid, CINZA, "[COMANDOS] /ajuda | /usuario | /personagens | /iniciarteste");
+CMD:ajuda(playerid, params[])
+{
+  	new type[128];
+   	if (sscanf(params, "s[128]", type)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
+		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b");
+		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar");
+		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
+		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa");
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "Se tiver dúvida na utilização de algum comando envie um /sos e fale com um administrador.");
+		return true;
+	}
+	if (!strcmp(type, "empresa", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[EMPRESA] ble");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		return true;
+	}else if (!strcmp(type, "casa", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[CASA] ble");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		return true;
+	} else if (!strcmp(type, "admin", true)) return ShowAdminCmds(playerid);
 
-    return 1;
+	return true;
 }
+
 
 stock GetWeapon(playerid)
 {
@@ -169,18 +193,7 @@ GiveMoney(playerid, amount)
 	return 1;
 }
 
-/*GiveMaterial(playerid, amount)
-{
-	pInfo[playerid][pMaterial] += amount;
-	return 1;
-}
-
-GetMaterial(playerid)
-{
-	return (pInfo[playerid][pMaterial]);
-}
-
-GetMoney(playerid)
+/*GetMoney(playerid)
 {
 	return (pInfo[playerid][pMoney]);
 }*/

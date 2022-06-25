@@ -6,7 +6,6 @@
 #define FULL_SHORT_DATETIME     "%d/%m/%Y - %H:%M:%S"
 
 // Vai retornar tanto 'dd/MM/yy - HH:mm:ss' como  'dd/MM/yy às HH:mm:ss'
-
 GetFullDate(timestamp, style = 0) {
     new convertedTimeZoned = timestamp - 10800;
     new  Timestamp:ts = Timestamp:convertedTimeZoned, returnDate[256];

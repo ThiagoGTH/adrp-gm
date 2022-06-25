@@ -165,7 +165,7 @@ public HttpIPInfo(playerid, response_code, data[])
 		HTTP(playerid, HTTP_GET, string, "", "HttpVPNInfo");
     }
     else {
-        va_SendClientMessage(playerid, CINZA, "ERRO: Não foi possível obter informações desse IP. (Cod: %d) (%s)", response_code, data);
+        va_SendClientMessage(playerid, COLOR_GREY, "ERRO: Não foi possível obter informações desse IP. (Cod: %d) (%s)", response_code, data);
     }
 
     return 1;
@@ -204,6 +204,6 @@ CMD:checarip(playerid, params[]){
   	format(dPlayerInfo[targetid][IP], 16, playerIP);
 	format(string, sizeof(string), "%s/%s%s", HTTP_IP_API_URL, playerIP, HTTP_IP_API_END);
 	HTTP(playerid, HTTP_GET, string, "", "HttpIPInfo");
-  	va_SendClientMessage(playerid, CINZA, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
+  	va_SendClientMessage(playerid, COLOR_GREY, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
 	return 1;
 }

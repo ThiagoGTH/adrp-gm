@@ -41,57 +41,21 @@ enum Player_Data {
     pEditandoBareira,
     pLicence,
 
-	pFaction,
-	pFactionID,
-	pFactionRank,
-	pFactionEdit,
-	pSelectedSlot,
-	pOnDuty,
-	pFactionOffer,
-	pFactionOffered,
-	pDisableFaction,
-    pMaterial,
+    pFreeze,
+    pFreezeTimer,
 
     pGuns[13],
 	pAmmo[13],
 
-    pTazer,
-    pBeanBag,
-    pStunned,
-    pCuffed,
-    pDragged,
-	pDraggedBy,
-	pDragTimer,
-
-    CurrentDealer,
-	CurrentItem[10],
-	CurrentAmmo[10],
-	CurrentCost[10],
-
-    pGraffiti,
-	pGraffitiTime,
-	pGraffitiColor,
-	pGraffitiText[64 char],
-	pEditGraffiti,
-    
-    pCarSeller,
-	pCarOffered,
-	pCarValue,
-
-    pFreeze,
-	pFreezeTimer,
-
-    pHouse,
-	pEntrance,
-
-    pLoopAnim,
+    pJetpack,
+    pAdminDuty,
     // Temp variables
     bool:pLogged,
     characterDelete[24]
 };
-
 new pInfo[MAX_PLAYERS][Player_Data];
-new AdminTrabalhando[MAX_PLAYERS];
+
+
 new const g_aWeaponSlots[] = {
 	0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 10, 10, 10, 10, 10, 10, 8, 8, 8, 0, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 4, 6, 6, 7, 7, 7, 7, 8, 12, 9, 9, 9, 11, 11, 11
 };
@@ -160,7 +124,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         mysql_query(DBConn, query);
 
         if(cache_num_rows()) {
-            SendClientMessage(playerid, VERMELHO, "Já existe outro usuário ou um personagem com este nome.");
+            SendClientMessage(playerid, COLOR_LIGHTRED, "Já existe outro usuário ou um personagem com este nome.");
             return ShowPlayerDialog(playerid, DIALOG_CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
                 "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
                 "Continuar", "Voltar");
@@ -333,13 +297,6 @@ LoadCharacterInfo(playerid, playerName[]) {
     cache_get_value_name_int(0, "interior", pInfo[playerid][pInterior]);
     cache_get_value_name_int(0, "virtual_world", pInfo[playerid][pVirtualWorld]);
 
-    cache_get_value_name_int(0, "material", pInfo[playerid][pMaterial]);
-    cache_get_value_name_int(0, "faction", pInfo[playerid][pFaction]);
-    cache_get_value_name_int(0, "faction_rank", pInfo[playerid][pFactionRank]);
-
-    cache_get_value_name_int(0, "house", pInfo[playerid][pHouse]);
-	cache_get_value_name_int(0, "entrance", pInfo[playerid][pEntrance]);
-
     cache_get_value_name_int(0, "first_login", first_login);
 
     if(!first_login) {
@@ -426,12 +383,7 @@ SaveCharacterInfo(playerid) {
     `positionX` = %f, \
     `positionY` = %f, \
     `positionZ` = %f,\
-    `positionA` = %f, \
-    `material` = %d, \
-    `faction` = %d, \
-    `faction_rank` = %d, \
-    `house` = %d, \
-    `entrance` = %d WHERE ID = %d;", 
+    `positionA` = %f WHERE ID = %d;", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
     pInfo[playerid][pAdmin], 
@@ -449,13 +401,6 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPositionY], 
     pInfo[playerid][pPositionZ],
     pInfo[playerid][pPositionA],
-
-    pInfo[playerid][pMaterial],
-    pInfo[playerid][pFaction],
-    pInfo[playerid][pFactionRank],
-
-    pInfo[playerid][pHouse],
-	pInfo[playerid][pEntrance],
 
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
@@ -490,53 +435,11 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pEditandoBareira] = 0;
     pInfo[playerid][pLicence] = 0;
 
-    pInfo[playerid][pFaction] = 0;
-	pInfo[playerid][pFactionID] = 0;
-	pInfo[playerid][pFactionRank] = 0;
-	pInfo[playerid][pFactionEdit] = 0;
-	pInfo[playerid][pSelectedSlot] = 0;
-	pInfo[playerid][pOnDuty] = 0;
-	pInfo[playerid][pFactionOffer] = 0;
-	pInfo[playerid][pFactionOffered] = 0;
-	pInfo[playerid][pDisableFaction] = 0;
-    pInfo[playerid][pMaterial] = 0;
-
-    pInfo[playerid][CurrentDealer] = 0;
-	pInfo[playerid][CurrentItem] = 0;
-	pInfo[playerid][CurrentAmmo] = 0;
-	pInfo[playerid][CurrentCost] = 0;
-
-    pInfo[playerid][pTazer] = 0;
-    pInfo[playerid][pBeanBag] = 0;
-    pInfo[playerid][pStunned] = 0;
-    pInfo[playerid][pCuffed] = 0;
-    pInfo[playerid][pDragged] = 0;
-	pInfo[playerid][pDraggedBy] = 0;
-	pInfo[playerid][pDragTimer] = 0;
-
-    pInfo[playerid][pGraffiti] = -1;
-	pInfo[playerid][pGraffitiTime] = 0;
-	pInfo[playerid][pGraffitiColor] = 0;
-	pInfo[playerid][pGraffitiText] = 0;
-	pInfo[playerid][pEditGraffiti] = 0;
-    
-    pInfo[playerid][pCarSeller] = INVALID_PLAYER_ID;
-	pInfo[playerid][pCarOffered] = -1;
-	pInfo[playerid][pCarValue] = 0;
-
-    pInfo[playerid][pHouse] = -1;
-	pInfo[playerid][pEntrance] = -1;
-
     pInfo[playerid][pFreeze] = 0;
-    AdminTrabalhando[playerid] = 0;
-    pInfo[playerid][pLoopAnim] = 0;
+    pInfo[playerid][pFreezeTimer] = 0;
+    pInfo[playerid][pJetpack] = 0;
+    pInfo[playerid][pAdminDuty] = 0;
 
-    /*foreach (new i : Player) if (pInfo[i][pDraggedBy] == playerid) {
-	    StopDragging(i);
-	}
-	if (pInfo[playerid][pDragged]) {
-	    StopDragging(playerid);
-	}*/
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
 		pInfo[playerid][pAmmo][i] = 0;

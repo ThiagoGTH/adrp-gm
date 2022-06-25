@@ -1,43 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-new DCC_Channel:logChannels[33];
-
-forward Discord_StartChannels();
-public Discord_StartChannels(){
-    logChannels[0] = DCC_FindChannelById("989303563622694942");  //Arrombar            (2)
-    logChannels[1] = DCC_FindChannelById("989303575769403392");  //Refundos            (3)
-    logChannels[2] = DCC_FindChannelById("989303590734692372");  //HotWire             (4)
-    logChannels[3] = DCC_FindChannelById("989303613434253333");  //Deletar Char        (5)
-    logChannels[4] = DCC_FindChannelById("989303628433092678");  //NameChange          (6)
-    logChannels[5] = DCC_FindChannelById("989303644681801808");  //Donater             (7)
-    logChannels[6] = DCC_FindChannelById("989303659408031784");  //AntiCheater         (8)
-    logChannels[7] = DCC_FindChannelById("989303687589556235");  //Grafitti            (9)
-    logChannels[8] = DCC_FindChannelById("989303697018331197");  //Itens               (10)
-    logChannels[9] = DCC_FindChannelById("989303723392122900");  //WHs                 (11)
-    logChannels[10] = DCC_FindChannelById("989303745022132224"); //Comprado veículo    (12)
-    logChannels[11] = DCC_FindChannelById("989303757911261244"); //Dinheiro            (13)
-    logChannels[12] = DCC_FindChannelById("989303773316911175"); //Ammu Nation         (14)
-    logChannels[13] = DCC_FindChannelById("989303791797039164"); //Armazenamento casa  (15)
-    logChannels[14] = DCC_FindChannelById("989303818896441345"); //Admin               (16)
-    logChannels[15] = DCC_FindChannelById("989303844838178836"); //Casas e empresas    (17)
-    logChannels[16] = DCC_FindChannelById("989303860285812747"); //Carros              (18)
-    logChannels[17] = DCC_FindChannelById("989303879889981490"); //Faccoes             (19)
-    logChannels[18] = DCC_FindChannelById("989303902883160115"); //Porte de armas      (20)
-    logChannels[19] = DCC_FindChannelById("989303918645370951"); //Armas               (21)
-    logChannels[20] = DCC_FindChannelById("989303945698615326"); //Permissões          (22)
-    logChannels[21] = DCC_FindChannelById("989304001516408863"); //Quotes importantes  (23)
-    logChannels[22] = DCC_FindChannelById("989304026501890068"); //Mobílias            (24)
-    logChannels[23] = DCC_FindChannelById("989304049931268116"); //Login Logout        (25)
-    logChannels[24] = DCC_FindChannelById("989304074681860186"); //Mortes              (26)
-    logChannels[25] = DCC_FindChannelById("989304087927476224"); //Arrastar            (27)
-    logChannels[26] = DCC_FindChannelById("989304108311789618"); //Chaves              (28)
-    logChannels[27] = DCC_FindChannelById("989304137638379550"); //Objetos autorizado  (29)
-    logChannels[28] = DCC_FindChannelById("989304154600128613"); //Auto leasing        (30)
-    logChannels[29] = DCC_FindChannelById("989304164213481482"); //FPS                 (31)
-    logChannels[30] = DCC_FindChannelById("989304202461339718"); // (/fac)            (32)
-    return 1;
-}
-
 hook OnGameModeInit(){
     Discord_StartChannels();
 }
@@ -49,57 +11,195 @@ public Discord_PublishLog(playerid, log[], type) {
     format(string, 512, "```%s```", log);
     utf8encode(string, string);
     DCC_SendChannelMessage(logChannels[convertedType], string);
-    return 1;
+    return true;
 }
 
-/*forward ServerStatus();
-public ServerStatus(){
+forward ServerStatus(type);
+public ServerStatus(type){
     new title[32],
-        text[4900],
-        update1[128],
-        update2[128],
-        versao1[128],
-        versao2[128],
-        ip1[128],
-        ip2[128],
+        text[512],
+        forum1[256],
+        forum2[256],
+        ucp1[256],
+        ucp2[256],
+        server1[256],
+        server2[256],
         footer[128];
-
-    if(Server_Type == 1){
-        format(title, 32, "Servidor on-line");
+    
+    if(type == 1){ // TUDO FUNCIONANDO
+        format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0x238C00);
+        DCC_SetEmbedColor(embed, 0xF2633C);
+                
+        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
+        utf8encode(forum1, forum1);
+        format(forum2, 256, "Fórum", forum2);
+        utf8encode(forum2, forum2);
+        DCC_AddEmbedField(embed, forum2, forum1, false);
         
-        format(text, 4900, "O acesso ao serviço SA-MP foi iniciado, a partir de agora você já pode se conectar com seu personagem.", text);
-        utf8encode(text, text);
-        DCC_SetEmbedDescription(embed, text);
-        
-        format(update1, 128, "%s", LASTEST_RELEASE);
-        utf8encode(update1, update1);
-        format(update2, 128, "Última Atualização", update2);
-        utf8encode(update2, update2);
-        DCC_AddEmbedField(embed, update2, update1, false);
-        
-        format(versao1, 128, "%s", VERSIONING);
-        utf8encode(versao1, versao1);
-        format(versao2, 128, "Versão do Gamemode", versao2);
-        utf8encode(versao2, versao2);
-        DCC_AddEmbedField(embed, versao2, versao1, false);
+        format(ucp1, 256, "Status: Operante\n**LINK:** %s", SERVERUCP);
+        utf8encode(ucp1, ucp1);
+        format(ucp2, 256, "User Control Panel", ucp2);
+        utf8encode(ucp2, ucp2);
+        DCC_AddEmbedField(embed, ucp2, ucp1, false);
 
-        format(ip1, 128, "%s", SERVERIP);
-        utf8encode(ip1, ip1);
-        format(ip2, 128, "Endereço de Conexão", ip2);
-        utf8encode(ip2, ip2);
-        DCC_AddEmbedField(embed, ip2, ip1, false);
-        
-        format(footer, 128, "Conexão estabelecida em: %s.", _:Now());
+        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
+        utf8encode(server1, server1);
+        format(server2, 256, "SA-MP", server2);
+        utf8encode(server2, server2);
+        DCC_AddEmbedField(embed, server2, server1, false);
+
+        format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/1DvanXG.png");
+        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
     }
-}*/
+    if(type == 2){ // FÓRUM COM PROBLEMA
+        format(title, 32, "STATUS DE SERVIÇOS");
+        utf8encode(title, title);
+        new DCC_Embed:embed = DCC_CreateEmbed(title);
+        DCC_SetEmbedColor(embed, 0xF2633C);
+        
+        format(text, 512, "Um problema foi encontrado no fórum. Os desenvolvedores trabalhando em uma solução.\n", text);
+        utf8encode(text, text);
+        DCC_SetEmbedDescription(embed, text);
+        
+        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
+        utf8encode(forum1, forum1);
+        format(forum2, 256, "Fórum", forum2);
+        utf8encode(forum2, forum2);
+        DCC_AddEmbedField(embed, forum2, forum1, false);
+        
+        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
+        utf8encode(ucp1, ucp1);
+        format(ucp2, 256, "User Control Panel", ucp2);
+        utf8encode(ucp2, ucp2);
+        DCC_AddEmbedField(embed, ucp2, ucp1, false);
+
+        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
+        utf8encode(server1, server1);
+        format(server2, 256, "SA-MP", server2);
+        utf8encode(server2, server2);
+        DCC_AddEmbedField(embed, server2, server1, false);
+
+        format(footer, 128, "© 2022 Advanced Roleplay");
+        utf8encode(footer, footer);
+
+        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+    }
+    if(type == 3){ // UCP COM PROBLEMA
+        format(title, 32, "STATUS DE SERVIÇOS");
+        utf8encode(title, title);
+        new DCC_Embed:embed = DCC_CreateEmbed(title);
+        DCC_SetEmbedColor(embed, 0xF2633C);
+        
+        format(text, 512, "Um problema foi encontrado no User Control Panel. Os desenvolvedores trabalhando em uma solução.\n", text);
+        utf8encode(text, text);
+        DCC_SetEmbedDescription(embed, text);
+        
+        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
+        utf8encode(forum1, forum1);
+        format(forum2, 256, "Fórum", forum2);
+        utf8encode(forum2, forum2);
+        DCC_AddEmbedField(embed, forum2, forum1, false);
+        
+        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
+        utf8encode(ucp1, ucp1);
+        format(ucp2, 256, "User Control Panel", ucp2);
+        utf8encode(ucp2, ucp2);
+        DCC_AddEmbedField(embed, ucp2, ucp1, false);
+
+        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
+        utf8encode(server1, server1);
+        format(server2, 256, "SA-MP", server2);
+        utf8encode(server2, server2);
+        DCC_AddEmbedField(embed, server2, server1, false);
+
+        format(footer, 128, "© 2022 Advanced Roleplay");
+        utf8encode(footer, footer);
+
+        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+    }
+    if(type == 4){ // SA-MP COM PROBLEMA
+        format(title, 32, "STATUS DE SERVIÇOS");
+        utf8encode(title, title);
+        new DCC_Embed:embed = DCC_CreateEmbed(title);
+        DCC_SetEmbedColor(embed, 0xF2633C);
+        
+        format(text, 512, "Um problema foi encontrado no serviço SA-MP. Os desenvolvedores trabalhando em uma solução.\n", text);
+        utf8encode(text, text);
+        DCC_SetEmbedDescription(embed, text);
+        
+        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
+        utf8encode(forum1, forum1);
+        format(forum2, 256, "Fórum", forum2);
+        utf8encode(forum2, forum2);
+        DCC_AddEmbedField(embed, forum2, forum1, false);
+        
+        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
+        utf8encode(ucp1, ucp1);
+        format(ucp2, 256, "User Control Panel", ucp2);
+        utf8encode(ucp2, ucp2);
+        DCC_AddEmbedField(embed, ucp2, ucp1, false);
+
+        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
+        utf8encode(server1, server1);
+        format(server2, 256, "SA-MP", server2);
+        utf8encode(server2, server2);
+        DCC_AddEmbedField(embed, server2, server1, false);
+
+        format(footer, 128, "© 2022 Advanced Roleplay");
+        utf8encode(footer, footer);
+
+        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+    }
+    if(type == 5){ // TUDO COM PROBLEMA (smyle sistemas)
+        format(title, 32, "STATUS DE SERVIÇOS");
+        utf8encode(title, title);
+        new DCC_Embed:embed = DCC_CreateEmbed(title);
+        DCC_SetEmbedColor(embed, 0xF2633C);
+        
+        format(text, 512, "Um problema foi encontrado em todos os serviços. Os desenvolvedores trabalhando em uma solução o mais rápido possível.\n", text);
+        utf8encode(text, text);
+        DCC_SetEmbedDescription(embed, text);
+        
+        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
+        utf8encode(forum1, forum1);
+        format(forum2, 256, "Fórum", forum2);
+        utf8encode(forum2, forum2);
+        DCC_AddEmbedField(embed, forum2, forum1, false);
+        
+        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
+        utf8encode(ucp1, ucp1);
+        format(ucp2, 256, "User Control Panel", ucp2);
+        utf8encode(ucp2, ucp2);
+        DCC_AddEmbedField(embed, ucp2, ucp1, false);
+
+        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
+        utf8encode(server1, server1);
+        format(server2, 256, "SA-MP", server2);
+        utf8encode(server2, server2);
+        DCC_AddEmbedField(embed, server2, server1, false);
+
+        format(footer, 128, "© 2022 Advanced Roleplay");
+        utf8encode(footer, footer);
+
+        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+    }
+}
+
+
 
 public DCC_OnMessageCreate(DCC_Message:message)
 {
@@ -117,10 +217,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
 
     new bool:is_bot;
     if(!DCC_IsUserBot(author, is_bot))
-        return 0;
+        return false;
 
     if(is_bot)
-        return 0;
+        return false;
 
     if(!strcmp(channel_name, "admin-chat", true) && channel == DCC_FindChannelById("989306920517136464")){
         new dest[255], nameee[255];
@@ -132,10 +232,116 @@ public DCC_OnMessageCreate(DCC_Message:message)
             SendAdminAlert(COLOR_ADMINCHAT, "...%s **", dest[64]);
         }
         else SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s (Discord): %s", nameee, dest);
-        return 1;
+        return true;
     }
 
-    return 1;
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("989306578199003197")){
+        DCC_SendChannelMessage(DCC_FindChannelById("989305002952622110"), string);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "central-directory", true) && channel == DCC_FindChannelById("989305002952622110")) //#central-directory
+    {
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!staff", true))
+            {
+                new count_aduty=0, count_offduty=0;
+                new aduty[1024], offduty[1024];
+
+                foreach (new i : Player) if (uInfo[i][uAdmin] > 0){
+                    new nomeadmin[128];
+                    nomeadmin = AdminRankName(i);
+
+                    if(pInfo[i][pAdminDuty]){
+                        count_aduty++;
+                        format(aduty, 1024, "%s%s %s (%s) (ID: %d)\n", aduty, nomeadmin, pNome(i), pInfo[i][pUser], i);
+                    }else{
+                        count_offduty++;
+                        format(offduty, 1024, "%s%s %s (%s) (ID: %d)\n", offduty, nomeadmin, pNome(i), pInfo[i][pUser], i);
+                    }
+                }               
+
+                new text[256];
+                if (count_aduty == 0 && count_offduty == 0){
+                    new title[32];
+                    format(title, 32, "Equipe administrativa online");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                                        
+                    format(text, 256, "Nenhum membro da equipe online neste momento.");
+                    utf8encode(text, text);
+                    DCC_SetEmbedDescription(embed, text);
+
+                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    new footer[128];
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+
+                    return true;
+                }
+
+                new title[32];
+                format(title, 32, "Equipe administrativa online");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+                                
+                utf8encode(aduty, aduty);
+                utf8encode(offduty, offduty);
+
+                if(count_aduty > 0)
+                    DCC_AddEmbedField(embed, "Membros da equipe em modo admin:", aduty, false);
+                else
+                    DCC_AddEmbedField(embed, "Membros da equipe em modo admin:", "Nenhum membro da equipe", false);
+
+                if(count_offduty > 0)
+                    DCC_AddEmbedField(embed, "Membros da equipe em modo roleplay:", offduty, false);
+                else
+                    DCC_AddEmbedField(embed, "Membros da equipe em modo roleplay:", "Nenhum membro da equipe", false);
+
+                DCC_SetEmbedColor(embed, 0xF2633C);
+                new footer[128];
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+
+                DCC_SendChannelEmbedMessage(channel, embed);
+            }
+            else if(!strcmp(command, "!teste", true))
+            {
+                DCC_SendChannelMessage(channel, "ok google, amoleca meu pinto"); 
+            }
+            else
+            {
+                new title[32];
+                format(title, 32, "Comando invalido");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[512];
+                format(text, 512, "Digite **!ajuda** para obter a lista de comandos completa.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
+                DCC_SetEmbedColor(embed, 0xF2633C);
+                new footer[128];
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+            }
+        }
+        return true;
+    }
+    return true;
 }
 /*public DCC_OnMessageCreate(DCC_Message:message)
 {
@@ -219,7 +425,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                    return 1;
+                    return true;
                 }
 
                 new title[32];
@@ -267,7 +473,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -303,7 +509,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 for(new i = 0; i < rows; i++)
@@ -381,7 +587,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -485,7 +691,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                    return 1;
+                    return true;
                 }
 
                 cache_delete(result);
@@ -572,7 +778,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -873,9 +1079,9 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1044,7 +1250,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1170,7 +1376,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1253,7 +1459,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(title_field, title_field);
                         utf8encode(text_field, text_field);
                         DCC_AddEmbedField(embed, title_field, text_field, false);
-                        return 1;
+                        return true;
                     }
                     else
                     {
@@ -1300,7 +1506,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1488,7 +1694,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1516,7 +1722,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                    return 1;
+                    return true;
                 }
 
                 new character_username[128];
@@ -1596,7 +1802,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1632,7 +1838,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     cache_delete(result);
-                    return 1;
+                    return true;
                 }
 
                 //Nome do usuário
@@ -1704,7 +1910,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -1791,7 +1997,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                    return 1;
+                    return true;
                 }
 
                 if(!strcmp(option, "bronze", true) && !strcmp(authorid, "326137493906784256", true))
@@ -1808,7 +2014,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SetEmbedDescription(embed, text);
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -1831,7 +2037,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -1881,7 +2087,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             new log[128];
                             format(log, sizeof(log), "thiago#0666 deu um pacote bronze para %s.", ReturnName(i, 0));
                             LogSQL_Create(99998, log, 7);
-                            return 1;
+                            return true;
                         }
                     }
 
@@ -1921,7 +2127,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             utf8encode(footer, footer);
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2011,7 +2217,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SetEmbedDescription(embed, text);
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -2034,7 +2240,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2086,7 +2292,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             new log[128];
                             format(log, sizeof(log), "thiago#0666 deu um pacote prata para %s.", ReturnName(i, 0));
                             LogSQL_Create(99998, log, 7);
-                            return 1;
+                            return true;
                         }
                     }
 
@@ -2126,7 +2332,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             utf8encode(footer, footer);
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2224,7 +2430,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SetEmbedDescription(embed, text);
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -2247,7 +2453,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2299,7 +2505,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             new log[128];
                             format(log, sizeof(log), "thiago#0666 deu um pacote ouro para %s.", ReturnName(i, 0));
                             LogSQL_Create(99998, log, 7);
-                            return 1;
+                            return true;
                         }
                     }
 
@@ -2339,7 +2545,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             utf8encode(footer, footer);
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2437,7 +2643,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SetEmbedDescription(embed, text);
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -2460,7 +2666,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
 
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2501,7 +2707,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             new log[128];
                             format(log, sizeof(log), "thiago#0666 removeu o pacote premium de %s.", ReturnName(i, 0));
                             LogSQL_Create(99998, log, 7);
-                            return 1;
+                            return true;
                         }
                     }
 
@@ -2541,7 +2747,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                             utf8encode(footer, footer);
                             DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                             DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                            return 1;
+                            return true;
                         }
                         else
                         {
@@ -2625,7 +2831,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SetEmbedDescription(embed, text);
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -2656,7 +2862,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador offline
@@ -2731,7 +2937,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
                 }
                 else if(!strcmp(option, "addnc", true) && !strcmp(authorid, "326137493906784256", true))
@@ -2751,7 +2957,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador online
@@ -2781,7 +2987,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         new log[128];
                         format(log, sizeof(log), "thiago#0666 deu uma mudana de nome para %s.", ReturnName(i, 0));
                         LogSQL_Create(99998, log, 7);
-                        return 1;
+                        return true;
                     }
 
                     //Jogador offline
@@ -2885,7 +3091,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
             }
         }
-        return 1;
+        return true;
     }
 
     if(channel == DCC_FindChannelById("989307682852855848")) //#requisições-flyers
@@ -2918,7 +3124,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -2994,7 +3200,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         LogSQL_Create(0, log, 16);
 
                         FinishFlyer(flyerid);
-                        return 1;
+                        return true;
                     }
                     else if(status == 1)
                     {
@@ -3023,7 +3229,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                        return 1;
+                        return true;
                     }
                     else if(status == 2)
                     {
@@ -3052,7 +3258,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                        return 1;
+                        return true;
                     }
                 }
 
@@ -3069,7 +3275,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                    return 1;
+                    return true;
                 }
             
             }
@@ -3092,7 +3298,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                    return 1;
+                    return true;
                 }
 
                 static 
@@ -3168,7 +3374,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         LogSQL_Create(0, log, 16);
 
                         FinishFlyerDenied(flyerid);
-                        return 1;
+                        return true;
                     }
                     else if(status == 1)
                     {
@@ -3197,7 +3403,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                        return 1;
+                        return true;
                     }
                     else if(status == 2)
                     {
@@ -3226,7 +3432,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                         utf8encode(footer, footer);
                         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                         DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                        return 1;
+                        return true;
                     }
                 }
 
@@ -3243,11 +3449,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989307682852855848"), embed);
-                    return 1;
+                    return true;
                 }
             }
         }
-        return 1;
+        return true;
     }
 
     if(!strcmp(channel_name, "manager-bot", true) && channel == DCC_FindChannelById("989305233299624007")) //#manager-bot
@@ -3280,13 +3486,13 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(text, 4900, "Uma instabilidade foi detectada no serviço SA-MP. O acesso de personagens foi suspenso e apenas será restabelecido aps ficar estvel novamente.", text);
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    new update1[128];
-                    format(update1, 128, "%s", LAST_UPDATE);
-                    utf8encode(update1, update1);
-                    new update2[128];
-                    format(update2, 128, "ltima atualização em:", update2);
-                    utf8encode(update2, update2);
-                    DCC_AddEmbedField(embed, update2, update1, false);
+                    new forum1[128];
+                    format(forum1, 128, "%s", LAST_UPDATE);
+                    utf8encode(forum1, forum1);
+                    new forum2[128];
+                    format(forum2, 128, "ltima atualização em:", forum2);
+                    utf8encode(forum2, forum2);
+                    DCC_AddEmbedField(embed, forum2, forum1, false);
                     new versao1[128];
                     format(versao1, 128, "%s", SERVER_REVISION);
                     utf8encode(versao1, versao1);
@@ -3312,7 +3518,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
-                    return 1;
+                    return true;
                 }
                 else
                 {
@@ -3334,13 +3540,13 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(text, 4900, "O acesso ao serviço SA-MP foi restabelecido, a partir de agora você pode se conectar com seu personagem.", text);
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    new update1[128];
-                    format(update1, 128, "%s", LAST_UPDATE);
-                    utf8encode(update1, update1);
-                    new update2[128];
-                    format(update2, 128, "ltima atualização em:", update2);
-                    utf8encode(update2, update2);
-                    DCC_AddEmbedField(embed, update2, update1, false);
+                    new forum1[128];
+                    format(forum1, 128, "%s", LAST_UPDATE);
+                    utf8encode(forum1, forum1);
+                    new forum2[128];
+                    format(forum2, 128, "ltima atualização em:", forum2);
+                    utf8encode(forum2, forum2);
+                    DCC_AddEmbedField(embed, forum2, forum1, false);
                     new versao1[128];
                     format(versao1, 128, "%s", SERVER_REVISION);
                     utf8encode(versao1, versao1);
@@ -3366,7 +3572,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
-                    return 1;
+                    return true;
                 }
             }
             else if(!strcmp(command, "!gmx", true))
@@ -3387,7 +3593,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
 
                 GiveGMX();
-                return 1;
+                return true;
             }
             else if(!strcmp(command, "!kickall", true))
             {
@@ -3409,7 +3615,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 foreach(new i : Player){
                     KickEx(i);
                 }
-                return 1;
+                return true;
             }
 
             else if(!strcmp(command, "!doublepd", true))
@@ -3641,7 +3847,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/br8MUJj.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
-                    return 1;
+                    return true;
                 }
 
                 if(isnull(_user_name))
@@ -3653,7 +3859,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/br8MUJj.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);//aq
-                    return 1;
+                    return true;
                 }
 
                 //Jogador online
@@ -3690,7 +3896,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
-                    return 1;
+                    return true;
                 }
 
                 //Buscar usuário offline
@@ -3717,7 +3923,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
                     cache_delete(result);
-                    return 1;
+                    return true;
                 }
 
                 cache_delete(result);
@@ -3772,7 +3978,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/br8MUJj.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
-                    return 1;
+                    return true;
                 }
 
                 if(isnull(_user_name))
@@ -3784,7 +3990,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/br8MUJj.png");
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);//aq
-                    return 1;
+                    return true;
                 }
 
                 //Buscar usuário offline
@@ -3811,7 +4017,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SetEmbedFooter(embed, footer);
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
                     cache_delete(result);
-                    return 1;
+                    return true;
                 }
 
                 new Float:credits = cache_get_field_float(0, "staffCredits");
@@ -3864,5 +4070,5 @@ public DCC_OnMessageCreate(DCC_Message:message)
             }
         }
     }
-    return 1;
+    return true;
 }*/

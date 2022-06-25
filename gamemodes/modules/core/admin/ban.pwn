@@ -33,9 +33,9 @@ CMD:ban(playerid, params[]) {
 
     // Printar
     
-    va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s baniu %s (%s) permanentemente. Motivo: %s.", uInfo[playerid][uName], 
+    va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s (%s) permanentemente. Motivo: %s.", uInfo[playerid][uName], 
     GetPlayerNameEx(id), uInfo[id][uName], reason);
-    va_SendClientMessage(playerid, VERDE, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
     SendServerMessage(playerid, "(( Você foi banido do servidor ))");
 
     Kick(id);
@@ -52,7 +52,7 @@ CMD:banoff(playerid, params[]) {
 
     foreach(new i : Player) {
         if(!strcmp(uInfo[i][uName], userName)) { 
-            va_SendClientMessage(playerid, VERMELHO, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
+            va_SendClientMessage(playerid, COLOR_LIGHTRED, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
             return SendSyntaxMessage(playerid, "/ban [player] [motivo]");
         }
     }
@@ -81,8 +81,8 @@ CMD:banoff(playerid, params[]) {
         `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, 0)", userName, uInfo[playerid][uName], reason, _:Now());
     mysql_query(DBConn, query);
 
-    va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s baniu %s de modo offline e permanentemente. Motivo: %s.", uInfo[playerid][uName], userName, reason);
-    va_SendClientMessage(playerid, VERDE, "Você baniu (offline) o usuário %s com sucesso.", userName);
+    va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline e permanentemente. Motivo: %s.", uInfo[playerid][uName], userName, reason);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu (offline) o usuário %s com sucesso.", userName);
 
     return 1;
 }
@@ -101,8 +101,8 @@ CMD:bantemp(playerid, params[]) {
         uInfo[id][uName], uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
     mysql_query(DBConn, query);
     
-    va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s baniu %s (%s) por %d dias. Motivo: %s.", uInfo[playerid][uName], GetPlayerNameEx(id), uInfo[id][uName], days, reason);
-    va_SendClientMessage(playerid, VERDE, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
+    va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s (%s) por %d dias. Motivo: %s.", uInfo[playerid][uName], GetPlayerNameEx(id), uInfo[id][uName], days, reason);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
     SendServerMessage(playerid, "(( Você foi banido do servidor ))");
     
     Kick(id);
@@ -121,7 +121,7 @@ CMD:bantempoff(playerid, params[]) {
 
     foreach(new i : Player) {
         if(!strcmp(uInfo[i][uName], userName)) { 
-            va_SendClientMessage(playerid, VERMELHO, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
+            va_SendClientMessage(playerid, COLOR_LIGHTRED, "Este usuário já está conectado no servidor. (Nick: %s, ID: %d)", GetPlayerNameEx(i), i);
             return SendSyntaxMessage(playerid, "/bantemp [player] [dias] [motivo]");
         }
     }
@@ -151,8 +151,8 @@ CMD:bantempoff(playerid, params[]) {
         userName, uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
     mysql_query(DBConn, query);
 
-    va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s baniu %s de modo offline por %d dias. Motivo: %s.", uInfo[playerid][uName], userName, days, reason);
-    va_SendClientMessage(playerid, VERDE, "Você baniu (offline) o usuário %s com sucesso.", userName);
+    va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline por %d dias. Motivo: %s.", uInfo[playerid][uName], userName, days, reason);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu (offline) o usuário %s com sucesso.", userName);
 
     return 1;
 }
@@ -170,8 +170,8 @@ CMD:desban(playerid, params[]) {
     mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0 WHERE `banned_name` = '%s' AND `banned` = 1", userName);
     mysql_query(DBConn, query);
 
-    va_SendClientMessageToAll(VERMELHO, "AdmCmd: %s desbaniu %s.", uInfo[playerid][uName], userName);
-    va_SendClientMessage(playerid, VERDE, "Você desbaniu o usuário %s com sucesso.", userName);
+    va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s desbaniu %s.", uInfo[playerid][uName], userName);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você desbaniu o usuário %s com sucesso.", userName);
 
     return 1;
 }
@@ -192,7 +192,7 @@ CMD:checarban(playerid, params[]) {
 
     new adminName[24], reason[128], ban_date, unban_date, banned;
 
-    va_SendClientMessage(playerid, VERDE, "Banimentos de %s:", userName);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Banimentos de %s:", userName);
     for(new i; i < cache_num_rows(); i++) {
         cache_get_value_name(i, "admin_name", adminName);
         cache_get_value_name(i, "reason", reason);
@@ -200,7 +200,7 @@ CMD:checarban(playerid, params[]) {
         cache_get_value_name_int(i, "unban_date", unban_date);
         cache_get_value_name_int(i, "banned", banned);
 
-        va_SendClientMessage(playerid, banned > 0 ? (VERMELHO) : (CINZA), " Banido por %s | Motivo: %s | Data do banimento: %s | \
+        va_SendClientMessage(playerid, banned > 0 ? (COLOR_LIGHTRED) : (COLOR_GREY), " Banido por %s | Motivo: %s | Data do banimento: %s | \
             Data do desbanimento: %s  %s", adminName, reason, GetFullDate(ban_date), 
             unban_date > 0 ? (GetFullDate(unban_date)) : ("Permanente"), banned > 0 ? ("**Cumprindo**") : (""));
     }
@@ -219,7 +219,7 @@ CMD:limparhistoricobans(playerid, params[]) {
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "O usuário especificado não tem nenhum banimento registrado.");
 
-    va_SendClientMessage(playerid, VERDE, "Você apagou %d banimentos do usuário %s.", cache_num_rows(), userName);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Você apagou %d banimentos do usuário %s.", cache_num_rows(), userName);
 
     mysql_format(DBConn, query, sizeof query, "DELETE FROM ban WHERE `banned_name` = '%s';", userName);
     mysql_query(DBConn, query);    

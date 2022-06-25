@@ -65,7 +65,7 @@ stock ShowAdminCmds(playerid){
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver");
 	}
-	return 1;
+	return true;
 }
 
 hook OnGameModeInit(){
@@ -177,14 +177,14 @@ CMD:resetararmas(playerid, params[])
 CMD:admins(playerid, params[])
 {
 	new count = 0;
-	SendClientMessage(playerid, COLOR_WHITE, "Administradores online:");
+	SendClientMessage(playerid, COLOR_GREEN, "Equipe administrativa on-line:");
 
     foreach (new i : Player) if (uInfo[i][uAdmin] > 0)
 	{
-		if(AdminTrabalhando[playerid] == 1)
-			va_SendClientMessage(playerid, COLOR_GREY, " %s %s %s (ID: %d) | Status: Em roleplay", AdminRankName(playerid), pNome(i), pInfo[i][pUser], i);
+		if(pInfo[playerid][pAdminDuty])
+			va_SendClientMessage(playerid, COLOR_GREEN, "%s %s (%s) (ID: %d) | Status: Em serviço administrativo", AdminRankName(i), pNome(i), pInfo[i][pUser], i);
 		else
-			va_SendClientMessage(playerid, COLOR_GREEN, " %s %s %s (ID: %d) | Status: Em serviço administrativo", AdminRankName(playerid), pNome(i), pInfo[i][pUser], i);
+			va_SendClientMessage(playerid, COLOR_GREY, "%s %s (%s) | Status: Em roleplay", AdminRankName(i), pNome(i), pInfo[i][pUser]);
         count++;
 	}
 	if (!count) {
@@ -195,23 +195,14 @@ CMD:admins(playerid, params[])
 
 CMD:atrabalho(playerid, params[])
 {
-    if(GetPlayerAdmin(playerid) > 0)
-    {
-		switch(AdminTrabalhando[playerid])
-		{
-		    case 0:
-			{
-				SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s entrou em modo de trabalho administrativo.", pNome(playerid));
-				AdminTrabalhando[playerid] = 1;
-				SetPlayerColor(playerid, 0x587B95FF);
-			}
-		    case 1:
-		    {
-				SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s saiu do modo de trabalho administrativo.", pNome(playerid));
-				AdminTrabalhando[playerid] = 0;
-				SetPlayerColor(playerid, COLOR_WHITE);
-		    }
-		}
+	if (!pInfo[playerid][pAdminDuty]){
+		SetPlayerColor(playerid, 0x408080FF);
+		pInfo[playerid][pAdminDuty] = 1;
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) entrou em trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
+	}else{
+	    SetPlayerColor(playerid, DEFAULT_COLOR);
+		pInfo[playerid][pAdminDuty] = 0;
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
 	}
 	return true;
 }
@@ -227,7 +218,7 @@ public2:OnPlayerUpdate_Timer() {
 	    		GetPlayerWeaponData(playerid, i, weapons[i][0], weapons[i][1]);
 
 	    		if(weapons[i][0] > 0 && weapons[i][1] > 0) {
-		    		SendServerMessage(playerid,"O anti-cheat de armas está ATIVO.");
+		    		//SendServerMessage(playerid, "O anti-cheat de armas está ATIVO.");
 					SendAdminAlert(COLOR_LIGHTRED, "(Weapon Hack) %s pode estar utilizando HACK DE ARMAS. Cheque com cuidado.", pNome(playerid));
 					return true;
 	    		}
@@ -576,7 +567,7 @@ CMD:gmx(playerid, params[]) {
     if(!pInfo[playerid][pLogged]) return true;
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
-    SendRconCommand("gmx");
+    GiveGMX();
     return true;
 }
 
@@ -726,10 +717,6 @@ CMD:spec(playerid, params[])
         pInfo[playerid][pPositionA],
          0, 0, 0, 0, 0, 0);
 	    TogglePlayerSpectating(playerid, false);
-
-	    if (!AdminTrabalhando[playerid]){
-			SetPlayerColor(playerid, COLOR_ADMIN);
-	    }
 	    
 	  	EmSpec[playerid] = INVALID_PLAYER_ID;
 	  	return SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você não está mais no modo espectador.");
@@ -762,11 +749,19 @@ CMD:spec(playerid, params[])
 	return true;
 }
 
-CMD:jetpack(playerid, params[]) {
+CMD:jetpack(playerid, params[])
+{
 	if(!pInfo[playerid][pLogged]) return true;
 	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
-	va_SendClientMessage(playerid, CINZA,"AdmCmd: Jetpack criado com sucesso.");
-	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USEJETPACK);
+	new userid;
+	if (sscanf(params, "u", userid)){
+ 	    pInfo[playerid][pJetpack] = 1;
+	 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USEJETPACK);
+	} else {
+		pInfo[userid][pJetpack] = 1;
+		SetPlayerSpecialAction(userid, SPECIAL_ACTION_USEJETPACK);
+		SendServerMessage(playerid, "Você spawnou um jetpack para %s.", pNome(userid));
+	}
 	return true;
 }
 
@@ -774,6 +769,7 @@ stock GiveGMX() {
 	foreach(new i : Player) {
 		SendClientMessage(i, COLOR_LIGHTRED, "O servidor sofrerá um GMX em cinco minutos. Finalize o que você está fazendo e deslogue.");
 		SaveCharacterInfo(i);
+		SaveUserInfo(i);
 		printf("[GMX] Reiniciando o servidor em cinco minutos.");
 		SendRconCommand("hostname Advanced Roleplay | REINICIANDO");
 		SendRconCommand("password 10102dmmdnsas7721jmm");
@@ -786,6 +782,7 @@ public GMXA() {
 	foreach(new i : Player) {
 		SendClientMessage(i, COLOR_YELLOW, "O servidor sofrerá um GMX AGORA. Você será KICKADO.");
 		SaveCharacterInfo(i);
+		SaveUserInfo(i);
 		Kick(i);
 	}
 	SetTimer("GMXF", 400, 0);
@@ -832,7 +829,7 @@ stock SendAdminAlert(color, const str[], {Float,_}:...)
 		#emit SCTRL 4
 
         foreach (new i : Player) if (uInfo[i][uAdmin] >= 1) SendClientMessage(i, color, string);
-		return 1;
+		return true;
 	}
 	foreach (new i : Player) if (uInfo[i][uAdmin] >= 1) SendClientMessage(i, color, string);
 	return true;
@@ -868,9 +865,4 @@ SendPlayerToPlayer(playerid, userid)
 
 	SetPlayerInterior(playerid, GetPlayerInterior(userid));
 	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(userid));
-
-	pInfo[playerid][pHouse] = pInfo[userid][pHouse];
-	//PlayerInfo[playerid][pBusiness] = PlayerInfo[userid][pBusiness];
-	pInfo[playerid][pEntrance] = pInfo[userid][pEntrance];
-	//PlayerInfo[playerid][pHospitalInt]  = PlayerInfo[userid][pHospitalInt];
 }

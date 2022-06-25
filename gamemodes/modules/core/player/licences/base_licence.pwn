@@ -135,7 +135,7 @@ CreateNewLicence(playerid) {
 		format(LicencesData[slot][warning_two], MAX_DRIVERLICENCE_WAR, "");
 		format(LicencesData[slot][warning_three], MAX_DRIVERLICENCE_WAR, "");
 
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você terminou o teste com sucesso. Licença número %d.", LicencesData[slot][licence_number]);
+		va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você terminou o teste com sucesso. Licença número %d.", LicencesData[slot][licence_number]);
 		mysql_format(DBConn, query, sizeof(query), "INSERT INTO `character_licences_driver` \
 			( `character_id`, `licence_number`, `licence_status`, `licence_warnings`, `warning_one`, `warning_two`, `warning_three` \
 			, `licence_car`, `licence_bike`, `licence_truck`) \
@@ -160,17 +160,17 @@ CreateNewLicence(playerid) {
 
 	if (DMVTestType[playerid] == 0) { //Carro
 		LicencesData[slot][licence_car] = 1;   
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para veículos.");
+		va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para veículos.");
 	}
 
 	if (DMVTestType[playerid] == 1) { //Moto
 		LicencesData[slot][licence_bike] = 1;  
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para motos.");
+		va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para motos.");
 	}
 
 	if (DMVTestType[playerid] == 2) { //Caminhão
 		LicencesData[slot][licence_truck] = 1;
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para caminhões.");
+		va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você terminou o teste com sucesso e recebeu sua licença para caminhões.");
 	}
 
 	pInfo[playerid][pLicence] = slot;
@@ -301,13 +301,13 @@ CMD:mostrarlicenca(playerid, params[])
 
 		new targetid;
 		if(sscanf(params, "u", targetid)){
-			va_SendClientMessage(playerid, VERDE,"|_______________Licenças_____________|");
-			va_SendClientMessage(playerid, CINZA, "Nome: %s", GetPlayerNameEx(playerid));
-			va_SendClientMessage(playerid, CINZA, "Número: %d", LicencesData[i][licence_number]);
-			va_SendClientMessage(playerid, CINZA, "Status: %s", status);
-			va_SendClientMessage(playerid, CINZA, "Tipos: (Veículos: %s) | (Motos: %s) | (Caminhões: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
-			va_SendClientMessage(playerid, CINZA, "Advertências: (%d/3)", avisos);
-			va_SendClientMessage(playerid, VERDE,"(Licença Motorista):{FFFFFF} Você pode mostrar sua licença para outro jogador. Use '/licencamotorista playerID'.");
+			va_SendClientMessage(playerid, COLOR_GREEN,"|_______________Licenças_____________|");
+			va_SendClientMessage(playerid, COLOR_GREY, "Nome: %s", GetPlayerNameEx(playerid));
+			va_SendClientMessage(playerid, COLOR_GREY, "Número: %d", LicencesData[i][licence_number]);
+			va_SendClientMessage(playerid, COLOR_GREY, "Status: %s", status);
+			va_SendClientMessage(playerid, COLOR_GREY, "Tipos: (Veículos: %s) | (Motos: %s) | (Caminhões: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
+			va_SendClientMessage(playerid, COLOR_GREY, "Advertências: (%d/3)", avisos);
+			va_SendClientMessage(playerid, COLOR_GREEN,"(Licença Motorista):{FFFFFF} Você pode mostrar sua licença para outro jogador. Use '/licencamotorista playerID'.");
 		}
 	
 		else{
@@ -315,12 +315,12 @@ CMD:mostrarlicenca(playerid, params[])
 			if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Você não está perto deste player.");
 			if (playerid == targetid) return SendErrorMessage(playerid, "Você não pode mostrar sua licença para você mesmo.");
 
-			va_SendClientMessage(targetid, CINZA,"|_______________Licenças_____________|");
-			va_SendClientMessage(targetid, CINZA, "Nome: %s", GetPlayerNameEx(playerid));
-			va_SendClientMessage(targetid, CINZA, "Número: %d", LicencesData[i][licence_number]);
-			va_SendClientMessage(targetid, CINZA, "Status: %s", status);
-			va_SendClientMessage(playerid, CINZA, "Tipos: (Veículos: %s) | (Motos: %s) | (Caminhões: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
-			va_SendClientMessage(targetid, CINZA, "Advertências: (%d/3)", avisos);
+			va_SendClientMessage(targetid, COLOR_GREY,"|_______________Licenças_____________|");
+			va_SendClientMessage(targetid, COLOR_GREY, "Nome: %s", GetPlayerNameEx(playerid));
+			va_SendClientMessage(targetid, COLOR_GREY, "Número: %d", LicencesData[i][licence_number]);
+			va_SendClientMessage(targetid, COLOR_GREY, "Status: %s", status);
+			va_SendClientMessage(playerid, COLOR_GREY, "Tipos: (Veículos: %s) | (Motos: %s) | (Caminhões: %s) | (Armas: %s)", status_car, status_bike, status_truck, status_gun);
+			va_SendClientMessage(targetid, COLOR_GREY, "Advertências: (%d/3)", avisos);
 		}
 
 	}
@@ -338,8 +338,8 @@ CMD:removeravisoslicenca(playerid, params[]) {
 	if (!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Você não está perto deste player.");
 	if (playerid == targetid) return SendErrorMessage(playerid, "Você não pode remover os avisos da sua licença.");
   
-    va_SendClientMessage(playerid, VERDE, "(Licença):{FFFFFF} Você limpou os avisos da licença de %s.", GetPlayerNameEx(targetid));
-	va_SendClientMessage(targetid, VERDE, "(Licença):{FFFFFF} O oficial %s limpou os avisos na sua licença.", GetPlayerNameEx(playerid));
+    va_SendClientMessage(playerid, COLOR_GREEN, "(Licença):{FFFFFF} Você limpou os avisos da licença de %s.", GetPlayerNameEx(targetid));
+	va_SendClientMessage(targetid, COLOR_GREEN, "(Licença):{FFFFFF} O oficial %s limpou os avisos na sua licença.", GetPlayerNameEx(playerid));
     ResetLicenceWarnings(targetid);
 	return 1;
 }
@@ -382,8 +382,8 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_CAR, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
-	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre no manana para continuar com o exame.");
+        va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
+	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre no manana para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
     }
@@ -396,8 +396,8 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_BIKE, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
-	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre na moto para continuar com o exame.");
+        va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
+	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre na moto para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
     }
@@ -410,8 +410,8 @@ StartTestingLicence(playerid){
 	    SetCameraBehindPlayer(playerid);
 	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_TRUCK, 2174.4653, -2267.1816, 13.3833, 225.5650, 0, 0, -1);
 	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
-        va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de caminhão.");
-	    va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Entre no caminhão para continuar com o exame.");
+        va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de caminhão.");
+	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre no caminhão para continuar com o exame.");
 	    emExame[playerid] = true;
         return 1;
     }
@@ -488,7 +488,7 @@ CreateDMVIcon(){
 	new string[24];
 	CreatePickup(1239, 1, 1490.3473, 1306.2144, 1093.2964, 0);
 	format(string, sizeof(string), "/iniciarteste");
-	Create3DTextLabel(string, BRANCO, 1490.3473, 1306.2144, 1093.2964, 20.0, 0);
+	Create3DTextLabel(string, COLOR_WHITE, 1490.3473, 1306.2144, 1093.2964, 20.0, 0);
 }
 
 DMV_StateChange(playerid, newstate, oldstate)
@@ -498,8 +498,8 @@ DMV_StateChange(playerid, newstate, oldstate)
   		new engine, lights, alarm, doors, bonnet, boot, objective,
   			vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-		if(!(vehicleid == carrodmv[playerid])) return va_SendClientMessage(playerid, VERDE, "Você precisa entrar no veículo.");
-		va_SendClientMessage(playerid, VERDE, "DMV:{FFFFFF} Você iniciou o exame. Siga os checkpoints e não danifique o veículo.");
+		if(!(vehicleid == carrodmv[playerid])) return va_SendClientMessage(playerid, COLOR_GREEN, "Você precisa entrar no veículo.");
+		va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o exame. Siga os checkpoints e não danifique o veículo.");
 		SetVehicleParamsEx(carrodmv[playerid], true, lights, alarm, doors, bonnet, boot, objective);
 		SetDMVRoute(playerid);
 	}

@@ -71,7 +71,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         /*new hash[256];
         format(hash, sizeof(hash), "%s", uInfo[playerid][uPass]);*/
         bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
-        printf("1: %s / 2: %s", inputtext, uInfo[playerid][uPass]);
     }
     return 1;
 }
@@ -83,16 +82,12 @@ public OnPasswordHashed(playerid)
 
     CreateUser(playerid, uInfo[playerid][uName], hash);
     CheckUserConditions(playerid);
-
-	printf("Password hashed for player %d: %s", playerid, hash);
 	return 1;
 }
 
 public OnPasswordChecked(playerid)
 {
 	new bool:match = bcrypt_is_equal();
-    printf("Password checked for %d: %s", playerid, (match) ? ("Match") : ("No match"));
-
     if(match){
 		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
@@ -109,7 +104,7 @@ public OnPasswordChecked(playerid)
 NotifyWrongAttempt(playerid) {
     loginAttempts[playerid]++;
 
-    va_SendClientMessage(playerid, VERMELHO, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
+    va_SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
 
     if(loginAttempts[playerid] >= 3) {
         SendServerMessage(playerid, "Você foi kickado por errar a senha muitas vezes.");
@@ -274,7 +269,7 @@ CheckCharactersName(playerid) {
     format(uInfo[playerid][uName], 24, "%s", realUserName);
     SetPlayerName(playerid, realUserName);
 
-    va_SendClientMessage(playerid, VERDE, "Redirecionado como '%s' com sucesso.", uInfo[playerid][uName]);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", uInfo[playerid][uName]);
     return 1;
 }
 
@@ -293,7 +288,7 @@ CMD:usuario(playerid, params[]) {
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um personagem com o nome digitado.");
 
     cache_get_value_name(0, "user", userValue);
-    va_SendClientMessage(playerid, VERDE, "O usuário de %s é: %s", characterName, userValue);
+    va_SendClientMessage(playerid, COLOR_GREEN, "O usuário de %s é: %s.", characterName, userValue);
 
     return 1;
 }
@@ -315,14 +310,14 @@ CMD:personagens(playerid, params[]) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s';", userName);
     mysql_query(DBConn, query);
 
-    va_SendClientMessage(playerid, CINZA, "Personagens de %s:", userName);
-    if(!cache_num_rows()) return va_SendClientMessage(playerid, CINZA, " Este usuário não tem nenhum personagem ainda.");
+    va_SendClientMessage(playerid, COLOR_GREY, "Personagens de %s:", userName);
+    if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_GREY, " Este usuário não tem nenhum personagem ainda.");
 
     for(new i; i < cache_num_rows(); i++) {
         cache_get_value_name(i, "name", characterValue);
         cache_get_value_name_int(i, "last_login", lastLogin);
 
-        va_SendClientMessage(playerid, GetPlayerByName(characterValue) == -1 ? (CINZA) : VERDE,
+        va_SendClientMessage(playerid, GetPlayerByName(characterValue) == -1 ? (COLOR_GREY) : COLOR_GREEN,
             " %s (%s) %s", characterValue, GetFullDate(lastLogin, 1), 
             GetPlayerByName(characterValue) == -1 ? ("") : ("**ONLINE**"));
     }

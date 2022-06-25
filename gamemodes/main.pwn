@@ -158,12 +158,9 @@ public OnGameModeInit() {
     SendRconCommand("weburl http://advanced-roleplay.com.br");
     SendRconCommand("password snd2n189w--");
     
-    SetNameTagDrawDistance(20);
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
-
     ShowPlayerMarkers(0);
-	ShowNameTags(1);
 	ManualVehicleEngineAndLights();
 	EnableVehicleFriendlyFire();
 

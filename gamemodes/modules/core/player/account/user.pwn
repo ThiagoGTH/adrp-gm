@@ -1,6 +1,6 @@
 /*
 
-O Gamemode do Prime Roleplay trabalha com usuários. Isso significa que se você tentar registrar diretamente um personagem, não vai funcionar.
+O Gamemode do Advanced Roleplay trabalha com usuários. Isso significa que se você tentar registrar diretamente um personagem, não vai funcionar.
 Isso tudo porque essa interação e hierarquia entre usuário-personagem permite que um só usuário contenha diversos outros personagens.
 
 Esse módulo é dedicado a coisas relacionadas ao sistema de gerenciamento de usuários. Se, por acaso, o seu interesse for consultar o acesso de
@@ -9,7 +9,12 @@ personagens, talvez seja interessante você dar uma olhada no módulo 'character.p
 */
 
 #include <YSI_Coding\y_hooks>
- 
+
+#define BCRYPT_COST 12
+
+forward OnPasswordHashed(playerid);
+forward OnPasswordChecked(playerid);
+
 enum User_Data {
     uID,
     uName[24],
@@ -52,9 +57,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             CheckUserConditions(playerid);
             return 0;
         }
-
-        CreateUser(playerid, uInfo[playerid][uName], inputtext);
-        CheckUserConditions(playerid);
+        bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
     }
 
     // Interação com o dialog de login
@@ -62,21 +65,43 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
     if(dialogid == DIALOG_LOGIN) {
         if(!response)
             return Kick(playerid);
-
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
         mysql_query(DBConn, query);
-        cache_get_value_name(0, "senha", uInfo[playerid][uPass]);
+        cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
+        /*new hash[256];
+        format(hash, sizeof(hash), "%s", uInfo[playerid][uPass]);*/
+        bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
+        printf("1: %s / 2: %s", inputtext, uInfo[playerid][uPass]);
+    }
+    return 1;
+}
 
-        if(!strlen(inputtext) || strcmp(inputtext, uInfo[playerid][uPass]))
-            return NotifyWrongAttempt(playerid);
-        
-        ClearPlayerChat(playerid);
+public OnPasswordHashed(playerid)
+{
+	new hash[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(hash);
+
+    CreateUser(playerid, uInfo[playerid][uName], hash);
+    CheckUserConditions(playerid);
+
+	printf("Password hashed for player %d: %s", playerid, hash);
+	return 1;
+}
+
+public OnPasswordChecked(playerid)
+{
+	new bool:match = bcrypt_is_equal();
+    printf("Password checked for %d: %s", playerid, (match) ? ("Match") : ("No match"));
+
+    if(match){
+		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid);
         ShowUsersCharacters(playerid);
-    }
+	}
+	else return NotifyWrongAttempt(playerid);
+	return 1;
 
-    return 1;
 }
 
 // Simplesmente a função de notificar a senha incorreta digitada pelo jogador, numa tentativa máxima de três vezes.
@@ -118,7 +143,7 @@ void:CreateUser(playerid, userName[], password[]) {
     if(IsUserRegistered(userName))
         return;
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO users (`username`, `senha`) VALUES ('%s', '%s');", userName, password);
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users (`username`, `password`) VALUES ('%s', '%s');", userName, password);
     mysql_query(DBConn, query);
 
     uInfo[playerid][uID] = cache_insert_id();
@@ -149,7 +174,7 @@ LoadUserInfo(playerid) {
         return 0;
 
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
-    cache_get_value_name(0, "senha", uInfo[playerid][uPass]);
+    cache_get_value_name(0, "password", uInfo[playerid][uPass]);
     cache_get_value_name_int(0, "admin", uInfo[playerid][uAdmin]);
     cache_get_value_name_int(0, "vip", uInfo[playerid][uVip]);
     cache_get_value_name_int(0, "ft", uInfo[playerid][uFactionMod]);

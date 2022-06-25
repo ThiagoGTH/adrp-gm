@@ -9,12 +9,7 @@ personagens, talvez seja interessante você dar uma olhada no módulo 'character.p
 */
 
 #include <YSI_Coding\y_hooks>
-
-#define BCRYPT_COST 12
-
-forward OnPasswordHashed(playerid);
-forward OnPasswordChecked(playerid);
-
+ 
 enum User_Data {
     uID,
     uName[24],
@@ -57,7 +52,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             CheckUserConditions(playerid);
             return 0;
         }
-        bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
+
+        CreateUser(playerid, uInfo[playerid][uName], inputtext);
+        CheckUserConditions(playerid);
     }
 
     // Interação com o dialog de login
@@ -65,41 +62,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
     if(dialogid == DIALOG_LOGIN) {
         if(!response)
             return Kick(playerid);
+
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
         mysql_query(DBConn, query);
-        cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
-        bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
-        printf("1: %s / 2: %s", inputtext, uInfo[playerid][uPass]);
-    }
-    return 1;
-}
+        cache_get_value_name(0, "senha", uInfo[playerid][uPass]);
 
-public OnPasswordHashed(playerid)
-{
-	new hash[BCRYPT_HASH_LENGTH];
-	bcrypt_get_hash(hash);
-
-    CreateUser(playerid, uInfo[playerid][uName], hash);
-    CheckUserConditions(playerid);
-
-	printf("Password hashed for player %d: %s", playerid, hash);
-	return 1;
-}
-
-public OnPasswordChecked(playerid)
-{
-	new bool:match = bcrypt_is_equal();
-    printf("Password checked for %d: %s", playerid, (match) ? ("Match") : ("No match"));
-
-    if(match){
-		ClearPlayerChat(playerid);
+        if(!strlen(inputtext) || strcmp(inputtext, uInfo[playerid][uPass]))
+            return NotifyWrongAttempt(playerid);
+        
+        ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid);
         ShowUsersCharacters(playerid);
-	}
-	else return NotifyWrongAttempt(playerid);
-	return 1;
+    }
 
+    return 1;
 }
 
 // Simplesmente a função de notificar a senha incorreta digitada pelo jogador, numa tentativa máxima de três vezes.

@@ -167,7 +167,7 @@ CMD:desban(playerid, params[]) {
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar nenhum usuário banido com este nome.");
 
-    mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0 WHERE `banned_name` = '%s' AND `banned` = 1", userName);
+    mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0, `unban_date` = '%d', `admin_unban` = '%s' WHERE `banned_name` = '%s' AND `banned` = 1", _:Now(), uInfo[playerid][uName], userName);
     mysql_query(DBConn, query);
 
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s desbaniu %s.", uInfo[playerid][uName], userName);
@@ -190,7 +190,7 @@ CMD:checarban(playerid, params[]) {
 
     // Pegar informações dos banimentos em variáveis e usar de um loop pra informar tudo
 
-    new adminName[24], reason[128], ban_date, unban_date, banned;
+    new adminName[24], reason[128], ban_date, unban_date, unban_admin[24], banned;
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Banimentos de %s:", userName);
     for(new i; i < cache_num_rows(); i++) {
@@ -198,11 +198,12 @@ CMD:checarban(playerid, params[]) {
         cache_get_value_name(i, "reason", reason);
         cache_get_value_name_int(i, "ban_date", ban_date);
         cache_get_value_name_int(i, "unban_date", unban_date);
+        cache_get_value_name(i, "admin_unban", unban_admin);
         cache_get_value_name_int(i, "banned", banned);
 
         va_SendClientMessage(playerid, banned > 0 ? (COLOR_LIGHTRED) : (COLOR_GREY), " Banido por %s | Motivo: %s | Data do banimento: %s | \
-            Data do desbanimento: %s  %s", adminName, reason, GetFullDate(ban_date), 
-            unban_date > 0 ? (GetFullDate(unban_date)) : ("Permanente"), banned > 0 ? ("**Cumprindo**") : (""));
+            Data do desbanimento: %s | %s", adminName, reason, GetFullDate(ban_date), 
+            unban_date > 0 ? (GetFullDate(unban_date)) : ("Permanente"), banned > 0 ? ("**Cumprindo**") : ("Desbanido por %s", unban_admin));
     }
     return 1;
 }

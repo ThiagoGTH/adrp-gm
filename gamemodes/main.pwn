@@ -22,7 +22,7 @@
 #define     SERVERUCP           "https://advanced-roleplay.com.br"
 #define     SERVERFORUM         "https://forum.advanced-roleplay.com.br"
 
-//new Server_Instability = 0; // 0 = Acesso normal | 1 = Acesso suspenso
+new Server_Instability = 0; // 0 = Acesso normal | 1 = Acesso suspenso
 new Server_Type = TYPE; // 0 = localhost | 1  = Oficial | 2  = Sandbox	
 new SERVER_MAINTENANCE = 0;  // 0 = fora de manutenção | 1 = em manutenção
 

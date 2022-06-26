@@ -195,6 +195,9 @@ CMD:admins(playerid, params[])
 
 CMD:atrabalho(playerid, params[])
 {
+	if(!pInfo[playerid][pLogged]) return true;
+  	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
+
 	if (!pInfo[playerid][pAdminDuty]){
 		SetPlayerColor(playerid, 0x408080FF);
 		pInfo[playerid][pAdminDuty] = 1;

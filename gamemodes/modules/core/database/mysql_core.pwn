@@ -91,6 +91,7 @@ void:CheckBanTable() {
     `reason` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `ban_date` int NOT NULL DEFAULT '0',\
     `unban_date` int NOT NULL DEFAULT '0',\
+    `unban_admin` varchar(24) NOT NULL DEFAULT 'Nenhum',\
     `banned` boolean NOT NULL DEFAULT '1',\
     PRIMARY KEY (`ID`));");
 

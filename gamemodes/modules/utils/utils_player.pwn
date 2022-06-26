@@ -143,7 +143,7 @@ GetPlayerNameEx(playerid) {
 
 // Basicamente a mesma coisa que a função de cima, mas pegar diretamente o IP do jogador.
 
-PlayerIP(playerid) {
+GetPlayerIP(playerid) {
     new returnIP[16];
     GetPlayerIp(playerid, returnIP, 16);
     return returnIP;

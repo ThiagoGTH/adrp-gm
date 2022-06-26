@@ -31,11 +31,13 @@ new query[2048];
 #define public2:%0(%1) forward %0(%1); public %0(%1)
 
 // Incluindo módulos úteis a diversos sistemas.
+#include "modules\utils\utils_globals.pwn"
 #include "modules\utils\utils_colors.pwn"
 #include "modules\utils\utils_player.pwn"
 #include "modules\utils\utils_dialogs.pwn"
 #include "modules\utils\utils_time.pwn"
 #include "modules\utils\utils_discord.pwn"
+#include "modules\utils\utils_logs.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -122,7 +124,10 @@ public OnGameModeInit() {
 public OnPlayerCommandPerformed(playerid, cmdtext[], success)
 {
     if(!success){
-		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
+		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
+    }else{
+        format(logString, sizeof(logString), "%s (%s) [%s]: %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmdtext);
+        logCreate(playerid, logString, 3);
     }
     return true;
 }

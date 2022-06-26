@@ -251,7 +251,7 @@ CreateCharacter(playerid, characterName[], characterAge, characterGender[], char
 
     mysql_format(DBConn, query, sizeof query,
         "INSERT INTO players (`name`, `user`, `age`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', %d, '%s', '%s', '%s');",
-            characterName, GetPlayerNameEx(playerid), characterAge, characterGender, characterBackground, PlayerIP(playerid));
+            characterName, GetPlayerNameEx(playerid), characterAge, characterGender, characterBackground, GetPlayerIP(playerid));
     mysql_query(DBConn, query);
 
     pInfo[playerid][pName][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
@@ -274,7 +274,7 @@ LoadCharacterInfo(playerid, playerName[]) {
 
     cache_get_value_name(0, "user", pInfo[playerid][pUser]);
     cache_get_value_name(0, "name", pInfo[playerid][pName]);
-    format(pInfo[playerid][pLastIP], 20, "%s", PlayerIP(playerid));
+    format(pInfo[playerid][pLastIP], 20, "%s", GetPlayerIP(playerid));
 
     cache_get_value_name_int(0, "age", pInfo[playerid][pAge]);
     cache_get_value_name(0, "gender", pInfo[playerid][pGender]);
@@ -307,8 +307,10 @@ LoadCharacterInfo(playerid, playerName[]) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
     mysql_query(DBConn, query);
 
+    format(logString, sizeof(logString), "%s (%s) logou no servidor como %s.", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid));
+	logCreate(playerid, logString, 2);
+
     printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", playerName);
-    
     LoadLicencesData(playerid);
 
 }
@@ -406,6 +408,8 @@ SaveCharacterInfo(playerid) {
     mysql_query(DBConn, query);
 
     pInfo[playerid][pLogged] = false;
+    format(logString, sizeof(logString), "%s desconectou-se do servidor.", pNome(playerid));
+	logCreate(playerid, logString, 2);
     printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
 
     return 1;

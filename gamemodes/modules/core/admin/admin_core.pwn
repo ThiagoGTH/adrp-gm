@@ -90,6 +90,8 @@ CMD:trancarserver(playerid, params[])
 	format(string, sizeof(string), "password %s", password);
 	SendRconCommand(string);
 
+	format(logString, sizeof(logString), "%s (%s) definiu a senha do servidor como '%s'.", pNome(playerid), GetPlayerUserEx(playerid), password);
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -114,6 +116,8 @@ CMD:tapa(playerid, params[])
 	PlayerPlaySound(userid, 1130, 0.0, 0.0, 0.0);
 
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s deu um tapa em %s.", pNome(playerid), pNome(userid));
+	format(logString, sizeof(logString), "%s (%s) deu um tapa em %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -124,7 +128,9 @@ CMD:curartodos(playerid, params[])
 	foreach (new i : Player) {
 	    SetPlayerHealth(i, 100.0);
 	}
-	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: O administrador %s curou todos os jogadores online.", pNome(playerid));
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: O administrador %s curou todos os jogadores on-line.", pNome(playerid));
+	format(logString, sizeof(logString), "%s (%s) curou todos os jogadores on-lige.", pNome(playerid), GetPlayerUserEx(playerid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -140,6 +146,9 @@ CMD:vida(playerid, params[])
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
 	SetPlayerHealth(userid, amount);
+	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou %s com %.2f de vida.", pNome(userid), amount);
+	format(logString, sizeof(logString), "%s (%s) setou %s com %.2f de vida.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -156,6 +165,8 @@ CMD:colete(playerid, params[])
 
   	SetPlayerArmour(userid, amount);
 	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou %s com %.2f de colete.", pNome(userid), amount);
+	format(logString, sizeof(logString), "%s (%s) setou %s com %.2f de colete.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -171,6 +182,9 @@ CMD:resetararmas(playerid, params[])
 
 	ResetWeapons(userid);
 	va_SendClientMessage(playerid, -1, "SERVER: Você resetou as armas de %s.", pNome(userid));
+	
+	format(logString, sizeof(logString), "%s (%s) resetou as armas de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -197,15 +211,19 @@ CMD:atrabalho(playerid, params[])
 {
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-
+	
 	if (!pInfo[playerid][pAdminDuty]){
 		SetPlayerColor(playerid, 0x408080FF);
 		pInfo[playerid][pAdminDuty] = 1;
 		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) entrou em trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
+		format(logString, sizeof(logString), "%s (%s) entrou em trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
+		logCreate(playerid, logString, 1);
 	}else{
 	    SetPlayerColor(playerid, DEFAULT_COLOR);
 		pInfo[playerid][pAdminDuty] = 0;
 		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
+		format(logString, sizeof(logString), "%s (%s) saiu do trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
+		logCreate(playerid, logString, 1);
 	}
 	return true;
 }
@@ -426,6 +444,8 @@ CMD:skin(playerid, params[])
 		SendServerMessage(userid, "O administrador %s mudou sua skin para %d.", pNome(playerid), level);
 		SendServerMessage(playerid, "Você mudou a skin de %s para %d.", pNome(userid), level);
 		SetPlayerSkin(userid, pInfo[userid][pSkin]);
+		format(logString, sizeof(logString), "%s (%s) mudou a skin de %s para %d.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), level);
+		logCreate(playerid, logString, 1);
 	}
 	return true;
 }
@@ -450,6 +470,9 @@ CMD:congelar(playerid, params[])
 	
 	TogglePlayerControllable(userid, 0);
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s congelou %s.", pNome(playerid), pNome(userid));
+	
+	format(logString, sizeof(logString), "%s (%s) congelou %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -463,6 +486,9 @@ CMD:descongelar(playerid, params[])
 
 	TogglePlayerControllable(userid, 1);
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s descongelou %s.", pNome(playerid), pNome(userid));
+	
+	format(logString, sizeof(logString), "%s (%s) descongelou %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -482,6 +508,9 @@ CMD:dararma(playerid, params[])
 
 	GiveWeaponToPlayer(userid, weaponid, ammo);
 	va_SendClientMessage(playerid, -1, "SERVER: Você deu para %s uma %s com %d munições.", pNome(userid), ReturnWeaponName(weaponid), ammo);
+	
+	format(logString, sizeof(logString), "%s (%s) deu uma %s (ID:%d AMMO:%d) para %s.", pNome(playerid), GetPlayerUserEx(playerid), ReturnWeaponName(weaponid), weaponid, ammo, pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -502,6 +531,9 @@ CMD:dardinheiro(playerid, params[])
 
 	GiveMoney(userid, amount);
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s deu $%s para %s.", pNome(playerid), FormatNumber(amount), pNome(userid));
+	
+	format(logString, sizeof(logString), "%s (%s) deu $%s para %s.", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(amount), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -571,6 +603,9 @@ CMD:gmx(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
     GiveGMX();
+	
+	format(logString, sizeof(logString), "%s (%s) forçou um GMX no servidor.", pNome(playerid), GetPlayerUserEx(playerid));
+	logCreate(playerid, logString, 1);
     return true;
 }
 
@@ -634,6 +669,10 @@ CMD:clima(playerid, params[])
 	SetWeather(weather);
 	SetWorldTime(hora);
 	SendInfoMessage(playerid, "Hora configurada para %dh e clima para %s.", hora, TempoNomes[weather]);
+
+	
+	format(logString, sizeof(logString), "%s (%s) configurou a hora para %d e o clima como '%s'.", pNome(playerid), hora, TempoNomes[weather]);
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -647,6 +686,9 @@ CMD:trazer(playerid, params[])
 	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "trazer [id/nick]");
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	SetPlayerPos(userid, PlayerPos[0], PlayerPos[1] + 2.0, PlayerPos[2]);
+	
+	format(logString, sizeof(logString), "%s (%s) levou %s até ele.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -696,6 +738,10 @@ CMD:ir(playerid, params[])
 	if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) return SendClientMessage(playerid, COLOR_LIGHTRED, "Esse administrador está em modo espectador em alguém, por isso não pode ir até o mesmo.");
 
 	SendPlayerToPlayer(playerid, id);
+
+	
+	format(logString, sizeof(logString), "%s (%s) foi até %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -749,6 +795,10 @@ CMD:spec(playerid, params[])
 
 	va_SendClientMessage(playerid, COLOR_LIGHTRED, "Você agora está observando %s (ID: %d). Use '/spec off' para sair do spec.", pNome(userid), userid);
 	EmSpec[playerid] = userid;
+
+	
+	format(logString, sizeof(logString), "%s (%s) está observando %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
@@ -764,6 +814,9 @@ CMD:jetpack(playerid, params[])
 		pInfo[userid][pJetpack] = 1;
 		SetPlayerSpecialAction(userid, SPECIAL_ACTION_USEJETPACK);
 		SendServerMessage(playerid, "Você spawnou um jetpack para %s.", pNome(userid));
+		
+		format(logString, sizeof(logString), "%s está observando %s.", pNome(playerid), pNome(userid));
+		logCreate(playerid, logString, 1);
 	}
 	return true;
 }

@@ -12,8 +12,6 @@ extrair, salvar ou inserir informações no mesmo banco de dados de maneira segura
 #define DB_PASSWORD     ""
 #define DB_NAME         "adrp"
 
-new MySQL:DBConn;
-
 hook OnGameModeInit() {
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -36,6 +34,7 @@ void:CheckTables() {
     CheckUserTable();
     CheckPlayerTable();
     CheckBanTable();
+    CheckLogsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -97,3 +96,17 @@ void:CheckBanTable() {
 
     print("[DATABASE] Tabela 'ban' checada com sucesso.");
 }
+
+void:CheckLogsTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `serverlogs` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `user` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
+    `timestamp` int NOT NULL DEFAULT '0',\
+    `log` varchar(255) NOT NULL DEFAULT 'N/A',\
+    `type` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela 'serverlogs' checada com sucesso.");
+} 

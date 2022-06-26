@@ -29,6 +29,13 @@ new uInfo[MAX_PLAYERS][User_Data];
 
 new loginAttempts[MAX_PLAYERS];
 
+GetPlayerUserEx(playerid){
+    new name[24];
+    GetPlayerName(playerid, name, sizeof(name));
+    format(name,sizeof(name),"%s", uInfo[playerid][uName]);
+    return name;
+}
+
 // Evento/gatilho de conexão estabelecida pelo jogador
 
 hook OnPlayerConnect(playerid) {
@@ -68,8 +75,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
         mysql_query(DBConn, query);
         cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
-        /*new hash[256];
-        format(hash, sizeof(hash), "%s", uInfo[playerid][uPass]);*/
         bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
     }
     return 1;
@@ -247,7 +252,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 
     return 1;
 }
- 
+
 // Aqui, iremos checar se o player logou com o nick de um personagem já existente e, se sim, redirecionar para o nome do usuário.
 
 CheckCharactersName(playerid) {

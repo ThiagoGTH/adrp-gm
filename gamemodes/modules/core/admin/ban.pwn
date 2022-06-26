@@ -38,6 +38,9 @@ CMD:ban(playerid, params[]) {
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
     SendServerMessage(playerid, "(( Você foi banido do servidor ))");
 
+    format(logString, sizeof(logString), "%s (%s) baniu %s (%s) por %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id), GetPlayerUserEx(id), reason);
+	logCreate(playerid, logString, 1);
+
     Kick(id);
     return 1;
 }
@@ -84,6 +87,9 @@ CMD:banoff(playerid, params[]) {
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline e permanentemente. Motivo: %s.", uInfo[playerid][uName], userName, reason);
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu (offline) o usuário %s com sucesso.", userName);
 
+    format(logString, sizeof(logString), "%s (%s) baniu %s off-line por %s.", pNome(playerid), GetPlayerUserEx(playerid), userName, reason);
+	logCreate(playerid, logString, 1);
+
     return 1;
 }
 
@@ -105,6 +111,9 @@ CMD:bantemp(playerid, params[]) {
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
     SendServerMessage(playerid, "(( Você foi banido do servidor ))");
     
+    format(logString, sizeof(logString), "%s (%s) baniu %s (%s) [%d dias] por %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id), GetPlayerUserEx(id), days, reason);
+	logCreate(playerid, logString, 1);
+
     Kick(id);
 
     return 1;
@@ -154,6 +163,9 @@ CMD:bantempoff(playerid, params[]) {
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline por %d dias. Motivo: %s.", uInfo[playerid][uName], userName, days, reason);
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu (offline) o usuário %s com sucesso.", userName);
 
+    format(logString, sizeof(logString), "%s (%s) baniu %s [%d dias] por %s.", pNome(playerid), GetPlayerUserEx(playerid), userName, days, reason);
+	logCreate(playerid, logString, 1);
+
     return 1;
 }
 
@@ -172,6 +184,9 @@ CMD:desban(playerid, params[]) {
 
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s desbaniu %s.", uInfo[playerid][uName], userName);
     va_SendClientMessage(playerid, COLOR_GREEN, "Você desbaniu o usuário %s com sucesso.", userName);
+
+    format(logString, sizeof(logString), "%s (%s) desbaniu %s.", pNome(playerid), GetPlayerUserEx(playerid), userName);
+	logCreate(playerid, logString, 1);
 
     return 1;
 }
@@ -223,7 +238,10 @@ CMD:limparhistoricobans(playerid, params[]) {
     va_SendClientMessage(playerid, COLOR_GREEN, "Você apagou %d banimentos do usuário %s.", cache_num_rows(), userName);
 
     mysql_format(DBConn, query, sizeof query, "DELETE FROM ban WHERE `banned_name` = '%s';", userName);
-    mysql_query(DBConn, query);    
+    mysql_query(DBConn, query);  
+
+    format(logString, sizeof(logString), "%s (%s) apagou %d banimentos do usuário %s.", pNome(playerid), GetPlayerUserEx(playerid), cache_num_rows(), userName);
+	logCreate(playerid, logString, 1);  
     return 1;
 }
 

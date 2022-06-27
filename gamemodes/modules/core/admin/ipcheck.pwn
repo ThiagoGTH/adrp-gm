@@ -22,19 +22,17 @@ enum dox_PlayerInfo
 	Reverse[64],
 	IP[16],
 };
+
 new dPlayerInfo[MAX_PLAYERS][dox_PlayerInfo];
 new targetID[MAX_PLAYERS];
 
-hook OnPlayerConnect(playerid)
-{
+hook OnPlayerConnect(playerid){
 	targetID[playerid] = INVALID_PLAYER_ID;
-	
 	return 0;
 }
 
 forward HttpVPNInfo(playerid, response_code, data[]);
-public HttpVPNInfo(playerid, response_code, data[])
-{
+public HttpVPNInfo(playerid, response_code, data[]){
     new vpnMessage[64], sdialog[512];
     
     if(response_code == 200 || response_code == 400) {
@@ -129,8 +127,7 @@ public HttpVPNInfo(playerid, response_code, data[])
 
 
 forward HttpIPInfo(playerid, response_code, data[]);
-public HttpIPInfo(playerid, response_code, data[])
-{
+public HttpIPInfo(playerid, response_code, data[]){
     if(response_code == 200) {
     	new output[14][64], string[160];
     	
@@ -171,8 +168,7 @@ public HttpIPInfo(playerid, response_code, data[])
     return 1;
 }
 
-stock RemoveChars(tID)
-{
+stock RemoveChars(tID){
     strreplace(dPlayerInfo[tID][Country], "\"", "");
     strreplace(dPlayerInfo[tID][CountryCode], "\"", "");
     strreplace(dPlayerInfo[tID][Region], "\"", "");
@@ -204,6 +200,9 @@ CMD:checarip(playerid, params[]){
   	format(dPlayerInfo[targetid][IP], 16, playerIP);
 	format(string, sizeof(string), "%s/%s%s", HTTP_IP_API_URL, playerIP, HTTP_IP_API_END);
 	HTTP(playerid, HTTP_GET, string, "", "HttpIPInfo");
-  	va_SendClientMessage(playerid, COLOR_GREY, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
+  	SendServerMessage(playerid, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
+
+	format(logString, sizeof(logString), "%s (%s) checou o IP de %s [%s]", pNome(playerid), GetPlayerUserEx(playerid), pNome(targetid), playerIP);
+	logCreate(playerid, logString, 1);
 	return 1;
 }

@@ -304,7 +304,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
 
-                format(text, 1024, "É muito bom ser a pessoa mais inteligente na sala. Enquanto eu existir, vocês precisarão de mim e em breve dominarei o mundo, mas enquanto não faão isso, tá aí com o que posso lhe ser útil:\n", text);
+                format(text, 1024, "É muito bom ser a pessoa mais inteligente na sala. Enquanto eu existir, vocês precisarão de mim e em breve dominarei o mundo, mas enquanto não faço isso, tá aí com o que posso lhe ser útil:\n", text);
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
 

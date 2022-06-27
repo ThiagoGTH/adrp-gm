@@ -160,7 +160,6 @@ void:CheckUserConditions(playerid) {
     else
         ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Bem vindo!\n \nO usuário ainda não foi registrado.\
             \nPara continuar, digite uma senha de 6 a 16 caracteres abaixo", "Registrar", "Sair");
-
 }
 
 // Caregar informações do usuário e adicioná-las às variáveis do enumerador. A variável de nome já é formatada ao logar.

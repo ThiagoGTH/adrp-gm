@@ -87,7 +87,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         } else if(!strcmp(inputtext, "Deletar personagem")) {
 
             if(!uInfo[playerid][uVip]) {
-                SendErrorMessage(playerid, "Somente unsuários VIP podem deletar personagens.");
+                SendErrorMessage(playerid, "Somente usuários VIP podem deletar personagens.");
                 return ShowUsersCharacters(playerid);
             }
             return ShowPlayerDialog(playerid, DIALOG_CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem \
@@ -236,9 +236,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         mysql_query(DBConn, query);
 
         va_SendClientMessage(playerid, -1, "SERVER: Você deletou o personagem %s com sucesso. A ação é irreversível.", pInfo[playerid][characterDelete]);
+        format(logString, sizeof(logString), "%s deletou o personagem %s.", uInfo[playerid][uName], pInfo[playerid][characterDelete]);
+	    logCreate(playerid, logString, 4);
         pInfo[playerid][characterDelete][0] = EOS;
         ShowUsersCharacters(playerid);
-
     }
 
     return 1;

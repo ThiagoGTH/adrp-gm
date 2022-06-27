@@ -73,7 +73,7 @@ ResetWeapons(playerid)
 	return 1;
 }
 
-/*esetWeapon(playerid, weaponid)
+/*ResetWeapon(playerid, weaponid)
 {
 	ResetPlayerWeapons(playerid);
 

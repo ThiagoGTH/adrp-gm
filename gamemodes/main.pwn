@@ -8,12 +8,16 @@
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
+//#include <Pawn.RakNet>
+//#include <attachment-fix> 
 #include <zcmd>
+#include <memory>
 #include <sscanf2>
 #include <discord-connector>
 #include <strlib>
 #include <easyDialog>
 #include <bcrypt>
+#include <streamer>
 
 #define     TYPE                (1)
 #define     LASTEST_RELEASE     "24/06/2022"
@@ -80,6 +84,9 @@ public OnGamemodeLoad(playerid){
             format(rcon, sizeof(rcon), "password 0");
             SendRconCommand(rcon);
             ServerStatus(1);
+
+            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou com acesso normal.");
+            logCreate(99998, logString, 5);
         } 
 	}
 
@@ -88,6 +95,9 @@ public OnGamemodeLoad(playerid){
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password sandbox333");
         SendRconCommand(rcon);
+
+        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou no modo Sandbox.");
+        logCreate(99998, logString, 5);
 	}
 
 	else if(Server_Type == 3){
@@ -96,6 +106,9 @@ public OnGamemodeLoad(playerid){
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password adrpthiagao");
         SendRconCommand(rcon);
+
+        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo manutenção.");
+        logCreate(99998, logString, 5);
 	}
 
     return true;

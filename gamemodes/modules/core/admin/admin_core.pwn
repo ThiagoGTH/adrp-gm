@@ -51,7 +51,7 @@ stock ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, ");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{

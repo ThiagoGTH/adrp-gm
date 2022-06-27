@@ -1,7 +1,7 @@
 /*
-
-Esse módulo é dedicado integralmente a lidar com conexões e integrações com o MySQL. Mas isso não implica que outros módulos não possam
-extrair, salvar ou inserir informações no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
+ 
+Esse mï¿½dulo ï¿½ dedicado integralmente a lidar com conexï¿½es e integraï¿½ï¿½es com o MySQL. Mas isso nï¿½o implica que outros mï¿½dulos nï¿½o possam
+extrair, salvar ou inserir informaï¿½ï¿½es no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
 
 */
 
@@ -16,14 +16,17 @@ hook OnGameModeInit() {
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     if(mysql_errno(DBConn)) {
-        print("\n[DATABASE] Houve um erro na tentativa de conexão com o MySQL.");
+        print("\n[DATABASE] Houve um erro na tentativa de conexï¿½o com o MySQL.");
         print("[DATABASE] Para obter mais detalhes, acesse a pasta de logging do plug-in.");
         print("[DATABASE] Desligando o servidor...\n");
+
+        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conexï¿½o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor serï¿½ desligado.");
+        logCreate(99998, logString, 5);
         
         SendRconCommand("exit");
     } else {
-        print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso.");
-        print("[DATABASE] Verificando criação de tabelas...");
+        print("\n[DATABASE] A conexï¿½o com o MySQL foi feita com sucesso.");
+        print("[DATABASE] Verificando criaï¿½ï¿½o de tabelas...");
         CheckTables();
     }
 
@@ -36,7 +39,7 @@ void:CheckTables() {
     CheckBanTable();
     CheckLogsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
-    print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
+    print("* Note que se alguma tabela faltar, funï¿½ï¿½es nï¿½o funcionarï¿½o de modo correto.\n");
 }
 
 void:CheckUserTable() {

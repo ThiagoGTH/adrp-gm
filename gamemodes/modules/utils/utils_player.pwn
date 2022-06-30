@@ -7,6 +7,9 @@ sejam, necessariamente, pertecentes a um sistema específico. São funções úteis e
 
 #include <a_samp>
 
+#define MINIMUM_SKILL           (1)
+#define MEDIUM_SKILL	        (2)
+#define FULL_SKILL		        (3)
 #define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
 #define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
 
@@ -721,18 +724,38 @@ ReturnWeaponName(weaponid)
 	GetWeaponName(weaponid, name, sizeof(name));
 
 	if (!weaponid)
-	    name = "None";
+	    name = "N/A";
 
 	else if (weaponid == 18)
-	    name = "Molotov Cocktail";
+	    name = "Coquetel Molotov";
 
 	else if (weaponid == 44)
-	    name = "Nightvision";
+	    name = "Visão noturna";
 
 	else if (weaponid == 45)
-	    name = "Infrared";
+	    name = "Infravermelho";
 
 	return name;
+}
+
+stock SetPlayerWeaponSkill(playerid, skill) {
+	switch(skill) {
+	    case MINIMUM_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
+            SetPlayerSkillLevel(playerid, 0, 40);
+            SetPlayerSkillLevel(playerid, 6, 50);
+	    }
+	    case MEDIUM_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
+            SetPlayerSkillLevel(playerid, 0, 500);
+            SetPlayerSkillLevel(playerid, 6, 500);
+	    }
+	    case FULL_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
+            SetPlayerSkillLevel(playerid, 0, 998);
+            SetPlayerSkillLevel(playerid, 6, 998);
+	    }
+	}
 }
 
 stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...)
@@ -805,3 +828,22 @@ FormatNumber(number) { // i didn't made it, idk who did!
 
 	return ret;
 }
+
+stock IsActualGun(id)
+{
+	switch(id)
+	{
+		case -1,0,2,3,5,6,7,10,11,12,13,14,15,40,41,42,43,44,45,46,47: return false;
+	}
+	return true;
+}
+
+stock IsLethalMeele(id)
+{
+	switch(id)
+	{
+	    case 4,8,9,18,16: return true;
+	}
+	return false;
+}
+

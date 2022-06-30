@@ -52,7 +52,7 @@ GiveWeaponToPlayer(playerid, weaponid, ammo)
 	return GivePlayerWeapon(playerid, weaponid, ammo);
 }
 
-/*SetWeapons(playerid)
+SetWeapons(playerid)
 {
 	ResetPlayerWeapons(playerid);
 
@@ -60,7 +60,7 @@ GiveWeaponToPlayer(playerid, weaponid, ammo)
 		GivePlayerWeapon(playerid, pInfo[playerid][pGuns][i], pInfo[playerid][pAmmo][i]);
 	}
 	return 1;
-}*/
+}
 
 ResetWeapons(playerid)
 {
@@ -186,18 +186,6 @@ stock UpdateWeapons(playerid)
 	return 1;
 }
 
-GiveMoney(playerid, amount)
-{
-	pInfo[playerid][pMoney] += amount;
-	GivePlayerMoney(playerid, amount);
-	return 1;
-}
-
-/*GetMoney(playerid)
-{
-	return (pInfo[playerid][pMoney]);
-}*/
-
 stock IsPlayerInWater(playerid)
 {
 	new anim = GetPlayerAnimationIndex(playerid);
@@ -234,4 +222,26 @@ public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 	SetPlayerPos(playerid, x, y, z);
 	TogglePlayerControllable(playerid, 1);
 	return 1;
+}
+
+GiveMoney(playerid, amount)
+{
+	pInfo[playerid][pMoney] += amount;
+	GivePlayerMoney(playerid, amount);
+	return 1;
+}
+
+/*GetMoney(playerid)
+{
+	return (pInfo[playerid][pMoney]);
+}*/
+
+stock SetPlayerHealthEx(playerid, Float:hp)
+{
+	if(hp <= 30) SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
+ 	else if(hp <= 40) SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
+	else SetPlayerWeaponSkill(playerid, FULL_SKILL);
+			
+	pInfo[playerid][pHealth] = hp;
+	return SetPlayerHealth(playerid, hp);
 }

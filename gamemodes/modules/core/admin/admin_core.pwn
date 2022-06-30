@@ -3,7 +3,7 @@
 Este módulo é dedicado aos administradores
 
 */
-
+ 
 #include <YSI_Coding\y_hooks>
 
 stock AdminRankName(playerid) {
@@ -46,12 +46,12 @@ stock ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 2) // GAME ADMIN 1
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /resetararmas, /infoplayer, /congelar, /descongelar, /spec");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /resetararmas, /infoplayer, /congelar, /descongelar, /spec, /ultimoatirador");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /reclife, /reviver");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
@@ -102,7 +102,7 @@ CMD:tapa(playerid, params[])
 
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/name]");
+	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
 	static
@@ -126,9 +126,9 @@ CMD:curartodos(playerid, params[])
 	if(!pInfo[playerid][pLogged]) return true;
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 	foreach (new i : Player) {
-	    SetPlayerHealth(i, 100.0);
+	    SetPlayerHealth(i, pInfo[i][pHealthMax]);
 	}
-	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: O administrador %s curou todos os jogadores on-line.", pNome(playerid));
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s curou todos os jogadores on-line.", pNome(playerid));
 	format(logString, sizeof(logString), "%s (%s) curou todos os jogadores on-lige.", pNome(playerid), GetPlayerUserEx(playerid));
 	logCreate(playerid, logString, 1);
 	return true;
@@ -138,16 +138,38 @@ CMD:vida(playerid, params[])
 {
 	static
 		userid,
-	  	Float:amount;
+	  	Float:amount; 
 
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	if (sscanf(params, "uf", userid, amount)) return SendSyntaxMessage(playerid, "/vida [playerid/nome] [quantidade]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+	if (amount > pInfo[userid][pHealthMax]) return SendErrorMessage(playerid, "Você não pode aumentar a vida deste jogador além do limite dele. (Máximo: %.2f)");
 
-	SetPlayerHealth(userid, amount);
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s setou a vida de %s em %.2f.", pNome(playerid), pNome(userid), amount);
+
+	SetPlayerHealthEx(userid, amount);
 	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou %s com %.2f de vida.", pNome(userid), amount);
 	format(logString, sizeof(logString), "%s (%s) setou %s com %.2f de vida.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:reclife(playerid, params[])
+{
+	static
+		userid; 
+
+	if(!pInfo[playerid][pLogged]) return true;
+  	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
+	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/reclife [playerid/nome]");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s recuperou a vida de %s.", pNome(playerid), pNome(userid));
+
+	SetPlayerHealthEx(userid, pInfo[userid][pHealthMax]);
+	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você recuperou a vida de %s.", pNome(userid));
+	format(logString, sizeof(logString), "%s (%s) recuperou a vida de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 	return true;
 }
@@ -340,92 +362,21 @@ CMD:infoplayer(playerid, params[])
 {
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new userid;
+	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/infoplayer [nome/playerid]");
+	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
+	if(userid != INVALID_PLAYER_ID){
 
-	new giveplayerid;
-	new armatext[30];
-	new municao;
-	new arma;
-	new Float:plrtempheal;
-	new Float:plrarmour;
-	new plrping;
-	new iplayer[MAX_PLAYER_NAME];
-	new smunicao;
-	new string[128];
-	new ip[32];
-	if(sscanf(params, "u", giveplayerid)) return SendSyntaxMessage(playerid, "/infoplayer [id do player]");
-	if(IsPlayerConnected(giveplayerid)){
-		if(giveplayerid != INVALID_PLAYER_ID)
-		{
-   			GetPlayerName(giveplayerid, iplayer, sizeof(iplayer));
-   			GetPlayerIp(giveplayerid,ip,128);
-   			new intid = GetPlayerInterior(giveplayerid);
-			new world = GetPlayerVirtualWorld(giveplayerid);
-			plrping = GetPlayerPing(giveplayerid);
-			GetPlayerArmour(giveplayerid, plrarmour);
-			GetPlayerHealth(giveplayerid,plrtempheal);
-			arma = GetPlayerWeapon(giveplayerid);
-			municao = GetPlayerAmmo(giveplayerid);
-			SendClientMessage(playerid, COLOR_GREEN, "|________[ EXIBINDO INFORMAÇÕES ]________|");
-			format(string, sizeof(string), "{FF6347}Nome: {FFFFFF} %s", iplayer);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}IP: {FFFFFF}%s", ip);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}Interior: {FFFFFF}%d", intid);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}Mundo: {FFFFFF}%d", world);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}Ping: {FFFFFF}%d", plrping);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}Colete: {FFFFFF}%1f", plrarmour);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			format(string, sizeof(string), "{FF6347}Saúde: {FFFFFF}%1f", plrtempheal);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			if(arma == 38) { armatext = "Minigun";}
-			else if(arma == 40) { armatext = "Detonador"; }
-			else if(arma == 36) { armatext = "Lança missil RPG"; }
-			else if(arma == 35) { armatext = "Lança missil"; }
-			else if(arma == 16) { armatext = "Granada"; }
-			else if(arma == 18) { armatext = "Coktel Molotov"; }
-			else if(arma == 22) { armatext = "Pistola de Duas mãos 9mm"; }
-			else if(arma == 26) { armatext = "Escopeta de Cano Serrado"; }
-			else if(arma == 27) { armatext = "Escopeta de Combate"; }
-			else if(arma == 28) { armatext = "Micro Uzi"; }
-			else if(arma == 32) { armatext = "Tec9"; }
-			else if(arma == 37) { armatext = "Lança Chamas"; }
-			else if(arma == 0) { armatext = "Desarmado"; }
-            else if(arma == 4) { armatext = "Faca"; }
-            else if(arma == 5) { armatext = "Bastão de Base Ball"; }
-            else if(arma == 9) { armatext = "Motoserra"; }
-            else if(arma == 14) { armatext = "Flores"; }
-            else if(arma == 17) { armatext = "Granada de Gas"; }
-            else if(arma == 23) { armatext = "Pistola com silênciador"; }
-            else if(arma == 16) { armatext = "Granada"; }
-            else if(arma == 24) { armatext = "Desert Eagle"; }
-            else if(arma == 25) { armatext = "ShotGun"; }
-            else if(arma == 29) { armatext = "MP5"; }
-            else if(arma == 30) { armatext = "AK-47"; }
-            else if(arma == 31) { armatext = "M4"; }
-            else if(arma == 33) { armatext = "Rifle"; }
-            else if(arma ==  34) { armatext = "Rifle Sniper"; }
-            else if(arma == 41) { armatext = "Spray"; }
-            else if(arma == 42) { armatext = "Extintor"; }
-            else if(arma == 46) { armatext = "Paraquedas"; }
-            else { armatext = "Desconhecido"; }
-            format(string, sizeof(string), "{FF6347}Arma: {FFFFFF}%s", armatext);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-			if(arma == 40 || arma == 36 || arma == 18 || arma == 28 || arma == 37)
-			{
-				SendClientMessage(playerid, COLOR_LIGHTRED, "/spec nele, pois ele pode estar usando xiter de armas");
-			}
-			if(municao == 65535) { smunicao = 0; } else { smunicao = municao; }
-			format(string, sizeof(string), "{FF6347}Munição: {FFFFFF}%d", smunicao);
-			SendClientMessage(playerid, COLOR_LIGHTRED, string);
-		}
-	}
-	else
-	{
-	    SendClientMessage(playerid, COLOR_GREY, "Este jogador está off-line !");
-	    return true;
+		va_SendClientMessage(playerid, COLOR_GREEN, "|________[ EXIBINDO INFORMAÇÕES ]________|");
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Nome: {FFFFFF}%s (%s)", pNome(userid), GetPlayerUserEx(playerid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Interior: {FFFFFF}%d", GetPlayerInterior(userid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Virtual World: {FFFFFF}%d", GetPlayerVirtualWorld(userid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Ping: {FFFFFF}%d", GetPlayerPing(userid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Colete: {FFFFFF}%.1f", GetPlayerArmourEx(userid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Vida: {FFFFFF}%.1f", GetPlayerHealthEx(userid));
+        va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Arma: {FFFFFF}%s", ReturnWeaponName(GetPlayerWeapon(userid)));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Munição: {FFFFFF}%d", GetPlayerAmmo(userid));
+		if(GetPlayerAmmo(userid) == 40 || GetPlayerAmmo(userid) == 36 || GetPlayerAmmo(userid) == 18 || GetPlayerAmmo(userid) == 28 || GetPlayerAmmo(userid) == 37) SendServerMessage(playerid, "Atenção neste jogador, é possível que ele esteja utilizando algum cheater de armas. Investigue com cautela.");
 	}
 	return true;
 }
@@ -542,7 +493,7 @@ CMD:setaradmin(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     new userid, admin;
-    if(sscanf(params, "ui", userid, admin)) return SendSyntaxMessage(playerid,"/setaradmin [playerID/Nome] [admin level]");
+    if(sscanf(params, "ud", userid, admin)) return SendSyntaxMessage(playerid,"/setaradmin [playerID/Nome] [admin level]");
     if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	if(admin > GetPlayerAdmin(playerid)) return SendErrorMessage(playerid, "Você não pode promover acima do seu nível.");
 	
@@ -550,7 +501,7 @@ CMD:setaradmin(playerid, params[]) {
 		if (admin < 0 || admin > 1337)
 			return SendClientMessage(playerid, COLOR_GREY, "Level inválido. Os niveis devem variar entre 0 a 1337.");
 
-		if(GetPlayerAdmin(userid) > 0) {
+		if(GetPlayerAdmin(userid) >= 0) {
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você promoveu %s para %s.", pNome(userid), AdminRankName(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s promoveu você para %s.", pNome(playerid), AdminRankName(userid));
 			uInfo[userid][uAdmin] = admin;
@@ -564,7 +515,7 @@ CMD:setaradmin(playerid, params[]) {
 		if (admin < 0 || admin > 5) return SendClientMessage(playerid, COLOR_GREY, "Level inválido. Os niveis devem variar entre 0 a 4.");
 		if (admin > GetPlayerAdmin(playerid)) return SendClientMessage(playerid, COLOR_GREY, "Você não pode promover acima do seu nível.");
 
-		if(GetPlayerAdmin(userid) > 0) {
+		if(GetPlayerAdmin(userid) >= 0) {
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você promoveu %s para %s.", pNome(userid), AdminRankName(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s promoveu você para %s.", pNome(playerid), AdminRankName(userid));
 			uInfo[userid][uAdmin] = admin;
@@ -683,7 +634,7 @@ CMD:trazer(playerid, params[])
 
 	new userid, Float: PlayerPos[3];
 	GetPlayerPos(playerid, PlayerPos[0], PlayerPos[1], PlayerPos[2]);
-	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "trazer [id/nick]");
+	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/trazer [id/nick]");
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	SetPlayerPos(userid, PlayerPos[0], PlayerPos[1] + 2.0, PlayerPos[2]);
 	

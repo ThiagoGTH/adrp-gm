@@ -4,8 +4,7 @@
  
 new Text3D:cNametag[MAX_PLAYERS];
  
-hook OnGameModeInit()
-{
+hook OnGameModeInit(){
     ShowNameTags(0);
     SetTimer("UpdateNametag", 1000, true);
     return 1;
@@ -75,39 +74,54 @@ static GetArmorDots(playerid){
     return dots;
 }
  
-hook OnPlayerConnect(playerid)
-{
+hook OnPlayerConnect(playerid){
     cNametag[playerid] = CreateDynamic3DTextLabel("Loading nametag...", 0xFFFFFFFF, 0.0, 0.0, 0.2, NT_DISTANCE, .attachedplayer = playerid, .testlos = 1);
+    pInfo[playerid][pESC] = 0;
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
-{
+hook OnPlayerUpdate(playerid){
+    pInfo[playerid][pESC] = GetTickCount();
+    return true;
+}
+
+hook OnPlayerDisconnect(playerid, reason){
     if(IsValidDynamic3DTextLabel(cNametag[playerid]))
         DestroyDynamic3DTextLabel(cNametag[playerid]);
     return 1;
 }
 
+IsPlayerMinimized(playerid, ms = 5000){
+    return pInfo[playerid][pESC] != 0 && GetTickCount() > (pInfo[playerid][pESC] + ms);
+}
+
 forward UpdateNametag();
-public UpdateNametag()
-{
+public UpdateNametag(){
     for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
         if(IsPlayerConnected(i)){
             new nametag[128], Float:armour;
             GetPlayerArmour(i, armour);
-            if(armour > 1.0){
-                format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetArmorDots(i), GetHealthDots(i));
+            if(IsPlayerMinimized(i)){
+                if(armour > 1.0){
+                    format(nametag, sizeof(nametag), "{858585}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", pNome(i), i, GetArmorDots(i), GetHealthDots(i));
+                }
+                else
+                    format(nametag, sizeof(nametag), "{858585}%s (%i){FFFFFF}\n{FF0000}%s", pNome(i), i, GetHealthDots(i));
             }
-            else
-                format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetHealthDots(i));
+            else{
+                if(armour > 1.0){
+                    format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FFFFFF}%s\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetArmorDots(i), GetHealthDots(i));
+                }
+                else
+                    format(nametag, sizeof(nametag), "{%06x}%s (%i){FFFFFF}\n{FF0000}%s", GetPlayerColor(i) >>> 8, pNome(i), i, GetHealthDots(i));
+            }
 
             UpdateDynamic3DTextLabelText(cNametag[i], 0xFFFFFFFF, nametag);
         }
     }
 }
 
-public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
-{
+hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
     if(IsPlayerConnected(playerid)){
         new nametag[128], Float:armour;
         GetPlayerArmour(playerid, armour);

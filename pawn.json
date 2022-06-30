@@ -19,7 +19,10 @@
 		"oscar-broman/strlib",
 		"lassir/bcrypt-samp",
 		"samp-incognito/samp-streamer-plugin",
-		"Zeex/samp-plugin-crashdetect"
+		"Zeex/samp-plugin-crashdetect",
+		"Pottus/ColAndreas",
+		"Southclaws/progress2:v2.3.0",
+		"Awsomedude/easyDialog"
 	],
 	"local": true,
 	"runtime": {

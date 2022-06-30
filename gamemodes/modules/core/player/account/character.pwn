@@ -47,8 +47,32 @@ enum Player_Data {
     pGuns[13],
 	pAmmo[13],
 
+    pLastShot[64],
+    pShotTime,
+
     pJetpack,
     pAdminDuty,
+
+    pInjured,
+    pBrutallyWounded, 
+    pDead,
+    pDeadTime,
+    pAllowRespawn,
+
+    pLimping,
+    pLimpingTime,
+    bool:pPassedOut,
+
+    pTackleMode,
+    pTackleTimer,
+
+    pESC,
+    Float:pHealthMax,
+
+    // FACTIONS
+    pSwat,
+
+    pJailed,
     // Temp variables
     bool:pLogged,
     characterDelete[24]
@@ -300,6 +324,13 @@ LoadCharacterInfo(playerid, playerName[]) {
 
     cache_get_value_name_int(0, "first_login", first_login);
 
+    for (new i = 0; i < 13; i ++) {
+	    format(query, sizeof(query), "Gun%d", i + 1);
+	    cache_get_value_name_int(0, query, pInfo[playerid][pGuns][i]);
+	    format(query, sizeof(query), "Ammo%d", i + 1);
+	    cache_get_value_name_int(0, query, pInfo[playerid][pAmmo][i]);
+	}
+    
     if(!first_login) {
         mysql_format(DBConn, query, sizeof query, "UPDATE players SET `first_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
         mysql_query(DBConn, query);
@@ -307,9 +338,6 @@ LoadCharacterInfo(playerid, playerName[]) {
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
     mysql_query(DBConn, query);
-
-    format(logString, sizeof(logString), "%s (%s) logou no servidor como %s.", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid));
-	logCreate(playerid, logString, 2);
 
     printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", playerName);
     LoadLicencesData(playerid);
@@ -339,12 +367,17 @@ SpawnSelectedCharacter(playerid) {
 
     SetPlayerSkin(playerid, GetPlayerSkin(playerid) > 0 ? (pInfo[playerid][pSkin]) : (23));
     SpawnPlayer(playerid);
+    SetWeapons(playerid);
 
+    pInfo[playerid][pHealthMax] = 150.0;
     pInfo[playerid][pLogged] = true;
     SetPlayerColor(playerid, 0xFFFFFFFF);
-
     ClearPlayerChat(playerid);
-    va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s.", pNome(playerid));
+    va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s. ", pNome(playerid));
+
+    format(logString, sizeof(logString), "%s (%s) logou no servidor como %s. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
+	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
+	logCreate(playerid, logString, 2);
     return 1;
 }
     
@@ -386,7 +419,34 @@ SaveCharacterInfo(playerid) {
     `positionX` = %f, \
     `positionY` = %f, \
     `positionZ` = %f,\
-    `positionA` = %f WHERE ID = %d;", 
+    `positionA` = %f, \
+    `Gun1` = '%d', \
+    `Ammo1` = '%d', \
+    `Gun2` = '%d', \
+    `Ammo2` = '%d', \
+    `Gun3` = '%d', \
+    `Ammo3` = '%d', \
+    `Gun4` = '%d', \
+    `Ammo4` = '%d', \
+    `Gun5` = '%d', \
+    `Ammo5` = '%d', \
+    `Gun6` = '%d', \
+    `Ammo6` = '%d', \
+    `Gun7` = '%d', \
+    `Ammo7` = '%d', \
+    `Gun8` = '%d', \
+    `Ammo8` = '%d', \
+    `Gun9` = '%d', \
+    `Ammo9` = '%d', \
+    `Gun10` = '%d', \
+    `Ammo10` = '%d', \
+    `Gun11` = '%d', \
+    `Ammo11` = '%d', \
+    `Gun12` = '%d', \
+    `Ammo12` = '%d', \
+    `Gun13` = '%d', \
+    `Ammo13` = '%d' \
+    WHERE ID = %d;", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
     pInfo[playerid][pAdmin], 
@@ -405,14 +465,39 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPositionZ],
     pInfo[playerid][pPositionA],
 
+    pInfo[playerid][pGuns][0], 
+	pInfo[playerid][pAmmo][0],
+	pInfo[playerid][pGuns][1], 
+	pInfo[playerid][pAmmo][1],
+	pInfo[playerid][pGuns][2], 
+	pInfo[playerid][pAmmo][2],
+	pInfo[playerid][pGuns][3], 
+	pInfo[playerid][pAmmo][3],
+	pInfo[playerid][pGuns][4], 
+	pInfo[playerid][pAmmo][4],
+	pInfo[playerid][pGuns][5], 
+	pInfo[playerid][pAmmo][5],
+	pInfo[playerid][pGuns][6], 
+	pInfo[playerid][pAmmo][6],
+	pInfo[playerid][pGuns][7], 
+	pInfo[playerid][pAmmo][7],
+	pInfo[playerid][pGuns][8], 
+	pInfo[playerid][pAmmo][8],
+	pInfo[playerid][pGuns][9], 
+	pInfo[playerid][pAmmo][9],
+	pInfo[playerid][pGuns][10], 
+	pInfo[playerid][pAmmo][10],
+	pInfo[playerid][pGuns][11], 
+	pInfo[playerid][pAmmo][11],
+	pInfo[playerid][pGuns][12], 
+	pInfo[playerid][pAmmo][12],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
     pInfo[playerid][pLogged] = false;
-    format(logString, sizeof(logString), "%s desconectou-se do servidor.", pNome(playerid));
+    format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
-    printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
-
+    printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));    
     return 1;
 }
 
@@ -445,11 +530,30 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pJetpack] = 0;
     pInfo[playerid][pAdminDuty] = 0;
 
+    pInfo[playerid][pInjured] = 0;
+    pInfo[playerid][pBrutallyWounded] = 0;
+    pInfo[playerid][pDead] = 0;
+    pInfo[playerid][pDeadTime] = 0;
+    pInfo[playerid][pAllowRespawn] = 0;
+
+    pInfo[playerid][pHealthMax] = 0;
+    pInfo[playerid][pLimping] = 0;
+    pInfo[playerid][pLimpingTime] = 0;
+    pInfo[playerid][pPassedOut] = false;
+    pInfo[playerid][pJailed] = 0;
+    pInfo[playerid][pSwat] = 0;
+
+    pInfo[playerid][pTackleMode] = false;
+    pInfo[playerid][pTackleTimer] = 0;
+
+    pInfo[playerid][pESC] = 0;
+
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
 		pInfo[playerid][pAmmo][i] = 0;
 	}
-
+    format(pInfo[playerid][pLastShot], 64, "");
+    pInfo[playerid][pShotTime] = 0;
 }
 
 hook OnPlayerDisconnect(playerid, reason) {

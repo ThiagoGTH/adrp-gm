@@ -4,12 +4,10 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#include <streamer>
+#include <streamer> 
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
-//#include <Pawn.RakNet>
-//#include <attachment-fix> 
 #include <zcmd>
 #include <memory>
 #include <sscanf2>
@@ -18,6 +16,7 @@
 #include <easyDialog>
 #include <bcrypt>
 #include <streamer>
+#include <easyDialog>  
 
 #define     TYPE                (1)
 #define     LASTEST_RELEASE     "24/06/2022"
@@ -60,6 +59,8 @@ new query[2048];
 // Inclusão de módulos relativos a sistemas
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\rpcmds.pwn"
+#include "modules\core\player\systems\deathsys.pwn"
+//#include "modules\core\player\systems\games\pool.pwn"
 #include "modules\core\discord\discord_core.pwn"
 
 // Inclusão de módulos relativos a administração
@@ -71,7 +72,6 @@ main() {
     print("\nGamemode conectado\n");
     printf("Última atualização em: %s\n \n", LASTEST_RELEASE);
 }
-
 
 forward OnGamemodeLoad(playerid);
 public OnGamemodeLoad(playerid){
@@ -122,8 +122,11 @@ public OnGameModeInit() {
     SendRconCommand("hostname Advanced Roleplay | Iniciando serviços...");
     SendRconCommand("language Brazilian Portuguese");
     SendRconCommand("weburl http://advanced-roleplay.com.br");
+    SendRconCommand("cookielogging 0");
+	SendRconCommand("messageholelimit 9000");
+	SendRconCommand("ackslimit 11000");
     SendRconCommand("password snd2n189w--");
-    
+
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
     ShowPlayerMarkers(0);

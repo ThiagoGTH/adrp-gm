@@ -412,7 +412,6 @@ SaveCharacterInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET \
     `name` = '%s', \
     `last_ip` = '%s',\
-    `last_login` = %d, \
     `money` = %d, \
     `bank` = %d, \
     `skin` = %d, \
@@ -454,7 +453,6 @@ SaveCharacterInfo(playerid) {
     WHERE ID = %d;", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
-    pInfo[playerid][pAdmin], 
     pInfo[playerid][pMoney], 
     pInfo[playerid][pBank],
     pInfo[playerid][pSkin], 

@@ -73,7 +73,7 @@ Dialog:configSys(playerid, response, listitem, inputtext[]){
         else if(listitem == 4){ // ADMINISTRADORES [OK]
             if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
-            mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `admin` > 0");
+            mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `admin` > 0 ORDER BY `admin` ASC");
             new Cache:result = mysql_query(DBConn, query);
 
             if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar nenhum administrador na database. [E#01]");
@@ -214,9 +214,9 @@ Dialog:addInfoFurniture3(playerid, response, listitem, inputtext[]){
         mysql_format(DBConn, query, sizeof query, "INSERT INTO furniture_info (`name`, `model`, `category`) VALUES ('%s', '%d', '%s');", pInfo[playerid][tempChar], modelid, pInfo[playerid][tempChar2]);
         new Cache:result = mysql_query(DBConn, query);
 
-        format(logString, sizeof(logString), "%s (%s) criou a mobília %s (%d) com a categoria '%s'.", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar], modelid, pInfo[playerid][tempChar2]);
+        format(logString, sizeof(logString), "%s (%s) criou a mobília %s (%d) com a categoria %s.", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar], modelid, pInfo[playerid][tempChar2]);
 		logCreate(playerid, logString, 8);
-        SendServerMessage(playerid, "Você criou a mobília %s (%d) com a categoria '%s' com sucesso.", pInfo[playerid][tempChar], modelid, pInfo[playerid][tempChar2]);
+        SendServerMessage(playerid, "Você criou a mobília %s (%d) com a categoria %s com sucesso.", pInfo[playerid][tempChar], modelid, pInfo[playerid][tempChar2]);
         pInfo[playerid][tempChar][0] = 
         pInfo[playerid][tempChar2][0] = EOS;
         cache_delete(result);
@@ -299,7 +299,7 @@ Dialog:confirmInfoInt(playerid, response, listitem, inputtext[]){
         mysql_format(DBConn, query, sizeof query, "DELETE FROM interiors_info WHERE `name` = '%s';", pInfo[playerid][tempChar]);
         new Cache:result = mysql_query(DBConn, query);
 
-        format(logString, sizeof(logString), "%s (%s) deletou o interior '%s'.", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar]);
+        format(logString, sizeof(logString), "%s (%s) deletou o interior %s.", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar]);
 		logCreate(playerid, logString, 8);
 
         SendServerMessage(playerid, "Você deletou o interior '%s' com sucesso. A ação é irreversível.", pInfo[playerid][tempChar]);

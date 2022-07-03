@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-new DCC_Channel:logChannels[9];
+new DCC_Channel:logChannels[10];
 forward Discord_StartChannels();
 public Discord_StartChannels(){
     logChannels[0] = DCC_FindChannelById("989303818896441345");     // Admin                (1)
@@ -12,6 +12,7 @@ public Discord_StartChannels(){
     logChannels[6] = DCC_FindChannelById("991846277329465526");     // Investida            (7)
     logChannels[7] = DCC_FindChannelById("992937921789317221");     // Gerenciamento        (8)
     logChannels[8] = DCC_FindChannelById("993023592004603994");     // Support Chat         (9)
+    logChannels[9] = DCC_FindChannelById("993230053959798824");     // Advertisement Log    (10)
     
     return true;
 }

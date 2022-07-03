@@ -60,6 +60,7 @@ new query[2048];
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\rpcmds.pwn"
 #include "modules\core\player\systems\deathsys.pwn"
+#include "modules\core\player\systems\ads.pwn"
 //#include "modules\core\player\systems\games\pool.pwn"
 #include "modules\core\discord\discord_core.pwn"
 

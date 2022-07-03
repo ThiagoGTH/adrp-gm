@@ -7,7 +7,7 @@ CMD:ajuda(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
 		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
-		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
 		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar");
 		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
 		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa");
@@ -30,7 +30,11 @@ CMD:ajuda(playerid, params[])
 	return true;
 }
 
-
+CMD:limparmeuchat(playerid, params[]){
+	if(!pInfo[playerid][pLogged]) return true;
+	ClearPlayerChat(playerid);
+	return true;
+}
 stock GetWeapon(playerid)
 {
 	new weaponid = GetPlayerWeapon(playerid);
@@ -231,10 +235,10 @@ GiveMoney(playerid, amount)
 	return 1;
 }
 
-/*GetMoney(playerid)
+GetMoney(playerid)
 {
 	return (pInfo[playerid][pMoney]);
-}*/
+}
 
 stock SetPlayerHealthEx(playerid, Float:hp)
 {

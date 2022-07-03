@@ -38,6 +38,9 @@ enum Player_Data {
     pVirtualWorld,
     pInterior,
 
+    pPhoneNumber,
+    pPhoneType,
+
     pEditandoBareira,
     pLicence,
 
@@ -68,6 +71,8 @@ enum Player_Data {
 
     pTackleMode,
     pTackleTimer,
+
+    pAdTick,
 
     pESC,
     Float:pHealthMax,
@@ -426,6 +431,8 @@ SaveCharacterInfo(playerid) {
     `positionY` = %f, \
     `positionZ` = %f,\
     `positionA` = %f, \
+    `phone_number` = %d, \
+    `phone_type` = %d, \
     `Gun1` = '%d', \
     `Ammo1` = '%d', \
     `Gun2` = '%d', \
@@ -469,6 +476,9 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPositionY], 
     pInfo[playerid][pPositionZ],
     pInfo[playerid][pPositionA],
+
+    pInfo[playerid][pPhoneType],
+    pInfo[playerid][pPhoneNumber],
 
     pInfo[playerid][pGuns][0], 
 	pInfo[playerid][pAmmo][0],
@@ -529,6 +539,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pInterior] = 0; 
     pInfo[playerid][pEditandoBareira] = 0;
     pInfo[playerid][pLicence] = 0;
+    pInfo[playerid][pPhoneType] = 0;
+    pInfo[playerid][pPhoneNumber] = 0;
 
     pInfo[playerid][pFreeze] = 0;
     pInfo[playerid][pFreezeTimer] = 0;
@@ -552,7 +564,7 @@ void:ResetCharacterData(playerid) {
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;
-
+    pInfo[playerid][pAdTick] = 0;
     pInfo[playerid][pESC] = 0;
 
     // TEMP VARS

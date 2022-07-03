@@ -27,6 +27,7 @@ hook OnGameModeInit() {
         print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso.");
         print("[DATABASE] Verificando criação de tabelas...");
         CheckTables();
+        mysql_set_charset("latin1");
     }
 
     return true;
@@ -39,6 +40,7 @@ void:CheckTables() {
     CheckLogsTable();
     CheckFurnitureInfoTable();
     CheckInteriorsInfoTable();
+    CheckAdsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -81,6 +83,8 @@ void:CheckPlayerTable() {
     `positionY` float NOT NULL DEFAULT '-2334.4849',\
     `positionZ` float NOT NULL DEFAULT '13.5469',\
     `positionA` float NOT NULL DEFAULT '0',\
+    `phone_number` int NOT NULL DEFAULT '0',\
+    `phone_type` int NOT NULL DEFAULT '0',\
     `Gun1` int NOT NULL DEFAULT '0',\
     `Ammo1` int NOT NULL DEFAULT '0',\
     `Gun2` int NOT NULL DEFAULT '0',\
@@ -165,4 +169,16 @@ void:CheckInteriorsInfoTable(){
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela 'interiors' checada com sucesso.");
+}
+
+void:CheckAdsTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `advertisement` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `player` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `text` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `time` int NOT NULL DEFAULT '0',\
+    `number` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela 'advertisement' checada com sucesso.");
 }

@@ -88,11 +88,11 @@ CMD:sos(playerid, params[]){
                     va_SendClientMessage(i, -1, "...%s", string[95]);
                 } else va_SendClientMessage(i, COLOR_LIGHTRED, "%s", string);
             }
-            new str[250], dest[250];
-            format(str, sizeof(str), "**[SOS %d]:** %s (%d): %s", sosid, pNome(playerid), playerid, params);
-            utf8encode(dest, str);
-            DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
         }
+        new str[250], dest[250];
+        format(str, sizeof(str), "**[SOS %d]:** %s (%d): %s", sosid, pNome(playerid), playerid, params);
+        utf8encode(dest, str);
+        DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
         SendServerMessage(playerid, "Sua dúvida foi enviada para todos os testers e administradores online.");
     } else SendErrorMessage(playerid, "A lista de dúvidas está cheia. Aguarde um momento.");
     return true;
@@ -379,7 +379,7 @@ CMD:ar(playerid, params[]){
     SendServerMessage(reportdata[reportid][reportPlayer], "O %s %s está atendendo seu report.", AdminRankName(playerid), pNome(playerid));
     SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está atendendo o report de %s.", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]));
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s recusou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]), text);
+	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]), text);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
     Report_Remove(reportid);

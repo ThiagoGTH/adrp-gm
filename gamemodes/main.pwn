@@ -65,6 +65,7 @@ new query[2048];
 
 // Inclusão de módulos relativos a administração
 #include "modules\core\admin\ban.pwn"
+#include "modules\core\admin\config.pwn"
 #include "modules\core\admin\ipcheck.pwn"
 #include "modules\core\admin\admin_core.pwn"
 

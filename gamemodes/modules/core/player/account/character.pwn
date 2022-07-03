@@ -57,7 +57,10 @@ enum Player_Data {
     pBrutallyWounded, 
     pDead,
     pDeadTime,
+    pLastBlow,
     pAllowRespawn,
+    pLastKnockout,
+    pTotalDamages,
 
     pLimping,
     pLimpingTime,
@@ -75,7 +78,9 @@ enum Player_Data {
     pJailed,
     // Temp variables
     bool:pLogged,
-    characterDelete[24]
+    characterDelete[24],
+    tempChar[64],
+    tempChar2[64]
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -532,10 +537,12 @@ void:ResetCharacterData(playerid) {
 
     pInfo[playerid][pInjured] = 0;
     pInfo[playerid][pBrutallyWounded] = 0;
+    pInfo[playerid][pLastKnockout] = 0;
     pInfo[playerid][pDead] = 0;
     pInfo[playerid][pDeadTime] = 0;
     pInfo[playerid][pAllowRespawn] = 0;
-
+    pInfo[playerid][pLastBlow] = 0;
+    pInfo[playerid][pTotalDamages] = 0;
     pInfo[playerid][pHealthMax] = 0;
     pInfo[playerid][pLimping] = 0;
     pInfo[playerid][pLimpingTime] = 0;
@@ -547,6 +554,11 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pTackleTimer] = 0;
 
     pInfo[playerid][pESC] = 0;
+
+    // TEMP VARS
+    pInfo[playerid][tempChar][0] = 
+    pInfo[playerid][tempChar2][0] = 
+    pInfo[playerid][characterDelete][0] = EOS;
 
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;

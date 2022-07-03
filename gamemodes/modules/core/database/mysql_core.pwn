@@ -37,6 +37,8 @@ void:CheckTables() {
     CheckPlayerTable();
     CheckBanTable();
     CheckLogsTable();
+    CheckFurnitureInfoTable();
+    CheckInteriorsInfoTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -138,3 +140,29 @@ void:CheckLogsTable(){
 
     print("[DATABASE] Tabela 'serverlogs' checada com sucesso.");
 } 
+
+void:CheckFurnitureInfoTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `furniture_info` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    `model` int NOT NULL DEFAULT '0',\
+    `category` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela 'furniture_info' checada com sucesso.");
+}
+
+void:CheckInteriorsInfoTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors_info` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    `virtual_world` int NOT NULL DEFAULT '0',\
+    `interior` int NOT NULL DEFAULT '0',\
+    `positionX` float NOT NULL DEFAULT '0',\
+    `positionY` float NOT NULL DEFAULT '0',\
+    `positionZ` float NOT NULL DEFAULT '0',\
+    `positionA` float NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela 'interiors' checada com sucesso.");
+}

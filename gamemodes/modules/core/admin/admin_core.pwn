@@ -14,9 +14,8 @@ stock AdminRankName(playerid) {
 		case 3: format(rank, sizeof(rank), "Game Admin 2");
 		case 4: format(rank, sizeof(rank), "Game Admin 3");
 		case 5: format(rank, sizeof(rank), "Lead Admin");
-		case 1335: format(rank, sizeof(rank), "Manager");
-		case 1336: format(rank, sizeof(rank), "Community Manager");
-        case 1337: format(rank, sizeof(rank), "Development Manager");
+        case 1337: format(rank, sizeof(rank), "Management");
+		default: format(rank, sizeof(rank), "Inválido");
 	}
 	return rank;
 }
@@ -59,7 +58,7 @@ stock ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{
@@ -379,7 +378,7 @@ CMD:infoplayer(playerid, params[])
 		if(GetPlayerAmmo(userid) == 40 || GetPlayerAmmo(userid) == 36 || GetPlayerAmmo(userid) == 18 || GetPlayerAmmo(userid) == 28 || GetPlayerAmmo(userid) == 37) SendServerMessage(playerid, "Atenção neste jogador, é possível que ele esteja utilizando algum cheater de armas. Investigue com cautela.");
 	}
 	return true;
-}
+} 
 
 CMD:skin(playerid, params[])
 {
@@ -502,28 +501,32 @@ CMD:setaradmin(playerid, params[]) {
 			return SendClientMessage(playerid, COLOR_GREY, "Level inválido. Os niveis devem variar entre 0 a 1337.");
 
 		if(GetPlayerAdmin(userid) >= 0) {
+			uInfo[userid][uAdmin] = admin;
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você promoveu %s para %s.", pNome(userid), AdminRankName(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s promoveu você para %s.", pNome(playerid), AdminRankName(userid));
-			uInfo[userid][uAdmin] = admin;
+			SaveUserInfo(userid);
 		}
 		else {
+			uInfo[userid][uAdmin] = admin;
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você removeu %s do quadro administrativo.", pNome(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s removeu você do quadro administrativo.", pNome(playerid));
-			uInfo[userid][uAdmin] = admin;
+			SaveUserInfo(userid);
 		}
 	} else { 
 		if (admin < 0 || admin > 5) return SendClientMessage(playerid, COLOR_GREY, "Level inválido. Os niveis devem variar entre 0 a 4.");
 		if (admin > GetPlayerAdmin(playerid)) return SendClientMessage(playerid, COLOR_GREY, "Você não pode promover acima do seu nível.");
 
 		if(GetPlayerAdmin(userid) >= 0) {
+			uInfo[userid][uAdmin] = admin;
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você promoveu %s para %s.", pNome(userid), AdminRankName(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s promoveu você para %s.", pNome(playerid), AdminRankName(userid));
-			uInfo[userid][uAdmin] = admin;
+			SaveUserInfo(userid);
 		}
 		else {
+			uInfo[userid][uAdmin] = admin;
 			va_SendClientMessage(playerid, COLOR_YELLOW,"Você removeu %s do quadro administrativo.", pNome(userid));
 			va_SendClientMessage(userid, COLOR_YELLOW,"%s removeu você do quadro administrativo.", pNome(playerid));
-			uInfo[userid][uAdmin] = admin;
+			SaveUserInfo(userid);
 		}
 	}
     return true;
@@ -672,18 +675,11 @@ CMD:ir(playerid, params[])
 			SetPlayerPos(playerid, X2, Y2, Z2);
 	    	return va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você foi até as coordenadas.");
 		}
+
 		else if (!strcmp(type, "interior", true)){
-		    static
-		        str[1536];
-			str[0] = '\0';
-			for (new i = 0; i < sizeof(g_arrInteriorData); i ++) {
-			    strcat(str, g_arrInteriorData[i][e_InteriorName]);
-			    strcat(str, "\n");
-		    }
-		    Dialog_Show(playerid, TeleportInterior, DIALOG_STYLE_LIST, "Teleporte: Lista de Interiores", str, "Selecionar", "Cancelar");
+			Dialog_Show(playerid, goToInt, DIALOG_STYLE_LIST, "Ir > Interior", "Interiores Nativos\nInteriores Personalizados", "Selecionar", "Cancelar");
 		    return true;
-		}
-	    else return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
+		} else return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
 	}
 	if (!IsPlayerSpawned(id)) return SendErrorMessage(playerid, "Você não pode ir até um jogador que não spawnou.");
 	if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) return SendClientMessage(playerid, COLOR_LIGHTRED, "Esse administrador está em modo espectador em alguém, por isso não pode ir até o mesmo.");
@@ -696,6 +692,64 @@ CMD:ir(playerid, params[])
 	return true;
 }
 
+Dialog:goToInt(playerid, response, listitem, inputtext[]){
+	if(response){
+		if(listitem == 0){
+			static
+		        str[1536];
+			str[0] = '\0';
+			for (new i = 0; i < sizeof(g_arrInteriorData); i ++) {
+			    strcat(str, g_arrInteriorData[i][e_InteriorName]);
+			    strcat(str, "\n");
+		    }
+		    Dialog_Show(playerid, TeleportInterior, DIALOG_STYLE_LIST, "Ir > Interior > Nativos", str, "Selecionar", "Cancelar");
+		}
+		else if(listitem == 1){
+			mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `ID` >= 0");
+            new Cache:result = mysql_query(DBConn, query);
+
+            new string[1024], intName[64], intID;
+            format(string, sizeof(string), "Nome\tID\n");
+			for(new i; i < cache_num_rows(); i++){
+				cache_get_value_name_int(i, "ID", intID);
+				cache_get_value_name(i, "name", intName);
+
+				format(string, sizeof(string), "%s%s\t%d\n", string, intName, intID);
+            }
+            cache_delete(result);
+
+            Dialog_Show(playerid, goToPerInt, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interior > Personalizados", string, "Selecionar", "Voltar");
+		}
+	} 
+	return true;
+}
+
+Dialog:goToPerInt(playerid, response, listitem, inputtext[]){
+	if(response){
+		new Float:pos[4], vw, int;
+		format(pInfo[playerid][tempChar], 64, "%s", inputtext);
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `name` = '%s'", pInfo[playerid][tempChar]);
+        new Cache:result = mysql_query(DBConn, query);
+
+        cache_get_value_name_float(0, "positionX", pos[0]);
+		cache_get_value_name_float(0, "positionY", pos[1]);
+		cache_get_value_name_float(0, "positionZ", pos[2]);
+		cache_get_value_name_float(0, "positionA", pos[3]);
+		cache_get_value_name_int(0, "interior", int);
+    	cache_get_value_name_int(0, "virtual_world", vw);
+        cache_delete(result);
+
+		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+		SetPlayerFacingAngle(playerid, pos[3]);
+		SetPlayerInterior(playerid, int);
+		SetPlayerVirtualWorld(playerid, vw);
+
+		SendServerMessage(playerid, "Você se teleportou para o interior '%s'.", pInfo[playerid][tempChar]);
+		pInfo[playerid][tempChar][0] =  EOS;
+		return true;
+	}
+	return true;
+}
 
 CMD:spec(playerid, params[])
 {
@@ -719,6 +773,9 @@ CMD:spec(playerid, params[])
 	    TogglePlayerSpectating(playerid, false);
 	    
 	  	EmSpec[playerid] = INVALID_PLAYER_ID;
+		format(logString, sizeof(logString), "%s (%s) parou de observar.", pNome(playerid), GetPlayerUserEx(playerid));
+		logCreate(playerid, logString, 1);
+
 	  	return SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você não está mais no modo espectador.");
 	}
 

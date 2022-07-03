@@ -7,8 +7,8 @@ Como o modulo user.pwn trabalha com users, esse vai ser um tipo de extensão pra 
 
 #include <YSI_Coding\y_hooks>
 
-#define USER_CHARACTERS_LIMIT 1
-#define USER_CHARACTERS_LIMIT_VIP 3
+#define USER_CHARACTERS_LIMIT 5
+#define USER_CHARACTERS_LIMIT_VIP 10
 
 enum Player_Data {
     pID,
@@ -78,6 +78,8 @@ enum Player_Data {
     pJailed,
     // Temp variables
     bool:pLogged,
+    pQuestion,
+    pAnswer,
     characterDelete[24],
     tempChar[64],
     tempChar2[64]
@@ -557,6 +559,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][tempChar][0] = 
     pInfo[playerid][tempChar2][0] = 
     pInfo[playerid][characterDelete][0] = EOS;
+    pInfo[playerid][pAnswer] = -1;
+    pInfo[playerid][pQuestion] = -1;
 
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
@@ -569,5 +573,7 @@ void:ResetCharacterData(playerid) {
 hook OnPlayerDisconnect(playerid, reason) {
     SaveCharacterInfo(playerid);
     ResetCharacterData(playerid);
+    SOS_Clear(playerid);
+    Report_Clear(playerid);
     return 1;
 }

@@ -535,7 +535,7 @@ CMD:setaradmin(playerid, params[]) {
 CMD:a(playerid, result[])
 {
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-	if(isnull(result))return SendSyntaxMessage(playerid, "/a (mensagem)");
+	if(isnull(result)) return SendSyntaxMessage(playerid, "/a (mensagem)");
 
 	// JOGO:
 	if (strlen(result) > 64){

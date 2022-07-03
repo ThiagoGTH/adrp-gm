@@ -41,16 +41,17 @@ stock ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 1) // TESTER
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[TESTER]{FFFFFF} /a, /aa, /tapa, /vida, /proximo, /usuario, /personagens, /ir, /trazer");
+		va_SendClientMessage(playerid, -1, "{33AA33}[TESTER]{FFFFFF} /a, /aa, /personagens, /usuario, /listasos, /aj, /rj, /cs, /fs, /tj");
 	}
 	if(GetPlayerAdmin(playerid) >= 2) // GAME ADMIN 1
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /resetararmas, /infoplayer, /congelar, /descongelar, /spec, /ultimoatirador");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /reclife, /reviver");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listareports, /ar, /rr, /tapa, /vida, /reviver, /reclife, /ir, /trazer");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /spec, /ultimoatirador");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
@@ -100,7 +101,7 @@ CMD:tapa(playerid, params[])
 		userid;
 
 	if(!pInfo[playerid][pLogged]) return true;
-  	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
+  	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
@@ -140,7 +141,7 @@ CMD:vida(playerid, params[])
 	  	Float:amount; 
 
 	if(!pInfo[playerid][pLogged]) return true;
-  	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
+  	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "uf", userid, amount)) return SendSyntaxMessage(playerid, "/vida [playerid/nome] [quantidade]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 	if (amount > pInfo[userid][pHealthMax]) return SendErrorMessage(playerid, "Você não pode aumentar a vida deste jogador além do limite dele. (Máximo: %.2f)");
@@ -197,7 +198,7 @@ CMD:resetararmas(playerid, params[])
 		userid;
 
   	if(!pInfo[playerid][pLogged]) return true;
-  	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+  	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/resetararmas [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
 
@@ -632,7 +633,7 @@ CMD:clima(playerid, params[])
 
 CMD:trazer(playerid, params[])
 {
-  	if(GetPlayerAdmin(playerid) < 1) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
+  	if(GetPlayerAdmin(playerid) < 2) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
 	if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) return SendClientMessage(playerid, COLOR_LIGHTRED, "Esse administrador está em modo espectador em alguém, por isso não pode puxa-lo.");
 
 	new userid, Float: PlayerPos[3];
@@ -653,7 +654,7 @@ CMD:ir(playerid, params[])
 	  	type[24],
 		string[64];
 
-	if(GetPlayerAdmin(playerid) < 1) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
+	if(GetPlayerAdmin(playerid) < 2) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
 
 	if (sscanf(params, "u", id)) {
 	 	SendSyntaxMessage(playerid, "/ir [playerid ou syntax]");

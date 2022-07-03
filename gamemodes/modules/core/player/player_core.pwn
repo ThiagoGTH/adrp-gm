@@ -6,7 +6,7 @@ CMD:ajuda(playerid, params[])
    	if (sscanf(params, "s[128]", type)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
-		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins");
+		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b");
 		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar");
 		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");

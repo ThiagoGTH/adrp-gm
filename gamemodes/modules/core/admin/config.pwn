@@ -1,7 +1,7 @@
 /*
 
 Este módulo é dedicado ao /gerenciar, que será integrado ao MySQL e poderá adicionar tudo dinamicamente.
-
+ 
 */
 
 #include <YSI_Coding\y_hooks>
@@ -247,7 +247,7 @@ Dialog:showInfoInt(playerid, response, listitem, inputtext[]){
         else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecinar", "Fechar");
     }
     return true;
-}
+} 
 
 Dialog:addInfoInt(playerid, response, listitem, inputtext[]){
     if(response){

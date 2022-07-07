@@ -19,10 +19,22 @@ CMD:ajuda(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "[EMPRESA] ble");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
-		return true;
-	}else if (!strcmp(type, "casa", true)){
+		return true; 
+	} else if (!strcmp(type, "casa", true)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "[CASA] ble");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		return true;
+	} else if (!strcmp(type, "fly", true)){
+		if(!pInfo[playerid][pLogged]) return true;
+    	if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
+
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[FLY] /fly - inicia/finaliza o modo de voo");
+		SendClientMessage(playerid, COLOR_CYAN2, "[FLY] botão de atirar - aumenta a altura");
+		SendClientMessage(playerid, COLOR_CYAN1, "[FLY] botão de mirar - diminui a altura");
+		SendClientMessage(playerid, COLOR_CYAN2, "[FLY] botão de correr (espaço) - aumenta a velocidade");
+		SendClientMessage(playerid, COLOR_CYAN1, "[FLY] botão de andar (lalt) - diminui a velocidade");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		return true;
 	} else if (!strcmp(type, "admin", true)) return ShowAdminCmds(playerid);

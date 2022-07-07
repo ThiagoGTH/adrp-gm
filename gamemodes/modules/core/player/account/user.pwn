@@ -153,7 +153,6 @@ void:CreateUser(playerid, userName[], password[]) {
 // Nada demais, só vai avaliar se o usuário está registrado (ou não) e mostrar as devidas dialogs
 
 void:CheckUserConditions(playerid) {
-
     if(IsUserRegistered(uInfo[playerid][uName]))
         ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "Bem vindo!\n \nO usuário já está registrado.\
             \nDigite a senha registrada para se conectar", "Conectar", "Sair");

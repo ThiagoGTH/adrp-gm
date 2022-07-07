@@ -2,3 +2,4 @@
 
 new MySQL:DBConn;
 new logString[255];
+

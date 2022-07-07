@@ -219,6 +219,13 @@ stock pNome(playerid)
 	return name;
 }
 
+stock ReturnName(playerid)
+{
+	new name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid, name, sizeof(name));
+	return name;
+}
+
 stock IsUserConnected(const userName[]) {
     new responseValue;
 

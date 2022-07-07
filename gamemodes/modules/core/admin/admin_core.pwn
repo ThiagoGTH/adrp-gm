@@ -35,6 +35,7 @@ CMD:aa(playerid)
 }
 
 stock ShowAdminCmds(playerid){
+	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	if(GetPlayerAdmin(playerid) >= 1)
 	{
 	    va_SendClientMessage(playerid, -1, "{33AA33}_______________________________ {FFFFFF}COMANDOS ADMINISTRATIVOS{33AA33} _______________________________");
@@ -63,7 +64,7 @@ stock ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver");
+		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly");
 	}
 	return true;
 }

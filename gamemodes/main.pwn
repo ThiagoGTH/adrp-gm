@@ -41,6 +41,7 @@ new query[2048];
 #include "modules\utils\utils_time.pwn"
 #include "modules\utils\utils_discord.pwn"
 #include "modules\utils\utils_logs.pwn"
+//#include "modules\utils\utils_textdraws.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -48,6 +49,7 @@ new query[2048];
 // Inclusão dos módulos de gerenciamento geral da conta (usuário e personagens)
 #include "modules\core\player\account\user.pwn"
 #include "modules\core\player\account\character.pwn"
+#include "modules\core\player\account\changechar.pwn"
 
 // Inclusão de módulos relativos a membros
 #include "modules\core\player\player_core.pwn"
@@ -57,15 +59,19 @@ new query[2048];
 #include "modules\core\player\licences\base_licence.pwn"
 
 // Inclusão de módulos relativos a sistemas
-#include "modules\core\player\systems\nametag.pwn"
-#include "modules\core\player\systems\rpcmds.pwn"
-#include "modules\core\player\systems\deathsys.pwn"
 #include "modules\core\player\systems\ads.pwn"
-//#include "modules\core\player\systems\games\pool.pwn"
+#include "modules\core\player\systems\rpcmds.pwn"
+#include "modules\core\player\systems\nametag.pwn"
+#include "modules\core\player\systems\death.pwn"
+//#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
+
+// Inclusão de módulos relativos a jogos
+//#include "modules\core\player\systems\games\poker.pwn"
 
 // Inclusão de módulos relativos a administração
 #include "modules\core\admin\ban.pwn"
+#include "modules\core\admin\fly.pwn"
 #include "modules\core\admin\config.pwn"
 #include "modules\core\admin\ipcheck.pwn"
 #include "modules\core\admin\reports.pwn"

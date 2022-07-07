@@ -61,6 +61,9 @@ enum Player_Data {
     pDead,
     pDeadTime,
     pLastBlow,
+    Text3D:pBrutallyTag,
+    Text3D:pNametag,
+    pNametagType,
     pAllowRespawn,
     pLastKnockout,
     pTotalDamages,
@@ -83,6 +86,7 @@ enum Player_Data {
     pJailed,
     // Temp variables
     bool:pLogged,
+    pFlying,
     pQuestion,
     pAnswer,
     characterDelete[24],
@@ -360,12 +364,11 @@ LoadCharacterInfo(playerid, playerName[]) {
 
 SpawnSelectedCharacter(playerid) {
     TogglePlayerSpectating(playerid, false);
-
     ResetPlayerMoney(playerid);
     GivePlayerMoney(playerid, pInfo[playerid][pMoney]);
     SetPlayerHealth(playerid, pInfo[playerid][pHealth]);
     SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
-
+    
     SetPlayerScore(playerid, pInfo[playerid][pScore]);
 
     SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
@@ -380,7 +383,7 @@ SpawnSelectedCharacter(playerid) {
     SetPlayerSkin(playerid, GetPlayerSkin(playerid) > 0 ? (pInfo[playerid][pSkin]) : (23));
     SpawnPlayer(playerid);
     SetWeapons(playerid);
-
+    SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
     pInfo[playerid][pLogged] = true;
     SetPlayerColor(playerid, 0xFFFFFFFF);
@@ -390,9 +393,25 @@ SpawnSelectedCharacter(playerid) {
     format(logString, sizeof(logString), "%s (%s) logou no servidor como %s. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
-    return 1;
-}
     
+    if(GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0) return true;
+
+    TogglePlayerSpectating(playerid, true);
+    InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
+    InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
+    SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid);
+    
+    return true;
+}
+
+forward SpawnPlayerPosCamera(playerid);
+public SpawnPlayerPosCamera(playerid)
+{
+    TogglePlayerSpectating(playerid, false);
+    SetCameraBehindPlayer(playerid);
+    return true;
+}
+
 SaveCharacterInfo(playerid) {
     new Float:pos[4];
 
@@ -470,7 +489,7 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pScore], 
     
     pInfo[playerid][pVirtualWorld],
-    pInfo[playerid][pInterior], 
+    pInfo[playerid][pInterior],
 
     pInfo[playerid][pPositionX], 
     pInfo[playerid][pPositionY], 
@@ -561,11 +580,14 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pJailed] = 0;
     pInfo[playerid][pSwat] = 0;
+    pInfo[playerid][pNametagType] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;
     pInfo[playerid][pAdTick] = 0;
+    pInfo[playerid][pFlying] = 0;
     pInfo[playerid][pESC] = 0;
+    ClearDamages(playerid);
 
     // TEMP VARS
     pInfo[playerid][tempChar][0] = 
@@ -573,6 +595,12 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][characterDelete][0] = EOS;
     pInfo[playerid][pAnswer] = -1;
     pInfo[playerid][pQuestion] = -1;
+
+    if (IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]))
+	{
+		DestroyDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]);
+	    pInfo[playerid][pBrutallyTag] = Text3D:INVALID_3DTEXT_ID;
+	}
 
 	for (new i = 0; i < 12; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
@@ -587,5 +615,13 @@ hook OnPlayerDisconnect(playerid, reason) {
     ResetCharacterData(playerid);
     SOS_Clear(playerid);
     Report_Clear(playerid);
+    new string[256];
+    switch(reason)
+	{
+	    case 0: format(string,sizeof(string),"(( %s (Problema de Conexão/Crash) ))", pNome(playerid));
+	    case 1: format(string,sizeof(string),"(( %s (Desconectou-se) ))", pNome(playerid));
+	    case 2: format(string,sizeof(string),"(( %s (Kickado/Banido) ))", pNome(playerid));
+	}
+	SendNearbyMessage(playerid, 30.0, COLOR_WHITE, string);
     return 1;
 }

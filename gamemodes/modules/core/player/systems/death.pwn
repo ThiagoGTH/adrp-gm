@@ -91,9 +91,180 @@ new WeaponDamage[][WeaponDamageInfo] =
 	{54,			0.0}	//Splat
 };
 
-hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
-    if(pInfo[playerid][pDead] || pInfo[playerid][pBrutallyWounded]) return true;
+hook OnGameModeInit(){
+    SetTimer("DeathTimer", 1000, true);
+    return true;
+}
 
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
+	if(pInfo[damagedid][pDead]) return false;
+	printf("Entrou!");
+    new Float:health, Float:armour;
+    amount = WeaponDamage[weaponid][WepDamage];
+    health = pInfo[damagedid][pHealth];
+    armour = pInfo[damagedid][pArmour];
+	
+    format(pInfo[damagedid][pLastShot], 64, "%s", pNome(playerid));
+	pInfo[damagedid][pShotTime] = gettime();
+
+	/*new bool:armourhit = false; 
+	switch(bodypart)
+	{
+		case BODY_PART_CHEST, BODY_PART_GROIN: armourhit = true;
+
+		case BODY_PART_LEFT_ARM, BODY_PART_RIGHT_ARM:
+		{
+			amount = amount / 2;
+			new chance = random(3);
+			if(chance == 1) armourhit = true;
+		}
+
+		case BODY_PART_LEFT_LEG, BODY_PART_RIGHT_LEG:
+		{
+			amount = amount / 3;
+
+			new chance = random(2);
+
+			if(chance){
+				pInfo[damagedid][pLimping] = true;
+                pInfo[damagedid][pLimpingTime] = 320;
+                SendClientMessage(damagedid, COLOR_LIGHTRED, "-> Você foi atingido na perna, agora você sofrerá para correr ou pular.");
+			}
+		}
+
+		case BODY_PART_HEAD:
+		{
+			if(pInfo[damagedid][pSwat]) amount = amount/4;
+		}
+	}*/
+	if(armour > 0.0){
+        armour -= amount;
+        if(armour < 0.0){
+         	SetPlayerArmour(damagedid, 0.0);
+            pInfo[damagedid][pArmour] = 0.0;
+            health += armour;
+        } else SetPlayerArmour(damagedid, armour);
+    } else health -= amount;
+	SetPlayerHealthEx(damagedid, health);
+	CallbackDamages(damagedid, playerid, bodypart, weaponid, amount);
+	if(health > 10 && health < 30){
+		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){
+			SetPlayerWeaponSkill(damagedid, MEDIUM_SKILL);
+			SendClientMessage(damagedid, COLOR_LIGHTRED, "-> Vida baixa, suas skills de tiros estão no médio.");
+		}
+    }
+    if(health < 10){
+		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){
+			SetPlayerWeaponSkill(damagedid, MINIMUM_SKILL);
+			SendClientMessage(damagedid, COLOR_LIGHTRED, "-> Vida crítica, suas skills de tiros estão no mínimo.");
+		}
+    }
+	if(health < 1){
+		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){ // BRUTALMENTE FERIDO 
+			printf("[1] CHAMOU AKI HEIN!");
+			pInfo[damagedid][pBrutallyWounded] = true;
+			pInfo[damagedid][pDeadTime] = 120;
+			pInfo[damagedid][pInterior] = GetPlayerInterior(damagedid);
+			pInfo[damagedid][pVirtualWorld] = GetPlayerVirtualWorld(damagedid);
+			GetPlayerPos(damagedid, pInfo[damagedid][pPositionX], pInfo[damagedid][pPositionY], pInfo[damagedid][pPositionZ]);
+			GetPlayerFacingAngle(damagedid, pInfo[damagedid][pPositionA]);
+        
+			SetSpawnInfo(damagedid, NO_TEAM, pInfo[damagedid][pSkin], 
+			pInfo[damagedid][pPositionX], pInfo[damagedid][pPositionY], pInfo[damagedid][pPositionZ], pInfo[damagedid][pPositionA],
+			0, 0, 0, 0, 0, 0);
+
+			SetPlayerSkin(damagedid, GetPlayerSkin(damagedid) > 0 ? (pInfo[damagedid][pSkin]) : (23));
+			SpawnPlayer(damagedid);
+
+			SetPlayerHealthEx(damagedid, 25.0);
+			pInfo[damagedid][pHealth] = 25.0;
+
+			SendClientMessage(damagedid, COLOR_LIGHTRED, "Você está brutalmente ferido, agora se um médico ou alguém não lhe ajudar, você irá morrer.");
+			SendClientMessage(damagedid, COLOR_LIGHTRED, "Para aceitar a morte digite /aceitarmorte.");
+
+			new textstring[512];
+			if (!IsValidDynamic3DTextLabel(pInfo[damagedid][pBrutallyTag])) {
+				if(pInfo[damagedid][pTotalDamages] == 1)
+					format(textstring, sizeof(textstring), "(( Este jogador foi ferido %d vez,\n /ferimentos %d para mais informações ))", pInfo[damagedid][pTotalDamages], damagedid);
+				else
+					format(textstring, sizeof(textstring), "(( Este jogador foi ferido %d vezes,\n /ferimentos %d para mais informações ))", pInfo[damagedid][pTotalDamages], damagedid);
+
+				pInfo[damagedid][pBrutallyTag] = CreateDynamic3DTextLabel(textstring, COLOR_LIGHTRED, 0.0, 0.0, 0.4, 8.0, damagedid, INVALID_VEHICLE_ID, 0, -1, -1);
+			} else {
+				if(pInfo[damagedid][pTotalDamages] == 1)
+					format(textstring, sizeof(textstring), "(( Este jogador foi ferido %d vez,\n /ferimentos %d para mais informações ))", pInfo[damagedid][pTotalDamages], damagedid);
+				else
+					format(textstring, sizeof(textstring), "(( Este jogador foi ferido %d vezes,\n /ferimentos %d para mais informações ))", pInfo[damagedid][pTotalDamages], damagedid);
+
+				UpdateDynamic3DTextLabelText(pInfo[damagedid][pBrutallyTag], COLOR_LIGHTRED, textstring);
+			}
+			TogglePlayerControllable(damagedid, false);
+			if(IsPlayerInAnyVehicle(damagedid)){
+				TogglePlayerControllable(damagedid, false);
+				ApplyAnimation(damagedid, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
+			} else {
+				TogglePlayerControllable(damagedid, true);
+				ApplyAnimation(damagedid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+			}
+			
+			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
+			logCreate(damagedid, logString, 6);
+		} else if(pInfo[damagedid][pBrutallyWounded]) { // MORTO 
+			printf("[2] CHAMOU AKI HEIN!");
+			pInfo[damagedid][pBrutallyWounded] = false;
+			pInfo[damagedid][pDead] = true;
+			pInfo[damagedid][pDeadTime] = 60;
+			pInfo[damagedid][pInterior] = GetPlayerInterior(damagedid);
+			pInfo[damagedid][pVirtualWorld] = GetPlayerVirtualWorld(damagedid);
+			GetPlayerPos(damagedid, pInfo[damagedid][pPositionX], pInfo[damagedid][pPositionY], pInfo[damagedid][pPositionZ]);
+			GetPlayerFacingAngle(damagedid, pInfo[damagedid][pPositionA]);
+
+			SetPlayerHealthEx(damagedid, 25.0);
+			pInfo[damagedid][pHealth] = 25.0;
+
+			TogglePlayerControllable(damagedid, false);
+
+			SendClientMessage(damagedid, COLOR_YELLOW, "-> Você está morto agora. Você precisa esperar 60 segundos para utilizar o comando /respawnar.");
+
+			new countwep = 0;
+            for (new i = 0; i < 12; i ++) if (pInfo[damagedid][pGuns][i] != 0) {
+                if(pInfo[damagedid][pAmmo][i] > 0)
+                    countwep++;
+            }
+            if(countwep > 0) {
+                va_SendClientMessage(damagedid, -1, "SERVER: Por segurança, estas eram as armas de %s antes de morrer.", pNome(damagedid));
+                va_SendClientMessage(damagedid, COLOR_LIGHTRED, "Armas:");
+                for (new i = 0; i < 12; i ++) if (pInfo[damagedid][pGuns][i] && pInfo[damagedid][pAmmo][i] > 0) {
+                    va_SendClientMessage(damagedid, -1, "%s (%d)", ReturnWeaponName(pInfo[damagedid][pGuns][i]), pInfo[damagedid][pAmmo][i]);
+                }
+                ResetWeapons(damagedid);	
+            } else va_SendClientMessage(damagedid, -1, "SERVER: Você não possuia nenhuma arma quando morreu.");
+			
+			new textstring[512];
+			if (!IsValidDynamic3DTextLabel(pInfo[damagedid][pBrutallyTag])) {
+				format(textstring, sizeof(textstring), "(( ESTE JOGADOR ESTÁ MORTO ))");
+				pInfo[damagedid][pBrutallyTag] = CreateDynamic3DTextLabel(textstring, COLOR_LIGHTRED, 0.0, 0.0, 0.4, 8.0, damagedid, INVALID_VEHICLE_ID, 0, -1, -1);
+			} else {
+				format(textstring, sizeof(textstring), "(( ESTE JOGADOR ESTÁ MORTO ))");
+				UpdateDynamic3DTextLabelText(pInfo[damagedid][pBrutallyTag], COLOR_LIGHTRED, textstring);
+			}
+
+			if(IsPlayerInAnyVehicle(damagedid)) ApplyAnimation(damagedid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0, true);
+			else ApplyAnimation(damagedid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0, true);
+			
+			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s com o status de morto com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
+			logCreate(damagedid, logString, 6);
+		}
+		return true;
+	}
+
+    return true;
+}
+
+/*
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
+    if(pInfo[playerid][pDead]) return false;
+	printf("Entrou!");
     new Float:health, Float:armour;
     amount = WeaponDamage[weaponid][WepDamage];
     health = pInfo[playerid][pHealth];
@@ -109,8 +280,8 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 
 		case BODY_PART_LEFT_ARM, BODY_PART_RIGHT_ARM:
 		{
+			amount = amount / 2;
 			new chance = random(3);
-
 			if(chance == 1) armourhit = true;
 		}
 
@@ -130,7 +301,6 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 		case BODY_PART_HEAD:
 		{
 			if(pInfo[playerid][pSwat]) amount = amount/4;
-			else amount = amount/2;
 		}
 	}
 	if(armour > 0.0 && armourhit){
@@ -145,12 +315,16 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 
 	SetPlayerHealthEx(playerid, health);
 	if(health > 10 && health < 30){
-       	SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
-        SendClientMessage(playerid, COLOR_LIGHTRED, "-> Vida baixa, suas skills de tiros estão no médio.");
+		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){
+			SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
+			SendClientMessage(playerid, COLOR_LIGHTRED, "-> Vida baixa, suas skills de tiros estão no médio.");
+		}
     }
     if(health < 10){
-        SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
-        SendClientMessage(playerid, COLOR_LIGHTRED, "-> Vida crítica, suas skills de tiros estão no mínimo.");
+		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){
+			SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
+			SendClientMessage(playerid, COLOR_LIGHTRED, "-> Vida crítica, suas skills de tiros estão no mínimo.");
+		}
     }
 	if(health < 1){
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 
@@ -191,12 +365,15 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 
 				UpdateDynamic3DTextLabelText(pInfo[playerid][pBrutallyTag], COLOR_LIGHTRED, textstring);
 			}
-
+			TogglePlayerControllable(playerid, false);
 			if(IsPlayerInAnyVehicle(playerid)){
-				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0);
 				TogglePlayerControllable(playerid, false);
-			} else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
-
+				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
+			} else {
+				TogglePlayerControllable(playerid, true);
+				ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+			}
+			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
 			logCreate(playerid, logString, 6);
 		} else if(pInfo[playerid][pBrutallyWounded]) { // MORTO 
@@ -239,8 +416,8 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 				UpdateDynamic3DTextLabelText(pInfo[playerid][pBrutallyTag], COLOR_LIGHTRED, textstring);
 			}
 
-			if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, 0, 1, 1, 1, 0, 1);
-			else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, 0, 1, 1, 1, 0, 1);
+			if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0, true);
+			else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0, true);
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s com o status de morto com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
 			logCreate(playerid, logString, 6);
@@ -251,6 +428,101 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
     return true;
 }
 
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
+    if(weaponid == 0){
+        if(pInfo[playerid][pTackleMode]){
+            if(pInfo[playerid][pTackleTimer] < gettime()){
+                new chance = random(2);
+                switch(chance){
+                    case 0: // falha
+                    {
+                        SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s falhou em tentar derrubar %s.", pNome(playerid), pNome(damagedid));
+
+                        ApplyAnimation(playerid,"ped","EV_dive", 4.0, false, true, true, false, 0, true);
+                        pInfo[playerid][pTackleTimer] = gettime() + 10;
+
+                        format(logString, sizeof(logString), "%s (%s) falhou em derrubar %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
+	                    logCreate(playerid, logString, 7);
+                    }
+                    case 1: // sucesso
+                    {
+                        SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
+                        
+                        ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, false, true, true, true, 0, true);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
+
+                        pInfo[playerid][pTackleTimer] = gettime() + 10;
+
+                        format(logString, sizeof(logString), "%s (%s) derrubou %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
+	                    logCreate(playerid, logString, 7);
+                    }
+                }
+            }
+        }
+    }
+	if(playerid != INVALID_PLAYER_ID && damagedid != INVALID_PLAYER_ID){
+        OnPlayerTakeDamage(damagedid, playerid, amount, weaponid, bodypart);
+    }
+    return true;
+}*/
+
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
+    if(pInfo[playerid][pDead]) return false;
+
+    if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){
+	    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
+			if(newkeys & KEY_JUMP && !(oldkeys & KEY_JUMP)){
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
+			}
+		}
+	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
+			if(newkeys & KEY_SPRINT && !(oldkeys & KEY_SPRINT)){
+				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
+			}
+		}
+	}
+    return true;
+}
+
+forward DeathTimer(); public DeathTimer(){
+    foreach (new i : Player){
+        if(pInfo[i][pDeadTime] > 0){
+            if(pInfo[i][pPassedOut] == true) if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;
+            else {
+                if(!pInfo[i][pDead] && pInfo[i][pInjured]){
+                    if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;
+                
+                    if(pInfo[i][pDeadTime] <= 0 && pInfo[i][pInjured] == 1){
+                        pInfo[i][pPassedOut] = false;
+                        TogglePlayerControllable(i, false);
+
+                        va_SendClientMessage(i, COLOR_YELLOW, "-> Você está morto agora. Será necessário esperar 60 segundos até poder utilizar o comando /respawnar.");
+
+                        SetPlayerChatBubble(i, "(( ESTE JOGADOR ESTÁ MORTO ))", COLOR_LIGHTRED, 15.0, 60*1000);
+                        SendClientMessageToAll(-1, "[11] MORTO TIMER");
+
+                        pInfo[i][pDead] = 1;
+                        pInfo[i][pDeadTime] = 60;
+
+                        if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
+                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+                    }
+                    else if(pInfo[i][pDead]){
+                        if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;
+                        if(pInfo[i][pDeadTime] <= 0 && pInfo[i][pInjured]){
+                            va_SendClientMessage(i, COLOR_YELLOW, "-> Você já pode usar /respawnar agora.");
+                            SendClientMessageToAll(-1, "[12] MORTO TIMER -> Allow respawn");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
 
 CallbackDamages(playerid, issuerid, bodypart, weaponid, Float:amount){
     new id,
@@ -283,8 +555,8 @@ CallbackDamages(playerid, issuerid, bodypart, weaponid, Float:amount){
 
 ShowPlayerDamages(damageid, playerid, view){
     new caption[33],
-        str[255],
-        longstr[1200];
+        str[1024];
+        //longstr[1200];
 
     format(caption, sizeof(caption), "%s — %d ferimentos", pNome(damageid), pInfo[damageid][pTotalDamages]);
 
@@ -305,9 +577,9 @@ ShowPlayerDamages(damageid, playerid, view){
 				ReturnWeaponName(DamageInfo[damageid][i][eDamageWeapon]), 
 				gettime() - DamageInfo[damageid][i][eDamageTime],
 				DamageInfo[damageid][i][eDamageTaken]);
-				strcat(longstr, str);
+				//strcat(longstr, str);
             }
-			Dialog_Show(playerid, damagesDialog, DIALOG_STYLE_TABLIST_HEADERS, caption, longstr, "Fechar", "");
+			Dialog_Show(playerid, damagesDialog, DIALOG_STYLE_TABLIST_HEADERS, caption, str, "Fechar", "");
         }
         case 1:
         {
@@ -323,9 +595,9 @@ ShowPlayerDamages(damageid, playerid, view){
 				pNome(DamageInfo[damageid][i][eDamageBy]),
 				gettime() - DamageInfo[damageid][i][eDamageTime],
 				DamageInfo[damageid][i][eDamageTaken]);
-				strcat(longstr, str);
+				//strcat(longstr, str);
             }
-            Dialog_Show(playerid, damagesDialog, DIALOG_STYLE_TABLIST_HEADERS, caption, longstr, "Fechar", "");
+            Dialog_Show(playerid, damagesDialog, DIALOG_STYLE_TABLIST_HEADERS, caption, str, "Fechar", "");
         } 
     }
     return true;
@@ -406,6 +678,18 @@ CMD:deletecorpse(playerid, params[])
     return 1;
 }*/
 
+CMD:investida(playerid, params[]){
+	if (!pInfo[playerid][pTackleMode]){
+		va_SendClientMessage(playerid, -1, "SERVER: Você ativou o modo investida. A partir de agora se você socar alguém, haverá chances de derruba-lo.");
+		va_SendClientMessage(playerid, -1, "SERVER: Se o jogador for derrubado e não interpretar corretamente, utilize o /report.");
+		pInfo[playerid][pTackleMode] = true;
+	}else{
+		va_SendClientMessage(playerid, -1, "SERVER: Você desativou o modo investida.");
+		pInfo[playerid][pTackleMode] = false;
+	}
+	return true;
+}
+
 CMD:ferimentos(playerid, params[]){
     if (!pInfo[playerid][pLogged]) return true;
     static userid;
@@ -440,17 +724,29 @@ CMD:debug(playerid, params[]){
 	pInfo[playerid][pDead] = 0;
     pInfo[playerid][pInjured] = 0;
     pInfo[playerid][pDeadTime] = 0;
+	pInfo[playerid][pBrutallyWounded] = 0;
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pLimping] = false;
     pInfo[playerid][pLimpingTime] = 0;
 	pInfo[playerid][pTotalDamages] = 0;
+	SetPlayerHealthEx(playerid, pInfo[playerid][pHealthMax]);
     SetCameraBehindPlayer(playerid);
     TogglePlayerControllable(playerid, true);
-    ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
+
+	ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, false, false, false, false, 0, true);
 	if (IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]))
 	{
 		DestroyDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]);
 		pInfo[playerid][pBrutallyTag] = Text3D:INVALID_3DTEXT_ID;
 	}
+	return true;
+}
+
+CMD:checkvars(playerid, params[]){
+	SendAdminAlert(COLOR_YELLOW, "pInfo[playerid][pDead] = %d, \
+    pInfo[playerid][pInjured] = %d, \
+    pInfo[playerid][pDeadTime] = %d, \
+	pInfo[playerid][pBrutallyWounded] = %d", pInfo[playerid][pDead], pInfo[playerid][pInjured], pInfo[playerid][pDeadTime], pInfo[playerid][pBrutallyWounded]);
+
 	return true;
 }

@@ -4,7 +4,8 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#include <streamer> 
+#include <fixes>
+#include <streamer>
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
@@ -15,6 +16,7 @@
 #include <strlib>
 #include <easyDialog>
 #include <bcrypt>
+//#include <progress2>
 #include <streamer>
 #include <easyDialog>  
 
@@ -41,7 +43,9 @@ new query[2048];
 #include "modules\utils\utils_time.pwn"
 #include "modules\utils\utils_discord.pwn"
 #include "modules\utils\utils_logs.pwn"
-//#include "modules\utils\utils_textdraws.pwn"
+#include "modules\utils\utils_models.pwn"
+#include "modules\utils\utils_interface.pwn"
+#include "modules\utils\utils_init.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -63,8 +67,12 @@ new query[2048];
 #include "modules\core\player\systems\rpcmds.pwn"
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\death.pwn"
+#include "modules\core\player\systems\mechanic.pwn"
 //#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
+
+// FACTIONS
+#include "modules\core\player\systems\factions\news.pwn"
 
 // Inclusão de módulos relativos a jogos
 //#include "modules\core\player\systems\games\poker.pwn"
@@ -82,77 +90,3 @@ main() {
     printf("Última atualização em: %s\n \n", LASTEST_RELEASE);
 }
 
-forward OnGamemodeLoad(playerid);
-public OnGamemodeLoad(playerid){
-    new rcon[255];
-    if(Server_Type == 1){
-		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
-		else{
-            format(rcon, sizeof(rcon), "hostname Advanced Roleplay | SA-MP 0.3.DL-R1");
-		    SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password 0");
-            SendRconCommand(rcon);
-            ServerStatus(1);
-
-            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou com acesso normal.");
-            logCreate(99998, logString, 5);
-        } 
-	}
-
-	else if(Server_Type == 2){
-		format(rcon, sizeof(rcon), "hostname Advanced Sandbox | SA-MP 0.3.DL-R1");
-		SendRconCommand(rcon);
-        format(rcon, sizeof(rcon), "password sandbox333");
-        SendRconCommand(rcon);
-
-        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou no modo Sandbox.");
-        logCreate(99998, logString, 5);
-	}
-
-	else if(Server_Type == 3){
-		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
-		else format(rcon, sizeof(rcon), "hostname Advanced Roleplay | SA-MP 0.3.DL-R1");
-		SendRconCommand(rcon);
-        format(rcon, sizeof(rcon), "password adrpthiagao");
-        SendRconCommand(rcon);
-
-        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo manutenção.");
-        logCreate(99998, logString, 5);
-	}
-
-    return true;
-}
-
-public OnGameModeInit() {
-    new gmText[128];
-    format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
-
-    SetGameModeText(gmText);
-    SendRconCommand("hostname Advanced Roleplay | Iniciando serviços...");
-    SendRconCommand("language Brazilian Portuguese");
-    SendRconCommand("weburl http://advanced-roleplay.com.br");
-    SendRconCommand("cookielogging 0");
-	SendRconCommand("messageholelimit 9000");
-	SendRconCommand("ackslimit 11000");
-    SendRconCommand("password snd2n189w--");
-
-    DisableInteriorEnterExits();
-    EnableStuntBonusForAll(false);
-    ShowPlayerMarkers(0);
-	ManualVehicleEngineAndLights();
-	EnableVehicleFriendlyFire();
-
-    SetTimer("OnGamemodeLoad", 600, false);
-    return true;
-}
-
-public OnPlayerCommandPerformed(playerid, cmdtext[], success)
-{
-    if(!success){
-		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
-    }else{
-        format(logString, sizeof(logString), "%s (%s) [%s]: %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmdtext);
-        logCreate(playerid, logString, 3);
-    }
-    return true;
-}

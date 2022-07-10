@@ -3,9 +3,9 @@
 #define NT_DISTANCE 8.0
   
 hook OnGameModeInit(){
-    ShowNameTags(0);
+    ShowNameTags(false);
     SetTimer("UpdateNametag", 1000, true);
-    return 1;
+    return true;
 }
 
 static GetHealthDots(playerid){
@@ -75,7 +75,7 @@ static GetArmorDots(playerid){
 hook OnPlayerConnect(playerid){
     pInfo[playerid][pNametag] = CreateDynamic3DTextLabel("Loading nametag...", 0xFFFFFFFF, 0.0, 0.0, 0.2, NT_DISTANCE, .attachedplayer = playerid, .testlos = 1);
     pInfo[playerid][pESC] = 0;
-    return 1;
+    return true;
 }
 
 hook OnPlayerUpdate(playerid){
@@ -86,7 +86,7 @@ hook OnPlayerUpdate(playerid){
 hook OnPlayerDisconnect(playerid, reason){
     if(IsValidDynamic3DTextLabel(pInfo[playerid][pNametag]))
         DestroyDynamic3DTextLabel(pInfo[playerid][pNametag]);
-    return 1;
+    return true;
 }
 
 IsPlayerMinimized(playerid, ms = 5000){
@@ -120,5 +120,5 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
         else  format(nametag, sizeof(nametag), "{FF0000}%s (%i){FFFFFF}\n{FF0000}%s", pNome(playerid), playerid, GetHealthDots(playerid));
         UpdateDynamic3DTextLabelText(pInfo[playerid][pNametag], 0xFFFFFFFF, nametag);
     }
-    return 1;
+    return true;
 }

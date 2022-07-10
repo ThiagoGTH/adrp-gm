@@ -5,6 +5,7 @@
 	"output": "gamemodes/main.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
+		"pawn-lang/sa-mp-fixes",
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",
 		"Southclaws/pawn-chrono",

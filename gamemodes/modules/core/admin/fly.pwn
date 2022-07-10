@@ -40,7 +40,7 @@ bool:StartFly(playerid)
 	new Float:x,Float:y,Float:z;
 	GetPlayerPos(playerid,x,y,z);
 	SetPlayerPos(playerid,x,y,z);
-	ApplyAnimation(playerid,"PARACHUTE","PARA_steerR",6.1,1,1,1,1,0,1);
+	ApplyAnimation(playerid,"PARACHUTE","PARA_steerR", 6.1, true, true, true, true, 0, true);
 	Fly(playerid);
 	return true;
 }
@@ -81,7 +81,7 @@ public Fly(playerid)
 	if(v_x == 0 && v_y == 0)
 	{
 		if(GetPlayerAnimationIndex(playerid) == 959)
-		ApplyAnimation(playerid,"PARACHUTE","PARA_steerR",6.1,1,1,1,1,0,1);
+		ApplyAnimation(playerid,"PARACHUTE","PARA_steerR", 6.1, true, true, true, true, 0, true);
 	}
 	else
 	{
@@ -89,7 +89,7 @@ public Fly(playerid)
 		GetPlayerCameraPos(playerid,x,y,z);
 		SetPlayerLookAt(playerid,v_x*500.0+x,v_y*500.0+y);
 		if(GetPlayerAnimationIndex(playerid) != 959)
-		ApplyAnimation(playerid,"PARACHUTE","FALL_SkyDive_Accel",6.1,1,1,1,1,0,1);
+		ApplyAnimation(playerid,"PARACHUTE", "FALL_SkyDive_Accel", 6.1, true, true, true, true, 0, true);
 	}
 	if(OnFly[playerid])
 		SetTimerEx("Fly",100,false,"i",playerid);

@@ -48,7 +48,7 @@ stock ShowAdminCmds(playerid){
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listareports, /ar, /rr, /tapa, /vida, /reviver, /reclife, /ir, /trazer");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /spec, /ultimoatirador");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /x, /y, /z");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
@@ -420,7 +420,7 @@ CMD:congelar(playerid, params[])
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	if(GetPlayerAdmin(userid) >= 1335 && GetPlayerAdmin(playerid) < 1335) SendErrorMessage(playerid, "Você não pode congelar um management!");
 	
-	TogglePlayerControllable(userid, 0);
+	TogglePlayerControllable(userid, false);
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s congelou %s.", pNome(playerid), pNome(userid));
 	
 	format(logString, sizeof(logString), "%s (%s) congelou %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
@@ -436,7 +436,7 @@ CMD:descongelar(playerid, params[])
 	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/descongelar [playerid/nome]");
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 
-	TogglePlayerControllable(userid, 1);
+	TogglePlayerControllable(userid, true);
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s descongelou %s.", pNome(playerid), pNome(userid));
 	
 	format(logString, sizeof(logString), "%s (%s) descongelou %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
@@ -460,6 +460,8 @@ CMD:dararma(playerid, params[])
 
 	GiveWeaponToPlayer(userid, weaponid, ammo);
 	va_SendClientMessage(playerid, -1, "SERVER: Você deu para %s uma %s com %d munições.", pNome(userid), ReturnWeaponName(weaponid), ammo);
+
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s deu uma %s(%d) para %s.", pNome(playerid), ReturnWeaponName(weaponid), ammo, pNome(userid));
 	
 	format(logString, sizeof(logString), "%s (%s) deu uma %s (ID:%d AMMO:%d) para %s.", pNome(playerid), GetPlayerUserEx(playerid), ReturnWeaponName(weaponid), weaponid, ammo, pNome(userid));
 	logCreate(playerid, logString, 1);
@@ -753,6 +755,40 @@ Dialog:goToPerInt(playerid, response, listitem, inputtext[]){
 	return true;
 }
 
+CMD:x(playerid, params[]){
+	if(!pInfo[playerid][pLogged]) return true;
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new Float:x, Float:y, Float:z, Float:npos;
+	if(sscanf(params, "f", npos)) return SendSyntaxMessage(playerid, "/x [Coodernada]");
+	
+	GetPlayerPos(playerid, x, y, z);
+	SetPlayerPos(playerid, x+npos, y, z);
+	return true;	
+}
+
+CMD:y(playerid, params[]){
+	if(!pInfo[playerid][pLogged]) return true;
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new Float:x, Float:y, Float:z, Float:npos;
+	if(sscanf(params, "f", npos)) return SendSyntaxMessage(playerid, "/y [Coodernada]");
+	
+	GetPlayerPos(playerid, x, y, z);
+	SetPlayerPos(playerid, x, y+npos, z);
+	return true;	
+}
+
+CMD:z(playerid, params[]){
+	if(!pInfo[playerid][pLogged]) return true;
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new Float:x, Float:y, Float:z, Float:npos;
+	
+	if(sscanf(params, "f", npos)) SendSyntaxMessage(playerid, "/z [Coodernada]");
+	
+	GetPlayerPos(playerid, x, y, z);
+	SetPlayerPos(playerid, x, y, z+npos);
+	return true;	
+}
+
 CMD:spec(playerid, params[])
 {
 	if(!pInfo[playerid][pLogged]) return true;
@@ -765,7 +801,8 @@ CMD:spec(playerid, params[])
 
 	    PlayerSpectatePlayer(playerid, INVALID_PLAYER_ID);
 	    PlayerSpectateVehicle(playerid, INVALID_VEHICLE_ID);
-
+		SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
 	    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], 
         pInfo[playerid][pPositionY], 
@@ -782,10 +819,11 @@ CMD:spec(playerid, params[])
 	}
 
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/spec <playerID/Nome>");
-	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
+	if (!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
+	if (IsPlayerWatchingCamera(userid)) return SendErrorMessage(playerid, "O jogador está assistindo uma transmissão, então não é possível espectar ele.");
+	if (GetPlayerState(userid) != PLAYER_STATE_SPECTATING) return SendErrorMessage(playerid, "O administrador está de spec em alguém, então não é possível espectar ele.");
 
-	if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING)
-	{
+	if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING){
 		GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
 		GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
 
@@ -795,25 +833,22 @@ CMD:spec(playerid, params[])
 	SetPlayerInterior(playerid, GetPlayerInterior(userid));
 	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(userid));
 
-	TogglePlayerSpectating(playerid, 1);
+	TogglePlayerSpectating(playerid, true);
 
 	if (IsPlayerInAnyVehicle(userid))
 	    PlayerSpectateVehicle(playerid, GetPlayerVehicleID(userid));
-
 	else
 		PlayerSpectatePlayer(playerid, userid);
 
 	va_SendClientMessage(playerid, COLOR_LIGHTRED, "Você agora está observando %s (ID: %d). Use '/spec off' para sair do spec.", pNome(userid), userid);
 	EmSpec[playerid] = userid;
 
-	
 	format(logString, sizeof(logString), "%s (%s) está observando %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 	return true;
 }
 
-CMD:jetpack(playerid, params[])
-{
+CMD:jetpack(playerid, params[]){
 	if(!pInfo[playerid][pLogged]) return true;
 	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	new userid;
@@ -840,7 +875,7 @@ stock GiveGMX() {
 		SendRconCommand("hostname Advanced Roleplay | REINICIANDO");
 		SendRconCommand("password 10102dmmdnsas7721jmm");
 	}
-	SetTimer("GMXA", 300000, 0);
+	SetTimer("GMXA", 300000, false);
 }
 
 forward GMXA();
@@ -851,7 +886,7 @@ public GMXA() {
 		SaveUserInfo(i);
 		Kick(i);
 	}
-	SetTimer("GMXF", 400, 0);
+	SetTimer("GMXF", 400, false);
 }
 forward GMXF();
 public GMXF() {

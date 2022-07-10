@@ -236,7 +236,7 @@ public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 	pInfo[playerid][pFreeze] = 0;
 
 	SetPlayerPos(playerid, x, y, z);
-	TogglePlayerControllable(playerid, 1);
+	TogglePlayerControllable(playerid, true);
 	return 1;
 }
 

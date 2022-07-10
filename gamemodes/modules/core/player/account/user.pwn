@@ -15,20 +15,6 @@ personagens, talvez seja interessante você dar uma olhada no módulo 'character.p
 forward OnPasswordHashed(playerid);
 forward OnPasswordChecked(playerid);
 
-enum User_Data {
-    uID,
-    uName[24],
-    uPass[16],
-    uAdmin,
-    uVip,
-    uFactionMod,
-	uPropertyMod,
-};
-
-new uInfo[MAX_PLAYERS][User_Data];
-
-new loginAttempts[MAX_PLAYERS];
-
 GetPlayerUserEx(playerid){
     new name[24];
     GetPlayerName(playerid, name, sizeof(name));
@@ -48,13 +34,12 @@ hook OnPlayerConnect(playerid) {
     TogglePlayerSpectating(playerid, true);
     CheckUserConditions(playerid);
 
-    return 1;
+    return true;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
     // Interação com o dialog de registro
-
     if(dialogid == DIALOG_REGISTER) {  
         if(!response)
             return Kick(playerid);
@@ -62,13 +47,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
             SendErrorMessage(playerid, "ERRO: A senha a ser registrada deve ter entre 6 e 16 caracteres.");
             CheckUserConditions(playerid);
-            return 0;
+            return false;
         }
         bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
     }
 
     // Interação com o dialog de login
-
     if(dialogid == DIALOG_LOGIN) {
         if(!response)
             return Kick(playerid);
@@ -77,7 +61,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
         bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
     }
-    return 1;
+    return true;
 }
 
 public OnPasswordHashed(playerid)
@@ -87,7 +71,7 @@ public OnPasswordHashed(playerid)
 
     CreateUser(playerid, uInfo[playerid][uName], hash);
     CheckUserConditions(playerid);
-	return 1;
+	return true;
 }
 
 public OnPasswordChecked(playerid)
@@ -97,10 +81,11 @@ public OnPasswordChecked(playerid)
 		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 2);
         ShowUsersCharacters(playerid);
 	}
 	else return NotifyWrongAttempt(playerid);
-	return 1;
+	return true;
 
 }
 
@@ -108,17 +93,18 @@ public OnPasswordChecked(playerid)
 
 NotifyWrongAttempt(playerid) {
     loginAttempts[playerid]++;
-
+    KillTimer(pInfo[playerid][pInterfaceTimer]);
     va_SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
+    pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 1);
 
     if(loginAttempts[playerid] >= 3) {
         SendServerMessage(playerid, "Você foi kickado por errar a senha muitas vezes.");
         Kick(playerid);
-        return 0;
+        return false;
     }
 
     CheckUserConditions(playerid);
-    return 1;
+    return true;
 }
 
 // Função booleana pra checar se o usuário já está registrado
@@ -153,12 +139,19 @@ void:CreateUser(playerid, userName[], password[]) {
 // Nada demais, só vai avaliar se o usuário está registrado (ou não) e mostrar as devidas dialogs
 
 void:CheckUserConditions(playerid) {
-    if(IsUserRegistered(uInfo[playerid][uName]))
-        ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", "Bem vindo!\n \nO usuário já está registrado.\
-            \nDigite a senha registrada para se conectar", "Conectar", "Sair");
-    else
+    KillTimer(pInfo[playerid][pInterfaceTimer]);
+    ShowLoginTextdraws(playerid);
+    if(IsUserRegistered(uInfo[playerid][uName])){
+        ShowLoginTextdraws(playerid);
+        ClearPlayerChat(playerid);
+        ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
+        \n           Digite sua senha:", "Autenticar", "Cancelar");
+    } else {
+        ShowLoginTextdraws(playerid);
+        ClearPlayerChat(playerid);
         ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Bem vindo!\n \nO usuário ainda não foi registrado.\
             \nPara continuar, digite uma senha de 6 a 16 caracteres abaixo", "Registrar", "Sair");
+    }
 }
 
 // Caregar informações do usuário e adicioná-las às variáveis do enumerador. A variável de nome já é formatada ao logar.
@@ -169,7 +162,7 @@ LoadUserInfo(playerid) {
     mysql_query(DBConn, query);
 
     if(!cache_num_rows()) 
-        return 0;
+        return false;
 
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
     cache_get_value_name(0, "password", uInfo[playerid][uPass]);
@@ -177,7 +170,7 @@ LoadUserInfo(playerid) {
     cache_get_value_name_int(0, "vip", uInfo[playerid][uVip]);
     cache_get_value_name_int(0, "ft", uInfo[playerid][uFactionMod]);
     cache_get_value_name_int(0, "pt", uInfo[playerid][uPropertyMod]);
-    return 1;
+    return true;
 }
 
 // Dar um UPDATE no MySQL com as novas informações do usuário.
@@ -188,7 +181,7 @@ SaveUserInfo(playerid) {
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
-        return 0;
+        return false;
 
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET `admin` = %d, \
     `vip` = %d,            \
@@ -202,12 +195,14 @@ SaveUserInfo(playerid) {
     mysql_query(DBConn, query);
 
     printf("Usuário '%s' salvo com sucesso.", uInfo[playerid][uName]);
-    return 1;
+    return true;
 }
 
 // Função pra formatar e mostrar os personagens do usuário numa Dialog
 
 ShowUsersCharacters(playerid) {
+    HideLoginTextdraws(playerid);
+    SetPlayerInterface(playerid, 999);
     new characterName[24], string[128], majorString[2056],
         characterScore, lastLogin;
 
@@ -236,19 +231,9 @@ ShowUsersCharacters(playerid) {
 // Simplesmente resetar as variáveis de usuário, já que elas estão armazenadas por ID e chamar o salvamento.
 
 hook OnPlayerDisconnect(playerid, reason) {
-    
     SaveUserInfo(playerid);
-
-    loginAttempts[playerid]               = 
-    uInfo        [playerid][uAdmin]       = 
-    uInfo        [playerid][uID]          = 
-    uInfo        [playerid][uVip]         = 
-    uInfo        [playerid][uFactionMod]  = 
-    uInfo        [playerid][uPropertyMod] = 0;
-
-    uInfo[playerid][uName][0] = EOS;
-
-    return 1;
+    ResetUserData(playerid);
+    return true;
 }
 
 // Aqui, iremos checar se o player logou com o nick de um personagem já existente e, se sim, redirecionar para o nome do usuário.
@@ -260,7 +245,7 @@ CheckCharactersName(playerid) {
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
-        return 1;
+        return true;
 
     cache_get_value_name(0, "user", realUserName);
 
@@ -273,7 +258,7 @@ CheckCharactersName(playerid) {
     SetPlayerName(playerid, realUserName);
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", uInfo[playerid][uName]);
-    return 1;
+    return true;
 }
 
 // Comando de checar usuário e personagens de um jogador. Aberto pra todos.
@@ -293,7 +278,7 @@ CMD:usuario(playerid, params[]) {
     cache_get_value_name(0, "user", userValue);
     va_SendClientMessage(playerid, COLOR_GREEN, "O usuário de %s é: %s.", characterName, userValue);
 
-    return 1;
+    return true;
 }
 
 CMD:personagens(playerid, params[]) {
@@ -325,5 +310,5 @@ CMD:personagens(playerid, params[]) {
             GetPlayerByName(characterValue) == -1 ? ("") : ("**ONLINE**"));
     }
 
-    return 1;
+    return true;
 }

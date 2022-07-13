@@ -719,7 +719,7 @@ stock SendClientMessageToAllEx(color, const text[], {Float, _}:...)
 
 		#emit RETN
 	}
-	return 1;
+	return true;
 }
 
 //Nome das Armas
@@ -801,11 +801,11 @@ stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:..
 
 		foreach (new i : Player)
 		{
-				if (IsPlayerNearPlayer(i, playerid, radius)) {
-			SendClientMessage(i, color, string);
+			if (IsPlayerNearPlayer(i, playerid, radius)) {
+				SendClientMessage(i, color, string);
 			}
 		}
-		return 1;
+		return true;
 	}
 	foreach (new i : Player)
 	{
@@ -813,7 +813,7 @@ stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:..
 			SendClientMessage(i, color, str);
 		}
 	}
-	return 1;
+	return true;
 }
 
 FormatNumber(number) { // i didn't made it, idk who did!

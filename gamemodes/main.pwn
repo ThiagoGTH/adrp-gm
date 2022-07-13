@@ -46,6 +46,7 @@ new query[2048];
 #include "modules\utils\utils_models.pwn"
 #include "modules\utils\utils_interface.pwn"
 #include "modules\utils\utils_init.pwn"
+#include "modules\utils\utils_vehicles.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -68,6 +69,8 @@ new query[2048];
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\death.pwn"
 #include "modules\core\player\systems\mechanic.pwn"
+#include "modules\core\player\systems\vehicles\vehicles_core.pwn"
+
 //#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
 

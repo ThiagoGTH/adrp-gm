@@ -21,6 +21,11 @@ public OnPlayerRequestDownload(playerid, type, crc)
 	return true;
 }*/
 
+public OnPlayerFinishedDownloading(playerid, virtualworld)
+{
+	return true;
+}
+
 hook OnGameModeInit(){
     LoadInterfaces();
     return true;

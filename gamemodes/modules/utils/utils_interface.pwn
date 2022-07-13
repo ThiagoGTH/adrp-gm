@@ -717,14 +717,14 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawFont(playerid, NewsTD[playerid][1], 4);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][1], false);
 
-    /*NewsTD[playerid][2] = CreatePlayerTextDraw(playerid, -0.411781, -0.166666, "LD_PLAN:tvcorn");
+    NewsTD[playerid][2] = CreatePlayerTextDraw(playerid, -0.411781, -0.166666, "mdl-9002:tv-screen");
     PlayerTextDrawTextSize(playerid, NewsTD[playerid][2], 712.000000, 477.000000);
     PlayerTextDrawAlignment(playerid, NewsTD[playerid][2], 1);
     PlayerTextDrawColor(playerid, NewsTD[playerid][2], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][2], 0);
     PlayerTextDrawBackgroundColor(playerid, NewsTD[playerid][2], 255);
     PlayerTextDrawFont(playerid, NewsTD[playerid][2], 4);
-    PlayerTextDrawSetProportional(playerid, NewsTD[playerid][2], false);*/
+    PlayerTextDrawSetProportional(playerid, NewsTD[playerid][2], false);
 
     NewsTD[playerid][3] = CreatePlayerTextDraw(playerid, 640.529296, -1.149999, "LD_PLAN:tvcorn");
     PlayerTextDrawTextSize(playerid, NewsTD[playerid][3], -142.000000, 158.000000);

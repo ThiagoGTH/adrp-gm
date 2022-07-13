@@ -83,6 +83,7 @@ StopPlayerWatchingCamera(playerid){
          0, 0, 0, 0, 0, 0);
 	TogglePlayerSpectating(playerid, false);
 	SetCameraBehindPlayer(playerid);
+	SetWeapons(playerid);
 
 	va_SendClientMessage(playerid, COLOR_GREEN, "Você deixou de assistir a transmissão ao vivo.");
 	return true;

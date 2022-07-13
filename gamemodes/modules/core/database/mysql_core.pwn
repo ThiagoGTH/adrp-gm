@@ -41,6 +41,7 @@ void:CheckTables() {
     CheckFurnitureInfoTable();
     CheckInteriorsInfoTable();
     CheckAdsTable();
+    CheckVehiclesTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -181,4 +182,121 @@ void:CheckAdsTable(){
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela 'advertisement' checada com sucesso.");
+}
+
+void:CheckVehiclesTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles` (\
+    `carID` int NOT NULL AUTO_INCREMENT,\
+    `carModel` int NOT NULL DEFAULT '0',\
+    `carOwner` int NOT NULL DEFAULT '0',\
+    `carPosX` float DEFAULT '0',\
+    `carPosY` float DEFAULT '0',\
+    `carPosZ` float DEFAULT '0',\
+    `carPosR` float DEFAULT '0',\
+    `carVirtualWorld` int DEFAULT '0',\
+    `carInterior` int DEFAULT '0',\
+    `carColor1` int NOT NULL DEFAULT '0',\
+    `carColor2` int NOT NULL DEFAULT '0',\
+    `carLocked` int NOT NULL DEFAULT '0',\
+    `carImpounded` int NOT NULL DEFAULT '0',\
+    `carImpoundPrice` int NOT NULL DEFAULT '0',\
+    `carWeapon1` int NOT NULL,\
+    `carAmmo1` int NOT NULL,\
+    `carWeapon2` int NOT NULL,\
+    `carAmmo2` int NOT NULL,\
+    `carWeapon3` int NOT NULL,\
+    `carAmmo3` int NOT NULL,\
+    `carWeapon4` int NOT NULL,\
+    `carAmmo4` int NOT NULL,\
+    `carWeapon5` int NOT NULL,\
+    `carAmmo5` int NOT NULL,\
+    `carWeapon6` int NOT NULL,\
+    `carAmmo6` int NOT NULL,\
+    `carWeapon7` int NOT NULL,\
+    `carAmmo7` int NOT NULL,\
+    `carWeapon8` int NOT NULL,\
+    `carAmmo8` int NOT NULL,\
+    `carWeapon9` int NOT NULL,\
+    `carAmmo9` int NOT NULL,\
+    `carWeapon10` int NOT NULL,\
+    `carAmmo10` int NOT NULL,\
+    `carWeapon11` int NOT NULL,\
+    `carAmmo11` int NOT NULL,\
+    `carWeapon12` int NOT NULL,\
+    `carAmmo12` int NOT NULL,\
+    `carWeapon13` int NOT NULL,\
+    `carAmmo13` int NOT NULL,\
+    `carWeapon14` int NOT NULL,\
+    `carAmmo14` int NOT NULL,\
+    `carWeapon15` int NOT NULL,\
+    `carAmmo15` int NOT NULL,\
+    `carWeapon16` int NOT NULL,\
+    `carAmmo16` int NOT NULL,\
+    `carWeapon17` int NOT NULL,\
+    `carAmmo17` int NOT NULL,\
+    `carWeapon18` int NOT NULL,\
+    `carAmmo18` int NOT NULL,\
+    `carWeapon19` int NOT NULL,\
+    `carAmmo19` int NOT NULL,\
+    `carWeapon20` int NOT NULL,\
+    `carAmmo20` int NOT NULL,\
+    `carWeapon21` int NOT NULL,\
+    `carAmmo21` int NOT NULL,\
+    `carWeapon22` int NOT NULL,\
+    `carAmmo22` int NOT NULL,\
+    `carWeapon23` int NOT NULL,\
+    `carAmmo23` int NOT NULL,\
+    `carWeapon24` int NOT NULL,\
+    `carAmmo24` int NOT NULL,\
+    `carWeapon25` int NOT NULL,\
+    `carAmmo25` int NOT NULL,\
+    `carWeapon26` int NOT NULL,\
+    `carAmmo26` int NOT NULL,\
+    `carWeapon27` int NOT NULL,\
+    `carAmmo27` int NOT NULL,\
+    `carWeapon28` int NOT NULL,\
+    `carAmmo28` int NOT NULL,\
+    `carWeapon29` int NOT NULL,\
+    `carAmmo29` int NOT NULL,\
+    `carWeapon30` int NOT NULL,\
+    `carAmmo30` int NOT NULL,\
+    `carFaction` int NOT NULL DEFAULT '0',\
+    `carBiz` int NOT NULL DEFAULT '0',\
+    `carRentPrice` int NOT NULL DEFAULT '0',\
+    `carRentPlayer` int NOT NULL DEFAULT '-1',\
+    `carRentTime` int NOT NULL DEFAULT '0',\
+    `carPaintjob` int(12) DEFAULT -1,\
+    `carMod1` int NOT NULL DEFAULT '0',\
+    `carMod2` int NOT NULL DEFAULT '0',\
+    `carMod3` int NOT NULL DEFAULT '0',\
+    `carMod4` int NOT NULL DEFAULT '0',\
+    `carMod5` int NOT NULL DEFAULT '0',\
+    `carMod6` int NOT NULL DEFAULT '0',\
+    `carMod7` int NOT NULL DEFAULT '0',\
+    `carMod8` int NOT NULL DEFAULT '0',\
+    `carMod9` int NOT NULL DEFAULT '0',\
+    `carMod10` int NOT NULL DEFAULT '0',\
+    `carMod11` int NOT NULL DEFAULT '0',\
+    `carMod12` int NOT NULL DEFAULT '0',\
+    `carMod13` int NOT NULL DEFAULT '0',\
+    `carMod14` int NOT NULL DEFAULT '0',\
+    `carNOSInstalled` int NOT NULL DEFAULT '0',\
+    `carNOS` int NOT NULL DEFAULT '0',\
+    `carBattery` float NOT NULL DEFAULT '100.000',\
+    `carEngine` float NOT NULL DEFAULT '100.000',\
+    `carMiles` float NOT NULL DEFAULT '0',\
+    `carFuel` float NOT NULL DEFAULT '100.00',\
+    `carHealth` float NOT NULL DEFAULT '1000.00',\
+    `carName` varchar(64),\
+    `carPlate` varchar(255),\
+    `carPlatePersonalized` int NOT NULL DEFAULT '0',\
+    `carAlarm` int NOT NULL DEFAULT '0',\
+    `carLock` int NOT NULL DEFAULT '0',\
+    `carImob` int NOT NULL DEFAULT '0',\
+    `carInsurance` int NOT NULL DEFAULT '0',\
+    `carXMRadio` int NOT NULL DEFAULT '0',\
+    `carSunPass` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`carID`));");
+
+    print("[DATABASE] Tabela 'vehicles' checada com sucesso.");
 }

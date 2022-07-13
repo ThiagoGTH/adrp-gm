@@ -307,7 +307,7 @@ SpawnSelectedCharacter(playerid) {
     TogglePlayerSpectating(playerid, true);
     InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
     InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
-    SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid);
+    SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid, 0);
     
     return true;
 }

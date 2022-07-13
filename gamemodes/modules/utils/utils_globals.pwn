@@ -1,7 +1,9 @@
 #include <YSI_Coding\y_hooks>
 
-#define USER_CHARACTERS_LIMIT 5
-#define USER_CHARACTERS_LIMIT_VIP 10
+#define USER_CHARACTERS_LIMIT       (5)
+#define USER_CHARACTERS_LIMIT_VIP   (10)
+
+#define MAX_DYNAMIC_CARS            (1500)
 
 new MySQL:DBConn;
 new logString[255];
@@ -206,3 +208,74 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][pLastShot], 64, "");
     pInfo[playerid][pShotTime] = 0;
 }
+
+// VEHICLES
+new vehiclecallsign[MAX_VEHICLES];
+
+enum coreVehicles {
+	vehWindowsDown,
+	vehCrate,
+    vehTemporary,
+	vehSirenOn,
+	vehSirenObject,
+};
+new CoreVehicles[MAX_VEHICLES][coreVehicles];
+
+enum carData {
+	carID,
+	carExists,
+	carModel,
+	carOwner,
+	Float:carPos[4],
+    carVirtualWorld,
+    carInterior,
+	carColor1,
+	carColor2,
+	carLocked,
+	carImpounded,
+	carImpoundPrice,
+	carVehicle,
+    carSpawned,
+    // Storage
+    carWeapons[30],
+	carAmmo[30],
+    carGunrackWeapon[3],
+    carGunrackAmmo[3],
+    // Types
+    carFaction,
+    carBiz,
+    carRent,
+    carRentPlayer,
+    carRentPrice,
+    // Tunning
+    carPaintjob,
+    carMods[14],
+    carNOSInstalled,
+    carNOS,
+    // Status
+    Float:carBattery, // Bateria do veículo
+	Float:carEngine, // Motor do veículo
+    Float:carMiles, // Milhas rodadas
+    Float:carMilesCon, // Milhas para descontar no gasto do veículo
+    Float:carFuel, // Combustível atual do veículo
+    Float:carMaxFuel, // Combustível máximo do veículo
+    Float:carHealth,
+    Float:carHealthUpdate,
+    // Adicionais
+    carName[64], // Nome (modelo) do veículo
+    carPlate[128], // Placa personalizada
+	carPlatePersonalized, // Status da placa personalizada
+    carAlarm, // Alarme
+ 	carLock, // Travas
+ 	carImob, // Immobilizer
+ 	carInsurance, // Seguro
+ 	carXMRadio, // Rádio
+    carSunPass, // SunPass
+    // Danos
+    carDamage[23], // 9 calibres + 14 partes veiculares que podem danificar
+    carDismantling,
+    carCarparts // Desmanche
+};
+new CarData[MAX_DYNAMIC_CARS][carData];
+
+

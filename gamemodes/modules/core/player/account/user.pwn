@@ -24,9 +24,9 @@ GetPlayerUserEx(playerid){
 
 // Evento/gatilho de conexão estabelecida pelo jogador
 
-hook OnPlayerConnect(playerid) {
-    
-    ClearPlayerChat(playerid, 50);
+hook OnPlayerRequestClass(playerid, classid) {
+    ShowLoginTextdraws(playerid);
+    ClearPlayerChat(playerid);
 
     format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
     CheckCharactersName(playerid);
@@ -80,7 +80,7 @@ public OnPasswordChecked(playerid)
     if(match){
 		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
-        LoadUserInfo(playerid);
+        LoadUserInfo(playerid); 
         pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 2);
         ShowUsersCharacters(playerid);
 	}

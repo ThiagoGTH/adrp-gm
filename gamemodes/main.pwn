@@ -4,32 +4,35 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#include <fixes>
+//#include <fixes>
 #include <streamer>
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
-#include <zcmd>
+#include <Pawn.CMD>
 #include <memory>
 #include <sscanf2>
 #include <discord-connector>
 #include <strlib>
 #include <easyDialog>
 #include <bcrypt>
-//#include <progress2>
+#include <progress2>
 #include <streamer>
+#include <PreviewDialog>
 #include <easyDialog>  
+#include <modelsizes>
+#include <physics>
 
 #define     TYPE                (1)
 #define     LASTEST_RELEASE     "24/06/2022"
 #define     VERSIONING          "0.0.1a - BETA"
 #define     SERVERIP            "localhost"
-#define     SERVERUCP           "https://advanced-roleplay.com.br"
+#define     SERVERUCP           "https://ucp.advanced-roleplay.com.br"
 #define     SERVERFORUM         "https://forum.advanced-roleplay.com.br"
 
-new Server_Instability = 0; // 0 = Acesso normal | 1 = Acesso suspenso
-new Server_Type = TYPE; // 0 = localhost | 1  = Oficial | 2  = Sandbox	
-new SERVER_MAINTENANCE = 0;  // 0 = fora de manutenção | 1 = em manutenção
+new Server_Instability = 0;     // 0 = Acesso normal | 1 = Acesso suspenso
+new Server_Type = TYPE;         // 0 = localhost | 1  = Oficial | 2  = Sandbox	
+new SERVER_MAINTENANCE = 0;     // 0 = fora de manutenção | 1 = em manutenção
 
 new query[2048];
 
@@ -39,7 +42,6 @@ new query[2048];
 #include "modules\utils\utils_globals.pwn"
 #include "modules\utils\utils_colors.pwn"
 #include "modules\utils\utils_player.pwn"
-#include "modules\utils\utils_dialogs.pwn"
 #include "modules\utils\utils_time.pwn"
 #include "modules\utils\utils_discord.pwn"
 #include "modules\utils\utils_logs.pwn"
@@ -55,12 +57,12 @@ new query[2048];
 #include "modules\core\player\account\user.pwn"
 #include "modules\core\player\account\character.pwn"
 #include "modules\core\player\account\changechar.pwn"
+#include "modules\core\player\account\paycheck.pwn"
 
 // Inclusão de módulos relativos a membros
 #include "modules\core\player\player_core.pwn"
-#include "modules\core\player\tela.pwn"
-
-//
+#include "modules\core\player\cmds\tela.pwn"
+#include "modules\core\player\cmds\newbie.pwn"
 #include "modules\core\player\licences\base_licence.pwn"
 
 // Inclusão de módulos relativos a sistemas
@@ -70,6 +72,7 @@ new query[2048];
 #include "modules\core\player\systems\death.pwn"
 #include "modules\core\player\systems\mechanic.pwn"
 #include "modules\core\player\systems\vehicles\vehicles_core.pwn"
+#include "modules\core\player\systems\vehicles\vehicles_cmd.pwn"
 
 //#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
@@ -78,6 +81,7 @@ new query[2048];
 #include "modules\core\player\systems\factions\news.pwn"
 
 // Inclusão de módulos relativos a jogos
+#include "modules\core\player\systems\games\pool.pwn"
 //#include "modules\core\player\systems\games\poker.pwn"
 
 // Inclusão de módulos relativos a administração
@@ -86,6 +90,7 @@ new query[2048];
 #include "modules\core\admin\config.pwn"
 #include "modules\core\admin\ipcheck.pwn"
 #include "modules\core\admin\reports.pwn"
+#include "modules\core\admin\ajail.pwn"
 #include "modules\core\admin\admin_core.pwn"
 
 main() {

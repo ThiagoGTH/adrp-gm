@@ -37,31 +37,27 @@ hook OnPlayerRequestClass(playerid, classid) {
     return true;
 }
 
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
-
-    // Interação com o dialog de registro
-    if(dialogid == DIALOG_REGISTER) {  
-        if(!response)
-            return Kick(playerid);
+Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]){
+	if(!response) return Kick(playerid);
         
-        if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
-            SendErrorMessage(playerid, "ERRO: A senha a ser registrada deve ter entre 6 e 16 caracteres.");
-            CheckUserConditions(playerid);
-            return false;
-        }
-        bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
+    if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
+        SendErrorMessage(playerid, "ERRO: A senha a ser registrada deve ter entre 6 e 16 caracteres.");
+        CheckUserConditions(playerid);
+        return false;
     }
 
-    // Interação com o dialog de login
-    if(dialogid == DIALOG_LOGIN) {
-        if(!response)
-            return Kick(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
-        mysql_query(DBConn, query);
-        cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
-        bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
-    }
-    return true;
+    bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
+	return true;
+}
+
+Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]){
+	if(!response) return Kick(playerid);
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
+    mysql_query(DBConn, query);
+    cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
+    bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
+	return true;
 }
 
 public OnPasswordHashed(playerid)
@@ -143,13 +139,12 @@ void:CheckUserConditions(playerid) {
     ShowLoginTextdraws(playerid);
     if(IsUserRegistered(uInfo[playerid][uName])){
         ShowLoginTextdraws(playerid);
-        ClearPlayerChat(playerid);
-        ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
+        //ClearPlayerChat(playerid);
+        Dialog_Show(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
         \n           Digite sua senha:", "Autenticar", "Cancelar");
     } else {
         ShowLoginTextdraws(playerid);
-        ClearPlayerChat(playerid);
-        ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Bem vindo!\n \nO usuário ainda não foi registrado.\
+        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Bem vindo!\n \nO usuário ainda não foi registrado.\
             \nPara continuar, digite uma senha de 6 a 16 caracteres abaixo", "Registrar", "Sair");
     }
 }
@@ -167,9 +162,13 @@ LoadUserInfo(playerid) {
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
     cache_get_value_name(0, "password", uInfo[playerid][uPass]);
     cache_get_value_name_int(0, "admin", uInfo[playerid][uAdmin]);
-    cache_get_value_name_int(0, "vip", uInfo[playerid][uVip]);
-    cache_get_value_name_int(0, "ft", uInfo[playerid][uFactionMod]);
-    cache_get_value_name_int(0, "pt", uInfo[playerid][uPropertyMod]);
+    cache_get_value_name_int(0, "charslots", uInfo[playerid][uCharSlots]);
+    cache_get_value_name_int(0, "redflag", uInfo[playerid][uRedFlag]);
+    cache_get_value_name_int(0, "newbie", uInfo[playerid][uNewbie]);
+    cache_get_value_name_int(0, "SOSAns", uInfo[playerid][uSOSAns]);
+    cache_get_value_name_int(0, "dutytime", uInfo[playerid][uDutyTime]);
+    cache_get_value_name_int(0, "jailtime", uInfo[playerid][uJailed]);
+    cache_get_value_name_int(0, "premiumpoints", uInfo[playerid][uPoints]);
     return true;
 }
 
@@ -177,20 +176,20 @@ LoadUserInfo(playerid) {
 
 SaveUserInfo(playerid) {
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = %d", uInfo[playerid][uID]);
+    /*mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = %d", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
-        return false;
+        return false;*/
 
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET `admin` = %d, \
-    `vip` = %d,            \
-    `ft`  = %d,            \
-    `pt`  = %d WHERE `ID` = %d", 
+    `redflag`  = %d,            \
+    `jailtime`  = %d,           \
+    `premiumpoints` = %d WHERE `ID` = %d", 
         uInfo[playerid][uAdmin], 
-        uInfo[playerid][uVip], 
-        uInfo[playerid][uFactionMod],
-        uInfo[playerid][uPropertyMod],
+        uInfo[playerid][uRedFlag],
+        uInfo[playerid][uJailed],
+        uInfo[playerid][uPoints],
         uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
@@ -210,8 +209,7 @@ ShowUsersCharacters(playerid) {
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
-        return ShowPlayerDialog(playerid, DIALOG_CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens",
-            "Nome\tNível\tÚltimo login\nCriar personagem", "Confirmar", "Sair");
+        return Dialog_Show(playerid, CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens", "Nome\tNível\tÚltimo login\nCriar personagem", "Confirmar", "Sair");
 
     majorString[0] = EOS;
     strcat(majorString, "Nome\tNível\tÚltimo login\n");
@@ -225,11 +223,10 @@ ShowUsersCharacters(playerid) {
     }
     strcat(majorString, "\n \nCriar personagem\n{FF5447}Deletar personagem");
 
-    return ShowPlayerDialog(playerid, DIALOG_CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens", majorString, "Confirmar", "Sair");
+    return Dialog_Show(playerid, CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens", majorString, "Confirmar", "Sair");
 }
 
 // Simplesmente resetar as variáveis de usuário, já que elas estão armazenadas por ID e chamar o salvamento.
-
 hook OnPlayerDisconnect(playerid, reason) {
     SaveUserInfo(playerid);
     ResetUserData(playerid);
@@ -237,7 +234,6 @@ hook OnPlayerDisconnect(playerid, reason) {
 }
 
 // Aqui, iremos checar se o player logou com o nick de um personagem já existente e, se sim, redirecionar para o nome do usuário.
-
 CheckCharactersName(playerid) {
     new realUserName[24];
 
@@ -262,7 +258,6 @@ CheckCharactersName(playerid) {
 }
 
 // Comando de checar usuário e personagens de um jogador. Aberto pra todos.
-
 CMD:usuario(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
     new characterName[24], userValue[24];
@@ -270,7 +265,6 @@ CMD:usuario(playerid, params[]) {
     if(sscanf(params, "s[24]", characterName)) return SendSyntaxMessage(playerid, "/usuario [personagem]");
 
     // Consultar a tabela players com o nome digitado e informar se o nome não existe ou, se sim, o seu usuário.
-
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", characterName);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um personagem com o nome digitado.");
@@ -288,13 +282,11 @@ CMD:personagens(playerid, params[]) {
     if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/personagens [usuario]");
 
     // Checar se existe um usuário no servidor com o nome digitado
-
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", userName);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um usuário com o nome digitado.");
 
     // Pegar os personagens que pertencem àquele usuário
-
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s';", userName);
     mysql_query(DBConn, query);
 

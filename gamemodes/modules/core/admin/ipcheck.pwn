@@ -28,7 +28,7 @@ new targetID[MAX_PLAYERS];
 
 hook OnPlayerConnect(playerid){
 	targetID[playerid] = INVALID_PLAYER_ID;
-	return 0;
+	return false;
 }
 
 forward HttpVPNInfo(playerid, response_code, data[]);
@@ -122,7 +122,7 @@ public HttpVPNInfo(playerid, response_code, data[]){
 
 	ShowPlayerDialog(playerid, 6156, DIALOG_STYLE_TABLIST_HEADERS, "Detalhes de IP", sdialog, "OK", "");
 
-    return 1;
+    return true;
 }
 
 
@@ -165,7 +165,7 @@ public HttpIPInfo(playerid, response_code, data[]){
         va_SendClientMessage(playerid, COLOR_GREY, "ERRO: Não foi possível obter informações desse IP. (Cod: %d) (%s)", response_code, data);
     }
 
-    return 1;
+    return true;
 }
 
 stock RemoveChars(tID){
@@ -183,11 +183,11 @@ stock RemoveChars(tID){
     strreplace(dPlayerInfo[tID][As], "\"", "");
     strreplace(dPlayerInfo[tID][Reverse], "\"", "");
     
-	return 1;
+	return true;
 }
 
 CMD:checarip(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return 1;
+	if(!pInfo[playerid][pLogged]) return true;
 	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
 
 	new targetid;
@@ -204,5 +204,5 @@ CMD:checarip(playerid, params[]){
 
 	format(logString, sizeof(logString), "%s (%s) checou o IP de %s [%s]", pNome(playerid), GetPlayerUserEx(playerid), pNome(targetid), playerIP);
 	logCreate(playerid, logString, 1);
-	return 1;
+	return true;
 }

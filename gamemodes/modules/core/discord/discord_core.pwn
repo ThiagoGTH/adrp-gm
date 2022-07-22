@@ -282,7 +282,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
         return true;
     }
 
-    if(!strcmp(channel_name, "central-directory", true) && channel == DCC_FindChannelById("989305002952622110")) //#central-directory
+    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")) //#comandos
     {
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
@@ -328,6 +328,12 @@ public DCC_OnMessageCreate(DCC_Message:message)
 
                 format(title_field, 128, "!checarban");
                 format(text_field, 1024, "Exibe as informações do banimento do usuário especificado.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!historico");
+                format(text_field, 1024, "Exibe o histórico do usuário especificado.");
                 utf8encode(title_field, title_field);
                 utf8encode(text_field, text_field);
                 DCC_AddEmbedField(embed, title_field, text_field, true);
@@ -402,6 +408,92 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
 
                 DCC_SendChannelEmbedMessage(channel, embed);
+            }
+            else if(!strcmp(command, "!historico", true)){
+            
+                new text[256],
+                    footer[128],
+                    title[64],
+                    timeValue[24],
+                    timestamp,
+                    log[512],
+                    logValue[512];
+
+                if(isnull(parameters)){
+                    format(text, 256, "**USE:** !historico [usuário]");
+                    utf8encode(text, text);
+                    format(title, 64, "Histórico de usuário");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    return true;
+                }
+                
+                // Pegar os personagens que pertencem àquele usuário
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", parameters);
+                new Cache:result = mysql_query(DBConn, query);
+
+                // Verificar existência do usuário
+                if(!cache_num_rows()) {
+                    format(text, 256, "Não foi possível encontrar um usuário com o nome digitado.");
+                    utf8encode(text, text);
+                    format(title, 64, "Personagem não encontrado");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    return true;
+                }
+
+                format(title, 64, "Punições de %s", parameters);
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+                DCC_SetEmbedColor(embed, 0xF2633C);
+                cache_delete(result);
+
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `user` = '%s' AND `type` = '11';", parameters);
+                new Cache:result2 = mysql_query(DBConn, query);
+                // Verifica se existe algum dado na tabela, ou seja, conta quantas punições o usuário tem. Se não possuir nenhum dado, o comando se encerra aqui.
+                if(!cache_num_rows()) {
+                    format(text, 256, "Este usuário não possui nenhuma punição.");
+                    utf8encode(text, text);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    return true;
+                }
+
+                // Puxa os personagens que constam na tabela através do nome do usuário.
+                for(new i; i < cache_num_rows(); i++) {
+                    
+                    cache_get_value_name(i, "log", log);
+                    cache_get_value_name_int(i, "timestamp", timestamp);
+
+                    format(logValue, 512, "%s", log);
+                    utf8encode(logValue, logValue);
+                    format(timeValue, 128, "Em: %s", GetFullDate(timestamp));
+                    utf8encode(timeValue, timeValue);
+                    DCC_AddEmbedField(embed, logValue, timeValue, false);
+                }
+                cache_delete(result2);
+                DCC_SetEmbedColor(embed, 0xF2633C);
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                return true;
             }
             else if(!strcmp(command, "!personagens", true)){
             

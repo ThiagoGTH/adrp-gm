@@ -25,8 +25,6 @@ enum Advert_Data
 new AdvertData[MAX_AD_QUEUE][Advert_Data];
 
 // COMMANDS
-CMD:an(playerid, params[]) return cmd_anuncio(playerid, params);
-CMD:anuncios(playerid, params[]) return cmd_anuncio(playerid, params);
 CMD:anuncio(playerid, params[]){
     if(!pInfo[playerid][pLogged]) return true;
     // Posição ainda não definida
@@ -46,6 +44,7 @@ CMD:anuncio(playerid, params[]){
     
     return true;
 }
+alias:anuncio("an", "anuncios")
 
 // FUNCTIONS
 Dialog:showAdvertise(playerid, response, listitem, inputtext[]){
@@ -92,9 +91,9 @@ Dialog:pubAdvertise(playerid, response, listitem, inputtext[]){
             AdvertData[exists][ad_id] = insertid;
 
             GiveMoney(playerid, -PRICE_AD);
-            if(uInfo[playerid][uVip] == 1) pInfo[playerid][pAdTick] = 90;
-            else if(uInfo[playerid][uVip] == 2) pInfo[playerid][pAdTick] = 60;
-            else if(uInfo[playerid][uVip] == 3) pInfo[playerid][pAdTick] = 30;
+            if(pInfo[playerid][pDonator] == 1) pInfo[playerid][pAdTick] = 90;
+            else if(pInfo[playerid][pDonator] == 2) pInfo[playerid][pAdTick] = 60;
+            else if(pInfo[playerid][pDonator] == 3) pInfo[playerid][pAdTick] = 30;
             else pInfo[playerid][pAdTick] = 120;
             cache_delete(result);
             SendServerMessage(playerid, "Seu anúncio entrou na lista, isso custou $%d.", PRICE_AD);

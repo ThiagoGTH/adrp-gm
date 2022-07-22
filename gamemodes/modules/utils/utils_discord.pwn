@@ -1,8 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
-new DCC_Channel:logChannels[10];
+new DCC_Channel:logChannels[12];
 forward Discord_StartChannels();
-public Discord_StartChannels(){
+public Discord_StartChannels() {
     logChannels[0] = DCC_FindChannelById("989303818896441345");     // Admin                (1)
     logChannels[1] = DCC_FindChannelById("989304049931268116");     // Login/Logout         (2)
     logChannels[2] = DCC_FindChannelById("990667978792116405");     // Comandos usados      (3)
@@ -13,7 +13,8 @@ public Discord_StartChannels(){
     logChannels[7] = DCC_FindChannelById("992937921789317221");     // Gerenciamento        (8)
     logChannels[8] = DCC_FindChannelById("993023592004603994");     // Support Chat         (9)
     logChannels[9] = DCC_FindChannelById("993230053959798824");     // Advertisement Log    (10)
-    
+    logChannels[10] = DCC_FindChannelById("998664519683407962");    // Punições             (11)
+    logChannels[11] = DCC_FindChannelById("999757221833478154");    // Sinuca               (12)
     return true;
 }
 
@@ -27,12 +28,11 @@ public Discord_PublishLog(playerid, log[], type) {
     return true;
 }
 
-hook OnGameModeInit(){
+hook OnGameModeInit() {
     Discord_StartChannels();
 }
 
-stock ReturnDate()
-{
+stock ReturnDate() {
 	new sendString[90], month, day, year;
 	new hour, minute, second;
 

@@ -26,7 +26,7 @@ hook OnGameModeInit()
 	TextDrawAlignment(Blind4, 3);
 	TextDrawUseBox(Blind4, true);
 	TextDrawBoxColor(Blind4, 0xFFA500FF);
-	return 1;
+	return true;
 }
 
 CMD:tela(playerid,params[])
@@ -53,5 +53,5 @@ CMD:tela(playerid,params[])
         case 4: TextDrawShowForPlayer(playerid, Blind4);
 		default: SendClientMessage(playerid, 0xDE3838FF, "ERRO: Opção inválida! Utilize /ajuda tela para mais informações.");
 	}
-	return 1;
+	return true;
 }

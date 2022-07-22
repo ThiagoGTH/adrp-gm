@@ -96,7 +96,7 @@ new LicencesData[MAX_DRIVERLICENCE][licencesdata];
 hook OnGameModeInit() {
 	CheckLicenceTable();
 	CreateDMVIcon();
-    return 1;
+    return true;
 }
 
 // Checa a tabela e cria, se não existir.
@@ -116,7 +116,7 @@ CheckLicenceTable() {
 		`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
         PRIMARY KEY (ID));");
 
-    return 1;
+    return true;
 }
 CreateNewLicence(playerid) {
 
@@ -176,7 +176,7 @@ CreateNewLicence(playerid) {
 	pInfo[playerid][pLicence] = slot;
 	SaveLicencesData(slot);
 	DMVTestType[playerid] = -1;
-	return 1;
+	return true;
 }
 
 GetFreeLicenceSlot() {
@@ -231,7 +231,7 @@ LoadLicencesData(playerid) {
 
 		}
 	}	
-	return 1;
+	return true;
 }
 
 SaveLicencesData(driver_id) {
@@ -253,17 +253,17 @@ SaveLicencesData(driver_id) {
 		LicencesData[driver_id][licence_id]
 	);
 	mysql_query(DBConn, query, false);
-	return 1;
+	return true;
 }
 
 CMD:criarlicenca(playerid, params[]){
 	CreateNewLicence(playerid);
-	return 1;
+	return true;
 }
 
 CMD:mostrarlicenca(playerid, params[])
 {
-	if(!pInfo[playerid][pLogged]) return 1;
+	if(!pInfo[playerid][pLogged]) return true;
 
 	if(pInfo[playerid][pLicence] == 0) return SendErrorMessage(playerid,"Você não tem uma licença de motorista.");
 	
@@ -325,7 +325,7 @@ CMD:mostrarlicenca(playerid, params[])
 
 	}
 	}
-	return 1;
+	return true;
 }
 
 //Lembrar de Adicionar a função de apenas fac policial poder usar
@@ -341,7 +341,7 @@ CMD:removeravisoslicenca(playerid, params[]) {
     va_SendClientMessage(playerid, COLOR_GREEN, "(Licença):{FFFFFF} Você limpou os avisos da licença de %s.", GetPlayerNameEx(targetid));
 	va_SendClientMessage(targetid, COLOR_GREEN, "(Licença):{FFFFFF} O oficial %s limpou os avisos na sua licença.", GetPlayerNameEx(playerid));
     ResetLicenceWarnings(targetid);
-	return 1;
+	return true;
 }
 
 
@@ -352,24 +352,24 @@ ROTAS
 */
 hook OnPlayerEnterCheckpoint(playerid, vehicleid, ispassenger) {
     DMV_EnterCheckpoint(playerid);
-    return 1;
+    return true;
 }
 
 hook OnPlayerExitVehicle(playerid, vehicleid) {
 
-	if(IsPlayerNPC(playerid)) return 1;		
+	if(IsPlayerNPC(playerid)) return true;		
 
 	if(emExame[playerid] == true) {
 		SendErrorMessage(playerid, "Você abandonou o carro e por isso reprovou no exame de direção.");
 		FailedExam(playerid);
 	}
-	return 1;
+	return true;
 }
 
 hook OnPlayerStateChange(playerid, newstate, oldstate) {
 	
 	DMV_StateChange(playerid, newstate, oldstate);
-	return 1;
+	return true;
 }
 
 StartTestingLicence(playerid){
@@ -385,7 +385,7 @@ StartTestingLicence(playerid){
         va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
 	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre no manana para continuar com o exame.");
 	    emExame[playerid] = true;
-        return 1;
+        return true;
     }
     if(DMVTestType[playerid] == 1){ //Motos
 	    pInfo[playerid][pMoney] -= PRECO_EXAME_BIKE;
@@ -399,7 +399,7 @@ StartTestingLicence(playerid){
         va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de carros.");
 	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre na moto para continuar com o exame.");
 	    emExame[playerid] = true;
-        return 1;
+        return true;
     }
     if(DMVTestType[playerid] == 2){ //Caminhão
 	    pInfo[playerid][pMoney] -= PRECO_EXAME_TRUCK;
@@ -413,9 +413,9 @@ StartTestingLicence(playerid){
         va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Você iniciou o teste de direção para a licença de Motorista de caminhão.");
 	    va_SendClientMessage(playerid, COLOR_GREEN, "DMV:{FFFFFF} Entre no caminhão para continuar com o exame.");
 	    emExame[playerid] = true;
-        return 1;
+        return true;
     }
-	return 1;
+	return true;
 }
 
 FinishTestingLicence(playerid){
@@ -425,7 +425,7 @@ FinishTestingLicence(playerid){
 	if(lataria <= MAX_VEHICLE_HEALTH){
 		SendErrorMessage(playerid, "O veículo está muito danificado e por isso você reprovou no exame.");
 		FailedExam(playerid);
-		return 1;
+		return true;
 	}
 	SetPlayerPos(playerid, 1778.2292, -1934.1807, 13.3856);
 	SetPlayerFacingAngle(playerid, 270.8737);
@@ -435,7 +435,7 @@ FinishTestingLicence(playerid){
 	DisablePlayerCheckpoint(playerid);
 	SetPlayerVirtualWorld(playerid, 0);
 	CreateNewLicence(playerid);
-	return 1;
+	return true;
 }
 
 SetDMVRoute(playerid)
@@ -444,7 +444,7 @@ SetDMVRoute(playerid)
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][0], 
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][1], 
     DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][2], 5.0);
-	return 1;
+	return true;
 }
 
 FailedExam(playerid)
@@ -458,7 +458,7 @@ FailedExam(playerid)
 	DisablePlayerCheckpoint(playerid);
 	emExame[playerid] = false;
     DMVTestType[playerid] = -1;
-	return 1;
+	return true;
 }
 
 DMVUpdate(playerid)
@@ -481,7 +481,7 @@ DMVUpdate(playerid)
 		SetDMVRoute(playerid);
 	} 
 	else FinishTestingLicence(playerid);
-	return 1;
+	return true;
 }
 
 CreateDMVIcon(){
@@ -494,7 +494,7 @@ CreateDMVIcon(){
 DMV_StateChange(playerid, newstate, oldstate)
 {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
-  		if(!emExame[playerid]) return 1;
+  		if(!emExame[playerid]) return true;
   		new engine, lights, alarm, doors, bonnet, boot, objective,
   			vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -503,7 +503,7 @@ DMV_StateChange(playerid, newstate, oldstate)
 		SetVehicleParamsEx(carrodmv[playerid], true, lights, alarm, doors, bonnet, boot, objective);
 		SetDMVRoute(playerid);
 	}
-	return 1;
+	return true;
 }
 
 
@@ -533,11 +533,11 @@ DMV_EnterCheckpoint(playerid)
 		DisablePlayerCheckpoint(playerid);
         DMVUpdate(playerid);
 	}
-	return 1;
+	return true;
 }
 
 CMD:iniciarteste(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return 1;
+	if(!pInfo[playerid][pLogged]) return true;
 	new string [512];
 	
 	//if(!IsPlayerInRangeOfPoint(playerid, 2.0, 1490.3473,1306.2144,1093.2964))
@@ -553,10 +553,10 @@ CMD:iniciarteste(playerid, params[]){
 	);
 	
 	Dialog_Show(playerid, DIALOG_DMV_ROUTE, DIALOG_STYLE_TABLIST_HEADERS, "Licenças", string, "Selecionar", "Cancelar");
-	return 1;
+	return true;
 }
 Dialog:DIALOG_DMV_ROUTE(playerid, response, listitem, inputtext[]) {
-	if(!response) return 1;
+	if(!response) return true;
 	DMVTestType[playerid] = listitem;
 
 //============================================================================
@@ -587,5 +587,5 @@ Dialog:DIALOG_DMV_ROUTE(playerid, response, listitem, inputtext[]) {
 //============================================================================
 
 	StartTestingLicence(playerid);
-	return 1;
+	return true;
 }

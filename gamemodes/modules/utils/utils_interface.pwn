@@ -39,14 +39,18 @@ public SetPlayerInterface(playerid, level) {
         KillTimer(pInfo[playerid][pInterfaceTimer]);
         // SHOW
         TextDrawShowForPlayer(playerid, TEXTDRAW_INTERFACE_INCORRECT);
+
         // HIDE
         TextDrawHideForPlayer(playerid, TEXTDRAW_INTERFACE_CONNECTED);
+
     } else if(level == 2){ // AUTENTICADO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
         // SHOW
         TextDrawShowForPlayer(playerid, TEXTDRAW_INTERFACE_CONNECTED);
+
         // HIDE
         TextDrawHideForPlayer(playerid, TEXTDRAW_INTERFACE_INCORRECT);
+        
     } else if(level == 999){ // FECHAR TUDO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
 
@@ -68,7 +72,6 @@ public ShowLoginTextdraws(playerid) {
     for(new i; i < 2; i++)
         PlayerTextDrawShow(playerid, LoginTD[playerid][i]);
 
-    printf("Chamou[1]");
     InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1764.986206, -1501.460083, 238.376602, 12000);
     InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1761.035888, -1498.431884, 237.901809, 12000);
     
@@ -80,7 +83,6 @@ HideLoginTextdraws(playerid) {
     for(new i; i < 2; i++)
         PlayerTextDrawHide(playerid, LoginTD[playerid][i]);
 
-    printf("Chamou[2]");
     return true;
 }
 

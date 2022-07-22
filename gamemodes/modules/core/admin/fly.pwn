@@ -29,7 +29,7 @@ CMD:fly(playerid)
 		StopFly(playerid);
 		pInfo[playerid][pFlying] = 0;
 	}
-	return 1;
+	return true;
 }
 
 bool:StartFly(playerid)
@@ -48,7 +48,7 @@ bool:StartFly(playerid)
 public Fly(playerid)
 {
 	if(!IsPlayerConnected(playerid))
-		return 1;
+		return true;
 	new k, ud,lr;
 	GetPlayerKeys(playerid,k,ud,lr);
 	new Float:v_x,Float:v_y,Float:v_z,
@@ -93,7 +93,7 @@ public Fly(playerid)
 	}
 	if(OnFly[playerid])
 		SetTimerEx("Fly",100,false,"i",playerid);
-	return 1;
+	return true;
 }
 
 bool:StopFly(playerid)

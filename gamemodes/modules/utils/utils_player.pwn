@@ -13,8 +13,7 @@ sejam, necessariamente, pertecentes a um sistema específico. São funções úteis e
 #define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
 #define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
 
-new EmSpec[MAX_PLAYERS],
-	DesarmandoPlayer[MAX_PLAYERS];
+new EmSpec[MAX_PLAYERS];
 
 enum e_InteriorData {
 	e_InteriorName[32],
@@ -208,35 +207,29 @@ SendNotConnectedMessage(playerid)
 
 // Checar se um usuário está conectado.
 
-stock pNome(playerid)
+pNome(playerid)
 {
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
-	for(new i = 0; i < MAX_PLAYER_NAME; i++)
-	{
-		if(name[i] == '_') name[i] = ' ';
+	if(playerid > -1 && playerid < MAX_PLAYERS){
+		static 
+			name[MAX_PLAYER_NAME + 1];
+
+		GetPlayerName(playerid, name, sizeof(name));
+
+		for (new i = 0, len = strlen(name); i < len; i ++){
+			if(name[i] == '_') name[i] = ' ';
+		}
+		return name;
+	} else {
+		static 
+			name[MAX_PLAYER_NAME + 1];
+
+		GetPlayerName(playerid, name, sizeof(name));
+
+		for (new i = 0, len = strlen(name); i < len; i ++){
+			if(name[i] == '_') name[i] = ' ';
+		}
+		return name;
 	}
-	return name;
-}
-
-stock ReturnName(playerid)
-{
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
-	return name;
-}
-
-stock IsUserConnected(const userName[]) {
-    new responseValue;
-
-    foreach(new i : Player) {
-        if(!strcmp(uInfo[i][uName], userName)) { 
-            responseValue = 1;
-            break;
-        }
-    }
-
-    return responseValue;
 }
 
 // Pegar o ID de um jogador pelo nome, ao invés do contrário
@@ -854,3 +847,43 @@ stock IsLethalMeele(id)
 	return false;
 }
 
+AdjustTextDrawString(string[])
+{
+	static const
+		scRealChars[256] =
+		{
+			  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,
+			 16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
+			 32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
+			 48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,
+			 64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
+			 80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  91,  92,  93,  94,  95,
+			 96,  97,  98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127,
+			128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,
+			144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159,
+			160,  94, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
+			124, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 175,
+			128, 129, 130, 130, 131, 197, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141,
+			208, 173, 142, 143, 144, 144, 145, 215, 216, 146, 147, 148, 149, 221, 222, 150,
+			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
+			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
+		};
+	if (ispacked(string))
+	{
+		for (new i = 0, len = strlen(string); i != len; ++i)
+		{
+			string{i} = scRealChars[string{i}];
+		}
+	}
+	else
+	{
+		for (new i = 0, len = strlen(string), ch; i != len; ++i)
+		{
+			if (0 <= (ch = string[i]) < 256)
+			{
+				string[i] = scRealChars[ch];
+			}
+		}
+	}
+}

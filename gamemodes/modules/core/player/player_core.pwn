@@ -1,7 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-CMD:ajuda(playerid, params[])
-{
+CMD:ajuda(playerid, params[]) {
   	new type[128];
    	if (sscanf(params, "s[128]", type)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
@@ -47,20 +46,19 @@ CMD:limparmeuchat(playerid, params[]){
 	ClearPlayerChat(playerid);
 	return true;
 }
-stock GetWeapon(playerid)
-{
+
+/*GetWeapon(playerid){
 	new weaponid = GetPlayerWeapon(playerid);
 
 	if (1 <= weaponid <= 46 && pInfo[playerid][pGuns][g_aWeaponSlots[weaponid]] == weaponid)
 		return weaponid;
 
-	return 0;
-}
+	return false;
+}*/
 
-GiveWeaponToPlayer(playerid, weaponid, ammo)
-{
+GiveWeaponToPlayer(playerid, weaponid, ammo){
 	if (weaponid < 0 || weaponid > 46)
-	return 0;
+	return false;
 
 	pInfo[playerid][pGuns][g_aWeaponSlots[weaponid]] = weaponid;
 	pInfo[playerid][pAmmo][g_aWeaponSlots[weaponid]] += ammo;
@@ -68,25 +66,23 @@ GiveWeaponToPlayer(playerid, weaponid, ammo)
 	return GivePlayerWeapon(playerid, weaponid, ammo);
 }
 
-SetWeapons(playerid)
-{
+SetWeapons(playerid){
 	ResetPlayerWeapons(playerid);
 
 	for (new i = 0; i < 13; i ++) if (pInfo[playerid][pGuns][i] > 0 && pInfo[playerid][pAmmo][i] > 0) {
 		GivePlayerWeapon(playerid, pInfo[playerid][pGuns][i], pInfo[playerid][pAmmo][i]);
 	}
-	return 1;
+	return true;
 }
 
-ResetWeapons(playerid)
-{
+ResetWeapons(playerid){
 	ResetPlayerWeapons(playerid);
 
 	for (new i = 0; i < 13; i ++) {
 		pInfo[playerid][pGuns][i] = 0;
 		pInfo[playerid][pAmmo][i] = 0;
 	}
-	return 1;
+	return true;
 }
 
 /*ResetWeapon(playerid, weaponid)
@@ -103,18 +99,18 @@ ResetWeapons(playerid)
 			pInfo[playerid][pAmmo][i] = 0;
 		}
 	}
-	return 1;
+	return true;
 }*/
 
-stock IsPlayerSpawned(playerid)
+IsPlayerSpawned(playerid)
 {
 	if (playerid < 0 || playerid >= MAX_PLAYERS)
-		return 0;
+		return false;
 
 	return (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING && GetPlayerState(playerid) != PLAYER_STATE_NONE && GetPlayerState(playerid) != PLAYER_STATE_WASTED);
 }
-
-stock PlayerHasWeapon(playerid, weaponid)
+/*
+PlayerHasWeapon(playerid, weaponid)
 {
 	new
 		weapon,
@@ -124,12 +120,12 @@ stock PlayerHasWeapon(playerid, weaponid)
 	{
 		GetPlayerWeaponData(playerid, i, weapon, ammo);
 
-		if (weapon == weaponid && ammo > 0) return 1;
+		if (weapon == weaponid && ammo > 0) return true;
 	}
-	return 0;
+	return false;
 }
 
-stock GetInitials(const string[])
+GetInitials(const string[])
 {
 	new
 		ret[32],
@@ -141,25 +137,26 @@ stock GetInitials(const string[])
 			ret[index++] = string[i];
 	}
 	return ret;
-}
-
-stock ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0)
+}*/
+/*
+ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0)
 {
 	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
 
 	pInfo[playerid][pLoopAnim] = true;
-	return 1;
+	return true;
 }
+*/
 
-stock PlayerHasTazer(playerid)
+/*PlayerHasTazer(playerid)
 {
 	return (GetPlayerWeapon(playerid) == 23 && pInfo[playerid][pTazer]);
 }
 
-stock PlayerHasBeanBag(playerid)
+PlayerHasBeanBag(playerid)
 {
 	return (GetPlayerWeapon(playerid) == 25 && pInfo[playerid][pBeanBag]);
-}
+}*/
 
 /*IsNumeric(const str[])
 {
@@ -169,12 +166,12 @@ if (i == 0 && str[0] == '-')
 	continue;
 
 else if (str[i] < '0' || str[i] > '9')
-	return 0;
+	return false;
 	}
-	return 1;
+	return true;
 }*/
 
-stock getVehicleName(vehicleid){
+/*getVehicleName(vehicleid){
 	new vehmodel = GetVehicleModel(vehicleid);
 	new nameVeh[75];
 
@@ -184,9 +181,9 @@ stock getVehicleName(vehicleid){
 	}
 	strcat(nameVeh, VehicleNames[vehmodel - 400]);
 	return nameVeh;
-}
-
-stock UpdateWeapons(playerid)
+}*/
+/*
+UpdateWeapons(playerid)
 {
 	for (new i = 0; i < 13; i ++) if (pInfo[playerid][pGuns][i])
 	{
@@ -199,18 +196,18 @@ stock UpdateWeapons(playerid)
 			pInfo[playerid][pGuns][i] = 0;
 		}
 	}
-	return 1;
-}
+	return true;
+}*/
 
-stock IsPlayerInWater(playerid)
+/*IsPlayerInWater(playerid)
 {
 	new anim = GetPlayerAnimationIndex(playerid);
 	if (((anim >=  1538) && (anim <= 1542)) || (anim == 1544) || (anim == 1250) || (anim == 1062)) return true;
 	return false;
-}
+}*/
 
 
-stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, time = 2000)
+/*SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, time = 2000)
 {
 	if (pInfo[playerid][pFreeze])
 	{
@@ -224,27 +221,27 @@ stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, time = 2000)
 
 	pInfo[playerid][pFreeze] = 1;
 	pInfo[playerid][pFreezeTimer] = SetTimerEx("SetPlayerToUnfreeze", time, false, "dfff", playerid, x, y, z);
-	return 1;
-}
+	return true;
+}*/
 
 forward SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z);
 public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 {
 	if (!IsPlayerInRangeOfPoint(playerid, 15.0, x, y, z))
-	    return 0;
+	    return false;
 
 	pInfo[playerid][pFreeze] = 0;
 
 	SetPlayerPos(playerid, x, y, z);
 	TogglePlayerControllable(playerid, true);
-	return 1;
+	return true;
 }
 
 GiveMoney(playerid, amount)
 {
 	pInfo[playerid][pMoney] += amount;
 	GivePlayerMoney(playerid, amount);
-	return 1;
+	return true;
 }
 
 GetMoney(playerid)
@@ -252,7 +249,7 @@ GetMoney(playerid)
 	return (pInfo[playerid][pMoney]);
 }
 
-stock SetPlayerHealthEx(playerid, Float:hp)
+SetPlayerHealthEx(playerid, Float:hp)
 {
 	if(hp <= 30) SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
  	else if(hp <= 40) SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
@@ -260,4 +257,9 @@ stock SetPlayerHealthEx(playerid, Float:hp)
 			
 	pInfo[playerid][pHealth] = hp;
 	return SetPlayerHealth(playerid, hp);
+}
+
+randomEx(min, max){
+    new rand = random(max-min)+min;
+    return rand;
 }

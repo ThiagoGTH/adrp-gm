@@ -6,7 +6,7 @@ Este módulo é dedicado aos administradores
  
 #include <YSI_Coding\y_hooks>
 
-stock AdminRankName(playerid) {
+AdminRankName(playerid) {
 	new rank[128];
 	switch(uInfo[playerid][uAdmin]) {
 		case 1: format(rank, sizeof(rank), "Tester");
@@ -20,7 +20,7 @@ stock AdminRankName(playerid) {
 	return rank;
 }
 
-stock GetPlayerAdmin(playerid) {
+GetPlayerAdmin(playerid) {
 	new level;
 	level = uInfo[playerid][uAdmin];
 	return level;
@@ -34,7 +34,7 @@ CMD:aa(playerid)
 	return true;
 }
 
-stock ShowAdminCmds(playerid){
+ShowAdminCmds(playerid){
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	if(GetPlayerAdmin(playerid) >= 1)
 	{
@@ -47,40 +47,30 @@ stock ShowAdminCmds(playerid){
 	if(GetPlayerAdmin(playerid) >= 2) // GAME ADMIN 1
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listareports, /ar, /rr, /tapa, /vida, /reviver, /reclife, /ir, /trazer");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /spec, /ultimoatirador");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /x, /y, /z");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /ultimoatirador, /x, /y, /z");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, ");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas, /novato, /encerrarsinuca");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /curartodos, /clima");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /curartodos, /clima, /redflag");
 	}
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly");
+		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly, /pegarpaycheck");
 	}
 	return true;
 }
 
-hook OnGameModeInit(){
-    SetTimer("OnPlayerUpdate_Timer", 600, true);
-    return true;
-}
-
-hook OnPlayerConnect(playerid, reason) {
-    DesarmandoPlayer[playerid] = 2;
-    return true;
-}
-
-CMD:trancarserver(playerid, params[])
-{
+CMD:trancarserver(playerid, params[]) {
     if(!pInfo[playerid][pLogged]) return true;
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
@@ -96,9 +86,8 @@ CMD:trancarserver(playerid, params[])
 	return true;
 }
 
-CMD:tapa(playerid, params[])
-{
-	static
+CMD:tapa(playerid, params[]) {
+	new
 		userid;
 
 	if(!pInfo[playerid][pLogged]) return true;
@@ -106,7 +95,7 @@ CMD:tapa(playerid, params[])
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
-	static
+	new
 		Float:x,
 	  	Float:y,
 	  	Float:z;
@@ -122,8 +111,7 @@ CMD:tapa(playerid, params[])
 	return true;
 }
 
-CMD:curartodos(playerid, params[])
-{
+CMD:curartodos(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 	foreach (new i : Player) {
@@ -135,8 +123,7 @@ CMD:curartodos(playerid, params[])
 	return true;
 }
 
-CMD:vida(playerid, params[])
-{
+CMD:vida(playerid, params[]) {
 	static
 		userid,
 	  	Float:amount; 
@@ -156,8 +143,7 @@ CMD:vida(playerid, params[])
 	return true;
 }
 
-CMD:reclife(playerid, params[])
-{
+CMD:reclife(playerid, params[]) {
 	static
 		userid; 
 
@@ -175,8 +161,7 @@ CMD:reclife(playerid, params[])
 	return true;
 }
 
-CMD:colete(playerid, params[])
-{
+CMD:colete(playerid, params[]) {
 	static
 		userid,
 	    Float:amount;
@@ -193,8 +178,7 @@ CMD:colete(playerid, params[])
 	return true;
 }
 
-CMD:resetararmas(playerid, params[])
-{
+CMD:resetararmas(playerid, params[]) {
 	static
 		userid;
 
@@ -211,8 +195,7 @@ CMD:resetararmas(playerid, params[])
 	return true;
 }
 
-CMD:admins(playerid, params[])
-{
+CMD:admins(playerid, params[]) {
 	new count = 0;
 	SendClientMessage(playerid, COLOR_GREEN, "Equipe administrativa on-line:");
 
@@ -230,8 +213,7 @@ CMD:admins(playerid, params[])
 	return true;
 }
 
-CMD:atrabalho(playerid, params[])
-{
+CMD:atrabalho(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	
@@ -251,116 +233,7 @@ CMD:atrabalho(playerid, params[])
 	return true;
 }
 
-public2:OnPlayerUpdate_Timer() {
-//======================================================================
-	//Anti Weapon Hack
-	new weapons[13][2];
-	for (new playerid; playerid < MAX_PLAYERS; playerid++) {
-
-		if(DesarmandoPlayer[playerid] < 1) {
-			for (new i = 0; i <= 12; i++) {
-	    		GetPlayerWeaponData(playerid, i, weapons[i][0], weapons[i][1]);
-
-	    		if(weapons[i][0] > 0 && weapons[i][1] > 0) {
-		    		//SendServerMessage(playerid, "O anti-cheat de armas está ATIVO.");
-					SendAdminAlert(COLOR_LIGHTRED, "(Weapon Hack) %s pode estar utilizando HACK DE ARMAS. Cheque com cuidado.", pNome(playerid));
-					return true;
-	    		}
-			}
-		}
-	}
-	//======================================================================
-	return true;
-}
-
-CMD:setarequipe(playerid, params[])
-{
-	static
-		userid,
-		type[24];
-
-	if(!pInfo[playerid][pLogged]) return true;
-	if(GetPlayerAdmin(playerid) < 5) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
-
-	if (sscanf(params, "us[32]", userid, type))
-	{
-	    SendSyntaxMessage(playerid, "/setarequipe [playerid/nome] [equipe]");
-		SendClientMessage(playerid, -1, "EQUIPES: faction team, property team");
-		return true;
-	}
-
-	if (userid == INVALID_PLAYER_ID)
-	    return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
-
-    if (!strcmp(type, "faction team", true))
-	{
-		if (uInfo[userid][uFactionMod])
-		{
-			uInfo[userid][uFactionMod] = false;
-
-			va_SendClientMessage(playerid, -1, "SERVER: Você retirou %s da faction team.", pNome(userid));
-			va_SendClientMessage(userid, -1, "SERVER: %s removeu você da faction team.", pNome(playerid));
-		}
-		else
-		{
-			uInfo[userid][uFactionMod] = true;
-
-			va_SendClientMessage(playerid, -1, "SERVER: Você colocou %s na faction team.", pNome(userid));
-			va_SendClientMessage(userid, -1, "SERVER: %s colocou você na faction team.", pNome(playerid));
-		}
-	}
-
-	if (!strcmp(type, "property team", true))
-	{
-		if (uInfo[userid][uPropertyMod])
-		{
-			uInfo[userid][uPropertyMod] = false;
-
-			va_SendClientMessage(playerid, -1, "SERVER: Você retirou %s da property team.", pNome(userid));
-			va_SendClientMessage(userid, -1, "SERVER: %s removeu você da property team.", pNome(playerid));
-		}
-		else
-		{
-			uInfo[userid][uPropertyMod] = true;
-
-			va_SendClientMessage(playerid, -1, "SERVER: Você colocou %s na property team.", pNome(userid));
-			va_SendClientMessage(userid, -1, "SERVER: %s colocou você na property team.", pNome(playerid));
-		}
-	}
-	return true;
-}
-
-stock RemovePlayerWeapon(playerid, weaponid) {
-	new plyWeapons[12];
-	new plyAmmo[12];
-
-    DesarmandoPlayer[playerid] = 2;
-
-	for(new slot = 0; slot != 12; slot++)
-	{
-		new wep, ammo;
-		GetPlayerWeaponData(playerid, slot, wep, ammo);
-
-		if(wep != weaponid)
-		{
-			GetPlayerWeaponData(playerid, slot, plyWeapons[slot], plyAmmo[slot]);
-		}
-	}
-	ResetPlayerWeapons(playerid);
-	for(new slot = 0; slot != 12; slot++)
-	{
-		SetWeapon(playerid, plyWeapons[slot], plyAmmo[slot]);
-	}
-}
-
-stock SetWeapon(playerid, weaponid, ammo) {
-    DesarmandoPlayer[playerid] = 3;
-    GivePlayerWeapon(playerid, weaponid, ammo);
-	return true;
-}
-
-CMD:infoplayer(playerid, params[])
-{
+CMD:infoplayer(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
@@ -382,8 +255,7 @@ CMD:infoplayer(playerid, params[])
 	return true;
 } 
 
-CMD:skin(playerid, params[])
-{
+CMD:skin(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
 	if(GetPlayerAdmin(playerid) < 3) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
 	new userid, level;
@@ -402,17 +274,24 @@ CMD:skin(playerid, params[])
 	return true;
 }
 
-CMD:proximo(playerid, params[])
-{
+CMD:proximo(playerid, params[]) {
     if(!pInfo[playerid][pLogged]) return true;
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-	
-	// A FAZER
+	static id = -1;
+	new count = 0;
+
+	if(GetPlayerAdmin(playerid) > 5){
+		if ((id = Pool_GetClosestTable(playerid)) != -1) {
+			SendServerMessage(playerid, "Você está próximo da mesa de sinuca: %d.", id);
+			count++;
+		}
+	}
+
+	if(!count) SendErrorMessage(playerid, "Você não está próximo a nada dinâmico.");
 	return true;
 }
 
-CMD:congelar(playerid, params[])
-{
+CMD:congelar(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
@@ -428,8 +307,7 @@ CMD:congelar(playerid, params[])
 	return true;
 }
 
-CMD:descongelar(playerid, params[])
-{
+CMD:descongelar(playerid, params[]) {
 	if(!pInfo[playerid][pLogged]) return true;
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
@@ -444,8 +322,7 @@ CMD:descongelar(playerid, params[])
 	return true;
 }
 
-CMD:dararma(playerid, params[])
-{
+CMD:dararma(playerid, params[]) {
 	static
 	    userid,
 	    weaponid,
@@ -468,8 +345,7 @@ CMD:dararma(playerid, params[])
 	return true;
 }
 
-CMD:dardinheiro(playerid, params[])
-{
+CMD:dardinheiro(playerid, params[]){
 	static
 		userid,
 	    amount;
@@ -536,8 +412,7 @@ CMD:setaradmin(playerid, params[]) {
     return true;
 }
 
-CMD:a(playerid, result[])
-{
+CMD:a(playerid, result[]) {
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	if(isnull(result)) return SendSyntaxMessage(playerid, "/a (mensagem)");
 
@@ -634,8 +509,7 @@ CMD:clima(playerid, params[])
 	return true;
 }
 
-CMD:trazer(playerid, params[])
-{
+CMD:trazer(playerid, params[]) {
   	if(GetPlayerAdmin(playerid) < 2) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
 	if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) return SendClientMessage(playerid, COLOR_LIGHTRED, "Esse administrador está em modo espectador em alguém, por isso não pode puxa-lo.");
 
@@ -650,8 +524,7 @@ CMD:trazer(playerid, params[])
 	return true;
 }
 
-CMD:ir(playerid, params[])
-{
+CMD:ir(playerid, params[]) {
 	static
 	  	id,
 	  	type[24],
@@ -866,7 +739,7 @@ CMD:jetpack(playerid, params[]){
 	return true;
 }
 
-stock GiveGMX() {
+GiveGMX() {
 	foreach(new i : Player) {
 		SendClientMessage(i, COLOR_LIGHTRED, "O servidor sofrerá um GMX em cinco minutos. Finalize o que você está fazendo e deslogue.");
 		SaveCharacterInfo(i);
@@ -888,6 +761,7 @@ public GMXA() {
 	}
 	SetTimer("GMXF", 400, false);
 }
+
 forward GMXF();
 public GMXF() {
 	foreach(new i : Player)
@@ -896,8 +770,7 @@ public GMXF() {
 	}
 }
 
-stock SendAdminAlert(color, const str[], {Float,_}:...)
-{
+SendAdminAlert(color, const str[], {Float,_}:...) {
 	static
 	    args,
 	    start,
@@ -936,8 +809,7 @@ stock SendAdminAlert(color, const str[], {Float,_}:...)
 	return true;
 }
 
-Dialog:TeleportInterior(playerid, response, listitem, inputtext[])
-{
+Dialog:TeleportInterior(playerid, response, listitem, inputtext[]) {
 	if (response)
 	{
 	    SetPlayerInterior(playerid, g_arrInteriorData[listitem][e_InteriorID]);
@@ -946,8 +818,7 @@ Dialog:TeleportInterior(playerid, response, listitem, inputtext[])
 	return true;
 }
 
-SendPlayerToPlayer(playerid, userid)
-{
+SendPlayerToPlayer(playerid, userid) {
 	new
 		Float:x,
 		Float:y,
@@ -967,3 +838,108 @@ SendPlayerToPlayer(playerid, userid)
 	SetPlayerInterior(playerid, GetPlayerInterior(userid));
 	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(userid));
 }
+
+CMD:kick(playerid, params[]) {
+	if(!pInfo[playerid][pLogged]) return true;
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new userid, reason[128];
+	if (sscanf(params, "us[128]", userid, reason)) return SendSyntaxMessage(playerid, "/kick [playerid/nome] [motivo]");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+
+	
+	va_SendClientMessageToAll(COLOR_LIGHTRED,"AdmCmd: %s kickou %s por: %s.", GetPlayerUserEx(playerid), pNome(userid), reason);
+	Kick(userid);
+
+	// Cria o log administrativo
+	format(logString, sizeof(logString), "%s (%s) kickou %s (%s) por %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), GetPlayerUserEx(userid), reason);
+	logCreate(playerid, logString, 1);
+
+	// Cria o histórico do jogador
+	format(logString, sizeof(logString), "%s (%s) foi kickado por %s (motivo: %s)", pNome(userid), GetPlayerUserEx(userid), GetPlayerUserEx(playerid), reason);
+	logCreate(playerid, logString, 11);
+
+	return true;
+}
+
+CMD:historico(playerid, params[]) {
+	if(!pInfo[playerid][pLogged]) return true;
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	new userid;
+	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/historico [playerid/nome]");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", GetPlayerUserEx(userid));
+    new Cache:result = mysql_query(DBConn, query);
+
+	if(!cache_num_rows()){
+		SendErrorMessage(playerid, "O usuário especificado não existe.");
+		cache_delete(result);
+		return true;
+	}
+
+	va_SendClientMessage(playerid, COLOR_GREEN, "Punições de %s:", GetPlayerUserEx(userid));
+	cache_delete(result);
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `user` = '%s' AND `type` = '11';", GetPlayerUserEx(userid));
+    new Cache:result2 = mysql_query(DBConn, query);
+	if(!cache_num_rows()){
+		va_SendClientMessage(playerid, COLOR_CYAN1, "Este jogador não tem nenhuma punição registrada em seu usuário.");
+		cache_delete(result2);
+	}
+	new logValue[512],
+		timestamp;
+	for (new i; i < cache_num_rows(); i++) {
+		cache_get_value_name(i, "log", logValue);
+        cache_get_value_name_int(i, "timestamp", timestamp);
+
+		va_SendClientMessage(playerid, COLOR_CYAN1, "%s", logValue);
+		va_SendClientMessage(playerid, COLOR_CYAN2, "Em %s", GetFullDate(timestamp));
+	}
+	cache_delete(result2);
+
+	format(logString, sizeof(logString), "%s (%s) checou o histórico de %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerUserEx(userid));
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:redflag(playerid, params[]) {
+	if (!pInfo[playerid][pLogged]) return true;
+	if (GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
+	new userid;
+	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/redflag [playerid/nome]");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+
+	if (uInfo[userid][uRedFlag]) {
+		uInfo[userid][uRedFlag] = 0;
+		SaveUserInfo(userid);
+
+		SendServerMessage(playerid, "Você desmarcou %s (%s) como redflag.", pNome(userid), GetPlayerUserEx(userid));
+
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s desmarcou %s como redflag.", GetPlayerUserEx(playerid), pNome(userid));
+
+		// Cria o log administrativo
+		format(logString, sizeof(logString), "%s (%s) desmarcou %s (%s) como redflag", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), GetPlayerUserEx(userid));
+		logCreate(playerid, logString, 1);
+
+		// Cria o histórico do jogador
+		format(logString, sizeof(logString), "%s (%s) foi desmarcado como redflag por %s", pNome(userid), GetPlayerUserEx(userid), GetPlayerUserEx(playerid));
+		logCreate(playerid, logString, 11);		
+	} else {
+		uInfo[userid][uRedFlag] = 1337;
+		SaveUserInfo(userid);
+
+		SendServerMessage(playerid, "Você marcou %s (%s) como redflag.", pNome(userid), GetPlayerUserEx(userid));
+		SendServerMessage(userid, "Você foi marcado como redflag por um administrador.");
+
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s marcou %s como redflag.", GetPlayerUserEx(playerid), pNome(userid));
+
+		// Cria o log administrativo
+		format(logString, sizeof(logString), "%s (%s) marcou %s (%s) como redflag", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), GetPlayerUserEx(userid));
+		logCreate(playerid, logString, 1);
+
+		// Cria o histórico do jogador
+		format(logString, sizeof(logString), "%s (%s) foi marcado como redflag por %s", pNome(userid), GetPlayerUserEx(userid), GetPlayerUserEx(playerid));
+		logCreate(playerid, logString, 11);	
+	}
+	return true;
+}
+

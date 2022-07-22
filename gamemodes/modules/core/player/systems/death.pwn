@@ -161,7 +161,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     }
 	if(health < 1){
 		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){ // BRUTALMENTE FERIDO 
-			printf("[1] CHAMOU AKI HEIN!");
 			pInfo[damagedid][pBrutallyWounded] = true;
 			pInfo[damagedid][pDeadTime] = 120;
 			pInfo[damagedid][pInterior] = GetPlayerInterior(damagedid);
@@ -210,7 +209,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
 			logCreate(damagedid, logString, 6);
 		} else if(pInfo[damagedid][pBrutallyWounded]) { // MORTO 
-			printf("[2] CHAMOU AKI HEIN!");
 			pInfo[damagedid][pBrutallyWounded] = false;
 			pInfo[damagedid][pDead] = true;
 			pInfo[damagedid][pDeadTime] = 60;
@@ -328,7 +326,6 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
     }
 	if(health < 1){
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 
-			printf("[1] CHAMOU AKI HEIN!");
 			pInfo[playerid][pBrutallyWounded] = true;
 			pInfo[playerid][pDeadTime] = 120;
 			pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
@@ -377,7 +374,6 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
 			logCreate(playerid, logString, 6);
 		} else if(pInfo[playerid][pBrutallyWounded]) { // MORTO 
-			printf("[2] CHAMOU AKI HEIN!");
 			pInfo[playerid][pBrutallyWounded] = false;
 			pInfo[playerid][pDead] = true;
 			pInfo[playerid][pDeadTime] = 60;
@@ -689,6 +685,7 @@ CMD:investida(playerid, params[]){
 	}
 	return true;
 }
+alias:investida("derrubar", "tackle", "investir")
 
 CMD:ferimentos(playerid, params[]){
     if (!pInfo[playerid][pLogged]) return true;

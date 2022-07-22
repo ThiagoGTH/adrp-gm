@@ -59,17 +59,19 @@ public OnGameModeInit() {
     ShowPlayerMarkers(0);
 	ManualVehicleEngineAndLights();
 	EnableVehicleFriendlyFire();
+    DisableCrashDetectLongCall();
 
     SetTimer("OnGamemodeLoad", 600, false);
     return true;
 }
 
-public OnPlayerCommandPerformed(playerid, cmdtext[], success) {
-    if(!success){
+public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags) {
+    if(result == -1){
 		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
     }else{
-        format(logString, sizeof(logString), "%s (%s) [%s]: %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmdtext);
+        format(logString, sizeof(logString), "%s (%s) [%s]: /%s %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmd, params);
         logCreate(playerid, logString, 3);
     }
+    pInfo[playerid][pAFKCount] = 0;
     return true;
 }

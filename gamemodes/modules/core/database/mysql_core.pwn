@@ -42,22 +42,40 @@ void:CheckTables() {
     CheckInteriorsInfoTable();
     CheckAdsTable();
     CheckVehiclesTable();
+    CheckVehiclesWeaponsTable();
+    CheckPoolTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
 
 void:CheckUserTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users` (\
-        ID int NOT NULL AUTO_INCREMENT,\
-        `username` varchar(24),\
-        `password` varchar(128),\
-        `admin` int NOT NULL DEFAULT 0,\
-        `vip` int NOT NULL DEFAULT 0,\
-        `ft` int NOT NULL DEFAULT 0,\
-        `pt` int NOT NULL DEFAULT 0,\
-        PRIMARY KEY (ID));");
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `username` varchar(24),\
+    `password` varchar(128),\
+    `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
+    `registration_date` int NOT NULL DEFAULT '0',\
+    `admin` int NOT NULL DEFAULT 0,\
+    `charslots` int NOT NULL DEFAULT 5,\
+    `dutytime` int NOT NULL DEFAULT 0,\
+    `SOSAns` int NOT NULL DEFAULT 0,\
+    `APPAns` int NOT NULL DEFAULT 0,\
+    `namechanges` int NOT NULL DEFAULT 0,\
+    `numberchanges` int NOT NULL DEFAULT 0,\
+    `fightchanges` int NOT NULL DEFAULT 0,\
+    `platechanges` int NOT NULL DEFAULT 0,\
+    `premiumpoints` int NOT NULL DEFAULT 0,\
+    `teams` varchar(24) NOT NULL DEFAULT 00000,\
+    `headteams` varchar(24) NOT NULL DEFAULT 00000,\
+    `redflag` int NOT NULL DEFAULT 0,\
+    `newbie` int NOT NULL DEFAULT 0,\
+    `jailtime` int NOT NULL DEFAULT -1,\
+    PRIMARY KEY (ID));");
 
-    print("[DATABASE] Tabela 'users' checada com sucesso.");
+    print("[DATABASE] Tabela users checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckPlayerTable() {
@@ -65,15 +83,20 @@ void:CheckPlayerTable() {
     `ID` int NOT NULL AUTO_INCREMENT,\
     `name` varchar(24) NOT NULL DEFAULT 'Nenhum',\
     `user` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `first_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `last_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `first_login` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
+    `donator` int NOT NULL DEFAULT '0',\
     `age` int NOT NULL DEFAULT '0',\
+    `minutes` int NOT NULL DEFAULT '0',\
+    `hours` int NOT NULL DEFAULT '0',\
     `gender` varchar(15) NOT NULL DEFAULT 'Masculino',\
     `background` varchar(50) NOT NULL DEFAULT 'Los Santos',\
     `money` int NOT NULL DEFAULT '0',\
     `bank` int NOT NULL DEFAULT '0',\
+    `savings` int NOT NULL DEFAULT '0',\
     `skin` int NOT NULL DEFAULT '23',\
     `health` float NOT NULL DEFAULT '100',\
     `armour` float NOT NULL DEFAULT '0',\
@@ -114,7 +137,9 @@ void:CheckPlayerTable() {
     `Ammo13` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'players' checada com sucesso.");
+    print("[DATABASE] Tabela players checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckBanTable() {
@@ -129,7 +154,9 @@ void:CheckBanTable() {
     `banned` boolean NOT NULL DEFAULT '1',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'ban' checada com sucesso.");
+    print("[DATABASE] Tabela ban checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ban checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckLogsTable(){
@@ -143,7 +170,9 @@ void:CheckLogsTable(){
     `type` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'serverlogs' checada com sucesso.");
+    print("[DATABASE] Tabela serverlogs checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela serverlogs checada com sucesso.");
+    logCreate(99998, logString, 5);
 } 
 
 void:CheckFurnitureInfoTable(){
@@ -154,7 +183,9 @@ void:CheckFurnitureInfoTable(){
     `category` varchar(64) NOT NULL DEFAULT 'Nenhum',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'furniture_info' checada com sucesso.");
+    print("[DATABASE] Tabela furniture_info checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela furniture_info checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckInteriorsInfoTable(){
@@ -169,7 +200,9 @@ void:CheckInteriorsInfoTable(){
     `positionA` float NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'interiors' checada com sucesso.");
+    print("[DATABASE] Tabela interiors checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckAdsTable(){
@@ -181,122 +214,193 @@ void:CheckAdsTable(){
     `number` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela 'advertisement' checada com sucesso.");
+    print("[DATABASE] Tabela advertisement checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela advertisement checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckVehiclesTable(){
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles` (\
     `carID` int NOT NULL AUTO_INCREMENT,\
-    `carModel` int NOT NULL DEFAULT '0',\
-    `carOwner` int NOT NULL DEFAULT '0',\
+    `carModel` int DEFAULT '0',\
+    `carOwner` int DEFAULT '0',\
     `carPosX` float DEFAULT '0',\
     `carPosY` float DEFAULT '0',\
     `carPosZ` float DEFAULT '0',\
     `carPosR` float DEFAULT '0',\
-    `carVirtualWorld` int DEFAULT '0',\
+    `carVW` int DEFAULT '0',\
     `carInterior` int DEFAULT '0',\
-    `carColor1` int NOT NULL DEFAULT '0',\
-    `carColor2` int NOT NULL DEFAULT '0',\
-    `carLocked` int NOT NULL DEFAULT '0',\
-    `carImpounded` int NOT NULL DEFAULT '0',\
-    `carImpoundPrice` int NOT NULL DEFAULT '0',\
-    `carWeapon1` int NOT NULL,\
-    `carAmmo1` int NOT NULL,\
-    `carWeapon2` int NOT NULL,\
-    `carAmmo2` int NOT NULL,\
-    `carWeapon3` int NOT NULL,\
-    `carAmmo3` int NOT NULL,\
-    `carWeapon4` int NOT NULL,\
-    `carAmmo4` int NOT NULL,\
-    `carWeapon5` int NOT NULL,\
-    `carAmmo5` int NOT NULL,\
-    `carWeapon6` int NOT NULL,\
-    `carAmmo6` int NOT NULL,\
-    `carWeapon7` int NOT NULL,\
-    `carAmmo7` int NOT NULL,\
-    `carWeapon8` int NOT NULL,\
-    `carAmmo8` int NOT NULL,\
-    `carWeapon9` int NOT NULL,\
-    `carAmmo9` int NOT NULL,\
-    `carWeapon10` int NOT NULL,\
-    `carAmmo10` int NOT NULL,\
-    `carWeapon11` int NOT NULL,\
-    `carAmmo11` int NOT NULL,\
-    `carWeapon12` int NOT NULL,\
-    `carAmmo12` int NOT NULL,\
-    `carWeapon13` int NOT NULL,\
-    `carAmmo13` int NOT NULL,\
-    `carWeapon14` int NOT NULL,\
-    `carAmmo14` int NOT NULL,\
-    `carWeapon15` int NOT NULL,\
-    `carAmmo15` int NOT NULL,\
-    `carWeapon16` int NOT NULL,\
-    `carAmmo16` int NOT NULL,\
-    `carWeapon17` int NOT NULL,\
-    `carAmmo17` int NOT NULL,\
-    `carWeapon18` int NOT NULL,\
-    `carAmmo18` int NOT NULL,\
-    `carWeapon19` int NOT NULL,\
-    `carAmmo19` int NOT NULL,\
-    `carWeapon20` int NOT NULL,\
-    `carAmmo20` int NOT NULL,\
-    `carWeapon21` int NOT NULL,\
-    `carAmmo21` int NOT NULL,\
-    `carWeapon22` int NOT NULL,\
-    `carAmmo22` int NOT NULL,\
-    `carWeapon23` int NOT NULL,\
-    `carAmmo23` int NOT NULL,\
-    `carWeapon24` int NOT NULL,\
-    `carAmmo24` int NOT NULL,\
-    `carWeapon25` int NOT NULL,\
-    `carAmmo25` int NOT NULL,\
-    `carWeapon26` int NOT NULL,\
-    `carAmmo26` int NOT NULL,\
-    `carWeapon27` int NOT NULL,\
-    `carAmmo27` int NOT NULL,\
-    `carWeapon28` int NOT NULL,\
-    `carAmmo28` int NOT NULL,\
-    `carWeapon29` int NOT NULL,\
-    `carAmmo29` int NOT NULL,\
-    `carWeapon30` int NOT NULL,\
-    `carAmmo30` int NOT NULL,\
-    `carFaction` int NOT NULL DEFAULT '0',\
-    `carBiz` int NOT NULL DEFAULT '0',\
+    `carColor1` int DEFAULT '0',\
+    `carColor2` int DEFAULT '0',\
+    `carLocked` int DEFAULT '0',\
+    `carImpounded` int DEFAULT '0',\
+    `carImpoundPrice` int DEFAULT '0',\
+    `carFaction` int NOT NULL DEFAULT '-1',\
+    `carBiz` int NOT NULL DEFAULT '-1',\
+    `carJob` int NOT NULL DEFAULT '-1',\
     `carRentPrice` int NOT NULL DEFAULT '0',\
     `carRentPlayer` int NOT NULL DEFAULT '-1',\
     `carRentTime` int NOT NULL DEFAULT '0',\
-    `carPaintjob` int(12) DEFAULT -1,\
-    `carMod1` int NOT NULL DEFAULT '0',\
-    `carMod2` int NOT NULL DEFAULT '0',\
-    `carMod3` int NOT NULL DEFAULT '0',\
-    `carMod4` int NOT NULL DEFAULT '0',\
-    `carMod5` int NOT NULL DEFAULT '0',\
-    `carMod6` int NOT NULL DEFAULT '0',\
-    `carMod7` int NOT NULL DEFAULT '0',\
-    `carMod8` int NOT NULL DEFAULT '0',\
-    `carMod9` int NOT NULL DEFAULT '0',\
-    `carMod10` int NOT NULL DEFAULT '0',\
-    `carMod11` int NOT NULL DEFAULT '0',\
-    `carMod12` int NOT NULL DEFAULT '0',\
-    `carMod13` int NOT NULL DEFAULT '0',\
-    `carMod14` int NOT NULL DEFAULT '0',\
-    `carNOSInstalled` int NOT NULL DEFAULT '0',\
-    `carNOS` int NOT NULL DEFAULT '0',\
-    `carBattery` float NOT NULL DEFAULT '100.000',\
-    `carEngine` float NOT NULL DEFAULT '100.000',\
-    `carMiles` float NOT NULL DEFAULT '0',\
-    `carFuel` float NOT NULL DEFAULT '100.00',\
-    `carHealth` float NOT NULL DEFAULT '1000.00',\
-    `carName` varchar(64),\
-    `carPlate` varchar(255),\
-    `carPlatePersonalized` int NOT NULL DEFAULT '0',\
-    `carAlarm` int NOT NULL DEFAULT '0',\
-    `carLock` int NOT NULL DEFAULT '0',\
-    `carImob` int NOT NULL DEFAULT '0',\
-    `carInsurance` int NOT NULL DEFAULT '0',\
-    `carXMRadio` int NOT NULL DEFAULT '0',\
-    `carSunPass` int NOT NULL DEFAULT '0',\
+    `carPaintjob` int DEFAULT -1,\
+    `carMod1` int DEFAULT '0',\
+    `carMod2` int DEFAULT '0',\
+    `carMod3` int DEFAULT '0',\
+    `carMod4` int DEFAULT '0',\
+    `carMod5` int DEFAULT '0',\
+    `carMod6` int DEFAULT '0',\
+    `carMod7` int DEFAULT '0',\
+    `carMod8` int DEFAULT '0',\
+    `carMod9` int DEFAULT '0',\
+    `carMod10` int DEFAULT '0',\
+    `carMod11` int DEFAULT '0',\
+    `carMod12` int DEFAULT '0',\
+    `carMod13` int DEFAULT '0',\
+    `carMod14` int DEFAULT '0',\
+    `carNOSInstalled` int DEFAULT '0',\
+    `carNOS` int DEFAULT '0',\
+    `carBattery` float NOT NULL,\
+    `carEngine` float NOT NULL,\
+    `carMiles` float NOT NULL,\
+    `carFuel` float NOT NULL,\
+    `carHealth` float NOT NULL,\
+    `carName` varchar(64) NOT NULL,\
+    `carNamePer` int NOT NULL,\
+    `carPlate` varchar(255) NOT NULL,\
+    `carPlatePer` int NOT NULL,\
+    `carEnergyResource` int NOT NULL,\
+    `carAlarm` int NOT NULL,\
+    `carLock` int NOT NULL,\
+    `carImob` int NOT NULL,\
+    `carInsurance` int NOT NULL,\
+    `carXMRadio` int NOT NULL,\
+    `carSunPass` int NOT NULL,\
+    `carDoorsStatus` int NOT NULL,\
+    `carPanelsStatus` int NOT NULL,\
+    `carLightsStatus` int NOT NULL,\
+    `carTiresStatus` int NOT NULL,\
+    `carCarparts` int NOT NULL,\
     PRIMARY KEY (`carID`));");
 
-    print("[DATABASE] Tabela 'vehicles' checada com sucesso.");
+    print("[DATABASE] Tabela vehicles checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckVehiclesWeaponsTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_weapons` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `carID` int DEFAULT '0',\
+    `carWeapon1` int NOT NULL,\
+    `carWeaponType1` int NOT NULL,\
+    `carAmmo1` int NOT NULL,\
+    `carWeapon2` int NOT NULL,\
+    `carWeaponType2` int NOT NULL,\
+    `carAmmo2` int NOT NULL,\
+    `carWeapon3` int NOT NULL,\
+    `carWeaponType3` int NOT NULL,\
+    `carAmmo3` int NOT NULL,\
+    `carWeapon4` int NOT NULL,\
+    `carWeaponType4` int NOT NULL,\
+    `carAmmo4` int NOT NULL,\
+    `carWeapon5` int NOT NULL,\
+    `carWeaponType5` int NOT NULL,\
+    `carAmmo5` int NOT NULL,\
+    `carWeapon6` int NOT NULL,\
+    `carWeaponType6` int NOT NULL,\
+    `carAmmo6` int NOT NULL,\
+    `carWeapon7` int NOT NULL,\
+    `carWeaponType7` int NOT NULL,\
+    `carAmmo7` int NOT NULL,\
+    `carWeapon8` int NOT NULL,\
+    `carWeaponType8` int NOT NULL,\
+    `carAmmo8` int NOT NULL,\
+    `carWeapon9` int NOT NULL,\
+    `carWeaponType9` int NOT NULL,\
+    `carAmmo9` int NOT NULL,\
+    `carWeapon10` int NOT NULL,\
+    `carWeaponType10` int NOT NULL,\
+    `carAmmo10` int NOT NULL,\
+    `carWeapon11` int NOT NULL,\
+    `carWeaponType11` int NOT NULL,\
+    `carAmmo11` int NOT NULL,\
+    `carWeapon12` int NOT NULL,\
+    `carWeaponType12` int NOT NULL,\
+    `carAmmo12` int NOT NULL,\
+    `carWeapon13` int NOT NULL,\
+    `carWeaponType13` int NOT NULL,\
+    `carAmmo13` int NOT NULL,\
+    `carWeapon14` int NOT NULL,\
+    `carWeaponType14` int NOT NULL,\
+    `carAmmo14` int NOT NULL,\
+    `carWeapon15` int NOT NULL,\
+    `carWeaponType15` int NOT NULL,\
+    `carAmmo15` int NOT NULL,\
+    `carWeapon16` int NOT NULL,\
+    `carWeaponType16` int NOT NULL,\
+    `carAmmo16` int NOT NULL,\
+    `carWeapon17` int NOT NULL,\
+    `carWeaponType17` int NOT NULL,\
+    `carAmmo17` int NOT NULL,\
+    `carWeapon18` int NOT NULL,\
+    `carWeaponType18` int NOT NULL,\
+    `carAmmo18` int NOT NULL,\
+    `carWeapon19` int NOT NULL,\
+    `carWeaponType19` int NOT NULL,\
+    `carAmmo19` int NOT NULL,\
+    `carWeapon20` int NOT NULL,\
+    `carWeaponType20` int NOT NULL,\
+    `carAmmo20` int NOT NULL,\
+    `carWeapon21` int NOT NULL,\
+    `carWeaponType21` int NOT NULL,\
+    `carAmmo21` int NOT NULL,\
+    `carWeapon22` int NOT NULL,\
+    `carWeaponType22` int NOT NULL,\
+    `carAmmo22` int NOT NULL,\
+    `carWeapon23` int NOT NULL,\
+    `carWeaponType23` int NOT NULL,\
+    `carAmmo23` int NOT NULL,\
+    `carWeapon24` int NOT NULL,\
+    `carWeaponType24` int NOT NULL,\
+    `carAmmo24` int NOT NULL,\
+    `carWeapon25` int NOT NULL,\
+    `carWeaponType25` int NOT NULL,\
+    `carAmmo25` int NOT NULL,\
+    `carWeapon26` int NOT NULL,\
+    `carWeaponType26` int NOT NULL,\
+    `carAmmo26` int NOT NULL,\
+    `carWeapon27` int NOT NULL,\
+    `carWeaponType27` int NOT NULL,\
+    `carAmmo27` int NOT NULL,\
+    `carWeapon28` int NOT NULL,\
+    `carWeaponType28` int NOT NULL,\
+    `carAmmo28` int NOT NULL,\
+    `carWeapon29` int NOT NULL,\
+    `carWeaponType29` int NOT NULL,\
+    `carAmmo29` int NOT NULL,\
+    `carWeapon30` int NOT NULL,\
+    `carWeaponType30` int NOT NULL,\
+    `carAmmo30` int NOT NULL,\
+    `empty` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela vehicles_weapons checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_weapons checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckPoolTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `pool_tables` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `positionX` float NOT NULL DEFAULT '0',\
+    `positionY` float NOT NULL DEFAULT '0',\
+    `positionZ` float NOT NULL DEFAULT '0',\
+    `positionA` float NOT NULL DEFAULT '0',\
+    `virtual_world` int NOT NULL DEFAULT '0',\
+    `interior` int NOT NULL DEFAULT '0',\
+    `skin` varchar(64) NOT NULL DEFAULT 'POOL_SKIN_DEFAULT',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela pool_tables checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela pool_tables checada com sucesso.");
+    logCreate(99998, logString, 5);
 }

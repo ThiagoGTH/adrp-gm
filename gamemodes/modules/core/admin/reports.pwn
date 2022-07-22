@@ -131,6 +131,7 @@ CMD:aj(playerid, params[]){
     SendServerMessage(sosdata[sosid][sosPlayer], "O %s %s está respondendo sua dúvida.", AdminRankName(playerid), pNome(playerid));
     SendServerMessage(sosdata[sosid][sosPlayer], "Utilize /cs para usar o canal de suporte.");
     SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está respondendo a dúvida de %s.", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]));
+    uInfo[playerid][uSOSAns] ++;
 
     if(strlen(text) > 64){
         va_SendClientMessage(sosdata[sosid][sosPlayer], COLOR_LIGHTRED, "Sua pergunta: {AFAFAF}%.64s", text);
@@ -164,6 +165,7 @@ CMD:rj(playerid, params[]){
     strunpack(text, sosdata[sosid][sosText]);
     SendServerMessage(sosdata[sosid][sosPlayer], "O %s %s recusou sua dúvida.", AdminRankName(playerid), pNome(playerid));
     SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou a dúvida de %s.", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]));
+    uInfo[playerid][uSOSAns] ++;
 
     if(strlen(text) > 64){
         va_SendClientMessage(sosdata[sosid][sosPlayer], COLOR_LIGHTRED, "Sua pergunta: {AFAFAF}%.64s", text);
@@ -318,7 +320,6 @@ Report_Remove(reportid){
 }
 
 // REPORT SYSTEM -> COMMANDS
-CMD:rep(playerid, params[]) return cmd_report(playerid, params);
 CMD:report(playerid, params[]){
     if (isnull(params)) return SendSyntaxMessage(playerid, "/report [texto]");
     if (Report_GetCount(playerid) > 0) return SendErrorMessage(playerid, "Você já possui um report pendente.");
@@ -343,6 +344,7 @@ CMD:report(playerid, params[]){
     } else SendErrorMessage(playerid, "A lista de reports está cheia. Aguarde um momento.");
     return true;
 }
+alias:report("rep")
 
 // REPORT SYSTEM -> ADMIN COMMANDS
 CMD:listareports(playerid, params[]){
@@ -378,6 +380,8 @@ CMD:ar(playerid, params[]){
     strunpack(text, reportdata[reportid][reportText]);
     SendServerMessage(reportdata[reportid][reportPlayer], "O %s %s está atendendo seu report.", AdminRankName(playerid), pNome(playerid));
     SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está atendendo o report de %s.", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]));
+    uInfo[playerid][uSOSAns] ++;
+
     new str[1024], dest[1024];
 	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]), text);
 	utf8encode(dest, str);
@@ -396,6 +400,8 @@ CMD:rr(playerid, params[]){
     strunpack(text, reportdata[reportid][reportText]);
     SendServerMessage(reportdata[reportid][reportPlayer], "O %s %s recusou seu report.", AdminRankName(playerid), pNome(playerid));
     SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou o report de %s.", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]));
+    uInfo[playerid][uSOSAns] ++;
+    
     if(strlen(text) > 64){
         va_SendClientMessage(reportdata[reportid][reportPlayer], COLOR_LIGHTRED, "Seu report: {AFAFAF}%.64s", text);
         va_SendClientMessage(reportdata[reportid][reportPlayer], COLOR_GREY, "...%s", text[64]);

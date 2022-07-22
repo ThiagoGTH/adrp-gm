@@ -63,7 +63,7 @@ CMD:barreira(playerid, params[])
 	if (isnull(params)){
 	 	SendUsageMessage(playerid, "/barreira <opção>");
 	    SendClientMessage(playerid, VERDE, "(Opções):{FFFFFF} colocar, editar, retirar, retirarall");
-		return 1;
+		return true;
 	}
     
 	static
@@ -93,7 +93,7 @@ CMD:barreira(playerid, params[])
             DestroyDynamicObject(br_info[i][cadeObject]);
 
             SendClientMessage(playerid, VERDE, "(Barreira):{FFFFFF} Você removeu uma barreira do servidor.");
-			return 1;
+			return true;
 		}
 		SendErrorMessage(playerid, "você não está próximo a nenhuma barreira.");
 	}
@@ -113,9 +113,9 @@ CMD:barreira(playerid, params[])
     	SetPVarInt(playerid, "SelectObject_Option", 1);
 		SendClientMessage(playerid, VERDE, "(Barreira):{FFFFFF} Clique sobre a barreira que você deseja editar.");
 		SelectObject(playerid);
-		return 1;
+		return true;
 	}
-	return 1;
+	return true;
 }
 public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y, Float:z) {
 	new SelectOption = GetPVarInt(playerid, "SelectObject_Option");
@@ -132,11 +132,11 @@ public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y
 				if(!IsValidDynamicObject(br_info[i][cadeObject])) return SendErrorMessage(playerid, "ERRO #1 - Ocorreu um erro ao editar este objeto. Motivo: Objeto inválido.");
 				br_info[i][beditando] = true;
             	EditDynamicObject(playerid, br_info[i][cadeObject]);
-				return 1;
+				return true;
     		}
     	}
     }
-    return 1;
+    return true;
 }
 
 public OnModelSelectionResponse(playerid, extraid, index, modelid, response)
@@ -176,11 +176,11 @@ public OnModelSelectionResponse(playerid, extraid, index, modelid, response)
             br_info[i][beditando] = true;
             EditDynamicObject(playerid, br_info[i][cadeObject]);
             pInfo[playerid][pEditandoBareira] = -1;
-            return 1;
+            return true;
         }
         SendErrorMessage(playerid, "(Barreira):{FFFFFF} O servidor atingiu o limite de barreiras spawnadas.");
 	}
-    return 1;
+    return true;
 }
 
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
@@ -195,7 +195,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
 
             SendErrorMessage(playerid,"(Barreira):{FFFFFF} Edição da barreira foi cancelada.");
         }
-        return 1;
+        return true;
     }
    	if (response == EDIT_RESPONSE_FINAL){
         if(pInfo[playerid][pEditandoBareira] != -1)
@@ -211,7 +211,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
 		        br_info[id][cadeObject] = CreateDynamicObject(br_info[id][cadeModel], x, y, z, rx, ry, rz, br_info[id][cadeWorld]);
 
 		        SendClientMessage(playerid, VERDE, "(Barreira):{FFFFFF} Barreira editada com sucesso.");
-		        return 1;
+		        return true;
             }   
             else{
                 if(IsValidDynamicObject(br_info[id][cadeObject]))
@@ -222,5 +222,5 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
             }
 		}            
     }
-    return 1;
+    return true;
 }

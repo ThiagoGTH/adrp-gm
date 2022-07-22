@@ -173,7 +173,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     if(dialogid == DIALOG_ID)
     {
         if(!response)
-            return 0;
+            return false;
 
         if(FloorRequestedBy[listitem] != INVALID_PLAYER_ID || IsFloorInQueue(listitem))
             GameTextForPlayer(playerid, "~r~The floor is already in the queue", 3500, 4);
@@ -185,7 +185,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		return true;
     }
 
-	return 0;
+	return false;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -294,7 +294,7 @@ stock Elevator_CloseDoors()
     // Closes the elevator's doors.
 
     if(ElevatorState == ELEVATOR_STATE_MOVING)
-	    return 0;
+	    return false;
 
     new Float:x, Float:y, Float:z;
 
@@ -400,7 +400,7 @@ stock AddFloorToQueue(floorid)
 	    return true;
 	}
 
-	return 0;
+	return false;
 }
 
 public ResetElevatorQueue()
@@ -424,7 +424,7 @@ stock IsFloorInQueue(floorid)
 	    if(ElevatorQueue[i] == floorid)
 	        return true;
 
-	return 0;
+	return false;
 }
 
 stock ReadNextFloorInQueue()
@@ -432,7 +432,7 @@ stock ReadNextFloorInQueue()
 	// Reads the next floor in the queue, closes doors, and goes to it.
 
 	if(ElevatorState != ELEVATOR_STATE_IDLE || ElevatorQueue[0] == INVALID_FLOOR)
-	    return 0;
+	    return false;
 
 	Elevator_CloseDoors();
 	Floor_CloseDoors(ElevatorFloor);
@@ -446,7 +446,7 @@ stock DidPlayerRequestElevator(playerid)
 	    if(FloorRequestedBy[i] == playerid)
 	        return true;
 
-	return 0;
+	return false;
 }
 
 stock ShowElevatorDialog(playerid)
@@ -471,7 +471,7 @@ stock CallElevator(playerid, floorid)
 	// Calls the elevator (also used with the elevator dialog).
 
 	if(FloorRequestedBy[floorid] != INVALID_PLAYER_ID || IsFloorInQueue(floorid))
-	    return 0;
+	    return false;
 
 	FloorRequestedBy[floorid] = playerid;
 	AddFloorToQueue(floorid);

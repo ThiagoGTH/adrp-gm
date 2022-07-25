@@ -44,6 +44,7 @@ void:CheckTables() {
     CheckVehiclesTable();
     CheckVehiclesWeaponsTable();
     CheckPoolTable();
+    CheckServerTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -402,5 +403,20 @@ void:CheckPoolTable(){
 
     print("[DATABASE] Tabela pool_tables checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela pool_tables checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckServerTable(){
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `SERVER` (\
+    `NAME` varchar(64) NOT NULL,\
+    `INT_VAL` int NOT NULL,\
+    `FLOAT_VAL` float NOT NULL,\
+    `STRING_VAL` varchar(128) NOT NULL,\
+    `TYPE` tinyint(1) DEFAULT '1',\
+    UNIQUE KEY `NAME` (`NAME`));");
+
+    print("[DATABASE] Tabela SERVER checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela SERVER checada com sucesso.");
     logCreate(99998, logString, 5);
 }

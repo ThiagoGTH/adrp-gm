@@ -22,7 +22,6 @@
 /* ================================ VARIAVEIS ================================ */
 new
 	p_HideHelpDialogTimer[MAX_PLAYERS] = { -1, ... },
-	szBigString [256],
 	PlayerText: p_HelpBoxTD[MAX_PLAYERS] = {PlayerText: INVALID_TEXT_DRAW, ...};
 
 Float:GetDistanceFromPointToPoint( Float: fX, Float: fY, Float: fX1, Float: fY1)

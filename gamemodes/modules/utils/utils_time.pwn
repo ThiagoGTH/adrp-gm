@@ -5,6 +5,14 @@
 #define FULL_DATETIME           "%d/%m/%Y às %H:%M:%S"
 #define FULL_SHORT_DATETIME     "%d/%m/%Y - %H:%M:%S"
 
+new // Fix Time
+	g_iTime = 0,
+	ghour = 0,
+	gminute = 0,
+	gsecond = 0,
+	timeshift = 0,
+	shifthour
+;
 // Vai retornar tanto 'dd/MM/yy - HH:mm:ss' como  'dd/MM/yy às HH:mm:ss'
 GetFullDate(timestamp, style = 0) {
     new convertedTimeZoned = timestamp - 10800;
@@ -46,3 +54,47 @@ GetDuration(time){
 	strcat(str, " atrás");
 	return str;
 }
+forward OnServerUpdateTimer();
+public OnServerUpdateTimer(){
+	g_iTime = gettime();
+
+	return Y_HOOKS_CONTINUE_RETURN_1;
+}
+
+hook OnGameModeInit(){
+	gettime(ghour, gminute, gsecond);
+	FixHour(ghour);
+	ghour = shifthour;
+	SetWorldTime(ghour);
+
+	SetTimer("SyncUp", 60000, true);
+	return true;
+}
+
+forward FixHour(hour);
+public FixHour(hour) {
+	hour = timeshift+hour;
+	if (hour < 0) hour = hour+24;
+	else if (hour > 23) hour = hour-24;
+	shifthour = hour;
+	return true;
+}
+
+forward SyncUp();
+public SyncUp() {
+    new tmphour;
+	new tmpminute;
+	new tmpsecond;
+	gettime(tmphour, tmpminute, tmpsecond);
+	FixHour(tmphour);
+	tmphour = shifthour;
+
+	if ((tmphour > ghour) || (tmphour == 0 && ghour == 23)) {
+		ghour = tmphour;
+
+		//OnTradingUpdate();
+		SetWorldTime(tmphour);
+	}
+}
+
+GetServerTime() return g_iTime;

@@ -22,6 +22,12 @@ GetPlayerUserEx(playerid){
     return name;
 }
 
+GetPlayerSQLID(playerid){
+    new SQLID;
+    SQLID = uInfo[playerid][uID];
+    return SQLID;
+}
+
 // Evento/gatilho de conexão estabelecida pelo jogador
 
 hook OnPlayerRequestClass(playerid, classid) {
@@ -37,7 +43,7 @@ hook OnPlayerRequestClass(playerid, classid) {
     return true;
 }
 
-Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]){
+Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
 	if(!response) return Kick(playerid);
         
     if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
@@ -50,7 +56,7 @@ Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]){
 	return true;
 }
 
-Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]){
+Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
 	if(!response) return Kick(playerid);
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
@@ -60,8 +66,7 @@ Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]){
 	return true;
 }
 
-public OnPasswordHashed(playerid)
-{
+public OnPasswordHashed(playerid) {
 	new hash[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(hash);
 

@@ -1,5 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
+#define FormatCash(%0) \
+    (FormatNumber2(%0, .prefix = '$'))
+
 #define MAX_DYNAMIC_CARS            (1500)
 
 #define MAX_OWNABLE_CARS            (5)
@@ -10,7 +13,10 @@
 new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];
-
+new 
+    szBigString [256],
+    szLargeString [1024];
+    
 enum User_Data {
     uID,
     uName[24],

@@ -332,7 +332,7 @@ SaveCharacterInfo(playerid) {
 
     if(!pInfo[playerid][pLogged]) return true;
 
-    pInfo[playerid][pMoney] = GetPlayerMoney(playerid);
+    pInfo[playerid][pMoney] = GetMoney(playerid);
     pInfo[playerid][pSkin] = GetPlayerSkin(playerid);
     pInfo[playerid][pHealth] = GetPlayerHealthEx(playerid);
     pInfo[playerid][pArmour] = GetPlayerArmourEx(playerid);

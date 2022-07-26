@@ -26,8 +26,8 @@ hook OnGameModeInit() {
     } else {
         print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso.");
         print("[DATABASE] Verificando criação de tabelas...");
-        CheckTables();
         mysql_set_charset("latin1");
+        CheckTables();
     }
 
     return true;
@@ -45,6 +45,7 @@ void:CheckTables() {
     CheckVehiclesWeaponsTable();
     CheckPoolTable();
     CheckServerTable();
+    CheckHousesTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -418,5 +419,34 @@ void:CheckServerTable(){
 
     print("[DATABASE] Tabela SERVER checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela SERVER checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckHousesTable() {
+    
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `houses` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int DEFAULT '0',\
+    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `locked` int DEFAULT '0',\
+    `price` int DEFAULT '0',\
+    `storage_money` int DEFAULT '0',\
+    `entry_x` float DEFAULT '0',\
+    `entry_y` float DEFAULT '0',\
+    `entry_z` float DEFAULT '0',\
+    `entry_a` float DEFAULT '0',\
+    `vw_entry` int DEFAULT '0',\
+    `interior_entry` int DEFAULT '0',\
+    `exit_x` float DEFAULT '0',\
+    `exit_y` float DEFAULT '0',\
+    `exit_z` float DEFAULT '0',\
+    `exit_a` float DEFAULT '0',\
+    `vw_exit` int DEFAULT '0',\
+    `interior_exit` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela houses checada com sucesso.");
+    
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses checada com sucesso.");
     logCreate(99998, logString, 5);
 }

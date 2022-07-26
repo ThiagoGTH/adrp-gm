@@ -74,6 +74,8 @@ new query[2048];
 #include "modules\core\player\systems\mechanic.pwn"
 #include "modules\core\player\systems\vehicles\vehicles_core.pwn"
 #include "modules\core\player\systems\vehicles\vehicles_cmd.pwn"
+#include "modules\core\player\systems\houses\houses_core.pwn"
+#include "modules\core\player\systems\houses\houses_cmd.pwn"
 //#include "modules\core\player\systems\investment\trading.pwn"
 
 //#include "modules\core\player\systems\elevator.pwn"
@@ -99,4 +101,3 @@ main() {
     print("\nGamemode conectado\n");
     printf("Última atualização em: %s\n \n", LASTEST_RELEASE);
 }
-

@@ -1,6 +1,6 @@
 {
-	"user": "ThiagoGTH",
-	"repo": "advanced-roleplay",
+	"user": "Gabryeu",
+	"repo": "advanced-roleplay-gm",
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [

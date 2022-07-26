@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 #define MAX_HOUSES          1000
+#define MAX_SECOND_ENTRIES  5000
 
 enum E_HOUSE_DATA {
     hID,                // ID da casa no MySQL
@@ -17,19 +18,33 @@ enum E_HOUSE_DATA {
     interiorEntry,      // Interior do exterior
 };
 
-new hInfo[1000][E_HOUSE_DATA];
+new hInfo[MAX_HOUSES][E_HOUSE_DATA];
+
+enum E_SECOND_ENTRIES_DATA {
+    sID,                // ID da entrada no MySQL
+    sHouseID,           // ID da casa que essa entrada pertence
+    bool:sLocked,       // Trancado 
+    Float:sExitPos[4],  // Posições (X, Y, Z, A) do interior
+    sExitVW,            // VW do interior
+    sExitInterior,      // Interior do interior
+    Float:sEntryPos[4], // Posições (X, Y, Z, A) do exterior
+    sEntryVW,           // VW do exterior
+    sEntryInterior,     // Interior do exterior
+};
+
+new sInfo[MAX_SECOND_ENTRIES][E_SECOND_ENTRIES_DATA];
 
 // ============================================================================================================================================
 
 hook OnGameModeInit() {
     LoadHouses();
-
+    LoadEntries();
     return 1;
 }
 
 hook OnGamemodeExit() {
     SaveHouses();
-
+    SaveEntries();
     return 1;
 }
 
@@ -66,6 +81,35 @@ LoadHouses() {
     }
 
     printf("[CASAS]: %d casas carregadas com sucesso.", loadedHouses);
+
+    return 1;
+}
+
+LoadHouse(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    hInfo[id][hID] = id;
+    cache_get_value_name_int(0, "character_id", hInfo[id][hOwner]);
+    cache_get_value_name(0, "address", hInfo[id][hAddress]);
+    cache_get_value_name_int(0, "locked", hInfo[id][hLocked]);
+    cache_get_value_name_int(0, "price", hInfo[id][hPrice]);
+    cache_get_value_name_int(0, "storage_money", hInfo[id][hStorageMoney]);
+    cache_get_value_name_float(0, "entry_x", hInfo[id][hEntryPos][0]);
+    cache_get_value_name_float(0, "entry_y", hInfo[id][hEntryPos][1]);
+    cache_get_value_name_float(0, "entry_z", hInfo[id][hEntryPos][2]);
+    cache_get_value_name_float(0, "entry_a", hInfo[id][hEntryPos][3]);
+    cache_get_value_name_int(0, "vw_entry", hInfo[id][vwEntry]);
+    cache_get_value_name_int(0, "interior_entry", hInfo[id][interiorEntry]);
+    cache_get_value_name_float(0, "exit_x", hInfo[id][hExitPos][0]);
+    cache_get_value_name_float(0, "exit_y", hInfo[id][hExitPos][1]);
+    cache_get_value_name_float(0, "exit_z", hInfo[id][hExitPos][2]);
+    cache_get_value_name_float(0, "exit_a", hInfo[id][hExitPos][3]);
+    cache_get_value_name_int(0, "vw_exit", hInfo[id][vwExit]);
+    cache_get_value_name_int(0, "interior_exit", hInfo[id][interiorExit]);
 
     return 1;
 }
@@ -147,6 +191,152 @@ GetNearestHouseExit(playerid, Float:distance = 1.0) {
             continue;
 
         if(!IsPlayerInRangeOfPoint(playerid, distance, hInfo[i][hExitPos][0], hInfo[i][hExitPos][1], hInfo[i][hExitPos][2]))
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
+// ============================================================================================================================================
+LoadEntries() {
+    new loadedEntries;
+
+    mysql_query(DBConn, "SELECT * FROM `houses_other_entries`;");
+
+    for(new i; i < cache_num_rows(); i++) {
+        new id;
+        cache_get_value_name_int(i, "id", id);
+        sInfo[id][sID] = id;
+
+        cache_get_value_name_int(i, "house_id", sInfo[id][sHouseID]);
+        cache_get_value_name_int(i, "locked", sInfo[id][sLocked]);
+        cache_get_value_name_float(i, "entry_x", sInfo[id][sEntryPos][0]);
+        cache_get_value_name_float(i, "entry_y", sInfo[id][sEntryPos][1]);
+        cache_get_value_name_float(i, "entry_z", sInfo[id][sEntryPos][2]);
+        cache_get_value_name_float(i, "entry_a", sInfo[id][sEntryPos][3]);
+        cache_get_value_name_int(i, "vw_entry", sInfo[id][sEntryVW]);
+        cache_get_value_name_int(i, "interior_entry", sInfo[id][sEntryInterior]);
+        cache_get_value_name_float(i, "exit_x", sInfo[id][sExitPos][0]);
+        cache_get_value_name_float(i, "exit_y", sInfo[id][sExitPos][1]);
+        cache_get_value_name_float(i, "exit_z", sInfo[id][sExitPos][2]);
+        cache_get_value_name_float(i, "exit_a", sInfo[id][sExitPos][3]);
+        cache_get_value_name_int(i, "vw_exit", sInfo[id][sExitVW]);
+        cache_get_value_name_int(i, "interior_exit", sInfo[id][sExitInterior]);
+
+        loadedEntries++;
+    }
+
+    printf("[CASAS]: %d entradas secundárias carregadas com sucesso.", loadedEntries);
+
+    return 1;
+}
+
+LoadEntry(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    sInfo[id][sID] = id;
+
+    cache_get_value_name_int(0, "house_id", sInfo[id][sHouseID]);
+    cache_get_value_name_int(0, "locked", sInfo[id][sLocked]);
+    cache_get_value_name_float(0, "entry_x", sInfo[id][sEntryPos][0]);
+    cache_get_value_name_float(0, "entry_y", sInfo[id][sEntryPos][1]);
+    cache_get_value_name_float(0, "entry_z", sInfo[id][sEntryPos][2]);
+    cache_get_value_name_float(0, "entry_a", sInfo[id][sEntryPos][3]);
+    cache_get_value_name_int(0, "vw_entry", sInfo[id][sEntryVW]);
+    cache_get_value_name_int(0, "interior_entry", sInfo[id][sEntryInterior]);
+    cache_get_value_name_float(0, "exit_x", sInfo[id][sExitPos][0]);
+    cache_get_value_name_float(0, "exit_y", sInfo[id][sExitPos][1]);
+    cache_get_value_name_float(0, "exit_z", sInfo[id][sExitPos][2]);
+    cache_get_value_name_float(0, "exit_a", sInfo[id][sExitPos][3]);
+    cache_get_value_name_int(0, "vw_exit", sInfo[id][sExitVW]);
+    cache_get_value_name_int(0, "interior_exit", sInfo[id][sExitInterior]);
+
+    return 1;
+}
+
+SaveEntries() {
+    new savedEntries;
+
+    for(new i; i < MAX_SECOND_ENTRIES; i++) {
+        if(!hInfo[i][hID])
+            continue;
+
+        mysql_format(DBConn, query, sizeof query, "UPDATE `houses_other_entries` SET `house_id` = %d, `locked` = %d, \
+            `entry_x` = %f, `entry_y` = %f, `entry_z` = %f, `entry_a` = %f, `vw_entry` = %d, `interior_entry` = %d, \
+            `exit_x` = %f, `exit_y` = %f, `exit_z` = %f, `exit_a` = %f, `vw_exit` = %d, `interior_exit` = %d WHERE `id` = %d;", sInfo[i][sHouseID], sInfo[i][sLocked],
+            sInfo[i][sEntryPos][0], sInfo[i][sEntryPos][1], sInfo[i][sEntryPos][2], sInfo[i][sEntryPos][3], sInfo[i][sEntryVW], sInfo[i][sEntryInterior],
+            sInfo[i][sExitPos][0], sInfo[i][sExitPos][1], sInfo[i][sExitPos][2], sInfo[i][sExitPos][3], sInfo[i][sExitVW], sInfo[i][sExitInterior], i);
+        mysql_query(DBConn, query);
+
+        savedEntries++;
+    }
+
+    printf("[CASAS]: %d entradas secundárias salvas com sucesso.", savedEntries);
+
+    return 1;
+}
+
+SaveEntry(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `houses_other_entries` SET `house_id` = %d, `locked` = %d, \
+        `entry_x` = %f, `entry_y` = %f, `entry_z` = %f, `entry_a` = %f, `vw_entry` = %d, `interior_entry` = %d, \
+        `exit_x` = %f, `exit_y` = %f, `exit_z` = %f, `exit_a` = %f, `vw_exit` = %d, `interior_exit` = %d WHERE `id` = %d;", sInfo[id][sHouseID], sInfo[id][sLocked],
+        sInfo[id][sEntryPos][0], sInfo[id][sEntryPos][1], sInfo[id][sEntryPos][2], sInfo[id][sEntryPos][3], sInfo[id][sEntryVW], sInfo[id][sEntryInterior],
+        sInfo[id][sExitPos][0], sInfo[id][sExitPos][1], sInfo[id][sExitPos][2], sInfo[id][sExitPos][3], sInfo[id][sExitVW], sInfo[id][sExitInterior], id);
+    mysql_query(DBConn, query);
+
+    return 1;
+}
+
+IsValidEntry(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    return 1;
+}
+
+// Procura por alguma entrada secundária de casa
+GetNearestHouseSecondEntry(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_SECOND_ENTRIES; i++) {
+        if(!sInfo[i][sHouseID])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, sInfo[i][sEntryPos][0], sInfo[i][sEntryPos][1], sInfo[i][sEntryPos][2]))
+            continue;
+
+        if(GetPlayerVirtualWorld(playerid) != sInfo[i][sEntryVW] || GetPlayerInterior(playerid) != sInfo[i][sEntryInterior])
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
+// Procura por alguma saída secundária de casa
+GetNearestHouseSecondExit(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_SECOND_ENTRIES; i++) {
+        if(!sInfo[i][sHouseID])
+            continue;
+        
+        if(GetPlayerVirtualWorld(playerid) != sInfo[i][sExitVW] || GetPlayerInterior(playerid) != sInfo[i][sExitInterior])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, sInfo[i][sExitPos][0], sInfo[i][sExitPos][1], sInfo[i][sExitPos][2]))
             continue;
 
         return i;

@@ -446,7 +446,28 @@ void:CheckHousesTable() {
     PRIMARY KEY (`id`));");
     
     print("[DATABASE] Tabela houses checada com sucesso.");
-    
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `houses_other_entries` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `house_id` int DEFAULT '0',\
+    `locked` int DEFAULT '0',\
+    `entry_x` float DEFAULT '0',\
+    `entry_y` float DEFAULT '0',\
+    `entry_z` float DEFAULT '0',\
+    `entry_a` float DEFAULT '0',\
+    `vw_entry` int DEFAULT '0',\
+    `interior_entry` int DEFAULT '0',\
+    `exit_x` float DEFAULT '0',\
+    `exit_y` float DEFAULT '0',\
+    `exit_z` float DEFAULT '0',\
+    `exit_a` float DEFAULT '0',\
+    `vw_exit` int DEFAULT '0',\
+    `interior_exit` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela houses_other_entries checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso.");
     logCreate(99998, logString, 5);
 }

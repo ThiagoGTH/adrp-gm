@@ -50,7 +50,8 @@ ShowAdminCmds(playerid){
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listareports, /ar, /rr, /tapa, /vida, /reviver, /reclife, /ir, /trazer");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /ultimoatirador, /x, /y, /z");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa, /atrancar");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa, /irentrada, /atrancar");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listaentradas");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
@@ -58,7 +59,8 @@ ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /curartodos, /clima, /redflag");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /curartodos, /clima, /redflag, /criarcasa, /deletarcasa, /editarcasa, /criarentrada");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /editarentrada, /deletarentrada");
 	}
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{

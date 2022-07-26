@@ -5,11 +5,11 @@ logCreate(playerid, log[], type){
 		Discord_PublishLog(playerid, log, type);
 
     if(playerid == 99998){
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('SYSTEM', 'SYSTEM', '%s', '%d', '%s', '%d')", 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('SYSTEM', 'SYSTEM', '%s', '%d', '%e', '%d')", 
             GetPlayerIP(playerid), gettime(), log, type);
         mysql_query(DBConn, query);
     }else{
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('%s', '%s', '%s', '%d', '%s', '%d')", 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('%s', '%s', '%s', '%d', '%e', '%d')", 
             GetPlayerNameEx(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), gettime(), log, type);
         mysql_query(DBConn, query);
     }

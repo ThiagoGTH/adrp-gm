@@ -47,6 +47,10 @@ CMD:limparmeuchat(playerid, params[]){
 	return true;
 }
 
+CMD:meuvw(playerid) {
+	return SendServerMessage(playerid, "O seu VW atual é %d.", GetPlayerVirtualWorld(playerid));
+}
+
 /*GetWeapon(playerid){
 	new weaponid = GetPlayerWeapon(playerid);
 

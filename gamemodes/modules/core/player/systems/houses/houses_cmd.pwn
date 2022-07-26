@@ -138,5 +138,38 @@ CMD:editarcasa(playerid, params[]) {
         return 1;
     }
 
+    //Editar o endereço
+    if(!strcmp(option, "endereco", true) || !strcmp(option, "endereço", true)) {
+        if(!strlen(value))
+            return SendErrorMessage(playerid, "Você precisa especificar um endereço para setar.");
+
+        format(hInfo[id][hAddress], 256, "%s", value);
+        SaveHouse(id);
+
+        SendServerMessage(playerid, "Você setou o endereço da casa de ID %d como '%s'.", id, value);
+
+        format(logString, sizeof(logString), "%s (%s) setou o endereço da casa de ID %d como '%s'.", pNome(playerid), GetPlayerUserEx(playerid), id, value);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }
+
+    SendSyntaxMessage(playerid, "/editarcasa [id] [opção]");
+    return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: entrada, interior, preco, endereco");
+}
+
+CMD:ircasa(playerid, params[]) {
+    new id;
+
+    if(GetPlayerAdmin(playerid) < 2)
+        return SendPermissionMessage(playerid);
+
+    if(!hInfo[id][hID])
+        return SendErrorMessage(playerid, "Esse ID de casa não existe.");
+
+    SetPlayerPos(playerid, hInfo[id][hEntryPos][0], hInfo[id][hEntryPos][1], hInfo[id][hEntryPos][2]);
+    SetPlayerFacingAngle(playerid, hInfo[id][hEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a casa de ID %d.", id);
+
     return 1;
 }

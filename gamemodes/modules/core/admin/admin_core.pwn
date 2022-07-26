@@ -42,14 +42,15 @@ ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 1) // TESTER
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[TESTER]{FFFFFF} /a, /aa, /personagens, /usuario, /listasos, /aj, /rj, /cs, /fs, /tj");
+		va_SendClientMessage(playerid, -1, "{33AA33}[TESTER]{FFFFFF} /a, /aa, /personagens, /usuario, /listasos, /aj, /rj, /cs, /fs, /tj, /vw");
+		va_SendClientMessage(playerid, -1, "{33AA33}[TESTER]{FFFFFF} /setarinterior");
 	}
 	if(GetPlayerAdmin(playerid) >= 2) // GAME ADMIN 1
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listareports, /ar, /rr, /tapa, /vida, /reviver, /reclife, /ir, /trazer");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /ultimoatirador, /x, /y, /z");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, ");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa");
 	}
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
@@ -943,3 +944,41 @@ CMD:redflag(playerid, params[]) {
 	return true;
 }
 
+CMD:vw(playerid, params[]) {
+	new id, vw;
+
+	if(GetPlayerAdmin(playerid) < 1)
+		return SendPermissionMessage(playerid);
+
+	if(sscanf(params, "ud", id, vw))
+		return SendSyntaxMessage(playerid, "/vw [id/nome] [id do vw]");
+
+	if(!IsPlayerConnected(id)) 
+		return SendNotConnectedMessage(playerid);
+
+
+	SetPlayerVirtualWorld(id, vw);
+	SendServerMessage(id, "O seu VW foi alterado por um administrador.");
+	SendServerMessage(playerid, "Você alterou o VW de %s para o VW %d.", pNome(id), vw);
+
+	return 1;
+}
+
+CMD:setarinterior(playerid, params[]) {
+	new id, interior;
+
+	if(GetPlayerAdmin(playerid) < 1)
+		return SendPermissionMessage(playerid);
+
+	if(sscanf(params, "ud", id, interior))
+		return SendSyntaxMessage(playerid, "/setarinterior [id/nome] [interior]");
+
+	if(!IsPlayerConnected(id)) 
+		return SendNotConnectedMessage(playerid);
+
+	SetPlayerInterior(id, interior);
+	SendServerMessage(id, "O seu interior foi alterado por um administrador.");
+	SendServerMessage(playerid, "Você alterou o interior de %s para o interior %d.", pNome(id), interior);
+
+	return 1;
+}

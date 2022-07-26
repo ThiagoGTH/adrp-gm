@@ -28,6 +28,9 @@ CMD:criarcasa(playerid, params[]) {
 
     new id = cache_insert_id();
 
+    mysql_format(DBConn, query, sizeof query, "UPDATE `houses` SET `vw_exit` = %d WHERE `id` = %d;", id + 10000, id);
+    mysql_query(DBConn, query);
+
     SendServerMessage(playerid, "Você criou a casa de ID %d no endereço: '%s'. ($%s)", id, address, FormatNumber(price));
 
     format(logString, sizeof(logString), "%s (%s) criou a casa de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
@@ -109,7 +112,6 @@ CMD:editarcasa(playerid, params[]) {
         hInfo[id][hExitPos][1] = pos[1];
         hInfo[id][hExitPos][2] = pos[2];
         hInfo[id][hExitPos][3] = pos[3];
-        hInfo[id][vwExit] = GetPlayerVirtualWorld(playerid);
         hInfo[id][interiorExit] = GetPlayerInterior(playerid);
     
         SaveHouse(id);
@@ -163,13 +165,71 @@ CMD:ircasa(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 2)
         return SendPermissionMessage(playerid);
 
+    if(sscanf(params, "d", id))
+        return SendSyntaxMessage(playerid, "/ircasa [id]");
+
     if(!hInfo[id][hID])
         return SendErrorMessage(playerid, "Esse ID de casa não existe.");
 
+    SetPlayerVirtualWorld(playerid, hInfo[id][vwEntry]);
+    SetPlayerInterior(playerid, hInfo[id][interiorEntry]);
     SetPlayerPos(playerid, hInfo[id][hEntryPos][0], hInfo[id][hEntryPos][1], hInfo[id][hEntryPos][2]);
     SetPlayerFacingAngle(playerid, hInfo[id][hEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a casa de ID %d.", id);
+
+    return 1;
+}
+
+CMD:atrancar(playerid, params[]) {
+    new houseID = GetNearestHouseEntry(playerid);
+    
+    if(GetPlayerAdmin(playerid) < 2)
+        return SendPermissionMessage(playerid);
+
+    if(!houseID) {
+        houseID = GetNearestHouseExit(playerid);
+
+        if(!houseID)
+            return 1;
+    }
+
+    hInfo[houseID][hLocked] = !hInfo[houseID][hLocked];
+    PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
+
+    return 1;
+}
+
+CMD:entrar(playerid) {
+    new houseID = GetNearestHouseEntry(playerid);
+    
+    if(!houseID)
+        return 1;
+
+    if(hInfo[houseID][hLocked])
+        return SendErrorMessage(playerid, "Esta casa está trancada.");
+
+    SetPlayerVirtualWorld(playerid, hInfo[houseID][vwExit]);
+    SetPlayerInterior(playerid, hInfo[houseID][interiorExit]);
+    SetPlayerPos(playerid, hInfo[houseID][hExitPos][0], hInfo[houseID][hExitPos][1], hInfo[houseID][hExitPos][2]);
+    SetPlayerFacingAngle(playerid, hInfo[houseID][hExitPos][3]);
+
+    return 1;
+}
+
+CMD:sair(playerid) {
+    new houseID = GetNearestHouseExit(playerid);
+    
+    if(!houseID)
+        return 1;
+
+    if(hInfo[houseID][hLocked])
+        return SendErrorMessage(playerid, "Esta casa está trancada.");
+
+    SetPlayerVirtualWorld(playerid, hInfo[houseID][vwEntry]);
+    SetPlayerInterior(playerid, hInfo[houseID][interiorEntry]);
+    SetPlayerPos(playerid, hInfo[houseID][hEntryPos][0], hInfo[houseID][hEntryPos][1], hInfo[houseID][hEntryPos][2]);
+    SetPlayerFacingAngle(playerid, hInfo[houseID][hEntryPos][3]);
 
     return 1;
 }

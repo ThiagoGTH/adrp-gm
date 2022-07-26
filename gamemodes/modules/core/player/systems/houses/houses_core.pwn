@@ -118,3 +118,39 @@ IsValidHouse(id) {
 
     return 1;
 }
+
+// Procura por alguma entrada de casa
+GetNearestHouseEntry(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_HOUSES; i++) {
+        if(!hInfo[i][hID])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, hInfo[i][hEntryPos][0], hInfo[i][hEntryPos][1], hInfo[i][hEntryPos][2]))
+            continue;
+
+        if(GetPlayerVirtualWorld(playerid) != hInfo[i][vwEntry] || GetPlayerInterior(playerid) != hInfo[i][interiorEntry])
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
+// Procura por alguma saída de casa
+GetNearestHouseExit(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_HOUSES; i++) {
+        if(!hInfo[i][hID])
+            continue;
+        
+        if(GetPlayerVirtualWorld(playerid) != hInfo[i][vwExit] || GetPlayerInterior(playerid) != hInfo[i][interiorExit])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, hInfo[i][hExitPos][0], hInfo[i][hExitPos][1], hInfo[i][hExitPos][2]))
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}

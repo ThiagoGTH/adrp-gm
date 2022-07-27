@@ -539,7 +539,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
-
+ 
                 format(title, 64, "Personagens de %s", parameters);
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);

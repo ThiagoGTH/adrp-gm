@@ -28,7 +28,7 @@ GetPlayerAdmin(playerid) {
 
 CMD:aa(playerid)
 {	
-    if(!pInfo[playerid][pLogged]) return true;
+    
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);
 	return true;
@@ -74,7 +74,7 @@ ShowAdminCmds(playerid){
 }
 
 CMD:trancarserver(playerid, params[]) {
-    if(!pInfo[playerid][pLogged]) return true;
+    
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
 	new password[30], string[128];
@@ -93,7 +93,7 @@ CMD:tapa(playerid, params[]) {
 	new
 		userid;
 
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -115,7 +115,7 @@ CMD:tapa(playerid, params[]) {
 }
 
 CMD:curartodos(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 	foreach (new i : Player) {
 	    SetPlayerHealth(i, pInfo[i][pHealthMax]);
@@ -131,7 +131,7 @@ CMD:vida(playerid, params[]) {
 		userid,
 	  	Float:amount; 
 
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "uf", userid, amount)) return SendSyntaxMessage(playerid, "/vida [playerid/nome] [quantidade]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -150,7 +150,7 @@ CMD:reclife(playerid, params[]) {
 	static
 		userid; 
 
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/reclife [playerid/nome]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -169,7 +169,7 @@ CMD:colete(playerid, params[]) {
 		userid,
 	    Float:amount;
 
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "uf", userid, amount)) return SendSyntaxMessage(playerid, "/colete [playerid/nome] [quantidade]");
 	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
@@ -185,7 +185,7 @@ CMD:resetararmas(playerid, params[]) {
 	static
 		userid;
 
-  	if(!pInfo[playerid][pLogged]) return true;
+  	
   	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/resetararmas [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
@@ -217,7 +217,7 @@ CMD:admins(playerid, params[]) {
 }
 
 CMD:atrabalho(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	
 	if (!pInfo[playerid][pAdminDuty]){
@@ -237,7 +237,7 @@ CMD:atrabalho(playerid, params[]) {
 }
 
 CMD:infoplayer(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
 	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/infoplayer [nome/playerid]");
@@ -259,7 +259,7 @@ CMD:infoplayer(playerid, params[]) {
 } 
 
 CMD:skin(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 3) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
 	new userid, level;
 	if(sscanf(params, "ud", userid, level)) return SendSyntaxMessage(playerid, "/skin [playerid] [skin id]");
@@ -278,7 +278,7 @@ CMD:skin(playerid, params[]) {
 }
 
 CMD:proximo(playerid, params[]) {
-    if(!pInfo[playerid][pLogged]) return true;
+    
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	static id = -1;
 	new count = 0;
@@ -295,7 +295,7 @@ CMD:proximo(playerid, params[]) {
 }
 
 CMD:congelar(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
 	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/congelar [playerid/nome]");
@@ -311,7 +311,7 @@ CMD:congelar(playerid, params[]) {
 }
 
 CMD:descongelar(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
 	if(sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/descongelar [playerid/nome]");
@@ -331,7 +331,7 @@ CMD:dararma(playerid, params[]) {
 	    weaponid,
 	    ammo;
 
-    if(!pInfo[playerid][pLogged]) return true;
+    
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 	if (sscanf(params, "udI(500)", userid, weaponid, ammo)) return SendSyntaxMessage(playerid, "/dararma [playerid/nome] [arma id] [munição]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -353,7 +353,7 @@ CMD:dardinheiro(playerid, params[]){
 		userid,
 	    amount;
 
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "ud", userid, amount))
@@ -371,7 +371,7 @@ CMD:dardinheiro(playerid, params[]){
 }
 
 CMD:setaradmin(playerid, params[]) {
-    if(!pInfo[playerid][pLogged]) return true;
+    
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     new userid, admin;
@@ -435,7 +435,7 @@ CMD:a(playerid, result[]) {
 }
 
 CMD:gmx(playerid, params[]) {
-    if(!pInfo[playerid][pLogged]) return true;
+    
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
     GiveGMX();
@@ -495,7 +495,7 @@ static const TempoNomes[][] = {
 
 CMD:clima(playerid, params[])
 {
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
 	new weather, hora;
@@ -632,7 +632,7 @@ Dialog:goToPerInt(playerid, response, listitem, inputtext[]){
 }
 
 CMD:x(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new Float:x, Float:y, Float:z, Float:npos;
 	if(sscanf(params, "f", npos)) return SendSyntaxMessage(playerid, "/x [Coodernada]");
@@ -643,7 +643,7 @@ CMD:x(playerid, params[]){
 }
 
 CMD:y(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new Float:x, Float:y, Float:z, Float:npos;
 	if(sscanf(params, "f", npos)) return SendSyntaxMessage(playerid, "/y [Coodernada]");
@@ -654,7 +654,7 @@ CMD:y(playerid, params[]){
 }
 
 CMD:z(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new Float:x, Float:y, Float:z, Float:npos;
 	
@@ -667,7 +667,7 @@ CMD:z(playerid, params[]){
 
 CMD:spec(playerid, params[])
 {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 
 	new userid;
@@ -725,7 +725,7 @@ CMD:spec(playerid, params[])
 }
 
 CMD:jetpack(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	new userid;
 	if (sscanf(params, "u", userid)){
@@ -843,7 +843,7 @@ SendPlayerToPlayer(playerid, userid) {
 }
 
 CMD:kick(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid, reason[128];
 	if (sscanf(params, "us[128]", userid, reason)) return SendSyntaxMessage(playerid, "/kick [playerid/nome] [motivo]");
@@ -865,7 +865,7 @@ CMD:kick(playerid, params[]) {
 }
 
 CMD:historico(playerid, params[]) {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/historico [playerid/nome]");

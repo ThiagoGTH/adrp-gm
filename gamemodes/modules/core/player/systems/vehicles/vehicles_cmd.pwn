@@ -6,7 +6,7 @@ CMD:darveiculo(playerid, params[]) {
 		userid,
 	    model[32];
 
-    if(!pInfo[playerid][pLogged]) return true;
+    
 	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "us[32]", userid, model)) return SendSyntaxMessage(playerid, "/darveiculo [id/nome] [id do modelo/nome]");

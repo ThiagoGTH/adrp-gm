@@ -330,8 +330,6 @@ public SpawnPlayerPosCamera(playerid) {
 SaveCharacterInfo(playerid) {
     new Float:pos[4];
 
-    if(!pInfo[playerid][pLogged]) return true;
-
     pInfo[playerid][pMoney] = GetMoney(playerid);
     pInfo[playerid][pSkin] = GetPlayerSkin(playerid);
     pInfo[playerid][pHealth] = GetPlayerHealthEx(playerid);

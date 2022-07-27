@@ -12,6 +12,7 @@
 #include <Pawn.CMD>
 #include <memory>
 #include <sscanf2>
+#include <indirection>
 #include <discord-connector>
 #include <strlib>
 #include <easyDialog>
@@ -49,7 +50,6 @@ new query[2048];
 #include "modules\utils\utils_interface.pwn"
 #include "modules\utils\utils_init.pwn"
 #include "modules\utils\utils_vehicles.pwn"
-#include "modules\utils\utils_svariable.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -77,6 +77,7 @@ new query[2048];
 #include "modules\core\player\systems\houses\houses_core.pwn"
 #include "modules\core\player\systems\houses\houses_cmd.pwn"
 //#include "modules\core\player\systems\investment\trading.pwn"
+#include "modules\core\player\systems\investment\investment_core.pwn"
 
 //#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"

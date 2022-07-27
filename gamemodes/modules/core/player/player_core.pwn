@@ -25,7 +25,7 @@ CMD:ajuda(playerid, params[]) {
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		return true;
 	} else if (!strcmp(type, "fly", true)){
-		if(!pInfo[playerid][pLogged]) return true;
+		
     	if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
@@ -42,7 +42,7 @@ CMD:ajuda(playerid, params[]) {
 }
 
 CMD:limparmeuchat(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	ClearPlayerChat(playerid);
 	return true;
 }
@@ -241,16 +241,23 @@ public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 	return true;
 }
 
-GiveMoney(playerid, amount)
-{
+GiveMoney(playerid, amount) {
 	pInfo[playerid][pMoney] += amount;
 	GivePlayerMoney(playerid, amount);
 	return true;
 }
 
-GetMoney(playerid)
-{
+GetMoney(playerid) {
 	return (pInfo[playerid][pMoney]);
+}
+
+GiveBankMoney(playerid, amount) {
+	pInfo[playerid][pBank] += amount;
+	return true;
+}
+
+GetBankMoney(playerid) {
+	return (pInfo[playerid][pBank]);
 }
 
 SetPlayerHealthEx(playerid, Float:hp)

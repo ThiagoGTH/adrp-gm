@@ -45,7 +45,7 @@ CMD:horas(playerid, params[]){
 }
 
 CMD:doublepd(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     if (DoublePaycheck == 0){
@@ -64,14 +64,14 @@ CMD:doublepd(playerid, params[]){
 
 CMD:pegarpaycheck(playerid, params[]){
     if(Server_Type == 2) {
-        if(!pInfo[playerid][pLogged]) return true;
+        
         if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
         pInfo[playerid][pPlayingMinutes] = 60;
         Payday(playerid);
         format(logString, sizeof(logString), "%s (%s) pegou um paycheck antecipado.", pNome(playerid), GetPlayerUserEx(playerid));
         logCreate(playerid, logString, 1);
     } else {
-        if(!pInfo[playerid][pLogged]) return true;
+        
         if(GetPlayerAdmin(playerid) < 1335) return SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
         pInfo[playerid][pPlayingMinutes] = 60;
         Payday(playerid);
@@ -82,7 +82,7 @@ CMD:pegarpaycheck(playerid, params[]){
 }
 
 CMD:setarhoras(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     pInfo[playerid][pPlayingMinutes] = 59;

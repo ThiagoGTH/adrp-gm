@@ -54,6 +54,7 @@ GetDuration(time){
 	strcat(str, " atrás");
 	return str;
 }
+
 forward OnServerUpdateTimer();
 public OnServerUpdateTimer(){
 	g_iTime = gettime();

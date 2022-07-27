@@ -20,7 +20,7 @@
 #define COLOR_ORANGE      			(0xFFA500FF)
 #define COLOR_ORANGE2     			(0xFF8000FF)
 #define COLOR_LIME        			(0x00FF00FF)
-#define COLOR_GREEN       			(0x36A71700)
+#define COLOR_GREEN       			(0x36A71700) 
 #define COLOR_GREEN3      			(0x33CC33FF)
 #define COLOR_GREEN4      			(0x15FF8AFF)
 #define COLOR_GREEN2      			(0x008040FF)

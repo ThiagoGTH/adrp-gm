@@ -263,7 +263,7 @@ CMD:criarlicenca(playerid, params[]){
 
 CMD:mostrarlicenca(playerid, params[])
 {
-	if(!pInfo[playerid][pLogged]) return true;
+	
 
 	if(pInfo[playerid][pLicence] == 0) return SendErrorMessage(playerid,"Você não tem uma licença de motorista.");
 	
@@ -537,7 +537,7 @@ DMV_EnterCheckpoint(playerid)
 }
 
 CMD:iniciarteste(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	new string [512];
 	
 	//if(!IsPlayerInRangeOfPoint(playerid, 2.0, 1490.3473,1306.2144,1093.2964))

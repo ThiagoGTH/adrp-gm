@@ -1,10 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-<<<<<<< HEAD
-new DCC_Channel:logChannels[14];
-=======
 new DCC_Channel:logChannels[15];
->>>>>>> teste
 forward Discord_StartChannels();
 public Discord_StartChannels() {
     logChannels[0] = DCC_FindChannelById("989303818896441345");     // Admin                (1)

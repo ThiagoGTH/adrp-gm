@@ -6,7 +6,6 @@
 #define FULL_SHORT_DATETIME     "%d/%m/%Y - %H:%M:%S"
 
 new // Fix Time
-	g_iTime = 0,
 	ghour = 0,
 	gminute = 0,
 	gsecond = 0,
@@ -55,13 +54,6 @@ GetDuration(time){
 	return str;
 }
 
-forward OnServerUpdateTimer();
-public OnServerUpdateTimer(){
-	g_iTime = gettime();
-
-	return Y_HOOKS_CONTINUE_RETURN_1;
-}
-
 hook OnGameModeInit(){
 	gettime(ghour, gminute, gsecond);
 	FixHour(ghour);
@@ -97,5 +89,3 @@ public SyncUp() {
 		SetWorldTime(tmphour);
 	}
 }
-
-GetServerTime() return g_iTime;

@@ -309,7 +309,12 @@ SpawnSelectedCharacter(playerid) {
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
     
-    if(GetPlayerInterior(playerid) != 0 || GetPlayerVirtualWorld(playerid) != 0) return true;
+    if(pInfo[playerid][pInterior] != 0 || pInfo[playerid][pVirtualWorld] != 0) {
+        TogglePlayerSpectating(playerid, false);
+        SetCameraBehindPlayer(playerid);
+        SetWeapons(playerid);
+        return false;
+    }
 
     TogglePlayerSpectating(playerid, true);
     InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);

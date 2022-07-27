@@ -454,23 +454,36 @@ void:CheckHousesTable() {
     print("[DATABASE] Tabela houses_other_entries checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso.");
 }
+
 void:CheckTradingTable(){
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
-    `symbol` varchar(4) NOT NULL DEFAULT 'N/A',\
+    `symbol` varchar(16) NOT NULL DEFAULT 'N/A',\
     `description` varchar(124) NOT NULL DEFAULT 'N/A',\
     `type` int NOT NULL DEFAULT '0',\
-    `capital` int NOT NULL DEFAULT '0',\
+    `capital` float NOT NULL DEFAULT '0.0',\
     `oldbuy_value` float NOT NULL DEFAULT '0.0',\
     `buy_value` float NOT NULL DEFAULT '0.0',\
-    `sell_value` int NOT NULL DEFAULT '0',\
+    `sell_value` float NOT NULL DEFAULT '0.0',\
     `max_slots` int NOT NULL DEFAULT '0',\
-    `slots_avaibles` int NOT NULL DEFAULT '0',\
+    `sold_slots` int NOT NULL DEFAULT '0',\
     `variation` float NOT NULL DEFAULT '0.0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela tradings checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela tradings checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings_owners` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `trading_id` int NOT NULL DEFAULT '0',\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `bought_price` float NOT NULL DEFAULT '0.0',\
+    `quantity` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela tradings_owners checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela tradings_owners checada com sucesso.");
     logCreate(99998, logString, 5);
 }

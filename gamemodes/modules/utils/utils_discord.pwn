@@ -15,7 +15,7 @@ public Discord_StartChannels() {
     logChannels[9] = DCC_FindChannelById("993230053959798824");     // Advertisement Log    (10)
     logChannels[10] = DCC_FindChannelById("998664519683407962");    // Punições             (11)
     logChannels[11] = DCC_FindChannelById("999757221833478154");    // Sinuca               (12)
-    logChannels[12] = DCC_FindChannelById("1001265336823316490");   // Houses                (13) 
+    logChannels[12] = DCC_FindChannelById("1001265336823316490");   // Houses               (13) 
     logChannels[13] = DCC_FindChannelById("1001539492357869700");   // Entrada              (14) 
     logChannels[14] = DCC_FindChannelById("1001354737972674600");   // Trading              (15) 
     return true;

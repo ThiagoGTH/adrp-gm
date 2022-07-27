@@ -64,6 +64,7 @@ new query[2048];
 #include "modules\core\player\player_core.pwn"
 #include "modules\core\player\cmds\tela.pwn"
 #include "modules\core\player\cmds\newbie.pwn"
+#include "modules\core\player\cmds\minigames.pwn"
 #include "modules\core\player\licences\base_licence.pwn"
 
 // Inclusão de módulos relativos a sistemas
@@ -76,8 +77,8 @@ new query[2048];
 #include "modules\core\player\systems\vehicles\vehicles_cmd.pwn"
 #include "modules\core\player\systems\houses\houses_core.pwn"
 #include "modules\core\player\systems\houses\houses_cmd.pwn"
-//#include "modules\core\player\systems\investment\trading.pwn"
 #include "modules\core\player\systems\investment\investment_core.pwn"
+#include "modules\core\player\systems\investment\investment_cmd.pwn"
 
 //#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
@@ -87,7 +88,6 @@ new query[2048];
 
 // Inclusão de módulos relativos a jogos
 #include "modules\core\player\systems\games\pool.pwn"
-//#include "modules\core\player\systems\games\poker.pwn"
 
 // Inclusão de módulos relativos a administração
 #include "modules\core\admin\ban.pwn"

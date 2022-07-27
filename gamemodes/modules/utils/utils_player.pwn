@@ -809,7 +809,7 @@ stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:..
 	return true;
 }
 
-FormatNumber(number, money = 1) {
+FormatNumber(number) {
     new length, value[32];
 
     format(value, sizeof(value), "%i", (number < 0) ? (-number) : (number));
@@ -819,16 +819,10 @@ FormatNumber(number, money = 1) {
     if(length > 3) {
         for(new l = 0, i = length; --i >= 0; l ++) {
             if((l % 3 == 0) && l > 0)  {
-                strins(value, ",", i + 1);
+                strins(value, ".", i + 1);
             }
         }
     }
-
-    if(money)
-        strins(value, "$", 0);
-    if(number < 0)
-        strins(value, "-$", 0);
-
     return value;
 } 
 

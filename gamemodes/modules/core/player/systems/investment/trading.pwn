@@ -933,8 +933,7 @@ static ShowPlayerStockMarket(playerid)
 	return ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações", szLargeString, "Selecionar", "Cancelar");
 }
 
-static ShowPlayerStockMarketOptions(playerid, stockid)
-{
+static ShowPlayerStockMarketOptions(playerid, stockid) {
 	format(szBigString, sizeof(szBigString), "Buy shares\t{36A717}%s\nDonate to company\t>>>\nView shareholders\t>>>\nView stock information\t>>>", FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2));
 	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_OPTIONS, DIALOG_STYLE_TABLIST, sprintf("Mercado de Ações - %s", g_stockMarketData[stockid][E_NAME]), szBigString, "Select", "Back");
 	return true;

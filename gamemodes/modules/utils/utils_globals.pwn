@@ -11,9 +11,7 @@ new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];
 new 
-    szBigString [256],
-    szLargeString [1024],
-    szHugeString [2048];
+    szBigString [256];
     
 enum User_Data {
     uID,

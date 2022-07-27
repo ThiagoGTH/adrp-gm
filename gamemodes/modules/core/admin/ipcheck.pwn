@@ -187,7 +187,7 @@ stock RemoveChars(tID){
 }
 
 CMD:checarip(playerid, params[]){
-	if(!pInfo[playerid][pLogged]) return true;
+	
 	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
 
 	new targetid;

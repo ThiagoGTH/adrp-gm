@@ -26,7 +26,7 @@ new AdvertData[MAX_AD_QUEUE][Advert_Data];
 
 // COMMANDS
 CMD:anuncio(playerid, params[]){
-    if(!pInfo[playerid][pLogged]) return true;
+    
     // Posição ainda não definida
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM advertisement WHERE `TIME` > UNIX_TIMESTAMP() ORDER BY `ID` ASC");
     new Cache:result = mysql_query(DBConn, query);

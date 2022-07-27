@@ -7,7 +7,7 @@ forward bool:StopFly(playerid);
 
 CMD:fly(playerid)
 {
-	if(!pInfo[playerid][pLogged]) return true;
+	
     if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 	if(IsPlayerInAnyVehicle(playerid))  return SendErrorMessage(playerid, "Você não pode utilizar esse comando estando dentro de um veículo.");
 	

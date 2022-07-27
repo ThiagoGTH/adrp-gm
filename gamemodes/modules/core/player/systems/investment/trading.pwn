@@ -1,6 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
 /* ================================ DEFINIÇÕES ================================ */
+#define Beep(%1)              			PlayerPlaySound(%1, 1137, 0.0, 0.0, 5.0)
+
 #define MAX_STOCKS					    (12)
 #define STOCK_REPORTING_PERIOD 		    (86400) // um dia
 #define STOCK_REPORTING_PERIODS 	    (30) // últimos trinta dias
@@ -256,18 +258,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new Float: shares = float(input_shares);
 
 			if ((p_PlayerShares[playerid][stockid] -= shares) < 0.1) {
-				mysql_single_query(sprintf("DELETE FROM `STOCK_OWNERS` WHERE `USER_ID`=%d AND `STOCK_ID`=%d", GetPlayerSQLID(playerid), stockid));
+				mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_OWNERS` WHERE `USER_ID`=%d AND `STOCK_ID`=%d", GetPlayerSQLID(playerid), stockid);
+   				mysql_query(DBConn, query);
 			} else {
 				StockMarket_GiveShares(stockid, GetPlayerSQLID(playerid), -shares);
 			}
 			StockMarket_UpdateSellOrder(stockid, GetPlayerSQLID(playerid), shares);
-			SendServerMessage(playerid, "Você fez uma ordem de venda para as ações de %s a %s cada. Use /shares para cancelar ordens de venda", FormatNumber2(shares, .decimals = 2), FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2));
+			SendServerMessage(playerid, "Você fez uma ordem de venda para as ações de %s a %s cada. Use /shares para cancelar ordens de venda.", FormatNumber2(shares, .decimals = 2), FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2));
 			return true;
 		}
 		return StockMarket_ShowSellSlip(playerid, stockid);
-	}
-	else if (dialogid == DIALOG_STOCK_MARKET_BUY)
-	{
+	} else if (dialogid == DIALOG_STOCK_MARKET_BUY) {
 		new
 			stockid = GetPVarInt(playerid, "stockmarket_selection");
 
@@ -284,75 +285,73 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				return true;
 			}
 			return StockMarket_ShowBuySlip(playerid, stockid);
-		} else 
-			return ShowPlayerStockMarket(playerid);
+		} else return ShowPlayerStockMarket(playerid);
 		
 	}
 	return true;
 }
 
 /* ================================ SQL ================================ */
-Stock_UpdateReportingPeriods(stockid) {
-	new
-		rows = cache_get_row_count();
-
-	if (rows) {
-		for (new row = 0; row < rows; row ++) {
-			g_stockMarketReportData[stockid][row][E_SQL_ID] = cache_get_field_content_int(row, "ID");
-			g_stockMarketReportData[stockid][row][E_POOL] = cache_get_field_content_float(row, "POOL");
-			g_stockMarketReportData[stockid][row][E_DONATIONS] = cache_get_field_content_float(row, "DONATIONS");
-			g_stockMarketReportData[stockid][row][E_PRICE] = cache_get_field_content_float(row, "PRICE");
+forward Stock_UpdateReportingPeriods(stockid);
+public Stock_UpdateReportingPeriods(stockid) {
+	if (cache_num_rows()) {
+		for (new i = 0; i < cache_num_rows(); i ++) {
+			cache_get_value_name_int(i, "ID", g_stockMarketReportData[stockid][i][E_SQL_ID]);
+			cache_get_value_name_float(i, "POOL", g_stockMarketReportData[stockid][i][E_POOL]);
+			cache_get_value_name_float(i, "DONATIONS", g_stockMarketReportData[stockid][i][E_DONATIONS]);
+			cache_get_value_name_float(i, "PRICE", g_stockMarketReportData[stockid][i][E_PRICE]);
 		}
-	} else { // no historical reporting data, restock the market maker
-		for (new i = 0; i < 3; i ++) { // create 3 reports for the company using the IPO price ... this way the price is not $0
+	} else { // se não possui dados de histórico, reabastece o mercado
+		for (new i = 0; i < 3; i ++) { // cria 3 relatórios para a empresa usando o preço do IPO, assim o preço não fica zerado
 			StockMarket_ReleaseDividends(stockid, .is_ipo = true);
 		}
-		// put market maker shares on the market
+		// coloca as ações no mercado
 		StockMarket_UpdateSellOrder(stockid, STOCK_MM_USER_ID, g_stockMarketData[stockid][E_IPO_SHARES]);
 	}
 	return true;
 }
 
-StockMarket_InsertReport(stockid, Float: default_start_pool, Float: default_start_price, Float: default_donation_pool, bool: is_ipo) {
+forward StockMarket_InsertReport(stockid, Float: default_start_pool, Float: default_start_price, Float: default_donation_pool, bool: is_ipo);
+public StockMarket_InsertReport(stockid, Float: default_start_pool, Float: default_start_price, Float: default_donation_pool, bool: is_ipo) {
 	new Float: before_price = g_stockMarketReportData[stockid][1][E_PRICE];
 
-	// set the new price of the company [ todo: use parabola for factor difficulty?]
+	// defina o novo preço da empresa
 	new Float: new_price = (g_stockMarketReportData[stockid][0][E_POOL] / g_stockMarketData[stockid][E_POOL_FACTOR]) * g_stockMarketData[stockid][E_PRICE_FACTOR] + STOCK_MARKET_PRICE_FLOOR;
 
-	// reduce price of shares depending on shares available from the start (200K max shares from IPO 100k means 50% reduction)
+	// reduzir o preço das ações dependendo das ações disponíveis desde o início (200 mil ações máximas do IPO 100 mil significa 50% de redução)
 	new_price *= floatpower(0.5, g_stockMarketData[stockid][E_MAX_SHARES] / g_stockMarketData[stockid][E_IPO_SHARES] - 1.0);
 
-	// check if price exceeds maximum price
-	if (new_price > g_stockMarketData[stockid][E_MAX_PRICE]) { // dont want wild market caps
+	// verificar se o preço excede o preço máximo
+	if (new_price > g_stockMarketData[stockid][E_MAX_PRICE]) { // não quero capitalizações de mercado selvagens
 		new_price = g_stockMarketData[stockid][E_MAX_PRICE];
 	}
 
-	// force a minimum of $1 per share
+	// forçar um mínimo de $1 por ação
 	if (new_price < STOCK_MARKET_PRICE_FLOOR) {
 		new_price = STOCK_MARKET_PRICE_FLOOR;
 	}
 
-	// check if its an ipo... if it is then set to ipo price
+	// verificar se é um IPO, se estiver definido para o preço do IPO
 	if (is_ipo) {
 		new_price = g_stockMarketData[stockid][E_IPO_PRICE];
 	}
 
-	// bankrupt motherf**kers
+	// filhos da puta falidos
 	new Float: price_change = ((new_price / before_price) - 1.0) * 100.0;
 
-	// stock is above the floor
+	// a ação tá positiva
 	if (price_change <= STOCK_BANKRUPTCY_PERCENT) {
-		format(szLargeString, sizeof(szLargeString),
-			"SELECT   USER_ID, SUM(HELD_SHARES) AS HELD_SHARES, SUM(OWNED_SHARES) AS OWNED_SHARES " \
-			"FROM     (" \
-			"	(SELECT STOCK_ID, USER_ID, SHARES AS HELD_SHARES, 0 AS OWNED_SHARES FROM STOCK_SELL_ORDERS t1 WHERE STOCK_ID=%d) " \
-			"	UNION ALL " \
-			"	(SELECT STOCK_ID, USER_ID, 0 AS HELD_SHARES, SHARES AS OWNED_SHARES FROM STOCK_OWNERS t2 WHERE STOCK_ID=%d) " \
-			") t_union " \
-			"GROUP BY USER_ID",
+		mysql_format(DBConn, query, sizeof query,
+			"SELECT USER_ID, SUM(HELD_SHARES) AS HELD_SHARES, SUM(OWNED_SHARES) AS OWNED_SHARES  \
+			FROM     (\
+				(SELECT STOCK_ID, USER_ID, SHARES AS HELD_SHARES, 0 AS OWNED_SHARES FROM STOCK_SELL_ORDERS t1 WHERE STOCK_ID=%d)  \
+				UNION ALL  \
+				(SELECT STOCK_ID, USER_ID, 0 AS HELD_SHARES, SHARES AS OWNED_SHARES FROM STOCK_OWNERS t2 WHERE STOCK_ID=%d)  \
+			) t_union  \
+			GROUP BY USER_ID",
 			stockid, stockid
 		);
-		mysql_tquery(dbHandle, szLargeString, "StockMarket_PanicSell", "d", stockid);
+		mysql_tquery(DBConn, query, "StockMarket_PanicSell", "d", stockid);
 	}
 
 	// full bankruptcy if a stock is $1 (UNTESTED!)
@@ -373,7 +372,9 @@ StockMarket_InsertReport(stockid, Float: default_start_pool, Float: default_star
 
 	// set the new price of the asset
 	g_stockMarketReportData[stockid][0][E_PRICE] = new_price;
-	mysql_single_query(sprintf("UPDATE `STOCK_REPORTS` SET `PRICE` = %f WHERE `ID` = %d", g_stockMarketReportData[stockid][0][E_PRICE], g_stockMarketReportData[stockid][0][E_SQL_ID]));
+
+	mysql_format(DBConn, query, sizeof query, "UPDATE `STOCK_REPORTS` SET `PRICE` = %f WHERE `ID` = %d", g_stockMarketReportData[stockid][0][E_PRICE], g_stockMarketReportData[stockid][0][E_SQL_ID]);
+    mysql_query(DBConn, query);
 
 	// store temporary stock info
 	new temp_stock_price_data[MAX_STOCKS][STOCK_REPORTING_PERIODS][E_STOCK_MARKET_PRICE_DATA];
@@ -395,85 +396,78 @@ StockMarket_InsertReport(stockid, Float: default_start_pool, Float: default_star
 	return true;
 }
 
-StockMarket_PanicSell(stockid)
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_PanicSell(stockid);
+public StockMarket_PanicSell(stockid) {
+	if (!cache_num_rows()) return true;
 
-	if (rows)
-	{
-		new
-			Float: global_shares_forfeited = 0.0;
+	new Float: global_shares_forfeited = 0.0;
 
-		// remove the percentage of stock from the user
-		for (new row = 0; row < rows; row ++)
-		{
-			new user_id = cache_get_field_content_int(row, "USER_ID");
+	for (new row = 0; row < cache_num_rows(); row ++) {
+		new user_id;
+		cache_get_value_name_int(row, "USER_ID", user_id);
 
-			if (user_id == STOCK_MM_USER_ID)
-				continue; // ignore market maker account
+		if (user_id == STOCK_MM_USER_ID)
+			continue; // ignore market maker account
 
-			new Float: held_shares = cache_get_field_content_float(row, "HELD_SHARES");
-			new Float: owned_shares = cache_get_field_content_float(row, "OWNED_SHARES");
-			new Float: player_shares_forfeited = floatround((held_shares + owned_shares) * STOCK_BANKRUPTCY_LOSS_PERCENT / 100.0);
+		new 
+			Float: held_shares, 
+			Float: owned_shares;
+				
+		cache_get_value_name_float(row, "HELD_SHARES", held_shares);
+    	cache_get_value_name_float(row, "OWNED_SHARES", owned_shares);
 
-			// the amount forfeitted succeeds the amount in sale orders ... remove them
-			if ((held_shares - player_shares_forfeited) <= 0.0) {
-				// printf("Strip sell orders if there is any for user %d, stock %d", user_id, stockid);
-				mysql_single_query(sprintf("DELETE FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d AND `USER_ID`=%d", stockid, user_id));
-				player_shares_forfeited -= held_shares;
-				global_shares_forfeited += held_shares;
-			} else {
-				// printf("Deduct sell orders if there is any for user %d, stock %d", user_id, stockid);
-				mysql_single_query(sprintf("UPDATE `STOCK_SELL_ORDERS` SET `SHARES`=%f WHERE `STOCK_ID`=%d AND `USER_ID`=%d", held_shares - player_shares_forfeited, stockid, user_id));
-				global_shares_forfeited += player_shares_forfeited;
-				player_shares_forfeited = 0.0;
-			}
+		new Float: player_shares_forfeited = floatround((held_shares + owned_shares) * STOCK_BANKRUPTCY_LOSS_PERCENT / 100.0);
 
-			// the amount forfeitted succeeds the amount in holdings ... remove them too
-			if ((owned_shares - player_shares_forfeited) <= 0.0) {
-				// printf("Strip owners if there is any for user %d, stock %d", user_id, stockid);
-				mysql_single_query(sprintf("DELETE FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d AND `USER_ID`=%d", stockid, user_id));
-				global_shares_forfeited += owned_shares;
-			} else {
-				// printf("Deduct owners if there is any for user %d, stock %d", user_id, stockid);
-				mysql_single_query(sprintf("UPDATE `STOCK_OWNERS` SET `SHARES`=%f WHERE `STOCK_ID`=%d AND `USER_ID`=%d", owned_shares - player_shares_forfeited, stockid, user_id));
-				global_shares_forfeited += player_shares_forfeited;
-			}
+		if ((held_shares - player_shares_forfeited) <= 0.0) {
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d AND `USER_ID`=%d", stockid, user_id);
+    		mysql_query(DBConn, query);
+			
+			player_shares_forfeited -= held_shares;
+			global_shares_forfeited += held_shares;
+		} else {
+			mysql_format(DBConn, query, sizeof query, "UPDATE `STOCK_SELL_ORDERS` SET `SHARES`=%f WHERE `STOCK_ID`=%d AND `USER_ID`=%d", held_shares - player_shares_forfeited, stockid, user_id);
+        	mysql_query(DBConn, query);
+
+			global_shares_forfeited += player_shares_forfeited;
+			player_shares_forfeited = 0.0;
+		} if ((owned_shares - player_shares_forfeited) <= 0.0) {
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d AND `USER_ID`=%d", stockid, user_id);
+    		mysql_query(DBConn, query);
+
+			global_shares_forfeited += owned_shares;
+		} else {
+			mysql_format(DBConn, query, sizeof query, "UPDATE `STOCK_OWNERS` SET `SHARES`=%f WHERE `STOCK_ID`=%d AND `USER_ID`=%d", owned_shares - player_shares_forfeited, stockid, user_id);
+    		mysql_query(DBConn, query);
+
+			global_shares_forfeited += player_shares_forfeited;
 		}
-
-		// allow market maker to sell the shares again at IPO price
-		StockMarket_UpdateSellOrder(stockid, STOCK_MM_USER_ID, floatround(global_shares_forfeited));
-
-		// inform everyone of the sale
-		SendClientMessageToAllFormatted(-1, "[STOCKS] %s has penalized its shareholders and has %d shares available for sale.", g_stockMarketData[stockid][E_NAME], floatround(global_shares_forfeited));
-		printf("[STOCK MAJOR BANKRUPTCY] %s(%d) has went partly bankrupt.", g_stockMarketData[stockid][E_NAME], stockid);
 	}
+
+	// allow market maker to sell the shares again at IPO price
+	StockMarket_UpdateSellOrder(stockid, STOCK_MM_USER_ID, floatround(global_shares_forfeited));
+
+	// inform everyone of the sale
+	printf("[STOCKS] %s has penalized its shareholders and has %d shares available for sale.", g_stockMarketData[stockid][E_NAME], floatround(global_shares_forfeited));
+	printf("[STOCK MAJOR BANKRUPTCY] %s(%d) has went partly bankrupt.", g_stockMarketData[stockid][E_NAME], stockid);
+	
 	return true;
 }
 
-StockMarket_OnPurchaseOrder(playerid, stockid, Float: shares)
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_OnPurchaseOrder(playerid, stockid, Float:shares);
+public StockMarket_OnPurchaseOrder(playerid, stockid, Float:shares) {
 
-	if (!rows) {
-		return SendErrorMessage(playerid, "This stock has no available shares for sale.");
-	}
+	if (!cache_num_rows()) return SendErrorMessage(playerid, "Esta empresa não possui ações disponíveis para venda.");
+	
+	new Float: available_quantity = 0.0;
 
-	// check if quantity is valid
-	new
-		Float: available_quantity = 0.0;
-
-	for (new r = 0; r < rows; r ++) {
-		available_quantity += cache_get_field_content_float(r, "SHARES");
+	for (new r = 0; r < cache_num_rows(); r ++) {
+		cache_get_value_name_float(r, "SHARES", available_quantity);
 	}
 
 	if (shares > available_quantity) {
-		return SendErrorMessage(playerid, "There are not that many shares available for sale."), StockMarket_ShowBuySlip(playerid, stockid), 1;
+		return SendErrorMessage(playerid, "Não há todas essas ações disponíveis para venda."), StockMarket_ShowBuySlip(playerid, stockid), 1;
 	}
 
-	// check if the player has the money for the purchase
 	new Float: ask_price = g_stockMarketReportData[stockid][1][E_PRICE];
 	new purchase_cost = floatround(ask_price * shares);
 
@@ -484,20 +478,23 @@ StockMarket_OnPurchaseOrder(playerid, stockid, Float: shares)
 	new purchase_cost_plus_fee = purchase_cost + floatround(purchase_fee);
 
 	if (GetMoney(playerid) < purchase_cost_plus_fee) {
-		return SendErrorMessage(playerid, "You need at least %s to purchase this many shares.", FormatCash(purchase_cost_plus_fee)), StockMarket_ShowBuySlip(playerid, stockid), 1;
+		return SendErrorMessage(playerid, "Você precisa de pelo menos %s para comprar esse número de ações.", FormatCash(purchase_cost_plus_fee)), StockMarket_ShowBuySlip(playerid, stockid), 1;
 	}
 
 	new
 		Float: amount_remaining = shares;
 
-	for (new row = 0; row < rows; row ++)
-	{
-		new sell_order_user_id = cache_get_field_content_int(row, "USER_ID");
-		new Float: sell_order_shares = cache_get_field_content_float(row, "SHARES");
+	for (new i = 0; i < cache_num_rows(); i ++) {
+		
+		new 
+			sell_order_user_id,
+			Float: sell_order_shares;
 
-		// check if seller is online
-		new
-			sellerid;
+		cache_get_value_name_int(i, "USER_ID", sell_order_user_id);
+		cache_get_value_name_float(i, "SHARES", sell_order_shares);
+
+		// verifica se o vendedor tá on
+		new sellerid;
 
 		foreach (sellerid : Player) if (GetPlayerSQLID(sellerid) == sell_order_user_id) {
 			break;
@@ -513,31 +510,32 @@ StockMarket_OnPurchaseOrder(playerid, stockid, Float: shares)
 
 		new sold_amount_minus_fee = floatround(sold_shares * ask_price - sold_amount_fee);
 
-		if (0 <= sellerid < MAX_PLAYERS && Iter_Contains(Player, sellerid) && IsPlayerLoggedIn(sellerid)) {
-			GivePlayerBankMoney(sellerid, sold_amount_minus_fee), Beep(sellerid);
-			SendServerMessage(sellerid, "You have sold %s %s shares to %s(%d) for %s (plus %0.1f%s fee)!", FormatNumber2(sold_shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], ReturnPlayerName(playerid), playerid, FormatCash(sold_amount_minus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+		if (0 <= sellerid < MAX_PLAYERS && Iter_Contains(Player, sellerid) && pInfo[sellerid][pLogged]) {
+			GiveBankMoney(sellerid, sold_amount_minus_fee), Beep(sellerid);
+			SendServerMessage(sellerid, "Você vendeu %s ações de %s para %s por %s (%0.1f%s de taxa)!", FormatNumber2(sold_shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], pNome(playerid), FormatCash(sold_amount_minus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+			
+			format(logString, sizeof(logString), "%s (%s) [%s] vendeu %s ações de %s para %s por %s (%0.1f%s de taxa)", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), FormatNumber2(sold_shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], pNome(playerid), FormatCash(sold_amount_minus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+			logCreate(playerid, logString, 13);
+		
 		} else {
-			mysql_single_query(sprintf("UPDATE `USERS` SET `BANKMONEY` = `BANKMONEY` + %d WHERE `ID` = %d", sold_amount_minus_fee, sell_order_user_id));
+			mysql_format(DBConn, query, sizeof query, "UPDATE `players` SET `bank` = `bank` + %d WHERE `ID` = %d", sold_amount_minus_fee, sell_order_user_id);
+        	mysql_query(DBConn, query);
 		}
 
-		// remove the sell order if there is little to no shares available
-		if (sell_order_shares - amount_remaining < 1.0)
-		{
+		// remover a ordem de venda se houver pouca ou nenhuma ação disponível
+		if (sell_order_shares - amount_remaining < 1.0) {
 			// get rid of this sell order
-			mysql_single_query(sprintf("DELETE FROM `STOCK_SELL_ORDERS` WHERE `USER_ID`=%d and `STOCK_ID`=%d", sell_order_user_id, stockid));
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_SELL_ORDERS` WHERE `USER_ID` = %d and `STOCK_ID` = %d", sell_order_user_id, stockid);
+        	mysql_query(DBConn, query);
 
-			// deduct the sell order amount from amount remaining
+			// livrar-se desta ordem de venda
 			amount_remaining -= sell_order_shares;
-
-			// remove number of available shares
+			// remover número de ações disponíveis
 			g_stockMarketData[stockid][E_AVAILABLE_SHARES] -= sell_order_shares;
-		}
-		else
-		{
-			// reduce sell order quantity
+		} else {
+			// reduzir a quantidade do pedido de venda
 			StockMarket_UpdateSellOrder(stockid, sell_order_user_id, -amount_remaining);
-
-			// the player's buy order was filled in the single sell order ... prevent updating
+			// a ordem de compra do jogador foi preenchida na única ordem de venda... impeça a atualização
 			break;
 		}
 	}
@@ -547,57 +545,55 @@ StockMarket_OnPurchaseOrder(playerid, stockid, Float: shares)
 
 	// reduce player balance and alert
 	GiveMoney(playerid, -purchase_cost_plus_fee);
-	SendServerMessage(playerid, "You have purchased %s shares of %s (@ %s/ea) for %s. (inc. %0.1f%s fee)", FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], FormatCash(ask_price, .decimals = 2), FormatCash(purchase_cost_plus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+	SendServerMessage(playerid, "Você comprou %s ações de %s (@ %s/ea) por %s. (incluindo taxa de %0.1f%s)", FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], FormatCash(ask_price, .decimals = 2), FormatCash(purchase_cost_plus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+
+	format(logString, sizeof(logString), "%s (%s) [%s] comprou %s ações de %s (@ %s/ea) por %s. (incluindo taxa de %0.1f%s)", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME], FormatCash(ask_price, .decimals = 2), FormatCash(purchase_cost_plus_fee), STOCK_MARKET_TRADING_FEE * 100.0, "%%");
+	logCreate(playerid, logString, 13);
+
 	return true;
 }
 
-StockMarket_OnShowBuySlip(playerid, stockid)
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_OnShowBuySlip(playerid, stockid);
+public StockMarket_OnShowBuySlip(playerid, stockid) {
 
-	if (!rows) {
-		return SendErrorMessage(playerid, "This stock does not currently have any shares available to buy.");
-	}
+	if(!cache_num_rows()) return SendErrorMessage(playerid, "Atualmente, esta empresa não possui ações disponíveis para compra.");
 
-	new
-		Float: available_quantity = cache_get_field_content_float(0, "SALE_SHARES");
+	new Float: available_quantity;
+	cache_get_value_name_float(0, "SALE_SHARES", available_quantity);
 
 	format(
 		szBigString, sizeof (szBigString),
-		"You can buy shares of %s for {36A717}%s each.\n\nThere are %s available shares to buy.",
+		"Você pode comprar ações de %s por {36A717}%s{FFFFFF} cada.\n\nExistem %s ações disponíveis para compra.",
 		g_stockMarketData[stockid][E_NAME],
 		FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2),
 		FormatNumber2(available_quantity, .decimals = 0)
 	);
-	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_BUY, DIALOG_STYLE_INPUT, "Mercado de Ações", szBigString, "Buy", "Back");
+	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_BUY, DIALOG_STYLE_INPUT, "Mercado de Ações", szBigString, "Comprar", "Voltar");
 	return true;
 }
 
-StockMarket_OnShowShares(playerid)
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_OnShowShares(playerid);
+public StockMarket_OnShowShares(playerid) {
+	if (!cache_num_rows()) return SendErrorMessage(playerid, "Você não possui ações de nenhuma empresa.");
+	
+	szLargeString = "Ações\tAções ativas\tAções à venda\t{36A717}Valor ($)\n";
 
-	if (!rows) {
-		return SendErrorMessage(playerid, "You are not holding any shares of any company.");
-	}
+	for (new row = 0; row < cache_num_rows(); row ++) {
+		new stockid;
 
-	szLargeString = "Stock\tActive Shares\tShares Being Sold\t{36A717}Value ($)\n";
+		cache_get_value_name_int(row, "STOCK_ID", stockid);
 
-	for (new row = 0; row < rows; row ++)
-	{
-		new
-			stockid = cache_get_field_content_int(row, "STOCK_ID");
+		if (Iter_Contains(stockmarkets, stockid)) {
+			new 
+				Float: shares,
+				Float: held_shares;
 
-		if (Iter_Contains(stockmarkets, stockid))
-		{
-			new Float: shares = cache_get_field_content_float(row, "OWNED_SHARES");
-			new Float: held_shares = cache_get_field_content_float(row, "HELD_SHARES");
+			cache_get_value_name_float(row, "OWNED_SHARES", shares);	
+			cache_get_value_name_float(row, "HELD_SHARES", held_shares);
 
 			format(
 				szLargeString, sizeof(szLargeString),
-				"%s%s (%s)\t%s (%0.2f%%)\t%s (%0.2f%%)\t{36A717}%s\n",
+				"%s%s (%s)\t%s (%0.2f%%)\t%s (%0.2f%%)\t{36A717}%s{FFFFFF}\n",
 				szLargeString,
 				g_stockMarketData[stockid][E_NAME],
 				g_stockMarketData[stockid][E_SYMBOL],
@@ -617,24 +613,23 @@ StockMarket_OnShowShares(playerid)
 			p_PlayerHasShare[playerid] { stockid } = false;
 		}
 	}
-	return ShowPlayerDialog(playerid, DIALOG_PLAYER_STOCKS, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações", szLargeString, "Select", "Close"), 1;
+	return ShowPlayerDialog(playerid, DIALOG_PLAYER_STOCKS, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações", szLargeString, "Selecionar", "Cancelar"), 1;
 }
 
-Stock_OnDividendPayout(stockid, bool: is_ipo)
-{
-	new
-		rows = cache_get_row_count();
+forward Stock_OnDividendPayout(stockid, bool: is_ipo);
+public Stock_OnDividendPayout(stockid, bool: is_ipo) {
 
 	// pay out existing shareholders
-	if (rows)
-	{
-		new
-			Float: total_shares = g_stockMarketData[stockid][E_MAX_SHARES];
+	if (cache_num_rows()) {
+		new Float: total_shares = g_stockMarketData[stockid][E_MAX_SHARES];
 
-		for (new row = 0; row < rows; row ++)
-		{
-			new account_id = cache_get_field_content_int(row, "USER_ID");
-			new Float: shares_owned = cache_get_field_content_float(row, "SHARES");
+		for (new row = 0; row < cache_num_rows(); row ++) {
+			new 
+				account_id,
+				Float: shares_owned;
+
+			cache_get_value_name_int(row, "USER_ID", account_id);
+			cache_get_value_name_float(row, "SHARES", shares_owned);
 
 			new Float: dividend_rate = shares_owned / total_shares;
 			new dividend_payout = floatround(g_stockMarketReportData[stockid][0][E_POOL] * dividend_rate);
@@ -647,126 +642,117 @@ Stock_OnDividendPayout(stockid, bool: is_ipo)
 			}
 
 			if (0 <= shareholder < MAX_PLAYERS && Iter_Contains(Player, shareholder)) {
-				GivePlayerBankMoney(shareholder, dividend_payout), Beep(shareholder);
-				SendServerMessage(shareholder, "You have been paid a %s dividend (%0.2f%s) for owning %s!", FormatCash(dividend_payout), dividend_rate * 100.0, "%%", g_stockMarketData[stockid][E_NAME]);
+				GiveBankMoney(shareholder, dividend_payout), Beep(shareholder);
+				SendServerMessage(shareholder, "Você recebeu um dividendo de %s (%0.2f%s) por possuir %s!", FormatCash(dividend_payout), dividend_rate * 100.0, "%%", g_stockMarketData[stockid][E_NAME]);
 			} else {
-				mysql_single_query(sprintf("UPDATE `USERS` SET `BANKMONEY` = `BANKMONEY` + %d WHERE `ID` = %d", dividend_payout, account_id));
+				mysql_format(DBConn, query, sizeof query, "UPDATE `players` SET `bank` = `bank` + %d WHERE `ID` = %d", dividend_payout, account_id);
+        		mysql_query(DBConn, query);
 			}
 		}
 	}
 
-	// insert to database a new report
-	mysql_format(dbHandle, szBigString, sizeof (szBigString), "INSERT INTO `STOCK_REPORTS` (`STOCK_ID`, `POOL`, `DONATIONS`, `PRICE`) VALUES (%d, %f, %f, %f)", stockid, STOCK_DEFAULT_START_POOL, STOCK_DEFAULT_START_DONATIONS, STOCK_DEFAULT_START_PRICE);
-	mysql_tquery(dbHandle, szBigString, "StockMarket_InsertReport", "dfffd", stockid, STOCK_DEFAULT_START_POOL, STOCK_DEFAULT_START_DONATIONS, STOCK_DEFAULT_START_PRICE, bool: is_ipo);
+	// inserir no banco de dados um novo relatório
+	mysql_format(DBConn, query, sizeof(query), "INSERT INTO `STOCK_REPORTS` (`STOCK_ID`, `POOL`, `DONATIONS`, `PRICE`) VALUES (%d, %f, %f, %f)", stockid, STOCK_DEFAULT_START_POOL, STOCK_DEFAULT_START_DONATIONS, STOCK_DEFAULT_START_PRICE);
+	mysql_tquery(DBConn, query, "StockMarket_InsertReport", "dfffd", stockid, STOCK_DEFAULT_START_POOL, STOCK_DEFAULT_START_DONATIONS, STOCK_DEFAULT_START_PRICE, bool: is_ipo);
 	return true;
 }
 
-Stock_UpdateMaximumShares(stockid)
-{
-	new
-		rows = cache_get_row_count();
+forward Stock_UpdateMaximumShares(stockid);
+public Stock_UpdateMaximumShares(stockid) {
 
-	if (rows)
-	{
-		g_stockMarketData[stockid][E_AVAILABLE_SHARES] = cache_get_field_content_float(0, "SHARES_HELD");
-		g_stockMarketData[stockid][E_MAX_SHARES] = g_stockMarketData[stockid][E_AVAILABLE_SHARES] + cache_get_field_content_float(0, "SHARES_OWNED");
+	if (cache_num_rows()) {
+		new Float: shares_owned;
+		cache_get_value_name_float(0, "SHARES_HELD", g_stockMarketData[stockid][E_AVAILABLE_SHARES]);
+		cache_get_value_name_float(0, "SHARES_OWNED", shares_owned);
+		g_stockMarketData[stockid][E_MAX_SHARES] = g_stockMarketData[stockid][E_AVAILABLE_SHARES] + shares_owned;
 
-		// rows shown but still showing as 0 maximum shares? set it to the ipo issued amount
-		if (!g_stockMarketData[stockid][E_MAX_SHARES])
-		{
+		if (!g_stockMarketData[stockid][E_MAX_SHARES]) {
 			g_stockMarketData[stockid][E_AVAILABLE_SHARES] = g_stockMarketData[stockid][E_IPO_SHARES];
 			g_stockMarketData[stockid][E_MAX_SHARES] = g_stockMarketData[stockid][E_IPO_SHARES];
 		}
-	}
-	else
-	{
+	} else {
 		g_stockMarketData[stockid][E_AVAILABLE_SHARES] = g_stockMarketData[stockid][E_IPO_SHARES];
 		g_stockMarketData[stockid][E_MAX_SHARES] = g_stockMarketData[stockid][E_IPO_SHARES];
 	}
 	return true;
 }
 
-StockMarket_OnCancelOrder(playerid)
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_OnCancelOrder(playerid);
+public StockMarket_OnCancelOrder(playerid) {
+	if (cache_num_rows()) {
+		new player_account = GetPlayerSQLID(playerid);
 
-	if (rows)
-	{
-		new
-			player_account = GetPlayerSQLID(playerid);
+		for (new row = 0; row < cache_num_rows(); row ++) {
+			new 
+				stockid, 
+				Float: shares; 
 
-		for (new row = 0; row < rows; row ++)
-		{
-			new stockid = cache_get_field_content_int(row, "STOCK_ID");
-			new Float: shares = cache_get_field_content_float(row, "SHARES");
+			cache_get_value_name_int(row, "STOCK_ID", stockid);
+			cache_get_value_name_float(row, "SHARES", shares);
 
 			g_stockMarketData[stockid][E_AVAILABLE_SHARES] -= shares;
-			mysql_single_query(sprintf("DELETE FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d AND `USER_ID`=%d", stockid, player_account));
+
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID` = %d AND `USER_ID` = %d", stockid, player_account);
+    		mysql_query(DBConn, query);
+
 			StockMarket_GiveShares(stockid, player_account, shares);
 
-			SendServerMessage(playerid, "You have cancelled your order of to sell %s shares of %s.", FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME]);
+			SendServerMessage(playerid, "Você cancelou sua oferta de venda de %s ações de %s.", FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME]);
+			
+			format(logString, sizeof(logString), "%s (%s) [%s] cancelou sua oferta de venda de %s ações de %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), FormatNumber2(shares, .decimals = 0), g_stockMarketData[stockid][E_NAME]);
+			logCreate(playerid, logString, 13);
 		}
 		return true;
-	}
-	else
-	{
-		return ShowPlayerShares(playerid), SendErrorMessage(playerid, "You don't have any sell orders for this stock to cancel."), 1;
-	}
+	} else return ShowPlayerShares(playerid), SendErrorMessage(playerid, "Você não tem nenhuma ordem de venda para cancelar esta ação."), 1;
 }
 
-StockMarket_ShowShareholders(playerid, stockid)
-{
-	new rows = cache_get_row_count();
+forward StockMarket_ShowShareholders(playerid, stockid);
+public StockMarket_ShowShareholders(playerid, stockid) {
+	szHugeString = "Usuário\tCompartilhamentos\tPorcentagem\n";
 
-	// format dialog title
-	szHugeString = "User\tShares\tPercentage (%)\n";
-
-	// track the shares that are held by players
 	new Float: out_standing_shares = g_stockMarketData[stockid][E_MAX_SHARES];
 
-	// show all the shareholders
-	if (rows)
-	{
-		new
-			player_name[24];
+	if (cache_num_rows()) {
+		new player_name[24];
 
-		for (new row = 0; row < rows; row ++)
+		for (new row = 0; row < cache_num_rows(); row ++)
 		{
-			cache_get_field_content(row, "NAME", player_name);
+			cache_get_value_name(row, "NAME", player_name);
+			new 
+				is_online, 
+				Float: shares; 
 
-			new is_online = cache_get_field_content_int(row, "ONLINE");
-			new Float: shares = cache_get_field_content_float(row, "SHARES");
+			cache_get_value_name_int(row, "ONLINE", is_online);
+			cache_get_value_name_float(row, "SHARES", shares);
 
 			out_standing_shares -= shares;
-			format(szHugeString, sizeof (szHugeString), "%s%s%s\t%s\t%s%%\n", szHugeString, is_online ? COL_GREEN : COL_WHITE, player_name, FormatNumber2(shares, .decimals = 0), FormatNumber2(shares / g_stockMarketData[stockid][E_MAX_SHARES] * 100.0, .decimals = 3));
+			format(szHugeString, sizeof (szHugeString), "%s%s%s\t%s\t%s%%\n", szHugeString, is_online ? COLOR_GREEN : COLOR_WHITE, player_name, FormatNumber2(shares, .decimals = 0), FormatNumber2(shares / g_stockMarketData[stockid][E_MAX_SHARES] * 100.0, .decimals = 3));
 		}
 	}
 
-	// tell players the shares tied up in sell orders
 	if (out_standing_shares > 0.0) {
-		format(szHugeString, sizeof (szHugeString), "%s{666666}Held In Sell Orders\t{666666}%s\t{666666}%s%%\n", szHugeString, FormatNumber2(out_standing_shares, .decimals = 0), FormatNumber2(out_standing_shares / g_stockMarketData[stockid][E_MAX_SHARES] * 100.0, .decimals = 3));
+		format(szHugeString, sizeof (szHugeString), "%s{666666}Pedidos de venda mantidos\t{666666}%s\t{666666}%s%%\n", szHugeString, FormatNumber2(out_standing_shares, .decimals = 0), FormatNumber2(out_standing_shares / g_stockMarketData[stockid][E_MAX_SHARES] * 100.0, .decimals = 3));
 	}
 
-	// format dialog
-	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_HOLDERS, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações - Shareholders", szHugeString, "Fechar", "Voltar");
+	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_HOLDERS, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações - Acionistas", szHugeString, "Fechar", "Voltar");
 	return true;
 }
 
-StockMarket_ForceShareSale()
-{
-	new
-		rows = cache_get_row_count();
+forward StockMarket_ForceShareSale();
+public StockMarket_ForceShareSale() {
+	if (cache_num_rows()) {
+		for (new row = 0; row < cache_num_rows(); row ++) { 
+			new 
+				accountid, 
+			 	stockid, 
+				Float: shares; 
 
-	if (rows)
-	{
-		for (new row = 0; row < rows; row ++)
-		{
-			new accountid = cache_get_field_content_int(row, "USER_ID");
-			new stockid = cache_get_field_content_int(row, "STOCK_ID");
-			new Float: shares = cache_get_field_content_float(row, "SHARES");
+			cache_get_value_name_int(row, "USER_ID", accountid);
+			cache_get_value_name_int(row, "STOCK_ID", stockid);
+			cache_get_value_name_float(row, "SHARES", shares);
 
-			mysql_single_query(sprintf("DELETE FROM `STOCK_OWNERS` WHERE `USER_ID`=%d AND `STOCK_ID`=%d", accountid, stockid));
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `STOCK_OWNERS` WHERE `USER_ID`=%d AND `STOCK_ID` = %d", accountid, stockid);
+    		mysql_query(DBConn, query);
 			StockMarket_UpdateSellOrder(stockid, accountid, shares);
 			printf("Inactive shares (user id: %d, stock id: %s, shares: %f)", accountid, g_stockMarketData[stockid][E_NAME], shares);
 		}
@@ -776,44 +762,35 @@ StockMarket_ForceShareSale()
 
 /* ================================ COMANDOS ================================ */
 //CMD:stocks(playerid, params[]) return cmd_stockmarkets(playerid, params);
-CMD:stockmarkets(playerid, params[])
-{
-	SendServerMessage(playerid, "The stock market will payout dividends in %s.", secondstotime(GetServerVariableInt("stock_report_time") - GetServerTime()));
+CMD:stockmarkets(playerid, params[]) {
+	SendServerMessage(playerid, "O mercado de ações pagará dividendos em %s.", secondstotime(GetServerVariableInt("stock_report_time") - GetServerTime()));
 	return ShowPlayerStockMarket(playerid);
 }
 
-CMD:shares(playerid, params[])
-{
+CMD:shares(playerid, params[]) {
 	return ShowPlayerShares(playerid);
 }
 
-CMD:astock(playerid, params[])
-{
-	if (!IsPlayerAdmin(playerid) || ! IsPlayerLeadMaintainer(playerid)) {
-		return false;
-	}
-
-	if (strmatch(params, "update maxshares")) {
+CMD:astock(playerid, params[]) {
+	if (strcmp(params, "atualizar ações")) {
 		foreach (new s : stockmarkets) {
 			UpdateStockMaxShares(s);
 		}
-		return SendServerMessage(playerid, "Max shares has been updated for all stocks.");
+		return SendServerMessage(playerid, "As ações máximas foram atualizadas para todas as ações.");
 	}
-	else if (strmatch(params, "new report")) {
+	else if (strcmp(params, "dividir")) {
 		foreach (new s : stockmarkets) {
 			StockMarket_ReleaseDividends(s);
 		}
 		UpdateServerVariableInt("stock_report_time", GetServerTime() + STOCK_REPORTING_PERIOD);
-		return SendServerMessage(playerid, "All stocks have now had their dividends distributed.");
+		return SendServerMessage(playerid, "Todas as ações tiveram seus dividendos distribuídos.");
 	}
-	return SendUsage(playerid, "/astock [UPDATE MAXSHARES/NEW REPORT]");
+	return SendSyntaxMessage(playerid, "/astock [ATUALIZAR AÇÕES/DIVIDIR]");
 }
 
 /* ================================ FUNÇÕES ================================ */
-static stock CreateStockMarket(stockid, const name[64], const symbol[4], Float: ipo_shares, Float: ipo_price, Float: max_price, Float: pool_factor, Float: price_factor, const description[72])
-{
-	if (!Iter_Contains(stockmarkets, stockid))
-	{
+static CreateStockMarket(stockid, const name[64], const symbol[4], Float: ipo_shares, Float: ipo_price, Float: max_price, Float: pool_factor, Float: price_factor, const description[72]) {
+	if (!Iter_Contains(stockmarkets, stockid)) {
 		strcpy(g_stockMarketData[stockid][E_NAME], name);
 		strcpy(g_stockMarketData[stockid][E_SYMBOL], symbol);
 		strcpy(g_stockMarketData[stockid][E_DESCRIPTION], description);
@@ -824,90 +801,83 @@ static stock CreateStockMarket(stockid, const name[64], const symbol[4], Float: 
 		g_stockMarketData[stockid][E_POOL_FACTOR] = pool_factor;
 		g_stockMarketData[stockid][E_PRICE_FACTOR] = price_factor;
 
-		// reset stock price information
+		// redefinir informações de preço de ações
 		for (new r = 0; r < sizeof(g_stockMarketReportData[]); r ++) {
 			g_stockMarketReportData[stockid][r][E_POOL] = 0.0;
 			g_stockMarketReportData[stockid][r][E_DONATIONS] = 0.0;
 			g_stockMarketReportData[stockid][r][E_PRICE] = 0.0;
 		}
 
-		// load price information if there is
- 		mysql_tquery(dbHandle, sprintf("SELECT * FROM `STOCK_REPORTS` WHERE `STOCK_ID`=%d ORDER BY `REPORTING_TIME` DESC, `ID` DESC LIMIT %d", stockid, sizeof(g_stockMarketReportData[])), "Stock_UpdateReportingPeriods", "d", stockid);
+		// carregar informações de preço se houver
+		mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `STOCK_REPORTS` WHERE `STOCK_ID`= '%d' ORDER BY `REPORTING_TIME` DESC, `ID` DESC LIMIT %d", stockid, sizeof(g_stockMarketReportData[]));
+		mysql_tquery(DBConn, query, "Stock_UpdateReportingPeriods", "d", stockid);
 
- 		// load the maximum number of shares
+ 		// carregar o número máximo de ações
 		UpdateStockMaxShares(stockid);
 
- 		// add to iterator
+ 		// adicionar ao iterator
 		Iter_Add(stockmarkets, stockid);
 	}
 	return stockid;
 }
 
-static stock StockMarket_ReleaseDividends(stockid, bool: is_ipo = false)
-{
-	mysql_format(dbHandle, szBigString, sizeof (szBigString), "SELECT * FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d", stockid);
-	mysql_tquery(dbHandle, szBigString, "Stock_OnDividendPayout", "dd", stockid, is_ipo);
+static StockMarket_ReleaseDividends(stockid, bool: is_ipo = false) {
+	mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d", stockid);
+	mysql_tquery(DBConn, query, "Stock_OnDividendPayout", "dd", stockid, is_ipo);
 	return true;
 }
 
-stock StockMarket_UpdateEarnings(stockid, amount, Float: factor = 1.0, Float: donation_amount = 0.0)
+StockMarket_UpdateEarnings(stockid, amount, Float: factor = 1.0, Float: donation_amount = 0.0)
 {
 	if (!Iter_Contains(stockmarkets, stockid))
 		return false;
 
-	// ensure that pool remains always above 0 dollars
+	// garantir que o pool permaneça sempre acima de 0 dólares
 	if ((g_stockMarketReportData[stockid][0][E_POOL] += float(amount) * factor) < 0.0) {
 		g_stockMarketReportData[stockid][0][E_POOL] = 0.0;
 	}
 
-	// update donation amount
+	// atualizar valor da doação
 	g_stockMarketReportData[stockid][0][E_DONATIONS] += donation_amount;
 
-	// save to database
-	mysql_single_query(sprintf("UPDATE `STOCK_REPORTS` SET `POOL`=%f, `DONATIONS`=%f WHERE `ID` = %d", g_stockMarketReportData[stockid][0][E_POOL], g_stockMarketReportData[stockid][0][E_DONATIONS], g_stockMarketReportData[stockid][0][E_SQL_ID]));
+	// salvar na database
+	mysql_format(DBConn, query, sizeof query, "UPDATE `STOCK_REPORTS` SET `POOL`=%f, `DONATIONS`=%f WHERE `ID` = %d", g_stockMarketReportData[stockid][0][E_POOL], g_stockMarketReportData[stockid][0][E_DONATIONS], g_stockMarketReportData[stockid][0][E_SQL_ID]);
+	mysql_query(DBConn, query);
 	return true;
 }
 
-static stock StockMarket_GiveShares(stockid, accountid, Float: shares)
-{
-	mysql_format(
-		dbHandle, szBigString, sizeof (szBigString),
-		"INSERT INTO `STOCK_OWNERS` (`USER_ID`, `STOCK_ID`, `SHARES`) VALUES (%d, %d, %f) ON DUPLICATE KEY UPDATE `SHARES` = `SHARES` + %f",
-		accountid, stockid, shares, shares
-	);
-	mysql_single_query(szBigString);
+static StockMarket_GiveShares(stockid, accountid, Float: shares) {
+	mysql_format(DBConn, query, sizeof query,
+        "INSERT INTO `STOCK_OWNERS` (`USER_ID`, `STOCK_ID`, `SHARES`) VALUES (%d, %d, %f) ON DUPLICATE KEY UPDATE `SHARES` = `SHARES` + %f",
+		accountid, stockid, shares, shares);
+    mysql_query(DBConn, query);
 }
 
-static stock StockMarket_UpdateSellOrder(stockid, accountid, Float: shares)
-{
-	mysql_format(
-		dbHandle, szBigString, sizeof (szBigString),
-		"INSERT INTO `STOCK_SELL_ORDERS` (`STOCK_ID`, `USER_ID`, `SHARES`) VALUES (%d, %d, %f) ON DUPLICATE KEY UPDATE `SHARES` = `SHARES` + %f",
-		stockid, accountid, shares, shares
-	);
-	mysql_single_query(szBigString);
+static StockMarket_UpdateSellOrder(stockid, accountid, Float: shares) {
+	mysql_format(DBConn, query, sizeof query,
+        "INSERT INTO `STOCK_SELL_ORDERS` (`STOCK_ID`, `USER_ID`, `SHARES`) VALUES (%d, %d, %f) ON DUPLICATE KEY UPDATE `SHARES` = `SHARES` + %f",
+		stockid, accountid, shares, shares);
+    mysql_query(DBConn, query);
 
-	// we are just using this variable to loosely track available shares
+	// estamos apenas usando essa variável para rastrear as vagas de ações disponíveis
 	g_stockMarketData[stockid][E_AVAILABLE_SHARES] += shares;
 }
 
-static stock StockMarket_CreateTradeLog(stockid, buyer_acc, seller_acc, Float: shares, Float: price)
-{
-	mysql_format(
-		dbHandle, szBigString, sizeof (szBigString),
-		"INSERT INTO `STOCK_TRADE_LOG` (`STOCK_ID`, `BUYER_ID`, `SELLER_ID`, `SHARES`, `PRICE`) VALUES (%d, %d, %d, %f, %f)",
-		stockid, buyer_acc, seller_acc, shares, price
-	);
-	mysql_single_query(szBigString);
+static StockMarket_CreateTradeLog(stockid, buyer_acc, seller_acc, Float: shares, Float: price) {
+	mysql_format(DBConn, query, sizeof query,
+        "INSERT INTO `STOCK_TRADE_LOG` (`STOCK_ID`, `BUYER_ID`, `SELLER_ID`, `SHARES`, `PRICE`) VALUES (%d, %d, %d, %f, %f)",
+		stockid, buyer_acc, seller_acc, shares, price);
+    mysql_query(DBConn, query);
 }
 
-static stock StockMarket_ShowBuySlip(playerid, stockid)
-{
-	mysql_tquery(dbHandle, sprintf("SELECT SUM(`SHARES`) AS `SALE_SHARES` FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d", stockid), "StockMarket_OnShowBuySlip", "dd", playerid, stockid);
+static StockMarket_ShowBuySlip(playerid, stockid) {
+	mysql_format(DBConn, query, sizeof query,
+        "SELECT SUM(`SHARES`) AS `SALE_SHARES` FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d", stockid);
+    mysql_tquery(DBConn, query, "StockMarket_OnShowBuySlip", "dd", playerid, stockid);
 	return true;
 }
 
-static stock StockMarket_ShowSellSlip(playerid, stockid)
+static StockMarket_ShowSellSlip(playerid, stockid)
 {
 	format(
 		szLargeString, sizeof (szLargeString),
@@ -920,7 +890,7 @@ static stock StockMarket_ShowSellSlip(playerid, stockid)
 	return true;
 }
 
-static stock StockMarket_ShowDonationSlip(playerid, stockid)
+static StockMarket_ShowDonationSlip(playerid, stockid)
 {
 	format(
 		szLargeString, sizeof (szLargeString),
@@ -931,7 +901,7 @@ static stock StockMarket_ShowDonationSlip(playerid, stockid)
 	return true;
 }
 
-static stock ShowPlayerStockMarket(playerid)
+static ShowPlayerStockMarket(playerid)
 {
 	szLargeString = "Stock\tAvailable Shares\tDividend Per Share ($)\tPrice ($)\n";
 
@@ -946,52 +916,59 @@ static stock ShowPlayerStockMarket(playerid)
 			szLargeString,
 			g_stockMarketData[s][E_NAME],
 			g_stockMarketData[s][E_SYMBOL],
-			FormatNumber2(g_stockMarketData[s][E_AVAILABLE_SHARES], .decimals = 0),
+
+			FormatNumber(floatround(g_stockMarketData[s][E_AVAILABLE_SHARES], floatround_ceil)),
+			FormatNumber(floatround(payout, floatround_ceil)),
+			price_change >= 0.0 ? COLOR_GREEN : COLOR_RED,
+			FormatNumber(floatround(g_stockMarketReportData[s][1][E_PRICE], floatround_ceil)),
+			FormatNumber(floatround(price_change, floatround_ceil)) 
+
+			/*FormatNumber2(g_stockMarketData[s][E_AVAILABLE_SHARES], .decimals = 0),
 			FormatCash(payout, .decimals = 2),
 			price_change >= 0.0 ? COLOR_GREEN : COLOR_RED,
 			FormatCash(g_stockMarketReportData[s][1][E_PRICE], .decimals = 2),
-			FormatNumber2(price_change, .decimals = 2, .prefix = (price_change >= 0.0 ? '+' : '\0'))
+			FormatNumber2(price_change, .decimals = 2, .prefix = (price_change >= 0.0 ? '+' : '\0'))*/
 		);
 	}
-	return ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações", szLargeString, "Select", "Close");
+	return ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET, DIALOG_STYLE_TABLIST_HEADERS, "Mercado de Ações", szLargeString, "Selecionar", "Cancelar");
 }
 
-static stock ShowPlayerStockMarketOptions(playerid, stockid)
+static ShowPlayerStockMarketOptions(playerid, stockid)
 {
 	format(szBigString, sizeof(szBigString), "Buy shares\t{36A717}%s\nDonate to company\t>>>\nView shareholders\t>>>\nView stock information\t>>>", FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2));
 	ShowPlayerDialog(playerid, DIALOG_STOCK_MARKET_OPTIONS, DIALOG_STYLE_TABLIST, sprintf("Mercado de Ações - %s", g_stockMarketData[stockid][E_NAME]), szBigString, "Select", "Back");
 	return true;
 }
 
-static stock ShowPlayerShareOptions(playerid, stockid)
+static ShowPlayerShareOptions(playerid, stockid)
 {
 	format(szBigString, sizeof(szBigString), "Sell shares\t{36A717}%s\n{FF0000}Cancel Sell Orders\t{FF0000}>>>", FormatCash(g_stockMarketReportData[stockid][1][E_PRICE], .decimals = 2));
 	ShowPlayerDialog(playerid, DIALOG_STOCK_POPTIONS, DIALOG_STYLE_TABLIST, sprintf("Mercado de Ações - %s", g_stockMarketData[stockid][E_NAME]), szBigString, "Select", "Back");
 	return true;
 }
 
-static stock ShowPlayerShares(playerid)
-{
+static ShowPlayerShares(playerid) {
 	new
 		accountid = GetPlayerSQLID(playerid);
 
-	mysql_format(
-		dbHandle, szLargeString, 512,
-		"SELECT   STOCK_ID, SUM(HELD_SHARES) AS HELD_SHARES, SUM(OWNED_SHARES) AS OWNED_SHARES " \
+	mysql_format(DBConn, query, sizeof query,
+        "SELECT   STOCK_ID, SUM(HELD_SHARES) AS HELD_SHARES, SUM(OWNED_SHARES) AS OWNED_SHARES " \
 		"FROM     (" \
 		"	(SELECT STOCK_ID, USER_ID, SHARES AS HELD_SHARES, 0 AS OWNED_SHARES FROM STOCK_SELL_ORDERS t1 WHERE USER_ID=%d) " \
 		"	UNION ALL " \
 		"	(SELECT STOCK_ID, USER_ID, 0 AS HELD_SHARES, SHARES AS OWNED_SHARES FROM STOCK_OWNERS t2 WHERE USER_ID=%d) " \
 		") t_union " \
 		"GROUP BY STOCK_ID",
-		accountid, accountid
-	);
-	mysql_tquery(dbHandle, szLargeString, "StockMarket_OnShowShares", "d", playerid);
+		accountid, accountid);
+    mysql_tquery(DBConn, query, "StockMarket_OnShowShares", "d", playerid);
 	return true;
 }
 
-static stock UpdateStockMaxShares(stockid) {
-	mysql_tquery(dbHandle, sprintf("SELECT (SELECT SUM(`SHARES`) FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d) AS `SHARES_OWNED`, (SELECT SUM(`SHARES`) FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d) AS `SHARES_HELD`", stockid, stockid), "Stock_UpdateMaximumShares", "d", stockid);
+static UpdateStockMaxShares(stockid) {
+
+	mysql_format(DBConn, query, sizeof query,
+        "SELECT (SELECT SUM(`SHARES`) FROM `STOCK_OWNERS` WHERE `STOCK_ID`=%d) AS `SHARES_OWNED`, (SELECT SUM(`SHARES`) FROM `STOCK_SELL_ORDERS` WHERE `STOCK_ID`=%d) AS `SHARES_HELD`", stockid, stockid);
+    mysql_tquery(DBConn, query, "Stock_UpdateMaximumShares", "d", stockid);
 }
 
 /*

@@ -26,8 +26,8 @@ hook OnGameModeInit() {
     } else {
         print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso.");
         print("[DATABASE] Verificando criação de tabelas...");
-        CheckTables();
         mysql_set_charset("latin1");
+        CheckTables();
     }
 
     return true;
@@ -45,6 +45,7 @@ void:CheckTables() {
     CheckVehiclesWeaponsTable();
     CheckPoolTable();
     CheckServerTable();
+    CheckTradingTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso.");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -418,5 +419,26 @@ void:CheckServerTable(){
 
     print("[DATABASE] Tabela SERVER checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela SERVER checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckTradingTable(){
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    `symbol` varchar(4) NOT NULL DEFAULT 'N/A',\
+    `description` varchar(124) NOT NULL DEFAULT 'N/A',\
+    `type` int NOT NULL DEFAULT '0',\
+    `capital` int NOT NULL DEFAULT '0',\
+    `oldbuy_value` float NOT NULL DEFAULT '0.0',\
+    `buy_value` float NOT NULL DEFAULT '0.0',\
+    `sell_value` int NOT NULL DEFAULT '0',\
+    `max_slots` int NOT NULL DEFAULT '0',\
+    `slots_avaibles` int NOT NULL DEFAULT '0',\
+    `variation` float NOT NULL DEFAULT '0.0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela tradings checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela tradings checada com sucesso.");
     logCreate(99998, logString, 5);
 }

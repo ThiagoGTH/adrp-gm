@@ -4,7 +4,7 @@
 #include <YSI_Coding\y_hooks>
 
 CMD:trocarpersonagem(playerid, params[]){
-    if(!pInfo[playerid][pLogged]) return true;
+    
     TogglePlayerSpectating(playerid, true);
     new string[256];
     format(string,sizeof(string),"(( %s (%s) (Foi para a tela de seleção de personagem) ))", pNome(playerid), GetPlayerUserEx(playerid));

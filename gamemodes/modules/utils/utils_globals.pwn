@@ -1,8 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-#define FormatCash(%0) \
-    (FormatNumber2(%0, .prefix = '$'))
-
 #define MAX_DYNAMIC_CARS            (1500)
 
 #define MAX_OWNABLE_CARS            (5)
@@ -15,7 +12,8 @@ new logString[255];
 new loginAttempts[MAX_PLAYERS];
 new 
     szBigString [256],
-    szLargeString [1024];
+    szLargeString [1024],
+    szHugeString [2048];
     
 enum User_Data {
     uID,

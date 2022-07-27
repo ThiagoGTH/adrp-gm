@@ -809,88 +809,43 @@ stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:..
 	return true;
 }
 
-FormatNumber(number) { // i didn't made it, idk who did!
-	new numOfPeriods = 0;
-	new tmp = number;
-	new ret[32];
+FormatNumber(number, money = 1) {
+    new length, value[32];
 
-	while(tmp > 1000) {
-		tmp = floatround(tmp / 1000, floatround_floor);
-		++numOfPeriods;
-	}
+    format(value, sizeof(value), "%i", (number < 0) ? (-number) : (number));
 
-	valstr(ret, number);
+    length = strlen(value);
 
-	new slen = strlen(ret);
-	for(new i = 1; i != (numOfPeriods + 1); ++i) {
-		strins(ret, ",", (slen - 3 * i));
-	}
-
-	return ret;
-}
-
-stock FormatNumber2({_, Float, Text3D, Menu, Text, DB, DBResult, bool, File}: variable, prefix = '\0', decimals = -1, thousand_seperator = ',', decimal_point = '.', tag = tagof(variable)) {
-    static
-        s_szReturn[32],
-        s_szThousandSeparator[2] = {' ', EOS},
-        s_iDecimalPos,
-        s_iChar,
-        s_iSepPos
-    ;
-
-    if (tag == tagof(bool:)){
-        if (variable)
-            memcpy(s_szReturn, "true", 0, 5 * (cellbits/8));
-        else
-            memcpy(s_szReturn, "false", 0, 6 * (cellbits/8));
-
-        return s_szReturn;
-    } else if (tag == tagof(Float:)) {
-        if (decimals == -1)
-            decimals = 8;
-
-        format(s_szReturn, sizeof(s_szReturn), "%.*f", decimals, variable);
-    } else {
-        format(s_szReturn, sizeof(s_szReturn), "%d", variable);
-
-        if (decimals > 0) {
-            strcat(s_szReturn, ".");
-
-            while (decimals--)
-                strcat(s_szReturn, "0");
-        }
-    }
-
-    s_iDecimalPos = strfind(s_szReturn, ".");
-
-    if (s_iDecimalPos == -1)
-        s_iDecimalPos = strlen(s_szReturn);
-    else
-        s_szReturn[s_iDecimalPos] = decimal_point;
-
-    if (s_iDecimalPos >= 4 && thousand_seperator) {
-        s_szThousandSeparator[0] = thousand_seperator;
-
-        s_iChar = s_iDecimalPos;
-        s_iSepPos = 0;
-
-        while (--s_iChar > 0) {
-            if (++s_iSepPos == 3 && s_szReturn[ s_iChar - 1 ] != '-') {
-                strins(s_szReturn, s_szThousandSeparator, s_iChar);
-
-                s_iSepPos = 0;
+    if(length > 3) {
+        for(new l = 0, i = length; --i >= 0; l ++) {
+            if((l % 3 == 0) && l > 0)  {
+                strins(value, ",", i + 1);
             }
         }
     }
 
-    if (prefix != '\0')  {
-        static
-            prefix_string[2];
+    if(money)
+        strins(value, "$", 0);
+    if(number < 0)
+        strins(value, "-$", 0);
 
-        prefix_string[0] = prefix;
-        strins(s_szReturn, prefix_string, s_szReturn[ 0 ] == '-'); // no point finding -
-    }
-    return s_szReturn;
+    return value;
+} 
+
+FormatFloat(Float:number) { // by Anakin2000
+    new 
+        str[24],
+        length;
+
+    format(str, sizeof(str), "%0.2f", number);
+
+    if((length = strlen(str)) < 7)
+        return str;
+
+    for(length -= 6; length > 0; length -= 3) 
+        strins(str, ",", length);
+
+    return str;
 }
 
 stock IsActualGun(id)

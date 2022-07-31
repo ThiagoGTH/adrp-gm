@@ -60,6 +60,13 @@ enum Player_Data {
     pVirtualWorld,
     pInterior,
 
+    // INFOS
+    pColorEyes,
+    pColorHair,
+    Float:pHeight,
+    Float:pWeight,
+    pDescription[128],
+
     pPhoneNumber,
     pPhoneType,
 
@@ -137,6 +144,7 @@ enum Player_Data {
     pBuyingPlateRemove,
     pTimerSpawn,
     pDelayNewbie,
+    pInvestment,
 
 };
 new pInfo[MAX_PLAYERS][Player_Data];
@@ -192,6 +200,12 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pPhoneType]      = 
     pInfo   [playerid][pPhoneNumber]    = 0;
 
+    pInfo   [playerid][pColorEyes]          = 0;
+    pInfo   [playerid][pColorHair]         = 0;
+    pInfo   [playerid][pHeight]       = 0.00;
+    pInfo   [playerid][pWeight]       = 0.00;
+    pInfo   [playerid][pDescription][0]   = EOS;
+
     pInfo[playerid][pFreeze] = 0;
     pInfo[playerid][pFreezeTimer] = 0;
     pInfo[playerid][pJetpack] = 0;
@@ -219,6 +233,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pFlying] = 0;
     pInfo[playerid][pESC] = 0;
     pInfo[playerid][pDelayNewbie] = 0;
+    pInfo[playerid][pInvestment] = 0;
     ClearDamages(playerid);
 
     pInfo[playerid][pRecording] = false;

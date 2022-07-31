@@ -121,19 +121,21 @@ forward Float:GetElevatorZCoordForFloor(floorid);
 forward Float:GetDoorsZCoordForFloor(floorid);
 
 // ------------------------ Callbacks ------------------------
-hook OnGameModeInit() {
+hook OnGameModeInit()
+{
 	ResetElevatorQueue();
 	Elevator_Initialize();
+
 	return true;
 }
 
-hook OnGameModeExit() {
+hook OnGameModeExit()
+{
 	Elevator_Destroy();
 	return true;
 }
 
-hook OnObjectMoved(objectid)
-{
+public OnObjectMoved(objectid) {
     new Float:x, Float:y, Float:z;
 	for(new i; i < sizeof(Obj_FloorDoors); i ++)
 	{
@@ -159,7 +161,8 @@ hook OnObjectMoved(objectid)
 	    Floor_OpenDoors(ElevatorFloor);
 
 	    GetObjectPos(Obj_Elevator, x, y, z);
-	    Label_Elevator	= Create3DTextLabel("Press 'F' to use elevator", 0xFFFFDD, 1784.9822, -1302.0426, z - 0.9, 4.0, 0, 1);
+	    Label_Elevator	= Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFF, 1784.9822, -1302.0426, z - 0.9, 4.0, 0, 1);
+		PlaySoundForPlayersInRange(6401, 10.0, x, y, z);
 
 	    ElevatorState 	= ELEVATOR_STATE_WAITING;
 	    SetTimer("Elevator_TurnToIdle", ELEVATOR_WAIT_TIME, 0);
@@ -168,17 +171,16 @@ hook OnObjectMoved(objectid)
 	return true;
 }
 
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
-{
+hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
     if(dialogid == DIALOG_ID)
     {
         if(!response)
             return false;
 
         if(FloorRequestedBy[listitem] != INVALID_PLAYER_ID || IsFloorInQueue(listitem))
-            GameTextForPlayer(playerid, "~r~The floor is already in the queue", 3500, 4);
+			SendErrorMessage(playerid, "O andar já está na fila.");
 		else if(DidPlayerRequestElevator(playerid))
-		    GameTextForPlayer(playerid, "~r~You already requested the elevator", 3500, 4);
+			SendErrorMessage(playerid, "Você já solicitou o elevador.");
 		else
 	        CallElevator(playerid, listitem);
 
@@ -211,17 +213,16 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				if(i <= 19)
 				{
 					CallElevator(playerid, i + 1);
-					GameTextForPlayer(playerid, "~r~Elevator called", 3500, 4);
+					GameTextForPlayer(playerid, "~r~Elevador chamado", 3500, 4);
 				}
 		    }
 		}
 	}
-
 	return true;
 }
 
 // ------------------------ Functions ------------------------
-stock Elevator_Initialize()
+Elevator_Initialize()
 {
 	// Initializes the elevator.
 
@@ -229,7 +230,7 @@ stock Elevator_Initialize()
 	Obj_ElevatorDoors[0] 	= CreateObject(18757, X_DOOR_CLOSED, -1303.459472, GROUND_Z_COORD, 0.000000, 0.000000, 270.000000);
 	Obj_ElevatorDoors[1] 	= CreateObject(18756, X_DOOR_CLOSED, -1303.459472, GROUND_Z_COORD, 0.000000, 0.000000, 270.000000);
 
-	Label_Elevator          = Create3DTextLabel("Press 'F' to use elevator", 0xFFFFDD, 1784.9822, -1302.0426, 13.6491, 4.0, 0, 1);
+	Label_Elevator          = Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFF, 1784.9822, -1302.0426, 13.6491, 4.0, 0, 1);
 
 	new string[128],
 		Float:z;
@@ -239,14 +240,14 @@ stock Elevator_Initialize()
 	    Obj_FloorDoors[i][0] 	= CreateObject(18757, X_DOOR_CLOSED, -1303.171142, GetDoorsZCoordForFloor(i), 0.000000, 0.000000, 270.000000);
 		Obj_FloorDoors[i][1] 	= CreateObject(18756, X_DOOR_CLOSED, -1303.171142, GetDoorsZCoordForFloor(i), 0.000000, 0.000000, 270.000000);
 
-		format(string, sizeof(string), "%s\nPress 'F' to call", FloorNames[i]);
+		format(string, sizeof(string), "%s\nPressione 'F' para chamar", FloorNames[i]);
 
 		if(i == 0)
 		    z = 13.4713;
 		else
 		    z = 13.4713 + 8.7396 + ((i-1) * 5.45155);
 
-		Label_Floors[i]         = Create3DTextLabel(string, 0xFFFFDD, 1783.9799, -1300.7660, z, 10.5, 0, 1);
+		Label_Floors[i]         = Create3DTextLabel(string, 0xFFFFFF, 1783.9799, -1300.7660, z, 5.0, 0, 1);
 		// Label_Elevator, Text3D:Label_Floors[21];
 	}
 
@@ -257,7 +258,7 @@ stock Elevator_Initialize()
 	return true;
 }
 
-stock Elevator_Destroy()
+Elevator_Destroy()
 {
 	// Destroys the elevator.
 
@@ -276,7 +277,7 @@ stock Elevator_Destroy()
 	return true;
 }
 
-stock Elevator_OpenDoors()
+Elevator_OpenDoors()
 {
 	// Opens the elevator's doors.
 
@@ -289,7 +290,7 @@ stock Elevator_OpenDoors()
 	return true;
 }
 
-stock Elevator_CloseDoors()
+Elevator_CloseDoors()
 {
     // Closes the elevator's doors.
 
@@ -305,7 +306,7 @@ stock Elevator_CloseDoors()
 	return true;
 }
 
-stock Floor_OpenDoors(floorid)
+Floor_OpenDoors(floorid)
 {
     // Opens the doors at the specified floor.
 
@@ -315,7 +316,7 @@ stock Floor_OpenDoors(floorid)
 	return true;
 }
 
-stock Floor_CloseDoors(floorid)
+Floor_CloseDoors(floorid)
 {
     // Closes the doors at the specified floor.
 
@@ -325,7 +326,7 @@ stock Floor_CloseDoors(floorid)
 	return true;
 }
 
-stock Elevator_MoveToFloor(floorid)
+Elevator_MoveToFloor(floorid)
 {
 	// Moves the elevator to specified floor (doors are meant to be already closed).
 
@@ -362,7 +363,7 @@ public Elevator_TurnToIdle()
 	return true;
 }
 
-stock RemoveFirstQueueFloor()
+RemoveFirstQueueFloor()
 {
 	// Removes the data in ElevatorQueue[0], and reorders the queue accordingly.
 
@@ -374,7 +375,7 @@ stock RemoveFirstQueueFloor()
 	return true;
 }
 
-stock AddFloorToQueue(floorid)
+AddFloorToQueue(floorid)
 {
  	// Adds 'floorid' at the end of the queue.
 
@@ -403,7 +404,7 @@ stock AddFloorToQueue(floorid)
 	return false;
 }
 
-public ResetElevatorQueue()
+ResetElevatorQueue()
 {
 	// Resets the queue.
 
@@ -416,7 +417,7 @@ public ResetElevatorQueue()
 	return true;
 }
 
-stock IsFloorInQueue(floorid)
+IsFloorInQueue(floorid)
 {
 	// Checks if the specified floor is currently part of the queue.
 
@@ -427,7 +428,7 @@ stock IsFloorInQueue(floorid)
 	return false;
 }
 
-stock ReadNextFloorInQueue()
+ReadNextFloorInQueue()
 {
 	// Reads the next floor in the queue, closes doors, and goes to it.
 
@@ -440,7 +441,7 @@ stock ReadNextFloorInQueue()
 	return true;
 }
 
-stock DidPlayerRequestElevator(playerid)
+DidPlayerRequestElevator(playerid)
 {
 	for(new i; i < sizeof(FloorRequestedBy); i ++)
 	    if(FloorRequestedBy[i] == playerid)
@@ -449,7 +450,7 @@ stock DidPlayerRequestElevator(playerid)
 	return false;
 }
 
-stock ShowElevatorDialog(playerid)
+ShowElevatorDialog(playerid)
 {
 	new string[512];
 	for(new i; i < sizeof(ElevatorQueue); i ++)
@@ -466,7 +467,7 @@ stock ShowElevatorDialog(playerid)
 	return true;
 }
 
-stock CallElevator(playerid, floorid)
+CallElevator(playerid, floorid)
 {
 	// Calls the elevator (also used with the elevator dialog).
 
@@ -479,8 +480,9 @@ stock CallElevator(playerid, floorid)
 	return true;
 }
 
-stock Float:GetElevatorZCoordForFloor(floorid)
+Float:GetElevatorZCoordForFloor(floorid)
     return (GROUND_Z_COORD + FloorZOffsets[floorid] + ELEVATOR_OFFSET); // A small offset for the elevator object itself.
 
-stock Float:GetDoorsZCoordForFloor(floorid)
+Float:GetDoorsZCoordForFloor(floorid)
 	return (GROUND_Z_COORD + FloorZOffsets[floorid]);
+

@@ -29,15 +29,23 @@ GetPlayerSQLID(playerid){
 }
 
 // Evento/gatilho de conexão estabelecida pelo jogador
-
+hook OnPlayerConnect(playerid) {
+    TogglePlayerControllable(playerid, false);
+    for (new i = 0; i < 70; i ++) {
+		SendClientMessage(playerid, -1, "");
+	}
+    
+    return true;
+}
 hook OnPlayerRequestClass(playerid, classid) {
+    TogglePlayerSpectating(playerid, true);
+    TogglePlayerControllable(playerid, false);
+
     ShowLoginTextdraws(playerid);
     ClearPlayerChat(playerid);
 
     format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
     CheckCharactersName(playerid);
-
-    TogglePlayerSpectating(playerid, true);
     CheckUserConditions(playerid);
 
     return true;

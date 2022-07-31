@@ -79,8 +79,9 @@ new query[2048];
 #include "modules\core\player\systems\houses\houses_cmd.pwn"
 #include "modules\core\player\systems\investment\investment_core.pwn"
 #include "modules\core\player\systems\investment\investment_cmd.pwn"
+#include "modules\core\player\systems\elevators\elevator.pwn"
+//#include "modules\core\player\systems\elevators\constructions.pwn"
 
-//#include "modules\core\player\systems\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
 
 // FACTIONS
@@ -97,6 +98,11 @@ new query[2048];
 #include "modules\core\admin\reports.pwn"
 #include "modules\core\admin\ajail.pwn"
 #include "modules\core\admin\admin_core.pwn"
+
+// MAPAS
+//#include "modules\core\maps\LSFD.pwn" 
+#include "modules\core\maps\SM.pwn" 
+#include "modules\core\maps\streets.pwn"
 
 main() {
     print("\nGamemode conectado\n");

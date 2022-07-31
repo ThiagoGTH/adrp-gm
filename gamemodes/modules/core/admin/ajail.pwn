@@ -126,6 +126,7 @@ CMD:ajailoff(playerid, params[]) {
 forward aJailMinuteCheck();
 public aJailMinuteCheck() {
     foreach (new i : Player){
+        if (!pInfo[i][pLogged]) return true;
         if (pInfo[i][pAFKCount] < 31 && uInfo[i][uJailed] > 0) uInfo[i][uJailed] --;
         if (uInfo[i][uJailed] == 0) freeAjail(i);
     } return true;

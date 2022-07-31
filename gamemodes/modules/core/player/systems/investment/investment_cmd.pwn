@@ -3,7 +3,7 @@
 CMD:investimentos(playerid, params[]){
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM tradings_owners WHERE `character_id` = '%d';", GetPlayerSQLID(playerid));
     new Cache:result = mysql_query(DBConn, query);
-    if(cache_num_rows()) Dialog_Show(playerid, tradingInit, DIALOG_STYLE_LIST, "Central de Investimentos", "Ações\nCripto\nCommodities\n\n{36A717}Gerenciar investimentos", "Selecinar", "Fechar");
+    if(cache_num_rows()) return Dialog_Show(playerid, tradingInit, DIALOG_STYLE_LIST, "Central de Investimentos", "Ações\nCripto\nCommodities\n \n{36A717}Gerenciar investimentos", "Selecinar", "Fechar");
     cache_delete(result);
 
     Dialog_Show(playerid, tradingInit, DIALOG_STYLE_LIST, "Central de Investimentos", "Ações\nCripto\nCommodities", "Selecinar", "Fechar");
@@ -211,5 +211,3 @@ CMD:deletarinvestimento(playerid, params[]){
 	logCreate(playerid, logString, 1);
     return true;
 }
-
-

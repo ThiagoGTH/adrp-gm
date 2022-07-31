@@ -31,9 +31,10 @@ hook OnGameModeInit(){
     return true;
 }
 
-stock LoadInterfaces(){ // -9000 +
+LoadInterfaces(){ // -9000 +
     AddSimpleModel(-1, 19379, -9000, "interface/interface.dff", "interface/login.txd");
     AddSimpleModel(-1, 19379, -9001, "interface/interface.dff", "interface/character.txd");
     AddSimpleModel(-1, 19379, -9002, "interface/interface.dff", "interface/news.txd");
 }
+
 

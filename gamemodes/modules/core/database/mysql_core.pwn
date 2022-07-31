@@ -111,6 +111,29 @@ void:CheckPlayerTable() {
     `positionA` float NOT NULL DEFAULT '0',\
     `phone_number` int NOT NULL DEFAULT '0',\
     `phone_type` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_apparence` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `color_eyes` int NOT NULL DEFAULT '0',\
+    `color_hair` int NOT NULL DEFAULT '0',\
+    `height` float NOT NULL DEFAULT 0.0,\
+    `weight` float NOT NULL DEFAULT 0.0,\
+    `description` varchar(128) NOT NULL DEFAULT 'N/A',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_apparence checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_weapons` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
     `Gun1` int NOT NULL DEFAULT '0',\
     `Ammo1` int NOT NULL DEFAULT '0',\
     `Gun2` int NOT NULL DEFAULT '0',\
@@ -139,8 +162,8 @@ void:CheckPlayerTable() {
     `Ammo13` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    print("[DATABASE] Tabela players checada com sucesso.");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players checada com sucesso.");
+    print("[DATABASE] Tabela players_weapons checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_weapons checada com sucesso.");
     logCreate(99998, logString, 5);
 }
 
@@ -474,12 +497,12 @@ void:CheckTradingTable(){
     print("[DATABASE] Tabela tradings checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela tradings checada com sucesso.");
     logCreate(99998, logString, 5);
-
+ 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings_owners` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `trading_id` int NOT NULL DEFAULT '0',\
     `character_id` int NOT NULL DEFAULT '0',\
-    `bought_price` float NOT NULL DEFAULT '0.0',\
+    `bought_price` int NOT NULL DEFAULT '0',\
     `quantity` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 

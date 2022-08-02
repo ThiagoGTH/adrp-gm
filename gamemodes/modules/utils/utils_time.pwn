@@ -59,6 +59,7 @@ hook OnGameModeInit(){
 	FixHour(ghour);
 	ghour = shifthour;
 	SetWorldTime(ghour);
+	SetWeather(14);
 
 	SetTimer("SyncUp", 60000, true);
 	return true;
@@ -75,17 +76,15 @@ public FixHour(hour) {
 
 forward SyncUp();
 public SyncUp() {
-    new tmphour;
-	new tmpminute;
-	new tmpsecond;
+    new tmphour, tmpminute, tmpsecond;
 	gettime(tmphour, tmpminute, tmpsecond);
 	FixHour(tmphour);
 	tmphour = shifthour;
 
 	if ((tmphour > ghour) || (tmphour == 0 && ghour == 23)) {
 		ghour = tmphour;
-
-		//OnTradingUpdate();
+		InvestmentUpdate();
 		SetWorldTime(tmphour);
+		SetWeather(14);
 	}
 }

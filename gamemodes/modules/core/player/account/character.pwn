@@ -148,7 +148,7 @@ Dialog:CHARACTER_DELETE(playerid, response, listitem, inputtext[]) {
 Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
     if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][characterDelete][0] = EOS;
 
-    mysql_format(DBConn, query, sizeof query, "DELETE FROM players WHERE `name` = '%s' AND `user` = '%s';", pInfo[playerid][characterDelete], uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `name` = '%s' AND `user` = '%s';", pInfo[playerid][characterDelete], uInfo[playerid][uName]);
     mysql_query(DBConn, query);
 
     va_SendClientMessage(playerid, -1, "SERVER: Você deletou o personagem %s com sucesso. A ação é irreversível.", pInfo[playerid][characterDelete]);

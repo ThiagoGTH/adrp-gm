@@ -41,14 +41,17 @@ CMD:editarinvestimento(playerid, params[]){
  	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /editarinvestimento [id] [opção]");
 	    SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, símbolo, descrição, tipo, capital");
-        SendClientMessage(playerid, COLOR_BEGE, "[Opções]: valorcompra, valorvenda, maxslots, variação");
+        SendClientMessage(playerid, COLOR_BEGE, "[Opções]: valorcompra, maxslots");
 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		return true;
 	}
+
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM tradings WHERE `ID` = '%d'", id);
     new Cache:resultid = mysql_query(DBConn, query);
+
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Investimento inexistente.");
     cache_delete(resultid);
+
     if (!strcmp(type, "nome", true)) {
 	    new name[64];
 
@@ -143,26 +146,12 @@ CMD:editarinvestimento(playerid, params[]){
 	    if (sscanf(string, "f", buy_value))
 	        return SendSyntaxMessage(playerid, "/editarinvestimento [id] [valorcompra] [novo valor de compra]");
 
-        mysql_format(DBConn, query, sizeof query, "UPDATE `tradings` SET `buy_value` = '%f' WHERE `id` = '%d';", buy_value, id);
+        mysql_format(DBConn, query, sizeof query, "UPDATE `tradings` SET `buy_value` = '%f', `sell_value` = '%f' WHERE `id` = '%d';", buy_value, buy_value, id);
         mysql_query(DBConn, query);
 
         SendServerMessage(playerid, "Você alterou o valor de compra do investimento ID %d para US$ %s.", id, FormatFloat(buy_value));
 
         format(logString, sizeof(logString), "%s (%s) alterou o valor de compra do investimento ID %d para US$ %s", pNome(playerid), GetPlayerUserEx(playerid), id, FormatFloat(buy_value));
-	    logCreate(playerid, logString, 1);
-	}
-    else if (!strcmp(type, "valorvenda", true)) {
-	    new Float:sell_value;
-
-	    if (sscanf(string, "f", sell_value))
-	        return SendSyntaxMessage(playerid, "/editarinvestimento [id] [valorvenda] [novo valor de venda]");
-
-        mysql_format(DBConn, query, sizeof query, "UPDATE `tradings` SET `sell_value` = '%f' WHERE `id` = '%d';", sell_value, id);
-        mysql_query(DBConn, query);
-
-        SendServerMessage(playerid, "Você alterou o valor de venda do investimento ID %d para US$ %s.", id, FormatFloat(sell_value));
-
-        format(logString, sizeof(logString), "%s (%s) alterou o valor de venda do investimento ID %d para US$ %s", pNome(playerid), GetPlayerUserEx(playerid), id, FormatFloat(sell_value));
 	    logCreate(playerid, logString, 1);
 	}
     else if (!strcmp(type, "maxslots", true)) {
@@ -177,20 +166,6 @@ CMD:editarinvestimento(playerid, params[]){
         SendServerMessage(playerid, "Você alterou o máximo de slots do investimento ID %d para %d.", id, maxslots);
 
         format(logString, sizeof(logString), "%s (%s) alterou o máximo de slots do investimento ID %d para %d", pNome(playerid), GetPlayerUserEx(playerid), id, maxslots);
-	    logCreate(playerid, logString, 1);
-	}
-    else if (!strcmp(type, "variação", true) || !strcmp(type, "variacao", true)) {
-	    new Float:variation;
-
-	    if (sscanf(string, "f", variation))
-	        return SendSyntaxMessage(playerid, "/editarinvestimento [id] [variação] [nova taxa de variação]");
-
-        mysql_format(DBConn, query, sizeof query, "UPDATE `tradings` SET `variation` = '%f' WHERE `id` = '%d';", variation, id);
-        mysql_query(DBConn, query);
-
-        SendServerMessage(playerid, "Você alterou a taxa de variação do investimento ID %d para %.2f.", id, variation);
-
-        format(logString, sizeof(logString), "%s (%s) alterou o máximo de slots do investimento ID %d para %.2f", pNome(playerid), GetPlayerUserEx(playerid), id, variation);
 	    logCreate(playerid, logString, 1);
 	}
     return true;
@@ -208,6 +183,17 @@ CMD:deletarinvestimento(playerid, params[]){
     SendServerMessage(playerid, "Você deletou o investimento ID %d.", id);
 
     format(logString, sizeof(logString), "%s (%s) deletou o investimento ID %d", pNome(playerid), GetPlayerUserEx(playerid), id);
+	logCreate(playerid, logString, 1);
+    return true;
+}
+
+CMD:atualizarinvestimentos(playerid, params[]){
+    if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
+
+    InvestmentUpdate();
+    
+    SendServerMessage(playerid, "Você forçou a atualização de todos os investimentos.");
+    format(logString, sizeof(logString), "%s (%s) forçou a atualização de todos os investimentos.", pNome(playerid), GetPlayerUserEx(playerid));
 	logCreate(playerid, logString, 1);
     return true;
 }

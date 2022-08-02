@@ -489,6 +489,8 @@ void:CheckTradingTable(){
     `oldbuy_value` float NOT NULL DEFAULT '0.0',\
     `buy_value` float NOT NULL DEFAULT '0.0',\
     `sell_value` float NOT NULL DEFAULT '0.0',\
+    `max_value` float NOT NULL DEFAULT '0.0',\
+    `min_value` float NOT NULL DEFAULT '0.0',\
     `max_slots` int NOT NULL DEFAULT '0',\
     `sold_slots` int NOT NULL DEFAULT '0',\
     `variation` float NOT NULL DEFAULT '0.0',\

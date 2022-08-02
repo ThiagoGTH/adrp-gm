@@ -32,6 +32,12 @@ hook OnPlayerConnect(playerid){
     RemoveBuildingForPlayer(playerid, 1291, 300.375, -1645.380, 32.756, 0.250);
     RemoveBuildingForPlayer(playerid, 620, 295.928, -1659.098, 31.975, 0.250);
     RemoveBuildingForPlayer(playerid, 6444, 285.265, -1611.949, 34.335, 0.250);
+
+    RemoveBuildingForPlayer(playerid, 3615, 553.351, -1875.000, 4.789, 0.250);
+    RemoveBuildingForPlayer(playerid, 3778, 553.351, -1875.000, 4.789, 0.250);
+    RemoveBuildingForPlayer(playerid, 6281, 570.742, -1868.338, 1.679, 0.250);
+    RemoveBuildingForPlayer(playerid, 6442, 570.742, -1868.338, 1.679, 0.250);
+
     return true;
 }
 
@@ -42,13 +48,15 @@ hook OnGameModeInit() {
 }
 
 LoadSMModels() {
-    AddSimpleModel (-1,19379, -2025, "maps/Env/SM/alooouctuk.dff", "maps/Env/SM/alooouctuk.txd");
-    AddSimpleModel (-1,19379, -2026, "maps/Env/SM/cicekbocek.dff", "maps/Env/SM/cicekbocek.txd");
+    AddSimpleModel (-1,19379, -20020, "maps/Env/SM/alooouctuk.dff", "maps/Env/SM/alooouctuk.txd");
+    AddSimpleModel (-1,19379, -20019, "maps/Env/SM/cicekbocek.dff", "maps/Env/SM/cicekbocek.txd");
+    AddSimpleModel (-1,19379, -20018, "maps/Env/SM/beach.dff", "maps/Env/SM/beach.txd");
+
 }
 
 SMExterior() {
-    CreateDynamicObject(-2025, 301.937988, -1657.810058, 19.648399, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00, 1000.00); 
-    CreateDynamicObject(-2026, 333.711608, -1659.509033, 32.586444, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
+    CreateDynamicObject(-20020, 301.937988, -1657.810058, 19.648399, 0.000000, 0.000000, 0.000000, -1, -1, -1, 800.00, 800.00); 
+    CreateDynamicObject(-20019, 333.711608, -1659.509033, 32.586444, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(11706, 249.081771, -1648.803833, 32.245185, 0.000000, 0.000000, -58.899906, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(1280, 253.318908, -1650.956420, 32.655174, 0.000000, 0.000000, 61.100006, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(1280, 258.712829, -1653.938354, 32.655174, 0.000000, 0.000000, 61.100006, -1, -1, -1, 300.00, 300.00); 
@@ -67,4 +75,8 @@ SMExterior() {
     CreateDynamicObject(1223, 311.208190, -1655.832275, 32.249961, 0.000000, 0.000000, 58.799991, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(1223, 328.787506, -1654.328735, 32.249961, 0.000000, 0.000000, -111.800018, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(1223, 335.851928, -1657.148925, 32.249961, 0.000000, 0.000000, 143.500076, -1, -1, -1, 300.00, 300.00); 
+
+    CreateObject(-20018, 570.742187, -1868.343750, 1.679700, 0.000000, 0.000000, 0.000000, 800.00); 
+    CreateDynamicObject(621, 538.106994, -1877.442016, 4.695919, 0.000000, 0.000000, 143.500076, -1, -1, -1, 300.00, 300.00); 
+    CreateDynamicObject(647, 540.063415, -1879.286376, 5.132755, 0.000000, 0.000000, 143.500076, -1, -1, -1, 300.00, 300.00); 
 }

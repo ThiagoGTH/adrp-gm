@@ -81,7 +81,6 @@ new query[2048];
 #include "modules\core\player\systems\investment\investment_cmd.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
 //#include "modules\core\player\systems\elevators\constructions.pwn"
-
 #include "modules\core\discord\discord_core.pwn"
 
 // FACTIONS
@@ -89,6 +88,7 @@ new query[2048];
 
 // Inclusão de módulos relativos a jogos
 #include "modules\core\player\systems\games\pool.pwn"
+
 
 // Inclusão de módulos relativos a administração
 #include "modules\core\admin\ban.pwn"

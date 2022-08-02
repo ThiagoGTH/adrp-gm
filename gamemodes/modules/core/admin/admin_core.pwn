@@ -64,11 +64,12 @@ ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca, /editarinvestimento");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /criarinvestimento, /destruirinvestimento");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly, /pegarpaycheck");
+		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly, /pegarpaycheck, /atualizarinvestimentos");
 	}
 	return true;
 }

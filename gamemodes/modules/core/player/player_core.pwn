@@ -7,7 +7,7 @@ CMD:ajuda(playerid, params[]) {
 		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
 		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
-		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar");
+		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos");
 		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
 		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa");
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
@@ -142,15 +142,15 @@ GetInitials(const string[])
 	}
 	return ret;
 }*/
-/*
-ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0)
+
+/*ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0)
 {
 	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
 
 	pInfo[playerid][pLoopAnim] = true;
 	return true;
-}
-*/
+}*/
+
 
 /*PlayerHasTazer(playerid)
 {

@@ -98,7 +98,6 @@ hook OnGameModeInit(){
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
 	if(pInfo[damagedid][pDead]) return false;
-	printf("Entrou!");
     new Float:health, Float:armour;
     amount = WeaponDamage[weaponid][WepDamage];
     health = pInfo[damagedid][pHealth];
@@ -107,7 +106,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     format(pInfo[damagedid][pLastShot], 64, "%s", pNome(playerid));
 	pInfo[damagedid][pShotTime] = gettime();
 
-	/*new bool:armourhit = false; 
+	new bool:armourhit = false; 
 	switch(bodypart)
 	{
 		case BODY_PART_CHEST, BODY_PART_GROIN: armourhit = true;
@@ -136,14 +135,14 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 		{
 			if(pInfo[damagedid][pSwat]) amount = amount/4;
 		}
-	}*/
-	if(armour > 0.0){
+	}
+	if(armour > 0.0 && armourhit){
         armour -= amount;
         if(armour < 0.0){
-         	SetPlayerArmour(damagedid, 0.0);
-            pInfo[damagedid][pArmour] = 0.0;
+         	SetPlayerArmour(playerid, 0.0);
+            pInfo[playerid][pArmour] = 0.0;
             health += armour;
-        } else SetPlayerArmour(damagedid, armour);
+        } else SetPlayerArmour(playerid, armour);
     } else health -= amount;
 	SetPlayerHealthEx(damagedid, health);
 	CallbackDamages(damagedid, playerid, bodypart, weaponid, amount);
@@ -200,10 +199,10 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			TogglePlayerControllable(damagedid, false);
 			if(IsPlayerInAnyVehicle(damagedid)){
 				TogglePlayerControllable(damagedid, false);
-				ApplyAnimation(damagedid, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
+				ApplyAnimation(damagedid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
 			} else {
 				TogglePlayerControllable(damagedid, true);
-				ApplyAnimation(damagedid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+				ApplyAnimation(damagedid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
 			}
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
@@ -365,10 +364,10 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 			TogglePlayerControllable(playerid, false);
 			if(IsPlayerInAnyVehicle(playerid)){
 				TogglePlayerControllable(playerid, false);
-				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
+				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
 			} else {
 				TogglePlayerControllable(playerid, true);
-				ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+				ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
 			}
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
@@ -503,8 +502,8 @@ forward DeathTimer(); public DeathTimer(){
                         pInfo[i][pDead] = 1;
                         pInfo[i][pDeadTime] = 60;
 
-                        if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, false, false, false, true, 0, true);
-                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0, true);
+                        if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
+                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
                     }
                     else if(pInfo[i][pDead]){
                         if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;

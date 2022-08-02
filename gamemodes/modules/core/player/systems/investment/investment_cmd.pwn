@@ -11,7 +11,7 @@ CMD:investimentos(playerid, params[]){
 } 
 
 CMD:criarinvestimento(playerid, params[]){
-    if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 	
     static
 	    type,
@@ -30,7 +30,7 @@ CMD:criarinvestimento(playerid, params[]){
 }
 
 CMD:editarinvestimento(playerid, params[]){
-    if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     static
 	    id,
@@ -173,7 +173,7 @@ CMD:editarinvestimento(playerid, params[]){
 
 CMD:deletarinvestimento(playerid, params[]){
     new id;
-    if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
     if (sscanf(params, "d", id)) return SendSyntaxMessage(playerid, "/deletarinvestimento [id]");
     if(!IsValidInvestment(id))  return SendErrorMessage(playerid, "Esse ID de investimento não existe.");
 

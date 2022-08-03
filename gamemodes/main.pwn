@@ -100,6 +100,7 @@ new query[2048];
 #include "modules\core\admin\ipcheck.pwn"
 #include "modules\core\admin\reports.pwn"
 #include "modules\core\admin\ajail.pwn"
+#include "modules\core\admin\log_search.pwn"
 #include "modules\core\admin\admin_core.pwn"
 
 // MAPAS

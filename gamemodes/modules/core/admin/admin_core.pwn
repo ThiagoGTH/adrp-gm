@@ -26,6 +26,26 @@ GetPlayerAdmin(playerid) {
 	return level;
 }
 
+GetUserTeam(playerid, team) {
+	if (team == 1) { // Faction Team
+		if (uInfo[playerid][uFactionTeam] == 1) return true;
+		else return false;
+	} else if (team == 2) { // Property Team
+		if (uInfo[playerid][uPropertyTeam] == 1) return true;
+		else return false;
+	} else if (team == 3) { // Event Team
+		if (uInfo[playerid][uEventTeam] == 1) return true;
+		else return false;
+	} else if (team == 4) { // CK Team
+		if (uInfo[playerid][uCKTeam] == 1) return true;
+		else return false;
+	} else if (team == 5) { // Log Team
+		if (uInfo[playerid][uLogTeam] == 1) return true;
+		else return false;	
+	}
+	return false;
+}
+
 CMD:pegaradmin(playerid, params[]) {	
   	uInfo[playerid][uAdmin] = 1337;
 	SaveUserInfo(playerid);
@@ -877,33 +897,23 @@ CMD:historico(playerid, params[]) {
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/historico [playerid/nome]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
-	mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", GetPlayerUserEx(userid));
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `user` = '%s' AND `type` = '11' ORDER BY `timestamp` DESC LIMIT 20;", GetPlayerUserEx(userid));
     new Cache:result = mysql_query(DBConn, query);
 
-	if(!cache_num_rows()){
-		SendErrorMessage(playerid, "O usuário especificado não existe.");
-		cache_delete(result);
-		return true;
-	}
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Este jogador não tem nenhuma punição registrada em seu usuário.");
 
-	va_SendClientMessage(playerid, COLOR_GREEN, "Punições de %s:", GetPlayerUserEx(userid));
-	cache_delete(result);
-	mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `user` = '%s' AND `type` = '11';", GetPlayerUserEx(userid));
-    new Cache:result2 = mysql_query(DBConn, query);
-	if(!cache_num_rows()){
-		va_SendClientMessage(playerid, COLOR_CYAN1, "Este jogador não tem nenhuma punição registrada em seu usuário.");
-		cache_delete(result2);
-	}
-	new logValue[512],
-		timestamp;
-	for (new i; i < cache_num_rows(); i++) {
-		cache_get_value_name(i, "log", logValue);
+    new string[2056], timestamp, log[255], title[256];
+	format(title, sizeof(title), "{FFFFFF}Punições de %s", GetPlayerUserEx(userid));
+    format(string, sizeof(string), "{FF6347}ATENÇÃO: As punições são exibidas de acordo com o horário e apenas as últimas vinte são contabilizadas.\nPara informações mais detalhadas, busque auxilio de um membro da Log Team.\n\n");
+    for(new i; i < cache_num_rows(); i++){
         cache_get_value_name_int(i, "timestamp", timestamp);
+        cache_get_value_name(i, "log", log);
 
-		va_SendClientMessage(playerid, COLOR_CYAN1, "%s", logValue);
-		va_SendClientMessage(playerid, COLOR_CYAN2, "Em %s", GetFullDate(timestamp));
-	}
-	cache_delete(result2);
+        format(string, sizeof(string), "%s{AFAFAF}[%s] {36A717}%s\n", string, GetFullDate(timestamp), log);
+    }
+    cache_delete(result);
+
+    Dialog_Show(playerid, showLog, DIALOG_STYLE_MSGBOX, title, string, "Fechar", "");
 
 	format(logString, sizeof(logString), "%s (%s) checou o histórico de %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerUserEx(userid));
 	logCreate(playerid, logString, 1);

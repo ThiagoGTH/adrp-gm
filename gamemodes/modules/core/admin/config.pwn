@@ -10,8 +10,8 @@ CMD:gerenciar(playerid, params[]){
     
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
-    if(GetPlayerAdmin(playerid)  > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecinar", "Fechar");
-    else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecinar", "Fechar");
+    if(GetPlayerAdmin(playerid)  > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
+    else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecionar", "Fechar");
     return true;
 }
 
@@ -108,8 +108,8 @@ Dialog:showInfoFurniture(playerid, response, listitem, inputtext[]){
             Dialog_Show(playerid, confirmInfoFur, DIALOG_STYLE_MSGBOX, "Gerenciar > Mobílias > Deletar mobília > Confirmar", string, "Deletar", "Cancelar");
         }
     } else { // Voltar
-        if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecinar", "Fechar");
-        else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecinar", "Fechar");
+        if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
+        else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecionar", "Fechar");
     }
     return true;
 }
@@ -243,8 +243,8 @@ Dialog:showInfoInt(playerid, response, listitem, inputtext[]){
             Dialog_Show(playerid, confirmInfoInt, DIALOG_STYLE_MSGBOX, "Gerenciar > Interiores > Remover", string, "Deletar", "Cancelar");
         }
     } else {  // Voltar
-        if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecinar", "Fechar");
-        else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecinar", "Fechar");
+        if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
+        else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecionar", "Fechar");
     }
     return true;
 } 
@@ -363,7 +363,7 @@ Dialog:showAdmins(playerid, response, listitem, inputtext[]){
             format(logString, sizeof(logString), "%s (%s) removeu %s do quadro administrativo.", pNome(playerid), GetPlayerUserEx(playerid), inputtext);
 		    logCreate(playerid, logString, 8);
         }
-    } else return Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecinar", "Fechar");
+    } else return Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
     return true;
 }
 

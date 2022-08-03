@@ -142,6 +142,12 @@ void:CreateUser(playerid, userName[], password[]) {
     mysql_query(DBConn, query);
 
     uInfo[playerid][uID] = cache_insert_id();
+
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_teams (`user_id`) VALUES ('%d');", uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
+
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_premium (`user_id`) VALUES ('%d');", uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
 }
 
 
@@ -175,43 +181,125 @@ LoadUserInfo(playerid) {
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
     cache_get_value_name(0, "password", uInfo[playerid][uPass]);
     cache_get_value_name_int(0, "admin", uInfo[playerid][uAdmin]);
-    cache_get_value_name_int(0, "charslots", uInfo[playerid][uCharSlots]);
+    
     cache_get_value_name_int(0, "redflag", uInfo[playerid][uRedFlag]);
     cache_get_value_name_int(0, "newbie", uInfo[playerid][uNewbie]);
     cache_get_value_name_int(0, "SOSAns", uInfo[playerid][uSOSAns]);
     cache_get_value_name_int(0, "dutytime", uInfo[playerid][uDutyTime]);
     cache_get_value_name_int(0, "jailtime", uInfo[playerid][uJailed]);
-    cache_get_value_name_int(0, "premiumpoints", uInfo[playerid][uPoints]);
+
+    LoadUserPremium(playerid);
+    LoadUserTeams(playerid);
+    return true;
+}
+
+LoadUserPremium(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users_premium WHERE `user_id` = '%d'", uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows()) 
+        return false;
+
+    cache_get_value_name_int(0, "points", uInfo[playerid][uPoints]);
+    cache_get_value_name_int(0, "name_changes", uInfo[playerid][uNameChanges]); 
+    cache_get_value_name_int(0, "number_changes", uInfo[playerid][uNumberChanges]); 
+    cache_get_value_name_int(0, "fight_changes", uInfo[playerid][uFightChanges]); 
+    cache_get_value_name_int(0, "plate_changes", uInfo[playerid][uPlateChanges]); 
+    cache_get_value_name_int(0, "chars_slots", uInfo[playerid][uCharSlots]);
+    return true;
+}
+
+LoadUserTeams(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users_teams WHERE `user_id` = '%d'", uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows()) 
+        return false;
+
+    cache_get_value_name_int(0, "head_faction_team", uInfo[playerid][uHeadFTeam]);
+    cache_get_value_name_int(0, "head_property_team", uInfo[playerid][uHeadPTeam]);
+    cache_get_value_name_int(0, "head_event_team", uInfo[playerid][uHeadETeam]);
+    cache_get_value_name_int(0, "head_ck_team", uInfo[playerid][uHeadCTeam]);
+    cache_get_value_name_int(0, "faction_team", uInfo[playerid][uFactionTeam]);
+    cache_get_value_name_int(0, "property_team", uInfo[playerid][uPropertyTeam]);
+    cache_get_value_name_int(0, "event_team", uInfo[playerid][uEventTeam]);
+    cache_get_value_name_int(0, "ck_team", uInfo[playerid][uCKTeam]);
+    cache_get_value_name_int(0, "log_team", uInfo[playerid][uLogTeam]);
     return true;
 }
 
 // Dar um UPDATE no MySQL com as novas informações do usuário.
 
 SaveUserInfo(playerid) {
-
-    /*mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = %d", uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-
-    if(!cache_num_rows())
-        return false;*/
-
-    mysql_format(DBConn, query, sizeof query, "UPDATE users SET `admin` = %d, \
-    `redflag`  = %d,            \
-    `jailtime`  = %d,           \
-    `premiumpoints` = %d WHERE `ID` = %d", 
+    mysql_format(DBConn, query, sizeof query, "UPDATE users SET \
+    `admin`     =   %d,           \
+    `redflag`   =   %d,           \
+    `jailtime`  =   %d,           \
+    `dutytime`  =   %d,           \
+    `SOSAns`    =   %d,           \
+    `newbie`    =   %d             \
+    WHERE `ID`  =   %d", 
         uInfo[playerid][uAdmin], 
         uInfo[playerid][uRedFlag],
         uInfo[playerid][uJailed],
-        uInfo[playerid][uPoints],
+        uInfo[playerid][uDutyTime],
+        uInfo[playerid][uSOSAns],
+        uInfo[playerid][uNewbie],
         uInfo[playerid][uID]);
     mysql_query(DBConn, query);
-
+    SaveUserPremium(playerid);
+    SaveUserTeams(playerid);
     printf("Usuário '%s' salvo com sucesso.", uInfo[playerid][uName]);
     return true;
 }
 
-// Função pra formatar e mostrar os personagens do usuário numa Dialog
+SaveUserPremium(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE users_premium SET \
+    `points`            =   %d,           \
+    `name_changes`      =   %d,           \
+    `number_changes`    =   %d,           \
+    `fight_changes`     =   %d,           \
+    `plate_changes`     =   %d,           \
+    `chars_slots`       =   %d            \
+    WHERE `ID`          =   %d", 
+        uInfo[playerid][uPoints], 
+        uInfo[playerid][uNameChanges],
+        uInfo[playerid][uNumberChanges],
+        uInfo[playerid][uFightChanges],
+        uInfo[playerid][uPlateChanges],
+        uInfo[playerid][uCharSlots],
+        uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
+    return true;
+}
 
+SaveUserTeams(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE users_teams SET \
+    `head_faction_team`     =   %d,           \
+    `head_property_team`    =   %d,           \
+    `head_event_team`       =   %d,           \
+    `head_ck_team`          =   %d,           \
+    `faction_team`          =   %d,           \
+    `property_team`         =   %d,           \
+    `event_team`            =   %d,           \
+    `ck_team`               =   %d,           \
+    `log_team`              =   %d            \
+    WHERE `ID`              =   %d", 
+        uInfo[playerid][uHeadFTeam], 
+        uInfo[playerid][uHeadPTeam],
+        uInfo[playerid][uHeadETeam],
+        uInfo[playerid][uHeadCTeam],
+        uInfo[playerid][uFactionTeam],
+        uInfo[playerid][uPropertyTeam],
+        uInfo[playerid][uEventTeam],
+        uInfo[playerid][uCKTeam],
+        uInfo[playerid][uLogTeam],
+        uInfo[playerid][uID]);
+    mysql_query(DBConn, query);
+    return true;
+}
+
+// Função pra formatar e mostrar os personagens do usuário numa Dialog
 ShowUsersCharacters(playerid) {
     HideLoginTextdraws(playerid);
     SetPlayerInterface(playerid, 999);

@@ -60,17 +60,9 @@ void:CheckUserTable() {
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
     `admin` int NOT NULL DEFAULT 0,\
-    `charslots` int NOT NULL DEFAULT 5,\
     `dutytime` int NOT NULL DEFAULT 0,\
     `SOSAns` int NOT NULL DEFAULT 0,\
     `APPAns` int NOT NULL DEFAULT 0,\
-    `namechanges` int NOT NULL DEFAULT 0,\
-    `numberchanges` int NOT NULL DEFAULT 0,\
-    `fightchanges` int NOT NULL DEFAULT 0,\
-    `platechanges` int NOT NULL DEFAULT 0,\
-    `premiumpoints` int NOT NULL DEFAULT 0,\
-    `teams` varchar(24) NOT NULL DEFAULT 00000,\
-    `headteams` varchar(24) NOT NULL DEFAULT 00000,\
     `redflag` int NOT NULL DEFAULT 0,\
     `newbie` int NOT NULL DEFAULT 0,\
     `jailtime` int NOT NULL DEFAULT -1,\
@@ -78,6 +70,41 @@ void:CheckUserTable() {
 
     print("[DATABASE] Tabela users checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_premium` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT 0,\
+    `points` int NOT NULL DEFAULT 0,\
+    `name_changes` int NOT NULL DEFAULT 0,\
+    `number_changes` int NOT NULL DEFAULT 0,\
+    `fight_changes` int NOT NULL DEFAULT 0,\
+    `plate_changes` int NOT NULL DEFAULT 0,\
+    `chars_slots` int NOT NULL DEFAULT 5,\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela users_premium checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_premium checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_teams` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT 0,\
+    `head_faction_team` int NOT NULL DEFAULT 0,\
+    `head_property_team` int NOT NULL DEFAULT 0,\
+    `head_event_team` int NOT NULL DEFAULT 0,\
+    `head_ck_team` int NOT NULL DEFAULT 0,\
+    `faction_team` int NOT NULL DEFAULT 0,\
+    `property_team` int NOT NULL DEFAULT 0,\
+    `event_team` int NOT NULL DEFAULT 0,\
+    `ck_team` int NOT NULL DEFAULT 0,\
+    `log_team` int NOT NULL DEFAULT 0,\
+    `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
+    `ucp_posts` int NOT NULL DEFAULT 0,\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela users_teams checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams checada com sucesso.");
     logCreate(99998, logString, 5);
 }
 
@@ -91,12 +118,11 @@ void:CheckPlayerTable() {
     `last_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `first_login` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
-    `donator` int NOT NULL DEFAULT '0',\
-    `age` int NOT NULL DEFAULT '0',\
+    `dateofbirth` varchar(16) NOT NULL DEFAULT '01/01/1970',\
     `minutes` int NOT NULL DEFAULT '0',\
     `hours` int NOT NULL DEFAULT '0',\
-    `gender` varchar(15) NOT NULL DEFAULT 'Masculino',\
-    `background` varchar(50) NOT NULL DEFAULT 'Los Santos',\
+    `gender` varchar(16) NOT NULL DEFAULT 'Masculino',\
+    `background` varchar(64) NOT NULL DEFAULT 'Los Santos',\
     `money` int NOT NULL DEFAULT '0',\
     `bank` int NOT NULL DEFAULT '0',\
     `savings` int NOT NULL DEFAULT '0',\
@@ -133,6 +159,17 @@ void:CheckPlayerTable() {
 
     print("[DATABASE] Tabela players_apparence checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_premium` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `donator` int NOT NULL DEFAULT '0',\
+    `donator_time` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_premium checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_premium checada com sucesso.");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_weapons` (\

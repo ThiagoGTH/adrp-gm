@@ -64,11 +64,11 @@ Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
     format(pInfo[playerid][pName], 24, "%s", inputtext);
     va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s", pInfo[playerid][pName]);
 
-    Dialog_Show(playerid, CHARACTER_CREATE_AGE, DIALOG_STYLE_INPUT, "Criar Personagem - Idade", "Agora, prossiga com a idade do seu personagem.\n \nA idade deve ser entre 13 e 99", "Continuar", "Voltar");
+    Dialog_Show(playerid, CHARACTER_CREATE_GENDER, DIALOG_STYLE_LIST, "Criar Personagem - Gênero", "Masculino\nFeminino", "Continuar", "Voltar");
 	return true;
 }
 
-Dialog:CHARACTER_CREATE_AGE(playerid, response, listitem, inputtext[]) {
+/*Dialog:CHARACTER_CREATE_AGE(playerid, response, listitem, inputtext[]) {
     if(!response) {
         pInfo[playerid][pAge] = 0;
         return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
@@ -86,7 +86,7 @@ Dialog:CHARACTER_CREATE_AGE(playerid, response, listitem, inputtext[]) {
 
     Dialog_Show(playerid, CHARACTER_CREATE_GENDER, DIALOG_STYLE_LIST, "Criar Personagem - Gênero", "Masculino\nFeminino", "Continuar", "Voltar");
 	return true;
-}
+}*/
 
 Dialog:CHARACTER_CREATE_GENDER(playerid, response, listitem, inputtext[]) {
     if(!response) {
@@ -114,7 +114,7 @@ Dialog:CHARACTER_CREATE_BG(playerid, response, listitem, inputtext[]) {
     format(pInfo[playerid][pBackground], 50, "%s", inputtext);
     va_SendClientMessage(playerid, -1, "A origem do seu personagem é de %s", pInfo[playerid][pBackground]);
 
-    CreateCharacter(playerid, pInfo[playerid][pName], pInfo[playerid][pAge], pInfo[playerid][pGender], pInfo[playerid][pBackground]);
+    CreateCharacter(playerid, pInfo[playerid][pName], pInfo[playerid][pGender], pInfo[playerid][pBackground]);
 
     SendClientMessage(playerid, -1, " ");
     SendServerMessage(playerid, "O personagem foi criado com sucesso e você já pode vê-lo na lista de personagens.");
@@ -161,15 +161,14 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
 
 // Nada muito especial. Vamos inserir o personagem criado com as informações dos inputtexts das dialogs anteriores e, até, reseta-las.
 
-CreateCharacter(playerid, characterName[], characterAge, characterGender[], characterBackground[]) {
+CreateCharacter(playerid, characterName[], characterGender[], characterBackground[]) {
 
     mysql_format(DBConn, query, sizeof query,
-        "INSERT INTO players (`name`, `user`, `age`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', '%d', '%s', '%s', '%s');",
-            characterName, GetPlayerNameEx(playerid), characterAge, characterGender, characterBackground, GetPlayerIP(playerid));
+        "INSERT INTO players (`name`, `user`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', '%s', '%s', '%s');",
+            characterName, GetPlayerNameEx(playerid), characterGender, characterBackground, GetPlayerIP(playerid));
     mysql_query(DBConn, query);
 
-    pInfo[playerid][pName][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
-    pInfo[playerid][pAge] = 0;
+    pInfo[playerid][pName][0] = pInfo[playerid][pDateOfBirth][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
 
     printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
 
@@ -189,9 +188,8 @@ LoadCharacterInfo(playerid, playerName[]) {
     cache_get_value_name(0, "user", pInfo[playerid][pUser]);
     cache_get_value_name(0, "name", pInfo[playerid][pName]);
     format(pInfo[playerid][pLastIP], 20, "%s", GetPlayerIP(playerid));
-    cache_get_value_name_int(0, "donator", pInfo[playerid][pDonator]);
 
-    cache_get_value_name_int(0, "age", pInfo[playerid][pAge]);
+    cache_get_value_name(0, "dateofbirth", pInfo[playerid][pDateOfBirth]);
     cache_get_value_name(0, "gender", pInfo[playerid][pGender]);
     cache_get_value_name(0, "background", pInfo[playerid][pBackground]);
 
@@ -228,6 +226,9 @@ LoadCharacterInfo(playerid, playerName[]) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_weapons (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_premium (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
@@ -237,6 +238,7 @@ LoadCharacterInfo(playerid, playerName[]) {
     LoadLicencesData(playerid);
     LoadPlayerWeapons(playerid);
     LoadPlayerApparence(playerid);
+    LoadPlayerPremium(playerid);
 
 }
 
@@ -266,6 +268,15 @@ LoadPlayerApparence(playerid){
     cache_get_value_name_float(0, "weight", pInfo[playerid][pWeight]);
     cache_get_value_name_int(0, "build", pInfo[playerid][pBuild]);
     cache_get_value_name(0, "description", pInfo[playerid][pDescription]);
+    cache_delete(result);
+    return true;
+}
+
+LoadPlayerPremium(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_premium WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "donator", pInfo[playerid][pDonator]);
+    cache_get_value_name_int(0, "donator_time", pInfo[playerid][pDonatorTime]);
     cache_delete(result);
     return true;
 }
@@ -390,7 +401,6 @@ SaveCharacterInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET \
     `name` = '%s', \
     `last_ip` = '%s',\
-    `donator` = '%d',\
     `minutes` = '%d',\
     `hours` = '%d', \
     `money` = '%d', \
@@ -411,7 +421,6 @@ SaveCharacterInfo(playerid) {
     WHERE ID = '%d';", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
-    pInfo[playerid][pDonator],
     pInfo[playerid][pPlayingMinutes],
     pInfo[playerid][pPlayingHours],
     pInfo[playerid][pMoney], 
@@ -434,6 +443,7 @@ SaveCharacterInfo(playerid) {
 
     SavePlayerWeapons(playerid);
     SavePlayerApparence(playerid);
+    SavePlayerPremium(playerid);
     return true;
 }
 
@@ -466,7 +476,7 @@ SavePlayerWeapons(playerid) {
     `Ammo12` = '%d', \
     `Gun13` = '%d', \
     `Ammo13` = '%d' \
-    WHERE character_id = %d;", 
+    WHERE character_id = '%d';", 
     pInfo[playerid][pGuns][0], 
 	pInfo[playerid][pAmmo][0],
 	pInfo[playerid][pGuns][1], 
@@ -508,7 +518,7 @@ SavePlayerApparence(playerid) {
     `weight` = '%f', \
     `build` = '%d', \
     `description` = '%s' \
-    WHERE character_id = %d;", 
+    WHERE character_id = '%d';", 
     pInfo[playerid][pEthnicity],
     pInfo[playerid][pColorEyes],
     pInfo[playerid][pColorHair],
@@ -516,6 +526,19 @@ SavePlayerApparence(playerid) {
     pInfo[playerid][pWeight],
     pInfo[playerid][pBuild],
     pInfo[playerid][pDescription],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
+    return true;
+}
+
+SavePlayerPremium(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_premium SET \
+    `donator` = '%d',        \
+    `donator_time` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pDonator],
+    pInfo[playerid][pDonatorTime],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 

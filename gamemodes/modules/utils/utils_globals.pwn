@@ -18,13 +18,29 @@ enum User_Data {
     uName[24],
     uPass[16],
     uAdmin,
+    // Teams
+    uHeadFTeam, // Faction 
+    uHeadPTeam, // Property
+    uHeadETeam, // Event
+    uHeadCTeam, // CK
+    uFactionTeam,
+    uPropertyTeam,
+    uEventTeam,
+    uCKTeam,
+    uLogTeam,
+    // Premium
+    uPoints,
+    uNameChanges,
+    uNumberChanges,
+    uFightChanges,
+    uPlateChanges,
     uCharSlots,
+    // Stats
     uRedFlag,
     uNewbie,
     uSOSAns,
     uDutyTime,
-    uJailed,
-    uPoints
+    uJailed
 };
 
 new uInfo[MAX_PLAYERS][User_Data];
@@ -37,10 +53,11 @@ enum Player_Data {
     pLastIP[15],
     pAdmin,
     pDonator,
+    pDonatorTime,
 
-    pAge,
-    pGender[15],
-    pBackground[50],
+    pDateOfBirth[16],
+    pGender[16],
+    pBackground[64],
 
     Float:pHealth,
     Float:pArmour,
@@ -159,13 +176,32 @@ new const g_aWeaponSlots[] = {
 void:ResetUserData(playerid) {
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
+    // Teams
+    uInfo        [playerid][uHeadFTeam]   = 
+    uInfo        [playerid][uHeadPTeam]   = 
+    uInfo        [playerid][uHeadETeam]   = 
+    uInfo        [playerid][uHeadCTeam]   = 
+    uInfo        [playerid][uFactionTeam] = 
+    uInfo        [playerid][uPropertyTeam]= 
+    uInfo        [playerid][uEventTeam]   = 
+    uInfo        [playerid][uCKTeam]      = 
+    uInfo        [playerid][uLogTeam]     = 
+
     uInfo        [playerid][uID]          = 
+    // Stats
     uInfo        [playerid][uRedFlag]     =
     uInfo        [playerid][uNewbie]      = 
     uInfo        [playerid][uSOSAns]      = 
     uInfo        [playerid][uDutyTime]    =
-    uInfo        [playerid][uCharSlots]   =
-    uInfo        [playerid][uPoints]      = 0;
+    // Premium
+    uInfo        [playerid][uPoints]        = 
+    uInfo        [playerid][uNameChanges]   = 
+    uInfo        [playerid][uNumberChanges] = 
+    uInfo        [playerid][uFightChanges]  = 
+    uInfo        [playerid][uPlateChanges]  = 
+    uInfo        [playerid][uCharSlots]     = 0;
+
+
     uInfo        [playerid][uJailed]      = -1;
 
     uInfo[playerid][uName][0] = EOS;
@@ -180,7 +216,8 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pGender][0]      =
     pInfo   [playerid][pBackground][0]  = EOS;
 
-    pInfo   [playerid][pDonator]        = 0;
+    pInfo   [playerid][pDonator]        =
+    pInfo   [playerid][pDonatorTime]    = 0;
     pInfo   [playerid][pPlayingMinutes] =
     pInfo   [playerid][pPlayingHours]   =
     pInfo   [playerid][pAFKCount]       =

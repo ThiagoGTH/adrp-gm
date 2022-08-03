@@ -103,9 +103,11 @@ new query[2048];
 #include "modules\core\admin\admin_core.pwn"
 
 // MAPAS
-//#include "modules\core\maps\LSFD.pwn" 
-#include "modules\core\maps\SM.pwn" 
-#include "modules\core\maps\streets.pwn"
+//#include "modules\core\maps\exterior\LSFD.pwn" 
+#include "modules\core\maps\exterior\SM.pwn" 
+#include "modules\core\maps\exterior\streets.pwn"
+
+#include "modules\core\maps\interior\mazebank.pwn"
 
 main() {
     print("\nGamemode conectado\n");

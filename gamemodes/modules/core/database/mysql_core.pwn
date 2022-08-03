@@ -58,6 +58,7 @@ void:CheckUserTable() {
     `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\
+    `last_login` int NOT NULL DEFAULT '0',\
     `admin` int NOT NULL DEFAULT 0,\
     `charslots` int NOT NULL DEFAULT 5,\
     `dutytime` int NOT NULL DEFAULT 0,\

@@ -38,11 +38,9 @@ CMD:editarinvestimento(playerid, params[]){
 	    string[128];
 
     if (sscanf(params, "ds[24]S()[128]", id, type, string)) {
- 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /editarinvestimento [id] [opção]");
 	    SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, símbolo, descrição, tipo, capital");
         SendClientMessage(playerid, COLOR_BEGE, "[Opções]: valorcompra, maxslots");
-	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		return true;
 	}
 

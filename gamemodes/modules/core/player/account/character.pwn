@@ -168,8 +168,6 @@ CreateCharacter(playerid, characterName[], characterAge, characterGender[], char
             characterName, GetPlayerNameEx(playerid), characterAge, characterGender, characterBackground, GetPlayerIP(playerid));
     mysql_query(DBConn, query);
 
-    
-
     pInfo[playerid][pName][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
     pInfo[playerid][pAge] = 0;
 
@@ -221,35 +219,14 @@ LoadCharacterInfo(playerid, playerName[]) {
     cache_get_value_name_int(0, "first_login", first_login);
     cache_delete(result);
 
-    // PLAYER WEAPONS
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_weapons WHERE `character_id` = '%d'", pInfo[playerid][pID]);
-    new Cache:result2 = mysql_query(DBConn, query);
-    for (new i = 0; i < 13; i ++) {
-	    format(query, sizeof(query), "Gun%d", i + 1);
-	    cache_get_value_name_int(0, query, pInfo[playerid][pGuns][i]);
-	    format(query, sizeof(query), "Ammo%d", i + 1);
-	    cache_get_value_name_int(0, query, pInfo[playerid][pAmmo][i]);
-	}
-    cache_delete(result2);
-
-    // PLAYER APPARENCE
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_apparence WHERE `character_id` = '%d'", pInfo[playerid][pID]);
-    new Cache:result3 = mysql_query(DBConn, query);
-    cache_get_value_name_int(0, "color_eyes", pInfo[playerid][pColorEyes]);
-    cache_get_value_name_int(0, "color_hair", pInfo[playerid][pColorHair]);
-    cache_get_value_name_float(0, "height", pInfo[playerid][pHeight]);
-    cache_get_value_name_float(0, "weight", pInfo[playerid][pWeight]);
-    cache_get_value_name(0, "description", pInfo[playerid][pDescription]);
-    cache_delete(result3);
-
-    if(!first_login) {
-        mysql_format(DBConn, query, sizeof query, "UPDATE players SET `first_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
+    if(first_login == 0) {
+        mysql_format(DBConn, query, sizeof query, "UPDATE players SET `first_login` = '%d' WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
         mysql_query(DBConn, query);
 
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_apparence (`character_id`) VALUES ('%d');", GetPlayerSQLID(playerid));
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_apparence (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_weapons (`character_id`) VALUES ('%d');", GetPlayerSQLID(playerid));
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_weapons (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
     }
 
@@ -258,11 +235,42 @@ LoadCharacterInfo(playerid, playerName[]) {
 
     printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", playerName);
     LoadLicencesData(playerid);
+    LoadPlayerWeapons(playerid);
+    LoadPlayerApparence(playerid);
 
 }
 
-// Em complemento as informações de personagem carregadas anteriormente, abaixo está a função de spawn.
+LoadPlayerWeapons(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_weapons WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
 
+    for (new i = 0; i < 13; i ++) {
+	    format(query, sizeof(query), "Gun%d", i + 1);
+	    cache_get_value_name_int(0, query, pInfo[playerid][pGuns][i]);
+	    format(query, sizeof(query), "Ammo%d", i + 1);
+	    cache_get_value_name_int(0, query, pInfo[playerid][pAmmo][i]);
+	}
+    cache_delete(result);
+
+    return true;
+}
+
+LoadPlayerApparence(playerid){
+    // PLAYER APPARENCE
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_apparence WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "ethnicity", pInfo[playerid][pEthnicity]);
+    cache_get_value_name_int(0, "color_eyes", pInfo[playerid][pColorEyes]);
+    cache_get_value_name_int(0, "color_hair", pInfo[playerid][pColorHair]);
+    cache_get_value_name_int(0, "height", pInfo[playerid][pHeight]);
+    cache_get_value_name_float(0, "weight", pInfo[playerid][pWeight]);
+    cache_get_value_name_int(0, "build", pInfo[playerid][pBuild]);
+    cache_get_value_name(0, "description", pInfo[playerid][pDescription]);
+    cache_delete(result);
+    return true;
+}
+
+// Em complemento as informações de personagem carregadas anteriormente, abaixo está a função de spawn.
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -314,6 +322,9 @@ SpawnSelectedCharacter(playerid) {
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `carOwner` = '%d';", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '1' WHERE `ID` = '%d';", pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
 
 	if(cache_num_rows() > 0) {
         for (new i = 0; i < cache_num_rows(); i ++) {
@@ -490,16 +501,20 @@ SavePlayerWeapons(playerid) {
 
 SavePlayerApparence(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players_apparence SET \
+    `ethnicity` = '%d', \
     `color_eyes` = '%d', \
     `color_hair` = '%d', \
     `height` = '%d', \
-    `weight` = '%d', \
+    `weight` = '%f', \
+    `build` = '%d', \
     `description` = '%s' \
     WHERE character_id = %d;", 
+    pInfo[playerid][pEthnicity],
     pInfo[playerid][pColorEyes],
     pInfo[playerid][pColorHair],
     pInfo[playerid][pHeight],
     pInfo[playerid][pWeight],
+    pInfo[playerid][pBuild],
     pInfo[playerid][pDescription],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
@@ -509,6 +524,10 @@ SavePlayerApparence(playerid) {
 
 hook OnPlayerDisconnect(playerid, reason) {
     new string[256];
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '0' WHERE `ID` = '%s';", pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
     switch(reason){
 	    case 0: format(string,sizeof(string),"(( %s (Problema de Conexão/Crash) ))", pNome(playerid));
 	    case 1: format(string,sizeof(string),"(( %s (Desconectou-se) ))", pNome(playerid));

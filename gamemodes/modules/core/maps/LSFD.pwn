@@ -13,22 +13,22 @@ hook OnGameModeInit() {
 }
 
 LoadLSFDModels() {
-	AddSimpleModel (-1,19379, -1001, "maps/Factions/LSFD/1.dff", "maps/Factions/LSFD/1.txd");
-	AddSimpleModel (-1,19379, -1002, "maps/Factions/LSFD/2.dff", "maps/Factions/LSFD/2.txd");
-	AddSimpleModel (-1,19379, -1003, "maps/Factions/LSFD/3.dff", "maps/Factions/LSFD/3.txd");
-	AddSimpleModel (-1,19379, -1004, "maps/Factions/LSFD/4.dff", "maps/Factions/LSFD/4.txd");
-	AddSimpleModel (-1,19379, -1005, "maps/Factions/LSFD/5.dff", "maps/Factions/LSFD/5.txd");
-	AddSimpleModel (-1,19379, -1006, "maps/Factions/LSFD/6.dff", "maps/Factions/LSFD/6.txd");
-	AddSimpleModel (-1,19379, -1007, "maps/Factions/LSFD/7.dff", "maps/Factions/LSFD/7.txd");
-	AddSimpleModel (-1,19379, -1008, "maps/Factions/LSFD/8.dff", "maps/Factions/LSFD/8.txd");
-	AddSimpleModel (-1,19379, -1009, "maps/Factions/LSFD/9.dff", "maps/Factions/LSFD/9.txd");
-	AddSimpleModel (-1,19379, -1010, "maps/Factions/LSFD/10.dff", "maps/Factions/LSFD/10.txd");
-	AddSimpleModel (-1,19379, -1011, "maps/Factions/LSFD/11.dff", "maps/Factions/LSFD/11.txd");
-	AddSimpleModel (-1,19379, -1012, "maps/Factions/LSFD/12.dff", "maps/Factions/LSFD/12.txd");
-	AddSimpleModel (-1,19379, -1013, "maps/Factions/LSFD/13.dff", "maps/Factions/LSFD/13.txd");
-	AddSimpleModel (-1,19379, -1013, "maps/Factions/LSFD/13.dff", "maps/Factions/LSFD/13.txd");
-	AddSimpleModel (-1,19379, -1014, "maps/Factions/LSFD/14.dff", "maps/Factions/LSFD/14.txd");
-	AddSimpleModel (-1,19379, -1015, "maps/Factions/LSFD/15.dff", "maps/Factions/LSFD/15.txd");
+	AddSimpleModel (-1, 19379, -1001, "maps/Factions/LSFD/1.dff", "maps/Factions/LSFD/1.txd");
+	AddSimpleModel (-1, 19379, -1002, "maps/Factions/LSFD/2.dff", "maps/Factions/LSFD/2.txd");
+	AddSimpleModel (-1, 19379, -1003, "maps/Factions/LSFD/3.dff", "maps/Factions/LSFD/3.txd");
+	AddSimpleModel (-1, 19379, -1004, "maps/Factions/LSFD/4.dff", "maps/Factions/LSFD/4.txd");
+	AddSimpleModel (-1, 19379, -1005, "maps/Factions/LSFD/5.dff", "maps/Factions/LSFD/5.txd");
+	AddSimpleModel (-1, 19379, -1006, "maps/Factions/LSFD/6.dff", "maps/Factions/LSFD/6.txd");
+	AddSimpleModel (-1, 19379, -1007, "maps/Factions/LSFD/7.dff", "maps/Factions/LSFD/7.txd");
+	AddSimpleModel (-1, 19379, -1008, "maps/Factions/LSFD/8.dff", "maps/Factions/LSFD/8.txd");
+	AddSimpleModel (-1, 19379, -1009, "maps/Factions/LSFD/9.dff", "maps/Factions/LSFD/9.txd");
+	AddSimpleModel (-1, 19379, -1010, "maps/Factions/LSFD/10.dff", "maps/Factions/LSFD/10.txd");
+	AddSimpleModel (-1, 19379, -1011, "maps/Factions/LSFD/11.dff", "maps/Factions/LSFD/11.txd");
+	AddSimpleModel (-1, 19379, -1012, "maps/Factions/LSFD/12.dff", "maps/Factions/LSFD/12.txd");
+	AddSimpleModel (-1, 19379, -1013, "maps/Factions/LSFD/13.dff", "maps/Factions/LSFD/13.txd");
+	AddSimpleModel (-1, 19379, -1013, "maps/Factions/LSFD/13.dff", "maps/Factions/LSFD/13.txd");
+	AddSimpleModel (-1, 19379, -1014, "maps/Factions/LSFD/14.dff", "maps/Factions/LSFD/14.txd");
+	AddSimpleModel (-1, 19379, -1015, "maps/Factions/LSFD/15.dff", "maps/Factions/LSFD/15.txd");
 }
 
 LSFDExterior() {

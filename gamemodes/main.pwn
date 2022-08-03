@@ -65,11 +65,14 @@ new query[2048];
 #include "modules\core\player\cmds\tela.pwn"
 #include "modules\core\player\cmds\newbie.pwn"
 #include "modules\core\player\cmds\minigames.pwn"
+#include "modules\core\player\cmds\ads.pwn"
+#include "modules\core\player\cmds\rpcmds.pwn"
+#include "modules\core\player\cmds\apparence.pwn"
+
 #include "modules\core\player\licences\base_licence.pwn"
 
 // Inclusão de módulos relativos a sistemas
-#include "modules\core\player\systems\ads.pwn"
-#include "modules\core\player\systems\rpcmds.pwn"
+
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\death.pwn"
 #include "modules\core\player\systems\mechanic.pwn"

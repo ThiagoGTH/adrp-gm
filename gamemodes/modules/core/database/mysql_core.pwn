@@ -111,6 +111,7 @@ void:CheckPlayerTable() {
     `positionA` float NOT NULL DEFAULT '0',\
     `phone_number` int NOT NULL DEFAULT '0',\
     `phone_type` int NOT NULL DEFAULT '0',\
+    `online` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players checada com sucesso.");
@@ -120,10 +121,12 @@ void:CheckPlayerTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_apparence` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
+    `ethnicity` int NOT NULL DEFAULT '0',\
     `color_eyes` int NOT NULL DEFAULT '0',\
     `color_hair` int NOT NULL DEFAULT '0',\
-    `height` float NOT NULL DEFAULT 0.0,\
+    `height` int NOT NULL DEFAULT '0',\
     `weight` float NOT NULL DEFAULT 0.0,\
+    `build` int NOT NULL DEFAULT 0,\
     `description` varchar(128) NOT NULL DEFAULT 'N/A',\
     PRIMARY KEY (`ID`));");
 

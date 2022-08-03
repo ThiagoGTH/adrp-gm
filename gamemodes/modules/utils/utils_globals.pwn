@@ -61,10 +61,12 @@ enum Player_Data {
     pInterior,
 
     // INFOS
+    pEthnicity,
     pColorEyes,
     pColorHair,
-    Float:pHeight,
+    pHeight,
     Float:pWeight,
+    pBuild,
     pDescription[128],
 
     pPhoneNumber,
@@ -133,6 +135,7 @@ enum Player_Data {
     pJailed,
     // Temp variables
     bool:pLogged,
+    pAllowedGender,
     pFlying,
     pQuestion,
     pAnswer,
@@ -200,11 +203,13 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pPhoneType]      = 
     pInfo   [playerid][pPhoneNumber]    = 0;
 
+    pInfo   [playerid][pEthnicity]          = 0;
     pInfo   [playerid][pColorEyes]          = 0;
-    pInfo   [playerid][pColorHair]         = 0;
-    pInfo   [playerid][pHeight]       = 0.00;
-    pInfo   [playerid][pWeight]       = 0.00;
-    pInfo   [playerid][pDescription][0]   = EOS;
+    pInfo   [playerid][pColorHair]          = 0;
+    pInfo   [playerid][pHeight]             = 0;
+    pInfo   [playerid][pWeight]             = 0.00;
+    pInfo   [playerid][pBuild]              = 0;
+    pInfo   [playerid][pDescription][0]     = EOS;
 
     pInfo[playerid][pFreeze] = 0;
     pInfo[playerid][pFreezeTimer] = 0;
@@ -259,6 +264,7 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][pBuyingPlate], 120, "");
 	pInfo[playerid][pBuyingPlateRemove] = 0;
     pInfo[playerid][pTimerSpawn] = 0;
+    pInfo[playerid][pAllowedGender] = 0;
 
     if (IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]))
 	{

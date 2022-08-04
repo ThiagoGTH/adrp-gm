@@ -5,16 +5,6 @@ MAZE BANK INTERIOR
 
 #include <YSI_Coding\y_hooks>
 
-hook OnPlayerConnect(playerid){
-    RemoveBuildingForPlayer(playerid, 1283, 1430.171, -1719.468, 15.625, 0.250);
-    RemoveBuildingForPlayer(playerid, 1258, 1445.005, -1704.765, 13.694, 0.250);
-    RemoveBuildingForPlayer(playerid, 1226, 1433.708, -1702.359, 16.420, 0.250);
-    RemoveBuildingForPlayer(playerid, 1226, 1433.708, -1676.687, 16.420, 0.250);
-    RemoveBuildingForPlayer(playerid, 1258, 1445.005, -1692.234, 13.694, 0.250);
-    RemoveBuildingForPlayer(playerid, 1226, 1433.708, -1656.250, 16.420, 0.250);
-    return true;
-}
-
 hook OnGameModeInit() {
     LoadMazeBankInterior();
     return true;

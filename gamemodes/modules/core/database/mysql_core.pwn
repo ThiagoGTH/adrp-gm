@@ -55,6 +55,8 @@ void:CheckUserTable() {
     `username` varchar(24),\
     `password` varchar(128),\
     `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `discord_tag` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `forum_username` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
@@ -120,8 +122,7 @@ void:CheckPlayerTable() {
     `dateofbirth` varchar(16) NOT NULL DEFAULT '01/01/1970',\
     `minutes` int NOT NULL DEFAULT '0',\
     `hours` int NOT NULL DEFAULT '0',\
-    `gender` varchar(16) NOT NULL DEFAULT 'Masculino',\
-    `background` varchar(64) NOT NULL DEFAULT 'Los Santos',\
+    `origin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `money` int NOT NULL DEFAULT '0',\
     `bank` int NOT NULL DEFAULT '0',\
     `savings` int NOT NULL DEFAULT '0',\
@@ -147,6 +148,7 @@ void:CheckPlayerTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_apparence` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
+    `gender` int NOT NULL DEFAULT '0',\
     `ethnicity` int NOT NULL DEFAULT '0',\
     `color_eyes` int NOT NULL DEFAULT '0',\
     `color_hair` int NOT NULL DEFAULT '0',\
@@ -174,32 +176,32 @@ void:CheckPlayerTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_weapons` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
-    `Gun1` int NOT NULL DEFAULT '0',\
-    `Ammo1` int NOT NULL DEFAULT '0',\
-    `Gun2` int NOT NULL DEFAULT '0',\
-    `Ammo2` int NOT NULL DEFAULT '0',\
-    `Gun3` int NOT NULL DEFAULT '0',\
-    `Ammo3` int NOT NULL DEFAULT '0',\
-    `Gun4` int NOT NULL DEFAULT '0',\
-    `Ammo4` int NOT NULL DEFAULT '0',\
-    `Gun5` int NOT NULL DEFAULT '0',\
-    `Ammo5` int NOT NULL DEFAULT '0',\
-    `Gun6` int NOT NULL DEFAULT '0',\
-    `Ammo6` int NOT NULL DEFAULT '0',\
-    `Gun7` int NOT NULL DEFAULT '0',\
-    `Ammo7` int NOT NULL DEFAULT '0',\
-    `Gun8` int NOT NULL DEFAULT '0',\
-    `Ammo8` int NOT NULL DEFAULT '0',\
-    `Gun9` int NOT NULL DEFAULT '0',\
-    `Ammo9` int NOT NULL DEFAULT '0',\
-    `Gun10` int NOT NULL DEFAULT '0',\
-    `Ammo10` int NOT NULL DEFAULT '0',\
-    `Gun11` int NOT NULL DEFAULT '0',\
-    `Ammo11` int NOT NULL DEFAULT '0',\
-    `Gun12` int NOT NULL DEFAULT '0',\
-    `Ammo12` int NOT NULL DEFAULT '0',\
-    `Gun13` int NOT NULL DEFAULT '0',\
-    `Ammo13` int NOT NULL DEFAULT '0',\
+    `gun1` int NOT NULL DEFAULT '0',\
+    `ammo1` int NOT NULL DEFAULT '0',\
+    `gun2` int NOT NULL DEFAULT '0',\
+    `ammo2` int NOT NULL DEFAULT '0',\
+    `gun3` int NOT NULL DEFAULT '0',\
+    `ammo3` int NOT NULL DEFAULT '0',\
+    `gun4` int NOT NULL DEFAULT '0',\
+    `ammo4` int NOT NULL DEFAULT '0',\
+    `gun5` int NOT NULL DEFAULT '0',\
+    `ammo5` int NOT NULL DEFAULT '0',\
+    `gun6` int NOT NULL DEFAULT '0',\
+    `ammo6` int NOT NULL DEFAULT '0',\
+    `gun7` int NOT NULL DEFAULT '0',\
+    `ammo7` int NOT NULL DEFAULT '0',\
+    `gun8` int NOT NULL DEFAULT '0',\
+    `ammo8` int NOT NULL DEFAULT '0',\
+    `gun9` int NOT NULL DEFAULT '0',\
+    `ammo9` int NOT NULL DEFAULT '0',\
+    `gun10` int NOT NULL DEFAULT '0',\
+    `ammo10` int NOT NULL DEFAULT '0',\
+    `gun11` int NOT NULL DEFAULT '0',\
+    `ammo11` int NOT NULL DEFAULT '0',\
+    `gun12` int NOT NULL DEFAULT '0',\
+    `ammo12` int NOT NULL DEFAULT '0',\
+    `gun13` int NOT NULL DEFAULT '0',\
+    `ammo13` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_weapons checada com sucesso.");

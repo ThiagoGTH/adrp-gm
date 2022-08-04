@@ -53,14 +53,19 @@ ApparenceReset(playerid) {
     return true;
 }
 
-CMD:veraparencia(playerid, params[]){
+CMD:veraparencia(playerid, params[]) {
     static userid;
     if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/veraparencia [playerid/nome]");
     if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
     if(!IsPlayerNearPlayer(playerid, userid, 20.0)) return SendErrorMessage(playerid, "Você não está perto deste jogador.");
 
-    new ethnicity[128], color_eyes[128], color_hair[128], build[128], title[124], text[1024];
+    new gender[128], ethnicity[128], color_eyes[128], color_hair[128], build[128];
 
+    switch(pInfo[playerid][pGender]) {
+		case 1: format(gender, sizeof(gender), "Masculino");
+		case 2: format(gender, sizeof(gender), "Feminino");
+		default: format(gender, sizeof(gender), "Inválido");
+	}
     switch(pInfo[userid][pEthnicity]) {
 		case 1: format(ethnicity, sizeof(ethnicity), "Branco");
 		case 2: format(ethnicity, sizeof(ethnicity), "Negro");
@@ -104,28 +109,17 @@ CMD:veraparencia(playerid, params[]){
 		default: format(build, sizeof(build), "Inválido");
 	}
 
-    format(title, sizeof(title), "Aparência de %s", pNome(userid));
-
-    format(text, sizeof(text), "{FFFFFF}Gênero: %s\n\
-    Etnia: %s\n\
-    Cabelo: %s\n\
-    Olhos: %s\n\
-    Físico: %s\n\
-    Altura: %dcm\n\
-    Peso: %.2fkg\n\n\
-    Descrição: %s", 
-    pInfo[userid][pGender], 
-    ethnicity,
-    color_hair,
-    color_eyes,
-    build,
-    pInfo[userid][pHeight],
-    pInfo[userid][pWeight],
-    pInfo[userid][pDescription]);
-
-    Dialog_Show(playerid, ShowApparence, DIALOG_STYLE_MSGBOX, title, text, "Fechar", "");
-
     SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s observa a aparência de %s.", pNome(playerid), pNome(userid));
+
+    va_SendClientMessage(playerid, COLOR_GREEN, "___________________[Aparência de %s]___________________", pNome(userid));
+    va_SendClientMessage(playerid, COLOR_WHITE, "Etnia: %s | Cabelo: %s | Olhos: %s", ethnicity, color_hair, color_eyes);
+    va_SendClientMessage(playerid, COLOR_WHITE, "Físico: %s | Peso: %.2f | Altura: %dcm", build, pInfo[userid][pWeight], pInfo[userid][pHeight]);
+    va_SendClientMessage(playerid, COLOR_WHITE, "Descrição:");
+    if (strlen(pInfo[userid][pDescription]) > 64){
+        va_SendClientMessage(playerid, COLOR_PURPLE, "* %s %.64s", pInfo[userid][pDescription]);
+        va_SendClientMessage(playerid, COLOR_PURPLE, "* ...%s", pInfo[userid][pDescription][64]);
+    } else va_SendClientMessage(playerid, COLOR_PURPLE, "* %s", pInfo[userid][pDescription]);
+
 
     return true;
 }
@@ -144,7 +138,7 @@ CMD:resetaraparencia(playerid, params[]){
 	}
     if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
     if (!strcmp(type, "gênero", true) || !strcmp(type, "genero", true) || !strcmp(type, "sexo", true)) {
-	    pInfo[userid][pAllowedGender] = 1;
+	    pInfo[userid][pGender] = 0;
         SendServerMessage(playerid, "Você autorizou %s a alterar de gênero.", pNome(userid));
         SendServerMessage(playerid, "Um administrador autorizou você a alterar de gênero. Use /editaraparencia.", pNome(userid));
         format(logString, sizeof(logString), "%s (%s) autorizou %s a mudar de gênero", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
@@ -183,8 +177,13 @@ CMD:resetaraparencia(playerid, params[]){
 }
 
 CMD:editaraparencia(playerid, params[]){
-    new ethnicity[128], color_eyes[128], color_hair[128], build[128], title[124], text[1024];
+    new gender[128], ethnicity[128], color_eyes[128], color_hair[128], build[128], title[124], text[1024];
 
+    switch(pInfo[playerid][pGender]) {
+		case 1: format(gender, sizeof(gender), "Masculino");
+		case 2: format(gender, sizeof(gender), "Feminino");
+		default: format(gender, sizeof(gender), "Inválido");
+	}
     switch(pInfo[playerid][pEthnicity]) {
 		case 1: format(ethnicity, sizeof(ethnicity), "Branco");
 		case 2: format(ethnicity, sizeof(ethnicity), "Negro");
@@ -237,7 +236,7 @@ CMD:editaraparencia(playerid, params[]){
     Altura:\t%dcm\n\
     Peso:\t%.2fkg\n\n\
     Descrição:\t%s", 
-    pInfo[playerid][pGender], 
+    gender, 
     ethnicity,
     color_hair,
     color_eyes,
@@ -253,9 +252,9 @@ CMD:editaraparencia(playerid, params[]){
 Dialog:EditApparence(playerid, response, listitem, inputtext[]){
     if(response){
         if(listitem == 0){ // Gênero
-            if (pInfo[playerid][pAllowedGender] != 1) return SendErrorMessage(playerid, "Você não pode alterar seu gênero sem a autorização de um administrador.");
+            if (pInfo[playerid][pGender] > 0) return SendErrorMessage(playerid, "Você não pode alterar seu gênero sem a autorização de um administrador.");
 
-            Dialog_Show(playerid, ChangeGender, DIALOG_STYLE_LIST, "Alterar Gênero", "Masculino\nFeminino", "Selecionar", "Fechar");
+            Dialog_Show(playerid, ChangeGender, DIALOG_STYLE_LIST, "Alterar Gênero", "Masculino\nFeminino", "Alterar", "Fechar");
             return true;
         } 
         else if(listitem == 1){ // Etnia
@@ -301,13 +300,18 @@ Dialog:EditApparence(playerid, response, listitem, inputtext[]){
 
 Dialog:ChangeGender(playerid, response, listitem, inputtext[]) {
     if(!response) {
-        SendServerMessage(playerid, "Você cancelou a sua troca de gênero, então foi definido automaticamente para masculino.");
-        format(pInfo[playerid][pGender], 15, "Masculino");
-        return true;
+        pInfo[playerid][pGender] = 1;
+        return SendServerMessage(playerid, "Você cancelou a sua troca de gênero, então foi definido automaticamente para masculino.");
     }
 
-    format(pInfo[playerid][pGender], 15, "%s", inputtext);
-    SendServerMessage(playerid, "Seu personagem agora é do sexo '%s'", pInfo[playerid][pGender]);
+    if (listitem == 0) {
+        pInfo[playerid][pGender] = 1;
+        SendServerMessage(playerid, "Você definiu seu gênero como masculino.");
+    }
+    else if (listitem == 1) {
+        pInfo[playerid][pGender] = 2;
+        SendServerMessage(playerid, "Você definiu seu gênero como feminino.");
+    }
 	return true;
 }
 

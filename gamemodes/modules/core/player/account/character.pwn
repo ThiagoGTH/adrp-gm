@@ -62,61 +62,10 @@ Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
     }
         
     format(pInfo[playerid][pName], 24, "%s", inputtext);
-    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s", pInfo[playerid][pName]);
 
-    Dialog_Show(playerid, CHARACTER_CREATE_GENDER, DIALOG_STYLE_LIST, "Criar Personagem - Gênero", "Masculino\nFeminino", "Continuar", "Voltar");
-	return true;
-}
+    CreateCharacter(playerid, pInfo[playerid][pName]);
 
-/*Dialog:CHARACTER_CREATE_AGE(playerid, response, listitem, inputtext[]) {
-    if(!response) {
-        pInfo[playerid][pAge] = 0;
-        return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
-            "Continuar", "Voltar");    
-    }
-
-    if(strval(inputtext) < 13 || strval(inputtext) > 99) {
-        return Dialog_Show(playerid, CHARACTER_CREATE_AGE, DIALOG_STYLE_INPUT, "Criar Personagem - Idade", 
-        "Agora, prossiga com a idade do seu personagem.\n \nA idade deve ser entre 13 e 99", "Continuar", "Voltar");
-    }
-        
-    pInfo[playerid][pAge] = strval(inputtext);
-    va_SendClientMessage(playerid, -1, "Seu personagem terá %d anos", pInfo[playerid][pAge]);
-
-    Dialog_Show(playerid, CHARACTER_CREATE_GENDER, DIALOG_STYLE_LIST, "Criar Personagem - Gênero", "Masculino\nFeminino", "Continuar", "Voltar");
-	return true;
-}*/
-
-Dialog:CHARACTER_CREATE_GENDER(playerid, response, listitem, inputtext[]) {
-    if(!response) {
-        pInfo[playerid][pGender][0] = EOS;
-        return Dialog_Show(playerid, CHARACTER_CREATE_AGE, DIALOG_STYLE_INPUT, "Criar Personagem - Idade", "Agora, prossiga com a idade do seu personagem.\n \nA idade deve ser entre 13 e 99", "Continuar", "Voltar");
-    }
-
-    format(pInfo[playerid][pGender], 15, "%s", inputtext);
-    va_SendClientMessage(playerid, -1, "Seu personagem é do sexo '%s'", pInfo[playerid][pGender]);
-        
-    Dialog_Show(playerid, CHARACTER_CREATE_BG, DIALOG_STYLE_INPUT, "Criar Personagem - ORIGEM", "Insira o local de origem do personagem (até 50 caracteres)", "Continuar", "Voltar");
-	return true;
-}
-
-Dialog:CHARACTER_CREATE_BG(playerid, response, listitem, inputtext[]) {
-    if(!response) {
-        pInfo[playerid][pBackground][0] = EOS;
-        return Dialog_Show(playerid, CHARACTER_CREATE_GENDER, DIALOG_STYLE_LIST, "Criar Personagem - Gênero", "Masculino\nFeminino", "Continuar", "Voltar");
-    }
-
-    if(strlen(inputtext) < 1 || strlen(inputtext) > 50) {
-        return Dialog_Show(playerid, CHARACTER_CREATE_BG, DIALOG_STYLE_INPUT, "Criar Personagem - ORIGEM", "Insira o local de origem do personagem (até 50 caracteres)", "Continuar", "Voltar");
-    }
-
-    format(pInfo[playerid][pBackground], 50, "%s", inputtext);
-    va_SendClientMessage(playerid, -1, "A origem do seu personagem é de %s", pInfo[playerid][pBackground]);
-
-    CreateCharacter(playerid, pInfo[playerid][pName], pInfo[playerid][pGender], pInfo[playerid][pBackground]);
-
-    SendClientMessage(playerid, -1, " ");
+    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s.", pInfo[playerid][pName]);
     SendServerMessage(playerid, "O personagem foi criado com sucesso e você já pode vê-lo na lista de personagens.");
 
     ShowUsersCharacters(playerid);
@@ -161,14 +110,14 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
 
 // Nada muito especial. Vamos inserir o personagem criado com as informações dos inputtexts das dialogs anteriores e, até, reseta-las.
 
-CreateCharacter(playerid, characterName[], characterGender[], characterBackground[]) {
+CreateCharacter(playerid, characterName[]) {
 
     mysql_format(DBConn, query, sizeof query,
-        "INSERT INTO players (`name`, `user_ID`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', '%s', '%s', '%s');",
-            characterName, GetPlayerUserEx(playerid), characterGender, characterBackground, GetPlayerIP(playerid));
+        "INSERT INTO players (`name`, `user_id`, `first_ip`) VALUES ('%s', '%d', '%s');",
+            characterName, uInfo[playerid][uID], GetPlayerIP(playerid));
     mysql_query(DBConn, query);
 
-    pInfo[playerid][pName][0] = pInfo[playerid][pDateOfBirth][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
+    pInfo[playerid][pName][0] = EOS;
 
     printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
 
@@ -190,8 +139,7 @@ LoadCharacterInfo(playerid, playerName[]) {
     format(pInfo[playerid][pLastIP], 20, "%s", GetPlayerIP(playerid));
 
     cache_get_value_name(0, "dateofbirth", pInfo[playerid][pDateOfBirth]);
-    cache_get_value_name(0, "gender", pInfo[playerid][pGender]);
-    cache_get_value_name(0, "background", pInfo[playerid][pBackground]);
+    cache_get_value_name(0, "origin", pInfo[playerid][pBackground]);
 
     cache_get_value_name_int(0, "minutes", pInfo[playerid][pPlayingMinutes]);
     cache_get_value_name_int(0, "hours", pInfo[playerid][pPlayingHours]);
@@ -247,9 +195,9 @@ LoadPlayerWeapons(playerid){
     new Cache:result = mysql_query(DBConn, query);
 
     for (new i = 0; i < 13; i ++) {
-	    format(query, sizeof(query), "Gun%d", i + 1);
+	    format(query, sizeof(query), "gun%d", i + 1);
 	    cache_get_value_name_int(0, query, pInfo[playerid][pGuns][i]);
-	    format(query, sizeof(query), "Ammo%d", i + 1);
+	    format(query, sizeof(query), "ammo%d", i + 1);
 	    cache_get_value_name_int(0, query, pInfo[playerid][pAmmo][i]);
 	}
     cache_delete(result);
@@ -261,6 +209,7 @@ LoadPlayerApparence(playerid){
     // PLAYER APPARENCE
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_apparence WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "gender", pInfo[playerid][pGender]);
     cache_get_value_name_int(0, "ethnicity", pInfo[playerid][pEthnicity]);
     cache_get_value_name_int(0, "color_eyes", pInfo[playerid][pColorEyes]);
     cache_get_value_name_int(0, "color_hair", pInfo[playerid][pColorHair]);

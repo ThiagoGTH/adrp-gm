@@ -111,6 +111,7 @@ new query[2048];
 #include "modules\core\maps\exterior\streets.pwn"
 
 #include "modules\core\maps\interior\mazebank.pwn"
+#include "modules\core\maps\interior\doj.pwn"
 
 main() {
     print("\nGamemode conectado\n");

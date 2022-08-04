@@ -4,7 +4,8 @@
 
 enum E_VEHICLE_DATA {
     // PRIMÁRIO
-    vID,                    // ID do veículo no MySQL
+    vSQLID,                 // ID do veículo no MySQL
+    vID,                    // ID real do veículo
     vExists,                // Definir se existe
     vModel,                 // ModelID do veículo
     vOwner,                 // ID do personagem dono do veículo
@@ -12,6 +13,7 @@ enum E_VEHICLE_DATA {
     vBusiness,              // ID da empresa do veículo
     vName[256],             // Nome personalizado
     vNamePersonalized,      // Se o nome é personalizado
+    vLegal,                 // Se o veículo é legalizado
     vPlate[128],            // Placa do veículo
     vPlatePersonalized,     // Se a placa é personalizada
     vSpawned,               // Se esta spawnado
@@ -46,14 +48,12 @@ new vInfo[MAX_DYNAMIC_VEHICLES][E_VEHICLE_DATA];
 // 
 LoadVehicles() {
     new loadedVehicles;
-
     mysql_query(DBConn, "SELECT * FROM `vehicles`;");
 
     for(new i; i < cache_num_rows(); i++) {
-        new id;
-        cache_get_value_name_int(i, "id", id);
-        vInfo[id][hID] = id;
+        vInfo[id][hID] = i;
 
+        cache_get_value_name_int(i, "id", vInfo[id][hSQLID]);
         cache_get_value_name_int(i, "character_id", hInfo[id][hOwner]);
         cache_get_value_name(i, "address", hInfo[id][hAddress]);
         cache_get_value_name_int(i, "locked", hInfo[id][hLocked]);
@@ -75,7 +75,6 @@ LoadVehicles() {
         loadedVehicles++;
     }
 
-    printf("[CASAS]: %d veículos carregados com sucesso.", loadedVehicles);
-
-    return 1;
+    printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
+    return true;
 }

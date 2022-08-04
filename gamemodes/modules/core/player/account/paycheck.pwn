@@ -142,7 +142,7 @@ Payday(i){
         SendServerMessage(i, "Você terminou o período de ajuda inicial, agora seu salário base será de $%s.", FormatNumber(NORMAL_PAYMENT));
     } else pBasePayment = NORMAL_PAYMENT;
 
-    pVehTaxes = Car_GetCount(i)*25;
+    //pVehTaxes = Car_GetCount(i)*25;
 
     // Juros da poupança dependendo do status premium do jogador
     if (pInfo[i][pDonator] == 2) pSavings2 = takeFees(pSavingsBefore, 3);

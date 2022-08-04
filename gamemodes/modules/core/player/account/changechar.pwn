@@ -26,7 +26,7 @@ ShowChangeCharacters(playerid) {
     new characterName[24], string[128], majorString[2056],
         characterScore, lastLogin;
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s'", uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%s'", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows()){

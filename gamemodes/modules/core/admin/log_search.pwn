@@ -1,12 +1,12 @@
 #include <YSI_Coding\y_hooks>
 
-CMD:logs(playerid, params[]){
-    if(GetPlayerAdmin(playerid) < 2 && !GetUserTeam(playerid, 5)) return SendPermissionMessage(playerid);
+CMD:logs(playerid, params[]) {
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 5)) return SendPermissionMessage(playerid);
     ShowLogsInit(playerid);
     return true;    
 }
 
-ShowLogsInit(playerid){
+ShowLogsInit(playerid) {
     new Cache:type[15], rows[15], string[1024];
 
     for (new i = 0; i < sizeof(type); i++){
@@ -41,7 +41,7 @@ ShowLogsInit(playerid){
     return true;
 }
 
-Dialog:dialogLogs(playerid, response, listitem, inputtext[]){
+Dialog:dialogLogs(playerid, response, listitem, inputtext[]) {
     if(response){
         if(!strcmp(inputtext, "Pesquisar", true)){
             Dialog_Show(playerid, dialogSearchLog, DIALOG_STYLE_INPUT, "Central de Logs > Pesquisar", "Digite o texto a ser pesquisado:", "Pesquisar", "Voltar");
@@ -71,7 +71,7 @@ Dialog:dialogLogs(playerid, response, listitem, inputtext[]){
     return true;
 }
 
-Dialog:dialogSearchLog(playerid, response, listitem, inputtext[]){
+Dialog:dialogSearchLog(playerid, response, listitem, inputtext[]) {
     if(response){
         if(isnull(inputtext)) return Dialog_Show(playerid, dialogSearchLog, DIALOG_STYLE_INPUT, "Central de Logs > Pesquisar", "ERRO: Você não especificou o que deve ser buscado.\nDigite o texto a ser pesquisado:", "Pesquisar", "Voltar");
 

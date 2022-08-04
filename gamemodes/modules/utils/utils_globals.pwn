@@ -48,7 +48,7 @@ new uInfo[MAX_PLAYERS][User_Data];
 enum Player_Data {
     pID,
     pName[24],
-    pUser[24],
+    pUser,
     pFirstIP[15],
     pLastIP[15],
     pAdmin,
@@ -112,6 +112,7 @@ enum Player_Data {
     Text3D:pBrutallyTag,
     Text3D:pNametag,
     pNametagType,
+    
     pAllowRespawn,
     pLastKnockout,
     pTotalDamages,
@@ -208,9 +209,9 @@ void:ResetUserData(playerid) {
 }
 
 void:ResetCharacterData(playerid) {
-    pInfo   [playerid][pID]             = 0;
+    pInfo   [playerid][pID]             = 
+    pInfo   [playerid][pUser]           = 0;
     pInfo   [playerid][pName][0]        =
-    pInfo   [playerid][pUser][0]        =
     pInfo   [playerid][pFirstIP][0]     =
     pInfo   [playerid][pLastIP][0]      = 
     pInfo   [playerid][pGender][0]      =
@@ -316,93 +317,3 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][pLastShot], 64, "");
     pInfo[playerid][pShotTime] = 0;
 }
-
-// VEHICLES
-//new vehiclecallsign[MAX_VEHICLES];
-
-enum coreVehicles {
-    Float:vehFuel,
-	vehWindowsDown,
-	vehCrate,
-    vehTemporary,
-	vehSirenOn,
-	vehSirenObject,
-    Float:MilesPos[5],
- 	Float:MilesTraveled,
-    vehAFK,
-    vehCARID
-};
-new CoreVehicles[MAX_VEHICLES][coreVehicles];
-
-enum carData {
-	carID,
-	carExists,
-	carModel,
-	carOwner,
-    carParkTime,
-	Float:carPos[4],
-    carVW,
-    carInterior,
-	carColor1,
-	carColor2,
-	carLocked,
-	carImpounded,
-	carImpoundPrice,
-	carVehicle,
-    carSpawned,
-    carTrunkPlayer,
-    // Storage
-    carWeapons[30],
-    carWeaponsType[30],
-	carAmmo[30],
-    carGunrackWeapon[3],
-    carGunrackAmmo[3],
-    // Types
-    carFaction,
-    carBiz,
-    carJob,
-    carRent,
-    carRentTime,
-    carRentPlayer,
-    carRentPrice,
-    carRentSpawnTime,
-    // Tunning
-    carPaintjob,
-    carMods[14],
-    carNOSInstalled,
-    carNOS,
-    // Status
-    Float:carBattery, // Bateria do veículo
-	Float:carEngine, // Motor do veículo
-    Float:carMiles, // Milhas rodadas
-    Float:carMilesCon, // Milhas para descontar no gasto do veículo
-    Float:carFuel, // Combustível atual do veículo
-    Float:carMaxHP,
-    Float:carMaxFuel, // Combustível máximo do veículo
-    Float:carHealth,
-    Float:carHealthUpdate,
-    // Adicionais
-    carName[64], // Nome (modelo) do veículo
-    carNamePer, // Status do modelo do veículo
-    carPlate[128], // Placa personalizada
-	carPlatePer, // Status da placa personalizada
-    carAlarm, // Alarme
- 	carLock, // Travas
- 	carImob, // Immobilizer
- 	carInsurance, // Seguro
- 	carXMRadio, // Rádio
-    carSunPass, // SunPass
-    carEnergyResource,
-    // Danos
-    Float:carHealthRepair,
-    carDoorsStatus,
-    carPanelsStatus,
-    carLightsStatus,
-    carTiresStatus,
-    carDamage[23], // 9 calibres + 14 partes veiculares que podem danificar
-    carDismantling, // Desmanche
-    carCarparts // Desmanche
-};
-new CarData[MAX_DYNAMIC_CARS][carData];
-
-

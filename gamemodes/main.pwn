@@ -49,7 +49,7 @@ new query[2048];
 #include "modules\utils\utils_models.pwn"
 #include "modules\utils\utils_interface.pwn"
 #include "modules\utils\utils_init.pwn"
-#include "modules\utils\utils_vehicles.pwn"
+//#include "modules\utils\utils_vehicles.pwn"
 
 // Incluindo do setup/core da database
 #include "modules\core\database\mysql_core.pwn"
@@ -68,6 +68,8 @@ new query[2048];
 #include "modules\core\player\cmds\ads.pwn"
 #include "modules\core\player\cmds\rpcmds.pwn"
 #include "modules\core\player\cmds\apparence.pwn"
+#include "modules\core\player\cmds\credits.pwn"
+#include "modules\core\player\cmds\player_config.pwn"
 
 #include "modules\core\player\licences\base_licence.pwn"
 
@@ -76,8 +78,8 @@ new query[2048];
 #include "modules\core\player\systems\nametag.pwn"
 #include "modules\core\player\systems\death.pwn"
 #include "modules\core\player\systems\mechanic.pwn"
-#include "modules\core\player\systems\vehicles\vehicles_core.pwn"
-#include "modules\core\player\systems\vehicles\vehicles_cmd.pwn"
+//#include "modules\core\player\systems\vehicles\vehicles_core.pwn"
+//#include "modules\core\player\systems\vehicles\vehicles_cmd.pwn"
 #include "modules\core\player\systems\houses\houses_core.pwn"
 #include "modules\core\player\systems\houses\houses_cmd.pwn"
 #include "modules\core\player\systems\investment\investment_core.pwn"

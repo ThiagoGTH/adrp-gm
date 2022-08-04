@@ -502,6 +502,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     title[64],
                     characterValue[24],
                     lastLogin,
+                    userID,
                     character[128],
                     lastL[128];
 
@@ -545,6 +546,9 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
                 DCC_SetEmbedColor(embed, 0xF2633C);
 
+                cache_get_value_name_int(0, "ID", userID);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", userID);
+                result = mysql_query(DBConn, query);
                 // Verifica se existe algum dado na tabela, ou seja, conta quantos personagens o usuário tem. Se não possuir nenhum dado, o comando se encerra aqui.
                 if(!cache_num_rows()) {
                     format(text, 256, "Este usuário não possui nenhum personagem.");
@@ -581,8 +585,8 @@ public DCC_OnMessageCreate(DCC_Message:message)
             
                 new text[256],
                     footer[128],
+                    userID,
                     title[64],
-                    characterName[24],
                     userValue[24];
 
                 if(isnull(parameters)){
@@ -601,7 +605,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 }
 
                 // Consultar a tabela players com o nome digitado e informar se o nome não existe ou, se sim, o seu usuário.
-                mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", characterName);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", parameters);
                 new Cache:result = mysql_query(DBConn, query);
 
                 if(!cache_num_rows()){
@@ -623,7 +627,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
                 DCC_SetEmbedColor(embed, 0xF2633C);
 
-                cache_get_value_name(0, "user", userValue);
+                cache_get_value_name_int(0, "user_id", userID);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%d';", userID);
+                mysql_query(DBConn, query);
+                cache_get_value_name(0, "username", userValue);
 
                 format(text, 256, "O usuário de %s é: **%s**", parameters, userValue);
                 utf8encode(text, text);
@@ -641,6 +648,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 new text[1024],
                     title[32],
                     footer[128],
+                    userID,
                     title_field[128], 
                     text_field[1024];
 
@@ -678,10 +686,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
+                cache_get_value_name_int(0, "ID", userID);
                 cache_delete(result); // Limpar o cachê do MySQL
 
                 // Pegar os dados referente ao banimento
-                mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s';", parameters);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d';", userID);
                 new Cache:result2 = mysql_query(DBConn, query);
 
                 // Verificar existência do banimento
@@ -711,7 +720,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     cache_get_value_name(i, "reason", reason);
                     cache_get_value_name_int(i, "ban_date", ban_date);
                     cache_get_value_name_int(i, "unban_date", unban_date);
-                    cache_get_value_name(i, "admin_unban", unban_admin);
+                    cache_get_value_name(i, "unban_admin", unban_admin);
                     cache_get_value_name_int(i, "banned", banned);
 
                     format(text, 1024, "O usuário '%s' esta, atualmente, **%s**.\n", parameters, banned > 0 ? ("banido") : ("desbanido"));

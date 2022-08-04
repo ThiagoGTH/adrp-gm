@@ -13,7 +13,7 @@ Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
 	if(!response || !strcmp(inputtext, " ")) return ShowUsersCharacters(playerid);
 
     else if(!strcmp(inputtext, "Criar personagem")) {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s';", uInfo[playerid][uName]);
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", uInfo[playerid][uID]);
         mysql_query(DBConn, query);
 
         if(cache_num_rows() > uInfo[playerid][uCharSlots]) {
@@ -132,7 +132,7 @@ Dialog:CHARACTER_DELETE(playerid, response, listitem, inputtext[]) {
         return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem que você gostaria de deletar.", "Continuar", "Voltar");
     }
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s' AND `user` = '%s';", inputtext, uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s' AND `user_id` = '%d';", inputtext, uInfo[playerid][uID]);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) {
         SendErrorMessage(playerid, "Esse personagem não existe ou não é desse usuário.");
@@ -148,7 +148,7 @@ Dialog:CHARACTER_DELETE(playerid, response, listitem, inputtext[]) {
 Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
     if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][characterDelete][0] = EOS;
 
-    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `name` = '%s' AND `user` = '%s';", pInfo[playerid][characterDelete], uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `name` = '%s' AND `user_id` = '%d';", pInfo[playerid][characterDelete], uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     va_SendClientMessage(playerid, -1, "SERVER: Você deletou o personagem %s com sucesso. A ação é irreversível.", pInfo[playerid][characterDelete]);
@@ -164,8 +164,8 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
 CreateCharacter(playerid, characterName[], characterGender[], characterBackground[]) {
 
     mysql_format(DBConn, query, sizeof query,
-        "INSERT INTO players (`name`, `user`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', '%s', '%s', '%s');",
-            characterName, GetPlayerNameEx(playerid), characterGender, characterBackground, GetPlayerIP(playerid));
+        "INSERT INTO players (`name`, `user_ID`, `gender`, `background`, `first_ip`) VALUES ('%s', '%s', '%s', '%s', '%s');",
+            characterName, GetPlayerUserEx(playerid), characterGender, characterBackground, GetPlayerIP(playerid));
     mysql_query(DBConn, query);
 
     pInfo[playerid][pName][0] = pInfo[playerid][pDateOfBirth][0] = pInfo[playerid][pGender][0] = pInfo[playerid][pBackground][0] = EOS;
@@ -185,7 +185,7 @@ LoadCharacterInfo(playerid, playerName[]) {
 
     cache_get_value_name_int(0, "ID", pInfo[playerid][pID]);
 
-    cache_get_value_name(0, "user", pInfo[playerid][pUser]);
+    cache_get_value_name_int(0, "user_id", pInfo[playerid][pUser]);
     cache_get_value_name(0, "name", pInfo[playerid][pName]);
     format(pInfo[playerid][pLastIP], 20, "%s", GetPlayerIP(playerid));
 
@@ -331,23 +331,8 @@ SpawnSelectedCharacter(playerid) {
     }
     if (uInfo[playerid][uAdmin] > 0) va_SendClientMessage(playerid, -1, "SERVER: Você logou com o nível administrativo %d.", uInfo[playerid][uAdmin]);
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `carOwner` = '%d';", pInfo[playerid][pID]);
-    new Cache:result = mysql_query(DBConn, query);
-
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '1' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);
-
-	if(cache_num_rows() > 0) {
-        for (new i = 0; i < cache_num_rows(); i ++) {
-            new carid;
-            cache_get_value_name_int(i, "carID", carid);
-			if(IsCarInData(carid) == -1)
-				Car_LoadByID(carid);
-
-            printf("carid %d", carid);
-		}
-	}
-	cache_delete(result);
 
     format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);

@@ -23,8 +23,8 @@ CMD:ban(playerid, params[]) {
     if(!IsPlayerConnected(id)) return SendNotConnectedMessage(playerid);
 
     // Inserir o banimento na database
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_name`, `admin_name`, `reason`, \
-        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, 0)", uInfo[id][uName], uInfo[playerid][uName], reason, _:Now());
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_id`, `admin_name`, `reason`, \
+        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, 0)", uInfo[id][uID], uInfo[playerid][uName], reason, _:Now());
     mysql_query(DBConn, query);
 
     // Printar
@@ -44,7 +44,7 @@ CMD:ban(playerid, params[]) {
 }
 
 CMD:banoff(playerid, params[]) {
-    new userName[24], reason[128], adminID;
+    new userName[24], reason[128], adminID, userID;
 
     if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]s[128]", userName, reason)) return SendSyntaxMessage(playerid, "/banoff [usuário] [motivo]");
@@ -65,21 +65,22 @@ CMD:banoff(playerid, params[]) {
 
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um usuário com este nome no banco de dados.");
     
+    cache_get_value_name_int(0, "ID", userID);
     cache_get_value_name_int(0, "admin", adminID);
     if(uInfo[playerid][uAdmin] < adminID) return SendErrorMessage(playerid, "Você não pode banir este jogador!");
 
     // Checar se o usuário já está banido.
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s' AND \
-        `banned` = 1;", userName, _:Now());
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND \
+        `banned` = 1;", userID, _:Now());
     mysql_query(DBConn, query);
 
     if(cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível banir este jogador porque ele já está cumprindo um banimento.");
 
     // Banir, enfim.
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_name`, `admin_name`, `reason`, \
-        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, 0)", userName, uInfo[playerid][uName], reason, _:Now());
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_id`, `admin_name`, `reason`, \
+        `ban_date`, `unban_date`) VALUES ('%d', '%s', '%s', %d, 0)", userID, uInfo[playerid][uName], reason, _:Now());
     mysql_query(DBConn, query);
 
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline e permanentemente. Motivo: %s.", uInfo[playerid][uName], userName, reason);
@@ -107,9 +108,9 @@ CMD:bantemp(playerid, params[]) {
     if(!IsPlayerConnected(id)) return SendNotConnectedMessage(playerid);
     if(!days) return SendErrorMessage(playerid, "Um jogador só pode ser banido temporariamente por, no mínimo, 1 dia.");
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_name`, `admin_name`, `reason`, \
-        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, %d)", 
-        uInfo[id][uName], uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_id`, `admin_name`, `reason`, \
+        `ban_date`, `unban_date`) VALUES ('%d', '%s', '%s', %d, %d)", 
+        uInfo[id][uID], uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
     mysql_query(DBConn, query);
     
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s (%s) por %d dias. Motivo: %s.", uInfo[playerid][uName], GetPlayerNameEx(id), uInfo[id][uName], days, reason);
@@ -127,7 +128,7 @@ CMD:bantemp(playerid, params[]) {
 }
 
 CMD:bantempoff(playerid, params[]) {
-    new userName[24], reason[128], days, adminID;
+    new userName[24], reason[128], days, adminID, userID;
 
     if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]ds[128]", userName, days, reason)) return SendSyntaxMessage(playerid, "/bantempoff [usuário] [dias] [motivo]");
@@ -149,22 +150,23 @@ CMD:bantempoff(playerid, params[]) {
 
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um usuário com este nome no banco de dados.");
     
+    cache_get_value_name_int(0, "ID", userID);
     cache_get_value_name_int(0, "admin", adminID);
     if(uInfo[playerid][uAdmin] < adminID) return SendErrorMessage(playerid, "Você não pode banir este jogador!");
 
     // Checar se o usuário já está banido.
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s' AND \
-        `banned` = 1;", userName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND \
+        `banned` = 1;", userID);
     mysql_query(DBConn, query);
 
     if(cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível banir este jogador porque ele já está cumprindo um banimento.");
 
     // Banir, enfim.
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_name`, `admin_name`, `reason`, \
-        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, %d)", 
-        userName, uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_id`, `admin_name`, `reason`, \
+        `ban_date`, `unban_date`) VALUES ('%d', '%s', '%s', %d, %d)", 
+        userID, uInfo[playerid][uName], reason, _:Now(), _:Now() + (86400 * days));
     mysql_query(DBConn, query);
 
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s de modo offline por %d dias. Motivo: %s.", uInfo[playerid][uName], userName, days, reason);
@@ -188,16 +190,21 @@ CMD:bantempoff(playerid, params[]) {
 }
 
 CMD:desban(playerid, params[]) {
-    new userName[24];
+    new userName[24], userID;
 
     if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/desban [usuario]");
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s' AND `banned` = 1;", userName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", userName);
+    mysql_query(DBConn, query);
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Esse usuário não existe.");
+    cache_get_value_name_int(0, "ID", userID);
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", userID);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar nenhum usuário banido com este nome.");
 
-    mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0, `unban_date` = '%d', `admin_unban` = '%s' WHERE `banned_name` = '%s' AND `banned` = 1", _:Now(), uInfo[playerid][uName], userName);
+    mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0, `unban_date` = '%d', `unban_admin` = '%s' WHERE `banned_id` = '%d' AND `banned` = 1", _:Now(), uInfo[playerid][uName], userID);
     mysql_query(DBConn, query);
 
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s desbaniu %s.", uInfo[playerid][uName], userName);
@@ -221,12 +228,17 @@ CMD:desban(playerid, params[]) {
 }
 
 CMD:checarban(playerid, params[]) {
-    new userName[24];
+    new userName[24], userID;
 
     if(uInfo[playerid][uAdmin] < 2) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/checarban [usuario]");
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s';", userName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", userName);
+    mysql_query(DBConn, query);
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Esse usuário não existe.");
+    cache_get_value_name_int(0, "ID", userID);
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d';", userID);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "O usuário especificado não tem nenhum banimento registrado.");
 
@@ -240,7 +252,7 @@ CMD:checarban(playerid, params[]) {
         cache_get_value_name(i, "reason", reason);
         cache_get_value_name_int(i, "ban_date", ban_date);
         cache_get_value_name_int(i, "unban_date", unban_date);
-        cache_get_value_name(i, "admin_unban", unban_admin);
+        cache_get_value_name(i, "unban_admin", unban_admin);
         cache_get_value_name_int(i, "banned", banned);
 
         va_SendClientMessage(playerid, banned > 0 ? (COLOR_LIGHTRED) : (COLOR_GREY), " Banido por %s | Motivo: %s | Data do banimento: %s | \
@@ -252,18 +264,23 @@ CMD:checarban(playerid, params[]) {
 alias:checarban("checarbans")
 
 CMD:limparhistoricobans(playerid, params[]) {
-    new userName[24];
+    new userName[24], userID;
 
     if(uInfo[playerid][uAdmin] < 5) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/limparhistoricobans [usuario]");
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s';", userName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", userName);
+    mysql_query(DBConn, query);
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Esse usuário não existe.");
+    cache_get_value_name_int(0, "ID", userID);
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d';", userID);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "O usuário especificado não tem nenhum banimento registrado.");
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Você apagou %d banimentos do usuário %s.", cache_num_rows(), userName);
 
-    mysql_format(DBConn, query, sizeof query, "DELETE FROM ban WHERE `banned_name` = '%s';", userName);
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM ban WHERE `banned_id` = '%d';", userID);
     mysql_query(DBConn, query);  
 
     format(logString, sizeof(logString), "%s (%s) apagou %d banimentos do usuário %s.", pNome(playerid), GetPlayerUserEx(playerid), cache_num_rows(), userName);
@@ -279,7 +296,7 @@ CheckUserBan(playerid) {
 
     UpdateUnbannedUsers();
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_name` = '%s' AND `banned` = 1;", uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
@@ -287,16 +304,14 @@ CheckUserBan(playerid) {
 
     
     // Armazenar informações do banimento em variáveis
-
     cache_get_value_name(0, "admin_name", adminName);
     cache_get_value_name(0, "reason", reason);
     cache_get_value_name_int(0, "ban_date", ban_date);
     cache_get_value_name_int(0, "unban_date", unban_date);
 
     // Formatar a string com as informações anteriores
-
-    format(bigString, sizeof bigString, "Você foi banido %sdo servidor.\n \nUsuário: %s\nData de banimento: %s\nData de desbanimento: %s\n \
-        Motivo: %s\n \nSe você acha que isso foi um engano, recorra a um apelo no fórum.", 
+    format(bigString, sizeof bigString, "Você foi banido %sdo servidor.\n\nUsuário: %s\nData de banimento: %s\nData de desbanimento: %s\n \
+    Motivo: %s\n \nSe você acha que isso foi um engano, recorra a um apelo no fórum.", 
         unban_date > 0 ? ("temporariamente ") : (""), uInfo[playerid][uName], GetFullDate(ban_date), 
         unban_date > 0 ? (GetFullDate(unban_date)) : ("Banimento permanente"), reason);
 

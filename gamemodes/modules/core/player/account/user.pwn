@@ -90,10 +90,10 @@ public OnPasswordChecked(playerid)
 		ClearPlayerChat(playerid);
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid); 
-        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 2);
-        ShowUsersCharacters(playerid);
+        CheckUserBan(playerid);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 500, false, "dd", playerid, 2);
 	}
-	else return NotifyWrongAttempt(playerid);
+	else return pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 500, false, "dd", playerid, 1);
 	return true;
 
 }
@@ -104,8 +104,7 @@ NotifyWrongAttempt(playerid) {
     loginAttempts[playerid]++;
     KillTimer(pInfo[playerid][pInterfaceTimer]);
     va_SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
-    pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 1);
-
+    
     if(loginAttempts[playerid] >= 3) {
         SendServerMessage(playerid, "Você foi kickado por errar a senha muitas vezes.");
         Kick(playerid);
@@ -306,7 +305,7 @@ ShowUsersCharacters(playerid) {
     new characterName[24], string[128], majorString[2056],
         characterScore, lastLogin;
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s'", uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
@@ -336,7 +335,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 
 // Aqui, iremos checar se o player logou com o nick de um personagem já existente e, se sim, redirecionar para o nome do usuário.
 CheckCharactersName(playerid) {
-    new realUserName[24];
+    new realUserName[24], userID;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s'", GetPlayerNameEx(playerid));
     mysql_query(DBConn, query);
@@ -344,7 +343,10 @@ CheckCharactersName(playerid) {
     if(!cache_num_rows())
         return true;
 
-    cache_get_value_name(0, "user", realUserName);
+    cache_get_value_name_int(0, "user_id", userID);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%d'",  userID);
+    mysql_query(DBConn, query);
+    cache_get_value_name(0, "username", realUserName);
 
     ClearPlayerChat(playerid);
     SendServerMessage(playerid, "Detectamos que o seu nome de usuário é o nome de um personagem existente.");
@@ -361,7 +363,7 @@ CheckCharactersName(playerid) {
 // Comando de checar usuário e personagens de um jogador. Aberto pra todos.
 CMD:usuario(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
-    new characterName[24], userValue[24];
+    new characterName[24], userValue[24], userID;
 
     if(sscanf(params, "s[24]", characterName)) return SendSyntaxMessage(playerid, "/usuario [personagem]");
 
@@ -369,8 +371,11 @@ CMD:usuario(playerid, params[]) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", characterName);
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um personagem com o nome digitado.");
+    cache_get_value_name_int(0, "user_id", userID);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%d';", userID);
+    mysql_query(DBConn, query);
+    cache_get_value_name(0, "username", userValue);
 
-    cache_get_value_name(0, "user", userValue);
     va_SendClientMessage(playerid, COLOR_GREEN, "O usuário de %s é: %s.", characterName, userValue);
 
     return true;
@@ -378,7 +383,7 @@ CMD:usuario(playerid, params[]) {
 
 CMD:personagens(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
-    new userName[24], characterValue[24], lastLogin;
+    new userName[24], characterValue[24], lastLogin, user_id;
 
     if(sscanf(params, "s[24]", userName)) return SendSyntaxMessage(playerid, "/personagens [usuario]");
 
@@ -387,8 +392,9 @@ CMD:personagens(playerid, params[]) {
     mysql_query(DBConn, query);
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar um usuário com o nome digitado.");
 
+    cache_get_value_name_int(0, "ID", user_id);
     // Pegar os personagens que pertencem àquele usuário
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s';", userName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", user_id);
     mysql_query(DBConn, query);
 
     va_SendClientMessage(playerid, COLOR_GREY, "Personagens de %s:", userName);

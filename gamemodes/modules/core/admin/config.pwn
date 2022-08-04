@@ -338,8 +338,13 @@ Dialog:showAdmins(playerid, response, listitem, inputtext[]){
             new Cache:result = mysql_query(DBConn, query);
             cache_delete(result);
 
-            mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s'", inputtext);
+            mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", inputtext);
             new Cache:result2 = mysql_query(DBConn, query);
+            new userID;
+            cache_get_value_name_int(0, "ID", userID);
+            cache_delete(result2);
+            mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", userID);
+            new Cache:result3 = mysql_query(DBConn, query);
 
             if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_GREY, "Esse administrador não possuía nenhum personagem. Não foi possível verificar a conexão deste. [E#02]");
             new characterValue[24];
@@ -348,7 +353,7 @@ Dialog:showAdmins(playerid, response, listitem, inputtext[]){
 
                 if(GetPlayerByName(characterValue) == -1){
                     SendServerMessage(playerid, "Você removeu %s da equipe administrativa do servidor.", inputtext);
-                    cache_delete(result2);
+                    cache_delete(result3);
                     return true;
                 } else {
                     new userid = GetPlayerByName(characterValue);
@@ -356,7 +361,7 @@ Dialog:showAdmins(playerid, response, listitem, inputtext[]){
                     va_SendClientMessage(userid, COLOR_YELLOW,"%s removeu você do quadro administrativo.", pNome(playerid));
                     SendServerMessage(playerid, "Você removeu %s da equipe administrativa do servidor.", inputtext);
                     SaveUserInfo(userid);
-                    cache_delete(result2);  
+                    cache_delete(result3);  
                     return true;
                 }
             }
@@ -428,8 +433,14 @@ Dialog:addAdmin2(playerid, response, listitem, inputtext[]){
             default: format(rank, sizeof(rank), "Inválido");
 	    }
         cache_delete(result);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user` = '%s'", inputtext);
+
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", inputtext);
         new Cache:result2 = mysql_query(DBConn, query);
+        new userID;
+        cache_get_value_name_int(0, "ID", userID);
+        cache_delete(result2);
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", userID);
+        new Cache:result3 = mysql_query(DBConn, query);
 
         if(!cache_num_rows()) return va_SendClientMessage(playerid, COLOR_GREY, "Esse administrador não possui nenhum personagem. Não foi possível verificar a conexão deste. [E#03]");
 
@@ -438,9 +449,9 @@ Dialog:addAdmin2(playerid, response, listitem, inputtext[]){
             cache_get_value_name(i, "name", characterValue);
 
             if(GetPlayerByName(characterValue) == -1){
-                cache_delete(result2);
+                cache_delete(result3);
                 SendServerMessage(playerid, "Você setou %s como %s.", pInfo[playerid][tempChar], rank);
-                cache_delete(result2);
+                cache_delete(result3);
                 return true;
             } else {
                 new userid = GetPlayerByName(characterValue);
@@ -448,7 +459,7 @@ Dialog:addAdmin2(playerid, response, listitem, inputtext[]){
                 SendServerMessage(playerid, "Você setou %s como %s.", pInfo[playerid][tempChar], rank);
                 va_SendClientMessage(userid, COLOR_YELLOW,"%s setou você como %s.", pNome(playerid), rank);
                 SaveUserInfo(userid);
-                cache_delete(result2);  
+                cache_delete(result3);  
                 return true;
             }
         }

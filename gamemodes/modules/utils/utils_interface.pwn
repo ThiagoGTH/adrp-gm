@@ -37,20 +37,18 @@ forward SetPlayerInterface(playerid, level);
 public SetPlayerInterface(playerid, level) {
     if(level == 1){ // SENHA INCORRETA
         KillTimer(pInfo[playerid][pInterfaceTimer]);
-        // SHOW
+        NotifyWrongAttempt(playerid);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 999);
+        
         TextDrawShowForPlayer(playerid, TEXTDRAW_INTERFACE_INCORRECT);
-
-        // HIDE
         TextDrawHideForPlayer(playerid, TEXTDRAW_INTERFACE_CONNECTED);
-
     } else if(level == 2){ // AUTENTICADO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
-        // SHOW
-        TextDrawShowForPlayer(playerid, TEXTDRAW_INTERFACE_CONNECTED);
+        ShowUsersCharacters(playerid);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 999);
 
-        // HIDE
+        TextDrawShowForPlayer(playerid, TEXTDRAW_INTERFACE_CONNECTED);
         TextDrawHideForPlayer(playerid, TEXTDRAW_INTERFACE_INCORRECT);
-        
     } else if(level == 999){ // FECHAR TUDO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
 
@@ -74,7 +72,6 @@ public ShowLoginTextdraws(playerid) {
 
     InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1764.986206, -1501.460083, 238.376602, 12000);
     InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1761.035888, -1498.431884, 237.901809, 12000);
-    
     return true;
 }
 
@@ -85,6 +82,8 @@ HideLoginTextdraws(playerid) {
 
     return true;
 }
+
+
 
 // Função para criar os textdraws de login
 CreateLoginTextdraws(playerid) {

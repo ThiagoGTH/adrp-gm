@@ -60,8 +60,7 @@ CMD:aa(playerid, params[]) {
 
 ShowAdminCmds(playerid){
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-	if(GetPlayerAdmin(playerid) >= 1)
-	{
+	if(GetPlayerAdmin(playerid) >= 1) {
 	    va_SendClientMessage(playerid, -1, "{33AA33}_______________________________ {FFFFFF}COMANDOS ADMINISTRATIVOS{33AA33} _______________________________");
 	}
 	if(GetPlayerAdmin(playerid) >= 1) // TESTER

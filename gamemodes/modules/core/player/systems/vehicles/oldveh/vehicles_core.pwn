@@ -107,6 +107,7 @@ Car_Create(ownerid, modelid, Float:x, Float:y, Float:z, Float:angle, color1, col
 			}
             new string[120];
             CarData[i][carVehicle] = CreateVehicle(modelid, x, y, z, angle, color1, color2, -1);
+			printf("Car_Create");
             format(string, sizeof(string), "%s", CarData[i][carPlate]);
             SetVehicleNumberPlate(CarData[i][carVehicle], string);
             GetVehiclePos(CarData[i][carVehicle], CoreVehicles[CarData[i][carVehicle]][MilesPos][0], CoreVehicles[CarData[i][carVehicle]][MilesPos][1], CoreVehicles[CarData[i][carVehicle]][MilesPos][2]);

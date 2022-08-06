@@ -24,6 +24,12 @@ GetPlayerUserEx(playerid){
 
 GetPlayerSQLID(playerid){
     new SQLID;
+    SQLID = pInfo[playerid][pID];
+    return SQLID;
+}
+
+GetUserSQLID(playerid){
+    new SQLID;
     SQLID = uInfo[playerid][uID];
     return SQLID;
 }

@@ -6,7 +6,7 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 
 #include <YSI_Coding\y_hooks>
 
-#define DB_HOST         "localhost"
+#define DB_HOST         "127.0.0.1"
 #define DB_USER         "root"
 #define DB_PASSWORD     ""
 #define DB_NAME         "adrp"
@@ -291,9 +291,9 @@ void:CheckVehiclesTable(){
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL DEFAULT '0',\
     `model` int NOT NULL DEFAULT '0',\
-    `faction` int NOT NULL DEFAULT '-1',\
-    `business` int NOT NULL DEFAULT '-1',\
-    `job` int NOT NULL DEFAULT '-1',\
+    `faction` int NOT NULL DEFAULT '0',\
+    `business` int NOT NULL DEFAULT '0',\
+    `job` int NOT NULL DEFAULT '0',\
     `name` varchar(256) NOT NULL DEFAULT 'Default',\
     `personalized_name` int NOT NULL DEFAULT '0',\
     `legalized` int NOT NULL  DEFAULT '0',\

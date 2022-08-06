@@ -296,7 +296,7 @@ CheckUserBan(playerid) {
 
     UpdateUnbannedUsers();
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", uInfo[playerid][uID]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", GetUserSQLID(playerid));
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())

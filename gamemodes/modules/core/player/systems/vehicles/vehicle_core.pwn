@@ -123,6 +123,7 @@ SaveVehicle(vehicleid) {
 }
 
 SpawnVehicle(vehicleid) {
+    
     if (vehicleid != -1 && vInfo[vehicleid][vExists]){
         new string[128];
         if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
@@ -149,10 +150,9 @@ SpawnVehicle(vehicleid) {
     }
 }
 
-
 LoadVehicles() {
     new loadedVehicles;
-    mysql_query(DBConn, "SELECT * FROM `vehicles`;");
+    mysql_query(DBConn, "SELECT * FROM `vehicles` WHERE (`faction` != '0' OR `business` != '0' OR `job` != '0') AND `model` > '0';");
 
     for (new i; i < cache_num_rows(); i++) {
         new id;
@@ -192,7 +192,7 @@ LoadVehicles() {
         cache_get_value_name_int(i, "virtual_world", vInfo[id][vVW]);
         cache_get_value_name_int(i, "interior", vInfo[id][vInterior]);
 
-        mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tuning` WHERE `ID` = '%d'", id);
+        mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tunings` WHERE `ID` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `ID` = '%d'", id);
@@ -202,6 +202,52 @@ LoadVehicles() {
         loadedVehicles++;
     }
     printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
+    return true;
+}
+
+LoadVehicle(vehicleid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `ID` = %d;", vehicleid);
+    mysql_query(DBConn, query);
+
+    if (vInfo[vehicleid][vExists]) return false;
+
+    vInfo[vehicleid][vExists] = true;
+    cache_get_value_name_int(0, "model", vInfo[vehicleid][vModel]);
+    cache_get_value_name_int(0, "character_vehicleid", vInfo[vehicleid][vOwner]);
+
+    cache_get_value_name_int(0, "faction", vInfo[vehicleid][vFaction]);
+    cache_get_value_name_int(0, "business", vInfo[vehicleid][vBusiness]);
+    cache_get_value_name_int(0, "job", vInfo[vehicleid][vJob]);
+
+    cache_get_value_name(0, "name", vInfo[vehicleid][vName]);
+    cache_get_value_name_int(0, "personalized_name", vInfo[vehicleid][vNamePersonalized]);
+
+    cache_get_value_name_int(0, "legalized", vInfo[vehicleid][vLegal]);
+
+    cache_get_value_name(0, "plate", vInfo[vehicleid][vPlate]);
+    cache_get_value_name_int(0, "personalized_plate", vInfo[vehicleid][vPlatePersonalized]);
+
+    cache_get_value_name_int(0, "locked", vInfo[vehicleid][vLocked]);
+
+    cache_get_value_name_int(0, "color1", vInfo[vehicleid][vColor1]);
+    cache_get_value_name_int(0, "color2", vInfo[vehicleid][vColor2]);
+    cache_get_value_name_int(0, "paintjob", vInfo[vehicleid][vPaintjob]);
+
+    cache_get_value_name_float(0, "position_X", vInfo[vehicleid][vPos][0]);
+    cache_get_value_name_float(0, "position_Y", vInfo[vehicleid][vPos][1]);
+    cache_get_value_name_float(0, "position_Z", vInfo[vehicleid][vPos][2]);
+    cache_get_value_name_float(0, "position_A", vInfo[vehicleid][vPos][3]);
+
+    cache_get_value_name_int(0, "virtual_world", vInfo[vehicleid][vVW]);
+    cache_get_value_name_int(0, "interior", vInfo[vehicleid][vInterior]);
+
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tuning` WHERE `vehicleid` = '%d'", vehicleid);
+	mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", vehicleid);
+
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicleid` = '%d'", vehicleid);
+	mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", vehicleid);
+
+    SpawnVehicle(vehicleid);
     return true;
 }
 
@@ -234,4 +280,9 @@ ModVehicle(vehicleid) {
 			AddVehicleComponent(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vMods][i]);
 		}
 	}
+}
+
+hook OnPlayerEnterCheckpoint(playerid) {
+    DisablePlayerCheckpoint(playerid);
+    return true;
 }

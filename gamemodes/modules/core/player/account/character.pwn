@@ -65,7 +65,7 @@ Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
 
     CreateCharacter(playerid, pInfo[playerid][pName]);
 
-    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s.", pInfo[playerid][pName]);
+    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s.", inputtext);
     SendServerMessage(playerid, "O personagem foi criado com sucesso e você já pode vê-lo na lista de personagens.");
 
     ShowUsersCharacters(playerid);

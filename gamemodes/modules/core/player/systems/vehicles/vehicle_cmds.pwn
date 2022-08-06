@@ -135,3 +135,62 @@ CMD:editarveiculo(playerid, params[]) {
 	}
 	return true;
 }
+
+CMD:veiculos(playerid, params[]) {
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
+    new Cache:result = mysql_query(DBConn, query);
+            
+    new string[2048], veh_id, veh_model, veh_color1, veh_color2;
+
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Você não possui nenhum veículo");
+
+    for(new i; i < cache_num_rows(); i++){
+        cache_get_value_name_int(i, "ID", veh_id);
+		cache_get_value_name_int(i, "model", veh_model);
+		cache_get_value_name_int(i, "color1", veh_color1);
+		cache_get_value_name_int(i, "color2", veh_color2);
+        
+		if(vInfo[veh_id][vVehicle]) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), vInfo[veh_id][vVehicle]);
+		else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), veh_id);
+    }
+    cache_delete(result);
+
+	new title[128];
+	format(title, 128, "_______________Veículos_de_%s", pNome(playerid));
+	AdjustTextDrawString(title);
+
+    Dialog_Show(playerid, showVehicles, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Spawnar", "Fechar");
+	return true;
+}
+
+Dialog:showVehicles(playerid, response, listitem, inputtext[]){
+    if(response){
+		new count = 0, veh_id;
+
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
+    	new Cache:result = mysql_query(DBConn, query);
+
+		for(new i; i < cache_num_rows(); i++) {
+        	cache_get_value_name_int(i, "ID", veh_id);
+			if(count == listitem) {
+				if(vInfo[veh_id][vVehicle]) {
+					SendErrorMessage(playerid, "Este veículo já está spawnado.");
+					break;
+				}
+
+				LoadVehicle(veh_id);
+				SendServerMessage(playerid, "Seu veículo %s foi spawnado.", ReturnVehicleModelName(listitem));
+				if(vInfo[i][vVW] == 0) {
+					va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Você pode usar a marca vermelha no mapa para achar seu veiculo.");
+					SetPlayerCheckpoint(playerid, vInfo[veh_id][vPos][0], vInfo[veh_id][vPos][1], vInfo[veh_id][vPos][2], 3.0);
+				}
+				printf("veh_id: %d", veh_id);
+			} else count ++;
+		}
+		cache_delete(result);
+
+		printf("listitem %d", listitem);
+		printf("inputtext[] %s %d", inputtext, inputtext);
+	}
+    return true;
+}

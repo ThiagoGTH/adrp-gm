@@ -13,10 +13,10 @@ hook OnPlayerConnect(playerid){
 }
 
 hook OnGameModeInit(){
-    LoadSANMap();
+    LoadSANExterior();
 }
 
-LoadSANMap(){
+LoadSANExterior(){
     AddSimpleModel(-1, 19325, -5775, "maps/factions/SAN/sannews1.dff", "maps/factions/SAN/sannews.txd");
     AddSimpleModel(-1, 19325, -5776, "maps/factions/SAN/sannews2.dff", "maps/factions/SAN/sannews.txd");
     AddSimpleModel(-1, 19325, -5777, "maps/factions/SAN/sannews3.dff", "maps/factions/SAN/sannews.txd");
@@ -31,5 +31,4 @@ LoadSANMap(){
     CreateDynamicObject(700, 1761.285888, -1651.709472, 14.398771, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
     CreateDynamicObject(700, 1777.687500, -1676.169311, 14.398771, 0.000000, 0.000000, 270.000000, -1, -1, -1, 300.00, 300.00); 
     CreateObject(4028, 1781.479980, -1648.420043, 26.835899, 0.000000, 0.000000, 125.499717, 800.00); 
-
 }

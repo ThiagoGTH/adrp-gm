@@ -48,9 +48,9 @@ hook OnGameModeInit() {
 }
 
 LoadSMModels() {
-    AddSimpleModel (-1,19379, -20020, "maps/Env/SM/alooouctuk.dff", "maps/Env/SM/alooouctuk.txd");
-    AddSimpleModel (-1,19379, -20019, "maps/Env/SM/cicekbocek.dff", "maps/Env/SM/cicekbocek.txd");
-    AddSimpleModel (-1,19379, -20018, "maps/Env/SM/beach.dff", "maps/Env/SM/beach.txd");
+    AddSimpleModel (-1,19379, -20020, "maps/env/SM/alooouctuk.dff", "maps/env/SM/alooouctuk.txd");
+    AddSimpleModel (-1,19379, -20019, "maps/env/SM/cicekbocek.dff", "maps/env/SM/cicekbocek.txd");
+    AddSimpleModel (-1,19379, -20018, "maps/env/SM/beach.dff", "maps/env/SM/beach.txd");
 
 }
 

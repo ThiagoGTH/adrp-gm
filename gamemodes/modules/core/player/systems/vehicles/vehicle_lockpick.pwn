@@ -1,11 +1,11 @@
-
+#include <YSI_Coding\y_hooks>
 
 new PlayerText:LockText[12], bool:LockUse[MAX_PLAYERS], Float:LockProgress = 207.0, Float:LockLocation[MAX_PLAYERS], Float:LockSize[MAX_PLAYERS], LockCount[MAX_PLAYERS], LockTimer[MAX_PLAYERS], Correct[MAX_PLAYERS], VehicleLockedID[MAX_PLAYERS];
 new Engine[MAX_PLAYERS], Lights[MAX_PLAYERS], Alarm[MAX_PLAYERS], DoorsLockPick[MAX_PLAYERS], Bonnet[MAX_PLAYERS], Boot[MAX_PLAYERS], Objective[MAX_PLAYERS];
 
 CMD:lockpick(playerid) {
     new Float:VehX, Float:VehY, Float:VehZ, Count;
-	if(LockUse[playerid] == true) return SendClientMessage(playerid, -1, "Você já esta usando a lockpick");
+	if(LockUse[playerid] == true) return SendErrorMessage(playerid, "Você já está tentando quebrar a trava deste veículo.");
     for(new i; i < MAX_VEHICLES; i++) {
         GetVehiclePos(i, VehX, VehY, VehZ);
     	if(IsPlayerInRangeOfPoint(playerid, 2.0, VehX, VehY, VehZ)) {
@@ -13,7 +13,7 @@ CMD:lockpick(playerid) {
     	    if(Count == 1) break;
 		}
 	}
-	if(Count == 0) return SendClientMessage(playerid, -1, "Não há nenhum veiculo próximo!");
+	if(Count == 0) return SendErrorMessage(playerid, "Não há nenhum veículo por perto.");
 	GetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), LockUse[playerid] = true, LockCount[playerid] = 0, CreateLocPick(playerid);
 	for(new i; i < 12; i++) { PlayerTextDrawShow(playerid, LockText[i]); }
 	return 1;
@@ -73,7 +73,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if(LockCount[playerid] == 4)
 				{
 					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
-					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "Você não conseguiu acertar a lockpick e acionou o alarme!");
+					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
 					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi trancado!");
 					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi aberto!");
 				}
@@ -122,14 +122,15 @@ forward LockpickTimer(playerid); public LockpickTimer(playerid)
 	{
 		PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA), PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
     	if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "Você não conseguiu acertar a lockpick e acionou o alarme!");
+
 		if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi trancado!"), Correct[playerid] = 0;
+		
 		SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi aberto!"), Correct[playerid] = 0;
 	}
 	return 1;
 }
 
-forward DestroyLockPick(playerid); public DestroyLockPick(playerid)
-{
+forward DestroyLockPick(playerid); public DestroyLockPick(playerid) {
     PlayerTextDrawDestroy(playerid, LockText[8]), PlayerTextDrawDestroy(playerid, LockText[9]), PlayerTextDrawDestroy(playerid, LockText[10]);
     if(LockCount[playerid] == 4)
     {
@@ -139,4 +140,3 @@ forward DestroyLockPick(playerid); public DestroyLockPick(playerid)
 	}
 	return 0;
 }
-//randomEx(Min, Max) return(random(((Max - Min) + 1)) + Min);

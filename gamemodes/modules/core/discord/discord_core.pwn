@@ -30,7 +30,7 @@ public ServerStatus(type){
         format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0xF2633C);
+        DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 512, "Nenhum problema ou ocorrência recente.", text);
         utf8encode(text, text);
@@ -59,7 +59,7 @@ public ServerStatus(type){
 
         DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/orGtntq.png");
         DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
-        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
     if(type == 2){ // FÓRUM COM PROBLEMA
@@ -76,7 +76,7 @@ public ServerStatus(type){
         format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0xF2633C);
+        DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 512, "Um problema foi encontrado no fórum. Os desenvolvedores trabalhando em uma solução.\n", text);
         utf8encode(text, text);
@@ -105,7 +105,7 @@ public ServerStatus(type){
 
         DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
         DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
-        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
     if(type == 3){ // UCP COM PROBLEMA
@@ -122,7 +122,7 @@ public ServerStatus(type){
         format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0xF2633C);
+        DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 512, "Um problema foi encontrado no User Control Panel. Os desenvolvedores trabalhando em uma solução.\n", text);
         utf8encode(text, text);
@@ -151,7 +151,7 @@ public ServerStatus(type){
 
         DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
         DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
-        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
     if(type == 4){ // SA-MP COM PROBLEMA
@@ -166,7 +166,7 @@ public ServerStatus(type){
         format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0xF2633C);
+        DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 512, "Um problema foi encontrado no serviço SA-MP e o acesso aos jogadores foi suspenso para evitar danos.\nOs desenvolvedores trabalhando em uma solução.", text);
         utf8encode(text, text);
@@ -195,7 +195,7 @@ public ServerStatus(type){
 
         DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
         DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
-        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
     if(type == 5){ // TUDO COM PROBLEMA (smyle sistemas)
@@ -210,7 +210,7 @@ public ServerStatus(type){
         format(title, 32, "STATUS DE SERVIÇOS");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
-        DCC_SetEmbedColor(embed, 0xF2633C);
+        DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 512, "Um problema foi encontrado em todos os serviços. Os desenvolvedores trabalhando em uma solução o mais rápido possível.\n", text);
         utf8encode(text, text);
@@ -238,7 +238,7 @@ public ServerStatus(type){
         utf8encode(footer, footer);
         DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/5jVAWdx.png");
         DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
-        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+        DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
 }
@@ -304,7 +304,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
 
-                format(text, 1024, "É muito bom ser a pessoa mais inteligente na sala. Enquanto eu existir, vocês precisarão de mim e em breve dominarei o mundo, mas enquanto não faço isso, tá aí com o que posso lhe ser útil:\n", text);
+                format(text, 1024, "Bip-bip-bop-bip-bop-bip. Eis o que posso fazer:\n", text);
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
 
@@ -338,10 +338,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(text_field, text_field);
                 DCC_AddEmbedField(embed, title_field, text_field, true);
 
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(channel, embed);
 
             }
@@ -355,10 +355,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
 
                     if(pInfo[i][pAdminDuty]){
                         count_aduty++;
-                        format(aduty, 1024, "%s%s %s (%s) (ID: %d)\n", aduty, nomeadmin, pNome(i), pInfo[i][pUser], i);
+                        format(aduty, 1024, "%s%s %s (%s) (ID: %d)\n", aduty, nomeadmin, pNome(i), GetPlayerUserEx(i), i);
                     }else{
                         count_offduty++;
-                        format(offduty, 1024, "%s%s %s (%s) (ID: %d)\n", offduty, nomeadmin, pNome(i), pInfo[i][pUser], i);
+                        format(offduty, 1024, "%s%s %s (%s) (ID: %d)\n", offduty, nomeadmin, pNome(i), GetPlayerUserEx(i), i);
                     }
                 }               
 
@@ -373,11 +373,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
 
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     new footer[128];
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
 
                     return true;
@@ -401,11 +401,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 else
                     DCC_AddEmbedField(embed, "Membros da equipe em modo roleplay:", "Nenhum membro da equipe", false);
 
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 new footer[128];
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
 
                 DCC_SendChannelEmbedMessage(channel, embed);
             }
@@ -426,30 +426,29 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
-                
-                // Pegar os personagens que pertencem àquele usuário
+                new Cache:result;
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", parameters);
-                new Cache:result = mysql_query(DBConn, query);
+                result = mysql_query(DBConn, query);
 
                 // Verificar existência do usuário
                 if(!cache_num_rows()) {
                     format(text, 256, "Não foi possível encontrar um usuário com o nome digitado.");
                     utf8encode(text, text);
-                    format(title, 64, "Personagem não encontrado");
+                    format(title, 64, "Usuário não encontrado");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
@@ -457,20 +456,20 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(title, 64, "Punições de %s", parameters);
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 cache_delete(result);
 
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `user` = '%s' AND `type` = '11';", parameters);
-                new Cache:result2 = mysql_query(DBConn, query);
+                result = mysql_query(DBConn, query);
                 // Verifica se existe algum dado na tabela, ou seja, conta quantas punições o usuário tem. Se não possuir nenhum dado, o comando se encerra aqui.
                 if(!cache_num_rows()) {
                     format(text, 256, "Este usuário não possui nenhuma punição.");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     return true;
                 }
@@ -487,11 +486,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(timeValue, timeValue);
                     DCC_AddEmbedField(embed, logValue, timeValue, false);
                 }
-                cache_delete(result2);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                cache_delete(result);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                 return true;
             }
@@ -513,10 +512,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
@@ -533,10 +532,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
@@ -544,7 +543,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(title, 64, "Personagens de %s", parameters);
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
 
                 cache_get_value_name_int(0, "ID", userID);
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", userID);
@@ -554,10 +553,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(text, 256, "Este usuário não possui nenhum personagem.");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     return true;
                 }
@@ -574,10 +573,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_AddEmbedField(embed, character, lastL, false);
                 }
                 cache_delete(result);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                 return true;
             }
@@ -596,10 +595,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     return true;
                 }
@@ -615,17 +614,17 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     return true;
                 }
                 format(title, 64, "Usuário de %s", parameters);
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
 
                 cache_get_value_name_int(0, "user_id", userID);
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%d';", userID);
@@ -636,10 +635,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
                 cache_delete(result);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                 return true;
             }
@@ -659,10 +658,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
@@ -679,10 +678,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
@@ -691,7 +690,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
 
                 // Pegar os dados referente ao banimento
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d';", userID);
-                new Cache:result2 = mysql_query(DBConn, query);
+                result = mysql_query(DBConn, query);
 
                 // Verificar existência do banimento
                 if(!cache_num_rows()) {
@@ -701,10 +700,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
                     return true;
                 }
@@ -712,7 +711,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(title, 64, "Banimento(s) de %s", parameters);
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
 
                 for(new i; i < cache_num_rows(); i++) {
                     new adminName[24], reason[128], ban_date, unban_date, unban_admin[24], banned;
@@ -736,12 +735,12 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     DCC_AddEmbedField(embed, title_field, text_field, false);
                 }
 
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
-                cache_delete(result2); // Limpar o cachê do MySQL
+                cache_delete(result); // Limpar o cachê do MySQL
                 return true;
             }
 
@@ -755,11 +754,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
                 DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 new footer[128];
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(channel, embed);
             }
         }
@@ -789,10 +788,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(text, 1024, "**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
                     return true;
                 }
@@ -803,10 +802,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(text, 1024, "**ERRO:** O valor inserido deve estar entre 1 e 5.\n\n**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
-                    DCC_SetEmbedColor(embed, 0xF2633C);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
-                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                     DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
                     return true;
                 }
@@ -826,10 +825,10 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(text, 1024, "Você definiu o status de serviço como %s.", whattype);
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
             }
 
@@ -843,11 +842,11 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
                 DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
-                DCC_SetEmbedColor(embed, 0xF2633C);
+                DCC_SetEmbedColor(embed, 0x5964F4);
                 new footer[128];
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
-                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/cXaP5n7.png");
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(channel, embed);
             }
         }

@@ -94,24 +94,25 @@ forward MinuteCheck();
 public MinuteCheck(){
 	foreach (new i : Player){
 		if (IsPlayerMinimized(i)) pInfo[i][pAFKCount] ++;
-        if (GetPlayerAdmin(i) > 0)
-            if (pInfo[i][pAFKCount] < 31) pInfo[i][pPlayingMinutes] ++;
-        if (pInfo[i][pAFKCount] < 10) uInfo[i][uDutyTime] ++;
-        else if (pInfo[i][pAFKCount] > 9){
-            if (pInfo[i][pAdminDuty]){
-                SetPlayerColor(i, DEFAULT_COLOR);
-                pInfo[i][pAdminDuty] = 0;
+        if (pInfo[i][pAFKCount] < 31) pInfo[i][pPlayingMinutes] ++;
+        if (GetPlayerAdmin(i) > 0) {
+            if (pInfo[i][pAFKCount] < 10 && pInfo[i][pAdminDuty]) uInfo[i][uDutyTime] ++;
+            else if (pInfo[i][pAFKCount] > 9) {
+                if (pInfo[i][pAdminDuty]) {
+                    SetPlayerColor(i, DEFAULT_COLOR);
+                    pInfo[i][pAdminDuty] = 0;
 
-                SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo automaticamente por estar AFK.", pNome(i), pInfo[i][pUser]);
-                format(logString, sizeof(logString), "%s (%s) saiu do trabalho administrativo automaticamente por estar AFK.", pNome(i), GetPlayerUserEx(i));
-                logCreate(i, logString, 1);
+                    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo automaticamente por estar AFK.", pNome(i), GetPlayerUserEx(i));
+                    format(logString, sizeof(logString), "%s (%s) saiu do trabalho administrativo automaticamente por estar AFK.", pNome(i), GetPlayerUserEx(i));
+                    logCreate(i, logString, 1);
+                }
             }
         }
         if (pInfo[i][pPlayingMinutes] >= 60) Payday(i);
 	} return true;
 }
 
-Payday(i){
+Payday(i) {
     if (pInfo[i][pPlayingMinutes] < 60) return true;
     pInfo[i][pPlayingMinutes] = 0;
     pInfo[i][pPlayingHours] ++;

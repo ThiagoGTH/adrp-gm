@@ -285,7 +285,7 @@ void:CheckAdsTable(){
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela advertisement checada com sucesso.");
     logCreate(99998, logString, 5);
 }
-
+       
 void:CheckVehiclesTable(){
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -293,18 +293,20 @@ void:CheckVehiclesTable(){
     `model` int NOT NULL DEFAULT '0',\
     `faction` int NOT NULL DEFAULT '-1',\
     `business` int NOT NULL DEFAULT '-1',\
+    `job` int NOT NULL DEFAULT '-1',\
     `name` varchar(256) NOT NULL DEFAULT 'Default',\
     `personalized_name` int NOT NULL DEFAULT '0',\
-    `plate` varchar(128) NOT NULL DEFAULT 'Default',\
+    `legalized` int NOT NULL  DEFAULT '0',\
+    `plate` varchar(128) NOT NULL DEFAULT ' ',\
     `personalized_plate` int NOT NULL DEFAULT '0',\
     `locked` int NOT NULL DEFAULT '0',\
     `color1` int NOT NULL DEFAULT '0',\
     `color2` int NOT NULL DEFAULT '0',\
     `paintjob` int NOT NULL DEFAULT '0',\
-    `positionX` float NOT NULL DEFAULT '0',\
-    `positionY` float NOT NULL DEFAULT '0',\
-    `positionZ` float NOT NULL DEFAULT '0',\
-    `positionA` float NOT NULL DEFAULT '0',\
+    `position_X` float NOT NULL DEFAULT '0',\
+    `position_Y` float NOT NULL DEFAULT '0',\
+    `position_Z` float NOT NULL DEFAULT '0',\
+    `position_A` float NOT NULL DEFAULT '0',\
     `virtual_world` int NOT NULL DEFAULT '0',\
     `interior` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
@@ -332,9 +334,6 @@ void:CheckVehiclesTable(){
     `mod15` int NOT NULL DEFAULT '0',\
     `mod16` int NOT NULL DEFAULT '0',\
     `mod17` int NOT NULL DEFAULT '0',\
-    `mod18` int NOT NULL DEFAULT '0',\
-    `mod19` int NOT NULL DEFAULT '0',\
-    `mod20` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
     print("[DATABASE] Tabela vehicles_tunings checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_tunings checada com sucesso.");

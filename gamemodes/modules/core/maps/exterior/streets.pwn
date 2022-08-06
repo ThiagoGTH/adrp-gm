@@ -24,12 +24,12 @@ hook OnGameModeInit() {
 }
 
 LoadStreetsModels() {
-    AddSimpleModel(-1, 19379, -20021, "maps/Env/streets/yolayrimi1.dff", "maps/Env/streets/yolayrimi.txd");
-    AddSimpleModel(-1, 19379, -20022, "maps/Env/streets/yolayrimi2.dff", "maps/Env/streets/yolayrimi.txd");
-    AddSimpleModel(-1, 19379, -20023, "maps/Env/streets/yolayrimi3.dff", "maps/Env/streets/yolayrimi.txd");
+    AddSimpleModel(-1, 19379, -20021, "maps/env/streets/yolayrimi1.dff", "maps/env/streets/yolayrimi.txd");
+    AddSimpleModel(-1, 19379, -20022, "maps/env/streets/yolayrimi2.dff", "maps/env/streets/yolayrimi.txd");
+    AddSimpleModel(-1, 19379, -20023, "maps/env/streets/yolayrimi3.dff", "maps/env/streets/yolayrimi.txd");
 
-    AddSimpleModel(-1, 19379, -20024, "maps/Env/streets/a2.dff", "maps/Env/streets/a2.txd");
-    AddSimpleModel(-1, 19379, -20025, "maps/Env/streets/b2.dff", "maps/Env/streets/b2.txd");
+    AddSimpleModel(-1, 19379, -20024, "maps/env/streets/a2.dff", "maps/env/streets/a2.txd");
+    AddSimpleModel(-1, 19379, -20025, "maps/env/streets/b2.dff", "maps/env/streets/b2.txd");
 }
 
 StreetsExterior() {

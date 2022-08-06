@@ -161,7 +161,6 @@ enum Player_Data {
     tempChar2[64],
     pInterfaceTimer,
     pBuyingPlate[128],
-    pBuyingPlateRemove,
     pTimerSpawn,
     pDelayNewbie,
     pInvestment,
@@ -299,7 +298,6 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pQuestion] = -1;
     pInfo[playerid][pInterfaceTimer] = -1;
     format(pInfo[playerid][pBuyingPlate], 120, "");
-	pInfo[playerid][pBuyingPlateRemove] = 0;
     pInfo[playerid][pTimerSpawn] = 0;
 
     if (IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag]))

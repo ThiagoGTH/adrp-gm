@@ -130,7 +130,7 @@ CMD:aj(playerid, params[]){
     strunpack(text, sosdata[sosid][sosText]);
     SendServerMessage(sosdata[sosid][sosPlayer], "O %s %s está respondendo sua dúvida.", AdminRankName(playerid), pNome(playerid));
     SendServerMessage(sosdata[sosid][sosPlayer], "Utilize /cs para usar o canal de suporte.");
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está respondendo a dúvida de %s.", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está respondendo a dúvida de %s.", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]));
     uInfo[playerid][uSOSAns] ++;
 
     if(strlen(text) > 64){
@@ -145,7 +145,7 @@ CMD:aj(playerid, params[]){
 	logCreate(playerid, logString, 9);
 
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o SOS de %s.**\n**Conteúdo do pedido de ajuda:** %s\n", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]), text);
+	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o SOS de %s.**\n**Conteúdo do pedido de ajuda:** %s\n", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]), text);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
 
@@ -164,7 +164,7 @@ CMD:rj(playerid, params[]){
     new text[128];
     strunpack(text, sosdata[sosid][sosText]);
     SendServerMessage(sosdata[sosid][sosPlayer], "O %s %s recusou sua dúvida.", AdminRankName(playerid), pNome(playerid));
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou a dúvida de %s.", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou a dúvida de %s.", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]));
     uInfo[playerid][uSOSAns] ++;
 
     if(strlen(text) > 64){
@@ -178,7 +178,7 @@ CMD:rj(playerid, params[]){
     } else va_SendClientMessage(sosdata[sosid][sosPlayer], COLOR_LIGHTRED, "Motivo: {AFAFAF}%s", answer);
 
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s recusou o SOS de %s.**\n**Conteúdo do pedido de ajuda:** %s\n**Motivo da recusa:** %s", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]), text, answer);
+	format(str, sizeof(str), "\n**AdmCmd: %s recusou o SOS de %s.**\n**Conteúdo do pedido de ajuda:** %s\n**Motivo da recusa:** %s", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]), text, answer);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
 
@@ -194,14 +194,14 @@ CMD:cs(playerid, params[]){
         new userid = pInfo[playerid][pAnswer];
         new pText[256], pText2[256];
         if(strlen(params) > 64){
-            format(pText, sizeof(pText), "(( [Suporte] %s %s: %.64s", AdminRankName(playerid), pInfo[playerid][pUser], params);
+            format(pText, sizeof(pText), "(( [Suporte] %s %s: %.64s", AdminRankName(playerid), GetPlayerUserEx(playerid), params);
             va_SendClientMessage(userid, COLOR_LIGHTYELLOW, pText);
             va_SendClientMessage(playerid, COLOR_LIGHTYELLOW, pText);
             format(pText2, sizeof(pText2), "...%s ))", params[64]);
             va_SendClientMessage(userid, COLOR_LIGHTYELLOW, pText2);
             va_SendClientMessage(playerid, COLOR_LIGHTYELLOW, pText2);
         }else{
-            format(pText, sizeof(pText), "(( [Suporte] %s %s: %s ))", AdminRankName(playerid), pInfo[playerid][pUser], params);
+            format(pText, sizeof(pText), "(( [Suporte] %s %s: %s ))", AdminRankName(playerid), GetPlayerUserEx(playerid), params);
             va_SendClientMessage(userid, COLOR_LIGHTYELLOW, pText);
             va_SendClientMessage(playerid, COLOR_LIGHTYELLOW, pText);
         }
@@ -237,8 +237,8 @@ CMD:fs(playerid, params[]){
     if (pInfo[playerid][pAnswer] == -1) return SendErrorMessage(playerid, "Você não está em um atendimento agora.");
 
     new userid = pInfo[playerid][pAnswer];
-    SendServerMessage(userid, "%s %s encerrou seu atendimento.", AdminRankName(playerid), pInfo[playerid][pUser]);
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s encerrou o atendimento de %s.", pInfo[playerid][pUser], pNome(userid));
+    SendServerMessage(userid, "%s %s encerrou seu atendimento.", AdminRankName(playerid), GetPlayerUserEx(playerid));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s encerrou o atendimento de %s.", GetPlayerUserEx(playerid), pNome(userid));
     format(logString, sizeof(logString), "%s (%s) encerrou o atendimento de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 9);
 
@@ -254,7 +254,7 @@ CMD:tj(playerid, params[]){
 
     new text[128];
     strunpack(text, sosdata[sosid][sosText]);
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s converteu a dúvida de %s em um report.", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s converteu a dúvida de %s em um report.", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]));
     
     if ((reportid = Report_Add(sosdata[sosid][sosPlayer], text)) != -1){
         new string[255];
@@ -272,7 +272,7 @@ CMD:tj(playerid, params[]){
     } else return SendErrorMessage(playerid, "A lista de reports está cheia. Aguarde um momento.");    
 
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s converteu o SOS de %s em um report.**\n**Conteúdo do pedido de ajuda:** %s", pInfo[playerid][pUser], pNome(sosdata[sosid][sosPlayer]), text);
+	format(str, sizeof(str), "\n**AdmCmd: %s converteu o SOS de %s em um report.**\n**Conteúdo do pedido de ajuda:** %s", GetPlayerUserEx(playerid), pNome(sosdata[sosid][sosPlayer]), text);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
 
@@ -379,11 +379,11 @@ CMD:ar(playerid, params[]){
     new text[128];
     strunpack(text, reportdata[reportid][reportText]);
     SendServerMessage(reportdata[reportid][reportPlayer], "O %s %s está atendendo seu report.", AdminRankName(playerid), pNome(playerid));
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está atendendo o report de %s.", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s está atendendo o report de %s.", GetPlayerUserEx(playerid), pNome(reportdata[reportid][reportPlayer]));
     uInfo[playerid][uSOSAns] ++;
 
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]), text);
+	format(str, sizeof(str), "\n**AdmCmd: %s aceitou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s", GetPlayerUserEx(playerid), pNome(reportdata[reportid][reportPlayer]), text);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
     Report_Remove(reportid);
@@ -399,7 +399,7 @@ CMD:rr(playerid, params[]){
     if ((reportid < 0 || reportid >= MAX_REPORTS) || !reportdata[reportid][reportExists] || reportdata[reportid][reportType] != 1) return SendErrorMessage(playerid, "ID de report inválido. A lista de reports vai de 0 até %d.", MAX_REPORTS);
     strunpack(text, reportdata[reportid][reportText]);
     SendServerMessage(reportdata[reportid][reportPlayer], "O %s %s recusou seu report.", AdminRankName(playerid), pNome(playerid));
-    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou o report de %s.", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]));
+    SendAdminAlert(COLOR_LIGHTRED, "AmdCmd: %s recusou o report de %s.", GetPlayerUserEx(playerid), pNome(reportdata[reportid][reportPlayer]));
     uInfo[playerid][uSOSAns] ++;
     
     if(strlen(text) > 64){
@@ -411,7 +411,7 @@ CMD:rr(playerid, params[]){
         va_SendClientMessage(reportdata[reportid][reportPlayer], COLOR_GREY, "...%s", answer[64]);
     } else va_SendClientMessage(reportdata[reportid][reportPlayer], COLOR_LIGHTRED, "Motivo: {AFAFAF}%s", answer);
     new str[1024], dest[1024];
-	format(str, sizeof(str), "\n**AdmCmd: %s recusou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s\n**Motivo da recusa:** %s", pInfo[playerid][pUser], pNome(reportdata[reportid][reportPlayer]), text, answer);
+	format(str, sizeof(str), "\n**AdmCmd: %s recusou o report de %s.**\n**Conteúdo do pedido de ajuda:** %s\n**Motivo da recusa:** %s", GetPlayerUserEx(playerid), pNome(reportdata[reportid][reportPlayer]), text, answer);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989343959933407332"), dest);
     Report_Remove(reportid);

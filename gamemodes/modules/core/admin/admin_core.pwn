@@ -230,9 +230,9 @@ CMD:admins(playerid, params[]) {
     foreach (new i : Player) if (uInfo[i][uAdmin] > 0)
 	{
 		if(pInfo[playerid][pAdminDuty])
-			va_SendClientMessage(playerid, COLOR_GREEN, "%s %s (%s) (ID: %d) | Status: Em serviço administrativo", AdminRankName(i), pNome(i), pInfo[i][pUser], i);
+			va_SendClientMessage(playerid, COLOR_GREEN, "%s %s (%s) (ID: %d) | Status: Em serviço administrativo", AdminRankName(i), pNome(i), GetPlayerUserEx(i), i);
 		else
-			va_SendClientMessage(playerid, COLOR_GREY, "%s %s (%s) | Status: Em roleplay", AdminRankName(i), pNome(i), pInfo[i][pUser]);
+			va_SendClientMessage(playerid, COLOR_GREY, "%s %s (%s) | Status: Em roleplay", AdminRankName(i), pNome(i), GetPlayerUserEx(i));
         count++;
 	}
 	if (!count) {
@@ -248,13 +248,13 @@ CMD:atrabalho(playerid, params[]) {
 	if (!pInfo[playerid][pAdminDuty]){
 		SetPlayerColor(playerid, 0x408080FF);
 		pInfo[playerid][pAdminDuty] = 1;
-		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) entrou em trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) entrou em trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
 		format(logString, sizeof(logString), "%s (%s) entrou em trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
 		logCreate(playerid, logString, 1);
 	}else{
 	    SetPlayerColor(playerid, DEFAULT_COLOR);
 		pInfo[playerid][pAdminDuty] = 0;
-		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo.", pNome(playerid), pInfo[playerid][pUser]);
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) saiu do trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
 		format(logString, sizeof(logString), "%s (%s) saiu do trabalho administrativo.", pNome(playerid), GetPlayerUserEx(playerid));
 		logCreate(playerid, logString, 1);
 	}
@@ -446,14 +446,14 @@ CMD:a(playerid, result[]) {
 
 	// JOGO:
 	if (strlen(result) > 64){
-	    SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s %s (%s): %.64s", AdminRankName(playerid), pNome(playerid), pInfo[playerid][pUser], result);
+	    SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s %s (%s): %.64s", AdminRankName(playerid), pNome(playerid), GetPlayerUserEx(playerid), result);
 	    SendAdminAlert(COLOR_ADMINCHAT, "...%s **", result[64]);
 	}
-	else SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s %s (%s): %s", AdminRankName(playerid), pNome(playerid), pInfo[playerid][pUser], result);
+	else SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s %s (%s): %s", AdminRankName(playerid), pNome(playerid), GetPlayerUserEx(playerid), result);
 
 	// DISCORD:
 	new str[1024], dest[1024];
-	format(str, sizeof(str), "[STAFF] %s %s (%s): %s", AdminRankName(playerid), pNome(playerid), pInfo[playerid][pUser], result);
+	format(str, sizeof(str), "[STAFF] %s %s (%s): %s", AdminRankName(playerid), pNome(playerid), GetPlayerUserEx(playerid), result);
 	utf8encode(dest, str);
 	DCC_SendChannelMessage(DCC_FindChannelById("989306920517136464"), dest);
 	return true;

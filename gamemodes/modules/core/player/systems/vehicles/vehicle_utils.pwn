@@ -3,7 +3,7 @@
 #define MAX_DYNAMIC_VEHICLES (2000)
 
 enum E_VEHICLE_DATA {
-    // 1°
+    // 1°                   // MAIN
     vSQLID,                 // ID do veículo no MySQL
     vID,                    // ID real do veículo
     vVehicle,               // CreateVehicle
@@ -13,7 +13,7 @@ enum E_VEHICLE_DATA {
     vFaction,               // ID da facção do veículo
     vBusiness,              // ID da empresa do veículo
     vJob,                   // ID do emprego pertencente ao veículo
-    vName[256],             // Nome personalizado
+    vName[64],              // Nome personalizado
     vNamePersonalized,      // Se o nome é personalizado
     vLegal,                 // Se o veículo é legalizado
     vPlate[128],            // Placa do veículo
@@ -25,24 +25,25 @@ enum E_VEHICLE_DATA {
     Float:vPos[4],          // Posições (X, Y, Z, A) do veículo
     vVW,                    // Virtual World do veículo
     vInterior,              // Interior do veículo
+    vImpounded,             // Se o veículo está apreendido ou não
+    vImpoundedPrice,        // Valor da apreensão
+    vImpoundedReason[64],   // Motivo da apreensão
 
-    // 2°
+    // 2°                   // STATS
+    vInsurance,             // Seguro
+    vSunpass,               // Pedágio
+    vAlarm,                 // Alarme
     Float:vFuel,            // Combustível do veículo
     Float:vHealth,          
     Float:vBattery,         // Bateria do veículo
 	Float:vEngine,          // Motor do veículo
     Float:vMiles,           // Milhas rodadas
     Float:vMilesCon,        // Contagem de milhas
-
+    
     // 3°
-    vInsurance,
-    vSunpass,
-    vAlarm,
-
-    // 4°
     vMods[17],              // Modificações
 
-    // 5°
+    // 4°                   // INVENTORY 1
     vWeapons[30],           // Armas guardadas
 	vWeaponsType[30],       // Tipo das armas
 	vAmmo[30],              // Munição das armas

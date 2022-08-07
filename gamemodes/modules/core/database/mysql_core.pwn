@@ -294,12 +294,15 @@ void:CheckVehiclesTable(){
     `faction` int NOT NULL DEFAULT '0',\
     `business` int NOT NULL DEFAULT '0',\
     `job` int NOT NULL DEFAULT '0',\
-    `name` varchar(256) NOT NULL DEFAULT 'Default',\
     `personalized_name` int NOT NULL DEFAULT '0',\
+    `name` varchar(64) NOT NULL DEFAULT 'Default',\
     `legalized` int NOT NULL  DEFAULT '0',\
     `plate` varchar(128) NOT NULL DEFAULT ' ',\
     `personalized_plate` int NOT NULL DEFAULT '0',\
     `locked` int NOT NULL DEFAULT '0',\
+    `impounded` int NOT NULL DEFAULT '0',\
+    `impounded_price` int NOT NULL DEFAULT '0',\
+    `impounded_reason` varchar(64) NOT NULL DEFAULT 'Default',\
     `color1` int NOT NULL DEFAULT '0',\
     `color2` int NOT NULL DEFAULT '0',\
     `paintjob` int NOT NULL DEFAULT '0',\
@@ -312,6 +315,22 @@ void:CheckVehiclesTable(){
     PRIMARY KEY (`ID`));");
     print("[DATABASE] Tabela vehicles checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_stats` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `vehicle_id` int NOT NULL DEFAULT '0',\
+    `insurance` int NOT NULL DEFAULT '0',\
+    `sunpass` int NOT NULL DEFAULT '0',\
+    `alarm` int NOT NULL DEFAULT '0',\
+    `fuel` float NOT NULL DEFAULT '0.0',\
+    `health` float NOT NULL DEFAULT '0.0',\
+    `battery` float NOT NULL DEFAULT '0.0',\
+    `engine` float NOT NULL DEFAULT '0.0',\
+    `miles` float NOT NULL DEFAULT '0.0',\
+    PRIMARY KEY (`ID`));");
+    print("[DATABASE] Tabela vehicles_stats checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_stats checada com sucesso.");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_tunings` (\
@@ -437,8 +456,6 @@ void:CheckVehiclesTable(){
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_weapons checada com sucesso.");
     logCreate(99998, logString, 5);
 }
-
-
 
 void:CheckPoolTable(){
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `pool_tables` (\

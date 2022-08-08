@@ -30,8 +30,18 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             vInfo[i][vFaction] = faction;
             vInfo[i][vBusiness] = business;
             vInfo[i][vJob] = job;
-
-            format(vInfo[i][vPlate], 128, "%s", plate);
+            
+            if(!strcmp(plate, "Invalid", true)){
+                vInfo[i][vLegal] = 0;
+                new platestring[128];
+                format(platestring, 128, " ");
+                SetVehicleNumberPlate(vInfo[i][vVehicle], platestring);
+            } else {
+                vInfo[i][vLegal] = 1;
+                format(vInfo[i][vPlate], 128, "%s", plate);
+                SetVehicleNumberPlate(vInfo[i][vVehicle], vInfo[i][vPlate]);
+            }
+            
 
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles (`character_id`) VALUES ('%d');", ownerid);
             result = mysql_query(DBConn, query);
@@ -168,7 +178,6 @@ SaveVehicle(vehicleid) {
 }
 
 SpawnVehicle(vehicleid) {
-    
     if (vehicleid != -1 && vInfo[vehicleid][vExists]){
         new string[128];
         if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
@@ -186,7 +195,8 @@ SpawnVehicle(vehicleid) {
 
         LinkVehicleToInterior(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vInterior]);
         SetVehicleVirtualWorld(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vVW]);
-        format(string, sizeof(string), "%s", vInfo[vehicleid][vPlate]);
+        if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true)) format(string, sizeof(string), " ");
+        else format(string, sizeof(string), "%s", vInfo[vehicleid][vPlate]);
 
         SetVehicleNumberPlate(vInfo[vehicleid][vVehicle], string);
         SetVehicleParamsEx(vInfo[vehicleid][vVehicle], false, false, false, vInfo[vehicleid][vLocked], false, false, false);
@@ -261,7 +271,7 @@ LoadVehicle(vehicleid) {
 
     vInfo[vehicleid][vExists] = true;
     cache_get_value_name_int(0, "model", vInfo[vehicleid][vModel]);
-    cache_get_value_name_int(0, "character_vehicleid", vInfo[vehicleid][vOwner]);
+    cache_get_value_name_int(0, "character_id", vInfo[vehicleid][vOwner]);
 
     cache_get_value_name_int(0, "faction", vInfo[vehicleid][vFaction]);
     cache_get_value_name_int(0, "business", vInfo[vehicleid][vBusiness]);
@@ -289,10 +299,13 @@ LoadVehicle(vehicleid) {
     cache_get_value_name_int(0, "virtual_world", vInfo[vehicleid][vVW]);
     cache_get_value_name_int(0, "interior", vInfo[vehicleid][vInterior]);
 
-    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tuning` WHERE `vehicleid` = '%d'", vehicleid);
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", vehicleid);
+	mysql_tquery(DBConn, query, "LoadVehicleStats", "d", vehicleid);
+
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tunings` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", vehicleid);
 
-    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicleid` = '%d'", vehicleid);
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", vehicleid);
 
     SpawnVehicle(vehicleid);
@@ -327,6 +340,44 @@ DeleteVehicle(vehicleid) {
 	return true;
 }
 
+ResetVehicle(vehicleid) {
+	if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
+		if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
+			return DestroyVehicle(vInfo[vehicleid][vVehicle]);
+	}
+	return false;
+}
+
+ParkPlayerVehicle(playerid) {
+    new vehicleid = GetPlayerVehicleID(playerid);
+    new id = VehicleGetID(vehicleid);
+
+    if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+    if(!VehicleIsOwner(playerid)) return SendErrorMessage(playerid, "Você ser o dono do veículo para usar esse comando.");
+    if(IsVehicleImpounded(vehicleid)) return SendErrorMessage(playerid, "Este veículo está apreendido, portanto você não pode utilizá-lo.");
+
+    if(IsPlayerInRangeOfPoint(playerid, 5.0, vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]) && vInfo[id][vVW] == GetPlayerVirtualWorld(playerid) && vInfo[id][vInterior] == GetPlayerInterior(playerid)) {
+        RemovePlayerFromVehicle(playerid);
+		for(new i = 0; i < MAX_PLAYERS; i++) {
+	    	if(GetPlayerState(i) == PLAYER_STATE_PASSENGER && GetPlayerVehicleID(i) == vInfo[vehicleid][vVehicle])  
+                RemovePlayerFromVehicle(i); 
+	    }
+
+        if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Seu veículo %s (( %s )) foi estacionado na vaga.", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+		else va_SendClientMessage(playerid, -1, "Seu veículo %s foi estacionado na vaga.", ReturnVehicleModelName(vInfo[id][vModel]));
+
+        
+
+    } else {
+        SendErrorMessage(playerid, "Você não está perto da sua vaga.");
+        if(vInfo[vehicleid][vVW] == 0) {
+            va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Você pode usar a marca vermelha no mapa para achar a vaga do seu veículo.");
+			SetPlayerCheckpoint(playerid, vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], 3.0);
+        }
+    } 
+    return true;
+}
+
 forward LoadVehicleStats(vehicleid);
 public LoadVehicleStats(vehicleid) {
 
@@ -335,6 +386,7 @@ public LoadVehicleStats(vehicleid) {
     cache_get_value_name_int(0, "alarm", vInfo[vehicleid][vAlarm]);
 
     cache_get_value_name_float(0, "fuel", vInfo[vehicleid][vFuel]);
+    printf("LoadVehicleStats %f", vInfo[vehicleid][vFuel]);
     cache_get_value_name_float(0, "health", vInfo[vehicleid][vHealth]);
     cache_get_value_name_float(0, "battery", vInfo[vehicleid][vBattery]);
 	cache_get_value_name_float(0, "engine", vInfo[vehicleid][vEngine]);
@@ -380,7 +432,8 @@ hook OnPlayerEnterCheckpoint(playerid) {
 }
 
 hook OnVehicleDeath(vehicleid, killerid){
-    
+
+    SaveVehicle(vehicleid);
 }
 
 ShowPlayerVehicles(playerid) {

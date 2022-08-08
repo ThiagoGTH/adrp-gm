@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-//#include "modules\core\maps\exterior\factions\LSFD.pwn"
+#include "modules\core\maps\exterior\factions\LSFD.pwn"
 #include "modules\core\maps\exterior\factions\SAN1.pwn" 
 #include "modules\core\maps\exterior\SM.pwn" 
 #include "modules\core\maps\exterior\streets.pwn"

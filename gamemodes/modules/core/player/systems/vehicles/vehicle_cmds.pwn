@@ -1,8 +1,37 @@
 #include <YSI_Coding\y_hooks>
 
 /* =============================== PLAYERS =============================== */
+CMD:placa(playerid, params[]) {
+	new vehicleid = VehicleNearest(playerid);
+	if(vehicleid == -1) return SendErrorMessage(playerid, "Você não está próximo de nenhum veiculo.");
+	
+	SendClientMessage(playerid, COLOR_GREEN, "|_________ San Andreas Plate _________|");
+	if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s (%s) ))", vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	else if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s ))", ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	else if(vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Placa: %s (( %s (%s) ))", vInfo[vehicleid][vPlate], vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	else va_SendClientMessage(playerid, -1, "Placa: %s (( %s ))", vInfo[vehicleid][vPlate], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	return true;
+}
+
 CMD:veiculos(playerid, params[]) {
 	ShowPlayerVehicles(playerid);
+	return true;
+}
+
+CMD:v(playerid, params[]) {
+	new type[128];
+	if (sscanf(params, "s[128]", type)) {
+ 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
+	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /v [ação]");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, comprarvaga, venderconce, stats");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca");
+		SendClientMessage(playerid, COLOR_BEGE, "[Deletar]: deletar (não recebe nada)");
+		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
+		return true;
+	}
+	if (!strcmp(type, "lista", true)) return ShowPlayerVehicles(playerid);
+	else if (!strcmp(type, "estacionar", true)) return ParkPlayerVehicle(playerid);
+
 	return true;
 }
 
@@ -59,15 +88,16 @@ CMD:criarveiculo(playerid, params[]) {
 CMD:darveiculo(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
-	static userid, model[32];
-	if (sscanf(params, "us[32]", userid, model)) return SendSyntaxMessage(playerid, "/darveiculo [id/nome] [id do modelo/nome]");
+	static userid, model[32], legal;
+	if (sscanf(params, "us[32]d", userid, model, legal)) return SendSyntaxMessage(playerid, "/darveiculo [id/nome] [id do modelo/nome] [legalizado? (1 sim, 2 não)]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
     if ((model[0] = GetVehicleModelByName(model)) == 0) return SendErrorMessage(playerid, "O modelo especificado é inválido.");
 
 	static Float:x, Float:y, Float:z, Float:a, id = -1;
     GetPlayerPos(userid, x, y, z);
 	GetPlayerFacingAngle(userid, a);
-	SetPlateFree(playerid);
+	if(legal == 1) SetPlateFree(playerid);
+	else if(legal == 2) format(pInfo[playerid][pBuyingPlate], 120, "Invalid");
 
     id = VehicleCreate(pInfo[userid][pID], model[0], x, y + 2, z + 1, a, random(127), random(127), pInfo[playerid][pBuyingPlate]);
 
@@ -366,5 +396,36 @@ CMD:deletarveiculo(playerid, params[]) {
 	logCreate(playerid, logString, 1);
 
 	DeleteVehicle(VehicleGetID(id));
+	return true;
+}
+
+CMD:amotor(playerid, params[]) {
+	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
+	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+
+	new string[64];
+	new vehicleid = GetPlayerVehicleID(playerid);
+
+	if(vInfo[VehicleGetID(vehicleid)][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
+
+	if(ReturnVehicleHealth(vehicleid) <= 300) return SendErrorMessage(playerid, "Este veículo está danificado e não pode ser ligado.");
+
+	switch (GetEngineStatus(vehicleid)) {
+	    case false: {
+	        SetEngineStatus(vehicleid, true);
+			format(string, sizeof(string), "~g~MOTOR LIGADO");
+			GameTextForPlayer(playerid, string, 2400, 4);
+			SetLightStatus(vehicleid, true);
+			if(vInfo[VehicleGetID(vehicleid)][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo %s.", pNome(playerid), vInfo[VehicleGetID(vehicleid)][vName]);
+			else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo.", pNome(playerid));
+		} case true: {
+		    SetEngineStatus(vehicleid, false);
+   			format(string, sizeof(string), "~r~MOTOR DESLIGADO");
+   			SetLightStatus(vehicleid, false);
+			GameTextForPlayer(playerid, string, 2400, 4);
+			if(vInfo[VehicleGetID(vehicleid)][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo %s.", pNome(playerid), vInfo[VehicleGetID(vehicleid)][vName]);
+			else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo.", pNome(playerid));
+		}
+	}
 	return true;
 }

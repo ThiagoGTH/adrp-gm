@@ -138,3 +138,94 @@ VehicleGetID(vehicleid) {
 	}
 	return -1;
 }
+
+VehicleNearest(playerid) {
+	static
+	    Float:fX,
+	    Float:fY,
+	    Float:fZ;
+
+	for (new i = 0; i != MAX_DYNAMIC_CARS; i ++) if (vInfo[i][vExists] && vInfo[i][vVehicle]) {
+		GetVehiclePos(vInfo[i][vVehicle], fX, fY, fZ);
+
+		if (IsPlayerInRangeOfPoint(playerid, 5.0, fX, fY, fZ) && GetPlayerVirtualWorld(playerid) == GetVehicleVirtualWorld(vInfo[i][vVehicle])) {
+		    return i;
+		}
+	}
+	return -1;
+}
+
+IsVehicleImpounded(vehicleid) {
+    new id = VehicleGetID(vehicleid);
+
+	if (id != -1 && vInfo[id][vImpounded] != -1 && vInfo[id][vImpoundedPrice] > 0)
+	    return true;
+
+	return false;
+}
+
+VehicleIsOwner(playerid) {
+    if(!pInfo[playerid][pLogged] || pInfo[playerid][pID] == -1) return false;
+    if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return false;
+    new vehicleid = GetPlayerVehicleID(playerid);
+    new id = VehicleGetID(vehicleid);
+    if(vInfo[id][vOwner] == pInfo[playerid][pID]) return true;
+	return false;
+}
+
+ReturnVehicleHealth(vehicleid) {
+	if (!IsValidVehicle(vehicleid))
+	    return 0;
+
+	static
+	    Float:amount;
+
+	GetVehicleHealth(vehicleid, amount);
+	return floatround(amount, floatround_round);
+}
+
+GetEngineStatus(vehicleid) {
+	static
+	    engine,
+	    lights,
+	    alarm,
+	    doors,
+	    bonnet,
+	    boot,
+	    objective;
+
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+
+	if (engine != 1)
+		return false;
+ 
+	return true;
+}
+
+SetEngineStatus(vehicleid, status) {
+	static
+	    engine,
+	    lights,
+	    alarm,
+	    doors,
+	    bonnet,
+	    boot,
+	    objective;
+
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, status, lights, alarm, doors, bonnet, boot, objective);
+}
+
+SetLightStatus(vehicleid, status) {
+	static
+	    engine,
+	    lights,
+	    alarm,
+	    doors,
+	    bonnet,
+	    boot,
+	    objective;
+
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, engine, status, alarm, doors, bonnet, boot, objective);
+}

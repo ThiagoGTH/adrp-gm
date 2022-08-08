@@ -94,30 +94,10 @@ enum licencesdata {
 new LicencesData[MAX_DRIVERLICENCE][licencesdata];
 
 hook OnGameModeInit() {
-	CheckLicenceTable();
 	CreateDMVIcon();
     return true;
 }
 
-// Checa a tabela e cria, se não existir.
-CheckLicenceTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS character_licences_driver (\
-        ID int NOT NULL AUTO_INCREMENT,\
-        `character_id` int NOT NULL DEFAULT 0,\
-        `licence_number` int NOT NULL DEFAULT 0,\
-        `licence_status` int NOT NULL DEFAULT 0,\
-        `licence_warnings` int NOT NULL DEFAULT 0,\
-		`licence_car` int NOT NULL DEFAULT 0,\
-		`licence_bike` int NOT NULL DEFAULT 0,\
-		`licence_truck` int NOT NULL DEFAULT 0,\
-		`licence_gun` int NOT NULL DEFAULT 0,\
-		`warning_one` varchar(128) NOT NULL DEFAULT 'Vazio',\
-		`warning_two` varchar(128) NOT NULL DEFAULT 'Vazio',\
-		`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
-        PRIMARY KEY (ID));");
-
-    return true;
-}
 CreateNewLicence(playerid) {
 
 	new slot = GetFreeLicenceSlot();

@@ -165,6 +165,9 @@ enum Player_Data {
     pDelayNewbie,
     pInvestment,
 
+    pEditingVeh,
+    pOjectVeh,
+    pSlotEdVeh,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -274,6 +277,11 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pFlying] = 0;
     pInfo[playerid][pESC] = 0;
     pInfo[playerid][pDelayNewbie] = 0;
+
+    pInfo[playerid][pEditingVeh] = 0;
+    pInfo[playerid][pOjectVeh] = 0;
+    pInfo[playerid][pSlotEdVeh] = 0;
+
     pInfo[playerid][pInvestment] = 0;
     ClearDamages(playerid);
 

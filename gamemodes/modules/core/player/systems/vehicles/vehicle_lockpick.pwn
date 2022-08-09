@@ -3,7 +3,7 @@
 new PlayerText:LockText[12], bool:LockUse[MAX_PLAYERS], Float:LockProgress = 207.0, Float:LockLocation[MAX_PLAYERS], Float:LockSize[MAX_PLAYERS], LockCount[MAX_PLAYERS], LockTimer[MAX_PLAYERS], Correct[MAX_PLAYERS], VehicleLockedID[MAX_PLAYERS];
 new Engine[MAX_PLAYERS], Lights[MAX_PLAYERS], Alarm[MAX_PLAYERS], DoorsLockPick[MAX_PLAYERS], Bonnet[MAX_PLAYERS], Boot[MAX_PLAYERS], Objective[MAX_PLAYERS];
 
-CMD:lockpick(playerid) {
+CMD:quebrartrava(playerid) {
     new Float:VehX, Float:VehY, Float:VehZ, Count;
 	if(LockUse[playerid] == true) return SendErrorMessage(playerid, "Você já está tentando quebrar a trava deste veículo.");
     for(new i; i < MAX_VEHICLES; i++) {
@@ -25,9 +25,15 @@ hook OnPlayerConnect(playerid)
 	PlayerTextDrawFont(playerid, LockText[0], 1), PlayerTextDrawSetProportional(playerid, LockText[0], 1), PlayerTextDrawAlignment(playerid, LockText[0], 2);
 	PlayerTextDrawBackgroundColor(playerid, LockText[0], -65281), PlayerTextDrawBoxColor(playerid, LockText[0], 150);
 
-	LockText[1] = CreatePlayerTextDraw(playerid, 205.0, 365.0, "NECESSARIOS: 5"), PlayerTextDrawSetShadow(playerid, LockText[1], 0);
-	PlayerTextDrawBackgroundColor(playerid, LockText[1], 255), PlayerTextDrawLetterSize(playerid, LockText[1], 0.2, 1.2);
-	PlayerTextDrawFont(playerid, LockText[1], 2), PlayerTextDrawSetProportional(playerid, LockText[1], 1);
+	new text[128];
+	format(text, 128, "QUANTIDADE_NECESSÁRIA:_5");
+	AdjustTextDrawString(text);
+	LockText[1] = CreatePlayerTextDraw(playerid, 205.0, 365.0, text);
+	PlayerTextDrawSetShadow(playerid, LockText[1], 0);
+	PlayerTextDrawBackgroundColor(playerid, LockText[1], 255);
+	PlayerTextDrawLetterSize(playerid, LockText[1], 0.2, 1.2);
+	PlayerTextDrawFont(playerid, LockText[1], 2);
+	PlayerTextDrawSetProportional(playerid, LockText[1], 1);
 
 	LockText[2] = CreatePlayerTextDraw(playerid, 361.0, 364.0, "LD_BEAT:CHIT"), PlayerTextDrawUseBox(playerid, LockText[2], 1);
 	PlayerTextDrawFont(playerid, LockText[2], 4), PlayerTextDrawSetProportional(playerid, LockText[2], 1);
@@ -69,11 +75,33 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             if(LockProgress < LockLocation[playerid]-(LockSize[playerid]+1) || LockProgress > LockLocation[playerid]+(LockSize[playerid]+2))
 			{
 			    PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
-				if(LockCount[playerid] < 4) return DestroyLockPick(playerid), KillTimer(LockTimer[playerid]), LockCount[playerid]++, LockProgress = 207.0, CreateLocPick(playerid);
+				if(LockCount[playerid] < 4) {
+					DestroyLockPick(playerid);
+					KillTimer(LockTimer[playerid]);
+					LockCount[playerid]++;
+					LockProgress = 207.0;
+					CreateLocPick(playerid);
+					return true;
+				}
                 if(LockCount[playerid] == 4)
 				{
-					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
-					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
+					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]);
+					SetTimerEx("DestroyLockPick", 2000, false, "i", playerid);
+					KillTimer(LockTimer[playerid]);
+
+					if(Correct[playerid] != 5){
+						if(Lights[playerid] == 1){
+							SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], false, true, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]);
+							SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
+
+						} else {
+							SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], true, true, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]);
+							SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
+						}
+
+						SetTimerEx("TurnAlarmOff", 10000, false, "d", VehicleLockedID[playerid]);
+						return true;
+					}
 					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi trancado!");
 					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendClientMessage(playerid, -1, "O veiculo foi aberto!");
 				}
@@ -107,10 +135,18 @@ CreateLocPick(playerid)
 	PlayerTextDrawFont(playerid, LockText[9], 1), PlayerTextDrawSetProportional(playerid, LockText[9], 1);
 	PlayerTextDrawBackgroundColor(playerid, LockText[9], 255), PlayerTextDrawBoxColor(playerid, LockText[9], -5963521);
 
-	LockText[10] = CreatePlayerTextDraw(playerid, 315.0, 386.0, "Pressione (ESPACO) na barra para prosseguir"), PlayerTextDrawSetShadow(playerid, LockText[10], 0);
-	PlayerTextDrawBackgroundColor(playerid, LockText[10], 255), PlayerTextDrawLetterSize(playerid, LockText[10], 0.18, 1.0);
-	PlayerTextDrawFont(playerid, LockText[10], 2), PlayerTextDrawSetProportional(playerid, LockText[10], 1);
-	PlayerTextDrawAlignment(playerid, LockText[10], 2), PlayerTextDrawSetShadow(playerid, LockText[10], 0), PlayerTextDrawColor(playerid, LockText[10], -56);
+	new text[128];
+	format(text, 128, "PRECIONE O ESPAÇO NO MOMENTO PARA PROSSEGUIR");
+	AdjustTextDrawString(text);
+	LockText[10] = CreatePlayerTextDraw(playerid, 315.0, 386.0, text);
+	PlayerTextDrawSetShadow(playerid, LockText[10], 0);
+	PlayerTextDrawBackgroundColor(playerid, LockText[10], 255);
+	PlayerTextDrawLetterSize(playerid, LockText[10], 0.18, 1.0);
+	PlayerTextDrawFont(playerid, LockText[10], 2);
+	PlayerTextDrawSetProportional(playerid, LockText[10], 1);
+	PlayerTextDrawAlignment(playerid, LockText[10], 2);
+	PlayerTextDrawSetShadow(playerid, LockText[10], 0);
+	PlayerTextDrawColor(playerid, LockText[10], -56);
 	return 1;
 }
 forward LockpickTimer(playerid); public LockpickTimer(playerid)
@@ -139,4 +175,18 @@ forward DestroyLockPick(playerid); public DestroyLockPick(playerid) {
 		for(new i; i < 12; i++) { PlayerTextDrawHide(playerid, LockText[i]); }
 	}
 	return 0;
+}
+
+forward TurnAlarmOff(vehicleid);
+public TurnAlarmOff(vehicleid)
+{
+	if(vehicleid != INVALID_VEHICLE_ID)
+	{
+	    static
+			engine2, lights2, alarm2, doors2, bonnet2, boot2, objective2;
+
+		GetVehicleParamsEx(vehicleid, engine2, lights2, alarm2, doors2, bonnet2, boot2, objective2);
+		SetVehicleParamsEx(vehicleid, engine2, false, false, doors2, bonnet2, boot2, objective2);
+	}
+	return 1;
 }

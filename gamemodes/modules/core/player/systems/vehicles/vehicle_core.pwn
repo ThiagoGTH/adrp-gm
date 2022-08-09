@@ -42,12 +42,14 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
                 SetVehicleNumberPlate(vInfo[i][vVehicle], vInfo[i][vPlate]);
             }
             
-
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles (`character_id`) VALUES ('%d');", ownerid);
             result = mysql_query(DBConn, query);
             new id = cache_insert_id();
             cache_delete(result);
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_stats (`vehicle_id`) VALUES ('%d');", id);
+            result = mysql_query(DBConn, query);
+            cache_delete(result);
+            mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_objects (`vehicle_id`) VALUES ('%d');", id);
             result = mysql_query(DBConn, query);
             cache_delete(result);
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_tunings (`vehicle_id`) VALUES ('%d');", id);
@@ -57,7 +59,7 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             result = mysql_query(DBConn, query);
             cache_delete(result);
 
-            vInfo[i][vSQLID] = id;
+            vInfo[i][vID] = id;
 
             vInfo[i][vVehicle] =  CreateVehicle(vInfo[i][vModel], 
             vInfo[i][vPos][0], vInfo[i][vPos][1], vInfo[i][vPos][2], vInfo[i][vPos][3], 
@@ -76,12 +78,15 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
 
 SaveVehicle(vehicleid) {
     new Cache:result;
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vSQLID]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
-
-    if(!cache_num_rows())
+    printf("SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
+    if(!cache_num_rows()){
+        printf("SELECT * FROM `vehicles` WHERE `id` = '%d';", vehicleid);
+        printf("Retornou falso ://");
         return false;
-
+    }
+        
     mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles` SET \
     `model` = '%d',                 \
     `character_id` = '%d',          \
@@ -106,7 +111,7 @@ SaveVehicle(vehicleid) {
     `impounded` = '%d',             \
     `impounded_price` = '%d',       \
     `impounded_reason` = '%s'       \
-    WHERE `id` = %d;", 
+    WHERE `id` = '%d';", 
     vInfo[vehicleid][vModel],
     vInfo[vehicleid][vOwner],
     vInfo[vehicleid][vFaction],
@@ -130,7 +135,7 @@ SaveVehicle(vehicleid) {
     vInfo[vehicleid][vImpounded],
     vInfo[vehicleid][vImpoundedPrice],
     vInfo[vehicleid][vImpoundedReason],
-    vInfo[vehicleid][vSQLID]);
+    vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
     cache_delete(result);
 
@@ -143,7 +148,7 @@ SaveVehicle(vehicleid) {
     `battery` = '%f',                   \
     `engine` = '%f',                    \
     `miles` = '%f'                      \
-    WHERE `vehicle_id` = %d;",
+    WHERE `vehicle_id` = '%d';",
     vInfo[vehicleid][vInsurance],
     vInfo[vehicleid][vSunpass],
     vInfo[vehicleid][vAlarm],
@@ -152,12 +157,34 @@ SaveVehicle(vehicleid) {
     vInfo[vehicleid][vBattery],
 	vInfo[vehicleid][vEngine],
     vInfo[vehicleid][vMiles],
-    vInfo[vehicleid][vSQLID]);
+    vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
     cache_delete(result);
 
+    for (new o = 0; o < 5; o++) {
+        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_objects` SET \
+        `object_%d` = '%d', \
+        `ofX_%d` = '%f', \
+        `ofY_%d` = '%f', \
+        `ofZ_%d` = '%f', \
+        `rX_%d` = '%f', \
+        `rY_%d` = '%f', \
+        `rZ_%d` = '%f' \
+        WHERE `vehicle_id` = '%d'",
+        o + 1, vInfo[vehicleid][vObject][o],
+        o + 1, vInfo[vehicleid][vObjectPosX][o],
+        o + 1, vInfo[vehicleid][vObjectPosY][o],
+        o + 1, vInfo[vehicleid][vObjectPosZ][o],
+        o + 1, vInfo[vehicleid][vObjectRotX][o],
+        o + 1, vInfo[vehicleid][vObjectRotY][o],
+        o + 1, vInfo[vehicleid][vObjectRotZ][o],
+        vInfo[vehicleid][vID]);
+        result = mysql_query(DBConn, query);
+    }
+    cache_delete(result);
+
     for (new m = 0; m < 17; m ++) {
-        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_tunings` SET `mod%d` = '%d' WHERE `vehicle_id` = '%d'", m + 1, vInfo[vehicleid][vMods][m], vInfo[vehicleid][vSQLID]);
+        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_tunings` SET `mod%d` = '%d' WHERE `vehicle_id` = '%d'", m + 1, vInfo[vehicleid][vMods][m], vInfo[vehicleid][vID]);
         result = mysql_query(DBConn, query);
 	}
     cache_delete(result);
@@ -170,7 +197,7 @@ SaveVehicle(vehicleid) {
         WHERE `vehicle_id` = '%d'", 
         w + 1, vInfo[vehicleid][vWeapons][w], 
         w + 1, vInfo[vehicleid][vAmmo][w], 
-        w + 1, vInfo[vehicleid][vWeaponsType][w], vInfo[vehicleid][vSQLID]);
+        w + 1, vInfo[vehicleid][vWeaponsType][w], vInfo[vehicleid][vID]);
         result = mysql_query(DBConn, query);
 	}
     cache_delete(result);
@@ -201,6 +228,7 @@ SpawnVehicle(vehicleid) {
         SetVehicleNumberPlate(vInfo[vehicleid][vVehicle], string);
         SetVehicleParamsEx(vInfo[vehicleid][vVehicle], false, false, false, vInfo[vehicleid][vLocked], false, false, false);
 
+        SetVehicleObject(vehicleid);
         ModVehicle(vehicleid);
     }
 }
@@ -216,7 +244,6 @@ LoadVehicles() {
         if (vInfo[id][vExists]) return false;
 
         vInfo[id][vID] = id;
-        vInfo[id][vSQLID] = id;
         vInfo[id][vExists] = true;
         cache_get_value_name_int(i, "model", vInfo[id][vModel]);
         cache_get_value_name_int(i, "character_id", vInfo[id][vOwner]);
@@ -250,6 +277,9 @@ LoadVehicles() {
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleStats", "d", id);
 
+        mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_objects` WHERE `vehicle_id` = '%d'", id);
+		mysql_tquery(DBConn, query, "LoadVehicleObjects", "d", id);
+
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tunings` WHERE `vehicle_id` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", id);
 
@@ -264,12 +294,12 @@ LoadVehicles() {
 }
 
 LoadVehicle(vehicleid) {
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `ID` = %d;", vehicleid);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
     mysql_query(DBConn, query);
-
     if (vInfo[vehicleid][vExists]) return false;
 
     vInfo[vehicleid][vExists] = true;
+    cache_get_value_name_int(0, "ID", vInfo[vehicleid][vID]);
     cache_get_value_name_int(0, "model", vInfo[vehicleid][vModel]);
     cache_get_value_name_int(0, "character_id", vInfo[vehicleid][vOwner]);
 
@@ -302,6 +332,9 @@ LoadVehicle(vehicleid) {
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleStats", "d", vehicleid);
 
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_objects` WHERE `vehicle_id` = '%d'", vehicleid);
+	mysql_tquery(DBConn, query, "LoadVehicleObjects", "d", vehicleid);
+
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tunings` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", vehicleid);
 
@@ -315,11 +348,14 @@ LoadVehicle(vehicleid) {
 DeleteVehicle(vehicleid) {
     if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
 	    new Cache:result;
-
+        printf("DELETE FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
         result = mysql_query(DBConn, query);
 
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_stats` WHERE `vehicle_id` = '%d';", vehicleid);
+        result = mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_objects` WHERE `vehicle_id` = '%d';", vehicleid);
         result = mysql_query(DBConn, query);
 
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_tunings` WHERE `vehicle_id` = '%d';", vehicleid);
@@ -344,6 +380,20 @@ ResetVehicle(vehicleid) {
 	if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
 		if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
 			return DestroyVehicle(vInfo[vehicleid][vVehicle]);
+
+        for (new i = 0; i < 5; i++){
+            if (IsValidDynamicObject(vInfo[vehicleid][vObject][i])) {
+                DestroyDynamicObject(vInfo[vehicleid][vObject][i]);
+                vInfo[vehicleid][vObject][i] = -1;
+                vInfo[vehicleid][vObjectPosX][0] = -1;
+                vInfo[vehicleid][vObjectPosY][1] = -1;
+                vInfo[vehicleid][vObjectPosZ][2] = -1;
+                vInfo[vehicleid][vObjectRotX][0] = -1;
+                vInfo[vehicleid][vObjectRotY][1] = -1;
+                vInfo[vehicleid][vObjectRotZ][2] = -1;
+            }
+            
+        }
 	}
 	return false;
 }
@@ -353,7 +403,9 @@ ParkPlayerVehicle(playerid) {
     new id = VehicleGetID(vehicleid);
 
     if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
-    if(!VehicleIsOwner(playerid)) return SendErrorMessage(playerid, "Você ser o dono do veículo para usar esse comando.");
+
+    if(!VehicleIsOwner(playerid, id)) return SendErrorMessage(playerid, "Você deve ser o dono do veículo para usar esse comando.");
+
     if(IsVehicleImpounded(vehicleid)) return SendErrorMessage(playerid, "Este veículo está apreendido, portanto você não pode utilizá-lo.");
 
     if(IsPlayerInRangeOfPoint(playerid, 5.0, vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]) && vInfo[id][vVW] == GetPlayerVirtualWorld(playerid) && vInfo[id][vInterior] == GetPlayerInterior(playerid)) {
@@ -363,21 +415,55 @@ ParkPlayerVehicle(playerid) {
                 RemovePlayerFromVehicle(i); 
 	    }
 
-        if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Seu veículo %s (( %s )) foi estacionado na vaga.", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
-		else va_SendClientMessage(playerid, -1, "Seu veículo %s foi estacionado na vaga.", ReturnVehicleModelName(vInfo[id][vModel]));
+        printf("A: vInfo[id][vVehicle] = %d\nvInfo[vehicleid][vVehicle] = %d", vInfo[id][vVehicle], vInfo[vehicleid][vVehicle]);
 
-        
+        printf("D: vInfo[id][vVehicle] = %d\nvInfo[vehicleid][vVehicle] = %d", vInfo[id][vVehicle], vInfo[vehicleid][vVehicle]);
+
+        if(vInfo[id][vNamePersonalized]) SendServerMessage(playerid, "Seu veículo %s (( %s )) foi estacionado na vaga.", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+		else SendServerMessage(playerid, "Seu veículo %s foi estacionado na vaga.", ReturnVehicleModelName(vInfo[id][vModel]));
+
+        format(logString, sizeof(logString), "%s (%s) estacionou seu %s (SQL %d) na vaga", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), id);
+	    logCreate(playerid, logString, 16);
+
+        printf("%d, %d", id, vehicleid);
+        SaveVehicle(id);
+        ResetVehicle(id);
+        vInfo[id][vVehicle] = 0;
+        vInfo[id][vExists] = 0;
 
     } else {
         SendErrorMessage(playerid, "Você não está perto da sua vaga.");
-        if(vInfo[vehicleid][vVW] == 0) {
+        if(vInfo[id][vVW] == 0) {
             va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Você pode usar a marca vermelha no mapa para achar a vaga do seu veículo.");
-			SetPlayerCheckpoint(playerid, vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], 3.0);
+			SetPlayerCheckpoint(playerid, vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2], 3.0);
         }
     } 
     return true;
 }
 
+ChangeParkPlayerVehicle(playerid) {
+    new vehicleid = GetPlayerVehicleID(playerid);
+    new id = VehicleGetID(vehicleid);
+
+    if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+    if(!VehicleIsOwner(playerid, id)) return SendErrorMessage(playerid, "Você ser o dono do veículo para usar esse comando.");
+    if(IsVehicleImpounded(id)) return SendErrorMessage(playerid, "Este veículo está apreendido, portanto você não pode utilizá-lo.");
+
+    GetVehiclePos(GetPlayerVehicleID(playerid), vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]);
+	GetVehicleZAngle(GetPlayerVehicleID(playerid), vInfo[id][vPos][3]);
+    vInfo[vehicleid][vVW] = GetPlayerVirtualWorld(playerid);
+    vInfo[vehicleid][vInterior] = GetPlayerInterior(playerid);
+    
+
+    if(vInfo[id][vNamePersonalized]) SendServerMessage(playerid, "Você atualizou a vaga do seu veículo %s (( %s )).", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+	else SendServerMessage(playerid, "Você atualizou a vaga do seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
+
+    format(logString, sizeof(logString), "%s (%s) atualizou a vaga do seu seu %s (SQL %d)", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), id);
+	logCreate(playerid, logString, 16);
+
+    SaveVehicle(id); SpawnVehicle(id);
+    return true;
+}
 forward LoadVehicleStats(vehicleid);
 public LoadVehicleStats(vehicleid) {
 
@@ -392,6 +478,27 @@ public LoadVehicleStats(vehicleid) {
 	cache_get_value_name_float(0, "engine", vInfo[vehicleid][vEngine]);
     cache_get_value_name_float(0, "miles", vInfo[vehicleid][vMiles]);
     
+    return true;
+}
+
+forward LoadVehicleObjects(vehicleid);
+public LoadVehicleObjects(vehicleid) {
+    for (new o = 0; o < 5; o ++) {
+        format(query, sizeof(query), "object_%d", o + 1);
+        cache_get_value_name_int(0, query, vInfo[vehicleid][vObject][o]);
+        format(query, sizeof(query), "ofX_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectPosX][o]);
+        format(query, sizeof(query), "ofY_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectPosY][o]);
+        format(query, sizeof(query), "ofZ_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectPosZ][o]);
+        format(query, sizeof(query), "rX_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotX][o]);
+        format(query, sizeof(query), "rY_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotY][o]);
+        format(query, sizeof(query), "rZ_%d", o + 1);
+        cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotZ][o]);
+    }
     return true;
 }
 
@@ -417,9 +524,26 @@ public LoadVehicleWeapons(vehicleid) {
     return true;
 }
 
+SetVehicleObject(vehicleid) {
+	if(vInfo[vehicleid][vVehicle] <= 0 || vInfo[vehicleid][vVehicle] >= MAX_VEHICLES) return;
+	for(new i = 0; i < 5; i++) {
+		if(vInfo[vehicleid][vObject][i] != 0) {
+            vInfo[vehicleid][vObject][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
+			AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][i], 
+            vInfo[vehicleid][vVehicle], 
+            vInfo[vehicleid][vObjectPosX][i],
+            vInfo[vehicleid][vObjectPosY][i],
+            vInfo[vehicleid][vObjectPosZ][i],
+            vInfo[vehicleid][vObjectRotX][i],
+            vInfo[vehicleid][vObjectRotY][i],
+            vInfo[vehicleid][vObjectRotZ][i]);
+		}
+	}
+}
+
 ModVehicle(vehicleid) {
 	if(vInfo[vehicleid][vVehicle] <= 0 || vInfo[vehicleid][vVehicle] >= MAX_VEHICLES) return;
-	for(new i = 0; i < 17; ++i) {
+	for(new i = 0; i < 17; i++) {
 		if(vInfo[vehicleid][vMods][i] != 0) {
 			AddVehicleComponent(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vMods][i]);
 		}
@@ -506,4 +630,39 @@ Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
 		cache_delete(result);
 	}
     return true;
+}
+
+// DEBUG
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
+    printf("\n\nOnPlayerEnterVehicle (vehicleid):\n\
+    vInfo[vehicleid][vModel] = %d\n\
+    vInfo[vehicleid][vOwner] = %d\n\
+    vInfo[vehicleid][vFaction] = %d\n\
+    vInfo[vehicleid][vBusiness] = %d\n\
+    vInfo[vehicleid][vJob] = %d\n\
+    vInfo[vehicleid][vID] = %d\n\
+    vInfo[vehicleid][vVehicle] = %d", vInfo[vehicleid][vModel], 
+    vInfo[vehicleid][vOwner],
+    vInfo[vehicleid][vFaction],
+    vInfo[vehicleid][vBusiness],
+    vInfo[vehicleid][vJob],
+    vInfo[vehicleid][vID],
+    vInfo[vehicleid][vVehicle]);
+
+    new id = VehicleGetID(vehicleid);
+    printf("\n\nOnPlayerEnterVehicle (id):\n\
+    vInfo[id][vModel] = %d\n\
+    vInfo[id][vOwner] = %d\n\
+    vInfo[id][vFaction] = %d\n\
+    vInfo[id][vBusiness] = %d\n\
+    vInfo[id][vJob] = %d\n\
+    vInfo[id][vID] = %d\n\
+    vInfo[id][vVehicle] = %d\n\n", vInfo[id][vModel], 
+    vInfo[id][vOwner],
+    vInfo[id][vFaction],
+    vInfo[id][vBusiness],
+    vInfo[id][vJob],
+    vInfo[id][vID],
+    vInfo[id][vVehicle]);
+    return 1;
 }

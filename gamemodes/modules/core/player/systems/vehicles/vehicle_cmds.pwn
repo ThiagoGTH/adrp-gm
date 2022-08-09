@@ -23,7 +23,7 @@ CMD:v(playerid, params[]) {
 	if (sscanf(params, "s[128]", type)) {
  	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /v [ação]");
-		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, comprarvaga, venderconce, stats");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, mudarvaga, venderconce, stats");
 		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca");
 		SendClientMessage(playerid, COLOR_BEGE, "[Deletar]: deletar (não recebe nada)");
 		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
@@ -31,6 +31,7 @@ CMD:v(playerid, params[]) {
 	}
 	if (!strcmp(type, "lista", true)) return ShowPlayerVehicles(playerid);
 	else if (!strcmp(type, "estacionar", true)) return ParkPlayerVehicle(playerid);
+	else if (!strcmp(type, "mudarvaga", true)) return ChangeParkPlayerVehicle(playerid);
 
 	return true;
 }
@@ -141,7 +142,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(userid, "%s setou você como dono do veículo %s (%d).", GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), vInfo[id][vVehicle]);
 
-		format(logString, sizeof(logString), "%s (%s) alterou de %s para %s como novo dono do %s (ID: %d/SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), pNome(vInfo[id][vOwner]), pNome(userid), ReturnVehicleModelName(vInfo[id][vModel]), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+		format(logString, sizeof(logString), "%s (%s) alterou de %s para %s como novo dono do %s (ID: %d/SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), pNome(vInfo[id][vOwner]), pNome(userid), ReturnVehicleModelName(vInfo[id][vModel]), vInfo[id][vVehicle], vInfo[id][vID]);
 		logCreate(playerid, logString, 1);
 
 		vInfo[id][vOwner] = pInfo[userid][pID];
@@ -165,7 +166,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você ajustou a localização do veículo ID %d.", vInfo[id][vVehicle]);
 
-		format(logString, sizeof(logString), "%s (%s) ajustou a localização do veículo ID %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+		format(logString, sizeof(logString), "%s (%s) ajustou a localização do veículo ID %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 		logCreate(playerid, logString, 1);
 	}
 	else if (!strcmp(type, "faccao", true) || !strcmp(type, "facção", true)){
@@ -175,12 +176,12 @@ CMD:editarveiculo(playerid, params[]) {
 		if(factionid == 0){
 			SendServerMessage(playerid, "Você removeu o status faccional do veículo ID %d.", vInfo[id][vVehicle]);
 
-			format(logString, sizeof(logString), "%s (%s) removeu o status faccional do veículo %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+			format(logString, sizeof(logString), "%s (%s) removeu o status faccional do veículo %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 		} else {
 			SendServerMessage(playerid, "Você definiu o veículo ID %d na facção ID %d.", vInfo[id][vVehicle], factionid);
 
-			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)na facção ID %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], factionid);
+			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)na facção ID %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], factionid);
 			logCreate(playerid, logString, 1);
 		}
 
@@ -194,12 +195,12 @@ CMD:editarveiculo(playerid, params[]) {
 		if(bizid == 0){
 			SendServerMessage(playerid, "Você removeu o status empresarial do veículo ID %d.", vInfo[id][vVehicle]);
 
-			format(logString, sizeof(logString), "%s (%s) removeu o status empresarial do veículo %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+			format(logString, sizeof(logString), "%s (%s) removeu o status empresarial do veículo %d (SQL: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 		} else {
 			SendServerMessage(playerid, "Você definiu o veículo ID %d na empresa ID %d.", vInfo[id][vVehicle], bizid);
 
-			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)na empresa ID %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], bizid);
+			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)na empresa ID %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], bizid);
 			logCreate(playerid, logString, 1);
 		}
 
@@ -221,7 +222,7 @@ CMD:editarveiculo(playerid, params[]) {
 		SaveVehicle(id); SpawnVehicle(id);
 		SendServerMessage(playerid, "Você definiu as cores do veículo %d como %d e %d.", vInfo[id][vVehicle], color1, color2);
 
-		format(logString, sizeof(logString), "%s (%s) definiu as cores do veículo ID %d (SQL: %d) como %d e %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], color1, color2);
+		format(logString, sizeof(logString), "%s (%s) definiu as cores do veículo ID %d (SQL: %d) como %d e %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], color1, color2);
 		logCreate(playerid, logString, 1);
 	}
 	else if (!strcmp(type, "modelo", true)){
@@ -232,7 +233,7 @@ CMD:editarveiculo(playerid, params[]) {
 		
 		SendServerMessage(playerid, "Você alterou o modelo do veículo %d de %d para %d.", vInfo[id][vVehicle], vInfo[id][vModel], model);
 
-		format(logString, sizeof(logString), "%s (%s) alterou o modelo do veículo %d (SQLID: %d) de %d para %d.", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], vInfo[id][vModel], model);
+		format(logString, sizeof(logString), "%s (%s) alterou o modelo do veículo %d (SQLID: %d) de %d para %d.", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], vInfo[id][vModel], model);
 		logCreate(playerid, logString, 1);
 
 		vInfo[id][vModel] = model[0];
@@ -250,7 +251,7 @@ CMD:editarveiculo(playerid, params[]) {
 			SaveVehicle(id); SpawnVehicle(id);
 			SendServerMessage(playerid, "Você removeu o nome do veículo ID %d.", vInfo[id][vVehicle]);
 
-			format(logString, sizeof(logString), "%s (%s) removeu o nome do veículo ID %d (SQLID: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+			format(logString, sizeof(logString), "%s (%s) removeu o nome do veículo ID %d (SQLID: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 			return true;
 		} else {
@@ -259,7 +260,7 @@ CMD:editarveiculo(playerid, params[]) {
 			SaveVehicle(id); SpawnVehicle(id);
 			SendServerMessage(playerid, "Você definiu o nome do veículo ID %d como %s.", vInfo[id][vVehicle], name);
 
-			format(logString, sizeof(logString), "%s (%s) definiu o nome do veículo ID %d (SQLID: %d) como %s.", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], name);
+			format(logString, sizeof(logString), "%s (%s) definiu o nome do veículo ID %d (SQLID: %d) como %s.", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], name);
 			logCreate(playerid, logString, 1);
 			return true;
 		}
@@ -272,7 +273,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com seguro nível %d.", vInfo[id][vVehicle], insurance);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com seguro nível %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], insurance);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com seguro nível %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], insurance);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vInsurance] = insurance;
@@ -285,7 +286,7 @@ CMD:editarveiculo(playerid, params[]) {
 		if(sunpass == 0){
 			SendServerMessage(playerid, "Você definiu o veículo ID %d como sem sunpass.", vInfo[id][vVehicle]);
 
-			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d) como sem sunpass", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d) como sem sunpass", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 
 			vInfo[id][vSunpass] = sunpass;
@@ -294,7 +295,7 @@ CMD:editarveiculo(playerid, params[]) {
 		} else if(sunpass == 1) {
 			SendServerMessage(playerid, "Você definiu o veículo ID %d com sunpass.", vInfo[id][vVehicle]);
 
-			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d) com sunpass", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID]);
+			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d) com sunpass", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 			vInfo[id][vSunpass] = sunpass;
 			SaveVehicle(id); SpawnVehicle(id);
@@ -309,7 +310,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com alarme nível %d.", vInfo[id][vVehicle], alarm);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com alarme nível %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], alarm);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com alarme nível %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], alarm);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vAlarm] = alarm;
@@ -323,7 +324,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com combustível em %.2f%%.", vInfo[id][vVehicle], fuel);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com combustível em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], fuel);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com combustível em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], fuel);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vFuel] = fuel;
@@ -337,7 +338,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com bateria em %.2f%%.", vInfo[id][vVehicle], battery);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com bateria em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], battery);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com bateria em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], battery);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vBattery] = battery;
@@ -351,7 +352,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com motor em %.2f%%.", vInfo[id][vVehicle], engine);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com motor em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], engine);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com motor em %.2f%%", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], engine);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vEngine] = engine;
@@ -365,7 +366,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		SendServerMessage(playerid, "Você definiu o veículo ID %d com milhas em %.2f.", vInfo[id][vVehicle], miles);
 
-		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com milhas em %.2f", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vSQLID], miles);
+		format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d)com milhas em %.2f", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], miles);
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vMiles] = miles;
@@ -395,7 +396,10 @@ CMD:deletarveiculo(playerid, params[]) {
 	format(logString, sizeof(logString), "%s (%s) destruiu o veículo %s [%d/SQL: %d]", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[VehicleGetID(id)][vModel]), id, VehicleGetID(id));
 	logCreate(playerid, logString, 1);
 
+	printf("DeleteVehicle(%d)", VehicleGetID(id));
+	
 	DeleteVehicle(VehicleGetID(id));
+	ResetVehicle(VehicleGetID(id));
 	return true;
 }
 
@@ -405,23 +409,24 @@ CMD:amotor(playerid, params[]) {
 
 	new string[64];
 	new vehicleid = GetPlayerVehicleID(playerid);
+	new id = VehicleGetID(vehicleid);
 
-	if(vInfo[VehicleGetID(vehicleid)][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
+	if(vInfo[id][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
 
 	if(ReturnVehicleHealth(vehicleid) <= 300) return SendErrorMessage(playerid, "Este veículo está danificado e não pode ser ligado.");
 
 	switch (GetEngineStatus(vehicleid)) {
 	    case false: {
 	        SetEngineStatus(vehicleid, true);
+			SetLightStatus(vehicleid, true);
 			format(string, sizeof(string), "~g~MOTOR LIGADO");
 			GameTextForPlayer(playerid, string, 2400, 4);
-			SetLightStatus(vehicleid, true);
 			if(vInfo[VehicleGetID(vehicleid)][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo %s.", pNome(playerid), vInfo[VehicleGetID(vehicleid)][vName]);
 			else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo.", pNome(playerid));
 		} case true: {
 		    SetEngineStatus(vehicleid, false);
-   			format(string, sizeof(string), "~r~MOTOR DESLIGADO");
    			SetLightStatus(vehicleid, false);
+   			format(string, sizeof(string), "~r~MOTOR DESLIGADO");
 			GameTextForPlayer(playerid, string, 2400, 4);
 			if(vInfo[VehicleGetID(vehicleid)][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo %s.", pNome(playerid), vInfo[VehicleGetID(vehicleid)][vName]);
 			else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo.", pNome(playerid));

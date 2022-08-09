@@ -76,6 +76,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags) {
     if(result == -1){
 		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
     }else{
+        if(!pInfo[playerid][pLogged]) return SendErrorMessage(playerid, "Você não pode utilizar comandos agora.");
         format(logString, sizeof(logString), "%s (%s) [%s]: /%s %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmd, params);
         logCreate(playerid, logString, 3);
     }

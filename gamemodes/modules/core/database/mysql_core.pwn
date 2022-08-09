@@ -86,8 +86,6 @@ void:CheckUserTable() {
     `chars_slots` int NOT NULL DEFAULT 5,\
     PRIMARY KEY (ID));");
 
-    mysql_query(DBConn, "ALTER TABLE `users_premium` ADD CONSTRAINT `users_premium_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);");
-
     print("[DATABASE] Tabela users_premium checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_premium checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -107,8 +105,6 @@ void:CheckUserTable() {
     `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
     `ucp_posts` int NOT NULL DEFAULT 0,\
     PRIMARY KEY (ID));");
-
-    mysql_query(DBConn, "ALTER TABLE `users_teams` ADD CONSTRAINT `users_teams_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);");
 
     print("[DATABASE] Tabela users_teams checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams checada com sucesso.");
@@ -148,8 +144,6 @@ void:CheckPlayerTable() {
     `online` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ALTER TABLE `players` ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);");
-
     print("[DATABASE] Tabela players checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -167,8 +161,6 @@ void:CheckPlayerTable() {
     `description` varchar(128) NOT NULL DEFAULT 'N/A',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ALTER TABLE `players_apparence` ADD CONSTRAINT `players_apparence_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
-
     print("[DATABASE] Tabela players_apparence checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -179,8 +171,6 @@ void:CheckPlayerTable() {
     `donator` int NOT NULL DEFAULT '0',\
     `donator_time` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
-
-    mysql_query(DBConn, "ALTER TABLE `players_premium` ADD CONSTRAINT `players_premium_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
 
     print("[DATABASE] Tabela players_premium checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_premium checada com sucesso.");
@@ -217,8 +207,6 @@ void:CheckPlayerTable() {
     `ammo13` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ALTER TABLE `players_weapons` ADD CONSTRAINT `players_weapons_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
-
     print("[DATABASE] Tabela players_weapons checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_weapons checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -235,8 +223,6 @@ void:CheckBanTable() {
     `unban_admin` varchar(24) NOT NULL DEFAULT 'Nenhum',\
     `banned` boolean NOT NULL DEFAULT '1',\
     PRIMARY KEY (`ID`));");
-
-    mysql_query(DBConn, "ALTER TABLE `ban` ADD CONSTRAINT `ban_ibfk_1` FOREIGN KEY (`banned_id`) REFERENCES `users` (`ID`)");
 
     print("[DATABASE] Tabela ban checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ban checada com sucesso.");
@@ -334,8 +320,6 @@ void:CheckVehiclesTable(){
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles checada com sucesso.");
     logCreate(99998, logString, 5);
 
-    mysql_query(DBConn, "ALTER TABLE `vehicles` ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
-
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_stats` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `vehicle_id` int NOT NULL DEFAULT '0',\
@@ -349,10 +333,52 @@ void:CheckVehiclesTable(){
     `miles` float NOT NULL DEFAULT '0.0',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ALTER TABLE `vehicles_stats` ADD CONSTRAINT `vehicles_stats_ibfk_1` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`ID`);");
-
     print("[DATABASE] Tabela vehicles_stats checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_stats checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_objects` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `vehicle_id` int NOT NULL DEFAULT '0',\
+    `object_1` int NOT NULL DEFAULT '0',\
+    `ofX_1` float NOT NULL DEFAULT '0.0',\
+    `ofY_1` float NOT NULL DEFAULT '0.0',\
+    `ofZ_1` float NOT NULL DEFAULT '0.0',\
+    `rX_1` float NOT NULL DEFAULT '0.0',\
+    `rY_1` float NOT NULL DEFAULT '0.0',\
+    `rZ_1` float NOT NULL DEFAULT '0.0',\
+    `object_2` int NOT NULL DEFAULT '0',\
+    `ofX_2` float NOT NULL DEFAULT '0.0',\
+    `ofY_2` float NOT NULL DEFAULT '0.0',\
+    `ofZ_2` float NOT NULL DEFAULT '0.0',\
+    `rX_2` float NOT NULL DEFAULT '0.0',\
+    `rY_2` float NOT NULL DEFAULT '0.0',\
+    `rZ_2` float NOT NULL DEFAULT '0.0',\
+    `object_3` int NOT NULL DEFAULT '0',\
+    `ofX_3` float NOT NULL DEFAULT '0.0',\
+    `ofY_3` float NOT NULL DEFAULT '0.0',\
+    `ofZ_3` float NOT NULL DEFAULT '0.0',\
+    `rX_3` float NOT NULL DEFAULT '0.0',\
+    `rY_3` float NOT NULL DEFAULT '0.0',\
+    `rZ_3` float NOT NULL DEFAULT '0.0',\
+    `object_4` int NOT NULL DEFAULT '0',\
+    `ofX_4` float NOT NULL DEFAULT '0.0',\
+    `ofY_4` float NOT NULL DEFAULT '0.0',\
+    `ofZ_4` float NOT NULL DEFAULT '0.0',\
+    `rX_4` float NOT NULL DEFAULT '0.0',\
+    `rY_4` float NOT NULL DEFAULT '0.0',\
+    `rZ_4` float NOT NULL DEFAULT '0.0',\
+    `object_5` int NOT NULL DEFAULT '0',\
+    `ofX_5` float NOT NULL DEFAULT '0.0',\
+    `ofY_5` float NOT NULL DEFAULT '0.0',\
+    `ofZ_5` float NOT NULL DEFAULT '0.0',\
+    `rX_5` float NOT NULL DEFAULT '0.0',\
+    `rY_5` float NOT NULL DEFAULT '0.0',\
+    `rZ_5` float NOT NULL DEFAULT '0.0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela vehicles_objects checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_objects checada com sucesso.");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_tunings` (\
@@ -376,8 +402,6 @@ void:CheckVehiclesTable(){
     `mod16` int NOT NULL DEFAULT '0',\
     `mod17` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
-
-    mysql_query(DBConn, "ALTER TABLE `vehicles_tunings` ADD CONSTRAINT `vehicles_tunings_ibfk_1` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`ID`);");
 
     print("[DATABASE] Tabela vehicles_tunings checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_tunings checada com sucesso.");
@@ -478,14 +502,12 @@ void:CheckVehiclesTable(){
     `weapon_type30` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ALTER TABLE `vehicles_weapons` ADD CONSTRAINT `vehicles_weapons_ibfk_1` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`ID`);");
-
     print("[DATABASE] Tabela vehicles_weapons checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_weapons checada com sucesso.");
     logCreate(99998, logString, 5);
 }
 
-void:CheckPoolTable(){
+void:CheckPoolTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `pool_tables` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `positionX` float NOT NULL DEFAULT '0',\
@@ -523,8 +545,6 @@ void:CheckHousesTable() {
     `vw_exit` int DEFAULT '0',\
     `interior_exit` int DEFAULT '0',\
     PRIMARY KEY (`id`));");
-
-    mysql_query(DBConn, "ALTER TABLE `houses` ADD CONSTRAINT `houses_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
     
     print("[DATABASE] Tabela houses checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses checada com sucesso.");
@@ -548,13 +568,11 @@ void:CheckHousesTable() {
     `interior_exit` int DEFAULT '0',\
     PRIMARY KEY (`id`));");
 
-    mysql_query(DBConn, "ALTER TABLE `houses_other_entries` ADD CONSTRAINT `houses_other_entries_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`);");
-
     print("[DATABASE] Tabela houses_other_entries checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso.");
 }
 
-void:CheckTradingTable(){
+void:CheckTradingTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
@@ -584,15 +602,12 @@ void:CheckTradingTable(){
     `quantity` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
-    mysql_query(DBConn, "ADD CONSTRAINT `tradings_owners_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`), \
-    ADD CONSTRAINT `tradings_owners_ibfk_2` FOREIGN KEY (`trading_id`) REFERENCES `tradings` (`ID`);");
-
     print("[DATABASE] Tabela tradings_owners checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela tradings_owners checada com sucesso.");
     logCreate(99998, logString, 5);
 }
 
-void:CheckUCPTable(){
+void:CheckUCPTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_apps` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `user_id` int NOT NULL,\
@@ -620,8 +635,6 @@ void:CheckUCPTable(){
     `valuation_date` int(11) NOT NULL DEFAULT '0',\
     PRIMARY KEY (`id`));");
 
-    mysql_query(DBConn, "ALTER TABLE `ucp_apps` ADD CONSTRAINT `ucp_apps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);");
-
     print("[DATABASE] Tabela ucp_apps checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_apps checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -648,8 +661,6 @@ void:CheckUCPTable(){
     `notification_read_date` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`id`));");
 
-    mysql_query(DBConn, "ALTER TABLE `ucp_notifications` ADD CONSTRAINT `ucp_notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`);");
-
     print("[DATABASE] Tabela ucp_notifications checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_notifications checada com sucesso.");
     logCreate(99998, logString, 5);
@@ -666,7 +677,7 @@ void:CheckUCPTable(){
     logCreate(99998, logString, 5);
 }
 
-CheckLicenceTable() {
+void:CheckLicenceTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS character_licences_driver (\
     ID int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL DEFAULT 0,\
@@ -681,8 +692,6 @@ CheckLicenceTable() {
 	`warning_two` varchar(128) NOT NULL DEFAULT 'Vazio',\
 	`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
     PRIMARY KEY (ID));");
-
-	mysql_query(DBConn, "ALTER TABLE `character_licences_driver`  ADD CONSTRAINT `character_licences_driver_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `players` (`ID`);");
 
     print("[DATABASE] Tabela character_licences_driver checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela character_licences_driver checada com sucesso.");

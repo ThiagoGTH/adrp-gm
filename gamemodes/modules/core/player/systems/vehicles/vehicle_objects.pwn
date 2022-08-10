@@ -58,16 +58,17 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
             finalx = ofx*floatcos(roz, degrees)+ofy*floatsin(roz, degrees);
             finaly = -ofx*floatsin(roz, degrees)+ofy*floatcos(roz, degrees);
 
-            vInfo[vehicleid][vObjectPosX][0] = finalx;
-            vInfo[vehicleid][vObjectPosY][1] = finaly;
-            vInfo[vehicleid][vObjectPosZ][2] = ofz;
-            vInfo[vehicleid][vObjectRotX][0] = rx;
-            vInfo[vehicleid][vObjectRotY][1] = ry;
-            vInfo[vehicleid][vObjectRotZ][2] = ofaz;
-            vInfo[vehicleid][vObject][slot] = object;
-
+            vInfo[vehicleid][vObjectPosX][slot] = finalx;
+            vInfo[vehicleid][vObjectPosY][slot] = finaly;
+            vInfo[vehicleid][vObjectPosZ][slot] = ofz;
+            vInfo[vehicleid][vObjectRotX][slot] = rx;
+            vInfo[vehicleid][vObjectRotY][slot] = ry;
+            vInfo[vehicleid][vObjectRotZ][slot] = ofaz;
+            
             AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][slot], vInfo[vehicleid][vVehicle], finalx, finaly, ofz, rx, ry, ofaz);
             SendServerMessage(playerid, "O item foi colocado no slot %d do veículo.", pInfo[playerid][pSlotEdVeh]);
+
+            vInfo[vehicleid][vObject][slot] = object;
 
             pInfo[playerid][pEditingVeh] = 0;
             pInfo[playerid][pOjectVeh] = 0;

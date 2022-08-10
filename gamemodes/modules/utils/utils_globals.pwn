@@ -137,6 +137,18 @@ enum Player_Data {
 	pVehicleSellPrice,
     pSpawnVeh,
 
+    // RADIO
+    rRadioState,            // Estado do rádio, se ligado ou desligado
+    rRadioSlot[7],          // Os canais conectados nos slots, vai do 1 ao 7
+    rRadioName1[32],        //
+    rRadioName2[32],        //
+    rRadioName3[32],        //
+    rRadioName4[32],        //      O nome dos slots, trocados pelo /radio renomear
+    rRadioName5[32],        //
+    rRadioName6[32],        //
+    rRadioName7[32],        //
+    pRadioNvl[4],           // O nível do rádio
+
     // CAMERA-MAN
     bool:pWatching,
 	pWatchingPlayer,
@@ -145,7 +157,6 @@ enum Player_Data {
 
     // FACTIONS
     pSwat,
-
 
     // TOG
     pTogNewbie,
@@ -297,6 +308,23 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pVehicleSell] = -1;
     pInfo[playerid][pVehicleSellPrice] = 0;
     pInfo[playerid][pSpawnVeh] = 0;
+
+    // RADIO
+    pInfo[playerid][rRadioState] = 0;
+    pInfo[playerid][rRadioSlot][0] = 0;
+    pInfo[playerid][rRadioSlot][1] = 0;
+    pInfo[playerid][rRadioSlot][2] = 0;
+    pInfo[playerid][rRadioSlot][3] = 0;
+    pInfo[playerid][rRadioSlot][4] = 0;
+    pInfo[playerid][rRadioSlot][5] = 0;
+    pInfo[playerid][rRadioSlot][6] = 0;
+    format(pInfo[playerid][rRadioName1], 90, "0");
+    format(pInfo[playerid][rRadioName2], 90, "0");
+    format(pInfo[playerid][rRadioName3], 90, "0");
+    format(pInfo[playerid][rRadioName4], 90, "0");
+    format(pInfo[playerid][rRadioName5], 90, "0");
+    format(pInfo[playerid][rRadioName6], 90, "0");
+    format(pInfo[playerid][rRadioName7], 90, "0");
     
     // TEMP VARS
     pInfo[playerid][tempChar][0] = 

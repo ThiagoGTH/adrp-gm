@@ -8,3 +8,4 @@
 #include "modules\core\player\cmds\apparence.pwn"
 #include "modules\core\player\cmds\credits.pwn"
 #include "modules\core\player\cmds\player_config.pwn"
+#include "modules\core\player\cmds\radio.pwn"

@@ -80,12 +80,11 @@ SaveVehicle(vehicleid) {
     new Cache:result;
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
+
     printf("SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
-    if(!cache_num_rows()){
-        printf("SELECT * FROM `vehicles` WHERE `id` = '%d';", vehicleid);
-        printf("Retornou falso ://");
-        return false;
-    }
+
+    if(!cache_num_rows())return false;
+
         
     mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles` SET \
     `model` = '%d',                 \
@@ -210,6 +209,9 @@ SpawnVehicle(vehicleid) {
         if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
 		    DestroyVehicle(vInfo[vehicleid][vVehicle]);
 
+        ResetVehicleObjects(vehicleid);
+
+
         if (vInfo[vehicleid][vColor1] == -1)
 		    vInfo[vehicleid][vColor1] = random(127);
 
@@ -227,9 +229,6 @@ SpawnVehicle(vehicleid) {
 
         SetVehicleNumberPlate(vInfo[vehicleid][vVehicle], string);
         SetVehicleParamsEx(vInfo[vehicleid][vVehicle], false, false, false, vInfo[vehicleid][vLocked], false, false, false);
-
-        SetVehicleObject(vehicleid);
-        ModVehicle(vehicleid);
     }
 }
 
@@ -287,6 +286,8 @@ LoadVehicles() {
 		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", id);
 
         SpawnVehicle(id);
+        SetVehicleObject(id);
+        ModVehicle(id);
         loadedVehicles++;
     }
     printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
@@ -342,6 +343,8 @@ LoadVehicle(vehicleid) {
 	mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", vehicleid);
 
     SpawnVehicle(vehicleid);
+    SetVehicleObject(vehicleid);
+    ModVehicle(vehicleid);
     return true;
 }
 
@@ -378,24 +381,31 @@ DeleteVehicle(vehicleid) {
 
 ResetVehicle(vehicleid) {
 	if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
-		if (IsValidVehicle(vInfo[vehicleid][vVehicle]))
-			return DestroyVehicle(vInfo[vehicleid][vVehicle]);
-
-        for (new i = 0; i < 5; i++){
-            if (IsValidDynamicObject(vInfo[vehicleid][vObject][i])) {
-                DestroyDynamicObject(vInfo[vehicleid][vObject][i]);
-                vInfo[vehicleid][vObject][i] = -1;
-                vInfo[vehicleid][vObjectPosX][0] = -1;
-                vInfo[vehicleid][vObjectPosY][1] = -1;
-                vInfo[vehicleid][vObjectPosZ][2] = -1;
-                vInfo[vehicleid][vObjectRotX][0] = -1;
-                vInfo[vehicleid][vObjectRotY][1] = -1;
-                vInfo[vehicleid][vObjectRotZ][2] = -1;
-            }
-            
+		if (IsValidVehicle(vInfo[vehicleid][vVehicle])){
+			DestroyVehicle(vInfo[vehicleid][vVehicle]);
+            ResetVehicleObjects(vehicleid);
         }
 	}
 	return false;
+}
+
+ResetVehicleObjects(vehicleid){
+    printf("ResetVehicleObjects(vehicleid) %d\n vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
+    for (new i = 0; i < 5; i++){  
+        printf("vInfo[id][vObject][i] = %d", vInfo[vehicleid][vObject][i]);  
+        if(vInfo[vehicleid][vObject][i] != 0){
+            DestroyDynamicObject(vInfo[vehicleid][vObject][i]);
+            printf("Mim destruirão");
+            vInfo[vehicleid][vObject][i] = 0;
+            vInfo[vehicleid][vObjectPosX][i] = 0;
+            vInfo[vehicleid][vObjectPosY][i] = 0;
+            vInfo[vehicleid][vObjectPosZ][i] = 0;
+            vInfo[vehicleid][vObjectRotX][i] = 0;
+            vInfo[vehicleid][vObjectRotY][i] = 0;
+            vInfo[vehicleid][vObjectRotZ][i] = 0;
+        }
+    }
+    return true;
 }
 
 ParkPlayerVehicle(playerid) {
@@ -415,18 +425,14 @@ ParkPlayerVehicle(playerid) {
                 RemovePlayerFromVehicle(i); 
 	    }
 
-        printf("A: vInfo[id][vVehicle] = %d\nvInfo[vehicleid][vVehicle] = %d", vInfo[id][vVehicle], vInfo[vehicleid][vVehicle]);
-
-        printf("D: vInfo[id][vVehicle] = %d\nvInfo[vehicleid][vVehicle] = %d", vInfo[id][vVehicle], vInfo[vehicleid][vVehicle]);
-
         if(vInfo[id][vNamePersonalized]) SendServerMessage(playerid, "Seu veículo %s (( %s )) foi estacionado na vaga.", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
 		else SendServerMessage(playerid, "Seu veículo %s foi estacionado na vaga.", ReturnVehicleModelName(vInfo[id][vModel]));
 
         format(logString, sizeof(logString), "%s (%s) estacionou seu %s (SQL %d) na vaga", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), id);
 	    logCreate(playerid, logString, 16);
 
-        printf("%d, %d", id, vehicleid);
         SaveVehicle(id);
+        ResetVehicleObjects(id);
         ResetVehicle(id);
         vInfo[id][vVehicle] = 0;
         vInfo[id][vExists] = 0;
@@ -464,6 +470,7 @@ ChangeParkPlayerVehicle(playerid) {
     SaveVehicle(id); SpawnVehicle(id);
     return true;
 }
+
 forward LoadVehicleStats(vehicleid);
 public LoadVehicleStats(vehicleid) {
 
@@ -499,6 +506,7 @@ public LoadVehicleObjects(vehicleid) {
         format(query, sizeof(query), "rZ_%d", o + 1);
         cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotZ][o]);
     }
+    SetVehicleObject(vehicleid);
     return true;
 }
 
@@ -525,9 +533,10 @@ public LoadVehicleWeapons(vehicleid) {
 }
 
 SetVehicleObject(vehicleid) {
-	if(vInfo[vehicleid][vVehicle] <= 0 || vInfo[vehicleid][vVehicle] >= MAX_VEHICLES) return;
 	for(new i = 0; i < 5; i++) {
+        printf("Teste1;");
 		if(vInfo[vehicleid][vObject][i] != 0) {
+            printf("mim chamarão pra criar :oo");
             vInfo[vehicleid][vObject][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
 			AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][i], 
             vInfo[vehicleid][vVehicle], 
@@ -539,15 +548,16 @@ SetVehicleObject(vehicleid) {
             vInfo[vehicleid][vObjectRotZ][i]);
 		}
 	}
+    return true;
 }
 
 ModVehicle(vehicleid) {
-	if(vInfo[vehicleid][vVehicle] <= 0 || vInfo[vehicleid][vVehicle] >= MAX_VEHICLES) return;
 	for(new i = 0; i < 17; i++) {
 		if(vInfo[vehicleid][vMods][i] != 0) {
 			AddVehicleComponent(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vMods][i]);
 		}
 	}
+    return true;
 }
 
 hook OnPlayerEnterCheckpoint(playerid) {

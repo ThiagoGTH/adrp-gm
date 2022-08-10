@@ -165,6 +165,31 @@ void:CheckPlayerTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso.");
     logCreate(99998, logString, 5);
 
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_radio` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `pRadioNvl` int NOT NULL,\
+    `rRadioState` int NOT NULL,\
+    `rRadioSlot1` int NOT NULL,\
+    `rRadioSlot2` int NOT NULL,\
+    `rRadioSlot3` int NOT NULL,\
+    `rRadioSlot4` int NOT NULL,\
+    `rRadioSlot5` int NOT NULL,\
+    `rRadioSlot6` int NOT NULL,\
+    `rRadioSlot7` int NOT NULL,\
+    `rRadioName1` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName2` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName3` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName4` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName5` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName6` varchar(32) NOT NULL DEFAULT '0',\
+    `rRadioName7` varchar(32) NOT NULL DEFAULT '0'\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_radio checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_radio checada com sucesso.");
+    logCreate(99998, logString, 5);
+
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_premium` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\

@@ -2,6 +2,7 @@
 
 #include "modules\core\maps\exterior\factions\LSFD.pwn"
 #include "modules\core\maps\exterior\factions\SAN1.pwn" 
+#include "modules\core\maps\exterior\factions\SEB.pwn" 
 #include "modules\core\maps\exterior\SM.pwn" 
 #include "modules\core\maps\exterior\streets.pwn"
 #include "modules\core\maps\exterior\bahamas.pwn"

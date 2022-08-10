@@ -146,7 +146,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 
 		vInfo[id][vOwner] = pInfo[userid][pID];
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	}
 	else if (!strcmp(type, "localizacao", true) || !strcmp(type, "localização", true)){
 		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
@@ -186,7 +186,7 @@ CMD:editarveiculo(playerid, params[]) {
 		}
 
 		vInfo[id][vFaction] = factionid;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	}
 	else if (!strcmp(type, "empresa", true)){
 		new bizid;
@@ -205,7 +205,7 @@ CMD:editarveiculo(playerid, params[]) {
 		}
 
 		vInfo[id][vBusiness] = bizid;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	}
 	else if (!strcmp(type, "cor", true)){
 		new color1, color2;
@@ -219,7 +219,7 @@ CMD:editarveiculo(playerid, params[]) {
 
 		vInfo[id][vColor1] = color1;
 		vInfo[id][vColor2] = color2;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 		SendServerMessage(playerid, "Você definiu as cores do veículo %d como %d e %d.", vInfo[id][vVehicle], color1, color2);
 
 		format(logString, sizeof(logString), "%s (%s) definiu as cores do veículo ID %d (SQL: %d) como %d e %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], color1, color2);
@@ -248,7 +248,7 @@ CMD:editarveiculo(playerid, params[]) {
 		if(!strcmp(params, "nenhum", true)){
 			vInfo[id][vNamePersonalized] = 0;
 			format(vInfo[id][vName], 64, " ");
-			SaveVehicle(id); SpawnVehicle(id);
+			SaveVehicle(id);
 			SendServerMessage(playerid, "Você removeu o nome do veículo ID %d.", vInfo[id][vVehicle]);
 
 			format(logString, sizeof(logString), "%s (%s) removeu o nome do veículo ID %d (SQLID: %d)", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
@@ -257,7 +257,7 @@ CMD:editarveiculo(playerid, params[]) {
 		} else {
 			vInfo[id][vNamePersonalized] = 1;
 			format(vInfo[id][vName], 64, name);
-			SaveVehicle(id); SpawnVehicle(id);
+			SaveVehicle(id);
 			SendServerMessage(playerid, "Você definiu o nome do veículo ID %d como %s.", vInfo[id][vVehicle], name);
 
 			format(logString, sizeof(logString), "%s (%s) definiu o nome do veículo ID %d (SQLID: %d) como %s.", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], name);
@@ -277,7 +277,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vInsurance] = insurance;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	}
 	else if (!strcmp(type, "sunpass", true)){
 		new sunpass;
@@ -290,7 +290,7 @@ CMD:editarveiculo(playerid, params[]) {
 			logCreate(playerid, logString, 1);
 
 			vInfo[id][vSunpass] = sunpass;
-			SaveVehicle(id); SpawnVehicle(id);
+			SaveVehicle(id);
 			return true;
 		} else if(sunpass == 1) {
 			SendServerMessage(playerid, "Você definiu o veículo ID %d com sunpass.", vInfo[id][vVehicle]);
@@ -298,7 +298,7 @@ CMD:editarveiculo(playerid, params[]) {
 			format(logString, sizeof(logString), "%s (%s) definiu o veículo ID %d (SQL: %d) com sunpass", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID]);
 			logCreate(playerid, logString, 1);
 			vInfo[id][vSunpass] = sunpass;
-			SaveVehicle(id); SpawnVehicle(id);
+			SaveVehicle(id);
 			return true;
 		} else return SendErrorMessage(playerid, "Você definiu um valor inválido.");
 	}
@@ -314,7 +314,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vAlarm] = alarm;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	} 
 	else if (!strcmp(type, "combustível", true) || !strcmp(type, "combustivel", true)){
 		new Float:fuel;
@@ -328,7 +328,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vFuel] = fuel;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	} 
 	else if (!strcmp(type, "bateria", true)){
 		new Float:battery;
@@ -342,7 +342,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vBattery] = battery;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	} 
 	else if (!strcmp(type, "motor", true)){
 		new Float:engine;
@@ -356,7 +356,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vEngine] = engine;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	} 
 	else if (!strcmp(type, "milhas", true)){
 		new Float:miles;
@@ -370,7 +370,7 @@ CMD:editarveiculo(playerid, params[]) {
 		logCreate(playerid, logString, 1);
 		
 		vInfo[id][vMiles] = miles;
-		SaveVehicle(id); SpawnVehicle(id);
+		SaveVehicle(id);
 	} else return SendErrorMessage(playerid, "Você específicou um parâmetro inválido.");
 	return true;
 }
@@ -395,11 +395,10 @@ CMD:deletarveiculo(playerid, params[]) {
 	SendServerMessage(playerid, "Você destruiu o veículo ID: %d.", id);
 	format(logString, sizeof(logString), "%s (%s) destruiu o veículo %s [%d/SQL: %d]", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[VehicleGetID(id)][vModel]), id, VehicleGetID(id));
 	logCreate(playerid, logString, 1);
-
-	printf("DeleteVehicle(%d)", VehicleGetID(id));
 	
-	DeleteVehicle(VehicleGetID(id));
+	ResetVehicleObjects(id);
 	ResetVehicle(VehicleGetID(id));
+	DeleteVehicle(VehicleGetID(id));
 	return true;
 }
 

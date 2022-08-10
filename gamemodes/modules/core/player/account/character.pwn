@@ -187,6 +187,7 @@ LoadCharacterInfo(playerid, playerName[]) {
     LoadPlayerWeapons(playerid);
     LoadPlayerApparence(playerid);
     LoadPlayerPremium(playerid);
+    LoadPlayerRadio(playerid);
 
 }
 
@@ -217,6 +218,29 @@ LoadPlayerApparence(playerid){
     cache_get_value_name_float(0, "weight", pInfo[playerid][pWeight]);
     cache_get_value_name_int(0, "build", pInfo[playerid][pBuild]);
     cache_get_value_name(0, "description", pInfo[playerid][pDescription]);
+    cache_delete(result);
+    return true;
+}
+
+LoadPlayerRadio(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_radio WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_int(0, "rRadioState", pInfo[playerid][rRadioState]);
+    cache_get_value_int(0, "rRadioSlot1", pInfo[playerid][rRadioSlot][0]);
+    cache_get_value_int(0, "rRadioSlot2", pInfo[playerid][rRadioSlot][1]);
+    cache_get_value_int(0, "rRadioSlot3", pInfo[playerid][rRadioSlot][2]);
+    cache_get_value_int(0, "rRadioSlot4", pInfo[playerid][rRadioSlot][3]);
+    cache_get_value_int(0, "rRadioSlot5", pInfo[playerid][rRadioSlot][4]);
+    cache_get_value_int(0, "rRadioSlot6", pInfo[playerid][rRadioSlot][5]);
+    cache_get_value_int(0, "rRadioSlot7", pInfo[playerid][rRadioSlot][6]);
+    cache_get_value_name(0, "rRadioName1", pInfo[playerid][rRadioName1]); 
+    cache_get_value_name(0, "rRadioName2", pInfo[playerid][rRadioName2]);
+    cache_get_value_name(0, "rRadioName3", pInfo[playerid][rRadioName3]);
+    cache_get_value_name(0, "rRadioName4", pInfo[playerid][rRadioName4]);
+    cache_get_value_name(0, "rRadioName5", pInfo[playerid][rRadioName5]);
+    cache_get_value_name(0, "rRadioName6", pInfo[playerid][rRadioName6]);
+    cache_get_value_name(0, "rRadioName7", pInfo[playerid][rRadioName7]);
+    cache_get_value_int(0, "pRadioNvl", pInfo[playerid][pRadioNvl]);
     cache_delete(result);
     return true;
 }
@@ -378,6 +402,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerWeapons(playerid);
     SavePlayerApparence(playerid);
     SavePlayerPremium(playerid);
+    SavePlayerRadio(playerid);
     return true;
 }
 
@@ -476,6 +501,44 @@ SavePlayerPremium(playerid) {
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
+    return true;
+}
+
+SavePlayerRadio(playerid) {
+    mysql_format(DBConn, query, sizeof(query), "UPDATE `players_radio` SET \
+    `rRadioState`='%i', \
+    `rRadioSlot1`='%i', \
+    `rRadioSlot2`='%i', \
+    `rRadioSlot3`='%i', \
+    `rRadioSlot4`='%i', \
+    `rRadioSlot5`='%i', \
+    `rRadioSlot6`='%i', \
+    `rRadioSlot7`='%i', \
+    `rRadioName1`='%s', \
+    `rRadioName2`='%s', \
+    `rRadioName3`='%s', \
+    `rRadioName4`='%s', \
+    `rRadioName5`='%s', \
+    `rRadioName6`='%s', \
+    `rRadioName7`='%s', \
+    `pRadioNvl`='%i' WHERE `character_id`='%d'", 
+    pInfo[playerid][rRadioState],
+    pInfo[playerid][rRadioSlot][0],
+    pInfo[playerid][rRadioSlot][1],
+    pInfo[playerid][rRadioSlot][2],
+    pInfo[playerid][rRadioSlot][3],
+    pInfo[playerid][rRadioSlot][4],
+    pInfo[playerid][rRadioSlot][5],
+    pInfo[playerid][rRadioSlot][6],
+    pInfo[playerid][rRadioName1],
+    pInfo[playerid][rRadioName2],
+    pInfo[playerid][rRadioName3],
+    pInfo[playerid][rRadioName4],
+    pInfo[playerid][rRadioName5],
+    pInfo[playerid][rRadioName6],
+    pInfo[playerid][rRadioName7],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
     return true;
 }
 

@@ -87,9 +87,20 @@ new g_arrVehicleNames[][] = {
     "Boxville", "Tiller", "Utility Trailer"
 };
 
+new Vehicle_Interior[MAX_VEHICLES];
+
 hook OnGameModeInit(){
+	for(new i = 0; i < MAX_VEHICLES; i++)
+		Vehicle_Interior[i] = 0;
+
     LoadVehicles();
     return true;
+}
+
+hook LinkVehicleToInterior(vehicleid, interiorid)
+{
+	Vehicle_Interior[vehicleid] = interiorid;
+	return true;
 }
 
 static const Letter[27][] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};

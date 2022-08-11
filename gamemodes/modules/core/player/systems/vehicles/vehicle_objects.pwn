@@ -83,7 +83,13 @@ CMD:vobjeto(playerid, params[]) {
 Dialog:ShowVehSlotObjects(playerid, response, listitem, inputtext[]){
 	if(response) {
         pInfo[playerid][pSlotEdVeh] = listitem;
-        new string[2048];
+        new id = pInfo[playerid][pEditingVeh];
+        new string[2048], title[128];
+
+        if(vInfo[id][vNamePersonalized]) format(title, sizeof(title), "Objetos_de_%s", vInfo[id][vName]);
+        else format(title, sizeof(title), "Objetos_de_%s", ReturnVehicleModelName(vInfo[id][vModel]));
+        AdjustTextDrawString(tile);
+
         for(new i; i < sizeof(g_aVehicleObjectData); i++){
 			new objectname[64];
             if(g_aVehicleObjectData[i][e_ObjectID] == 0) format(objectname, 64, "Slot vago");
@@ -92,13 +98,40 @@ Dialog:ShowVehSlotObjects(playerid, response, listitem, inputtext[]){
 			format(string, sizeof(string), "%s%d(0.0, 0.0, 180.0)\t~g~%s\n", string, g_aVehicleObjectData[i][e_ObjectID], objectname);	
 			
 		}
-        Dialog_Show(playerid, ShowVehicleObjects, DIALOG_STYLE_PREVIEW_MODEL, "Objetos", string, "Selecionar", "Fechar");
+        Dialog_Show(playerid, ShowVehicleObjects, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
 		return true;
 	} else {
         pInfo[playerid][pEditingVeh] = 0;
-        SendServerMessage(playerid, "Você cancelou a seleção de objetos.");
+        pInfo[playerid][pSlotEdVeh] = 0;
+        SendServerMessage(playerid, "Você cancelou a adição de objeto veicular.");
     }
 	return true;
+}
+
+Dialog:ShowVehicleObjects(playerid, response, listitem, inputtext[]) {
+    new 
+        Float:vehPos[3], 
+        slot =  pInfo[playerid][pSlotEdVeh], 
+        id = pInfo[playerid][pEditingVeh], 
+        object;
+    if(response){
+        pInfo[playerid][pOjectVeh] = object = strval(inputtext);
+
+        if (IsValidDynamicObject(vInfo[id][vObjectSlot][slot]))
+        DestroyDynamicObject(vInfo[id][vObjectSlot][slot]);
+        
+        GetVehiclePos(vInfo[id][vVehicle], vehPos[0], vehPos[1], vehPos[2]);
+        vInfo[id][vObjectSlot][slot] = CreateDynamicObject(object, vehPos[0], vehPos[1], vehPos[2], 0, 0, 0);
+        EditDynamicObject(playerid, vInfo[id][vObjectSlot][slot]);
+        SendServerMessage(playerid, "Agora você adicionando um objeto ao seu veículo."), SendServerMessage(playerid, "Aperte ESC para cancelar, ou o disquete para salvar quando estiver pronto.");
+	} else {
+        SendServerMessage(playerid, "Você cancelou a adição de objeto veicular.");
+        vInfo[id][vObjectSlot][slot] = -1;
+        pInfo[playerid][pEditingVeh] = 0;
+        pInfo[playerid][pOjectVeh] = 0;
+        vInfo[id][vObject][slot] = 0;
+    }
+    return true;
 }
 
 CMD:avobjeto(playerid, params[]) {

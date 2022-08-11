@@ -434,3 +434,22 @@ CMD:amotor(playerid, params[]) {
 	}
 	return true;
 }
+
+CMD:irveiculo(playerid, params[]) {
+	new vehicleid;
+
+	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/irveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+
+	static
+	    Float:x,
+		Float:y,
+		Float:z;
+
+	GetVehiclePos(vehicleid, x, y, z);
+	SetPlayerVirtualWorld(playerid, GetVehicleVirtualWorld(vehicleid));
+	SetPlayerInterior(playerid, Vehicle_Interior[vehicleid]);
+	SetPlayerPos(playerid, x, y - 2, z + 2);
+	return 1;
+}

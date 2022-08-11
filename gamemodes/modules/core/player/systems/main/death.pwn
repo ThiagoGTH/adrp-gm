@@ -107,7 +107,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 	pInfo[damagedid][pShotTime] = gettime();
 
 	new bool:armourhit = false; 
-	switch(bodypart)
+	/*switch(bodypart)
 	{
 		case BODY_PART_CHEST, BODY_PART_GROIN: armourhit = true;
 
@@ -135,7 +135,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 		{
 			if(pInfo[damagedid][pSwat]) amount = amount/4;
 		}
-	}
+	}*/
 	if(armour > 0.0 && armourhit){
         armour -= amount;
         if(armour < 0.0){

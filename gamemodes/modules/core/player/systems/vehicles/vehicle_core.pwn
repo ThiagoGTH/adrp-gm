@@ -180,7 +180,7 @@ SaveVehicle(vehicleid) {
         o + 1, vInfo[vehicleid][vObjectRotZ][o],
         vInfo[vehicleid][vID]);
         result = mysql_query(DBConn, query);
-        printf("o + 1, vInfo[vehicleid][vObject][o] = %d", vInfo[vehicleid][vObject][o]);
+        //printf("o + 1, vInfo[vehicleid][vObject][o] = %d", vInfo[vehicleid][vObject][o]);
     }
     cache_delete(result);
 
@@ -219,9 +219,11 @@ SpawnVehicle(vehicleid) {
 		if (vInfo[vehicleid][vColor2] == -1)
 		    vInfo[vehicleid][vColor2] = random(127);
 
+        printf("Criou!");
         vInfo[vehicleid][vVehicle] =  CreateVehicle(vInfo[vehicleid][vModel], 
         vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], vInfo[vehicleid][vPos][3], 
         vInfo[vehicleid][vColor1], vInfo[vehicleid][vColor2], -1, false);
+        printf("%d", vInfo[vehicleid][vVehicle]);
 
         LinkVehicleToInterior(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vInterior]);
         SetVehicleVirtualWorld(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vVW]);
@@ -392,7 +394,7 @@ ResetVehicle(vehicleid) {
 }
 
 ResetVehicleObjects(vehicleid){
-    printf("ResetVehicleObjects(vehicleid) %d && vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
+    //printf("ResetVehicleObjects(vehicleid) %d && vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
     for (new i = 0; i < 5; i++){  
         if (IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
             DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
@@ -480,7 +482,6 @@ public LoadVehicleStats(vehicleid) {
     cache_get_value_name_int(0, "alarm", vInfo[vehicleid][vAlarm]);
 
     cache_get_value_name_float(0, "fuel", vInfo[vehicleid][vFuel]);
-    printf("LoadVehicleStats %f", vInfo[vehicleid][vFuel]);
     cache_get_value_name_float(0, "health", vInfo[vehicleid][vHealth]);
     cache_get_value_name_float(0, "battery", vInfo[vehicleid][vBattery]);
 	cache_get_value_name_float(0, "engine", vInfo[vehicleid][vEngine]);
@@ -508,9 +509,9 @@ public LoadVehicleObjects(vehicleid) {
         cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotZ][o]);
     }
     for(new i = 0; i < 5; i++) {
-        printf("CreateA: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+        //printf("CreateA: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
 		if(vInfo[vehicleid][vObject][i] != 0) {
-            printf("CreateD: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+           // printf("CreateD: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
             if(IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
                 DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
                 vInfo[vehicleid][vObjectSlot][i] = -1;
@@ -556,7 +557,7 @@ SetVehicleObject(vehicleid) {
     VehicleGetID(vehicleid);
 	for(new i = 0; i < 5; i++) {
 		if(vInfo[vInfo[vehicleid][vVehicle]][vObject][i] != 0) {
-            printf("Create: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+            //printf("Create: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
 
             vInfo[vehicleid][vObject][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
 			AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][i], 
@@ -665,26 +666,6 @@ Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
 
 // DEBUG
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
-    printf("\n\nOnPlayerEnterVehicle (vehicleid):\n\
-    vInfo[vehicleid][vModel] = %d\n\
-    vInfo[vehicleid][vOwner] = %d\n\
-    vInfo[vehicleid][vFaction] = %d\n\
-    vInfo[vehicleid][vBusiness] = %d\n\
-    vInfo[vehicleid][vJob] = %d\n\
-    vInfo[vehicleid][vID] = %d\n\
-    vInfo[vehicleid][vVehicle] = %d\n", vInfo[vehicleid][vModel], 
-    vInfo[vehicleid][vOwner],
-    vInfo[vehicleid][vFaction],
-    vInfo[vehicleid][vBusiness],
-    vInfo[vehicleid][vJob],
-    vInfo[vehicleid][vID],
-    vInfo[vehicleid][vVehicle]);
-    for(new i = 0; i < 5; i++) {
-		if(vInfo[vehicleid][vObject][i] != 0) {
-            printf("vInfo[vehicleid][vObject][i] = %d\n", vInfo[vehicleid][vObject][i]);
-		}
-	}
-
     new id = VehicleGetID(vehicleid);
     printf("\n\nOnPlayerEnterVehicle (id):\n\
     vInfo[id][vModel] = %d\n\

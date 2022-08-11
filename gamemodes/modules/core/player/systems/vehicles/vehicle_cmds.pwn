@@ -432,24 +432,83 @@ CMD:amotor(playerid, params[]) {
 			else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo.", pNome(playerid));
 		}
 	}
+
+	format(logString, sizeof(logString), "%s (%s) usou o /amotor %s [%d/SQL: %d]", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), vehicleid, id);
+	logCreate(playerid, logString, 1);
 	return true;
 }
 
 CMD:irveiculo(playerid, params[]) {
 	new vehicleid;
 
-	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/irveiculo [veículo]");
 	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
 
-	static
-	    Float:x,
-		Float:y,
-		Float:z;
-
+	static Float:x, Float:y, Float:z;
 	GetVehiclePos(vehicleid, x, y, z);
 	SetPlayerVirtualWorld(playerid, GetVehicleVirtualWorld(vehicleid));
 	SetPlayerInterior(playerid, Vehicle_Interior[vehicleid]);
 	SetPlayerPos(playerid, x, y - 2, z + 2);
-	return 1;
+
+	format(logString, sizeof(logString), "%s (%s) foi até o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:trazerveiculo(playerid, params[]) {
+	new vehicleid;
+
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/trazerveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+
+	static Float:x, Float:y, Float:z;
+
+	GetPlayerPos(playerid, x, y, z);
+	SetVehiclePos(vehicleid, x + 2, y - 2, z);
+
+	SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid));
+	LinkVehicleToInterior(vehicleid, GetPlayerInterior(playerid));
+
+	format(logString, sizeof(logString), "%s (%s) levou o veículo %d até ele", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:respawnarveiculo(playerid, params[]) {
+	new vehicleid;
+
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+
+	RespawnVehicle(vehicleid);
+	SendServerMessage(playerid, "Você respawnou o veículo ID: %d.", vehicleid);
+    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s respawnou o veículo %d.", GetPlayerUserEx(playerid), vehicleid);
+
+	format(logString, sizeof(logString), "%s (%s) respawnou o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:rtc(playerid, params[]) {
+	new vehicleid;
+
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+	new id = VehicleGetID(vehicleid);
+	
+	SaveVehicle(id);
+    ResetVehicleObjects(id);
+    ResetVehicle(id);
+    vInfo[id][vVehicle] = 0;
+    vInfo[id][vExists] = 0;
+	SendServerMessage(playerid, "Você respawnou o veículo ID: %d.", vehicleid);
+    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s respawnou o veículo %d.", GetPlayerUserEx(playerid), vehicleid);
+
+	format(logString, sizeof(logString), "%s (%s) respawnou o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
 }

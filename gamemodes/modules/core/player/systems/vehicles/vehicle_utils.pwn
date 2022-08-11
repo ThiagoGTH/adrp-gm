@@ -38,6 +38,7 @@ enum E_VEHICLE_DATA {
 	Float:vEngine,          // Motor do veículo
     Float:vMiles,           // Milhas rodadas
     Float:vMilesCon,        // Contagem de milhas
+	Float:MilesPos[3],		// Contagem de milhas
     
     // 3°
     vMods[17],              // Modificações

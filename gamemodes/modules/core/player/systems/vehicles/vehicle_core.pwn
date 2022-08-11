@@ -664,6 +664,17 @@ Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
     return true;
 }
 
+RespawnVehicle(vehicleid) {
+	new id = VehicleGetID(vehicleid);
+
+	if (id != -1)
+	    SpawnVehicle(id);
+	else SetVehicleToRespawn(vehicleid);
+    ResetVehicleObjects(vehicleid);
+	ResetVehicle(vehicleid);
+	return true;
+}
+
 // DEBUG
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
     new id = VehicleGetID(vehicleid);

@@ -88,7 +88,7 @@ Dialog:ShowVehSlotObjects(playerid, response, listitem, inputtext[]){
 
         if(vInfo[id][vNamePersonalized]) format(title, sizeof(title), "Objetos_de_%s", vInfo[id][vName]);
         else format(title, sizeof(title), "Objetos_de_%s", ReturnVehicleModelName(vInfo[id][vModel]));
-        AdjustTextDrawString(tile);
+        AdjustTextDrawString(title);
 
         for(new i; i < sizeof(g_aVehicleObjectData); i++){
 			new objectname[64];

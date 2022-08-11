@@ -6,6 +6,9 @@
 #include "modules\core\maps\exterior\SM.pwn" 
 #include "modules\core\maps\exterior\streets.pwn"
 #include "modules\core\maps\exterior\bahamas.pwn"
+
 #include "modules\core\maps\interior\factions\SAN2.pwn"
 #include "modules\core\maps\interior\mazebank.pwn"
 #include "modules\core\maps\interior\doj.pwn"
+#include "modules\core\maps\interior\nightclub1.pwn"
+#include "modules\core\maps\interior\hospital.pwn"

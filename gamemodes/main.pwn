@@ -21,13 +21,12 @@
 #include <easyDialog>  
 #include <modelsizes>
 #include <physics>
-//#include <circle>
+
+/* ==============================[modules]============================== */
 
 #include "modules\utils\utils.pwn"
 #include "modules\core\maps\maps.pwn"
-
 #include "modules\core\database\mysql_core.pwn"
-
 #include "modules\core\player\account\account.pwn"
 #include "modules\core\player\player_core.pwn"
 #include "modules\core\player\cmds\cmds.pwn"
@@ -39,12 +38,7 @@
 #include "modules\core\player\systems\factions\factions.pwn"
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
-
 #include "modules\core\discord\discord_core.pwn"
-
 #include "modules\core\admin\admin.pwn"
 
-main() {
-    print("\nGamemode conectado\n");
-    printf("Última atualização em: %s\n \n", LASTEST_RELEASE);
-}
+main() { }

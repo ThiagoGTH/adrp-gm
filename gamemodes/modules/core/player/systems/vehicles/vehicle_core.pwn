@@ -61,15 +61,16 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
 
             vInfo[i][vID] = id;
 
-            vInfo[i][vVehicle] =  CreateVehicle(vInfo[i][vModel], 
+            /*vInfo[i][vVehicle] =  CreateVehicle(vInfo[i][vModel], 
             vInfo[i][vPos][0], vInfo[i][vPos][1], vInfo[i][vPos][2], vInfo[i][vPos][3], 
-            vInfo[i][vColor1], vInfo[i][vColor2], -1, false);
+            vInfo[i][vColor1], vInfo[i][vColor2], -1, false);*/
 
             LinkVehicleToInterior(vInfo[i][vVehicle], vInfo[i][vInterior]);
             SetVehicleVirtualWorld(vInfo[i][vVehicle], vInfo[i][vVW]);
             SetVehicleNumberPlate(vInfo[i][vVehicle], vInfo[i][vPlate]);
 
             SaveVehicle(i);
+            LoadVehicle(vInfo[i][vID]);
             return i;
         }
     }
@@ -179,6 +180,7 @@ SaveVehicle(vehicleid) {
         o + 1, vInfo[vehicleid][vObjectRotZ][o],
         vInfo[vehicleid][vID]);
         result = mysql_query(DBConn, query);
+        printf("o + 1, vInfo[vehicleid][vObject][o] = %d", vInfo[vehicleid][vObject][o]);
     }
     cache_delete(result);
 
@@ -210,7 +212,6 @@ SpawnVehicle(vehicleid) {
 		    DestroyVehicle(vInfo[vehicleid][vVehicle]);
 
         ResetVehicleObjects(vehicleid);
-
 
         if (vInfo[vehicleid][vColor1] == -1)
 		    vInfo[vehicleid][vColor1] = random(127);
@@ -286,8 +287,8 @@ LoadVehicles() {
 		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", id);
 
         SpawnVehicle(id);
-        SetVehicleObject(id);
-        ModVehicle(id);
+        //SetVehicleObject(id);
+        //ModVehicle(id);
         loadedVehicles++;
     }
     printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
@@ -342,9 +343,10 @@ LoadVehicle(vehicleid) {
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", vehicleid);
 
+    
+
     SpawnVehicle(vehicleid);
-    SetVehicleObject(vehicleid);
-    ModVehicle(vehicleid);
+    //SetVehicleObject(vehicleid);
     return true;
 }
 
@@ -390,19 +392,18 @@ ResetVehicle(vehicleid) {
 }
 
 ResetVehicleObjects(vehicleid){
-    printf("ResetVehicleObjects(vehicleid) %d\n vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
+    printf("ResetVehicleObjects(vehicleid) %d && vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
     for (new i = 0; i < 5; i++){  
-        printf("vInfo[id][vObject][i] = %d", vInfo[vehicleid][vObject][i]);  
-        if(vInfo[vehicleid][vObject][i] != 0){
-            DestroyDynamicObject(vInfo[vehicleid][vObject][i]);
-            printf("Mim destruirão");
+        if (IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
+            DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
             vInfo[vehicleid][vObject][i] = 0;
-            vInfo[vehicleid][vObjectPosX][i] = 0;
-            vInfo[vehicleid][vObjectPosY][i] = 0;
-            vInfo[vehicleid][vObjectPosZ][i] = 0;
-            vInfo[vehicleid][vObjectRotX][i] = 0;
-            vInfo[vehicleid][vObjectRotY][i] = 0;
-            vInfo[vehicleid][vObjectRotZ][i] = 0;
+            vInfo[vehicleid][vObjectSlot][i] = -1;
+            vInfo[vehicleid][vObjectPosX][i] = -1;
+            vInfo[vehicleid][vObjectPosY][i] = -1;
+            vInfo[vehicleid][vObjectPosZ][i] = -1;
+            vInfo[vehicleid][vObjectRotX][i] = -1;
+            vInfo[vehicleid][vObjectRotY][i] = -1;
+            vInfo[vehicleid][vObjectRotZ][i] = -1;
         }
     }
     return true;
@@ -506,7 +507,26 @@ public LoadVehicleObjects(vehicleid) {
         format(query, sizeof(query), "rZ_%d", o + 1);
         cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotZ][o]);
     }
-    SetVehicleObject(vehicleid);
+    for(new i = 0; i < 5; i++) {
+        printf("CreateA: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+		if(vInfo[vehicleid][vObject][i] != 0) {
+            printf("CreateD: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+            if(IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
+                DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
+                vInfo[vehicleid][vObjectSlot][i] = -1;
+            }
+
+            vInfo[vehicleid][vObjectSlot][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
+            AttachDynamicObjectToVehicle(vInfo[vehicleid][vObjectSlot][i], 
+            vInfo[vehicleid][vVehicle], 
+            vInfo[vehicleid][vObjectPosX][i],
+            vInfo[vehicleid][vObjectPosY][i],
+            vInfo[vehicleid][vObjectPosZ][i],
+            vInfo[vehicleid][vObjectRotX][i],
+            vInfo[vehicleid][vObjectRotY][i],
+            vInfo[vehicleid][vObjectRotZ][i]);
+		}
+	}
     return true;
 }
 
@@ -533,10 +553,11 @@ public LoadVehicleWeapons(vehicleid) {
 }
 
 SetVehicleObject(vehicleid) {
+    VehicleGetID(vehicleid);
 	for(new i = 0; i < 5; i++) {
-        printf("Teste1;");
-		if(vInfo[vehicleid][vObject][i] != 0) {
-            printf("mim chamarão pra criar :oo");
+		if(vInfo[vInfo[vehicleid][vVehicle]][vObject][i] != 0) {
+            printf("Create: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
+
             vInfo[vehicleid][vObject][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
 			AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][i], 
             vInfo[vehicleid][vVehicle], 
@@ -651,13 +672,18 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
     vInfo[vehicleid][vBusiness] = %d\n\
     vInfo[vehicleid][vJob] = %d\n\
     vInfo[vehicleid][vID] = %d\n\
-    vInfo[vehicleid][vVehicle] = %d", vInfo[vehicleid][vModel], 
+    vInfo[vehicleid][vVehicle] = %d\n", vInfo[vehicleid][vModel], 
     vInfo[vehicleid][vOwner],
     vInfo[vehicleid][vFaction],
     vInfo[vehicleid][vBusiness],
     vInfo[vehicleid][vJob],
     vInfo[vehicleid][vID],
     vInfo[vehicleid][vVehicle]);
+    for(new i = 0; i < 5; i++) {
+		if(vInfo[vehicleid][vObject][i] != 0) {
+            printf("vInfo[vehicleid][vObject][i] = %d\n", vInfo[vehicleid][vObject][i]);
+		}
+	}
 
     new id = VehicleGetID(vehicleid);
     printf("\n\nOnPlayerEnterVehicle (id):\n\
@@ -667,12 +693,19 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
     vInfo[id][vBusiness] = %d\n\
     vInfo[id][vJob] = %d\n\
     vInfo[id][vID] = %d\n\
-    vInfo[id][vVehicle] = %d\n\n", vInfo[id][vModel], 
+    vInfo[id][vVehicle] = %d\n", vInfo[id][vModel], 
     vInfo[id][vOwner],
     vInfo[id][vFaction],
     vInfo[id][vBusiness],
     vInfo[id][vJob],
     vInfo[id][vID],
     vInfo[id][vVehicle]);
+
+    for(new i = 0; i < 5; i++) {
+		if(vInfo[id][vObject][i] != 0) {
+            printf("vInfo[id][vObject][i] = %d\n", vInfo[id][vObject][i]);
+		}
+	}
+
     return 1;
 }

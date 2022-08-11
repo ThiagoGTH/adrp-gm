@@ -217,9 +217,10 @@ CMD:editarveiculo(playerid, params[]) {
 		if (color2 < 0 || color2 > 255)
 			return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
 
-		vInfo[id][vColor1] = color1;
-		vInfo[id][vColor2] = color2;
-		SaveVehicle(id);
+		//vInfo[id][vColor1] = color1;
+		//vInfo[id][vColor2] = color2;
+		SetVehicleColor(id, color1, color2);
+		//SaveVehicle(id);
 		SendServerMessage(playerid, "Você definiu as cores do veículo %d como %d e %d.", vInfo[id][vVehicle], color1, color2);
 
 		format(logString, sizeof(logString), "%s (%s) definiu as cores do veículo ID %d (SQL: %d) como %d e %d", pNome(playerid), GetPlayerUserEx(playerid), vInfo[id][vVehicle], vInfo[id][vID], color1, color2);

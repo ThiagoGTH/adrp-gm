@@ -253,7 +253,7 @@ LoadPlayerPremium(playerid){
     cache_delete(result);
     return true;
 }
-
+ 
 // Em complemento as informações de personagem carregadas anteriormente, abaixo está a função de spawn.
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;

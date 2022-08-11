@@ -52,6 +52,7 @@ enum E_VEHICLE_DATA {
 
 	// 7° 
 	vObject[5],
+	vObjectSlot[5],
 	Float:vObjectPosX[5],
 	Float:vObjectPosY[5],
 	Float:vObjectPosZ[5],
@@ -190,6 +191,15 @@ ReturnVehicleHealth(vehicleid) {
 	return floatround(amount, floatround_round);
 }
 
+SetVehicleColor(vehicleid, color1, color2) {
+	if (vehicleid != -1) {
+	    vInfo[vehicleid][vColor1] = color1;
+	    vInfo[vehicleid][vColor2] = color2;
+	    SaveVehicle(vehicleid);
+	}
+	return ChangeVehicleColor(vInfo[vehicleid][vVehicle], color1, color2);
+}
+
 GetEngineStatus(vehicleid) {
 	static
 	    engine,
@@ -261,5 +271,38 @@ SetDoorsStatus(vehicleid, status) {
 	    objective;
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, status, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, engine, alarm, alarm, status, bonnet, boot, objective);
+}
+
+GetVehicleFromBehind(vehicleid) {
+	static
+	    Float:fCoords[7];
+
+	GetVehiclePos(vehicleid, fCoords[0], fCoords[1], fCoords[2]);
+	GetVehicleZAngle(vehicleid, fCoords[3]);
+
+	for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (i != vehicleid && GetVehiclePos(i, fCoords[4], fCoords[5], fCoords[6]))
+	{
+		if (floatabs(fCoords[0] - fCoords[4]) < 6 && floatabs(fCoords[1] - fCoords[5]) < 6 && floatabs(fCoords[2] - fCoords[6]) < 6)
+			return i;
+	}
+	return INVALID_VEHICLE_ID;
+}
+
+GetNearestVehicle(playerid, forkflit=0) {
+	static
+	    Float:fX,
+	    Float:fY,
+	    Float:fZ;
+
+	if(forkflit) {
+	    for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && GetVehiclePos(i, fX, fY, fZ) && GetVehicleModel(i) != 530) {
+		    if (IsPlayerInRangeOfPoint(playerid, 5.0, fX, fY, fZ)) return i;
+		}
+	} else {
+		for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && GetVehiclePos(i, fX, fY, fZ)) {
+		    if (IsPlayerInRangeOfPoint(playerid, 3.5, fX, fY, fZ)) return i;
+		}
+	}
+	return INVALID_VEHICLE_ID;
 }

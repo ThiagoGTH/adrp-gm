@@ -1,7 +1,108 @@
 #include <YSI_Coding\y_hooks>
 
+enum e_VehicleObjectData {
+	e_ObjectID,
+	e_ObjectName[64],
+	e_ObjectType
+};
+
+static const g_aVehicleObjectData[][e_VehicleObjectData] = {
+	{1000, "Spoiler 1", 0},
+    {1002, "Spoiler 2", 0},
+    {1003, "Spoiler 3", 0},
+    {1014, "Spoiler 4", 0},
+    {1015, "Spoiler 5", 0},
+    {1143, "Saída de Ar 1", 0},
+    {1145, "Saída de Ar 1", 0},
+    {1145, "Saída de Ar 1", 0},
+    {1008, "Cilindro de Nos Pequeno", 0},
+    {1009, "Cilindro de Nos Médio", 0},
+    {1010, "Cilindro de Nos Duplo", 0},
+    {19917, "Motor", 0},
+
+    {2404, "Prancha de Surf 1", 0},
+    {2405, "Prancha de Surf 2", 0},
+    {2406, "Prancha de Surf 3", 0},
+    {2410, "Prancha de Surf 4", 0},
+
+    {18645, "Capacete em Chamas", 0},
+    {18976, "Capacete de Motocross", 0},
+    {18977, "Capacete Vermelho", 0},
+
+    {18641, "Lanterna Pequena", 0},
+    {18633, "Chave de Boca", 0},
+    {18644, "Chave de Fenda", 0},
+    {18634, "Pé de Cabra", 0},
+    {18635, "Martelo", 0},
+    {18632, "Vara de Pesca", 0},
+    {11738, "Medkit", 0},
+
+    {19308, "Taxi 1", 0},
+    {19309, "Taxi 2", 0},
+    {19310, "Taxi 3", 0},
+    {19311, "Taxi 4", 0},
+
+    {19317, "Guitarra Vermelha", 0},
+    {19318, "Guitarra Branca", 0},
+    {19319, "Guitarra Preta", 0},
+
+    {1428, "Escada", 0}
+};
+
+CheckVehObjectName(modelid) {
+	new name[64];
+	for (new i = 0; i < sizeof(g_aVehicleObjectData); i ++) {
+		if (g_aVehicleObjectData[i][e_ObjectID] == modelid) {
+			format(name, sizeof(name), "%s", g_aVehicleObjectData[i][e_ObjectName]);
+    	}
+	}
+	return name;
+}
+
 CMD:vobjeto(playerid, params[]) {
-    
+    new id = GetNearestVehicle(playerid);
+    if(!IsValidVehicle(id) || VehicleGetID(id) == -1) return SendErrorMessage(playerid, "Você deve estar próximo a um veículo.");
+    id = VehicleGetID(id);
+    if(!VehicleIsOwner(playerid, id)) return SendErrorMessage(playerid, "Você deve ser o proprietário do veículo para usar esse comando.");
+    pInfo[playerid][pEditingVeh] = id;
+    new string[512], title[256], slots;
+    if(pInfo[playerid][pDonator] > 0) slots = 5;
+    else slots = 3;
+
+    if(vInfo[id][vNamePersonalized]) format(title, sizeof(title), "{FFFFFF}Objetos de %s", vInfo[id][vName]);
+    else format(title, sizeof(title), "{FFFFFF}Objetos de %s", ReturnVehicleModelName(vInfo[id][vModel]));
+    format(string, sizeof(string), "Slot\tObjeto\n");
+    for(new i = 0; i < slots; i++) {
+        format(string, sizeof(string), "%s%d\t%s\n", string, i, CheckVehObjectName(vInfo[id][vObject][i]));
+    }
+
+    Dialog_Show(playerid, ShowVehSlotObjects, DIALOG_STYLE_TABLIST_HEADERS, title, string, "Selecionar", "Fechar");
+    return true;
+}
+
+Dialog:ShowVehSlotObjects(playerid, response, listitem, inputtext[]){
+	if(response) {
+        pInfo[playerid][pSlotEdVeh] = listitem;
+        new string[2048];
+        for(new i; i < sizeof(g_aVehicleObjectData); i++){
+			new objectname[64];
+            if(g_aVehicleObjectData[i][e_ObjectID] == 0) format(objectname, 64, "Slot vago");
+			else format(objectname, 64, "%s", g_aVehicleObjectData[i][e_ObjectName]);
+			AdjustTextDrawString(objectname);
+			format(string, sizeof(string), "%s%d(0.0, 0.0, 180.0)\t~g~%s\n", string, g_aVehicleObjectData[i][e_ObjectID], objectname);	
+			
+		}
+        Dialog_Show(playerid, ShowVehicleObjects, DIALOG_STYLE_PREVIEW_MODEL, "Objetos", string, "Selecionar", "Fechar");
+		return true;
+	} else {
+        pInfo[playerid][pEditingVeh] = 0;
+        SendServerMessage(playerid, "Você cancelou a seleção de objetos.");
+    }
+	return true;
+}
+
+CMD:avobjeto(playerid, params[]) {
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
     new 
 		id, 
 		object,
@@ -14,13 +115,17 @@ CMD:vobjeto(playerid, params[]) {
     if (slot < 0 || slot > 5) return SendErrorMessage(playerid, "Você especificou um slot inválido.");
 
 	id = VehicleGetID(id);
+
+    if (IsValidDynamicObject(vInfo[id][vObjectSlot][slot]))
+        DestroyDynamicObject(vInfo[id][vObjectSlot][slot]);
+        
     pInfo[playerid][pEditingVeh] = id;
     pInfo[playerid][pOjectVeh] = object;
     pInfo[playerid][pSlotEdVeh] = slot;
 
     GetVehiclePos(vInfo[id][vVehicle], VehPos[0], VehPos[1], VehPos[2]);
-    vInfo[id][vObject][slot] = CreateDynamicObject(object, VehPos[0], VehPos[1], VehPos[2], 0, 0, 0);
-    EditDynamicObject(playerid, vInfo[id][vObject][slot]);
+    vInfo[id][vObjectSlot][slot] = CreateDynamicObject(object, VehPos[0], VehPos[1], VehPos[2], 0, 0, 0);
+    EditDynamicObject(playerid, vInfo[id][vObjectSlot][slot]);
     return true;
 }
 
@@ -31,9 +136,12 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
             new vehicleid = pInfo[playerid][pEditingVeh];
             new slot = pInfo[playerid][pSlotEdVeh];
 
-            DestroyDynamicObject(vInfo[vehicleid][vObject][slot]);
+            if (IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][slot]))
+                DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][slot]);
+
             SendErrorMessage(playerid, "Você cancelou a edição do item, então ele foi destruído.", pInfo[playerid][pSlotEdVeh]);
 
+            vInfo[vehicleid][vObjectSlot][slot] = -1;
             pInfo[playerid][pEditingVeh] = 0;
             pInfo[playerid][pOjectVeh] = 0;
             vInfo[vehicleid][vObject][slot] = 0;
@@ -64,8 +172,12 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
             vInfo[vehicleid][vObjectRotX][slot] = rx;
             vInfo[vehicleid][vObjectRotY][slot] = ry;
             vInfo[vehicleid][vObjectRotZ][slot] = ofaz;
+            if (IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][slot]))
+                DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][slot]);
+
             
-            AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][slot], vInfo[vehicleid][vVehicle], finalx, finaly, ofz, rx, ry, ofaz);
+            vInfo[vehicleid][vObjectSlot][slot] = CreateDynamicObject(object, 0, 0, 0, 0, 0, 0);
+            AttachDynamicObjectToVehicle(vInfo[vehicleid][vObjectSlot][slot], vInfo[vehicleid][vVehicle], finalx, finaly, ofz, rx, ry, ofaz);
             SendServerMessage(playerid, "O item foi colocado no slot %d do veículo.", pInfo[playerid][pSlotEdVeh]);
 
             vInfo[vehicleid][vObject][slot] = object;
@@ -78,46 +190,3 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
     }
     return true;
 }
-
-/*CMD:teste(playerid, params[]) {
-    if (pInfo[playerid][pEditingVehObject] || !IsPlayerInAnyVehicle(playerid))
-        return 1;
-    
-    new objectid, Float:VehPos[3];
-    GetVehiclePos(GetPlayerVehicleID(playerid), VehPos[0], VehPos[1], VehPos[2]);
-    objectid = CreateDynamicObject(19917, VehPos[0], VehPos[1], VehPos[2], 0, 0, 0);
-    EditDynamicObject(playerid, objectid);
-    pInfo[playerid][pEditingVehObject] = 1;
-    return 1;
-}
-
-public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
-{
-    if(response == EDIT_RESPONSE_UPDATE)
-    {
-        return 1;
-    }
-    if(response == EDIT_RESPONSE_FINAL && pInfo[playerid][pEditingVehObject])
-    {
-        pInfo[playerid][pEditingVehObject] = 0;
-    
-        if (!IsPlayerInAnyVehicle(playerid))
-            return 0;
-    
-        new Float:ofx, Float:ofy, Float:ofz;
-        new Float:ofaz, Float:finalx, Float:finaly;
-        new Float:px, Float:py, Float:pz, Float:roz;
-        GetVehiclePos(GetPlayerVehicleID(playerid), px, py, pz);
-        GetVehicleZAngle(GetPlayerVehicleID(playerid), roz);
-        ofx = x-px;
-        ofy = y-py;
-        ofz = z-pz;
-        ofaz = rz-roz;
-        finalx = ofx*floatcos(roz, degrees)+ofy*floatsin(roz, degrees);
-        finaly = -ofx*floatsin(roz, degrees)+ofy*floatcos(roz, degrees);
-      
-        SendClientMessage(playerid, 0x58ACFAFF, "The object attached to your vehicle.");
-        AttachDynamicObjectToVehicle(objectid, GetPlayerVehicleID(playerid), finalx, finaly, ofz, rx, ry, ofaz);
-    }
-    return 1;
-}*/

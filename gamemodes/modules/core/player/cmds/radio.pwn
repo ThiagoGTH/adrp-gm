@@ -287,7 +287,7 @@ CMD:r1(playerid, params[])
     ProxDetector(15.0, playerid, text, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2);
     return true;
 }
-alias:r("r1")
+alias:r1("r")
 
 CMD:r2(playerid, params[])
 {

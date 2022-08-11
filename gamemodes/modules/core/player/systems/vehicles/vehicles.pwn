@@ -5,3 +5,4 @@
 #include "modules\core\player\systems\vehicles\vehicle_cmds.pwn"
 #include "modules\core\player\systems\vehicles\vehicle_lockpick.pwn"
 #include "modules\core\player\systems\vehicles\vehicle_objects.pwn"
+#include "modules\core\player\systems\vehicles\vehicle_trailer.pwn"

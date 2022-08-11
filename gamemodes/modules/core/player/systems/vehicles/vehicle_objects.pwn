@@ -58,7 +58,7 @@ CheckVehObjectName(modelid) {
 	}
 	return name;
 }
-
+  
 CMD:vobjeto(playerid, params[]) {
     new id = GetNearestVehicle(playerid);
     if(!IsValidVehicle(id) || VehicleGetID(id) == -1) return SendErrorMessage(playerid, "Você deve estar próximo a um veículo.");

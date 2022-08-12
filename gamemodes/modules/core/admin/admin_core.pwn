@@ -74,22 +74,24 @@ ShowAdminCmds(playerid){
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /colete, /infoplayer, /congelar, /descongelar, /ultimoatirador, /x, /y, /z");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa, /irentrada, /atrancar");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listaentradas");
-	}
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listaentradas, /irveiculo, /trazerveiculo, /respawnarveiculo, /rtc");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /aremovercallsign, /checarveiculos");
+	} 
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas, /novato, /encerrarsinuca");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /resetaraparencia");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /resetaraparencia, /entrarveiculo");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /curartodos, /clima, /redflag, /criarcasa, /deletarcasa, /editarcasa, /criarentrada");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /editarentrada, /deletarentrada");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 3]{FFFFFF} /criarveiculo, /editarveiculo, /deletarveiculo, /amotor, /areparar");
 	}
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca, /editarinvestimento");
-		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /criarinvestimento, /destruirinvestimento");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /criarinvestimento, /destruirinvestimento, /darveiculo");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{

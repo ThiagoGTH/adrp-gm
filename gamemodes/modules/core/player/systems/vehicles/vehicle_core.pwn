@@ -30,6 +30,22 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             vInfo[i][vFaction] = faction;
             vInfo[i][vBusiness] = business;
             vInfo[i][vJob] = job;
+
+            SetCarAttributes(modelid, i);
+            new count;
+		    for (new ix = 0; ix < sizeof(arrBatteryEngine); ix ++) {
+			    if(vInfo[i][vModel] == arrBatteryEngine[ix][VehModel]) {
+		    	    vInfo[i][vMaxFuel] = arrBatteryEngine[ix][VehMaxFuel];
+		        	vInfo[i][vFuel] = arrBatteryEngine[ix][VehMaxFuel];
+		        	count++;
+			        break;
+			    }
+			} if(!count) {
+			    vInfo[i][vMaxFuel] = 70.0;
+      			vInfo[i][vFuel] = 70.0;
+    	  		count = 0;
+			}
+
             
             if(!strcmp(plate, "Invalid", true)){
                 vInfo[i][vLegal] = 0;
@@ -61,10 +77,6 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
 
             vInfo[i][vID] = id;
 
-            /*vInfo[i][vVehicle] =  CreateVehicle(vInfo[i][vModel], 
-            vInfo[i][vPos][0], vInfo[i][vPos][1], vInfo[i][vPos][2], vInfo[i][vPos][3], 
-            vInfo[i][vColor1], vInfo[i][vColor2], -1, false);*/
-
             LinkVehicleToInterior(vInfo[i][vVehicle], vInfo[i][vInterior]);
             SetVehicleVirtualWorld(vInfo[i][vVehicle], vInfo[i][vVW]);
             SetVehicleNumberPlate(vInfo[i][vVehicle], vInfo[i][vPlate]);
@@ -82,11 +94,8 @@ SaveVehicle(vehicleid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
 
-    printf("SELECT * FROM `vehicles` WHERE `id` = '%d';", vInfo[vehicleid][vID]);
-
-    if(!cache_num_rows())return false;
-
-        
+    if(!cache_num_rows()) return false;
+ 
     mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles` SET \
     `model` = '%d',                 \
     `character_id` = '%d',          \
@@ -180,7 +189,6 @@ SaveVehicle(vehicleid) {
         o + 1, vInfo[vehicleid][vObjectRotZ][o],
         vInfo[vehicleid][vID]);
         result = mysql_query(DBConn, query);
-        //printf("o + 1, vInfo[vehicleid][vObject][o] = %d", vInfo[vehicleid][vObject][o]);
     }
     cache_delete(result);
 
@@ -212,6 +220,7 @@ SpawnVehicle(vehicleid) {
 		    DestroyVehicle(vInfo[vehicleid][vVehicle]);
 
         ResetVehicleObjects(vehicleid);
+        LoadVehicleObjects(vehicleid);
 
         if (vInfo[vehicleid][vColor1] == -1)
 		    vInfo[vehicleid][vColor1] = random(127);
@@ -219,11 +228,9 @@ SpawnVehicle(vehicleid) {
 		if (vInfo[vehicleid][vColor2] == -1)
 		    vInfo[vehicleid][vColor2] = random(127);
 
-        printf("Criou!");
         vInfo[vehicleid][vVehicle] =  CreateVehicle(vInfo[vehicleid][vModel], 
         vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], vInfo[vehicleid][vPos][3], 
         vInfo[vehicleid][vColor1], vInfo[vehicleid][vColor2], -1, false);
-        printf("%d", vInfo[vehicleid][vVehicle]);
 
         LinkVehicleToInterior(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vInterior]);
         SetVehicleVirtualWorld(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vVW]);
@@ -289,8 +296,6 @@ LoadVehicles() {
 		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", id);
 
         SpawnVehicle(id);
-        //SetVehicleObject(id);
-        //ModVehicle(id);
         loadedVehicles++;
     }
     printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
@@ -355,7 +360,6 @@ LoadVehicle(vehicleid) {
 DeleteVehicle(vehicleid) {
     if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
 	    new Cache:result;
-        printf("DELETE FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
         result = mysql_query(DBConn, query);
 
@@ -385,16 +389,60 @@ DeleteVehicle(vehicleid) {
 
 ResetVehicle(vehicleid) {
 	if (vehicleid != -1 && vInfo[vehicleid][vExists]) {
-		if (IsValidVehicle(vInfo[vehicleid][vVehicle])){
+		if (IsValidVehicle(vInfo[vehicleid][vVehicle])) {
 			DestroyVehicle(vInfo[vehicleid][vVehicle]);
+
             ResetVehicleObjects(vehicleid);
+
+            vInfo[vehicleid][vID] =
+            vInfo[vehicleid][vModel] =
+            vInfo[vehicleid][vOwner] =
+            vInfo[vehicleid][vFaction] =
+            vInfo[vehicleid][vBusiness] =
+            vInfo[vehicleid][vJob] =
+            vInfo[vehicleid][vNamePersonalized] =
+            vInfo[vehicleid][vLegal] =
+            vInfo[vehicleid][vPlatePersonalized] =
+            vInfo[vehicleid][vColor1] =
+            vInfo[vehicleid][vColor2] =
+            vInfo[vehicleid][vPaintjob] =
+            vInfo[vehicleid][vVW] =
+            vInfo[vehicleid][vInterior] =
+            vInfo[vehicleid][vImpounded] =
+            vInfo[vehicleid][vImpoundedPrice] =
+            vInfo[vehicleid][vInsurance] =
+            vInfo[vehicleid][vSunpass] =
+            vInfo[vehicleid][vAlarm] =
+            vInfo[vehicleid][vEnergyResource] = 0;
+
+            vInfo[vehicleid][vLocked] = false;
+
+            vInfo[vehicleid][vFuel] =
+            vInfo[vehicleid][vMaxFuel] =
+            vInfo[vehicleid][vHealth] =
+            vInfo[vehicleid][vHealthRepair] =
+            vInfo[vehicleid][vMaxHealth] =
+            vInfo[vehicleid][vBattery] =
+            vInfo[vehicleid][vEngine] =
+            vInfo[vehicleid][vMiles] =
+            vInfo[vehicleid][vMilesCon] = 0.0;
+            
+            vInfo[vehicleid][vName][0] =
+            vInfo[vehicleid][vPlate][0] =
+            vInfo[vehicleid][vImpoundedReason][0] = EOS;
+
+            for (new i = 0; i < 4; i++) {
+                vInfo[vehicleid][vPos][i] = 0;
+            }
+            for (new ix = 0; ix < 3; ix++) {
+                vInfo[vehicleid][MilesPos][ix] = 0;
+            }
         }
 	}
 	return false;
 }
 
-ResetVehicleObjects(vehicleid){
-    //printf("ResetVehicleObjects(vehicleid) %d && vInfo[vehicleid][vVehicle] %d\n", vehicleid, vInfo[vehicleid][vVehicle]);
+ResetVehicleObjects(vehicleid) {
     for (new i = 0; i < 5; i++){  
         if (IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
             DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
@@ -474,9 +522,68 @@ ChangeParkPlayerVehicle(playerid) {
     return true;
 }
 
+CheckVehicleStats(playerid) {
+    new vehicleid = GetPlayerVehicleID(playerid);
+    new id = VehicleGetID(vehicleid);
+
+    if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+    if(!VehicleIsOwner(playerid, id)) return SendErrorMessage(playerid, "Você ser o dono do veículo para usar esse comando.");
+
+    new sunpassstatus[128];
+	if(vInfo[id][vSunpass] == 1) {
+		if(pInfo[playerid][pDonator] != 0)  format(sunpassstatus, 128, "Instalado");
+		else format(sunpassstatus, 128, "Desabilitado");
+	} else format(sunpassstatus, 128, "Não instalado");
+
+	if(vInfo[id][vModel] == 481 || vInfo[id][vModel] == 509 || vInfo[id][vModel] == 510) {
+		if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "%s ((%s)):", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+		else va_SendClientMessage(playerid, COLOR_WHITECYAN, "%s:", ReturnVehicleModelName(vInfo[id][vModel]));
+
+		va_SendClientMessage(playerid, COLOR_WHITECYAN, "Trava[%d], Alarme[%d], Seguro[%d], Placa[%s], Sun Pass[%s]", vInfo[id][vLocked], vInfo[id][vAlarm], vInfo[id][vInsurance], vInfo[id][vPlate], sunpassstatus);
+		va_SendClientMessage(playerid, COLOR_WHITECYAN, "Vida útil: Engrenagem[%.2f], Milhas Rodadas[%.1f]", vInfo[id][vEngine], vInfo[id][vMiles]);
+	} else {
+		if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "%s ((%s)):", vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+		else va_SendClientMessage(playerid, COLOR_WHITECYAN, "%s:", ReturnVehicleModelName(vInfo[id][vModel]));
+
+		va_SendClientMessage(playerid, COLOR_WHITECYAN, "Trava[%d], Alarme[%d], Seguro[%d], Placa[%s], Sun Pass[%s]", vInfo[id][vLocked], vInfo[id][vAlarm], vInfo[id][vInsurance], vInfo[id][vPlate], sunpassstatus);
+		va_SendClientMessage(playerid, COLOR_WHITECYAN, "Vida útil: Motor[%.2f], Bateria[%.2f], Milhas Rodadas[%.1f]", vInfo[id][vEngine], vInfo[id][vBattery], vInfo[id][vMiles]);
+	}
+    return true;
+}
+
+SetVehicleLock(playerid) {
+ 	static id = -1, Float:x, Float:y, Float:z;
+    GetPlayerPos(playerid, x, y, z);
+
+	if ((id = VehicleInside(playerid)) != -1 || (id = VehicleNearestToLock(playerid)) != -1) {
+        GetDoorsStatus(id);
+	    if (VehicleIsOwner(playerid, id)) {
+			if (!vInfo[id][vLocked]) {
+				vInfo[id][vLocked] = true;
+				SaveVehicle(id);
+
+				GameTextForPlayer(playerid, "~r~Trancado", 2400, 4);
+                PlaySoundForPlayersInRange(1145, 2.0, x, y, z);
+				PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
+				SetDoorsStatus(vInfo[id][vVehicle], true);
+			} else {
+				vInfo[id][vLocked] = false;
+				SaveVehicle(id);
+
+				GameTextForPlayer(playerid, "~g~Destrancado", 2400, 4);
+				PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
+				SetDoorsStatus(vInfo[id][vVehicle], false);
+			}
+		} else {
+            if(vInfo[id][vNamePersonalized])  SendErrorMessage(playerid, "Você não possui as chaves para destrancar o veículo %s (( %s )).",vInfo[id][vName], ReturnVehicleModelName(vInfo[id][vModel]));
+            else SendErrorMessage(playerid, "Você não possui as chaves para destrancar o veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
+        }
+	} else SendErrorMessage(playerid, "Você não está próximo do seu veiculo.");
+	return true;
+}
+
 forward LoadVehicleStats(vehicleid);
 public LoadVehicleStats(vehicleid) {
-
     cache_get_value_name_int(0, "insurance", vInfo[vehicleid][vInsurance]);
     cache_get_value_name_int(0, "sunpass", vInfo[vehicleid][vSunpass]);
     cache_get_value_name_int(0, "alarm", vInfo[vehicleid][vAlarm]);
@@ -509,9 +616,7 @@ public LoadVehicleObjects(vehicleid) {
         cache_get_value_name_float(0, query, vInfo[vehicleid][vObjectRotZ][o]);
     }
     for(new i = 0; i < 5; i++) {
-        //printf("CreateA: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
 		if(vInfo[vehicleid][vObject][i] != 0) {
-           // printf("CreateD: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
             if(IsValidDynamicObject(vInfo[vehicleid][vObjectSlot][i])){
                 DestroyDynamicObject(vInfo[vehicleid][vObjectSlot][i]);
                 vInfo[vehicleid][vObjectSlot][i] = -1;
@@ -537,6 +642,11 @@ public LoadVehicleTuning(vehicleid) {
         format(query, sizeof(query), "mod%d", m + 1);
         cache_get_value_name_int(0, query, vInfo[vehicleid][vMods][m]);
     }
+    for(new i = 0; i < 17; i++) {
+		if(vInfo[vehicleid][vMods][i] != 0) {
+			AddVehicleComponent(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vMods][i]);
+		}
+	}
     return true;
 }
 
@@ -553,41 +663,12 @@ public LoadVehicleWeapons(vehicleid) {
     return true;
 }
 
-SetVehicleObject(vehicleid) {
-    VehicleGetID(vehicleid);
-	for(new i = 0; i < 5; i++) {
-		if(vInfo[vInfo[vehicleid][vVehicle]][vObject][i] != 0) {
-            //printf("Create: vInfo[vehicleid][vObject][i] %d", vInfo[vehicleid][vObject][i]);
-
-            vInfo[vehicleid][vObject][i] = CreateDynamicObject(vInfo[vehicleid][vObject][i], 0, 0, 0, 0, 0, 0);
-			AttachDynamicObjectToVehicle(vInfo[vehicleid][vObject][i], 
-            vInfo[vehicleid][vVehicle], 
-            vInfo[vehicleid][vObjectPosX][i],
-            vInfo[vehicleid][vObjectPosY][i],
-            vInfo[vehicleid][vObjectPosZ][i],
-            vInfo[vehicleid][vObjectRotX][i],
-            vInfo[vehicleid][vObjectRotY][i],
-            vInfo[vehicleid][vObjectRotZ][i]);
-		}
-	}
-    return true;
-}
-
-ModVehicle(vehicleid) {
-	for(new i = 0; i < 17; i++) {
-		if(vInfo[vehicleid][vMods][i] != 0) {
-			AddVehicleComponent(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vMods][i]);
-		}
-	}
-    return true;
-}
-
 hook OnPlayerEnterCheckpoint(playerid) {
     DisablePlayerCheckpoint(playerid);
     return true;
 }
 
-hook OnVehicleDeath(vehicleid, killerid){
+hook OnVehicleDeath(vehicleid, killerid) {
 
     SaveVehicle(vehicleid);
 }
@@ -675,29 +756,16 @@ RespawnVehicle(vehicleid) {
 	return true;
 }
 
-// DEBUG
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
     new id = VehicleGetID(vehicleid);
-    printf("\n\nOnPlayerEnterVehicle (id):\n\
-    vInfo[id][vModel] = %d\n\
-    vInfo[id][vOwner] = %d\n\
-    vInfo[id][vFaction] = %d\n\
-    vInfo[id][vBusiness] = %d\n\
-    vInfo[id][vJob] = %d\n\
-    vInfo[id][vID] = %d\n\
-    vInfo[id][vVehicle] = %d\n", vInfo[id][vModel], 
-    vInfo[id][vOwner],
-    vInfo[id][vFaction],
-    vInfo[id][vBusiness],
-    vInfo[id][vJob],
-    vInfo[id][vID],
-    vInfo[id][vVehicle]);
-
-    for(new i = 0; i < 5; i++) {
-		if(vInfo[id][vObject][i] != 0) {
-            printf("vInfo[id][vObject][i] = %d\n", vInfo[id][vObject][i]);
-		}
-	}
-
-    return 1;
+    if (id != -1) { 
+        if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+            if (VehicleIsOwner(playerid, id)) {
+                if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem vindo ao seu veículo %s.", vInfo[id][vName]);
+			    else va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem vindo ao seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
+                SaveVehicle(vehicleid);
+            }
+        }
+    }
+    return true;
 }

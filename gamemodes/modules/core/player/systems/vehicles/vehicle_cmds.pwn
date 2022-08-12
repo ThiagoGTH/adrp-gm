@@ -1,6 +1,26 @@
 #include <YSI_Coding\y_hooks>
 
 /* =============================== PLAYERS =============================== */
+CMD:v(playerid, params[]) {
+	new type[128];
+	if (sscanf(params, "s[128]", type)) {
+ 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
+	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /v [ação]");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, mudarvaga, stats");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca");
+		SendClientMessage(playerid, COLOR_BEGE, "[Deletar]: deletar (não recebe nada)");
+		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
+		return true;
+	}
+	if (!strcmp(type, "lista", true)) return ShowPlayerVehicles(playerid);
+	else if (!strcmp(type, "estacionar", true)) return ParkPlayerVehicle(playerid);
+	else if (!strcmp(type, "mudarvaga", true)) return ChangeParkPlayerVehicle(playerid);
+	else if (!strcmp(type, "stats", true)) return CheckVehicleStats(playerid);
+	else if (!strcmp(type, "trancar", true)) return SetVehicleLock(playerid);
+
+	return true;
+}
+
 CMD:placa(playerid, params[]) {
 	new vehicleid = VehicleNearest(playerid);
 	if(vehicleid == -1) return SendErrorMessage(playerid, "Você não está próximo de nenhum veiculo.");
@@ -13,79 +33,101 @@ CMD:placa(playerid, params[]) {
 	return true;
 }
 
-CMD:veiculos(playerid, params[]) {
-	ShowPlayerVehicles(playerid);
+CMD:motor(playerid, params[]) {
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+
+	new string[64], vehicleid = GetPlayerVehicleID(playerid);
+	new id = VehicleGetID(vehicleid), model = GetVehicleModel(vehicleid);
+
+	if(model == 481 || model == 509 || model == 510) {
+		SendErrorMessage(playerid, "Este veiculo não possui motor.");
+		SetEngineStatus(vehicleid, true);
+		return true;
+	}
+
+	if (GetEngineStatus(vehicleid)){
+	    SetEngineStatus(vehicleid, false);
+		format(string, sizeof(string), "~r~MOTOR DESLIGADO");
+	    GameTextForPlayer(playerid, string, 2500, 4);
+		if(vInfo[id][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo %s.", pNome(playerid), vInfo[id][vName]);
+		else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s desliga o veículo.", pNome(playerid));
+	    return true;
+	} 
+	
+	if (vInfo[id][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
+	if (ReturnVehicleHealth(vehicleid) <= 300) return SendErrorMessage(playerid, "Este veículo está danificado e não pode ser ligado.");
+
+	if (VehicleIsOwner(playerid, id)) {
+		if (vInfo[id][vFaction] != 0 || vInfo[id][vJob] != 0) vInfo[id][vBattery] = 100.000;
+		if (vInfo[id][vBattery] > 5.000) {
+			if (!GetEngineStatus(vehicleid)) {
+				SetEngineStatus(vehicleid, true);
+				if(vInfo[id][vBattery] > 0.001) vInfo[id][vBattery] -= 0.001;
+
+				format(string, sizeof(string), "~g~MOTOR LIGADO");
+				GameTextForPlayer(playerid, string, 2400, 4);
+
+				if(vInfo[id][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo %s.", pNome(playerid), vInfo[id][vName]);
+				else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo.", pNome(playerid));
+			}
+		} else {
+			new randomex;
+			randomex = random(6);
+			switch(randomex) {
+				case 1: {
+	    	    	SetEngineStatus(vehicleid, true);
+					if(vInfo[id][vBattery] > 0.001) vInfo[id][vBattery] -= 0.001;
+
+	        		format(string, sizeof(string), "~g~MOTOR LIGADO");
+	        		GameTextForPlayer(playerid, string, 2500, 4);
+				
+					if(vInfo[id][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo %s.", pNome(playerid), vInfo[id][vName]);
+					else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s liga o veículo.", pNome(playerid));
+				} default: {
+					if(vInfo[id][vNamePersonalized]) SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s insere a chave na ignição e tenta ligar o motor, porém sem sucesso.", pNome(playerid));
+					else SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s insere a chave na ignição e tenta ligar o motor, porém sem sucesso.", pNome(playerid));
+				}
+			}
+		}
+	} else SendErrorMessage(playerid, "Você não possui as chaves deste veículo.");
 	return true;
 }
 
-CMD:v(playerid, params[]) {
-	new type[128];
-	if (sscanf(params, "s[128]", type)) {
- 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
-	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /v [ação]");
-		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, mudarvaga, venderconce, stats");
-		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca");
-		SendClientMessage(playerid, COLOR_BEGE, "[Deletar]: deletar (não recebe nada)");
-		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
-		return true;
-	}
-	if (!strcmp(type, "lista", true)) return ShowPlayerVehicles(playerid);
-	else if (!strcmp(type, "estacionar", true)) return ParkPlayerVehicle(playerid);
-	else if (!strcmp(type, "mudarvaga", true)) return ChangeParkPlayerVehicle(playerid);
+CMD:luzes(playerid, params[]) {
+	new vehicleid = GetPlayerVehicleID(playerid);
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+	if (!IsEngineVehicle(vehicleid)) return SendErrorMessage(playerid, "Você não está em nenhum veículo.");
 
+	switch (GetLightStatus(vehicleid)) {
+	    case false: {
+	        SetLightStatus(vehicleid, true);
+         	GameTextForPlayer(playerid, "Luzes Ligadas", 2400, 4);
+		} case true: {
+		    SetLightStatus(vehicleid, false);
+		    GameTextForPlayer(playerid, "Luzes Desligadas", 2400, 4);
+		}
+	}
 	return true;
+}
+
+CMD:capo(playerid, params[]) {
+	for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && IsPlayerNearHood(playerid, i)) {
+	    if (!IsDoorVehicle(i))  return SendErrorMessage(playerid, "Este veículo não possui capô.");
+
+	    if (!GetHoodStatus(i)) {
+	        SetHoodStatus(i, true);
+	        GameTextForPlayer(playerid, "Capo Aberto", 2400, 4);
+		} else {
+			SetHoodStatus(i, false);
+	        GameTextForPlayer(playerid, "Capo Fechado", 2400, 4);
+		}
+	    return true;
+	}
+	return SendErrorMessage(playerid, "Você não está próximo de nenhum veículo.");
 }
 
 /* =============================== ADMINS =============================== */
-CMD:criarveiculo(playerid, params[]) {
-	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
-
-	static model[32], type, color1, color2, id = -1, value = 0;
-
-	if (sscanf(params, "s[32]dddd", model, type, color1, color2, value)){
-		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
-	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /criarveiculo [modelo id/nome] [tipo] [cor 1] [cor 2] [id do tipo]");
-	 	SendClientMessage(playerid, COLOR_BEGE, "[Tipos]: 1. Facção | 2. Empresa | 3. Emprego");
-	 	SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
-	 	return true;
-	}
-	if ((model[0] = GetVehicleModelByName(model)) == 0) return SendErrorMessage(playerid, "O modelo especificado é inválido.");
-
-	if (type < 1 || type > 3) return SendErrorMessage(playerid, "O tipo especificado é inválido. Os tipos variam entre 1 e 3.");
-
-	if (color1 < 0 || color1 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
-
-	if (color2 < 0 || color2 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
-
-	if (value < 0) return SendErrorMessage(playerid, "O ID do tipo é referente ao ID da categoria. Esse valor não pode ser menor que 0.");
-
-	static Float:x, Float:y, Float:z, Float:a;
-    GetPlayerPos(playerid, x, y, z);
-	GetPlayerFacingAngle(playerid, a);
-	SetPlateFree(playerid);
-
-	if(type == 1) id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, value, 0, 0);
-	else if(type == 2) id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, value, 0);
-	else if(type == 3) id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, 0, value);
-
-	pInfo[playerid][pBuyingPlate][0] = EOS;
-
-	if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
-
-	new style[32];
-	switch(type){
-		case 1: format(style, 32, "a facção");
-		case 2: format(style, 32, "a empresa");
-		case 3: format(style, 32, "o emprego");
-	}
-
-	SendServerMessage(playerid, "Você criou um %s para %s ID %d.", ReturnVehicleModelName(model[0]), style, value);
-
-	format(logString, sizeof(logString), "%s (%s) criou um %s para %s ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), style, value);
-	logCreate(playerid, logString, 1);
-	return true;
-}
-
+// >= 5
 CMD:darveiculo(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
@@ -113,13 +155,79 @@ CMD:darveiculo(playerid, params[]) {
 	return true;
 }
 
+// >= 4
+CMD:criarveiculo(playerid, params[]) {
+	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
+	static type[32], model[32], color1, color2, id = -1, value = 0, string[256];
+	if (sscanf(params, "s[32]", type)) return SendSyntaxMessage(playerid, "/criarveiculo [tipo] (facção/empresa/emprego)");
+	if (!strcmp(type, "facção", true) || !strcmp(type, "faccao", true)) {
+		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo facção [id facção] [modelo] [cor 1] [cor 2]");
+
+		if ((model[0] = GetVehicleModelByName(model)) == 0) return SendErrorMessage(playerid, "O modelo especificado é inválido.");
+		if (color1 < 0 || color1 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (color2 < 0 || color2 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (value < 0) return SendErrorMessage(playerid, "O ID do tipo é referente ao ID da categoria. Esse valor não pode ser menor que 0.");
+
+		static Float:x, Float:y, Float:z, Float:a;
+		GetPlayerPos(playerid, x, y, z);
+		GetPlayerFacingAngle(playerid, a);
+		SetPlateFree(playerid);
+
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
+
+		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, value, 0, 0);
+		pInfo[playerid][pBuyingPlate][0] = EOS;
+
+		format(logString, sizeof(logString), "%s (%s) criou um %s para a facção ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
+		logCreate(playerid, logString, 1);
+	} else if (!strcmp(type, "empresa", true)) {
+		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo empresa [id empresa] [modelo] [cor 1] [cor 2]");
+
+		if ((model[0] = GetVehicleModelByName(model)) == 0) return SendErrorMessage(playerid, "O modelo especificado é inválido.");
+		if (color1 < 0 || color1 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (color2 < 0 || color2 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (value < 0) return SendErrorMessage(playerid, "O ID do tipo é referente ao ID da categoria. Esse valor não pode ser menor que 0.");
+
+		static Float:x, Float:y, Float:z, Float:a;
+		GetPlayerPos(playerid, x, y, z);
+		GetPlayerFacingAngle(playerid, a);
+		SetPlateFree(playerid);
+
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
+
+		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, value, 0);
+		pInfo[playerid][pBuyingPlate][0] = EOS;
+
+		format(logString, sizeof(logString), "%s (%s) criou um %s para a empresa ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
+		logCreate(playerid, logString, 1);
+	} else if (!strcmp(type, "emprego", true)) {
+		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo emprego [id emprego] [modelo] [cor 1] [cor 2]");
+
+		if ((model[0] = GetVehicleModelByName(model)) == 0) return SendErrorMessage(playerid, "O modelo especificado é inválido.");
+		if (color1 < 0 || color1 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (color2 < 0 || color2 > 255) return SendErrorMessage(playerid, "As cores devem estar entre 0 e 255.");
+		if (value < 0) return SendErrorMessage(playerid, "O ID do tipo é referente ao ID da categoria. Esse valor não pode ser menor que 0.");
+
+		static Float:x, Float:y, Float:z, Float:a;
+		GetPlayerPos(playerid, x, y, z);
+		GetPlayerFacingAngle(playerid, a);
+		SetPlateFree(playerid);
+
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
+
+		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, 0, value);
+		pInfo[playerid][pBuyingPlate][0] = EOS;
+
+		format(logString, sizeof(logString), "%s (%s) criou um %s para o emprego ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
+		logCreate(playerid, logString, 1);
+	} else return SendErrorMessage(playerid, "Você especificou um tipo inválido. Tipos: facção, empresa ou emprego.");
+	return true;
+}
+
 CMD:editarveiculo(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
-	static 
-		id, 
-		type[24], 
-		string[128];
+	static id, type[24], string[128];
 
 	if (sscanf(params, "ds[24]S()[128]", id, type, string)){
 	 	SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
@@ -131,9 +239,8 @@ CMD:editarveiculo(playerid, params[]) {
 	}
 
 	if (!IsValidVehicle(id) || VehicleGetID(id) == -1) return SendErrorMessage(playerid, "Você especificou um veículo inválido.");
-
 	id = VehicleGetID(id);
-	
+
 	if (!strcmp(type, "dono", true) || !strcmp(type, "proprietario", true)){
 		new userid;
 		if (sscanf(string, "u", userid)) return SendSyntaxMessage(playerid, "/editarveiculo [id] [dono] [novo dono]");
@@ -404,16 +511,16 @@ CMD:deletarveiculo(playerid, params[]) {
 }
 
 CMD:amotor(playerid, params[]) {
-	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
+	if (GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendErrorMessage(playerid, "Você deve ser o motorista do veículo para usar esse comando.");
 
 	new string[64];
 	new vehicleid = GetPlayerVehicleID(playerid);
 	new id = VehicleGetID(vehicleid);
 
-	if(vInfo[id][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
+	if (vInfo[id][vFuel] < 1.0) return SendErrorMessage(playerid, "O tanque de combustível está vazio.");
 
-	if(ReturnVehicleHealth(vehicleid) <= 300) return SendErrorMessage(playerid, "Este veículo está danificado e não pode ser ligado.");
+	if (ReturnVehicleHealth(vehicleid) <= 300) return SendErrorMessage(playerid, "Este veículo está danificado e não pode ser ligado.");
 
 	switch (GetEngineStatus(vehicleid)) {
 	    case false: {
@@ -438,6 +545,73 @@ CMD:amotor(playerid, params[]) {
 	return true;
 }
 
+CMD:areparar(playerid, params[]) {
+    new vehicleid = GetPlayerVehicleID(playerid);
+	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
+	if (vehicleid > 0 && isnull(params)) {
+		RepairVehicle(vehicleid);
+		new id = VehicleGetID(vehicleid);
+
+		if(id != -1)
+			vInfo[id][vHealthRepair] = 1000.0;
+		
+		SendServerMessage(playerid, "Você reparou seu atual veículo.");
+  		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s reparou o veiculo %d.", GetPlayerUserEx(playerid), vehicleid);
+	} else {
+		if (sscanf(params, "d", vehicleid))
+	    	return SendSyntaxMessage(playerid, "/areparar [ID do veículo]");
+
+		else if (!IsValidVehicle(vehicleid))
+	    	return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+
+		RepairVehicle(vehicleid);
+		new id = VehicleGetID(vehicleid);
+		
+		if(id != -1) {
+			vInfo[id][vHealthRepair] = 1000.0;
+
+			vInfo[id][vDamage][1] = 0;//9mm
+			vInfo[id][vDamage][2] = 0;//.44
+			vInfo[id][vDamage][3] = 0;//12 Gauge
+			vInfo[id][vDamage][4] = 0;//9x19mm
+			vInfo[id][vDamage][5] = 0;//7.62mm
+			vInfo[id][vDamage][6] = 0;//5.56x45mm
+			vInfo[id][vDamage][7] = 0;//.40 LR
+			vInfo[id][vDamage][8] = 0;//.50 LR
+
+			GetVehicleDamageStatus(vInfo[id][vVehicle], vInfo[id][vPanelsStatus], vInfo[id][vDoorsStatus], vInfo[id][vLightsStatus], vInfo[id][vTiresStatus]);
+		}
+
+		SendServerMessage(playerid, "Você reparou o veículo ID: %d.", vehicleid);
+		SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s reparou o veiculo %d.", GetPlayerUserEx(playerid), vehicleid);
+
+		if(id != -1) format(logString, sizeof(logString), "%s (%s) reparou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid, id);
+		else format(logString, sizeof(logString), "%s (%s) reparou o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+		logCreate(playerid, logString, 1);
+	}
+	return true;
+}
+
+// >= 3
+CMD:entrarveiculo(playerid, params[]) {
+	new vehicleid, seatid;
+
+    if (GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/irveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+
+	seatid = GetAvailableSeat(vehicleid, 0);
+
+	if (seatid == -1)
+	    return SendErrorMessage(playerid, "Não há nenhum assento disponível.");
+
+	PutPlayerInVehicle(playerid, vehicleid, seatid);
+	format(logString, sizeof(logString), "%s (%s) entrou no veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+// >= 2
 CMD:irveiculo(playerid, params[]) {
 	new vehicleid;
 
@@ -448,7 +622,7 @@ CMD:irveiculo(playerid, params[]) {
 	static Float:x, Float:y, Float:z;
 	GetVehiclePos(vehicleid, x, y, z);
 	SetPlayerVirtualWorld(playerid, GetVehicleVirtualWorld(vehicleid));
-	SetPlayerInterior(playerid, Vehicle_Interior[vehicleid]);
+	SetPlayerInterior(playerid, VehicleInterior[vehicleid]);
 	SetPlayerPos(playerid, x, y - 2, z + 2);
 
 	format(logString, sizeof(logString), "%s (%s) foi até o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
@@ -499,6 +673,7 @@ CMD:rtc(playerid, params[]) {
 	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
 	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
 	new id = VehicleGetID(vehicleid);
+	if (vInfo[id][vFaction] != 0 || vInfo[id][vBusiness] != 0 || vInfo[id][vJob] != 0) return SendErrorMessage(playerid, "Você não pode dar respawn total em um veículo fixo.");
 	
 	SaveVehicle(id);
     ResetVehicleObjects(id);
@@ -510,5 +685,53 @@ CMD:rtc(playerid, params[]) {
 
 	format(logString, sizeof(logString), "%s (%s) respawnou o veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
 	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:aremovercallsign(playerid, params[]) {
+	new vehicleid;
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
+	
+	SendServerMessage(playerid, "Você removeu a callsign do veículo %d", vehicleid);
+
+	Delete3DTextLabel(v3DText[vehicleid]);
+	vCallsign[vehicleid] = 0;
+
+	format(logString, sizeof(logString), "%s (%s) removeu a callsign do veículo %d", pNome(playerid), GetPlayerUserEx(playerid), vehicleid);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:checarveiculos(playerid, params[]) {
+	new userid;
+	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+	if (sscanf(params, "d", userid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(userid));
+    new Cache:result = mysql_query(DBConn, query);
+    new veh_id, veh_model, veh_pname, veh_name[64], veh_impounded;
+
+	format(logString, sizeof(logString), "%s (%s) checou os veículos de %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
+	logCreate(playerid, logString, 1);
+
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Este jogador não possui nenhum veículo");
+	va_SendClientMessage(playerid, COLOR_GREEN, "Veiculos de %s (ID: %d):", pNome(userid), userid);
+    for(new i; i < cache_num_rows(); i++){
+        cache_get_value_name_int(i, "ID", veh_id);
+		cache_get_value_name_int(i, "model", veh_model);
+		cache_get_value_name_int(i, "personalized_name", veh_pname);
+		cache_get_value_name(i, "name", veh_name);
+        cache_get_value_name_int(i, "impounded", veh_impounded);
+        
+		if(!vInfo[veh_id][vVehicle] && veh_pname != 0 && veh_impounded != 0) va_SendClientMessage(playerid, COLOR_GREY, "(%d) %s (( %s )) [APREENDIDO]", veh_id, veh_name, ReturnVehicleModelName(veh_model));
+		else if(vInfo[veh_id][vVehicle] && veh_pname != 0) va_SendClientMessage(playerid, COLOR_GREY, "(%d/%d) %s (( %s )) ** Spawnado", vInfo[veh_id][vVehicle], veh_id, veh_name, ReturnVehicleModelName(veh_model));
+		else if(!vInfo[veh_id][vVehicle] && veh_pname != 0) va_SendClientMessage(playerid, COLOR_GREY, "(%d) %s (( %s )) ", veh_id, veh_name, ReturnVehicleModelName(veh_model));
+		else if(vInfo[veh_id][vVehicle]) va_SendClientMessage(playerid, COLOR_GREY, "(%d/%d) %s ** Spawnado", vInfo[veh_id][vVehicle], veh_id, ReturnVehicleModelName(veh_model));
+		else va_SendClientMessage(playerid, COLOR_GREY, "(%d) %s", veh_id, ReturnVehicleModelName(veh_model));
+    }
+    cache_delete(result);
 	return true;
 }

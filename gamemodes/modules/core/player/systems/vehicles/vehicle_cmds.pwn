@@ -159,7 +159,7 @@ CMD:darveiculo(playerid, params[]) {
 CMD:criarveiculo(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 	static type[32], model[32], color1, color2, id = -1, value = 0, string[256];
-	if (sscanf(params, "s[32]", type)) return SendSyntaxMessage(playerid, "/criarveiculo [tipo] (facção/empresa/emprego)");
+	if (sscanf(params, "s[32]S()[256]", type, string)) return SendSyntaxMessage(playerid, "/criarveiculo [tipo] (facção/empresa/emprego)");
 	if (!strcmp(type, "facção", true) || !strcmp(type, "faccao", true)) {
 		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo facção [id facção] [modelo] [cor 1] [cor 2]");
 
@@ -180,6 +180,7 @@ CMD:criarveiculo(playerid, params[]) {
 
 		format(logString, sizeof(logString), "%s (%s) criou um %s para a facção ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
+		return true;
 	} else if (!strcmp(type, "empresa", true)) {
 		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo empresa [id empresa] [modelo] [cor 1] [cor 2]");
 
@@ -200,6 +201,7 @@ CMD:criarveiculo(playerid, params[]) {
 
 		format(logString, sizeof(logString), "%s (%s) criou um %s para a empresa ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
+		return true;
 	} else if (!strcmp(type, "emprego", true)) {
 		if (sscanf(string, "ds[32]dd", value, model, color1, color2)) return SendSyntaxMessage(playerid, "/criarveiculo emprego [id emprego] [modelo] [cor 1] [cor 2]");
 
@@ -220,7 +222,8 @@ CMD:criarveiculo(playerid, params[]) {
 
 		format(logString, sizeof(logString), "%s (%s) criou um %s para o emprego ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
-	} else return SendErrorMessage(playerid, "Você especificou um tipo inválido. Tipos: facção, empresa ou emprego.");
+		return true;
+	}
 	return true;
 }
 
@@ -228,7 +231,6 @@ CMD:editarveiculo(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
 	static id, type[24], string[128];
-
 	if (sscanf(params, "ds[24]S()[128]", id, type, string)){
 	 	SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		SendClientMessage(playerid, COLOR_BEGE, "USE: /editarveiculo [id] [opção]");
@@ -651,13 +653,18 @@ CMD:trazerveiculo(playerid, params[]) {
 }
 
 CMD:respawnarveiculo(playerid, params[]) {
-	new vehicleid;
+	new vehicleid, id;
 
 	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
 	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
 
-	RespawnVehicle(vehicleid);
+	id = VehicleGetID(id);
+	SaveVehicle(id);
+    ResetVehicleObjects(id);
+    ResetVehicle(id);
+	LoadVehicle(id);
+
 	SendServerMessage(playerid, "Você respawnou o veículo ID: %d.", vehicleid);
     SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s respawnou o veículo %d.", GetPlayerUserEx(playerid), vehicleid);
 

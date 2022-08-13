@@ -122,6 +122,8 @@ void:CheckPlayerTable() {
     `last_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `first_login` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
+    `donator` int NOT NULL DEFAULT '0',\
+    `donator_time` int NOT NULL DEFAULT '0',\
     `dateofbirth` varchar(16) NOT NULL DEFAULT '01/01/1970',\
     `minutes` int NOT NULL DEFAULT '0',\
     `hours` int NOT NULL DEFAULT '0',\

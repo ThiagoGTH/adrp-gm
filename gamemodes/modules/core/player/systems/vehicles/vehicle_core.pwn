@@ -220,7 +220,6 @@ SpawnVehicle(vehicleid) {
 		    DestroyVehicle(vInfo[vehicleid][vVehicle]);
 
         ResetVehicleObjects(vehicleid);
-        LoadVehicleObjects(vehicleid);
 
         if (vInfo[vehicleid][vColor1] == -1)
 		    vInfo[vehicleid][vColor1] = random(127);
@@ -758,12 +757,13 @@ RespawnVehicle(vehicleid) {
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
     new id = VehicleGetID(vehicleid);
+    va_SendClientMessage(playerid, -1, "VehicleID: %d", id);
     if (id != -1) { 
         if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
             if (VehicleIsOwner(playerid, id)) {
                 if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem vindo ao seu veículo %s.", vInfo[id][vName]);
 			    else va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem vindo ao seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
-                SaveVehicle(vehicleid);
+                SaveVehicle(id);
             }
         }
     }

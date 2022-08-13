@@ -28,7 +28,12 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 
 hook OnGameModeInit(){
     LoadInterfaces();
+	LoadObjects();
     return true;
+}
+
+LoadObjects(){
+	AddSimpleModel(-1, 19379, -1000, "objects/trailers/trailer1.dff", "objects/trailers/trailer1.txd");
 }
 
 LoadInterfaces(){ // -9000 +

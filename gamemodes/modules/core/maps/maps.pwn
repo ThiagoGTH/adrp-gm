@@ -9,6 +9,7 @@
 #include "modules\core\maps\exterior\cityhall.pwn"
 #include "modules\core\maps\exterior\idlewood.pwn"
 #include "modules\core\maps\exterior\sanpedro.pwn"
+#include "modules\core\maps\exterior\tolls.pwn"
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
 #include "modules\core\maps\interior\mazebank.pwn"

@@ -28,6 +28,12 @@ enum E_VEHICLE_DATA {
     vImpoundedPrice,        // Valor da apreensão
     vImpoundedReason[64],   // Motivo da apreensão
 
+	// CARAVAN SYSTEM
+	vCaravan,
+	vCaravanModelID,
+	vCaravanModelName[64],
+	vCaravanType,
+
     // 2°                   // STATS
     vInsurance,             // Seguro
     vSunpass,               // Pedágio

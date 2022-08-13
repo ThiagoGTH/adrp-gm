@@ -185,7 +185,7 @@ void:CheckPlayerTable() {
     `rRadioName4` varchar(32) NOT NULL DEFAULT '0',\
     `rRadioName5` varchar(32) NOT NULL DEFAULT '0',\
     `rRadioName6` varchar(32) NOT NULL DEFAULT '0',\
-    `rRadioName7` varchar(32) NOT NULL DEFAULT '0'\
+    `rRadioName7` varchar(32) NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_radio checada com sucesso.");
@@ -329,6 +329,7 @@ void:CheckVehiclesTable(){
     `legalized` int NOT NULL  DEFAULT '0',\
     `plate` varchar(128) NOT NULL DEFAULT 'Invalid',\
     `personalized_plate` int NOT NULL DEFAULT '0',\
+    `caravan` int NOT NULL DEFAULT '0',\
     `locked` int NOT NULL DEFAULT '0',\
     `impounded` int NOT NULL DEFAULT '0',\
     `impounded_price` int NOT NULL DEFAULT '0',\
@@ -345,6 +346,18 @@ void:CheckVehiclesTable(){
     PRIMARY KEY (`ID`));");
     print("[DATABASE] Tabela vehicles checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_caravan` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `vehicle_id` int NOT NULL DEFAULT '0',\
+    `caravan_model_id` int NOT NULL DEFAULT '0',\
+    `caravan_model_name` varchar(64) NOT NULL DEFAULT 'Default',\
+    `caravan_type` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela vehicles_caravan checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_caravan checada com sucesso.");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_stats` (\
@@ -666,6 +679,20 @@ void:CheckUCPTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_apps checada com sucesso.");
     logCreate(99998, logString, 5);
 
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_posts` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int DEFAULT '0',\
+    `post_title` text NOT NULL,\
+    `post_desc` text NOT NULL,\
+    `post_img` text NOT NULL,\
+    `post_send_date` int NOT NULL DEFAULT '0',\
+    `post_target_img` text NOT NULL,\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_posts checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_posts checada com sucesso.");
+    logCreate(99998, logString, 5);
+ 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_choices` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `question_number` int NOT NULL,\

@@ -110,12 +110,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			{
 			    PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
 				if(LockCount[playerid] < 4) return DestroyLockPick(playerid), KillTimer(LockTimer[playerid]), LockCount[playerid]++, LockProgress = 207.0, CreateLocPick(playerid);
-                if(LockCount[playerid] == 4)
-				{
+                if(LockCount[playerid] == 4) {
 					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
-					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
-					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo.");
-					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo.");
+					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado."), format(logString, sizeof(logString), "%s (%s) falhou em usar o lockpick no veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
+					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
+					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e destrancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 				}
 			} else {
 				PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0x00FF00AA), Correct[playerid]++;
@@ -124,11 +123,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				{
 					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
 
-					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
+					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado."), format(logString, sizeof(logString), "%s (%s) falhou em usar o lockpick no veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 
-					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo.");
+					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
         
-					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo.");
+					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e destrancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 				}
 			}
 		}
@@ -195,17 +194,17 @@ forward LockpickTimer(playerid); public LockpickTimer(playerid) {
 		KillTimer(LockTimer[playerid]);
     	if(Correct[playerid] != 5) {
 			SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]);
-			SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado.");
+			SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado."), format(logString, sizeof(logString), "%s (%s) falhou em usar o lockpick no veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 			return true;
 		}
 		if(DoorsLockPick[playerid] == 0) {
 			SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]);
-			SendServerMessage(playerid, "Você usou o lockpick e o veículo foi trancado.");
+			SendServerMessage(playerid, "Você usou o lockpick e o veículo foi trancado."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 			Correct[playerid] = 0;
 			return true;
 		}
 		SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]);
-		SendServerMessage(playerid, "Você usou o lockpick e o veículo foi aberto.");
+		SendServerMessage(playerid, "Você usou o lockpick e o veículo foi aberto."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 		Correct[playerid] = 0;
 	}
 	return true;

@@ -63,6 +63,7 @@ CMD:vobjeto(playerid, params[]) {
     new id = GetNearestVehicle(playerid);
     if(!IsValidVehicle(id) || VehicleGetID(id) == -1) return SendErrorMessage(playerid, "Você deve estar próximo a um veículo.");
     id = VehicleGetID(id);
+    if(vInfo[id][vCaravan] == 1) return SendErrorMessage(playerid, "Você não pode colocar um objeto em uma caravana.");
     if(!VehicleIsOwner(playerid, id)) return SendErrorMessage(playerid, "Você deve ser o proprietário do veículo para usar esse comando.");
     pInfo[playerid][pEditingVeh] = id;
     new string[512], title[256], slots;
@@ -144,10 +145,12 @@ CMD:avobjeto(playerid, params[]) {
 
 	if (sscanf(params, "ddd", id, slot, object)) return SendSyntaxMessage(playerid, "/vobjeto [id veículo] [slot] [id objeto]");
 	if (!IsValidVehicle(id) || VehicleGetID(id) == -1) return SendErrorMessage(playerid, "Você especificou um veículo inválido.");
-
+    
     if (slot < 0 || slot > 5) return SendErrorMessage(playerid, "Você especificou um slot inválido.");
 
 	id = VehicleGetID(id);
+    
+    if(vInfo[id][vCaravan] == 1) return SendErrorMessage(playerid, "Você não pode colocar um objeto em uma caravana.");
 
     if (IsValidDynamicObject(vInfo[id][vObjectSlot][slot]))
         DestroyDynamicObject(vInfo[id][vObjectSlot][slot]);

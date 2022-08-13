@@ -28,6 +28,7 @@ CMD:placa(playerid, params[]) {
 	SendClientMessage(playerid, COLOR_GREEN, "|_________ San Andreas Plate _________|");
 	if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s (%s) ))", vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
 	else if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s ))", ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	else if(vInfo[vehicleid][vCaravan] != 0) va_SendClientMessage(playerid, -1, "Placa: %s (( %s ))", vInfo[vehicleid][vPlate], vInfo[vehicleid][vName]);
 	else if(vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Placa: %s (( %s (%s) ))", vInfo[vehicleid][vPlate], vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
 	else va_SendClientMessage(playerid, -1, "Placa: %s (( %s ))", vInfo[vehicleid][vPlate], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
 	return true;
@@ -173,10 +174,10 @@ CMD:criarveiculo(playerid, params[]) {
 		GetPlayerFacingAngle(playerid, a);
 		SetPlateFree(playerid);
 
-		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
-
 		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, value, 0, 0);
 		pInfo[playerid][pBuyingPlate][0] = EOS;
+
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
 
 		format(logString, sizeof(logString), "%s (%s) criou um %s para a facção ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
@@ -194,10 +195,10 @@ CMD:criarveiculo(playerid, params[]) {
 		GetPlayerFacingAngle(playerid, a);
 		SetPlateFree(playerid);
 
-		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
-
 		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, value, 0);
 		pInfo[playerid][pBuyingPlate][0] = EOS;
+
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
 
 		format(logString, sizeof(logString), "%s (%s) criou um %s para a empresa ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
@@ -215,11 +216,11 @@ CMD:criarveiculo(playerid, params[]) {
 		GetPlayerFacingAngle(playerid, a);
 		SetPlateFree(playerid);
 
-		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
-
 		id = VehicleCreate(0, model[0], x, y + 2, z + 1, a, color1, color2, pInfo[playerid][pBuyingPlate], 0, 0, 0, 0, 0, value);
 		pInfo[playerid][pBuyingPlate][0] = EOS;
 
+		if (id == -1) return SendErrorMessage(playerid, "O servidor chegou ao limite máximo de veículos dinâmicos.");
+		
 		format(logString, sizeof(logString), "%s (%s) criou um %s para o emprego ID %d", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]), value);
 		logCreate(playerid, logString, 1);
 		return true;
@@ -720,11 +721,11 @@ CMD:checarveiculos(playerid, params[]) {
 	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(userid));
     new Cache:result = mysql_query(DBConn, query);
     new veh_id, veh_model, veh_pname, veh_name[64], veh_impounded;
-
+	printf("%d", GetPlayerSQLID(userid));
 	format(logString, sizeof(logString), "%s (%s) checou os veículos de %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 
-    if(!cache_num_rows()) return SendErrorMessage(playerid, "Este jogador não possui nenhum veículo");
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Este jogador não possui nenhum veículo.");
 	va_SendClientMessage(playerid, COLOR_GREEN, "Veiculos de %s (ID: %d):", pNome(userid), userid);
     for(new i; i < cache_num_rows(); i++){
         cache_get_value_name_int(i, "ID", veh_id);

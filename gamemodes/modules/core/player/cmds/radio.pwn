@@ -1,6 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-
 CMD:radio(playerid, params[]) {
     new type[16], string[64];
 
@@ -155,46 +154,46 @@ CMD:radio(playerid, params[]) {
         {
             SendClientMessage(playerid, COLOR_BEGE, "Modelo: Rateck Radio 1.40 (3 slots)");
             va_SendClientMessage(playerid, COLOR_BEGE, "Status: %s", GetState(playerid));
-            if(pInfo[playerid][rRadioName1] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
-            if(pInfo[playerid][rRadioName1] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
-            if(pInfo[playerid][rRadioName2] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
-            if(pInfo[playerid][rRadioName2] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
-            if(pInfo[playerid][rRadioName3] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
-            if(pInfo[playerid][rRadioName3] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
+            if(!strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
+            if(strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
+            if(!strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
+            if(strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
+            if(!strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
+            if(strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
         }
         else if(pInfo[playerid][pRadioNvl] == 2)
         {
             SendClientMessage(playerid, COLOR_BEGE, "Modelo: Rateck Radio 2.20 (5 slots)");
             va_SendClientMessage(playerid, COLOR_BEGE, "Status: %s", GetState(playerid));
-            if(pInfo[playerid][rRadioName1] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
-            if(pInfo[playerid][rRadioName1] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
-            if(pInfo[playerid][rRadioName2] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
-            if(pInfo[playerid][rRadioName2] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
-            if(pInfo[playerid][rRadioName3] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
-            if(pInfo[playerid][rRadioName3] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
-            if(pInfo[playerid][rRadioName4] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i", pInfo[playerid][rRadioSlot][3]); }
-            if(pInfo[playerid][rRadioName4] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][3], pInfo[playerid][rRadioName4]); }
-            if(pInfo[playerid][rRadioName5] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i", pInfo[playerid][rRadioSlot][4]); }
-            if(pInfo[playerid][rRadioName5] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][4], pInfo[playerid][rRadioName5]); }
+            if(!strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
+            if(strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
+            if(!strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
+            if(strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
+            if(!strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
+            if(strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
+            if(!strcmp(pInfo[playerid][rRadioName4], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i", pInfo[playerid][rRadioSlot][3]); }
+            if(strcmp(pInfo[playerid][rRadioName4], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][3], pInfo[playerid][rRadioName4]); }
+            if(!strcmp(pInfo[playerid][rRadioName5], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i", pInfo[playerid][rRadioSlot][4]); }
+            if(strcmp(pInfo[playerid][rRadioName5], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][4], pInfo[playerid][rRadioName5]); }
         }
         else if(pInfo[playerid][pRadioNvl] == 3)
         {
             SendClientMessage(playerid, COLOR_BEGE, "Modelo: Rateck Radio 3.60 (7 slots)");
             va_SendClientMessage(playerid, COLOR_BEGE, "Status: %s", GetState(playerid));
-            if(pInfo[playerid][rRadioName1] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
-            if(pInfo[playerid][rRadioName1] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
-            if(pInfo[playerid][rRadioName2] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
-            if(pInfo[playerid][rRadioName2] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
-            if(pInfo[playerid][rRadioName3] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
-            if(pInfo[playerid][rRadioName3] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
-            if(pInfo[playerid][rRadioName4] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i", pInfo[playerid][rRadioSlot][3]); }
-            if(pInfo[playerid][rRadioName4] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][3], pInfo[playerid][rRadioName4]); }
-            if(pInfo[playerid][rRadioName5] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i", pInfo[playerid][rRadioSlot][4]); }
-            if(pInfo[playerid][rRadioName5] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][4], pInfo[playerid][rRadioName5]); }
-            if(pInfo[playerid][rRadioName6] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 6: %i", pInfo[playerid][rRadioSlot][5]); }
-            if(pInfo[playerid][rRadioName6] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 6: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][5], pInfo[playerid][rRadioName6]); }
-            if(pInfo[playerid][rRadioName7] == 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 7: %i", pInfo[playerid][rRadioSlot][6]); }
-            if(pInfo[playerid][rRadioName7] != 0) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 7: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][6], pInfo[playerid][rRadioName7]); }
+            if(!strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i", pInfo[playerid][rRadioSlot][0]); }
+            if(strcmp(pInfo[playerid][rRadioName1], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 1: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][0], pInfo[playerid][rRadioName1]); }
+            if(!strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i", pInfo[playerid][rRadioSlot][1]); }
+            if(strcmp(pInfo[playerid][rRadioName2], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 2: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][1], pInfo[playerid][rRadioName2]); }
+            if(!strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i", pInfo[playerid][rRadioSlot][2]); }
+            if(strcmp(pInfo[playerid][rRadioName3], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 3: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][2], pInfo[playerid][rRadioName3]); }
+            if(!strcmp(pInfo[playerid][rRadioName4], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i", pInfo[playerid][rRadioSlot][3]); }
+            if(strcmp(pInfo[playerid][rRadioName4], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 4: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][3], pInfo[playerid][rRadioName4]); }
+            if(!strcmp(pInfo[playerid][rRadioName5], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i", pInfo[playerid][rRadioSlot][4]); }
+            if(strcmp(pInfo[playerid][rRadioName5], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 5: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][4], pInfo[playerid][rRadioName5]); }
+            if(!strcmp(pInfo[playerid][rRadioName6], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 6: %i", pInfo[playerid][rRadioSlot][5]); }
+            if(strcmp(pInfo[playerid][rRadioName6], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 6: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][5], pInfo[playerid][rRadioName6]); }
+            if(!strcmp(pInfo[playerid][rRadioName7], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 7: %i", pInfo[playerid][rRadioSlot][6]); }
+            if(strcmp(pInfo[playerid][rRadioName7], "0")) { va_SendClientMessage(playerid, COLOR_BEGE, "Slot 7: %i   |   Nome: %s", pInfo[playerid][rRadioSlot][6], pInfo[playerid][rRadioName7]); }
         }
     }
     else if(!strcmp(type, "renomear", true))
@@ -206,8 +205,16 @@ CMD:radio(playerid, params[]) {
         if(pInfo[playerid][rRadioState] == 0) return SendErrorMessage(playerid, "O seu rádio está desligado.");
         if(slot2 <= 0 || slot2 >= 8) return SendErrorMessage(playerid, "O slot do canal precisa ser entre 1 a 7.");
         if(strlen(name) >= 7) return SendErrorMessage(playerid, "O limite de caracteres de uma renomeação é de 6.");
-        if(name[0] == pInfo[playerid][rRadioName1] || name[0] == pInfo[playerid][rRadioName2] || name[0] == pInfo[playerid][rRadioName3] || name[0] == pInfo[playerid][rRadioName4] || name[0] == pInfo[playerid][rRadioName5] || name[0] == pInfo[playerid][rRadioName6] || name[0] == pInfo[playerid][rRadioName7])
-            return SendErrorMessage(playerid, "Você já possui esse nome em algum outro canal de seu aparelho.");
+        if(strcmp(name, "0"))
+        {
+            if(!strcmp(name, pInfo[playerid][rRadioName1], true) || !strcmp(name, pInfo[playerid][rRadioName2], true) || !strcmp(name, pInfo[playerid][rRadioName3], true) || !strcmp(name, pInfo[playerid][rRadioName4], true) || !strcmp(name, pInfo[playerid][rRadioName5], true) 
+            || !strcmp(name, pInfo[playerid][rRadioName6], true) || !strcmp(name, pInfo[playerid][rRadioName7], true)) return SendErrorMessage(playerid, "Você já possui esse nome em algum outro canal de seu aparelho.");
+        }
+
+        for(new i = 0; i < strlen(name); i ++)
+        {
+            if((strcmp(name[i], "0")) && (name[i] == tolower(name[i]))) return SendErrorMessage(playerid, "O nome do seu slot deve conter somente letras maiúsculas.");
+        }
 
 
         if(IsPlayerConnected(playerid))
@@ -216,39 +223,46 @@ CMD:radio(playerid, params[]) {
             {
                 case 1:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName1], 90, "0");
                     format(pInfo[playerid][rRadioName1], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 2:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName2], 90, "0");
                     format(pInfo[playerid][rRadioName2], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 3:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName3], 90, "0");
                     format(pInfo[playerid][rRadioName3], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 4:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName4], 90, "0");
                     if(pInfo[playerid][pRadioNvl] == 1) return SendErrorMessage(playerid, "Seu aparelho não possui capacidade para mais slots.");
                     format(pInfo[playerid][rRadioName4], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 5:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName5], 90, "0");
                     if(pInfo[playerid][pRadioNvl] == 1) return SendErrorMessage(playerid, "Seu aparelho não possui capacidade para mais slots.");
                     format(pInfo[playerid][rRadioName5], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 6:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName6], 90, "0");
                     if((pInfo[playerid][pRadioNvl] == 1 || pInfo[playerid][pRadioNvl] == 2)) return SendErrorMessage(playerid, "Seu aparelho não possui capacidade para mais slots.");
                     format(pInfo[playerid][rRadioName6], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
                 case 7:
                 {
+                    if(!strcmp(name[playerid], "0")) return va_SendClientMessage(playerid, COLOR_GREEN2, "O nome de seu slot %d foi restaurado.", slot2) && format(pInfo[playerid][rRadioName7], 90, "0");
                     if((pInfo[playerid][pRadioNvl] == 1 || pInfo[playerid][pRadioNvl] == 2)) return SendErrorMessage(playerid, "Seu aparelho não possui capacidade para mais slots.");
                     format(pInfo[playerid][rRadioName7], 90, "%s", name);
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
@@ -502,77 +516,77 @@ TransmissionName(playerid, number)
     {
         case 1:
         {
-            if(pInfo[playerid][rRadioName1] != 0)
+            if(strcmp(pInfo[playerid][rRadioName1], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName1]);
             }
-            if(pInfo[playerid][rRadioName1] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName1], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][0]);
             }
         }
         case 2:
         {
-            if(pInfo[playerid][rRadioName2] != 0)
+            if(strcmp(pInfo[playerid][rRadioName2], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName2]);
             }
-            if(pInfo[playerid][rRadioName2] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName2], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][1]);
             }
         }
         case 3:
         {
-            if(pInfo[playerid][rRadioName3] != 0)
+            if(strcmp(pInfo[playerid][rRadioName3], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName3]);
             }
-            if(pInfo[playerid][rRadioName3] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName3], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][2]);
             }
         }
         case 4:
         {
-            if(pInfo[playerid][rRadioName4] != 0)
+            if(strcmp(pInfo[playerid][rRadioName4], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName4]);
             }
-            if(pInfo[playerid][rRadioName4] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName4], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][3]);
             }
         }
         case 5:
         {
-            if(pInfo[playerid][rRadioName5] != 0)
+            if(strcmp(pInfo[playerid][rRadioName5], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName5]);
             }
-            if(pInfo[playerid][rRadioName5] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName5], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][4]);
             }
         }
         case 6:
         {
-            if(pInfo[playerid][rRadioName6] != 0)
+            if(strcmp(pInfo[playerid][rRadioName6], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName6]);
             }
-            if(pInfo[playerid][rRadioName6] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName6], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][5]);
             }
         }
         case 7:
         {
-            if(pInfo[playerid][rRadioName7] != 0)
+            if(strcmp(pInfo[playerid][rRadioName7], "0"))
             {
                 format(frt1, sizeof(frt1), "%s", pInfo[playerid][rRadioName7]);
             }
-            if(pInfo[playerid][rRadioName7] == 0)
+            if(!strcmp(pInfo[playerid][rRadioName7], "0"))
             {
                 format(frt1, sizeof(frt1), "%i", pInfo[playerid][rRadioSlot][6]);
             }

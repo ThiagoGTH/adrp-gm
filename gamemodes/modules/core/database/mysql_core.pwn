@@ -360,6 +360,19 @@ void:CheckVehiclesTable(){
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_caravan checada com sucesso.");
     logCreate(99998, logString, 5);
 
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_damages` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `vehicle_id` int NOT NULL DEFAULT '0',\
+    `panels_status` int NOT NULL DEFAULT '0',\
+    `doors_status` int NOT NULL DEFAULT '0',\
+    `lights_status` int NOT NULL DEFAULT '0',\
+    `tires_status` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela vehicles_damages checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_damages checada com sucesso.");
+    logCreate(99998, logString, 5);
+
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `vehicles_stats` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `vehicle_id` int NOT NULL DEFAULT '0',\

@@ -65,6 +65,9 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_stats (`vehicle_id`) VALUES ('%d');", id);
             result = mysql_query(DBConn, query);
             cache_delete(result);
+            mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_damages (`vehicle_id`) VALUES ('%d');", id);
+            result = mysql_query(DBConn, query);
+            cache_delete(result);
             mysql_format(DBConn, query, sizeof query, "INSERT INTO vehicles_caravan (`vehicle_id`) VALUES ('%d');", id);
             result = mysql_query(DBConn, query);
             cache_delete(result);
@@ -175,6 +178,7 @@ SaveVehicle(vehicleid) {
     result = mysql_query(DBConn, query);
     cache_delete(result);
 
+    GetVehicleHealth(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vHealth]);
     mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_stats` SET \
     `insurance` = '%d',                 \
     `sunpass` = '%d',                   \
@@ -193,6 +197,22 @@ SaveVehicle(vehicleid) {
     vInfo[vehicleid][vBattery],
 	vInfo[vehicleid][vEngine],
     vInfo[vehicleid][vMiles],
+    vInfo[vehicleid][vID]);
+    result = mysql_query(DBConn, query);
+    cache_delete(result);
+
+    GetVehicleDamageStatus(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vPanelsStatus], vInfo[vehicleid][vDoorsStatus], vInfo[vehicleid][vLightsStatus], vInfo[vehicleid][vTiresStatus]);
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_damages` SET \
+    `panels_status` = '%d',                 \
+    `doors_status` = '%d',                  \
+    `lights_status` = '%d',                 \
+    `tires_status` = '%d'                   \
+    WHERE `vehicle_id` = '%d';",
+    vInfo[vehicleid][vPanelsStatus],
+    vInfo[vehicleid][vDoorsStatus],
+    vInfo[vehicleid][vLightsStatus],
+    vInfo[vehicleid][vTiresStatus],
     vInfo[vehicleid][vID]);
     result = mysql_query(DBConn, query);
     cache_delete(result);
@@ -270,7 +290,7 @@ SpawnVehicle(vehicleid) {
         vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], vInfo[vehicleid][vPos][3], 
         vInfo[vehicleid][vColor1], vInfo[vehicleid][vColor2], -1, false);
 
-        if(vInfo[vehicleid][vCaravan] != 0) vInfo[vehicleid][vInterior] = vInfo[vehicleid][vInterior] + 1;
+        //if(vInfo[vehicleid][vCaravan] != 0) vInfo[vehicleid][vInterior] = vInfo[vehicleid][vInterior] + 1;
         LinkVehicleToInterior(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vInterior]);
         SetVehicleVirtualWorld(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vVW]);
         if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true)) format(string, sizeof(string), " ");
@@ -308,6 +328,8 @@ LoadVehicles() {
         cache_get_value_name(i, "plate", vInfo[id][vPlate]);
         cache_get_value_name_int(i, "personalized_plate", vInfo[id][vPlatePersonalized]);
 
+        cache_get_value_name_int(i, "caravan", vInfo[id][vCaravan]);
+
         cache_get_value_name_int(i, "locked", vInfo[id][vLocked]);
 
         cache_get_value_name_int(i, "color1", vInfo[id][vColor1]);
@@ -324,6 +346,9 @@ LoadVehicles() {
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleStats", "d", id);
+
+        mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_damages` WHERE `vehicle_id` = '%d'", id);
+		mysql_tquery(DBConn, query, "LoadVehicleDamages", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_caravan` WHERE `vehicle_id` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleCaravan", "d", id);
@@ -361,6 +386,8 @@ LoadVehicle(vehicleid) {
     cache_get_value_name(0, "name", vInfo[vehicleid][vName]);
     cache_get_value_name_int(0, "personalized_name", vInfo[vehicleid][vNamePersonalized]);
 
+    cache_get_value_name_int(0, "caravan", vInfo[vehicleid][vCaravan]);
+
     cache_get_value_name_int(0, "legalized", vInfo[vehicleid][vLegal]);
 
     cache_get_value_name(0, "plate", vInfo[vehicleid][vPlate]);
@@ -382,6 +409,9 @@ LoadVehicle(vehicleid) {
 
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleStats", "d", vehicleid);
+
+    mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_damages` WHERE `vehicle_id` = '%d'", vehicleid);
+	mysql_tquery(DBConn, query, "LoadVehicleDamages", "d", vehicleid);
 
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_caravan` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleCaravan", "d", vehicleid);
@@ -407,6 +437,9 @@ DeleteVehicle(vehicleid) {
         result = mysql_query(DBConn, query);
 
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_stats` WHERE `vehicle_id` = '%d';", vehicleid);
+        result = mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_damages` WHERE `vehicle_id` = '%d';", vehicleid);
         result = mysql_query(DBConn, query);
 
         mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_caravan` WHERE `vehicle_id` = '%d';", vehicleid);
@@ -566,7 +599,7 @@ ChangeParkPlayerVehicle(playerid) {
 
     format(logString, sizeof(logString), "%s (%s) atualizou a vaga do seu seu %s (SQL %d)", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(vInfo[id][vModel]), id);
 	logCreate(playerid, logString, 16);
-
+    
     SaveVehicle(id); SpawnVehicle(id);
     return true;
 }
@@ -642,7 +675,19 @@ public LoadVehicleStats(vehicleid) {
     cache_get_value_name_float(0, "battery", vInfo[vehicleid][vBattery]);
 	cache_get_value_name_float(0, "engine", vInfo[vehicleid][vEngine]);
     cache_get_value_name_float(0, "miles", vInfo[vehicleid][vMiles]);
-    
+
+    SetVehicleHealth(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vHealth]);
+    return true;
+}
+
+forward LoadVehicleDamages(vehicleid);
+public LoadVehicleDamages(vehicleid) {
+    cache_get_value_name_int(0, "panels_status", vInfo[vehicleid][vPanelsStatus]);
+    cache_get_value_name_int(0, "doors_status", vInfo[vehicleid][vDoorsStatus]);
+    cache_get_value_name_int(0, "lights_status", vInfo[vehicleid][vLightsStatus]);
+    cache_get_value_name_int(0, "tires_status", vInfo[vehicleid][vTiresStatus]);
+
+    UpdateVehicleDamageStatus(vInfo[vehicleid][vVehicle], vInfo[vehicleid][vPanelsStatus], vInfo[vehicleid][vDoorsStatus], vInfo[vehicleid][vLightsStatus], vInfo[vehicleid][vTiresStatus]);
     return true;
 }
 
@@ -725,11 +770,6 @@ hook OnPlayerEnterCheckpoint(playerid) {
     return true;
 }
 
-hook OnVehicleDeath(vehicleid, killerid) {
-
-    SaveVehicle(vehicleid);
-}
-
 ShowPlayerVehicles(playerid) {
 	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
     new Cache:result = mysql_query(DBConn, query);
@@ -737,7 +777,7 @@ ShowPlayerVehicles(playerid) {
     new string[2048], veh_id, veh_model, veh_color1, veh_color2, veh_pname, veh_name[64], veh_impounded;
     new caravan, caravan_model, caravan_model_name[64];
 
-    if(!cache_num_rows()) return SendErrorMessage(playerid, "Você não possui nenhum veículo");
+    if(!cache_num_rows()) return SendErrorMessage(playerid, "Você não possui nenhum veículo.");
 
     for(new i; i < cache_num_rows(); i++){
         cache_get_value_name_int(i, "ID", veh_id);
@@ -824,17 +864,48 @@ RespawnVehicle(vehicleid) {
 	return true;
 }
 
-public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger) {
-    new id = VehicleGetID(vehicleid);
-    va_SendClientMessage(playerid, -1, "VehicleID: %d", id);
-
-    if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+hook OnPlayerStateChange(playerid, newstate, oldstate) {
+    if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
+        new vehicleid = GetPlayerVehicleID(playerid);
+        new id = VehicleGetID(vehicleid);
         if (VehicleIsOwner(playerid, id)) {
             if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", vInfo[id][vName]);
 			else va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
-            SaveVehicle(id);
         }
+        SaveVehicle(id);
     }
-    
+    return true;
+}
+
+public OnVehicleDeath(vehicleid, killerid) {
+    static id;
+    id = VehicleGetID(vehicleid);
+
+    if(id != -1) {
+        printf("entrou!");
+        if (vInfo[id][vFaction] != 0 || vInfo[id][vBusiness] != 0 || vInfo[id][vJob] != 0){
+            RepairVehicle(vInfo[id][vVehicle]);
+            SaveVehicle(id);
+            ResetVehicleObjects(id);
+            ResetVehicle(id);
+            LoadVehicle(id);
+            return true;
+        }
+
+        if(vInfo[id][vInsurance] < 3) {
+            for (new i = 0; i < 17; i ++) {
+                if (vInfo[id][vMods][i] > 0) 
+                    RemoveVehicleComponent(vehicleid, vInfo[id][vMods][i]);
+            }
+        }
+
+        GetVehiclePos(vInfo[id][vVehicle], vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]);
+
+        SaveVehicle(id);
+        ResetVehicleObjects(id);
+        ResetVehicle(id);
+        vInfo[id][vVehicle] = 0;
+        vInfo[id][vExists] = 0;
+    }
     return true;
 }

@@ -718,14 +718,19 @@ CMD:checarveiculos(playerid, params[]) {
 	if (sscanf(params, "d", userid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
-	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(userid));
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", pInfo[userid][pID]);
     new Cache:result = mysql_query(DBConn, query);
     new veh_id, veh_model, veh_pname, veh_name[64], veh_impounded;
-	printf("%d", GetPlayerSQLID(userid));
+
+	printf("SELECT * FROM vehicles WHERE `character_id` = '%d'", pInfo[userid][pID]);
+	
 	format(logString, sizeof(logString), "%s (%s) checou os veículos de %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 
+	printf("cache_num_rows() %d", cache_num_rows());
     if(!cache_num_rows()) return SendErrorMessage(playerid, "Este jogador não possui nenhum veículo.");
+
+
 	va_SendClientMessage(playerid, COLOR_GREEN, "Veiculos de %s (ID: %d):", pNome(userid), userid);
     for(new i; i < cache_num_rows(); i++){
         cache_get_value_name_int(i, "ID", veh_id);

@@ -279,6 +279,7 @@ hook OnGameModeInit() {
 		VehicleInterior[i] = 0;
 
     LoadVehicles();
+	SetTimer("VehicleCheck", 2250, true); //2s
     return true;
 }
 
@@ -703,6 +704,28 @@ SetCarAttributes(vehiclemodel, vehicleid) {
      	vInfo[vehicleid][vEnergyResource] = 1;
      	vInfo[vehicleid][vMaxHealth] = 1000.0;
      	count = 0;
+	}
+	return true;
+}
+
+forward VehicleCheck();
+public VehicleCheck() {
+	static Float:fHealth;
+
+	for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && GetVehicleHealth(i, fHealth) && fHealth > 990.0) {
+	    new vehicleid;
+		vehicleid = VehicleGetID(i);
+		RepairVehicle(vInfo[vehicleid][vVehicle]);
+	}
+
+	for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && GetVehicleHealth(i, fHealth) && fHealth < 300.0) {
+	    SetVehicleHealth(i, 300.0);
+	    new vehicleid;
+		vehicleid = VehicleGetID(i);
+		if(vInfo[vehicleid][vEngine] > 0.030) vInfo[vehicleid][vEngine] -= 0.030;
+		
+ 		vInfo[vehicleid][vHealthRepair] = 300.0;
+	    SetEngineStatus(i, false);
 	}
 	return true;
 }

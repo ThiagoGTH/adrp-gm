@@ -25,8 +25,16 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             vInfo[i][vInsurance] = insurance;
             vInfo[i][vSunpass] = sunpass;
             vInfo[i][vAlarm] = alarm;
-            vInfo[i][vFuel] = 50.00;
 
+            vInfo[i][vFuel] = 50.00;
+            vInfo[i][vHealth] = 1000.00;
+            vInfo[i][vHealthRepair] = 1000.00;
+            vInfo[i][vMaxHealth] = 1000.00;
+            vInfo[i][vBattery] = 100.00;
+            vInfo[i][vEngine] = 100.00;
+            vInfo[i][vMiles] = 0.00;
+            vInfo[i][vMilesCon] = 0.00;
+            
             vInfo[i][vFaction] = faction;
             vInfo[i][vBusiness] = business;
             vInfo[i][vJob] = job;
@@ -46,7 +54,6 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
     	  		count = 0;
 			}
 
-            
             if(!strcmp(plate, "Invalid", true)){
                 vInfo[i][vLegal] = 0;
                 new platestring[128];
@@ -794,15 +801,16 @@ ShowPlayerVehicles(playerid) {
             mysql_query(DBConn, query);
             cache_get_value_name_int(0, "caravan_model_id", caravan_model);
             cache_get_value_name(0, "caravan_model_name", caravan_model_name);
-            if(!vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, caravan_model, caravan_model_name, veh_id);
-            else if(vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, caravan_model, caravan_model_name, vInfo[veh_id][vVehicle]);
-        } else {
-            if(!vInfo[veh_id][vVehicle] && veh_pname != 0 && veh_impounded != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
-            else if(vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, vInfo[veh_id][vVehicle]);
-            else if(!vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
-            else if(vInfo[veh_id][vVehicle]) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), vInfo[veh_id][vVehicle]);
-            else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), veh_id);
         }
+        
+        if(!vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, caravan_model, caravan_model_name, veh_id);
+        else if(vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, caravan_model, caravan_model_name, vInfo[veh_id][vVehicle]);
+        else if(!vInfo[veh_id][vVehicle] && veh_pname != 0 && veh_impounded != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
+        else if(vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, vInfo[veh_id][vVehicle]);
+        else if(!vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
+        else if(vInfo[veh_id][vVehicle]) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), vInfo[veh_id][vVehicle]);
+        else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), veh_id);
+        
     }
     cache_delete(result);
 

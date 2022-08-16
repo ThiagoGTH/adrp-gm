@@ -183,6 +183,8 @@ enum Player_Data {
 
     // Dealership
     dModel,
+    dColor1,
+    dColor2,
     dBuyVehicle,
     dVehPrice,
     dAlarm,
@@ -367,6 +369,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dVehPrice] =
     pInfo[playerid][dAlarm] =
     pInfo[playerid][dInsurance] =
+    pInfo[playerid][dColor1] = 
+    pInfo[playerid][dColor2] =
     pInfo[playerid][dSunpass] =
     pInfo[playerid][dLegalized] = 
     pInfo[playerid][dFinalPrice] = 0;

@@ -402,6 +402,7 @@ Dialog:DealershipBoats(playerid, response, listitem, inputtext[]) {
 }
 
 SetCarInside(playerid, model, price, cam) {
+    TogglePlayerControllable(playerid, true);
     if(cam == 1) { // Grotti
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
@@ -468,7 +469,7 @@ SetCarInside(playerid, model, price, cam) {
 	    }
 	}
 
-    format(title, sizeof(title), "%s - {36A717}%s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+    format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
     format(string, sizeof(string), "{FFFF00}Valor:\t\t\t\t{FFFFFF}%s\n", FormatNumber(price));
     format(string, sizeof(string), "%s{FFFF00}Velocidade Máx:\t\t{FFFFFF}%.0f mph\n", string, carMaxVelocity2);
 	format(string, sizeof(string), "%s{FFFF00}HP Máx:\t\t\t{FFFFFF}1000.0\n", string);
@@ -516,22 +517,22 @@ SetCarInside(playerid, model, price, cam) {
         format(string, sizeof(string), "%s{FFFF00}Veículo legalizado\t\t{FFFFFF}%s\n%s", string, FormatNumber(GetLegalityPrice(playerid)), benefits);
     }
 
-    Dialog_Show(playerid, EditorCheckOut, DIALOG_STYLE_MSGBOX, title, string, "Editar", "Check-out");
+    Dialog_Show(playerid, EditorCheckOut, DIALOG_STYLE_MSGBOX, title, string, "Editar", "Comprar");
     return true;
 }
 
 Dialog:EditorCheckOut(playerid, response, listitem, inputtext[]) {
     new string[512], title[256];
     if(response){
-        SetPlateFree(playerid);
-
-        format(title, sizeof(title), "%s - {36A717}%s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+        format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
         format(string, sizeof(string), "Você realmente deseja comprar um(a) %s por %s?", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
         Dialog_Show(playerid, EditorCheckOutResponse, DIALOG_STYLE_MSGBOX, title, string, "Confirmar", "Cancelar");
     } else {
+        format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
+        Dialog_Show(playerid, SelectEdit, DIALOG_STYLE_LIST, title, "Alarme\nTrava\nLegalidade\nSeguro\nSun Pass\nCor 1\nCor 2", "Selecionar", "<<");
     }
     return true;
 }
@@ -550,7 +551,54 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][pPositionA],
             0, 0, 0, 0, 0, 0);
             SpawnPlayer(playerid);
+            return true;
         }
+        new id, vaga = randomEx(0, 193);
+		new Float:xcar, Float:ycar, Float:zcar, Float:acar;
+
+        if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435) {
+			xcar = DealershipSpawns[vaga][e_PosX];
+			ycar = DealershipSpawns[vaga][e_PosY];
+			zcar = DealershipSpawns[vaga][e_PosZ]+3.0;
+			acar = DealershipSpawns[vaga][e_PosA];
+        } else {
+            xcar = DealershipSpawns[vaga][e_PosX];
+			ycar = DealershipSpawns[vaga][e_PosY];
+			zcar = DealershipSpawns[vaga][e_PosZ];
+			acar = DealershipSpawns[vaga][e_PosA];
+        }
+
+	    if(pInfo[playerid][dLegalized] == 0) format(pInfo[playerid][pBuyingPlate], 120, "Invalid");
+        else if(pInfo[playerid][dLegalized] == 1) SetPlateFree(playerid);
+    
+        id = VehicleCreate(pInfo[playerid][pID], pInfo[playerid][dModel], xcar, ycar, zcar, acar, pInfo[playerid][dColor1], pInfo[playerid][dColor2], pInfo[playerid][pBuyingPlate], pInfo[playerid][dInsurance], pInfo[playerid][dSunpass], pInfo[playerid][dAlarm]);
+
+        if(IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
+            DestroyVehicle(pInfo[playerid][dBuyVehicle]);
+            pInfo[playerid][dBuyVehicle] = INVALID_VEHICLE_ID;
+        }
+
+        if (id == -1) return SendErrorMessage(playerid, "O servidor atingiu o limite de veiculos.");
+
+        GiveMoney(playerid, -GetVehicleFinalPrice(playerid));
+
+        SetPlayerCheckpoint(playerid, xcar, ycar, zcar, 3.0);
+    	SendClientMessage(playerid, -1, "SERVER: A sua vaga de estacionamento está localizada na Mulholland Intersection. Um checkpoint foi criado com a localização.");
+
+        format(logString, sizeof(logString), "%s (%s) comprou um(a) %s (SQL %d) por %s na concessionária", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dModel]), id, FormatNumber(GetVehicleFinalPrice(playerid)));
+	    logCreate(playerid, logString, 16);
+
+        TogglePlayerControllable(playerid, false);
+        ResetDealershipVars(playerid);
+        SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+        SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+        SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+        pInfo[playerid][pPositionX], 
+        pInfo[playerid][pPositionY], 
+        pInfo[playerid][pPositionZ],
+        pInfo[playerid][pPositionA],
+        0, 0, 0, 0, 0, 0);
+        SpawnPlayer(playerid);
     } else {
         SendErrorMessage(playerid, "Você desistiu da compra.");
         ResetDealershipVars(playerid);
@@ -658,6 +706,8 @@ ResetDealershipVars(playerid) {
     pInfo[playerid][dInsurance] =
     pInfo[playerid][dSunpass] =
     pInfo[playerid][dLegalized] = 
+    pInfo[playerid][dColor1] = 
+    pInfo[playerid][dColor2] =
     pInfo[playerid][dFinalPrice] = 0;
 
     pInfo[playerid][pBuyingPlate][0] = EOS;

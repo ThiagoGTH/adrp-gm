@@ -1,0 +1,665 @@
+#include <YSI_Coding\y_hooks>
+
+#define ALARM_PRICE_1       (1000)
+#define ALARM_PRICE_2       (1250)
+#define ALARM_PRICE_3       (1500)
+#define SUNPASS_PRICE_1     (500)
+#define LEGALITY_PRICE_1    (3000)
+
+/* CATEGORIAS:
+1 - Aviões;
+2 - Barcos;
+3 - Bicicletas;
+4 - Motos;
+5 - Sedans;
+6 - SUVs & Wagons;
+7 - Lowriders;
+8 - Esportivos;
+9 - Industriais;
+10 - Caminhonetes;
+11 - Únicos;
+12 - Trailers*/
+
+CMD:concessionaria(playerid, params[]){
+    if(IsPlayerInRangeOfPoint(playerid, 5.0, 542.0506, -1292.9080, 17.2422)) Dialog_Show(playerid, Dealership_Init1, DIALOG_STYLE_LIST, "Grotti", "1. Aviões\n2. Barcos\n3. Motos\n4. Esportivos", "Selecionar", "Fechar");
+    else if(IsPlayerInRangeOfPoint(playerid, 5.0, 2131.8108, -1150.8969, 24.1069)) Dialog_Show(playerid, Dealership_Init2, DIALOG_STYLE_LIST, "Coutt & Schutz", "1. Bicicletas\n2. Motos\n3. Sedans\n4. SUVs & Wagons\n5. Lowriders\n6. Industriais\n7. Caminhonetes\n8. Trailers Industriais", "Selecionar", "Fechar");
+    else return SendErrorMessage(playerid, "Você não está em nenhuma concessionária.");
+
+    GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
+	GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
+
+	pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
+	pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
+    return true;
+}
+
+Dialog:Dealership_Init1(playerid, response, listitem, inputtext[]){
+    if(response){
+        if(listitem == 0){ // AVIÕES
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '1'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx001 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Aviões_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipAirplanes, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 1){ // BARCOS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '2'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx002 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Barcos_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipBoats, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 2){ // MOTOS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '4'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx003 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Motos_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 3){ // ESPORTIVOS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '8'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx004 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Esportivos_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+    } else SendServerMessage(playerid, "Você desistiu de adquirir um veículo.");
+    return true;
+}
+
+Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
+    if(response){
+        if(listitem == 0){ // BICICLETAS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '3'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx005 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Bicicletas_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 1){ // MOTOS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '4'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx006 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Motos_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 2){ // SEDANS
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '5'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx007 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Sedans_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 3){ // SUVs & Wagons
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '6'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx008 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "SUVs_&_Wagons_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 4){ // Lowriders
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '7'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx009 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Lowriders_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 5){ // Industriais
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '9'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx010 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Veículos_Industriais_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 6){ // Caminhonetes
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '10'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx011 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Caminhonetes_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+        else if(listitem == 7){ // Trailers Industriais
+            new Cache:result = mysql_query(DBConn, "SELECT * FROM `vehicles_dealer` WHERE `category` = '12'");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx012 - Não existe nenhum veículo registrado nessa categoria, reporte a um desenvolvedor.");
+
+            new string[2048], model_id, price;
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "model_id", model_id);
+                cache_get_value_name_int(i, "price", price);
+
+                if(GetMoney(playerid) < price) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~Valor~n~~r~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+                else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~Valor~n~~g~%s\n", string, model_id, random(127), random(127), ReturnVehicleModelName(model_id), FormatNumber(price));
+
+            }
+            cache_delete(result);
+            new title[128];
+            format(title, 128, "Trailers_Industriais_Disponíveis");
+            AdjustTextDrawString(title);
+
+            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            return true;
+        }
+    } else SendServerMessage(playerid, "Você desistiu de adquirir um veículo.");
+    return true;
+}
+
+Dialog:DealershipGrotti(playerid, response, listitem, inputtext[]) {
+    if(response) {
+        new model_id = strval(inputtext), price, premium;
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d'", model_id);
+        new Cache:result = mysql_query(DBConn, query);
+
+        if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx003 - Não existe nenhum veículo registrado com esse modelo, reporte a um desenvolvedor.");
+
+        cache_get_value_name_int(0, "price", price);
+        cache_get_value_name_int(0, "premium", premium);
+        cache_delete(result);
+        if(GetMoney(playerid) < price) return SendErrorMessage(playerid, "Você não possui %s em mãos para comprar %s.", FormatNumber(price), ReturnVehicleModelName(model_id));
+
+        if(pInfo[playerid][pDonator] < premium) return SendErrorMessage(playerid, "Você precisa ser no mínimo %s para adquirir esse veículo.", PremiumType(premium));
+
+        pInfo[playerid][dModel] = model_id;
+        pInfo[playerid][dFinalPrice] = price;
+
+        SetCarInside(playerid, model_id, price, 1);
+    } else return ResetDealershipVars(playerid);
+    return true;
+}
+
+Dialog:DealershipCoutt(playerid, response, listitem, inputtext[]) {
+    if(response) {
+        new model_id = strval(inputtext), price, premium;
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d'", model_id);
+        new Cache:result = mysql_query(DBConn, query);
+
+        if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx002 - Não existe nenhum veículo registrado com esse modelo, reporte a um desenvolvedor.");
+
+        cache_get_value_name_int(0, "price", price);
+        cache_get_value_name_int(0, "premium", premium);
+        cache_delete(result);
+        if(GetMoney(playerid) < price) return SendErrorMessage(playerid, "Você não possui %s em mãos para comprar %s.", FormatNumber(price), ReturnVehicleModelName(model_id));
+
+        if(pInfo[playerid][pDonator] < premium) return SendErrorMessage(playerid, "Você precisa ser no mínimo %s para adquirir esse veículo.", PremiumType(premium));
+
+        pInfo[playerid][dModel] = model_id;
+        pInfo[playerid][dFinalPrice] = price;
+
+        SetCarInside(playerid, model_id, price, 2);
+    } else return ResetDealershipVars(playerid);
+    return true;
+}
+
+Dialog:DealershipAirplanes(playerid, response, listitem, inputtext[]) {
+    if(response) {
+        new model_id = strval(inputtext), price, premium;
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d'", model_id);
+        new Cache:result = mysql_query(DBConn, query);
+
+        if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx002 - Não existe nenhum veículo registrado com esse modelo, reporte a um desenvolvedor.");
+
+        cache_get_value_name_int(0, "price", price);
+        cache_get_value_name_int(0, "premium", premium);
+        cache_delete(result);
+        if(GetMoney(playerid) < price) return SendErrorMessage(playerid, "Você não possui %s em mãos para comprar %s.", FormatNumber(price), ReturnVehicleModelName(model_id));
+
+        if(pInfo[playerid][pDonator] < premium) return SendErrorMessage(playerid, "Você precisa ser no mínimo %s para adquirir esse veículo.", PremiumType(premium));
+
+        pInfo[playerid][dModel] = model_id;
+        pInfo[playerid][dFinalPrice] = price;
+
+        SetCarInside(playerid, model_id, price, 3);
+    } else return ResetDealershipVars(playerid);
+    return true;
+}
+
+Dialog:DealershipBoats(playerid, response, listitem, inputtext[]) {
+    if(response) {
+        new model_id = strval(inputtext), price, premium;
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d'", model_id);
+        new Cache:result = mysql_query(DBConn, query);
+
+        if(!cache_num_rows()) return SendErrorMessage(playerid, "Dx002 - Não existe nenhum veículo registrado com esse modelo, reporte a um desenvolvedor.");
+
+        cache_get_value_name_int(0, "price", price);
+        cache_get_value_name_int(0, "premium", premium);
+        cache_delete(result);
+        if(GetMoney(playerid) < price) return SendErrorMessage(playerid, "Você não possui %s em mãos para comprar %s.", FormatNumber(price), ReturnVehicleModelName(model_id));
+
+        if(pInfo[playerid][pDonator] < premium) return SendErrorMessage(playerid, "Você precisa ser no mínimo %s para adquirir esse veículo.", PremiumType(premium));
+
+        pInfo[playerid][dModel] = model_id;
+        pInfo[playerid][dFinalPrice] = price;
+
+        SetCarInside(playerid, model_id, price, 4);
+    } else return ResetDealershipVars(playerid);
+    return true;
+}
+
+SetCarInside(playerid, model, price, cam) {
+    if(cam == 1) { // Grotti
+		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
+			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 20.3701, 273.0962, 1, 1, -1);
+			else
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 17.3701, 273.0962, 1, 1, -1);
+
+			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+		}
+		SetPlayerVirtualWorld(playerid, playerid+1000);
+		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+1000);
+        PutPlayerInVehicle(playerid, pInfo[playerid][dBuyVehicle], 0);
+	}
+    else if(cam == 2) { // Coutt And Schutz
+		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
+			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 27.6460, 0.7070, 1, 1, -1);
+			else
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 25.6460, 0.7070, 1, 1, -1);
+
+			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+		}
+		SetPlayerVirtualWorld(playerid, playerid+2000);
+		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+2000);
+        PutPlayerInVehicle(playerid, pInfo[playerid][dBuyVehicle], 0);
+	}
+    else if(cam == 3) { // Aeroporto
+	    SetPlayerPos(playerid, 1932.2606,-2251.5281,13.5469);
+		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
+	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 1907.4602, -2292.1763, 14.7098, 273.5805, 1, 1, -1);
+			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+		}
+		SetPlayerVirtualWorld(playerid, playerid+5000);
+		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+5000);
+		PutPlayerInVehicle(playerid, pInfo[playerid][dBuyVehicle], 0);
+		SetPlayerCameraPos(playerid, 1925.9956, -2284.3994, 14.2212);
+		SetPlayerCameraLookAt(playerid, 1925.0631, -2284.7654, 14.2113);
+	}
+    else if(cam == 4) { //Marina
+	    SetPlayerPos(playerid, 715.4207,-1699.9086,2.4297);
+		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle]))
+		{
+	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 723.2198, -1698.6869, -0.0064, 0.0000, 1, 1, -1);
+	    	SetVehicleColor(pInfo[playerid][dBuyVehicle],  random(127), random(127));
+		}
+		SetPlayerVirtualWorld(playerid, playerid+6000);
+		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+6000);
+		PutPlayerInVehicle(playerid, pInfo[playerid][dBuyVehicle], 0);
+		SetPlayerCameraPos(playerid, 728.2611, -1680.6938, 2.9265);
+		SetPlayerCameraLookAt(playerid, 727.8109, -1681.5879, 2.7616);
+	}
+    new title[128], string[2048];
+    pInfo[playerid][dVehPrice] = price;
+
+    new CarEnergyResource2, Float:carMaxVelocity2, Float:carMass2, Float:carEngine2, Float:carConsumation2, Float:carMaxFuel2;
+	for (new i = 0; i < sizeof(arrBatteryEngine); i ++) {
+	    if(model == arrBatteryEngine[i][VehModel]) {
+	        CarEnergyResource2 = arrBatteryEngine[i][VehFuelType];
+	        carMaxVelocity2 = arrBatteryEngine[i][VehMaxVelocity];
+	        carMass2 = arrBatteryEngine[i][VehMass];
+	        carEngine2 = arrBatteryEngine[i][VehEngine];
+	        carConsumation2 = arrBatteryEngine[i][VehConsumation];
+	        carMaxFuel2 =  arrBatteryEngine[i][VehMaxFuel];
+	    }
+	}
+
+    format(title, sizeof(title), "%s - {36A717}%s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+    format(string, sizeof(string), "{FFFF00}Valor:\t\t\t\t{FFFFFF}%s\n", FormatNumber(price));
+    format(string, sizeof(string), "%s{FFFF00}Velocidade Máx:\t\t{FFFFFF}%.0f mph\n", string, carMaxVelocity2);
+	format(string, sizeof(string), "%s{FFFF00}HP Máx:\t\t\t{FFFFFF}1000.0\n", string);
+	format(string, sizeof(string), "%s{FFFF00}Massa:\t\t\t\t{FFFFFF}%.1fkg\n", string, carMass2);
+	format(string, sizeof(string), "%s\n", string);
+    if(carEngine2) {
+	   	format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Tração Traseira\n", string);
+	} else {
+	    format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Outro\n", string);
+	}
+
+    if(CarEnergyResource2 == 1) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Gasolina\n", string); }
+	else if(CarEnergyResource2 == 2) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Diesel\n", string); }
+	else if(CarEnergyResource2 == 4) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Turbo/Querosene\n", string); }
+	format(string, sizeof(string), "%s{FFFF00}Autonomia:\t\t\t{FFFFFF}%.0f mpg.\n", string, carConsumation2);
+	format(string, sizeof(string), "%s{FFFF00}Cap. do Tanque:\t\t{FFFFFF}%.0f gal's.\n\n", string, carMaxFuel2);
+
+    
+    if(pInfo[playerid][dAlarm] > 0){
+        new benefits[512];
+        switch(pInfo[playerid][dAlarm]) {
+            case 1: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Alarme sonoro do veiculo.\n");
+            case 2: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Alarme sonoro do veiculo;\n\t{FFFF00}+{FFFFFF}Envio de SMS do monitoramento do alarme para o proprietário do veiculo.\n");
+            case 3: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Alarme sonoro do veiculo;\n\t{FFFF00}+{FFFFFF}Envio de SMS do monitoramento do alarme para o proprietário do veiculo;\n\t{FFFF00}+{FFFFFF}Alerta para a polícia com a localização do veiculo e envia um checkpoint\n\tpara a posição onde o veiculo se encontra.\n");
+        }
+        format(string, sizeof(string), "%s{FFFF00}Alarme nível %d\t\t\t{FFFFFF}%s\n%s", string, pInfo[playerid][dAlarm], FormatNumber(GetAlarmPrice(playerid)), benefits);
+    }
+    if(pInfo[playerid][dInsurance] > 0){
+        new benefits[512];
+        switch(pInfo[playerid][dInsurance]) {
+            case 1: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado.\n");
+            case 2: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado;\n\t{FFFF00}+{FFFFFF}Restaura a lataria do veiculo por completo ao ser spawnado.\n");
+            case 3: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado;\n\t{FFFF00}+{FFFFFF}Restaura a lataria do veiculo por completo ao ser spawnado;\n\t{FFFF00}+{FFFFFF} Rastreador que localiza o veículo.");
+        }
+        format(string, sizeof(string), "%s{FFFF00}Seguro nível %d\t\t\t{FFFFFF}%s\n%s", string, pInfo[playerid][dInsurance], FormatNumber(GetInsurancePrice(playerid)), benefits);
+    }
+    if(pInfo[playerid][dSunpass] > 0){
+        new benefits[512];
+        format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Abertura automática da cancela nas faixas de Sun Pass nos pedágios\n\t{FFFF00}+{FFFFFF}Pagamento do pedágio das faixas Sun Pass a cada paycheck apenas.\n\t{BBBBBB}*{FFFFFF}(( Somente funcional com um pacote premium ativo. ))");
+        format(string, sizeof(string), "%s{FFFF00}Sun Pass instalado\t\t{FFFFFF}%s\n%s", string, FormatNumber(GetSunpassPrice(playerid)), benefits);
+    }
+    if(pInfo[playerid][dLegalized] > 0){
+        new benefits[512];
+        format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Veículo legalizado e emplacado de acordo com as normas do DMV.\n");
+        format(string, sizeof(string), "%s{FFFF00}Veículo legalizado\t\t{FFFFFF}%s\n%s", string, FormatNumber(GetLegalityPrice(playerid)), benefits);
+    }
+
+    Dialog_Show(playerid, EditorCheckOut, DIALOG_STYLE_MSGBOX, title, string, "Editar", "Check-out");
+    return true;
+}
+
+Dialog:EditorCheckOut(playerid, response, listitem, inputtext[]) {
+    new string[512], title[256];
+    if(response){
+        SetPlateFree(playerid);
+
+        format(title, sizeof(title), "%s - {36A717}%s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+
+        format(string, sizeof(string), "Você realmente deseja comprar um(a) %s por %s?", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+
+        Dialog_Show(playerid, EditorCheckOutResponse, DIALOG_STYLE_MSGBOX, title, string, "Confirmar", "Cancelar");
+    } else {
+
+    }
+    return true;
+}
+
+Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
+	if (response){
+        if(GetMoney(playerid) < GetVehicleFinalPrice(playerid)){
+            SendErrorMessage(playerid, "Você não possui US$ %s para comprar esse veículo.", FormatNumber(GetVehicleFinalPrice(playerid)));
+            ResetDealershipVars(playerid);
+            SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+            SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            0, 0, 0, 0, 0, 0);
+            SpawnPlayer(playerid);
+        }
+    } else {
+        SendErrorMessage(playerid, "Você desistiu da compra.");
+        ResetDealershipVars(playerid);
+        SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+	    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+        pInfo[playerid][pPositionX], 
+        pInfo[playerid][pPositionY], 
+        pInfo[playerid][pPositionZ],
+        pInfo[playerid][pPositionA],
+        0, 0, 0, 0, 0, 0);
+        SpawnPlayer(playerid);
+    }
+    return true;
+}
+
+public OnVehicleStreamIn(vehicleid, forplayerid) {
+	if(IsValidVehicle(pInfo[forplayerid][dBuyVehicle])) {
+		if(vehicleid == pInfo[forplayerid][dBuyVehicle]) {
+            // Grotti
+        	if(GetPlayerVirtualWorld(forplayerid) == forplayerid+1000) {
+				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
+                InterpolateCameraPos(forplayerid, 526.704101, -1266.684448, 22.523324, 553.664184, -1276.940185, 17.633834, 3000);
+                InterpolateCameraLookAt(forplayerid, 529.676818, -1270.703857, 22.439306, 550.074951, -1280.415771, 17.440483, 3000);  
+			}
+            // Coutt And Schutz
+        	else if(GetPlayerVirtualWorld(forplayerid) == forplayerid+2000) {
+				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
+                InterpolateCameraPos(forplayerid, 2131.395507, -1131.769653, 33.460655, 2117.156250, -1122.494995, 26.035772, 3000);
+                InterpolateCameraLookAt(forplayerid, 2131.756591, -1136.441772, 31.716844, 2120.337402, -1126.348876, 25.867837, 3000);
+			}
+            // Aeroporto
+			else if(GetPlayerVirtualWorld(forplayerid) == forplayerid+5000) {
+				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
+	        	SetPlayerCameraPos(forplayerid, 1925.9956, -2284.3994, 14.2212);
+				SetPlayerCameraLookAt(forplayerid, 1925.0631, -2284.7654, 14.2113);
+			}
+            // Marina
+			else if(GetPlayerVirtualWorld(forplayerid) == forplayerid+6000) {
+				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
+	        	SetPlayerCameraPos(forplayerid, 728.2611, -1680.6938, 2.9265);
+				SetPlayerCameraLookAt(forplayerid, 727.8109, -1681.5879, 2.7616);
+			}
+		}
+	}
+	return true;
+}
+
+GetAlarmPrice(playerid) {
+    new price;
+    switch(pInfo[playerid][dAlarm]){
+        case 1: price = ALARM_PRICE_1;
+        case 2: price = ALARM_PRICE_2;
+        case 3: price = ALARM_PRICE_3;
+        default: price = 0;
+    }
+    return price;
+}
+
+GetInsurancePrice(playerid) {
+    new price;
+    switch(pInfo[playerid][dInsurance]){
+        case 1: price = (pInfo[playerid][dVehPrice]/100)*10;
+        case 2: price = (pInfo[playerid][dVehPrice]/100)*20;
+        case 3: price = (pInfo[playerid][dVehPrice]/100)*30;
+        default: price = 0;
+    }
+    return price;
+}
+
+GetSunpassPrice(playerid) {
+    new price;
+    switch(pInfo[playerid][dInsurance]){
+        case 1: price = SUNPASS_PRICE_1;
+        default: price = 0;
+    }
+    return price;
+}
+
+GetLegalityPrice(playerid) {
+    new price;
+    switch(pInfo[playerid][dLegalized]){
+        case 1: price = LEGALITY_PRICE_1;
+        default: price = 0;
+    }
+    return price;
+}
+
+GetVehicleFinalPrice(playerid) {
+	new price;
+
+    price = pInfo[playerid][dVehPrice] + GetLegalityPrice(playerid) + GetSunpassPrice(playerid) + GetInsurancePrice(playerid) + GetAlarmPrice(playerid);
+	return price;
+}
+
+ResetDealershipVars(playerid) {
+    if(IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
+        DestroyVehicle(pInfo[playerid][dBuyVehicle]);
+        pInfo[playerid][dBuyVehicle] = INVALID_VEHICLE_ID;
+    }
+	    	
+    pInfo[playerid][dModel] =
+    pInfo[playerid][dVehPrice] =
+    pInfo[playerid][dAlarm] =
+    pInfo[playerid][dInsurance] =
+    pInfo[playerid][dSunpass] =
+    pInfo[playerid][dLegalized] = 
+    pInfo[playerid][dFinalPrice] = 0;
+
+    pInfo[playerid][pBuyingPlate][0] = EOS;
+    return true;
+}

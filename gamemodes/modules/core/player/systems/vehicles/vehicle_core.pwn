@@ -868,6 +868,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
     if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
         new vehicleid = GetPlayerVehicleID(playerid);
         new id = VehicleGetID(vehicleid);
+        if (id == -1) return false;
         if (VehicleIsOwner(playerid, id)) {
             if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", vInfo[id][vName]);
 			else va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));

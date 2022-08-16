@@ -10,7 +10,7 @@ CMD:gerenciar(playerid, params[]){
     
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
-    if(GetPlayerAdmin(playerid)  > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
+    if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos\nAdministradores", "Selecionar", "Fechar");
     else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nVeículos", "Selecionar", "Fechar");
     return true;
 }

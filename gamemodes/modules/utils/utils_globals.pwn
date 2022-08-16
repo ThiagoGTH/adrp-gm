@@ -164,6 +164,7 @@ enum Player_Data {
     pJailed,
     // Temp variables
     bool:pLogged,
+    pBJOffer,
     pFlying,
     pQuestion,
     pAnswer,
@@ -179,6 +180,17 @@ enum Player_Data {
     pEditingVeh,
     pOjectVeh,
     pSlotEdVeh,
+
+    // Dealership
+    dModel,
+    dBuyVehicle,
+    dVehPrice,
+    dAlarm,
+    dInsurance,
+    dSunpass,
+    dLegalized,
+    dFinalPrice,
+
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -286,6 +298,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pTackleTimer] = 0;
     pInfo[playerid][pAdTick] = 0;
     pInfo[playerid][pFlying] = 0;
+    pInfo[playerid][pBJOffer] = -1;
     pInfo[playerid][pESC] = 0;
     pInfo[playerid][pDelayNewbie] = 0;
 
@@ -348,4 +361,13 @@ void:ResetCharacterData(playerid) {
 	}
     format(pInfo[playerid][pLastShot], 64, "");
     pInfo[playerid][pShotTime] = 0;
+
+    pInfo[playerid][dModel] =
+    pInfo[playerid][dBuyVehicle] =
+    pInfo[playerid][dVehPrice] =
+    pInfo[playerid][dAlarm] =
+    pInfo[playerid][dInsurance] =
+    pInfo[playerid][dSunpass] =
+    pInfo[playerid][dLegalized] = 
+    pInfo[playerid][dFinalPrice] = 0;
 }

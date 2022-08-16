@@ -6,3 +6,4 @@
 #include "modules\core\player\systems\vehicles\vehicle_lockpick.pwn"
 #include "modules\core\player\systems\vehicles\vehicle_objects.pwn"
 #include "modules\core\player\systems\vehicles\vehicle_caravan.pwn"
+#include "modules\core\player\systems\vehicles\vehicle_dealership.pwn"

@@ -936,3 +936,14 @@ public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5) {
 	}
 	return true;
 }
+
+PremiumType(type) {
+	new rank[128];
+	switch(type) {
+		case 1: format(rank, sizeof(rank), "Premium Bronze");
+		case 2: format(rank, sizeof(rank), "Premium Prata");
+		case 3: format(rank, sizeof(rank), "Premium Ouro");
+		default: format(rank, sizeof(rank), "Inválido");
+	}
+	return rank;
+}

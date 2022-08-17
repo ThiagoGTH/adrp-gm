@@ -7,20 +7,6 @@
 #define LEGALITY_PRICE_1                (3000)
 #define MAX_DEALERSHIP_LISTTEXTDRAW     (5)
 
-/* CATEGORIAS:
-1 - Aviões;
-2 - Barcos;
-3 - Bicicletas;
-4 - Motos;
-5 - Sedans;
-6 - SUVs & Wagons;
-7 - Lowriders;
-8 - Esportivos;
-9 - Industriais;
-10 - Caminhonetes;
-11 - Únicos;
-12 - Trailers*/
-
 CMD:concessionaria(playerid, params[]){
     if(IsPlayerInRangeOfPoint(playerid, 5.0, 542.0506, -1292.9080, 17.2422)) Dialog_Show(playerid, Dealership_Init1, DIALOG_STYLE_LIST, "Grotti", "1. Aviões\n2. Barcos\n3. Motos\n4. Esportivos", "Selecionar", "Fechar");
     else if(IsPlayerInRangeOfPoint(playerid, 5.0, 2131.8108, -1150.8969, 24.1069)) Dialog_Show(playerid, Dealership_Init2, DIALOG_STYLE_LIST, "Coutt & Schutz", "1. Bicicletas\n2. Motos\n3. Sedans\n4. SUVs & Wagons\n5. Lowriders\n6. Industriais\n7. Caminhonetes\n8. Trailers Industriais", "Selecionar", "Fechar");
@@ -608,8 +594,8 @@ Dialog:SelectEdit(playerid, response, listitem, inputtext[]) {
 Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
     new string[1024], title[128];
     format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
-    if(response){
-        if(pInfo[playerid][dBuyingEditMenu] == 1){
+    if(response) {
+        if(pInfo[playerid][dBuyingEditMenu] == 1) {
             switch(listitem){
                 case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Nenhum\nAlarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
                 case 1: format(string, sizeof(string), "Nenhum\n{BBBBBB}>>> {FFFFFF}Alarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));

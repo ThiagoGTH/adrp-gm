@@ -546,7 +546,7 @@ hook OnPlayerDisconnect(playerid, reason) {
     if(pInfo[playerid][pLogged] == false) return false;
     
     new string[256];
-    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '0' WHERE `ID` = '%s';", pInfo[playerid][pID]);
+    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '0' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
     switch(reason){

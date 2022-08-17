@@ -4,7 +4,7 @@
 #include <YSI_Coding\y_hooks>
 
 CMD:trocarpersonagem(playerid, params[]){
-    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '0' WHERE `ID` = '%s';", pInfo[playerid][pID]);
+    mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '0' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);
     
     TogglePlayerSpectating(playerid, true);

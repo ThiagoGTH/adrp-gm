@@ -940,10 +940,31 @@ public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5) {
 PremiumType(type) {
 	new rank[128];
 	switch(type) {
+		case 0: format(rank, sizeof(rank), "Comum");
 		case 1: format(rank, sizeof(rank), "Premium Bronze");
 		case 2: format(rank, sizeof(rank), "Premium Prata");
 		case 3: format(rank, sizeof(rank), "Premium Ouro");
-		default: format(rank, sizeof(rank), "Inválido");
+		default: format(rank, sizeof(rank), "Comum");
 	}
 	return rank;
+}
+
+DealershipCategory(type) {
+	new category[128];
+	switch(type) {
+		case 1: format(category, sizeof(category), "Aviões");
+		case 2: format(category, sizeof(category), "Barcos");
+		case 3: format(category, sizeof(category), "Bicicletas");
+		case 4: format(category, sizeof(category), "Motos");
+		case 5: format(category, sizeof(category), "Sedans");
+		case 6: format(category, sizeof(category), "SUVs & Wagons");
+		case 7: format(category, sizeof(category), "Lowriders");
+		case 8: format(category, sizeof(category), "Esportivos");
+		case 9: format(category, sizeof(category), "Industriais");
+		case 10: format(category, sizeof(category), "Caminhonetes");
+		case 11: format(category, sizeof(category), "Únicos");
+		case 12: format(category, sizeof(category), "Trailers industriais");
+		default: format(category, sizeof(category), "Inválido");
+	}
+	return category;
 }

@@ -194,6 +194,13 @@ enum Player_Data {
     dFinalPrice,
     dCam,
     dBuyingEditMenu,
+
+    dEditingSQL,
+    dEditingModel,
+    dEditingPremium,
+    dEditingCategory,
+    dEditingPrice,
+    dEditingMenu,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -370,11 +377,18 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dVehPrice] =
     pInfo[playerid][dAlarm] =
     pInfo[playerid][dInsurance] =
-    pInfo[playerid][dColor1] = 
+    pInfo[playerid][dColor1] =
     pInfo[playerid][dColor2] =
     pInfo[playerid][dSunpass] =
-    pInfo[playerid][dLegalized] = 
-    pInfo[playerid][dCam] = 
-    pInfo[playerid][dBuyingEditMenu] = 
+    pInfo[playerid][dLegalized] =
+    pInfo[playerid][dCam] =
+    pInfo[playerid][dBuyingEditMenu] =
     pInfo[playerid][dFinalPrice] = 0;
+
+    pInfo[playerid][dEditingSQL] =
+    pInfo[playerid][dEditingModel] =
+    pInfo[playerid][dEditingPremium] =
+    pInfo[playerid][dEditingCategory] =
+    pInfo[playerid][dEditingPrice] =
+    pInfo[playerid][dEditingMenu] = 0;
 }

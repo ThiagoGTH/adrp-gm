@@ -798,10 +798,13 @@ ShowPlayerVehicles(playerid) {
 
         if(caravan != 0){
             mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_caravan WHERE `vehicle_id` = '%d'", veh_id);
-            mysql_query(DBConn, query);
+            new Cache:result2 = mysql_query(DBConn, query);
             cache_get_value_name_int(0, "caravan_model_id", caravan_model);
             cache_get_value_name(0, "caravan_model_name", caravan_model_name);
+            cache_delete(result2);
         }
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
+        result = mysql_query(DBConn, query);
         
         if(!vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, caravan_model, caravan_model_name, veh_id);
         else if(vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, caravan_model, caravan_model_name, vInfo[veh_id][vVehicle]);
@@ -810,7 +813,6 @@ ShowPlayerVehicles(playerid) {
         else if(!vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
         else if(vInfo[veh_id][vVehicle]) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), vInfo[veh_id][vVehicle]);
         else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), veh_id);
-        
     }
     cache_delete(result);
 

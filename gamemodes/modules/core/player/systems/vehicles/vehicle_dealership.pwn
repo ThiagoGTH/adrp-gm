@@ -1,10 +1,11 @@
 #include <YSI_Coding\y_hooks>
 
-#define ALARM_PRICE_1       (1000)
-#define ALARM_PRICE_2       (1250)
-#define ALARM_PRICE_3       (1500)
-#define SUNPASS_PRICE_1     (500)
-#define LEGALITY_PRICE_1    (3000)
+#define ALARM_PRICE_1                   (1000)
+#define ALARM_PRICE_2                   (1250)
+#define ALARM_PRICE_3                   (1500)
+#define SUNPASS_PRICE_1                 (500)
+#define LEGALITY_PRICE_1                (3000)
+#define MAX_DEALERSHIP_LISTTEXTDRAW     (5)
 
 /* CATEGORIAS:
 1 - Aviões;
@@ -192,7 +193,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "Sedans_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
         else if(listitem == 3){ // SUVs & Wagons
@@ -214,7 +215,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "SUVs_&_Wagons_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
         else if(listitem == 4){ // Lowriders
@@ -236,7 +237,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "Lowriders_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
         else if(listitem == 5){ // Industriais
@@ -258,7 +259,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "Veículos_Industriais_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
         else if(listitem == 6){ // Caminhonetes
@@ -280,7 +281,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "Caminhonetes_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
         else if(listitem == 7){ // Trailers Industriais
@@ -302,7 +303,7 @@ Dialog:Dealership_Init2(playerid, response, listitem, inputtext[]){
             format(title, 128, "Trailers_Industriais_Disponíveis");
             AdjustTextDrawString(title);
 
-            Dialog_Show(playerid, DealershipGrotti, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+            Dialog_Show(playerid, DealershipCoutt, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
             return true;
         }
     } else SendServerMessage(playerid, "Você desistiu de adquirir um veículo.");
@@ -406,11 +407,11 @@ SetCarInside(playerid, model, price, cam) {
     if(cam == 1) { // Grotti
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
-				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 20.3701, 273.0962, 1, 1, -1);
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 20.3701, 273.0962, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 			else
-	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 17.3701, 273.0962, 1, 1, -1);
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 17.3701, 273.0962, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
-			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+1000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+1000);
@@ -419,11 +420,11 @@ SetCarInside(playerid, model, price, cam) {
     else if(cam == 2) { // Coutt And Schutz
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
-				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 27.6460, 0.7070, 1, 1, -1);
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 27.6460, 0.7070, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 			else
-	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 25.6460, 0.7070, 1, 1, -1);
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 25.6460, 0.7070, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
-			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+2000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+2000);
@@ -432,8 +433,8 @@ SetCarInside(playerid, model, price, cam) {
     else if(cam == 3) { // Aeroporto
 	    SetPlayerPos(playerid, 1932.2606,-2251.5281,13.5469);
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
-	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 1907.4602, -2292.1763, 14.7098, 273.5805, 1, 1, -1);
-			SetVehicleColor(pInfo[playerid][dBuyVehicle], random(127), random(127));
+	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 1907.4602, -2292.1763, 14.7098, 273.5805, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+5000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+5000);
@@ -445,8 +446,8 @@ SetCarInside(playerid, model, price, cam) {
 	    SetPlayerPos(playerid, 715.4207,-1699.9086,2.4297);
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle]))
 		{
-	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 723.2198, -1698.6869, -0.0064, 0.0000, 1, 1, -1);
-	    	SetVehicleColor(pInfo[playerid][dBuyVehicle],  random(127), random(127));
+	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 723.2198, -1698.6869, -0.0064, 0.0000, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+	    	ChangeVehicleColor(pInfo[playerid][dBuyVehicle],  pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+6000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+6000);
@@ -455,7 +456,9 @@ SetCarInside(playerid, model, price, cam) {
 		SetPlayerCameraLookAt(playerid, 727.8109, -1681.5879, 2.7616);
 	}
     new title[128], string[2048];
+    pInfo[playerid][dModel] = model;
     pInfo[playerid][dVehPrice] = price;
+    pInfo[playerid][dCam] = cam;
 
     new CarEnergyResource2, Float:carMaxVelocity2, Float:carMass2, Float:carEngine2, Float:carConsumation2, Float:carMaxFuel2;
 	for (new i = 0; i < sizeof(arrBatteryEngine); i ++) {
@@ -469,18 +472,15 @@ SetCarInside(playerid, model, price, cam) {
 	    }
 	}
 
-    format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+    format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
     format(string, sizeof(string), "{FFFF00}Valor:\t\t\t\t{FFFFFF}%s\n", FormatNumber(price));
     format(string, sizeof(string), "%s{FFFF00}Velocidade Máx:\t\t{FFFFFF}%.0f mph\n", string, carMaxVelocity2);
 	format(string, sizeof(string), "%s{FFFF00}HP Máx:\t\t\t{FFFFFF}1000.0\n", string);
 	format(string, sizeof(string), "%s{FFFF00}Massa:\t\t\t\t{FFFFFF}%.1fkg\n", string, carMass2);
 	format(string, sizeof(string), "%s\n", string);
-    if(carEngine2) {
-	   	format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Tração Traseira\n", string);
-	} else {
-	    format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Outro\n", string);
-	}
-
+    if(carEngine2) format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Tração Traseira\n", string);
+	else format(string, sizeof(string), "%s{FFFF00}Motor:\t\t\t\t{FFFFFF}Outro\n", string);
+	
     if(CarEnergyResource2 == 1) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Gasolina\n", string); }
 	else if(CarEnergyResource2 == 2) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Diesel\n", string); }
 	else if(CarEnergyResource2 == 4) { format(string, sizeof(string), "%s{FFFF00}Combustível:\t\t\t{FFFFFF}Turbo/Querosene\n", string); }
@@ -502,13 +502,13 @@ SetCarInside(playerid, model, price, cam) {
         switch(pInfo[playerid][dInsurance]) {
             case 1: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado.\n");
             case 2: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado;\n\t{FFFF00}+{FFFFFF}Restaura a lataria do veiculo por completo ao ser spawnado.\n");
-            case 3: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado;\n\t{FFFF00}+{FFFFFF}Restaura a lataria do veiculo por completo ao ser spawnado;\n\t{FFFF00}+{FFFFFF} Rastreador que localiza o veículo.");
+            case 3: format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Restaura o HP do veiculo ao máximo após ser spawnado;\n\t{FFFF00}+{FFFFFF}Restaura a lataria do veiculo por completo ao ser spawnado;\n\t{FFFF00}+{FFFFFF} Rastreador que localiza o veículo.\n");
         }
         format(string, sizeof(string), "%s{FFFF00}Seguro nível %d\t\t\t{FFFFFF}%s\n%s", string, pInfo[playerid][dInsurance], FormatNumber(GetInsurancePrice(playerid)), benefits);
     }
     if(pInfo[playerid][dSunpass] > 0){
         new benefits[512];
-        format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Abertura automática da cancela nas faixas de Sun Pass nos pedágios\n\t{FFFF00}+{FFFFFF}Pagamento do pedágio das faixas Sun Pass a cada paycheck apenas.\n\t{BBBBBB}*{FFFFFF}(( Somente funcional com um pacote premium ativo. ))");
+        format(benefits, sizeof(benefits), "\t{FFFF00}+{FFFFFF}Abertura automática da cancela nas faixas de Sun Pass nos pedágios\n\t{FFFF00}+{FFFFFF}Pagamento do pedágio das faixas Sun Pass a cada paycheck apenas.\n\t{BBBBBB}*{FFFFFF}(( Somente funcional com um pacote premium ativo. ))\n");
         format(string, sizeof(string), "%s{FFFF00}Sun Pass instalado\t\t{FFFFFF}%s\n%s", string, FormatNumber(GetSunpassPrice(playerid)), benefits);
     }
     if(pInfo[playerid][dLegalized] > 0){
@@ -517,29 +517,165 @@ SetCarInside(playerid, model, price, cam) {
         format(string, sizeof(string), "%s{FFFF00}Veículo legalizado\t\t{FFFFFF}%s\n%s", string, FormatNumber(GetLegalityPrice(playerid)), benefits);
     }
 
-    Dialog_Show(playerid, EditorCheckOut, DIALOG_STYLE_MSGBOX, title, string, "Editar", "Comprar");
+    Dialog_Show(playerid, EditorCheckOut, DIALOG_STYLE_MSGBOX, title, string, "Comprar", "Editar");
     return true;
 }
 
 Dialog:EditorCheckOut(playerid, response, listitem, inputtext[]) {
     new string[512], title[256];
     if(response){
-        format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+        format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
         format(string, sizeof(string), "Você realmente deseja comprar um(a) %s por %s?", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
         Dialog_Show(playerid, EditorCheckOutResponse, DIALOG_STYLE_MSGBOX, title, string, "Confirmar", "Cancelar");
     } else {
-        format(title, sizeof(title), "%s - {36A717}US$ %s", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+        format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 
-        Dialog_Show(playerid, SelectEdit, DIALOG_STYLE_LIST, title, "Alarme\nTrava\nLegalidade\nSeguro\nSun Pass\nCor 1\nCor 2", "Selecionar", "<<");
+        Dialog_Show(playerid, SelectEdit, DIALOG_STYLE_LIST, title, "Alarme\nSeguro\nLegalidade\nSun Pass\nCor 1\nCor 2", "Selecionar", "<<");
     }
+    return true;
+}
+
+Dialog:SelectEdit(playerid, response, listitem, inputtext[]) {
+    new string[512], title[128];
+    format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+    if(response){
+        switch(listitem){
+            case 0: {
+                switch(pInfo[playerid][dAlarm]) {
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Nenhum\nAlarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                    case 1: format(string, sizeof(string), "Nenhum\n{BBBBBB}>>> {FFFFFF}Alarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                    case 2: format(string, sizeof(string), "Nenhum\nAlarme Nível 1 - %s\n{BBBBBB}>>> {FFFFFF}Alarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                    case 3: format(string, sizeof(string), "Nenhum\nAlarme Nível 1 - %s\nAlarme Nível 2 - %s\n{BBBBBB}>>> {FFFFFF}Alarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                }
+                pInfo[playerid][dBuyingEditMenu] = 1;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 1: {
+                switch(pInfo[playerid][dInsurance]) {
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Nenhum\nSeguro Nível 1 - %s\nSeguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                    case 1: format(string, sizeof(string), "Nenhum\n{BBBBBB}>>> {FFFFFF}Seguro Nível 1 - %s\nSeguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                    case 2: format(string, sizeof(string), "Nenhum\nSeguro Nível 1 - %s\n{BBBBBB}>>> {FFFFFF}Seguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                    case 3: format(string, sizeof(string), "Nenhum\nSeguro Nível 1 - %s\nSeguro Nível 2 - %s\n{BBBBBB}>>> {FFFFFF}Seguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                }
+                pInfo[playerid][dBuyingEditMenu] = 2;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 2: {
+                switch(pInfo[playerid][dLegalized]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Sem emplacamento\nCom emplacamento - %s", FormatNumber(LEGALITY_PRICE_1));
+                    case 1: format(string, sizeof(string), "Sem emplacamento\n{BBBBBB}>>> {FFFFFF}Com emplacamento - %s", FormatNumber(LEGALITY_PRICE_1));
+                }
+                pInfo[playerid][dBuyingEditMenu] = 3;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 3: {
+                switch(pInfo[playerid][dSunpass]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Sun Pass inativo\nSun Pass ativo - %s", FormatNumber(SUNPASS_PRICE_1));
+                    case 1: format(string, sizeof(string), "Sun Pass inativo\n{BBBBBB}>>> {FFFFFF}Sun Pass ativo - %s", FormatNumber(LEGALITY_PRICE_1));
+                }
+                pInfo[playerid][dBuyingEditMenu] = 4;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 4: {
+                switch(pInfo[playerid][dColor1]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Preto\nBranco\nAzul\nVermelho\nCinza");
+                    case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
+                    case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
+                    case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
+                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                }
+                pInfo[playerid][dBuyingEditMenu] = 5;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 5: {
+                switch(pInfo[playerid][dColor2]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Preto\nBranco\nAzul\nVermelho\nCinza");
+                    case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
+                    case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
+                    case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
+                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                }
+                pInfo[playerid][dBuyingEditMenu] = 6;
+				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+        }
+    } else SetCarInside(playerid, pInfo[playerid][dModel], pInfo[playerid][dVehPrice], pInfo[playerid][dCam]);
+    return true;
+}
+
+Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
+    new string[1024], title[128];
+    format(title, sizeof(title), "{FFFFFF}%s ({36A717}US$ %s{FFFFFF})", ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
+    if(response){
+        if(pInfo[playerid][dBuyingEditMenu] == 1){
+            switch(listitem){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Nenhum\nAlarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                case 1: format(string, sizeof(string), "Nenhum\n{BBBBBB}>>> {FFFFFF}Alarme Nível 1 - %s\nAlarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                case 2: format(string, sizeof(string), "Nenhum\nAlarme Nível 1 - %s\n{BBBBBB}>>> {FFFFFF}Alarme Nível 2 - %s\nAlarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+                case 3: format(string, sizeof(string), "Nenhum\nAlarme Nível 1 - %s\nAlarme Nível 2 - %s\n{BBBBBB}>>> {FFFFFF}Alarme Nível 3 - %s", FormatNumber(ALARM_PRICE_1), FormatNumber(ALARM_PRICE_2), FormatNumber(ALARM_PRICE_3));
+            }
+            pInfo[playerid][dAlarm] = listitem;
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][dBuyingEditMenu] == 2) {
+            switch(listitem){
+               case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Nenhum\nSeguro Nível 1 - %s\nSeguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                case 1: format(string, sizeof(string), "Nenhum\n{BBBBBB}>>> {FFFFFF}Seguro Nível 1 - %s\nSeguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                case 2: format(string, sizeof(string), "Nenhum\nSeguro Nível 1 - %s\n{BBBBBB}>>> {FFFFFF}Seguro Nível 2 - %s\nSeguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+                case 3: format(string, sizeof(string), "Nenhum\nSeguro Nível 1 - %s\nSeguro Nível 2 - %s\n{BBBBBB}>>> {FFFFFF}Seguro Nível 3 - %s", FormatNumber((pInfo[playerid][dVehPrice]/100)*10), FormatNumber((pInfo[playerid][dVehPrice]/100)*20), FormatNumber((pInfo[playerid][dVehPrice]/100)*30));
+            }
+            pInfo[playerid][dInsurance] = listitem;
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][dBuyingEditMenu] == 3) {
+            switch(listitem){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Sem emplacamento\nCom emplacamento - %s", FormatNumber(LEGALITY_PRICE_1));
+                case 1: format(string, sizeof(string), "Sem emplacamento\n{BBBBBB}>>> {FFFFFF}Com emplacamento - %s", FormatNumber(LEGALITY_PRICE_1));
+            }
+            pInfo[playerid][dLegalized] = listitem;
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][dBuyingEditMenu] == 4) {
+            switch(listitem){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Sun Pass inativo\nSun Pass ativo - %s", FormatNumber(SUNPASS_PRICE_1));
+                case 1: format(string, sizeof(string), "Sun Pass inativo\n{BBBBBB}>>> {FFFFFF}Sun Pass ativo - %s", FormatNumber(LEGALITY_PRICE_1));
+            }
+            pInfo[playerid][dSunpass] = listitem;
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][dBuyingEditMenu] == 5) {
+            switch(listitem){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Preto\nBranco\nAzul\nVermelho\nCinza");
+                case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
+                case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
+                case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
+                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+            }
+            pInfo[playerid][dColor1] = listitem;
+            ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][dBuyingEditMenu] == 6) {
+            switch(listitem){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Preto\nBranco\nAzul\nVermelho\nCinza");
+                case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
+                case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
+                case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
+                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+            }
+            pInfo[playerid][dColor2] = listitem;
+            ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+            Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+        }
+    } else Dialog_Show(playerid, SelectEdit, DIALOG_STYLE_LIST, title, "Alarme\nSeguro\nLegalidade\nSun Pass\nCor 1\nCor 2", "Selecionar", "<<");
     return true;
 }
 
 Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
 	if (response){
-        if(GetMoney(playerid) < GetVehicleFinalPrice(playerid)){
+        if(GetMoney(playerid) < GetVehicleFinalPrice(playerid)) {
             SendErrorMessage(playerid, "Você não possui US$ %s para comprar esse veículo.", FormatNumber(GetVehicleFinalPrice(playerid)));
             ResetDealershipVars(playerid);
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
@@ -578,18 +714,31 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][dBuyVehicle] = INVALID_VEHICLE_ID;
         }
 
-        if (id == -1) return SendErrorMessage(playerid, "O servidor atingiu o limite de veiculos.");
+        if (id == -1) {
+            SendErrorMessage(playerid, "O servidor atingiu o limite de veiculos.");
+            TogglePlayerControllable(playerid, false);
+            SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+            SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            0, 0, 0, 0, 0, 0);
+            SpawnPlayer(playerid);
+            ResetDealershipVars(playerid);
+            return true;
+        } 
 
         GiveMoney(playerid, -GetVehicleFinalPrice(playerid));
-
         SetPlayerCheckpoint(playerid, xcar, ycar, zcar, 3.0);
-    	SendClientMessage(playerid, -1, "SERVER: A sua vaga de estacionamento está localizada na Mulholland Intersection. Um checkpoint foi criado com a localização.");
+    	SendClientMessage(playerid, COLOR_YELLOW, "SERVER: A sua vaga de estacionamento está localizada na Mulholland Intersection.");
+        SendClientMessage(playerid, COLOR_YELLOW, "SERVER: Um checkpoint foi criado com a localização.");
 
-        format(logString, sizeof(logString), "%s (%s) comprou um(a) %s (SQL %d) por %s na concessionária", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dModel]), id, FormatNumber(GetVehicleFinalPrice(playerid)));
+        format(logString, sizeof(logString), "%s (%s) comprou um(a) %s por US$ %s na concessionária", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dModel]), FormatNumber(GetVehicleFinalPrice(playerid)));
 	    logCreate(playerid, logString, 16);
 
         TogglePlayerControllable(playerid, false);
-        ResetDealershipVars(playerid);
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
         SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
         SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
@@ -599,6 +748,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
         SpawnPlayer(playerid);
+        ResetDealershipVars(playerid);
     } else {
         SendErrorMessage(playerid, "Você desistiu da compra.");
         ResetDealershipVars(playerid);
@@ -671,7 +821,7 @@ GetInsurancePrice(playerid) {
 
 GetSunpassPrice(playerid) {
     new price;
-    switch(pInfo[playerid][dInsurance]){
+    switch(pInfo[playerid][dSunpass]){
         case 1: price = SUNPASS_PRICE_1;
         default: price = 0;
     }
@@ -708,6 +858,8 @@ ResetDealershipVars(playerid) {
     pInfo[playerid][dLegalized] = 
     pInfo[playerid][dColor1] = 
     pInfo[playerid][dColor2] =
+    pInfo[playerid][dBuyingEditMenu] =
+    pInfo[playerid][dCam] =
     pInfo[playerid][dFinalPrice] = 0;
 
     pInfo[playerid][pBuyingPlate][0] = EOS;

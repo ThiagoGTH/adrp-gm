@@ -32,6 +32,9 @@
 		"mode": "server",
 		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
 		"port": 7777,
+		"filterscripts":[
+			"cameditor"
+		],
 		"hostname": "Advanced Roleplay",
 		"maxplayers": 50,
 		"language": "Brazilian Portuguese",

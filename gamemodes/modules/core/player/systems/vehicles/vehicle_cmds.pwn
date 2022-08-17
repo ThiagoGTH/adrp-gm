@@ -26,8 +26,9 @@ CMD:placa(playerid, params[]) {
 	if(vehicleid == -1) return SendErrorMessage(playerid, "Você não está próximo de nenhum veiculo.");
 	
 	SendClientMessage(playerid, COLOR_GREEN, "|_________ San Andreas Plate _________|");
-	if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s (%s) ))", vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
-	else if(!strcmp(vInfo[vehicleid][vPlate], "Invalid", true) && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s ))", ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	if(vInfo[vehicleid][vLegal] == 0 && vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s (%s) ))", vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+	else if(vInfo[vehicleid][vLegal] == 0 && !vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Veículo não emplacado (( %s ))", ReturnVehicleModelName(vInfo[vehicleid][vModel]));
+
 	else if(vInfo[vehicleid][vCaravan] != 0) va_SendClientMessage(playerid, -1, "Placa: %s (( %s ))", vInfo[vehicleid][vPlate], vInfo[vehicleid][vName]);
 	else if(vInfo[vehicleid][vNamePersonalized]) va_SendClientMessage(playerid, -1, "Placa: %s (( %s (%s) ))", vInfo[vehicleid][vPlate], vInfo[vehicleid][vName], ReturnVehicleModelName(vInfo[vehicleid][vModel]));
 	else va_SendClientMessage(playerid, -1, "Placa: %s (( %s ))", vInfo[vehicleid][vPlate], ReturnVehicleModelName(vInfo[vehicleid][vModel]));

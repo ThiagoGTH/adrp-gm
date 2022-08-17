@@ -192,7 +192,8 @@ enum Player_Data {
     dSunpass,
     dLegalized,
     dFinalPrice,
-
+    dCam,
+    dBuyingEditMenu,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -373,5 +374,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dColor2] =
     pInfo[playerid][dSunpass] =
     pInfo[playerid][dLegalized] = 
+    pInfo[playerid][dCam] = 
+    pInfo[playerid][dBuyingEditMenu] = 
     pInfo[playerid][dFinalPrice] = 0;
 }

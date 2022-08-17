@@ -5,7 +5,6 @@
 #define ALARM_PRICE_3                   (1500)
 #define SUNPASS_PRICE_1                 (500)
 #define LEGALITY_PRICE_1                (3000)
-#define MAX_DEALERSHIP_LISTTEXTDRAW     (5)
 
 CMD:concessionaria(playerid, params[]){
     if(IsPlayerInRangeOfPoint(playerid, 5.0, 542.0506, -1292.9080, 17.2422)) Dialog_Show(playerid, Dealership_Init1, DIALOG_STYLE_LIST, "Grotti", "1. Aviões\n2. Barcos\n3. Motos\n4. Esportivos", "Selecionar", "Fechar");
@@ -393,9 +392,9 @@ SetCarInside(playerid, model, price, cam) {
     if(cam == 1) { // Grotti
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
-				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 20.3701, 273.0962, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 552.0631, -1269.3943, 20.3316, 320.8407, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 			else
-	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 544.0143, -1285.2227, 17.3701, 273.0962, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model,552.0631, -1269.3943, 17.3316, 320.8407, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
 			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
@@ -406,9 +405,9 @@ SetCarInside(playerid, model, price, cam) {
     else if(cam == 2) { // Coutt And Schutz
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 			if(pInfo[playerid][dModel] == 450 || pInfo[playerid][dModel] == 584 || pInfo[playerid][dModel] == 591 || pInfo[playerid][dModel] == 435)
-				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 27.6460, 0.7070, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+				pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.6782, -1125.8719, 27.5539, 340.7095, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 			else
-	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.8887, -1130.6163, 25.6460, 0.7070, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
+	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.6782, -1125.8719, 25.5539, 340.7095, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
 			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
@@ -570,7 +569,7 @@ Dialog:SelectEdit(playerid, response, listitem, inputtext[]) {
                     case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
                     case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
                     case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
-                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
                 }
                 pInfo[playerid][dBuyingEditMenu] = 5;
 				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -581,7 +580,7 @@ Dialog:SelectEdit(playerid, response, listitem, inputtext[]) {
                     case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
                     case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
                     case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
-                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                    case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
                 }
                 pInfo[playerid][dBuyingEditMenu] = 6;
 				Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -637,7 +636,7 @@ Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
                 case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
                 case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
                 case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
-                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
             }
             pInfo[playerid][dColor1] = listitem;
             ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
@@ -649,7 +648,7 @@ Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
                 case 1: format(string, sizeof(string), "Preto\n{BBBBBB}>>> {FFFFFF}Branco\nAzul\nVermelho\nCinza");
                 case 2: format(string, sizeof(string), "Preto\nBranco\n{BBBBBB}>>> {FFFFFF}Azul\nVermelho\nCinza");
                 case 3: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\nCinza");
-                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\n{BBBBBB}>>> {FFFFFF}Vermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
+                case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
             }
             pInfo[playerid][dColor2] = listitem;
             ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
@@ -757,14 +756,14 @@ public OnVehicleStreamIn(vehicleid, forplayerid) {
             // Grotti
         	if(GetPlayerVirtualWorld(forplayerid) == forplayerid+1000) {
 				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
-                InterpolateCameraPos(forplayerid, 526.704101, -1266.684448, 22.523324, 553.664184, -1276.940185, 17.633834, 3000);
-                InterpolateCameraLookAt(forplayerid, 529.676818, -1270.703857, 22.439306, 550.074951, -1280.415771, 17.440483, 3000);  
+                InterpolateCameraPos(forplayerid, 541.752685, -1278.650634, 26.411600, 550.738769, -1265.103027, 16.965684, 3000);
+                InterpolateCameraLookAt(forplayerid, 540.849304, -1283.567260, 26.517061, 551.438171, -1270.032470, 17.425970, 3000);
 			}
             // Coutt And Schutz
         	else if(GetPlayerVirtualWorld(forplayerid) == forplayerid+2000) {
 				PutPlayerInVehicle(forplayerid, pInfo[forplayerid][dBuyVehicle], 0);
-                InterpolateCameraPos(forplayerid, 2131.395507, -1131.769653, 33.460655, 2117.156250, -1122.494995, 26.035772, 3000);
-                InterpolateCameraLookAt(forplayerid, 2131.756591, -1136.441772, 31.716844, 2120.337402, -1126.348876, 25.867837, 3000);
+                InterpolateCameraPos(forplayerid, 2115.999755, -1136.640747, 30.675525, 2119.390625, -1122.038940, 25.275941, 3000);
+                InterpolateCameraLookAt(forplayerid, 2119.793212, -1139.496582, 29.108930, 2121.748535, -1126.444580, 25.451234, 3000);
 			}
             // Aeroporto
 			else if(GetPlayerVirtualWorld(forplayerid) == forplayerid+5000) {

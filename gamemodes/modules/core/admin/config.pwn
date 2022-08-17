@@ -399,7 +399,7 @@ Dialog:DealershipAdd(playerid, response, listitem, inputtext[]){
         if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um veículo com este modelo.");
         cache_delete(result);
 
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO `vehicles_dealer` (`model_id`, `category`) VALUES ('%d', '1');", model[0]);
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO `vehicles_dealer` (`model_id`, `category`, `price`) VALUES ('%d', '1', '999999999');", model[0]);
         result = mysql_query(DBConn, query);
         cache_delete(result);
 
@@ -600,7 +600,7 @@ Dialog:DealershipEditOptions(playerid, response, listitem, inputtext[]) {
             format(string, sizeof(string), 
                 "{AFAFAF}Categoria\t{FFFFFF}%s\n\
                 {AFAFAF}Premium\t{FFFFFF}%s\n\
-                {AFAFAF}Valor\t{FFFFFF}US$ %s\n\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
+                {AFAFAF}Valor\t{FFFFFF}US$ %s\n\t\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
             );
             Dialog_Show(playerid, DealershipEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
         }
@@ -608,7 +608,7 @@ Dialog:DealershipEditOptions(playerid, response, listitem, inputtext[]) {
         format(string, sizeof(string), 
             "{AFAFAF}Categoria\t{FFFFFF}%s\n\
             {AFAFAF}Premium\t{FFFFFF}%s\n\
-            {AFAFAF}Valor\t{FFFFFF}US$ %s\n\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
+            {AFAFAF}Valor\t{FFFFFF}US$ %s\n\t\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
         );
 
         Dialog_Show(playerid, DealershipEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");

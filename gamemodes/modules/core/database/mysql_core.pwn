@@ -237,6 +237,75 @@ void:CheckPlayerTable() {
     print("[DATABASE] Tabela players_weapons checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_weapons checada com sucesso.");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_inv` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `item1` int NOT NULL DEFAULT '0',\
+    `amount1` int NOT NULL DEFAULT '0',\
+    `item2` int NOT NULL DEFAULT '0',\
+    `amount2` int NOT NULL DEFAULT '0',\
+    `item3` int NOT NULL DEFAULT '0',\
+    `amount3` int NOT NULL DEFAULT '0',\
+    `item4` int NOT NULL DEFAULT '0',\
+    `amount4` int NOT NULL DEFAULT '0',\
+    `item5` int NOT NULL DEFAULT '0',\
+    `amount5` int NOT NULL DEFAULT '0',\
+    `item6` int NOT NULL DEFAULT '0',\
+    `amount6` int NOT NULL DEFAULT '0',\
+    `item7` int NOT NULL DEFAULT '0',\
+    `amount7` int NOT NULL DEFAULT '0',\
+    `item8` int NOT NULL DEFAULT '0',\
+    `amount8` int NOT NULL DEFAULT '0',\
+    `item9` int NOT NULL DEFAULT '0',\
+    `amount9` int NOT NULL DEFAULT '0',\
+    `item10` int NOT NULL DEFAULT '0',\
+    `amount10` int NOT NULL DEFAULT '0',\
+    `item11` int NOT NULL DEFAULT '0',\
+    `amount11` int NOT NULL DEFAULT '0',\
+    `item12` int NOT NULL DEFAULT '0',\
+    `amount12` int NOT NULL DEFAULT '0',\
+    `item13` int NOT NULL DEFAULT '0',\
+    `amount13` int NOT NULL DEFAULT '0',\
+    `item14` int NOT NULL DEFAULT '0',\
+    `amount14` int NOT NULL DEFAULT '0',\
+    `item15` int NOT NULL DEFAULT '0',\
+    `amount15` int NOT NULL DEFAULT '0',\
+    `item16` int NOT NULL DEFAULT '0',\
+    `amount16` int NOT NULL DEFAULT '0',\
+    `item17` int NOT NULL DEFAULT '0',\
+    `amount17` int NOT NULL DEFAULT '0',\
+    `item18` int NOT NULL DEFAULT '0',\
+    `amount18` int NOT NULL DEFAULT '0',\
+    `item19` int NOT NULL DEFAULT '0',\
+    `amount19` int NOT NULL DEFAULT '0',\
+    `item20` int NOT NULL DEFAULT '0',\
+    `amount20` int NOT NULL DEFAULT '0',\
+    `item21` int NOT NULL DEFAULT '0',\
+    `amount21` int NOT NULL DEFAULT '0',\
+    `item22` int NOT NULL DEFAULT '0',\
+    `amount22` int NOT NULL DEFAULT '0',\
+    `item23` int NOT NULL DEFAULT '0',\
+    `amount23` int NOT NULL DEFAULT '0',\
+    `item24` int NOT NULL DEFAULT '0',\
+    `amount24` int NOT NULL DEFAULT '0',\
+    `item25` int NOT NULL DEFAULT '0',\
+    `amount25` int NOT NULL DEFAULT '0',\
+    `item26` int NOT NULL DEFAULT '0',\
+    `amount26` int NOT NULL DEFAULT '0',\
+    `item27` int NOT NULL DEFAULT '0',\
+    `amount27` int NOT NULL DEFAULT '0',\
+    `item28` int NOT NULL DEFAULT '0',\
+    `amount28` int NOT NULL DEFAULT '0',\
+    `item29` int NOT NULL DEFAULT '0',\
+    `amount29` int NOT NULL DEFAULT '0',\
+    `item30` int NOT NULL DEFAULT '0',\
+    `amount30` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_inv checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_inv checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckBanTable() {

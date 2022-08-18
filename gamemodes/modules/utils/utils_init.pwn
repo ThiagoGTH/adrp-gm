@@ -42,6 +42,8 @@ public OnGamemodeLoad(playerid) {
 }
 
 public OnGameModeInit() {
+    CA_Init();
+
     new gmText[128];
     format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
 

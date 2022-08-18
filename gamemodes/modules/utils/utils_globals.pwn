@@ -201,6 +201,10 @@ enum Player_Data {
     dEditingCategory,
     dEditingPrice,
     dEditingMenu,
+
+    // Inventory
+    iItem[MAX_INVENTORY_SLOTS],
+    iAmount[MAX_INVENTORY_SLOTS],
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -391,4 +395,10 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dEditingCategory] =
     pInfo[playerid][dEditingPrice] =
     pInfo[playerid][dEditingMenu] = 0;
+
+    // INVENTORY
+    for (new i = 0; i < MAX_INVENTORY_SLOTS; i ++) {
+    	pInfo[playerid][iItem][i] = 0;
+        pInfo[playerid][iAmount][i] = 0;
+	}
 }

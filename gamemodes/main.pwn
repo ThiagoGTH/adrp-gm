@@ -21,6 +21,7 @@
 #include <easyDialog>  
 #include <modelsizes>
 #include <physics>
+#include <colandreas>
 
 /* ==============================[modules]============================== */
 
@@ -32,6 +33,7 @@
 #include "modules\core\player\cmds\cmds.pwn"
 #include "modules\core\player\licences\base_licence.pwn"
 #include "modules\core\player\systems\main\systems.pwn"
+#include "modules\core\player\systems\items\items.pwn"
 #include "modules\core\player\systems\vehicles\vehicles.pwn"
 #include "modules\core\player\systems\houses\houses.pwn"
 #include "modules\core\player\systems\investment\investment.pwn"

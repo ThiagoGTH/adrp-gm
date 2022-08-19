@@ -863,7 +863,7 @@ Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
     return true;
 }
 
-RespawnVehicle(vehicleid) {
+/*RespawnVehicle(vehicleid) {
 	new id = VehicleGetID(vehicleid);
 
 	if (id != -1)
@@ -872,7 +872,7 @@ RespawnVehicle(vehicleid) {
     ResetVehicleObjects(vehicleid);
 	ResetVehicle(vehicleid);
 	return true;
-}
+}*/
 
 hook OnPlayerStateChange(playerid, newstate, oldstate) {
     if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {

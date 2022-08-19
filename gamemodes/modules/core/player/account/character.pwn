@@ -214,7 +214,7 @@ LoadPlayerInventory(playerid){
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_inv WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
 
-    for (new i = 0; i < MAX_INVENTORY_SLOTS; i ++) {
+    for (new i = 0; i < 30; i ++) {
 	    format(query, sizeof(query), "item%d", i + 1);
 	    cache_get_value_name_int(0, query, pInfo[playerid][iItem][i]);
 	    format(query, sizeof(query), "amount%d", i + 1);
@@ -489,14 +489,15 @@ SavePlayerWeapons(playerid) {
 }
 
 SavePlayerInventory(playerid) {
-    for (new i = 0; i < MAX_INVENTORY_SLOTS; i ++) {
+    new Cache:result;
+    for (new i = 0; i < 30; i ++) {
         mysql_format(DBConn, query, sizeof query, "UPDATE `player_inv` SET \
         `item%d` = '%d', \
         `amount%d` = '%d', \
         WHERE `character_id` = '%d'", 
         i + 1, pInfo[playerid][iItem][i], 
         i + 1, pInfo[playerid][iAmount][i], pInfo[playerid][pID]);
-        new Cache:result = mysql_query(DBConn, query);
+        result = mysql_query(DBConn, query);
 	}
     cache_delete(result);
     return true;

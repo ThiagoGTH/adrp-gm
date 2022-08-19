@@ -14,6 +14,11 @@ enum DI_ITEMS_DATA {
 
 new diInfo[MAX_DYNAMIC_ITEMS][DI_ITEMS_DATA];
 
+hook OnGameModeInit() {
+    LoadItems();
+    return true;
+}
+
 ItemCategory(type) {
 	new category[128];
 	switch(type) {

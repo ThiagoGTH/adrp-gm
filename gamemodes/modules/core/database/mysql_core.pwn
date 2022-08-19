@@ -38,6 +38,7 @@ void:CheckTables() {
     CheckUserTable();
     CheckUCPTable();
     CheckPlayerTable();
+    CheckItemsTable();
     CheckBanTable();
     CheckFurnitureInfoTable();
     CheckInteriorsInfoTable();
@@ -308,6 +309,19 @@ void:CheckPlayerTable() {
     logCreate(99998, logString, 5);
 }
 
+void:CheckItemsTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `items` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `item_name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    `item_desc` varchar(256) NOT NULL DEFAULT 'Nenhum',\
+    `item_model` int NOT NULL DEFAULT '0',\
+    `item_category` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela items checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela items checada com sucesso.");
+    logCreate(99998, logString, 5);
+}
 void:CheckBanTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ban` (\
     `ID` int NOT NULL AUTO_INCREMENT,\

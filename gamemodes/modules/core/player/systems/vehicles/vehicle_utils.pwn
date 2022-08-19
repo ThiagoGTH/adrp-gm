@@ -753,20 +753,6 @@ SetHoodStatus(vehicleid, status) {
 	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, status, boot, objective);
 }
 
-SetAlarmStatus(vehicleid, status) {
-	static
-	    engine,
-	    lights,
-	    alarm,
-	    doors,
-	    bonnet,
-	    boot,
-	    objective;
-
-	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	return SetVehicleParamsEx(vehicleid, engine, lights, status, doors, bonnet, boot, objective);
-}
-
 SetDoorsStatus(vehicleid, status) {
 	static
 	    engine,

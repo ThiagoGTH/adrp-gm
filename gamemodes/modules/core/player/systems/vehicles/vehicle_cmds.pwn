@@ -113,7 +113,7 @@ CMD:luzes(playerid, params[]) {
 }
 
 CMD:capo(playerid, params[]) {
-	for (new i = 1; i != GetVehiclePoolSize()+1; i ++) if (IsValidVehicle(i) && IsPlayerNearHood(playerid, i)) {
+	for (new i = 1; i != MAX_VEHICLES+1; i ++) if (IsValidVehicle(i) && IsPlayerNearHood(playerid, i)) {
 	    if (!IsDoorVehicle(i))  return SendErrorMessage(playerid, "Este veículo não possui capô.");
 
 	    if (!GetHoodStatus(i)) {

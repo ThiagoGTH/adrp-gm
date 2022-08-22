@@ -16,3 +16,23 @@
 #include "modules\core\maps\interior\doj.pwn"
 #include "modules\core\maps\interior\nightclub1.pwn"
 #include "modules\core\maps\interior\hospital.pwn"
+
+// HOUSES
+#include "modules\core\maps\interior\houses\house1.pwn"
+#include "modules\core\maps\interior\houses\house2.pwn"
+#include "modules\core\maps\interior\houses\house3.pwn"
+#include "modules\core\maps\interior\houses\house4.pwn"
+#include "modules\core\maps\interior\houses\house5.pwn"
+#include "modules\core\maps\interior\houses\house6.pwn"
+#include "modules\core\maps\interior\houses\house7.pwn"
+#include "modules\core\maps\interior\houses\house8.pwn"
+#include "modules\core\maps\interior\houses\house9.pwn"
+#include "modules\core\maps\interior\houses\house10.pwn"
+#include "modules\core\maps\interior\houses\house11.pwn"
+#include "modules\core\maps\interior\houses\house12.pwn"
+
+// GARAGES
+#include "modules\core\maps\interior\garages\garage1.pwn"
+#include "modules\core\maps\interior\garages\garage2.pwn"
+#include "modules\core\maps\interior\garages\garage3.pwn"
+#include "modules\core\maps\interior\garages\garage4.pwn"

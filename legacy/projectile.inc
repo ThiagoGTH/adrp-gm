@@ -411,7 +411,7 @@ public Internal_OnProjectilesUpdate()
 		    #if defined foreach
 		        foreach(new a : Player) {
 			#else
-				for (new a = 0, b = GetPlayerPoolSize(); a <= b; a++) if (IsPlayerConnected(a)) {
+				for (new a = 0, b = MAX_PLAYERS a <= b; a++) if (IsPlayerConnected(a)) {
 			#endif
 				GetPlayerPos(a, cx, cy, cz);
 

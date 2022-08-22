@@ -8,6 +8,7 @@ enum DI_ITEMS_DATA {
     bool:diExists,
     diName[64],
     diDescription[256],
+    bool:diUseful,
     diModel,
     diCategory,
 };

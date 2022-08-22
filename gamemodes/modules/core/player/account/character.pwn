@@ -491,7 +491,7 @@ SavePlayerWeapons(playerid) {
 SavePlayerInventory(playerid) {
     new Cache:result;
     for (new i = 0; i < 30; i ++) {
-        mysql_format(DBConn, query, sizeof query, "UPDATE `player_inv` SET \
+        mysql_format(DBConn, query, sizeof query, "UPDATE `players_inv` SET \
         `item%d` = '%d', \
         `amount%d` = '%d', \
         WHERE `character_id` = '%d'", 

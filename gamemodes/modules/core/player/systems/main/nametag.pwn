@@ -95,7 +95,7 @@ IsPlayerMinimized(playerid, ms = 5000){
 
 forward UpdateNametag();
 public UpdateNametag(){
-    for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
+    for(new i = 0, j = MAX_PLAYERS; i <= j; i++){
         if(IsPlayerConnected(i)){
             new nametag[128], Float:armour;
             GetPlayerArmour(i, armour);

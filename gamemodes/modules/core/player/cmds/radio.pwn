@@ -282,7 +282,7 @@ CMD:r1(playerid, params[])
     if(pInfo[playerid][rRadioSlot][0] == 0) return SendErrorMessage(playerid, "A frequência desejada está desativada.");
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r [mensagem].");
 
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 1 || 2 || 3))
         {
@@ -311,7 +311,7 @@ CMD:r2(playerid, params[])
     if(pInfo[playerid][rRadioSlot][1] == 0) return SendErrorMessage(playerid, "A frequência desejada está desativada.");
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r2 [mensagem].");
 
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 1 || 2 || 3))
         {
@@ -339,7 +339,7 @@ CMD:r3(playerid, params[])
     if(pInfo[playerid][rRadioSlot][2] == 0) return SendErrorMessage(playerid, "A frequência desejada está desativada.");
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r3 [mensagem].");
     
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 1 || 2 || 3))
         {
@@ -367,7 +367,7 @@ CMD:r4(playerid, params[])
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r4 [mensagem].");
     if(pInfo[playerid][pRadioNvl] == 1) return SendErrorMessage(playerid, "O seu rádio não possui capacidade.");
     
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 2 || 3))
         {
@@ -395,7 +395,7 @@ CMD:r5(playerid, params[])
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r5 [mensagem].");
     if(pInfo[playerid][pRadioNvl] == 1) return SendErrorMessage(playerid, "O seu rádio não possui capacidade.");
     
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 2 || 3))
         {
@@ -423,7 +423,7 @@ CMD:r6(playerid, params[])
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r6 [mensagem].");
     if((pInfo[playerid][pRadioNvl] == 1 || pInfo[playerid][pRadioNvl] == 2)) return SendErrorMessage(playerid, "O seu rádio não possui capacidade.");
     
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 3))
         {
@@ -451,7 +451,7 @@ CMD:r7(playerid, params[])
     if(isnull(params)) return SendSyntaxMessage(playerid, "/r7 [mensagem].");
     if((pInfo[playerid][pRadioNvl] == 1 || pInfo[playerid][pRadioNvl] == 2)) return SendErrorMessage(playerid, "O seu rádio não possui capacidade.");
    
-    for(new i, j = GetPlayerPoolSize(); i <= j; i++)
+    for(new i, j = MAX_PLAYERS; i <= j; i++)
     {
         if((pInfo[i][rRadioState] == 1) && (pInfo[i][pRadioNvl] == 3))
         {

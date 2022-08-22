@@ -1,0 +1,228 @@
+[2022-08-19T18:47:17Z] [Info] Loading plugin: crashdetect
+[2022-08-19T18:47:17Z] [Info]   CrashDetect plugin 4.20
+[2022-08-19T18:47:17Z] [Info] Loading plugin: mysql
+[2022-08-19T18:47:17Z] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-08-19T18:47:17Z] [Info] Loading plugin: chrono
+[2022-08-19T18:47:17Z] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:47:17Z] [Error] Skipping legacy plugin 'pawnraknet'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.RakNet/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:47:17Z] [Info] Loading plugin: pawn-memory
+[2022-08-19T18:47:17Z] [Info] ========================
+[2022-08-19T18:47:17Z] [Info] = Memory access plugin =
+[2022-08-19T18:47:17Z] [Info] =       Made by BigETI =
+[2022-08-19T18:47:17Z] [Info] = Loaded!              =
+[2022-08-19T18:47:17Z] [Info] ========================
+[2022-08-19T18:47:17Z] [Info] Loading plugin: sscanf
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info]  ===============================
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info]       sscanf plugin loaded.     
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info]          Version: 2.13.1
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info]  ===============================
+[2022-08-19T18:47:17Z] [Info] 
+[2022-08-19T18:47:17Z] [Info] Loading plugin: streamer
+[2022-08-19T18:47:17Z] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-08-19T18:47:17Z] [Info] Loading plugin: discord-connector
+[2022-08-19T18:47:18Z] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-08-19T18:47:18Z] [Info] Loading plugin: bcrypt-samp
+[2022-08-19T18:47:18Z] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-08-19T18:47:18Z] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-08-19T18:47:18Z] [Info] Loading plugin: ColAndreas
+[2022-08-19T18:47:18Z] [Info] *********************
+[2022-08-19T18:47:18Z] [Info] ** Created By:     **
+[2022-08-19T18:47:18Z] [Info] ** [uL]Chris42O    **
+[2022-08-19T18:47:18Z] [Info] ** [uL]Slice       **
+[2022-08-19T18:47:18Z] [Info] ** [uL]Pottus      **
+[2022-08-19T18:47:18Z] [Info] *********************
+[2022-08-19T18:47:18Z] [Info] No collision data found.
+[2022-08-19T18:47:18Z] [Info] *********************
+[2022-08-19T18:47:18Z] [Info]   ColAndreas Loaded
+[2022-08-19T18:47:18Z] [Info]    v1.4.0
+[2022-08-19T18:47:18Z] [Info] *********************
+[2022-08-19T18:47:18Z] [Info] 
+--------------------------------------
+[2022-08-19T18:47:18Z] [Info]  CamEditor by Drebin
+[2022-08-19T18:47:18Z] [Info] --------------------------------------
+
+[2022-08-19T18:47:18Z] [Error] Function not registered: PC_EmulateCommand
+[2022-08-19T18:47:18Z] [Warning] Deprecated function GetVehiclePoolSize used. This function was replaced by MAX_VEHICLES.
+[2022-08-19T18:47:18Z] [Error] Function not registered: PC_RegAlias
+[2022-08-19T18:47:18Z] [Warning] Deprecated function GetPlayerPoolSize used. This function was replaced by MAX_PLAYERS.
+[2022-08-19T18:47:18Z] [Error] Function not registered: PC_Init
+[2022-08-19T18:47:18Z] [Warning] Deprecated functions will be removed in the next open.mp release.
+[2022-08-19T18:47:18Z] [Info] [debug] Run time error 19: "File or function is not found"
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_Init
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_RegAlias
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_EmulateCommand
+[2022-08-19T18:47:18Z] [Error] File or function is not found
+[2022-08-19T18:47:18Z] [Info] [debug] Run time error 19: "File or function is not found"
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_Init
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_RegAlias
+[2022-08-19T18:47:18Z] [Info] [debug]  PC_EmulateCommand
+[2022-08-19T18:47:18Z] [Error] File or function is not found
+[2022-08-19T18:47:18Z] [Info] Legacy Network started on port 7777
+[2022-08-19T18:47:20Z] [Info] Failed to announce legacy network to open.mp list
+[2022-08-19T18:48:32Z] [Info] [debug] Run time error 19: "File or function is not found"
+[2022-08-19T18:48:32Z] [Info] [debug]  PC_Init
+[2022-08-19T18:48:32Z] [Info] [debug]  PC_RegAlias
+[2022-08-19T18:48:32Z] [Info] [debug]  PC_EmulateCommand
+[2022-08-19T18:48:32Z] [Error] File or function is not found
+[2022-08-19T18:48:32Z] [Info] 
+[2022-08-19T18:48:32Z] [Info]  ===============================
+[2022-08-19T18:48:32Z] [Info] 
+[2022-08-19T18:48:32Z] [Info]      sscanf plugin unloaded.    
+[2022-08-19T18:48:32Z] [Info] 
+[2022-08-19T18:48:32Z] [Info]  ===============================
+[2022-08-19T18:48:32Z] [Info] 
+[2022-08-19T18:48:32Z] [Info] plugin.bcrypt: Plugin unloaded.
+[2022-08-19T18:48:32Z] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito unloaded ***
+
+[2022-08-19T18:48:32Z] [Info] plugin.dc-connector: Unloading plugin...
+[2022-08-19T18:49:06Z] [Info] Loading plugin: crashdetect
+[2022-08-19T18:49:06Z] [Info]   CrashDetect plugin 4.20
+[2022-08-19T18:49:06Z] [Info] Loading plugin: mysql
+[2022-08-19T18:49:06Z] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-08-19T18:49:06Z] [Info] Loading plugin: chrono
+[2022-08-19T18:49:06Z] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:49:06Z] [Error] Skipping legacy plugin 'pawnraknet'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.RakNet/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:49:06Z] [Info] Loading plugin: pawn-memory
+[2022-08-19T18:49:06Z] [Info] ========================
+[2022-08-19T18:49:06Z] [Info] = Memory access plugin =
+[2022-08-19T18:49:06Z] [Info] =       Made by BigETI =
+[2022-08-19T18:49:06Z] [Info] = Loaded!              =
+[2022-08-19T18:49:06Z] [Info] ========================
+[2022-08-19T18:49:06Z] [Info] Loading plugin: sscanf
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info]  ===============================
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info]       sscanf plugin loaded.     
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info]          Version: 2.13.1
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info]  ===============================
+[2022-08-19T18:49:06Z] [Info] 
+[2022-08-19T18:49:06Z] [Info] Loading plugin: streamer
+[2022-08-19T18:49:06Z] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-08-19T18:49:06Z] [Info] Loading plugin: discord-connector
+[2022-08-19T18:49:07Z] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-08-19T18:49:07Z] [Info] Loading plugin: bcrypt-samp
+[2022-08-19T18:49:07Z] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-08-19T18:49:07Z] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-08-19T18:49:07Z] [Info] Loading plugin: ColAndreas
+[2022-08-19T18:49:07Z] [Info] *********************
+[2022-08-19T18:49:07Z] [Info] ** Created By:     **
+[2022-08-19T18:49:07Z] [Info] ** [uL]Chris42O    **
+[2022-08-19T18:49:07Z] [Info] ** [uL]Slice       **
+[2022-08-19T18:49:07Z] [Info] ** [uL]Pottus      **
+[2022-08-19T18:49:07Z] [Info] *********************
+[2022-08-19T18:49:07Z] [Info] No collision data found.
+[2022-08-19T18:49:07Z] [Info] *********************
+[2022-08-19T18:49:07Z] [Info]   ColAndreas Loaded
+[2022-08-19T18:49:07Z] [Info]    v1.4.0
+[2022-08-19T18:49:07Z] [Info] *********************
+[2022-08-19T18:49:07Z] [Info] 
+--------------------------------------
+[2022-08-19T18:49:07Z] [Info]  CamEditor by Drebin
+[2022-08-19T18:49:07Z] [Info] --------------------------------------
+
+[2022-08-19T18:49:07Z] [Info] Legacy Network started on port 7777
+[2022-08-19T18:49:08Z] [Info] Failed to announce legacy network to open.mp list
+[2022-08-19T18:49:19Z] [Info] Could not find:
+
+	 .amx 
+While attempting to load a PAWN gamemode, a file-not-found error was
+encountered.  This could be caused by many things:
+                
+ * The wrong filename was given.
+ * The wrong gamemodes path was given.
+ * The server was launched from a different directory, making relative paths
+   relative to the wrong place (and thus wrong).
+ * You didn't copy the file to the correct directory or server.
+ * The compilation failed, leading to no output file.
+ * `-l` or `-a` were used to compile, which output intermediate steps for
+   inspecting, rather than a full script.
+ * Anything else, really just check the file is at the path given.
+			
+[2022-08-19T18:54:09Z] [Info] Loading plugin: crashdetect
+[2022-08-19T18:54:09Z] [Info]   CrashDetect plugin 4.20
+[2022-08-19T18:54:09Z] [Info] Loading plugin: mysql
+[2022-08-19T18:54:09Z] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-08-19T18:54:09Z] [Info] Loading plugin: chrono
+[2022-08-19T18:54:09Z] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:54:09Z] [Error] Skipping legacy plugin 'pawnraknet'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.RakNet/releases , make sure to download x.x.x-omp version.
+[2022-08-19T18:54:09Z] [Info] Loading plugin: pawn-memory
+[2022-08-19T18:54:09Z] [Info] ========================
+[2022-08-19T18:54:09Z] [Info] = Memory access plugin =
+[2022-08-19T18:54:09Z] [Info] =       Made by BigETI =
+[2022-08-19T18:54:09Z] [Info] = Loaded!              =
+[2022-08-19T18:54:09Z] [Info] ========================
+[2022-08-19T18:54:09Z] [Info] Loading plugin: sscanf
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info]  ===============================
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info]       sscanf plugin loaded.     
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info]          Version: 2.13.1
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info]  ===============================
+[2022-08-19T18:54:09Z] [Info] 
+[2022-08-19T18:54:09Z] [Info] Loading plugin: streamer
+[2022-08-19T18:54:09Z] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-08-19T18:54:09Z] [Info] Loading plugin: discord-connector
+[2022-08-19T18:54:10Z] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-08-19T18:54:10Z] [Info] Loading plugin: bcrypt-samp
+[2022-08-19T18:54:10Z] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-08-19T18:54:10Z] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-08-19T18:54:10Z] [Info] Loading plugin: ColAndreas
+[2022-08-19T18:54:10Z] [Info] *********************
+[2022-08-19T18:54:10Z] [Info] ** Created By:     **
+[2022-08-19T18:54:10Z] [Info] ** [uL]Chris42O    **
+[2022-08-19T18:54:10Z] [Info] ** [uL]Slice       **
+[2022-08-19T18:54:10Z] [Info] ** [uL]Pottus      **
+[2022-08-19T18:54:10Z] [Info] *********************
+[2022-08-19T18:54:10Z] [Info] No collision data found.
+[2022-08-19T18:54:10Z] [Info] *********************
+[2022-08-19T18:54:10Z] [Info]   ColAndreas Loaded
+[2022-08-19T18:54:10Z] [Info]    v1.4.0
+[2022-08-19T18:54:10Z] [Info] *********************
+[2022-08-19T18:54:10Z] [Info] 
+--------------------------------------
+[2022-08-19T18:54:10Z] [Info]  CamEditor by Drebin
+[2022-08-19T18:54:10Z] [Info] --------------------------------------
+
+[2022-08-19T18:54:10Z] [Error] Function not registered: PC_EmulateCommand
+[2022-08-19T18:54:10Z] [Warning] Deprecated function GetVehiclePoolSize used. This function was replaced by MAX_VEHICLES.
+[2022-08-19T18:54:10Z] [Error] Function not registered: PC_RegAlias
+[2022-08-19T18:54:10Z] [Warning] Deprecated function GetPlayerPoolSize used. This function was replaced by MAX_PLAYERS.
+[2022-08-19T18:54:10Z] [Error] Function not registered: PC_Init
+[2022-08-19T18:54:10Z] [Warning] Deprecated functions will be removed in the next open.mp release.
+[2022-08-19T18:54:10Z] [Info] [debug] Run time error 19: "File or function is not found"
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_Init
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_RegAlias
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_EmulateCommand
+[2022-08-19T18:54:10Z] [Error] File or function is not found
+[2022-08-19T18:54:10Z] [Info] [debug] Run time error 19: "File or function is not found"
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_Init
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_RegAlias
+[2022-08-19T18:54:10Z] [Info] [debug]  PC_EmulateCommand
+[2022-08-19T18:54:10Z] [Error] File or function is not found
+[2022-08-19T18:54:10Z] [Info] Legacy Network started on port 7777
+[2022-08-19T18:54:11Z] [Info] Failed to announce legacy network to open.mp list

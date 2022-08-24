@@ -322,6 +322,31 @@ void:CheckItemsTable() {
     print("[DATABASE] Tabela items checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela items checada com sucesso.");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `items_dropped` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `item_id` int NOT NULL DEFAULT '0',\
+    `item_player` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `item_model` int NOT NULL DEFAULT '0',\
+    `item_quantity` int NOT NULL DEFAULT '0',\
+    `item_weapon` int NOT NULL DEFAULT '0',\
+    `item_ammo` int NOT NULL DEFAULT '0',\
+    `item_int` int NOT NULL DEFAULT '0',\
+    `item_world` int NOT NULL DEFAULT '0',\
+    `item_object` int NOT NULL DEFAULT '0',\
+    `item_positionX` float NOT NULL DEFAULT '0.0',\
+    `item_positionY` float NOT NULL DEFAULT '0.0',\
+    `item_positionZ` float NOT NULL DEFAULT '0.0',\
+    `item_positionA` float NOT NULL DEFAULT '0.0',\
+    `item_positionRX` float NOT NULL DEFAULT '0.0',\
+    `item_positionRY` float NOT NULL DEFAULT '0.0',\
+    `item_positionRZ` float NOT NULL DEFAULT '0.0',\
+    `item_positionRA` float NOT NULL DEFAULT '0.0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela items checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela items checada com sucesso.");
+    logCreate(99998, logString, 5);
 }
 void:CheckBanTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ban` (\

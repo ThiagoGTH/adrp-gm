@@ -56,6 +56,12 @@ Inventory_Add(playerid, item[], quantity = 1){
     return -1;
 }
 
+Inventory_Remove(playerid, slotid, quantity = 1){
+    if(pInfo[playerid][iAmount][slotid] > 1) return pInfo[playerid][iAmount][slotid] -= quantity;
+    else if(pInfo[playerid][iAmount][slotid] == 1) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0;
+    return -1;
+}
+
 Inventory_Reset(playerid) {
     for (new i = 0; i < MAX_INVENTORY_SLOTS; i++) {
     	pInfo[playerid][iItem][i] = 0;
@@ -107,18 +113,6 @@ public GetItemID(playerid, item[]){
     return -1;
 }
 
-CMD:teste(playerid, params[]){
-    new value = GetInventorySlots(playerid);
-    for (new i = 0; i < value; i++) {
-        if(pInfo[playerid][iItem][i] != 0) {
-            va_SendClientMessage(playerid, -1, "{%d} %s (%d) [%d]", diInfo[pInfo[playerid][iItem][i]][diModel], 
-            diInfo[pInfo[playerid][iItem][i]][diName], 
-            pInfo[playerid][iAmount][i], i);
-        }
-    }
-    return true;
-}
-
 ShowPlayerInventory(playerid){
     new string[2048], value = GetInventorySlots(playerid), money = GetMoney(playerid), count = 0, title[128];
 
@@ -133,7 +127,6 @@ ShowPlayerInventory(playerid){
         }
     }
     //AdjustTextDrawString(string);
-
 	format(title, sizeof(title), "Inventário de %s (%d/%d)", pNome(playerid), count, value);
 	AdjustTextDrawString(title);
 
@@ -168,6 +161,8 @@ Dialog:PlayerInventorySelected(playerid, response, listitem, inputtext[]) {
     if (response) {
         new slotid = pInfo[playerid][pInventoryItem];
 
+        if (!strcmp(inputtext, "Dropar", true))
+            return PlayerDropItem(playerid, slotid);
         if (!strcmp(inputtext, "Descrição", true))
             return ShowItemDescription(playerid, slotid);
     } else ShowPlayerInventory(playerid);
@@ -190,4 +185,85 @@ Dialog:Dg_ShowItemDescription(playerid, response, listitem, inputtext[]) {
     if (response) ShowPlayerInventory(playerid);
     else pInfo[playerid][pInventoryItem] = -1;
     return true;
+}
+
+PlayerDropItem(playerid, slotid){
+    if (IsPlayerInAnyVehicle(playerid) || !IsPlayerSpawned(playerid)) 
+        return SendErrorMessage(playerid, "Você não pode dropar itens neste momento.");
+
+    if (pInfo[playerid][iAmount][slotid] == 1) DropPlayerItem(playerid, slotid);
+	else 
+        Dialog_Show(playerid, DropItem, DIALOG_STYLE_INPUT, "Dropar Item", "Item: %s - Quantidade: %d\n\nPor favor, especifique a quantidade que você deseja dropar deste item:", "Dropar", "Cancelar", diInfo[pInfo[playerid][iItem][slotid]][diName], pInfo[playerid][iAmount][slotid]);
+
+    return true;
+}
+
+DropPlayerItem(playerid, slotid, quantity = 1) {
+    static
+		Float:x,
+  		Float:y,
+    	Float:z,
+		Float:angle,
+		interior,
+        world;
+
+    GetPlayerPos(playerid, x, y, z);
+	GetPlayerFacingAngle(playerid, angle);
+    world = GetPlayerVirtualWorld(playerid);
+    interior = GetPlayerInterior(playerid);
+
+    if(GetPlayerVirtualWorld(playerid) == 0) va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Este item desaparecerá no próximo shutdown diário, apenas itens dropados em interiores não somem após o shutdown.");
+
+    Inventory_Remove(playerid, slotid, quantity);
+    DropItem(playerid, diInfo[pInfo[playerid][iItem][slotid]][diID], diInfo[pInfo[playerid][iItem][slotid]][diModel], quantity, x, y, z, interior, world);
+
+    SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s dropou um(a) %s.", pNome(playerid), diInfo[pInfo[playerid][iItem][slotid]][diName]);
+
+    format(logString, sizeof(logString), "%s (%s) dropou um(a) %s em %s", pNome(playerid), GetPlayerUserEx(playerid), diInfo[pInfo[playerid][iItem][slotid]][diName], GetPlayerLocation(playerid));
+	logCreate(playerid, logString, 18);
+    return true;
+}
+
+DropItem(playerid, item, model, quantity, Float:x, Float:y, Float:z, interior, world, weaponid = 0, ammo = 0) {
+    for (new i = 0; i != MAX_DROPPED_ITEMS; i ++) if (!DroppedItems[i][droppedModel]) {
+
+	    DroppedItems[i][droppedPlayer] = playerid;
+		DroppedItems[i][droppedModel] = model;
+        DroppedItems[i][droppedItem] = item;
+		DroppedItems[i][droppedQuantity] = quantity;
+		DroppedItems[i][droppedWeapon] = weaponid;
+  		DroppedItems[i][droppedAmmo] = ammo;
+		DroppedItems[i][droppedPos][0] = x;
+		DroppedItems[i][droppedPos][1] = y;
+		DroppedItems[i][droppedPos][2] = z;
+		DroppedItems[i][droppedPos][3] = 0.0;
+		DroppedItems[i][droppedPos][4] = 0.0;
+		DroppedItems[i][droppedPos][5] = 0.0;
+        DroppedItems[i][droppedInt] = interior;
+		DroppedItems[i][droppedWorld] = world;
+        if (IsWeaponModel(model)) {
+			DroppedItems[i][droppedObject] = CreateDynamicObject(model, x, y, z, 93.7, 120.0, 120.0, world, interior);
+			DroppedItems[i][droppedPos][3] = 93.7;
+			DroppedItems[i][droppedPos][4] = 120.0;
+			DroppedItems[i][droppedPos][5] = 120.0;
+		} else DroppedItems[i][droppedObject] = CreateDynamicObject(model, x, y, z, 0.0, 0.0, 0.0, world, interior, -1);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO `items_dropped` (\
+        `item_id`, \
+        `item_player`, \
+        `item_model`, \
+        `item_quantity`, \
+        `item_weapon`, \
+        `item_ammo`, \
+        `item_int`, \
+        `item_world`, \
+        `item_positionX`, \
+        `item_positionY`, \
+        `item_positionZ`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%.4f', '%.4f', '%.4f');", item, pInfo[playerid][pID], model, quantity, weaponid, ammo, interior, world, x, y, z);
+        new Cache:result = mysql_query(DBConn, query);
+        cache_delete(result);
+
+        return i;
+    }
+    return -1;
 }

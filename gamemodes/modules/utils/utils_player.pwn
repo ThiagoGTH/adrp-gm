@@ -262,15 +262,334 @@ IsPlayerNearPlayer(playerid, n_playerid, Float:radius) {
     return false;
 }
 
-//Localização do mapa
-stock GetLocation(Float:fX, Float:fY, Float:fZ)
+//CheckCam
+stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
 {
+	return floatround(floatsqroot(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)) + ((z1 - z2) * (z1 - z2))));
+}
+stock Float:DistanceCameraTargetToLocation(Float:fCameraX, Float:fCameraY, Float:fCameraZ, Float:fObjectX, Float:fObjectY, Float:fObjectZ, Float:fVectorX, Float:fVectorY, Float:fVectorZ)
+{
+	new
+		Float:fX,
+		Float:fY,
+		Float:fZ,
+		Float:fDistance;
+
+	fDistance = GetDistance(fCameraX, fCameraY, fCameraZ, fObjectX, fObjectY, fObjectZ);
+
+	fX = fVectorX * fDistance + fCameraX;
+	fY = fVectorY * fDistance + fCameraY;
+	fZ = fVectorZ * fDistance + fCameraZ;
+
+	return floatsqroot((fX - fObjectX) * (fX - fObjectX) + (fY - fObjectY) * (fY - fObjectY) + (fZ - fObjectZ) * (fZ - fObjectZ));
+}
+
+//Mensagem pra todos com defines
+stock SendClientMessageToAllEx(color, const text[], {Float, _}:...)
+{
+	static
+	    args,
+	    str[144];
+
+	/*
+     *  Custom function that uses #emit to format variables into a string.
+     *  This code is very fragile; touching any code here will cause crashing!
+	*/
+	if ((args = numargs()) == 2)
+	{
+	    SendClientMessageToAll(color, text);
+	}
+	else
+	{
+		while (--args >= 2)
+		{
+			#emit LCTRL 5
+			#emit LOAD.alt args
+			#emit SHL.C.alt 2
+			#emit ADD.C 12
+			#emit ADD
+			#emit LOAD.I
+			#emit PUSH.pri
+		}
+		#emit PUSH.S text
+		#emit PUSH.C 144
+		#emit PUSH.C str
+		#emit LOAD.S.pri 8
+		#emit ADD.C 4
+		#emit PUSH.pri
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+
+		SendClientMessageToAll(color, str);
+
+		#emit RETN
+	}
+	return true;
+}
+
+//Nome das Armas
+ReturnWeaponName(weaponid)
+{
+	static
+		name[32];
+
+	GetWeaponName(weaponid, name, sizeof(name));
+
+	if (!weaponid)
+	    name = "N/A";
+
+	else if (weaponid == 18)
+	    name = "Coquetel Molotov";
+
+	else if (weaponid == 44)
+	    name = "Visão noturna";
+
+	else if (weaponid == 45)
+	    name = "Infravermelho";
+
+	return name;
+}
+
+stock SetPlayerWeaponSkill(playerid, skill) {
+	switch(skill) {
+	    case MINIMUM_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
+            SetPlayerSkillLevel(playerid, 0, 40);
+            SetPlayerSkillLevel(playerid, 6, 50);
+	    }
+	    case MEDIUM_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
+            SetPlayerSkillLevel(playerid, 0, 500);
+            SetPlayerSkillLevel(playerid, 6, 500);
+	    }
+	    case FULL_SKILL: {
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
+            SetPlayerSkillLevel(playerid, 0, 998);
+            SetPlayerSkillLevel(playerid, 6, 998);
+	    }
+	}
+}
+
+stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...)
+{
+	static
+		args,
+		start,
+		end,
+		string[144];
+
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+
+	if (args > 16)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+
+		for (end = start + (args - 16); end > start; end -= 4)
+		{
+			#emit LREF.pri end
+			#emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 144
+		#emit PUSH.C string
+
+		#emit LOAD.S.pri 8
+		#emit CONST.alt 4
+		#emit SUB
+		#emit PUSH.pri
+
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+
+		foreach (new i : Player)
+		{
+			if (IsPlayerNearPlayer(i, playerid, radius)) {
+				SendClientMessage(i, color, string);
+			}
+		}
+		return true;
+	}
+	foreach (new i : Player)
+	{
+		if (IsPlayerNearPlayer(i, playerid, radius)) {
+			SendClientMessage(i, color, str);
+		}
+	}
+	return true;
+}
+
+FormatNumber(number) {
+    new length, value[32];
+
+    format(value, sizeof(value), "%i", (number < 0) ? (-number) : (number));
+
+    length = strlen(value);
+
+    if(length > 3) {
+        for(new l = 0, i = length; --i >= 0; l ++) {
+            if((l % 3 == 0) && l > 0)  {
+                strins(value, ".", i + 1);
+            }
+        }
+    }
+    return value;
+} 
+
+FormatFloat(Float:number) { // by Anakin2000
+    new 
+        str[24],
+        length;
+
+    format(str, sizeof(str), "%0.2f", number);
+
+    if((length = strlen(str)) < 7)
+        return str;
+
+    for(length -= 6; length > 0; length -= 3) 
+        strins(str, ",", length);
+
+    return str;
+}
+
+PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
+{
+    for(new i=0; i<=MAX_PLAYERS; i++)
+    {
+        if(IsPlayerConnected(i) && IsPlayerInRangeOfPoint(i,range,x,y,z))
+        {
+            PlayerPlaySound(i, soundid, x, y, z);
+        }
+    }
+}
+
+stock IsActualGun(id)
+{
+	switch(id)
+	{
+		case -1,0,2,3,5,6,7,10,11,12,13,14,15,40,41,42,43,44,45,46,47: return false;
+	}
+	return true;
+}
+
+stock IsLethalMeele(id)
+{
+	switch(id)
+	{
+	    case 4,8,9,18,16: return true;
+	}
+	return false;
+}
+
+AdjustTextDrawString(string[])
+{
+	static const
+		scRealChars[256] =
+		{
+			  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,
+			 16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
+			 32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
+			 48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,
+			 64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
+			 80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  91,  92,  93,  94,  95,
+			 96,  97,  98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127,
+			128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,
+			144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159,
+			160,  94, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
+			124, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 175,
+			128, 129, 130, 130, 131, 197, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141,
+			208, 173, 142, 143, 144, 144, 145, 215, 216, 146, 147, 148, 149, 221, 222, 150,
+			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
+			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
+		};
+	if (ispacked(string))
+	{
+		for (new i = 0, len = strlen(string); i != len; ++i)
+		{
+			string{i} = scRealChars[string{i}];
+		}
+	}
+	else
+	{
+		for (new i = 0, len = strlen(string), ch; i != len; ++i)
+		{
+			if (0 <= (ch = string[i]) < 256)
+			{
+				string[i] = scRealChars[ch];
+			}
+		}
+	}
+}
+
+forward ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5);
+public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5) {
+	if(IsPlayerConnected(playerid)) {
+		new Float:posx, Float:posy, Float:posz;
+		new Float:oldposx, Float:oldposy, Float:oldposz;
+		new Float:tempposx, Float:tempposy, Float:tempposz;
+		GetPlayerPos(playerid, oldposx, oldposy, oldposz);
+		foreach(new i : Player) {
+			if(IsPlayerConnected(i) && (GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i))) {
+				GetPlayerPos(i, posx, posy, posz);
+				tempposx = (oldposx -posx);
+				tempposy = (oldposy -posy);
+				tempposz = (oldposz -posz);
+				if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16))) SendClientMessage(i, col1, string);
+				else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8))) SendClientMessage(i, col2, string);
+				else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4))) SendClientMessage(i, col3, string);
+				else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2))) SendClientMessage(i, col4, string);	
+				else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi))) SendClientMessage(i, col5, string);
+					
+			}
+		}
+	}
+	return true;
+}
+
+stock GetPlayerLocation(playerid)
+{
+	static
+	    Float:fX,
+	    Float:fY,
+		Float:fZ,
+		string[32];
+	// id = -1;
+/*	if ((id = House_Inside(playerid)) != -1)
+	{
+		fX = HouseData[id][housePos][0];
+		fY = HouseData[id][housePos][1];
+		fZ = HouseData[id][housePos][2];
+	}
+	else if ((id = Business_Inside(playerid)) != -1)
+	{
+		fX = BusinessData[id][bizPos][0];
+		fY = BusinessData[id][bizPos][1];
+		fZ = BusinessData[id][bizPos][2];
+	}
+	else if ((id = Entrance_Inside(playerid)) != -1)
+	{
+		fX = EntranceData[id][entrancePos][0];
+		fY = EntranceData[id][entrancePos][1];
+		fZ = EntranceData[id][entrancePos][2];
+	}
+	else */
+	GetPlayerPos(playerid, fX, fY, fZ);
+
+	format(string, 32, GetLocation(fX, fY, fZ));
+	return string;
+}
+
+GetLocation(Float:fX, Float:fY, Float:fZ) {
     enum e_ZoneData
 	{
-     	e_Zonename[32 char],
+     	e_ZoneName[64 char],
      	Float:e_ZoneArea[6]
 	};
-	new const g_arrZoneData[][e_ZoneData] =
+	static const g_arrZoneData[][e_ZoneData] =
 	{
 		{!"The Big Ear", 	              {-410.00, 1403.30, -3.00, -137.90, 1681.20, 200.00}},
 		{!"Aldea Malvada",                {-1372.10, 2498.50, 0.00, -1277.50, 2615.30, 200.00}},
@@ -642,299 +961,11 @@ stock GetLocation(Float:fX, Float:fY, Float:fZ)
 	    name[32] = "San Andreas";
 
 	for (new i = 0; i != sizeof(g_arrZoneData); i ++) if ((fX >= g_arrZoneData[i][e_ZoneArea][0] && fX <= g_arrZoneData[i][e_ZoneArea][3]) && (fY >= g_arrZoneData[i][e_ZoneArea][1] && fY <= g_arrZoneData[i][e_ZoneArea][4]) && (fZ >= g_arrZoneData[i][e_ZoneArea][2] && fZ <= g_arrZoneData[i][e_ZoneArea][5])) {
-		strunpack(name, g_arrZoneData[i][e_Zonename]);
+		strunpack(name, g_arrZoneData[i][e_ZoneName]);
 
 		break;
 	}
 	return name;
-}
-
-//CheckCam
-stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
-{
-	return floatround(floatsqroot(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)) + ((z1 - z2) * (z1 - z2))));
-}
-stock Float:DistanceCameraTargetToLocation(Float:fCameraX, Float:fCameraY, Float:fCameraZ, Float:fObjectX, Float:fObjectY, Float:fObjectZ, Float:fVectorX, Float:fVectorY, Float:fVectorZ)
-{
-	new
-		Float:fX,
-		Float:fY,
-		Float:fZ,
-		Float:fDistance;
-
-	fDistance = GetDistance(fCameraX, fCameraY, fCameraZ, fObjectX, fObjectY, fObjectZ);
-
-	fX = fVectorX * fDistance + fCameraX;
-	fY = fVectorY * fDistance + fCameraY;
-	fZ = fVectorZ * fDistance + fCameraZ;
-
-	return floatsqroot((fX - fObjectX) * (fX - fObjectX) + (fY - fObjectY) * (fY - fObjectY) + (fZ - fObjectZ) * (fZ - fObjectZ));
-}
-
-//Mensagem pra todos com defines
-stock SendClientMessageToAllEx(color, const text[], {Float, _}:...)
-{
-	static
-	    args,
-	    str[144];
-
-	/*
-     *  Custom function that uses #emit to format variables into a string.
-     *  This code is very fragile; touching any code here will cause crashing!
-	*/
-	if ((args = numargs()) == 2)
-	{
-	    SendClientMessageToAll(color, text);
-	}
-	else
-	{
-		while (--args >= 2)
-		{
-			#emit LCTRL 5
-			#emit LOAD.alt args
-			#emit SHL.C.alt 2
-			#emit ADD.C 12
-			#emit ADD
-			#emit LOAD.I
-			#emit PUSH.pri
-		}
-		#emit PUSH.S text
-		#emit PUSH.C 144
-		#emit PUSH.C str
-		#emit LOAD.S.pri 8
-		#emit ADD.C 4
-		#emit PUSH.pri
-		#emit SYSREQ.C format
-		#emit LCTRL 5
-		#emit SCTRL 4
-
-		SendClientMessageToAll(color, str);
-
-		#emit RETN
-	}
-	return true;
-}
-
-//Nome das Armas
-ReturnWeaponName(weaponid)
-{
-	static
-		name[32];
-
-	GetWeaponName(weaponid, name, sizeof(name));
-
-	if (!weaponid)
-	    name = "N/A";
-
-	else if (weaponid == 18)
-	    name = "Coquetel Molotov";
-
-	else if (weaponid == 44)
-	    name = "Visão noturna";
-
-	else if (weaponid == 45)
-	    name = "Infravermelho";
-
-	return name;
-}
-
-stock SetPlayerWeaponSkill(playerid, skill) {
-	switch(skill) {
-	    case MINIMUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
-            SetPlayerSkillLevel(playerid, 0, 40);
-            SetPlayerSkillLevel(playerid, 6, 50);
-	    }
-	    case MEDIUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
-            SetPlayerSkillLevel(playerid, 0, 500);
-            SetPlayerSkillLevel(playerid, 6, 500);
-	    }
-	    case FULL_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
-            SetPlayerSkillLevel(playerid, 0, 998);
-            SetPlayerSkillLevel(playerid, 6, 998);
-	    }
-	}
-}
-
-stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...)
-{
-	static
-		args,
-		start,
-		end,
-		string[144];
-
-	#emit LOAD.S.pri 8
-	#emit STOR.pri args
-
-	if (args > 16)
-	{
-		#emit ADDR.pri str
-		#emit STOR.pri start
-
-		for (end = start + (args - 16); end > start; end -= 4)
-		{
-			#emit LREF.pri end
-			#emit PUSH.pri
-		}
-		#emit PUSH.S str
-		#emit PUSH.C 144
-		#emit PUSH.C string
-
-		#emit LOAD.S.pri 8
-		#emit CONST.alt 4
-		#emit SUB
-		#emit PUSH.pri
-
-		#emit SYSREQ.C format
-		#emit LCTRL 5
-		#emit SCTRL 4
-
-		foreach (new i : Player)
-		{
-			if (IsPlayerNearPlayer(i, playerid, radius)) {
-				SendClientMessage(i, color, string);
-			}
-		}
-		return true;
-	}
-	foreach (new i : Player)
-	{
-		if (IsPlayerNearPlayer(i, playerid, radius)) {
-			SendClientMessage(i, color, str);
-		}
-	}
-	return true;
-}
-
-FormatNumber(number) {
-    new length, value[32];
-
-    format(value, sizeof(value), "%i", (number < 0) ? (-number) : (number));
-
-    length = strlen(value);
-
-    if(length > 3) {
-        for(new l = 0, i = length; --i >= 0; l ++) {
-            if((l % 3 == 0) && l > 0)  {
-                strins(value, ".", i + 1);
-            }
-        }
-    }
-    return value;
-} 
-
-FormatFloat(Float:number) { // by Anakin2000
-    new 
-        str[24],
-        length;
-
-    format(str, sizeof(str), "%0.2f", number);
-
-    if((length = strlen(str)) < 7)
-        return str;
-
-    for(length -= 6; length > 0; length -= 3) 
-        strins(str, ",", length);
-
-    return str;
-}
-
-PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
-{
-    for(new i=0; i<=MAX_PLAYERS; i++)
-    {
-        if(IsPlayerConnected(i) && IsPlayerInRangeOfPoint(i,range,x,y,z))
-        {
-            PlayerPlaySound(i, soundid, x, y, z);
-        }
-    }
-}
-
-stock IsActualGun(id)
-{
-	switch(id)
-	{
-		case -1,0,2,3,5,6,7,10,11,12,13,14,15,40,41,42,43,44,45,46,47: return false;
-	}
-	return true;
-}
-
-stock IsLethalMeele(id)
-{
-	switch(id)
-	{
-	    case 4,8,9,18,16: return true;
-	}
-	return false;
-}
-
-AdjustTextDrawString(string[])
-{
-	static const
-		scRealChars[256] =
-		{
-			  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,
-			 16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
-			 32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
-			 48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,
-			 64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
-			 80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  91,  92,  93,  94,  95,
-			 96,  97,  98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
-			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127,
-			128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,
-			144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159,
-			160,  94, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
-			124, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 175,
-			128, 129, 130, 130, 131, 197, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141,
-			208, 173, 142, 143, 144, 144, 145, 215, 216, 146, 147, 148, 149, 221, 222, 150,
-			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
-			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
-		};
-	if (ispacked(string))
-	{
-		for (new i = 0, len = strlen(string); i != len; ++i)
-		{
-			string{i} = scRealChars[string{i}];
-		}
-	}
-	else
-	{
-		for (new i = 0, len = strlen(string), ch; i != len; ++i)
-		{
-			if (0 <= (ch = string[i]) < 256)
-			{
-				string[i] = scRealChars[ch];
-			}
-		}
-	}
-}
-
-forward ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5);
-public ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5) {
-	if(IsPlayerConnected(playerid)) {
-		new Float:posx, Float:posy, Float:posz;
-		new Float:oldposx, Float:oldposy, Float:oldposz;
-		new Float:tempposx, Float:tempposy, Float:tempposz;
-		GetPlayerPos(playerid, oldposx, oldposy, oldposz);
-		foreach(new i : Player) {
-			if(IsPlayerConnected(i) && (GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i))) {
-				GetPlayerPos(i, posx, posy, posz);
-				tempposx = (oldposx -posx);
-				tempposy = (oldposy -posy);
-				tempposz = (oldposz -posz);
-				if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16))) SendClientMessage(i, col1, string);
-				else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8))) SendClientMessage(i, col2, string);
-				else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4))) SendClientMessage(i, col3, string);
-				else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2))) SendClientMessage(i, col4, string);	
-				else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi))) SendClientMessage(i, col5, string);
-					
-			}
-		}
-	}
-	return true;
 }
 
 PremiumType(type) {

@@ -1,13 +1,4 @@
-/*
-
-Como o modulo user.pwn trabalha com users, esse vai ser um tipo de extensão pra gerenciar de personagens (carregar, criar, etc.), ou...
-... a mesma metodologia de trabalho do user.pwn, mas agora estamos lidando diretamente com os personagens especificos daquele usuário.
-
-*/
-
 #include <YSI_Coding\y_hooks>
-
-// Pode ficar um pouco confuso de agora em diante. Visto que não tem uma maneira tão eficiente de inserir multiplas informações em um só dialog, a inserção aconterá por quatro diferente deles. Você pode indentifica-los a começarem com 'CHARACTER_CREATE'
 
 Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
 	if(!response || !strcmp(inputtext, " ")) return ShowUsersCharacters(playerid);
@@ -108,8 +99,6 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
 	return true;
 }
 
-// Nada muito especial. Vamos inserir o personagem criado com as informações dos inputtexts das dialogs anteriores e, até, reseta-las.
-
 CreateCharacter(playerid, characterName[]) {
 
     mysql_format(DBConn, query, sizeof query,
@@ -122,9 +111,6 @@ CreateCharacter(playerid, characterName[]) {
     printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
 
 }
-
-// Já que as funções anteriores estavam relacionadas a criação de um personagem, agora as próximas funções seerão destinadas a carregar, salvar,
-// sair, logar, etc. com o personagem.
 
 LoadCharacterInfo(playerid, playerName[]) {
     new first_login;
@@ -272,8 +258,7 @@ LoadPlayerPremium(playerid){
     cache_delete(result);
     return true;
 }
- 
-// Em complemento as informações de personagem carregadas anteriormente, abaixo está a função de spawn.
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -493,7 +478,7 @@ SavePlayerInventory(playerid) {
     for (new i = 0; i < 30; i ++) {
         mysql_format(DBConn, query, sizeof query, "UPDATE `players_inv` SET \
         `item%d` = '%d', \
-        `amount%d` = '%d', \
+        `amount%d` = '%d' \
         WHERE `character_id` = '%d'", 
         i + 1, pInfo[playerid][iItem][i], 
         i + 1, pInfo[playerid][iAmount][i], pInfo[playerid][pID]);

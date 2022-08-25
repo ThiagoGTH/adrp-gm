@@ -12,6 +12,7 @@
 #include "modules\core\maps\exterior\env\sanpedro.pwn"
 #include "modules\core\maps\exterior\env\bahamas.pwn"
 #include "modules\core\maps\exterior\env\SM.pwn" 
+#include "modules\core\maps\exterior\env\westmont.pwn" 
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
 #include "modules\core\maps\interior\mazebank.pwn"

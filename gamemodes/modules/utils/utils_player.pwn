@@ -583,6 +583,9 @@ stock GetPlayerLocation(playerid)
 	return string;
 }
 
+forward EditDynObject(playerid, objectid);
+public EditDynObject(playerid, objectid) return EditDynamicObject(playerid, objectid);
+
 GetLocation(Float:fX, Float:fY, Float:fZ) {
     enum e_ZoneData
 	{

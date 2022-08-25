@@ -30,11 +30,11 @@
 	"runtime": {
 		"version": "0.3.DL",
 		"mode": "server",
-		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
-		"port": 7777,
-		"filterscripts":[
+		"filterscripts": [
 			"cameditor"
 		],
+		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
+		"port": 7777,
 		"hostname": "Advanced Roleplay",
 		"maxplayers": 50,
 		"language": "Brazilian Portuguese",

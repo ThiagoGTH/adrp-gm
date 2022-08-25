@@ -19,7 +19,7 @@ new diInfo[MAX_DYNAMIC_ITEMS][DI_ITEMS_DATA];
 
 enum DROPPED_ITEMS_DATA {
 	droppedID,
-    droppedExists,
+    bool:droppedExists,
 	droppedItem,
 	droppedPlayer,
 	droppedModel,
@@ -29,14 +29,43 @@ enum DROPPED_ITEMS_DATA {
 	droppedAmmo,
 	droppedInt,
 	droppedWorld,
-	droppedObject
+	droppedObject,
 };
 
 new DroppedItems[MAX_DROPPED_ITEMS][DROPPED_ITEMS_DATA];
 
 hook OnGameModeInit() {
     LoadItems();
-    return true;
+	LoadDroppeds();
+}
+
+OrganizeInventory(playerid) {
+    for(new i = 0; i < GetInventorySlots(playerid); i++) {
+        if(pInfo[playerid][iItem][i] != 0) {
+            for(new a = 0; a < GetInventorySlots(playerid); a++) {
+                if(pInfo[playerid][iItem][a] == 0) {
+                    pInfo[playerid][iItem][a] = pInfo[playerid][iItem][i];
+					pInfo[playerid][iAmount][a] = pInfo[playerid][iAmount][i];
+					pInfo[playerid][iItem][i] = 0;
+					pInfo[playerid][iAmount][i] = 0;
+                }
+			}
+		}
+		return i;
+	}
+	return true;
+}
+
+GetInventorySlots(playerid){
+    new value;
+    switch(pInfo[playerid][pDonator]){
+        case 0: value = 15;
+        case 1: value = 20;
+        case 2: value = 25;
+        case 3: value = 30;
+        default: value = 15;
+    }
+    return value;
 }
 
 ItemCategory(type) {

@@ -326,7 +326,7 @@ void:CheckItemsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `items_dropped` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `item_id` int NOT NULL DEFAULT '0',\
-    `item_player` varchar(24) NOT NULL DEFAULT 'Nenhum',\
+    `item_player` int NOT NULL DEFAULT '0',\
     `item_model` int NOT NULL DEFAULT '0',\
     `item_quantity` int NOT NULL DEFAULT '0',\
     `item_weapon` int NOT NULL DEFAULT '0',\

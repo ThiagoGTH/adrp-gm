@@ -20,7 +20,7 @@ public Discord_StartChannels() {
     logChannels[14] = DCC_FindChannelById("1001354737972674600");   // Trading              (15)
     logChannels[15] = DCC_FindChannelById("1006281850790092811");   // Veículos             (16)
     logChannels[16] = DCC_FindChannelById("1008019265284227102");   // Lockpick             (17)
-    logChannels[17] = DCC_FindChannelById("1011803785317855372");   // Drop             (18)
+    logChannels[17] = DCC_FindChannelById("1011803785317855372");   // Drop                 (18)
     return true;
 }
 
@@ -36,17 +36,13 @@ public Discord_PublishLog(playerid, log[], type) {
 
 hook OnGameModeInit() {
     Discord_StartChannels();
+    SetTimer("DiscordStatus", 15000, true);
 }
 
-stock ReturnDate() {
-	new sendString[90], month, day, year;
-	new hour, minute, second;
-
-	gettime(hour, minute, second);
-	getdate(year, month, day);
-
-	format(sendString, 90, "%d/%d/%d - %02d:%02d:%02d", day, month, year, hour, minute, second);
-	return sendString;
+forward DiscordStatus();
+public DiscordStatus() {
+    new string[32];
+    format(string, sizeof string, "%d/%d", Iter_Count(Player), GetMaxPlayers());
+    DCC_SetBotActivity(string);
+    return true;
 }
-
-

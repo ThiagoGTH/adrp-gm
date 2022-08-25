@@ -206,6 +206,7 @@ enum Player_Data {
     iItem[30],
     iAmount[30],
     pInventoryItem,
+    pEditDropped,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -403,4 +404,5 @@ void:ResetCharacterData(playerid) {
         pInfo[playerid][iAmount][i] = 0;
 	}
     pInfo[playerid][pInventoryItem] = -1;
+    pInfo[playerid][pEditDropped] = 0;
 }

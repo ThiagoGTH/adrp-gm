@@ -7,9 +7,9 @@ CMD:logs(playerid, params[]) {
 }
 
 ShowLogsInit(playerid) {
-    new Cache:type[15], rows[15], string[1024];
+    new Cache:type[18], rows[18], string[1024];
 
-    for (new i = 0; i < sizeof(type); i++){
+    for (new i = 0; i < sizeof(type); i++) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `type` = '%d';", i + 1);
         type[i] = mysql_query(DBConn, query);
         rows[i] = cache_num_rows();
@@ -33,8 +33,11 @@ ShowLogsInit(playerid) {
     12\tSinuca\t%d\n\
     13\tCasas\t%d\n\
     14\tEntradas\t%d\n\
-    15\tInvestimentos\t%d",
-    rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], rows[7], rows[8], rows[9], rows[10], rows[11], rows[12], rows[13], rows[14]
+    15\tInvestimentos\t%d\
+    16\tVeículos\t%d\
+    17\tLockpick\t%d\
+    18\tDrop de itens\t%d",
+    rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], rows[7], rows[8], rows[9], rows[10], rows[11], rows[12], rows[13], rows[14], rows[15], rows[16], rows[17]
 	);
 
     Dialog_Show(playerid, dialogLogs, DIALOG_STYLE_TABLIST_HEADERS, "Central de Logs", string, "Selecionar", "Fechar");

@@ -306,7 +306,7 @@ CheckUserBan(playerid) {
     cache_get_value_name(0, "reason", reason);
     cache_get_value_name_int(0, "ban_date", ban_date);
     cache_get_value_name_int(0, "unban_date", unban_date);
-    
+
     // Formatar a string com as informações anteriores
     format(bigString, sizeof bigString, "{FFFFFF}Você foi banido %sdo servidor.\n\nUsuário: %s\nData de banimento: %s\nData de desbanimento: %s\nBanido por: %s\n\
     Motivo: %s\n \nSe você acha que isso foi um engano, recorra a um apelo no fórum.", 

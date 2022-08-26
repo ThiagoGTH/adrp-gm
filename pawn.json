@@ -23,7 +23,7 @@
 		"lassir/bcrypt-samp",
 		"samp-incognito/samp-streamer-plugin",
 		"Pottus/ColAndreas",
-		"Southclaws/progress2",
+		"Southclaws/progress2", 
 		"Awsomedude/easyDialog"
 	],
 	"local": true,

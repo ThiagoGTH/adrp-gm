@@ -180,6 +180,9 @@ enum Player_Data {
     pInvestment,
     pChoosingCharacter,
     pCharacterChoosed,
+    pCharacterActorSkin,
+    pCharacterActor,
+    pCharacterFinalizing,
 
     pEditingVeh,
     pOjectVeh,
@@ -403,10 +406,6 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dEditingCategory] =
     pInfo[playerid][dEditingPrice] =
     pInfo[playerid][dEditingMenu] = 0;
-
-    pInfo[playerid][pShowFooter] = 0;
-    pInfo[playerid][pChoosingCharacter] = 0;
-    pInfo[playerid][pCharacterChoosed] = 0;
     
     // INVENTORY
     for (new i = 0; i < 30; i ++) {
@@ -415,4 +414,13 @@ void:ResetCharacterData(playerid) {
 	}
     pInfo[playerid][pInventoryItem] = -1;
     pInfo[playerid][pEditDropped] = 0;
+}
+
+void:ResetCharacterSelection(playerid){
+    pInfo[playerid][pShowFooter] = 0;
+    pInfo[playerid][pChoosingCharacter] = 0;
+    pInfo[playerid][pCharacterChoosed] = 0;
+    pInfo[playerid][pCharacterActorSkin] = 0;
+    pInfo[playerid][pCharacterActor] = 0;
+    DestroyActor(pInfo[playerid][pCharacterActor]);
 }

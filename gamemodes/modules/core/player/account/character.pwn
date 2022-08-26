@@ -26,6 +26,7 @@ Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
             return ShowUsersCharacters(playerid);
                 
         ResetCharacterData(playerid);
+        ResetCharacterSelection(playerid);
         LoadCharacterInfo(playerid, inputtext);
         SpawnSelectedCharacter(playerid);
     }
@@ -112,10 +113,10 @@ CreateCharacter(playerid, characterName[]) {
 
 }
 
-LoadCharacterInfo(playerid, playerName[]) {
+LoadCharacterInfoID(playerid, id) {
     new first_login;
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s'", playerName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d'", id);
     new Cache:result = mysql_query(DBConn, query);
 
     cache_get_value_name_int(0, "ID", pInfo[playerid][pID]);
@@ -171,7 +172,7 @@ LoadCharacterInfo(playerid, playerName[]) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
     mysql_query(DBConn, query);
 
-    printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", playerName);
+    printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", pInfo[playerid][pName]);
     LoadLicencesData(playerid);
     LoadPlayerWeapons(playerid);
     LoadPlayerApparence(playerid);
@@ -179,6 +180,7 @@ LoadCharacterInfo(playerid, playerName[]) {
     LoadPlayerRadio(playerid);
     LoadPlayerInventory(playerid);
 
+    SpawnSelectedCharacter(playerid);
 }
 
 LoadPlayerWeapons(playerid){
@@ -328,7 +330,6 @@ SpawnSelectedCharacter(playerid) {
     InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
     InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
     SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid, 0);
-    
     return true;
 }
 
@@ -583,6 +584,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 
     SaveCharacterInfo(playerid);
     ResetCharacterData(playerid);
+    ResetCharacterSelection(playerid);
     SOS_Clear(playerid);
     Report_Clear(playerid);
     return true;

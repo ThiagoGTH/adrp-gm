@@ -4,7 +4,7 @@ new PlayerText:LoginTD[MAX_PLAYERS][2];
 new PlayerText:NotifyTD[MAX_PLAYERS][3];
 new PlayerText:NewsTD[MAX_PLAYERS][11];
 
-new PlayerText:CharTD[MAX_PLAYERS][3];
+new PlayerText:CharTD[MAX_PLAYERS][2];
 new PlayerText:CharTD_1[MAX_PLAYERS][5];
 new PlayerText:CharTD_2[MAX_PLAYERS][5];
 new PlayerText:CharTD_3[MAX_PLAYERS][5];
@@ -15,6 +15,7 @@ new PlayerText:CharTD_7[MAX_PLAYERS][5];
 new PlayerText:CharTD_8[MAX_PLAYERS][5];
 new PlayerText:CharTD_9[MAX_PLAYERS][5];
 new PlayerText:CharTD_10[MAX_PLAYERS][5];
+new PlayerText:CharTD_BUTTON[MAX_PLAYERS][3];
 
 new Text:BannedTD[3];
 
@@ -53,15 +54,15 @@ public SetPlayerInterface(playerid, level) {
         KillTimer(pInfo[playerid][pInterfaceTimer]);
         NotifyWrongAttempt(playerid);
         HidePlayerFooter(playerid);
-        ShowPlayerFooter(playerid, "SENHA INVÁLIDA", 2);
-        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 888);
+        ShowPlayerFooter(playerid, "SENHA_INVÁLIDA", 2);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
         
     } else if(level == 2) { // AUTENTICADO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
         ShowUsersCharacters(playerid);
         HidePlayerFooter(playerid);
         ShowPlayerFooter(playerid, "AUTENTICADO", 3);
-        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 1000, false, "dd", playerid, 888);
+        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
 
     } else if(level == 888) { // FECHAR NOTIFICAÇÕES
         KillTimer(pInfo[playerid][pInterfaceTimer]);
@@ -132,7 +133,7 @@ CreateLoginTextdraws(playerid) {
 // Função para mostrar os textdraws de personagens
 forward ShowCharacterTextdraws(playerid, type);
 public ShowCharacterTextdraws(playerid, type) {
-    for(new i; i < 3; i++)
+    for(new i; i < 2; i++)
         PlayerTextDrawShow(playerid, CharTD[playerid][i]);
 
     if(type == 1){
@@ -169,12 +170,20 @@ public ShowCharacterTextdraws(playerid, type) {
     return true;
 }
 
+forward ShowCharacterButtonTextdraws(playerid);
+public ShowCharacterButtonTextdraws(playerid) {
+    for(new i; i < 3; i++)
+        PlayerTextDrawShow(playerid, CharTD_BUTTON[playerid][i]);
+
+    return true;
+}
+
 // Função para esconder os textdraws de personagens
 HideCharacterTextdraws(playerid) {
-    for(new i; i < 3; i++)
+    for(new i; i < 2; i++)
         PlayerTextDrawHide(playerid, CharTD[playerid][i]);
 
-    for(new i; i < 5; i++){
+    for(new i; i < 5; i++) {
         PlayerTextDrawHide(playerid, CharTD_1[playerid][i]);
         PlayerTextDrawHide(playerid, CharTD_2[playerid][i]);
         PlayerTextDrawHide(playerid, CharTD_3[playerid][i]);
@@ -186,6 +195,10 @@ HideCharacterTextdraws(playerid) {
         PlayerTextDrawHide(playerid, CharTD_9[playerid][i]);
         PlayerTextDrawHide(playerid, CharTD_10[playerid][i]);
     }
+
+    for(new i; i < 3; i++)
+        PlayerTextDrawHide(playerid, CharTD_BUTTON[playerid][i]);
+    
     return true;
 }
 
@@ -209,15 +222,6 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawFont(playerid, CharTD[playerid][1], 4);
     PlayerTextDrawSetProportional(playerid, CharTD[playerid][1], 0);
 
-    CharTD[playerid][2] = CreatePlayerTextDraw(playerid, 267.411712, 32.299999, "mdl-9000:logo");
-    PlayerTextDrawTextSize(playerid, CharTD[playerid][2], 105.000000, 41.000000);
-    PlayerTextDrawAlignment(playerid, CharTD[playerid][2], 1);
-    PlayerTextDrawColor(playerid, CharTD[playerid][2], -1);
-    PlayerTextDrawSetShadow(playerid, CharTD[playerid][2], 0);
-    PlayerTextDrawBackgroundColor(playerid, CharTD[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD[playerid][2], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD[playerid][2], 0);
-
     CreateCharacterTextdraws1(playerid);
     CreateCharacterTextdraws2(playerid);
     CreateCharacterTextdraws3(playerid);
@@ -228,6 +232,34 @@ CreateCharacterTextdraws(playerid) {
     CreateCharacterTextdraws8(playerid);
     CreateCharacterTextdraws9(playerid);
     CreateCharacterTextdraws10(playerid);
+
+    CharTD_BUTTON[playerid][0] = CreatePlayerTextDraw(playerid, 134.176513, 349.833282, "mdl-9000:button");
+    PlayerTextDrawTextSize(playerid, CharTD_BUTTON[playerid][0], 91.000000, 21.000000);
+    PlayerTextDrawAlignment(playerid, CharTD_BUTTON[playerid][0], 1);
+    PlayerTextDrawColor(playerid, CharTD_BUTTON[playerid][0], -1);
+    PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][0], 0);
+    PlayerTextDrawBackgroundColor(playerid, CharTD_BUTTON[playerid][0], 255);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][0], 4);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][0], 0);
+    PlayerTextDrawSetSelectable(playerid, CharTD_BUTTON[playerid][0], true);
+
+    CharTD_BUTTON[playerid][1] = CreatePlayerTextDraw(playerid, 134.176513, 349.833282, "mdl-9000:button_effect");
+    PlayerTextDrawTextSize(playerid, CharTD_BUTTON[playerid][1], 91.000000, 21.000000);
+    PlayerTextDrawAlignment(playerid, CharTD_BUTTON[playerid][1], 1);
+    PlayerTextDrawColor(playerid, CharTD_BUTTON[playerid][1], -1);
+    PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][1], 0);
+    PlayerTextDrawBackgroundColor(playerid, CharTD_BUTTON[playerid][1], 255);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][1], 4);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][1], 0);
+
+    CharTD_BUTTON[playerid][2] = CreatePlayerTextDraw(playerid, 177.499969, 352.349975, "JOGAR");
+    PlayerTextDrawLetterSize(playerid, CharTD_BUTTON[playerid][2], 0.400000, 1.600000);
+    PlayerTextDrawAlignment(playerid, CharTD_BUTTON[playerid][2], 2);
+    PlayerTextDrawColor(playerid, CharTD_BUTTON[playerid][2], -1);
+    PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][2], 0);
+    PlayerTextDrawBackgroundColor(playerid, CharTD_BUTTON[playerid][2], 255);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][2], 2);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][2], 1);
     return true;
 }
 
@@ -532,7 +564,7 @@ CreateCharacterTextdraws6(playerid){
 }
 
 CreateCharacterTextdraws7(playerid){
-    CharTD_7[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 75.083351, "mdl-9000:bg_select_character");
+    CharTD_7[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 285.083351, "mdl-9000:bg_select_character");
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][0], 105.000000, 27.000000);
     PlayerTextDrawAlignment(playerid, CharTD_7[playerid][0], 1);
     PlayerTextDrawColor(playerid, CharTD_7[playerid][0], 50529124);
@@ -542,7 +574,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][0], 0);
     PlayerTextDrawSetSelectable(playerid, CharTD_7[playerid][0], true);
 
-    CharTD_7[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 78.000022, "John_Doe");
+    CharTD_7[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 288.000022, "John_Doe");
     PlayerTextDrawLetterSize(playerid, CharTD_7[playerid][1], 0.200000, 1.200000);
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][1], 277.000000, 0.000000);
     PlayerTextDrawAlignment(playerid, CharTD_7[playerid][1], 1);
@@ -552,7 +584,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawFont(playerid, CharTD_7[playerid][1], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][1], 1);
 
-    CharTD_7[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
+    CharTD_7[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 298.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_7[playerid][2], 0.200000, 0.800000);
     PlayerTextDrawAlignment(playerid, CharTD_7[playerid][2], 1);
     PlayerTextDrawColor(playerid, CharTD_7[playerid][2], -1061109505);
@@ -561,7 +593,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawFont(playerid, CharTD_7[playerid][2], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][2], 1);
 
-    CharTD_7[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
+    CharTD_7[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 290.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][3], 14.000000, 17.000000);
     PlayerTextDrawAlignment(playerid, CharTD_7[playerid][3], 1);
     PlayerTextDrawColor(playerid, CharTD_7[playerid][3], -1);
@@ -570,7 +602,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawFont(playerid, CharTD_7[playerid][3], 4);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][3], 0);
 
-    CharTD_7[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
+    CharTD_7[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 293.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][4], 10.000000, 11.000000);
     PlayerTextDrawAlignment(playerid, CharTD_7[playerid][4], 1);
     PlayerTextDrawColor(playerid, CharTD_7[playerid][4], -1);
@@ -582,7 +614,7 @@ CreateCharacterTextdraws7(playerid){
 }
 
 CreateCharacterTextdraws8(playerid){
-    CharTD_8[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 75.083351, "mdl-9000:bg_select_character");
+    CharTD_8[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 315.083351, "mdl-9000:bg_select_character");
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][0], 105.000000, 27.000000);
     PlayerTextDrawAlignment(playerid, CharTD_8[playerid][0], 1);
     PlayerTextDrawColor(playerid, CharTD_8[playerid][0], 50529124);
@@ -592,7 +624,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][0], 0);
     PlayerTextDrawSetSelectable(playerid, CharTD_8[playerid][0], true);
 
-    CharTD_8[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 78.000022, "John_Doe");
+    CharTD_8[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 318.000022, "John_Doe");
     PlayerTextDrawLetterSize(playerid, CharTD_8[playerid][1], 0.200000, 1.200000);
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][1], 277.000000, 0.000000);
     PlayerTextDrawAlignment(playerid, CharTD_8[playerid][1], 1);
@@ -602,7 +634,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawFont(playerid, CharTD_8[playerid][1], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][1], 1);
 
-    CharTD_8[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
+    CharTD_8[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 328.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_8[playerid][2], 0.200000, 0.800000);
     PlayerTextDrawAlignment(playerid, CharTD_8[playerid][2], 1);
     PlayerTextDrawColor(playerid, CharTD_8[playerid][2], -1061109505);
@@ -611,7 +643,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawFont(playerid, CharTD_8[playerid][2], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][2], 1);
 
-    CharTD_8[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
+    CharTD_8[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 320.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][3], 14.000000, 17.000000);
     PlayerTextDrawAlignment(playerid, CharTD_8[playerid][3], 1);
     PlayerTextDrawColor(playerid, CharTD_8[playerid][3], -1);
@@ -620,7 +652,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawFont(playerid, CharTD_8[playerid][3], 4);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][3], 0);
 
-    CharTD_8[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
+    CharTD_8[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 323.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][4], 10.000000, 11.000000);
     PlayerTextDrawAlignment(playerid, CharTD_8[playerid][4], 1);
     PlayerTextDrawColor(playerid, CharTD_8[playerid][4], -1);
@@ -632,7 +664,7 @@ CreateCharacterTextdraws8(playerid){
 }
 
 CreateCharacterTextdraws9(playerid){
-    CharTD_9[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 75.083351, "mdl-9000:bg_select_character");
+    CharTD_9[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 345.083351, "mdl-9000:bg_select_character");
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][0], 105.000000, 27.000000);
     PlayerTextDrawAlignment(playerid, CharTD_9[playerid][0], 1);
     PlayerTextDrawColor(playerid, CharTD_9[playerid][0], 50529124);
@@ -642,7 +674,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][0], 0);
     PlayerTextDrawSetSelectable(playerid, CharTD_9[playerid][0], true);
 
-    CharTD_9[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 78.000022, "John_Doe");
+    CharTD_9[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 348.000022, "John_Doe");
     PlayerTextDrawLetterSize(playerid, CharTD_9[playerid][1], 0.200000, 1.200000);
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][1], 277.000000, 0.000000);
     PlayerTextDrawAlignment(playerid, CharTD_9[playerid][1], 1);
@@ -652,7 +684,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawFont(playerid, CharTD_9[playerid][1], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][1], 1);
 
-    CharTD_9[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
+    CharTD_9[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 358.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_9[playerid][2], 0.200000, 0.800000);
     PlayerTextDrawAlignment(playerid, CharTD_9[playerid][2], 1);
     PlayerTextDrawColor(playerid, CharTD_9[playerid][2], -1061109505);
@@ -661,7 +693,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawFont(playerid, CharTD_9[playerid][2], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][2], 1);
 
-    CharTD_9[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
+    CharTD_9[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 350.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][3], 14.000000, 17.000000);
     PlayerTextDrawAlignment(playerid, CharTD_9[playerid][3], 1);
     PlayerTextDrawColor(playerid, CharTD_9[playerid][3], -1);
@@ -670,7 +702,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawFont(playerid, CharTD_9[playerid][3], 4);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][3], 0);
 
-    CharTD_9[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
+    CharTD_9[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 353.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][4], 10.000000, 11.000000);
     PlayerTextDrawAlignment(playerid, CharTD_9[playerid][4], 1);
     PlayerTextDrawColor(playerid, CharTD_9[playerid][4], -1);
@@ -682,7 +714,7 @@ CreateCharacterTextdraws9(playerid){
 }
 
 CreateCharacterTextdraws10(playerid){
-    CharTD_10[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 75.083351, "mdl-9000:bg_select_character");
+    CharTD_10[playerid][0] = CreatePlayerTextDraw(playerid, 488.529418, 305.083351, "mdl-9000:bg_select_character");
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][0], 105.000000, 27.000000);
     PlayerTextDrawAlignment(playerid, CharTD_10[playerid][0], 1);
     PlayerTextDrawColor(playerid, CharTD_10[playerid][0], 50529124);
@@ -692,7 +724,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][0], 0);
     PlayerTextDrawSetSelectable(playerid, CharTD_10[playerid][0], true);
 
-    CharTD_10[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 78.000022, "John_Doe");
+    CharTD_10[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 308.000022, "John_Doe");
     PlayerTextDrawLetterSize(playerid, CharTD_10[playerid][1], 0.200000, 1.200000);
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][1], 277.000000, 0.000000);
     PlayerTextDrawAlignment(playerid, CharTD_10[playerid][1], 1);
@@ -702,7 +734,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawFont(playerid, CharTD_10[playerid][1], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][1], 1);
 
-    CharTD_10[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
+    CharTD_10[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 318.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_10[playerid][2], 0.200000, 0.800000);
     PlayerTextDrawAlignment(playerid, CharTD_10[playerid][2], 1);
     PlayerTextDrawColor(playerid, CharTD_10[playerid][2], -1061109505);
@@ -711,7 +743,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawFont(playerid, CharTD_10[playerid][2], 1);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][2], 1);
 
-    CharTD_10[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
+    CharTD_10[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 310.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][3], 14.000000, 17.000000);
     PlayerTextDrawAlignment(playerid, CharTD_10[playerid][3], 1);
     PlayerTextDrawColor(playerid, CharTD_10[playerid][3], -1);
@@ -720,7 +752,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawFont(playerid, CharTD_10[playerid][3], 4);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][3], 0);
 
-    CharTD_10[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
+    CharTD_10[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 313.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][4], 10.000000, 11.000000);
     PlayerTextDrawAlignment(playerid, CharTD_10[playerid][4], 1);
     PlayerTextDrawColor(playerid, CharTD_10[playerid][4], -1);
@@ -745,81 +777,109 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
         if (playertextid == CharTD_1[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 1) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 1) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_2[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 2) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 2) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_3[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 3) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 3) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_4[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 4) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
-            }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
+                if (count == 4) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
+            }            
         } else if (playertextid == CharTD_5[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 5) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 5) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_6[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 6) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 6) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_7[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 7) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 7) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
-        } else if (playertextid == CharTD_7[playerid][0]) {
-            for(new i; i < cache_num_rows(); i++) {
-                count++;
-                if (count == 7) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
-            }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_8[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 8) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 8) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
 
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_9[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 9) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 9) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                } 
             }
-
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
         } else if (playertextid == CharTD_10[playerid][0]) {
             for(new i; i < cache_num_rows(); i++) {
                 count++;
-                if (count == 10) cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                if (count == 10) {
+                    cache_get_value_name_int(i, "ID", pInfo[playerid][pCharacterChoosed]);
+                    cache_get_value_name_int(i, "skin", pInfo[playerid][pCharacterActorSkin]);
+                }
             }
+        } else if (playertextid == CharTD_BUTTON[playerid][0]) {
+            DestroyActor(pInfo[playerid][pCharacterActor]);
+            
+            CancelSelectTextDraw(playerid);
+            ResetCharacterData(playerid);
+            LoadCharacterInfoID(playerid, pInfo[playerid][pCharacterChoosed]);
+            SpawnSelectedCharacter(playerid);
+            HideCharacterTextdraws(playerid);
+            pInfo[playerid][pCharacterChoosed] = 0;
+            pInfo[playerid][pCharacterActorSkin] = 0;
+            ResetCharacterSelection(playerid);
 
-            SendServerMessage(playerid, "Você spawnara o personagem %d", pInfo[playerid][pCharacterChoosed]);
+            ShowPlayerFooter(playerid, "BEM-VINDO(A)!", 2);
+            pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 3000, false, "dd", playerid, 888);
+            return true;
         }
+
+        SelectTextDraw(playerid, 0x5964F4FF);
+        InterpolateCameraPos(playerid, 398.892791, -2044.198242, 9.665472, 396.914611, -2042.464477, 8.440737, 1000);
+        InterpolateCameraLookAt(playerid, 396.500122, -2040.112792, 11.273117, 393.339019, -2038.973510, 8.272800, 1000);
+        DestroyActor(pInfo[playerid][pCharacterActor]);
+        pInfo[playerid][pCharacterActor] = CreateActor(pInfo[playerid][pCharacterActorSkin], 396.1454, -2041.9301, 7.8359, 208.4032);
+        SetActorVirtualWorld(pInfo[playerid][pCharacterActor], playerid+1000);
+
+        ShowCharacterButtonTextdraws(playerid);
         cache_delete(result);
     }
     return false;
@@ -834,15 +894,22 @@ ShowChangeCharactersTD(playerid) {
         SendServerMessage(playerid, "Você será kickado do servidor agora. Tire uma screenshot desta tela.");
         return KickEx(playerid);
     }
-
+    
     new characterName[24], string[128],
         characterID, count = 0;
 
+    ClearPlayerChat(playerid);
     SetPlayerInterface(playerid, 999);
+    SetPlayerVirtualWorld(playerid, playerid+1000);
     TogglePlayerSpectating(playerid, true);
     ShowCharacterTextdraws(playerid, 1);
     SelectTextDraw(playerid, 0x5964F4FF);
     pInfo[playerid][pChoosingCharacter] = 1;
+
+    SetPlayerVirtualWorld(playerid, playerid+1000);
+    SetPlayerInterior(playerid, 0);
+    InterpolateCameraPos(playerid, 398.892791, -2044.198242, 9.665472, 398.892791, -2044.198242, 9.665472, 1000);
+    InterpolateCameraLookAt(playerid, 396.500122, -2040.112792, 11.273117, 396.500122, -2040.112792, 11.273117, 1000);
 
     for(new i; i < cache_num_rows(); i++) {
         count ++;
@@ -934,12 +1001,6 @@ ShowChangeCharactersTD(playerid) {
     return true;
 }
 
-CMD:xxx(playerid, params[]){
-    ShowChangeCharactersTD(playerid);
-    return true;
-}
-
-
 /***********************************************************************************************
 
     TELA DE BANIMENTO
@@ -951,8 +1012,8 @@ public ShowBannedTextdraws(playerid) {
     for(new i; i < 3; i++)
         TextDrawShowForPlayer(playerid, BannedTD[i]);
 
-    InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1764.986206, -1501.460083, 238.376602, 12000);
-    InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1761.035888, -1498.431884, 237.901809, 12000);
+    InterpolateCameraPos(playerid, 2151.759033, -1955.770507, 14.705178, 1460.781860, -1955.596435, 14.657321, 30000);
+    InterpolateCameraLookAt(playerid, 2146.779785, -1956.206420, 14.837976, 1455.782226, -1955.538818, 14.680758, 30000);
     return true;
 }
 
@@ -1147,9 +1208,9 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawFont(playerid, NotifyTD[playerid][1], 4);
     PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][1], 0);
 
-    NotifyTD[playerid][2] = CreatePlayerTextDraw(playerid, 370.305908, 370.750000, "TEXTO FOOTER");
+    NotifyTD[playerid][2] = CreatePlayerTextDraw(playerid, 316.659057, 370.750000, "TEXTO_FOOTER");
     PlayerTextDrawLetterSize(playerid, NotifyTD[playerid][2], 0.400000, 1.500000);
-    PlayerTextDrawAlignment(playerid, NotifyTD[playerid][2], 3);
+    PlayerTextDrawAlignment(playerid, NotifyTD[playerid][2], 2);
     PlayerTextDrawColor(playerid, NotifyTD[playerid][2], -1);
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][2], 0);
     PlayerTextDrawBackgroundColor(playerid, NotifyTD[playerid][2], 255);
@@ -1173,16 +1234,10 @@ ShowPlayerFooter(playerid, const string[], type = 2) {
 
     for(new i; i < 3; i++)
         PlayerTextDrawShow(playerid, NotifyTD[playerid][i]);
-
-	pInfo[playerid][pShowFooter] = true;
 }
 
 forward HidePlayerFooter(playerid);
 public HidePlayerFooter(playerid) {
-	if (!pInfo[playerid][pShowFooter])
-	    return false;
-
-	pInfo[playerid][pShowFooter] = false;
     for(new i; i < 3; i++)
         PlayerTextDrawHide(playerid, NotifyTD[playerid][i]);
 	return true;

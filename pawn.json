@@ -30,9 +30,6 @@
 	"runtime": {
 		"version": "0.3.DL",
 		"mode": "server",
-		"filterscripts": [
-			"cameditor"
-		],
 		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
 		"port": 7777,
 		"hostname": "Advanced Roleplay",

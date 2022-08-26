@@ -1,13 +1,3 @@
-/*
-
-O Gamemode do Advanced Roleplay trabalha com usuários. Isso significa que se você tentar registrar diretamente um personagem, não vai funcionar.
-Isso tudo porque essa interação e hierarquia entre usuário-personagem permite que um só usuário contenha diversos outros personagens.
-
-Esse módulo é dedicado a coisas relacionadas ao sistema de gerenciamento de usuários. Se, por acaso, o seu interesse for consultar o acesso de
-personagens, talvez seja interessante você dar uma olhada no módulo 'character.pwn' que lida com isso esse tipo de informações.
-
-*/
-
 #include <YSI_Coding\y_hooks>
 
 #define BCRYPT_COST 12
@@ -43,6 +33,7 @@ hook OnPlayerConnect(playerid) {
     
     return true;
 }
+
 hook OnPlayerRequestClass(playerid, classid) {
     TogglePlayerSpectating(playerid, true);
     TogglePlayerControllable(playerid, false);
@@ -89,8 +80,7 @@ public OnPasswordHashed(playerid) {
 	return true;
 }
 
-public OnPasswordChecked(playerid)
-{
+public OnPasswordChecked(playerid) {
 	new bool:match = bcrypt_is_equal();
     if(match){
 		ClearPlayerChat(playerid);
@@ -174,7 +164,6 @@ void:CheckUserConditions(playerid) {
 }
 
 // Caregar informações do usuário e adicioná-las às variáveis do enumerador. A variável de nome já é formatada ao logar.
-
 LoadUserInfo(playerid) {
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
@@ -234,7 +223,6 @@ LoadUserTeams(playerid) {
 }
 
 // Dar um UPDATE no MySQL com as novas informações do usuário.
-
 SaveUserInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET \
     `admin`     =   %d,           \
@@ -304,42 +292,13 @@ SaveUserTeams(playerid) {
     return true;
 }
 
-// Função pra formatar e mostrar os personagens do usuário numa Dialog
-ShowUsersCharacters(playerid) {
-    HideLoginTextdraws(playerid);
-    SetPlayerInterface(playerid, 999);
-    new characterName[24], string[128], majorString[2056],
-        characterScore, lastLogin;
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-
-    if(!cache_num_rows())
-        return Dialog_Show(playerid, CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens", "Nome\tNível\tÚltimo login\nCriar personagem", "Confirmar", "Sair");
-
-    majorString[0] = EOS;
-    strcat(majorString, "Nome\tNível\tÚltimo login\n");
-    for(new i; i < cache_num_rows(); i++) {
-        cache_get_value_name(i, "name", characterName);
-        cache_get_value_name_int(i, "score", characterScore);
-        cache_get_value_name_int(i, "last_login", lastLogin);
-        
-        format(string, sizeof(string), "%s\t%d\t%s\n", characterName, characterScore, GetFullDate(lastLogin));
-        strcat(majorString, string);
-    }
-    strcat(majorString, "\n \nCriar personagem\n{FF5447}Deletar personagem");
-
-    return Dialog_Show(playerid, CHARACTER_SELECT, DIALOG_STYLE_TABLIST_HEADERS, "Personagens", majorString, "Confirmar", "Sair");
-}
-
-// Simplesmente resetar as variáveis de usuário, já que elas estão armazenadas por ID e chamar o salvamento.
 hook OnPlayerDisconnect(playerid, reason) {
     SaveUserInfo(playerid);
     ResetUserData(playerid);
     return true;
 }
 
-// Aqui, iremos checar se o player logou com o nick de um personagem já existente e, se sim, redirecionar para o nome do usuário.
 CheckCharactersName(playerid) {
     new realUserName[24], userID;
 
@@ -366,7 +325,6 @@ CheckCharactersName(playerid) {
     return true;
 }
 
-// Comando de checar usuário e personagens de um jogador. Aberto pra todos.
 CMD:usuario(playerid, params[]) {
     if(uInfo[playerid][uAdmin] < 1) return SendPermissionMessage(playerid);
     new characterName[24], userValue[24], userID;

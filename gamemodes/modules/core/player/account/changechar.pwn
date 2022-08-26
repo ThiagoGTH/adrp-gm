@@ -1,6 +1,3 @@
-/*
-
-*/
 #include <YSI_Coding\y_hooks>
 
 CMD:trocarpersonagem(playerid, params[]){
@@ -14,13 +11,14 @@ CMD:trocarpersonagem(playerid, params[]){
     
     SaveCharacterInfo(playerid);
     ResetCharacterData(playerid);
+    ResetCharacterSelection(playerid);
     SOS_Clear(playerid);
     Report_Clear(playerid);
 
-    ShowChangeCharacters(playerid);
+    ShowChangeCharactersTD(playerid);
     return true;
 }
-
+/*
 ShowChangeCharacters(playerid) {
     new characterName[24], string[128], majorString[2056],
         characterScore, lastLogin;
@@ -55,6 +53,7 @@ Dialog:ShowChangeChars(playerid, response, listitem, inputtext[]){
             return SendErrorMessage(playerid, "ERRO#23 - Reporte sobre este problema a um desenvolvedor o mais rápido possível.");
                 
         ResetCharacterData(playerid);
+        ResetCharacterSelection(playerid);
         LoadCharacterInfo(playerid, inputtext);
         SpawnSelectedCharacter(playerid);
     }else{
@@ -62,4 +61,4 @@ Dialog:ShowChangeChars(playerid, response, listitem, inputtext[]){
         return KickEx(playerid);
     }
     return true;
-}
+}*/

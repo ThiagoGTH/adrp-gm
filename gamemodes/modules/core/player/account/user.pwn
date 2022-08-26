@@ -58,7 +58,7 @@ hook OnPlayerRequestClass(playerid, classid) {
 }
 
 Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
-	if(!response) return Kick(playerid);
+	if(!response) return KickEx(playerid);
         
     if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
         SendErrorMessage(playerid, "ERRO: A senha a ser registrada deve ter entre 6 e 16 caracteres.");
@@ -71,7 +71,7 @@ Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
 }
 
 Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
-	if(!response) return Kick(playerid);
+	if(!response) return KickEx(playerid);
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
     mysql_query(DBConn, query);
@@ -113,7 +113,7 @@ NotifyWrongAttempt(playerid) {
     
     if(loginAttempts[playerid] >= 3) {
         SendServerMessage(playerid, "Você foi kickado por errar a senha muitas vezes.");
-        Kick(playerid);
+        KickEx(playerid);
         return false;
     }
 
@@ -254,7 +254,7 @@ SaveUserInfo(playerid) {
     mysql_query(DBConn, query);
     SaveUserPremium(playerid);
     SaveUserTeams(playerid);
-    printf("Usuário '%s' salvo com sucesso.", uInfo[playerid][uName]);
+    printf("Usuário '%s' salvo com sucesso.", GetPlayerUserEx(playerid)); 
     return true;
 }
 

@@ -1,10 +1,12 @@
 #include <YSI_Coding\y_hooks>
 
-/*new baseurl[] = "http://158.69.184.5/";
-public OnPlayerRequestDownload(playerid, type, crc)
-{
+new baseurl[] = "http://26.244.244.209/models/";
+public OnPlayerRequestDownload(playerid, type, crc) {
 	if(!IsPlayerConnected(playerid))
 		return false;
+
+	InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1764.986206, -1501.460083, 238.376602, 12000);
+    InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1761.035888, -1498.431884, 237.901809, 12000);
 
 	new fullurl[256+1], dlfilename[64+1], foundfilename = 0;
 
@@ -19,7 +21,7 @@ public OnPlayerRequestDownload(playerid, type, crc)
 	}
 
 	return true;
-}*/
+}
 
 public OnPlayerFinishedDownloading(playerid, virtualworld)
 {
@@ -37,8 +39,8 @@ LoadObjects(){
 }
 
 LoadInterfaces(){ // -9000 +
-    AddSimpleModel(-1, 19379, -9000, "interface/interface.dff", "interface/login.txd");
-    AddSimpleModel(-1, 19379, -9001, "interface/interface.dff", "interface/character.txd");
+	AddSimpleModel(-1, 19379, -9000, "interface/interface.dff", "interface/interface.txd");
+	AddSimpleModel(-1, 19379, -9001, "interface/interface.dff", "interface/notify.txd");
     AddSimpleModel(-1, 19379, -9002, "interface/interface.dff", "interface/news.txd");
 }
 

@@ -36,7 +36,7 @@ new DroppedItems[MAX_DROPPED_ITEMS][DROPPED_ITEMS_DATA];
 
 hook OnGameModeInit() {
     LoadItems();
-	LoadDroppeds();
+	//LoadDroppeds();
 }
 
 OrganizeInventory(playerid) {

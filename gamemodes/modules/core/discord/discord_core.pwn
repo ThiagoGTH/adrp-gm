@@ -32,7 +32,7 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Nenhum problema ou ocorrência recente.", text);
+        format(text, 512, "Nenhum problema ou ocorrência recente.");
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
         
@@ -44,13 +44,13 @@ public ServerStatus(type){
         
         format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
         utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
+        format(ucp2, 256, "User Control Panel");
         utf8encode(ucp2, ucp2);
         DCC_AddEmbedField(embed, ucp2, ucp1, false);
 
         format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
         utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
+        format(server2, 256, "SA-MP");
         utf8encode(server2, server2);
         DCC_AddEmbedField(embed, server2, server1, false);
 

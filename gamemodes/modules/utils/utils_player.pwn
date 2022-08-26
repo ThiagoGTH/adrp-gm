@@ -1002,3 +1002,17 @@ DealershipCategory(type) {
 	}
 	return category;
 }
+
+KickEx(playerid) {
+	if (pInfo[playerid][pKicked]) return false;
+
+	pInfo[playerid][pKicked] = 1;
+	SetTimerEx("KickTimer", 200, false, "d", playerid);
+	return true;
+}
+
+forward KickTimer(playerid);
+public KickTimer(playerid) {
+	if (pInfo[playerid][pKicked]) return Kick(playerid);
+	return false;
+}

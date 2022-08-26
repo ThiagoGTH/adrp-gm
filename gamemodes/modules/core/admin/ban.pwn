@@ -8,11 +8,6 @@ Se um jogador tiver o `unbanned_time` como 0, o sistema considerará que o banime
 
 #include <YSI_Coding\y_hooks>
 
-hook OnPlayerConnect(playerid) {
-    CheckUserBan(playerid);
-    return true;
-}
-
 CMD:ban(playerid, params[]) {
     new id, reason[128]; 
 
@@ -24,14 +19,15 @@ CMD:ban(playerid, params[]) {
 
     // Inserir o banimento na database
     mysql_format(DBConn, query, sizeof query, "INSERT INTO ban (`banned_id`, `admin_name`, `reason`, \
-        `ban_date`, `unban_date`) VALUES ('%s', '%s', '%s', %d, 0)", uInfo[id][uID], uInfo[playerid][uName], reason, _:Now());
+        `ban_date`, `unban_date`) VALUES ('%d', '%s', '%s', %d, 0)", uInfo[id][uID], uInfo[playerid][uName], reason, _:Now());
     mysql_query(DBConn, query);
 
     // Printar
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s (%s) permanentemente. Motivo: %s.", uInfo[playerid][uName], 
     GetPlayerNameEx(id), uInfo[id][uName], reason);
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
-    SendServerMessage(playerid, "(( Você foi banido do servidor ))");
+    SendServerMessage(id, "(( Você foi banido do servidor ))");
+    ShowBannedTextdraws(id);
 
     format(logString, sizeof(logString), "%s (%s) baniu %s (%s) por %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id), GetPlayerUserEx(id), reason);
 	logCreate(playerid, logString, 1);
@@ -39,7 +35,7 @@ CMD:ban(playerid, params[]) {
     format(logString, sizeof(logString), "%s (%s) banido por %s (motivo: %s)", pNome(id), GetPlayerUserEx(id), GetPlayerUserEx(playerid), reason);
 	logCreate(id, logString, 11);
 
-    Kick(id);
+    KickEx(id);
     return true;
 }
 
@@ -115,15 +111,15 @@ CMD:bantemp(playerid, params[]) {
     
     va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s baniu %s (%s) por %d dias. Motivo: %s.", uInfo[playerid][uName], GetPlayerNameEx(id), uInfo[id][uName], days, reason);
     va_SendClientMessage(playerid, COLOR_GREEN, "Você baniu o usuário %s com sucesso.", uInfo[id][uName]);
-    SendServerMessage(playerid, "(( Você foi banido do servidor ))");
+    SendServerMessage(id, "(( Você foi banido do servidor ))");
     
     format(logString, sizeof(logString), "%s (%s) baniu %s (%s) [%d dias] por %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id), GetPlayerUserEx(id), days, reason);
 	logCreate(playerid, logString, 1);
 
     format(logString, sizeof(logString), "%s (%s) banido temporariamente por %s (dias: %d, motivo: %s)", pNome(id), GetPlayerUserEx(id), GetPlayerUserEx(playerid), days, reason);
 	logCreate(id, logString, 11);
-
-    Kick(id);
+    ShowBannedTextdraws(id);
+    KickEx(id);
     return true;
 }
 
@@ -292,37 +288,39 @@ alias:limparhistoricobans("limparhistoricoban")
 // Checar se o usuário está banido.
 CheckUserBan(playerid) {
     new adminName[24], reason[128], ban_date, unban_date,
-        bigString[512];
+        bigString[1024];
 
     UpdateUnbannedUsers();
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", GetUserSQLID(playerid));
     mysql_query(DBConn, query);
-
+    printf("cache_num_rows() = %d", cache_num_rows());
     if(!cache_num_rows())
         return true;
 
-    
+    HideLoginTextdraws(playerid);
+    HideCharacterTextdraws(playerid);
+
     // Armazenar informações do banimento em variáveis
     cache_get_value_name(0, "admin_name", adminName);
     cache_get_value_name(0, "reason", reason);
     cache_get_value_name_int(0, "ban_date", ban_date);
     cache_get_value_name_int(0, "unban_date", unban_date);
-
+    
     // Formatar a string com as informações anteriores
-    format(bigString, sizeof bigString, "Você foi banido %sdo servidor.\n\nUsuário: %s\nData de banimento: %s\nData de desbanimento: %s\n \
+    format(bigString, sizeof bigString, "{FFFFFF}Você foi banido %sdo servidor.\n\nUsuário: %s\nData de banimento: %s\nData de desbanimento: %s\nBanido por: %s\n\
     Motivo: %s\n \nSe você acha que isso foi um engano, recorra a um apelo no fórum.", 
-        unban_date > 0 ? ("temporariamente ") : (""), uInfo[playerid][uName], GetFullDate(ban_date), 
-        unban_date > 0 ? (GetFullDate(unban_date)) : ("Banimento permanente"), reason);
+        unban_date > 0 ? ("temporariamente ") : (""), GetPlayerUserEx(playerid), GetFullDate(ban_date), 
+        unban_date > 0 ? (GetFullDate(unban_date)) : ("Banimento permanente"), adminName, reason);
 
-    Dialog_Show(playerid, DialogBan, DIALOG_STYLE_MSGBOX, "Usuário Banido", bigString, "Entendi", "");
+    Dialog_Show(playerid, DialogBan, DIALOG_STYLE_MSGBOX, " ", bigString, "Entendi", "");
 
-    Kick(playerid);
+    ShowBannedTextdraws(playerid);
+    ClearPlayerChat(playerid);
+    KickEx(playerid);
     return true;
 }
 
-// Quando chamada, irá setar 'banned' como false no MySQL para todas rows que tiverem o 'unban_date' menor do que o tempo atual.
-// Essa condição não irá passar se o unban_date for 0, ou seja, permanente.
 void:UpdateUnbannedUsers() {
     mysql_format(DBConn, query, sizeof query, "UPDATE ban SET `banned` = 0 WHERE `banned` = 1 AND `unban_date` <> 0 AND `unban_date` <= %d;", 
         _:Now());

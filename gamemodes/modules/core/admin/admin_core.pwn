@@ -878,7 +878,7 @@ CMD:kick(playerid, params[]) {
 
 	
 	va_SendClientMessageToAll(COLOR_LIGHTRED,"AdmCmd: %s kickou %s por: %s.", GetPlayerUserEx(playerid), pNome(userid), reason);
-	Kick(userid);
+	KickEx(userid);
 
 	// Cria o log administrativo
 	format(logString, sizeof(logString), "%s (%s) kickou %s (%s) por %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), GetPlayerUserEx(userid), reason);

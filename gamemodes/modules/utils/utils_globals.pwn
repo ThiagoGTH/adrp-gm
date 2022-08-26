@@ -155,6 +155,8 @@ enum Player_Data {
 	bool:pRecording,
 	pCameraTimer,
 
+    pKicked,
+    pShowFooter,
     // FACTIONS
     pSwat,
 
@@ -176,6 +178,8 @@ enum Player_Data {
     pTimerSpawn,
     pDelayNewbie,
     pInvestment,
+    pChoosingCharacter,
+    pCharacterChoosed,
 
     pEditingVeh,
     pOjectVeh,
@@ -354,6 +358,8 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][rRadioName5], 90, "0");
     format(pInfo[playerid][rRadioName6], 90, "0");
     format(pInfo[playerid][rRadioName7], 90, "0");
+
+    pInfo[playerid][pKicked] = 0;
     
     // TEMP VARS
     pInfo[playerid][tempChar][0] = 
@@ -398,6 +404,10 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dEditingPrice] =
     pInfo[playerid][dEditingMenu] = 0;
 
+    pInfo[playerid][pShowFooter] = 0;
+    pInfo[playerid][pChoosingCharacter] = 0;
+    pInfo[playerid][pCharacterChoosed] = 0;
+    
     // INVENTORY
     for (new i = 0; i < 30; i ++) {
     	pInfo[playerid][iItem][i] = 0;

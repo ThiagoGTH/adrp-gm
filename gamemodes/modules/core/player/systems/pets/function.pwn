@@ -1,5 +1,4 @@
-IsPetSpawned(playerid)
-{
+IsPetSpawned(playerid) {
     if(PetData[playerid][petSpawn])
         return 1;
 

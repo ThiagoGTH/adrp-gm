@@ -15,8 +15,8 @@ hook OnGameModeInit() {
     AddSimpleModel (-1, 1923, -1067, "maps/env/eastls_church/EastLSChurch2.dff", "maps/env/eastls_church/EastLSChurch2.txd");
     AddSimpleModel (-1, 1923, -1068, "maps/env/eastls_church/EastLSChurch3.dff", "maps/env/eastls_church/EastLSChurch3.txd");
 
-    CreateObject(-1066, 2414.398437, -1362.203125, 32.601600, 0.000000, 0.000000, 0.000000, 500.00); 
-    CreateObject(-1068, 2422.093017, -1426.369018, 28.738000, 0.000000, 0.000000, 0.000000, 500.00); 
+    CreateDynamicObject(-1066, 2414.398437, -1362.203125, 32.601600, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
+    CreateDynamicObject(-1068, 2422.093017, -1426.369018, 28.738000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
     CreateObject(-1067, 2411.164062, -1402.883056, 28.016000, 0.000000, 0.000000, 0.000000, 500.00); 
     return true;
 }

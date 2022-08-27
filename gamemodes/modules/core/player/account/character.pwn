@@ -88,7 +88,7 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
     pInfo[playerid][characterDelete][0] = EOS;
     ShowUsersCharacters(playerid);
 	return true;
-}*/ 
+}
 
 CreateCharacter(playerid, characterName[]) {
 
@@ -101,7 +101,7 @@ CreateCharacter(playerid, characterName[]) {
 
     printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
 
-}
+}*/
 
 LoadCharacterInfoID(playerid, id) {
     new first_login;

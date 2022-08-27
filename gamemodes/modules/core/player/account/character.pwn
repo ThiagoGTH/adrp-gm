@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
+/*Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
 	if(!response || !strcmp(inputtext, " ")) return ShowUsersCharacters(playerid);
 
     else if(!strcmp(inputtext, "Criar personagem")) {
@@ -19,21 +19,11 @@ Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
         return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem \
                 que você gostaria de deletar.", "Continuar", "Voltar");
 
-    } else {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", inputtext);
-        mysql_query(DBConn, query);
-        if(!cache_num_rows())
-            return ShowUsersCharacters(playerid);
-                
-        ResetCharacterData(playerid);
-        ResetCharacterSelection(playerid);
-        LoadCharacterInfo(playerid, inputtext);
-        SpawnSelectedCharacter(playerid);
     }
 	return true;
-}
+}*/
 
-Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
+/*Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
     if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][pName][0] = EOS;
 
     if(strlen(inputtext) < 1) {
@@ -98,7 +88,7 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
     pInfo[playerid][characterDelete][0] = EOS;
     ShowUsersCharacters(playerid);
 	return true;
-}
+}*/ 
 
 CreateCharacter(playerid, characterName[]) {
 
@@ -542,7 +532,7 @@ SavePlayerRadio(playerid) {
     `rRadioName5`='%s', \
     `rRadioName6`='%s', \
     `rRadioName7`='%s', \
-    `pRadioNvl`='%i' WHERE `character_id`='%d'", 
+    `pRadioNvl`='%i' WHERE `character_id` = '%d'", 
     pInfo[playerid][rRadioState],
     pInfo[playerid][rRadioSlot][0],
     pInfo[playerid][rRadioSlot][1],
@@ -558,6 +548,7 @@ SavePlayerRadio(playerid) {
     pInfo[playerid][rRadioName5],
     pInfo[playerid][rRadioName6],
     pInfo[playerid][rRadioName7],
+    pInfo[playerid][pRadioNvl],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
     return true;

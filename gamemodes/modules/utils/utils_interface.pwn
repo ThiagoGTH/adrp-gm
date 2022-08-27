@@ -59,7 +59,7 @@ public SetPlayerInterface(playerid, level) {
         
     } else if(level == 2) { // AUTENTICADO
         KillTimer(pInfo[playerid][pInterfaceTimer]);
-        ShowUsersCharacters(playerid);
+        ShowCharactersTD(playerid);
         HidePlayerFooter(playerid);
         ShowPlayerFooter(playerid, "AUTENTICADO", 3);
         pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
@@ -885,7 +885,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
     return false;
 }
 
-ShowChangeCharactersTD(playerid) {
+ShowCharactersTD(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 

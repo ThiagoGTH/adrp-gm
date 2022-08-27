@@ -44,6 +44,12 @@ public OnGamemodeLoad(playerid) {
 public OnGameModeInit() {
     CA_Init();
 
+    MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
+    new Float:pos;
+    if (MapAndreas_FindAverageZ(20.001, 25.006, pos)) {
+        // Found position - position saved in 'pos'
+    }
+    
     new gmText[128];
     format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
 

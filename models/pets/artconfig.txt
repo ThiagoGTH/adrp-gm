@@ -1,0 +1,15 @@
+AddCharModel(13, 20062, "bfyst.dff", "bfyst.txd"); 
+
+AddCharModel(252, 20063, "wmyro1.dff", "wmyro1.txd");
+
+AddCharModel(252, 20064, "wmyva2_1.dff", "wmyva2_1.txd");
+
+AddCharModel(252, 20065, "wmyva2_2.dff", "wmyva2_2.txd");
+
+AddCharModel(252, 20066, "wmyva2_3.dff", "wmyva2_3.txd");
+
+AddCharModel(252, 20067, "wmyva2_3.dff", "wmyva2_3.txd");
+
+AddCharModel(252, 20068, "wmyva2_4.dff", "wmyva2_4.txd");
+
+AddCharModel(252, 20069, "wmyva2_5.dff", "wmyva2_5.txd");

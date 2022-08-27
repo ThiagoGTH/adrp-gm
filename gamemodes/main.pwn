@@ -22,6 +22,9 @@
 #include <modelsizes>
 #include <physics>
 #include <colandreas>
+#include <mapandreas>
+
+#define YSI_NO_HEAP_MALLOC
 
 /* ==============================[modules]============================== */
 
@@ -36,6 +39,7 @@
 #include "modules\core\player\systems\items\items.pwn"
 #include "modules\core\player\systems\vehicles\vehicles.pwn"
 #include "modules\core\player\systems\houses\houses.pwn"
+#include "modules\core\player\systems\pets\pets.pwn"
 #include "modules\core\player\systems\investment\investment.pwn"
 #include "modules\core\player\systems\factions\factions.pwn"
 #include "modules\core\player\systems\games\games.pwn"

@@ -31,6 +31,7 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 hook OnGameModeInit(){
     LoadInterfaces();
 	LoadObjects();
+	LoadPets();
     return true;
 }
 

@@ -163,6 +163,10 @@ IsValidHouse(id) {
     return 1;
 }
 
+HouseHasOwner(id) {
+    return IsValidHouse(id) && (hInfo[id][hOwner]);
+}
+
 // Procura por alguma entrada de casa
 GetNearestHouseEntry(playerid, Float:distance = 1.0) {
     for(new i; i < MAX_HOUSES; i++) {
@@ -343,4 +347,23 @@ GetNearestHouseSecondExit(playerid, Float:distance = 1.0) {
     }
 
     return 0;
+}
+
+GetHouseAddress(id) {
+    IsValidHouse(id);
+
+    new address[256];
+    format(address, sizeof(address), "%s", hInfo[id][hAddress]);
+
+    return address;
+}
+
+BuyHouse(id, playerid) {
+    hInfo[id][hOwner] = pInfo[playerid][pID];
+    SaveHouse(id);
+
+    format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hPrice]));
+	logCreate(playerid, logString, 13);
+
+    return 1;
 }

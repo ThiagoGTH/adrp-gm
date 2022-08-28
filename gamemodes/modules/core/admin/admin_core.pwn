@@ -291,7 +291,7 @@ CMD:skin(playerid, params[]) {
 	new userid, level;
 	if(sscanf(params, "ud", userid, level)) return SendSyntaxMessage(playerid, "/skin [playerid] [skin id]");
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
-	if(level < 1 || level > 30000) return SendErrorMessage(playerid, "Você selecionou um ID restrito à Management.");
+	if(GetPlayerAdmin(playerid) < 6 && level > 29899) return SendErrorMessage(playerid, "Você selecionou um ID restrito à Management.");
 
 	if(userid != INVALID_PLAYER_ID){
 		pInfo[userid][pSkin] = level;

@@ -1,3 +1,6 @@
+forward Float:GetDistance2D(Float:x1, Float:y1, Float:x2, Float:y2);
+forward Float:GetAngleToPoint(Float:fPointX, Float:fPointY, Float:fDestX, Float:fDestY);
+
 timer Pet_Update[100](playerid, targetid) {
     if(PetData[playerid][petModelID] != 0 && PetData[playerid][petSpawn] && PetData[playerid][petStatus] == PET_FOLLOW) {
 

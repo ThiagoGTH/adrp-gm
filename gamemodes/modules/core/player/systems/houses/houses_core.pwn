@@ -8,6 +8,8 @@ enum E_HOUSE_DATA {
     hOwner,             // ID do personagem dono da casa
     hAddress[256],      // Endereço
     bool:hLocked,       // Trancado 
+    hRentable,          // Alugavel
+    hRent,              // Preço do aluguel
     hPrice,             // Preço de venda (pelo servidor)
     hStorageMoney,      // Dinheiro guardado
     Float:hExitPos[4],  // Posições (X, Y, Z, A) do interior
@@ -161,6 +163,10 @@ IsValidHouse(id) {
         return 0;
 
     return 1;
+}
+
+HouseHasOwner(id) {
+    return IsValidHouse(id) && (hInfo[id][hOwner]);
 }
 
 // Procura por alguma entrada de casa
@@ -343,4 +349,47 @@ GetNearestHouseSecondExit(playerid, Float:distance = 1.0) {
     }
 
     return 0;
+}
+
+GetHouseAddress(id) {
+    IsValidHouse(id);
+
+    new address[256];
+    format(address, sizeof(address), "%s", hInfo[id][hAddress]);
+
+    return address;
+}
+
+BuyHouse(id, playerid) {
+    hInfo[id][hOwner] = pInfo[playerid][pID];
+    SaveHouse(id);
+
+    format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hPrice]));
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+RentableHouse(id, playerid, rentable) {
+    if(rentable != 1)
+        rentable = 0;
+
+    hInfo[id][hRentable] = rentable;
+    hInfo[id][hRent] = 1;
+    SaveHouse(id);
+
+    format(logString, sizeof(logString), "%s (%s) deixou a casa ID %d %s.", pNome(playerid), GetPlayerUserEx(playerid), id, (rentable ? "alugável" : "não alugável"));
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+SetRentPrice(id, playerid, value) {
+    hInfo[id][hRent] = value;
+    SaveHouse(id);
+
+    format(logString, sizeof(logString), "%s (%s) alterou o preço de aluguel da sua casa ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(value));
+	logCreate(playerid, logString, 13);
+
+    return 1;
 }

@@ -243,8 +243,7 @@ public ServerStatus(type){
     }
 }
 
-public DCC_OnMessageCreate(DCC_Message:message)
-{
+public DCC_OnMessageCreate(DCC_Message:message) {
     new channel_name[32];
     new DCC_Channel:channel;
     DCC_GetMessageChannel(message, channel);
@@ -264,6 +263,109 @@ public DCC_OnMessageCreate(DCC_Message:message)
     if(is_bot)
         return false;
 
+    if(!strcmp(channel_name, "registro", true) && channel == DCC_FindChannelById("1013482041595146352")) { // #
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!registrar", true)){
+               
+                new text[256],
+                    footer[128],
+                    title[64];
+                    /*timeValue[24],
+                    timestamp,
+                    log[512],
+                    logValue[512];*/
+
+                if(isnull(parameters)){
+                    format(text, 256, "**USE:** !registrar [nome do usuário]");
+                    utf8encode(text, text);
+                    format(title, 64, "Registrar UCP");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    return true;
+                }
+
+                new Cache:result;
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", parameters);
+                result = mysql_query(DBConn, query);
+
+                // Verificar existência do usuário
+                if(cache_num_rows()) {
+                    format(text, 256, "Ops... foi encontrado um usuário com este nome.");
+                    utf8encode(text, text);
+                    format(title, 64, "Usuário Existente");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                static const Letter[27][] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+                static const Number[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+                new password[128], Caracter1, Caracter2, Caracter3, Caracter4, Caracter5, Caracter6, Caracter7, Caracter8, Caracter9;
+                Caracter1 = randomEx(0, 9);     //Numero
+                Caracter2 = randomEx(0, 26);    //Letra
+                Caracter3 = randomEx(0, 26);    //Letra
+                Caracter4 = randomEx(0, 26);    //Letra
+                Caracter5 = randomEx(0, 9);     //Numero
+                Caracter6 = randomEx(0, 9);     //Numero
+                Caracter7 = randomEx(0, 9);     //Numero
+                Caracter8 = randomEx(0, 26);    //Letra
+                Caracter9 = randomEx(0, 26);    //Letra
+                format(password, sizeof(password), "%d%s%s%s%d%d%d%s%s", Number[Caracter1], Letter[Caracter2], Letter[Caracter3], Letter[Caracter4], Number[Caracter5], Number[Caracter6], Number[Caracter7], Letter[Caracter8], Letter[Caracter9]);
+
+                bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]", parameters);
+                
+                //CreateUser(parameters, password[]);
+                DCC_SendChannelMessage(channel, "Enviei!");
+                DCC_CreatePrivateChannel(author, "PrivateMessengeNewbie", "s[24]s[128]", parameters, password);
+                return true;
+            } else {
+                new title[32];
+                format(title, 32, "Comando inválido");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[512];
+                format(text, 512, "Digite **!ajuda** para obter a lista de comandos completa.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                new footer[128];
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+            }
+        }
+        return true;
+    }
+
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")) {
+        DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
+        return true;
+    }
+    ////////////////////////////////////////////////////////////////////////
     if(!strcmp(channel_name, "admin-chat", true) && channel == DCC_FindChannelById("989306920517136464")){
         new dest[255], nameee[255];
         utf8decode(dest, string);
@@ -470,7 +572,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -491,7 +593,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!personagens", true)){
@@ -557,7 +659,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -577,7 +679,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!usuario", true)){
@@ -599,7 +701,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -618,7 +720,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
                 format(title, 64, "Usuário de %s", parameters);
@@ -639,7 +741,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!checarban", true)){
@@ -704,7 +806,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -739,7 +841,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 cache_delete(result); // Limpar o cachê do MySQL
                 return true;
             }
@@ -852,6 +954,13 @@ public DCC_OnMessageCreate(DCC_Message:message)
         }
         return true;
     }
+    ////////////////////////////////////////////////////////////////////////
     
+    return true;
+}
+
+forward PrivateMessageRegister(name[24], password[128]);
+public PrivateMessageRegister(name[24], password[128]) {
+    DCC_SendChannelMessage(DCC_GetCreatedPrivateChannel(), "Seu usuario eh %s com senha %s", name, password);
     return true;
 }

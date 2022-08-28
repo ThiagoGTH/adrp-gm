@@ -331,7 +331,7 @@ LoadPlayerPet(playerid){
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_pet WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
     cache_get_value_name_int(0, "pet_model", PetData[playerid][petModelID]);
-    cache_get_value_name(0, "pet_name", PetData[targetid][petName]);
+    cache_get_value_name(0, "pet_name", PetData[playerid][petName]);
     cache_delete(result);
     return true;
 }
@@ -574,7 +574,7 @@ SavePlayerPet(playerid) {
     `pet_name` = '%s'    \
     WHERE character_id = '%d';", 
     PetData[playerid][petModelID],
-    PetData[targetid][petName],
+    PetData[playerid][petName],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
@@ -601,6 +601,7 @@ hook OnPlayerDisconnect(playerid, reason) {
     printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
 
     SaveCharacterInfo(playerid);
+    PetDespawn(playerid);
     ResetCharacterData(playerid);
     ResetCharacterSelection(playerid);
     SOS_Clear(playerid);

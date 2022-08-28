@@ -2,7 +2,7 @@
 
 #define BCRYPT_COST 12
 
-forward OnPasswordHashed(playerid);
+forward OnPasswordHashed(user[]);
 forward OnPasswordChecked(playerid);
 
 GetPlayerUserEx(playerid){
@@ -48,7 +48,7 @@ hook OnPlayerRequestClass(playerid, classid) {
     return true;
 }
 
-Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
+/*Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
 	if(!response) return KickEx(playerid);
         
     if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
@@ -59,6 +59,15 @@ Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
 
     bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
 	return true;
+}*/
+
+public OnPasswordHashed(user[]) {
+	new hash[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(hash);
+
+    CreateUser(user, hash);
+    //CheckUserConditions(playerid);
+	return true;
 }
 
 Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
@@ -68,15 +77,6 @@ Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
     mysql_query(DBConn, query);
     cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
     bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
-	return true;
-}
-
-public OnPasswordHashed(playerid) {
-	new hash[BCRYPT_HASH_LENGTH];
-	bcrypt_get_hash(hash);
-
-    CreateUser(playerid, uInfo[playerid][uName], hash);
-    CheckUserConditions(playerid);
 	return true;
 }
 
@@ -128,7 +128,7 @@ bool:IsUserRegistered(userName[]) {
 
 // Gerar o usuário e inserir na database sob as condições de checagem da função booleana acima.
 
-void:CreateUser(playerid, userName[], password[]) {
+void:CreateUser(userName[], password[]) {
 
     if(IsUserRegistered(userName))
         return;
@@ -136,15 +136,14 @@ void:CreateUser(playerid, userName[], password[]) {
     mysql_format(DBConn, query, sizeof query, "INSERT INTO users (`username`, `password`) VALUES ('%s', '%s');", userName, password);
     mysql_query(DBConn, query);
 
-    uInfo[playerid][uID] = cache_insert_id();
+    new id = cache_insert_id();
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_teams (`user_id`) VALUES ('%d');", uInfo[playerid][uID]);
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_teams (`user_id`) VALUES ('%d');", id);
     mysql_query(DBConn, query);
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_premium (`user_id`) VALUES ('%d');", uInfo[playerid][uID]);
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users_premium (`user_id`) VALUES ('%d');", id);
     mysql_query(DBConn, query);
 }
-
 
 // Nada demais, só vai avaliar se o usuário está registrado (ou não) e mostrar as devidas dialogs
 

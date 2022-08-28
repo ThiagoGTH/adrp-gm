@@ -267,7 +267,7 @@ SetFacingPoint(actorid, Float:x, Float:y) {
 
 IsValidPetModel(skinid) {
     switch(skinid) {
-        case 20062..20069:
+        case 30000..30019:
             return 1;
     }
     return 0;

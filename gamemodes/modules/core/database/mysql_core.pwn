@@ -705,6 +705,8 @@ void:CheckHousesTable() {
     `address` varchar(256) DEFAULT 'Endereço desconhecido',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
+    `rentable` int DEFAULT '0',\
+    `rent` int DEFAULT '0',\
     `storage_money` int DEFAULT '0',\
     `entry_x` float DEFAULT '0',\
     `entry_y` float DEFAULT '0',\

@@ -430,6 +430,54 @@ CMD:comprar(playerid) {
     return 1;
 }
 
+CMD:alugavel(playerid) {
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Essa casa não é sua.");
+    
+    switch(hInfo[houseID][hRentable]) {
+        case 0: {
+            RentableHouse(houseID, playerid, 1);
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Sua casa agora está alugável.");
+        }
+        default: {
+            RentableHouse(houseID, playerid, 0);
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Sua casa não está mais alugável.");
+        }
+    }
+
+    return 1;
+}
+
+CMD:precoaluguel(playerid, params[]) {
+    new price;
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Essa casa não é sua.");
+
+    if(sscanf(params, "i", price))
+        return SendSyntaxMessage(playerid, "/precoaluguel [preço]");
+    
+    if(!hInfo[houseID][hRentable])
+        return SendErrorMessage(playerid, "Sua casa não está alugável. (/alugavel)");
+    
+    if(price < 1 || price > 500)
+        return SendErrorMessage(playerid, "O preço do aluguel não pode ser menor que $1 ou maior que $500.");
+    
+    SetRentPrice(houseID, playerid, price);
+    va_SendClientMessage(playerid, COLOR_YELLOW, "Você alterou o preço do aluguel da sua casa para $%s", FormatNumber(price));
+
+    return 1;
+}
+
 CMD:entrar(playerid) {
     new houseID = GetNearestHouseEntry(playerid), entryID = GetNearestHouseSecondEntry(playerid);
     

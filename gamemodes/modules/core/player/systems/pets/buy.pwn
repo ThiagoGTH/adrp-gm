@@ -37,21 +37,22 @@ CMD:menupet(playerid, params[]) {
     new title[128];
     format(title, sizeof title, "Animais disponíveis");
     AdjustTextDrawString(title);
+    AdjustTextDrawString(string);
     return Dialog_Show(playerid, BuyPetsDialog, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Comprar", "Cancelar");
 }
 
 Dialog:BuyPetsDialog(playerid, response, listitem, inputtext[]) {
     if(response) {
         if(GetMoney(playerid) < PET_SHOP[listitem][PET_PRICE]) {
-            SendErrorMessage(playerid, "Você não possui US$ %s em mãos para comprar %s.", FormatNumber(PET_SHOP[listitem][PET_PRICE]), PET_SHOP[listitem][PET_NAME]);
+            SendErrorMessage(playerid, "Você não possui US$ %s em mãos para comprar um %s.", FormatNumber(PET_SHOP[listitem][PET_PRICE]), PET_SHOP[listitem][PET_NAME]);
             return PC_EmulateCommand(playerid, "/menupet");
         }
         GiveMoney(playerid, -PET_SHOP[listitem][PET_PRICE]);
         PetData[playerid][petModelID] = PET_SHOP[listitem][PET_MODELID];
         format(PetData[playerid][petName], 128, "Jack");
-        SendServerMessage(playerid, "Você comprou um %s e pagou US$ %s nele.", PET_SHOP[listitem][PET_NAME], PET_SHOP[listitem][PET_PRICE]);
+        SendServerMessage(playerid, "Você comprou um %s e pagou US$ %s nele.", PET_SHOP[listitem][PET_NAME], FormatNumber(PET_SHOP[listitem][PET_PRICE]));
 
-        format(logString, sizeof(logString), "%s (%s) comprou um %s por US$ %s", pNome(playerid), GetPlayerUserEx(playerid), PET_SHOP[listitem][PET_NAME], PET_SHOP[listitem][PET_PRICE]);
+        format(logString, sizeof(logString), "%s (%s) comprou um %s por US$ %s", pNome(playerid), GetPlayerUserEx(playerid), PET_SHOP[listitem][PET_NAME], FormatNumber(PET_SHOP[listitem][PET_PRICE]));
         logCreate(playerid, logString, 19);
     }
     return true;

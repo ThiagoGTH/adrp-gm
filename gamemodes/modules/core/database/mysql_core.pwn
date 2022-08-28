@@ -8,7 +8,7 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 
 #define DB_HOST         "127.0.0.1"
 #define DB_USER         "root"
-#define DB_PASSWORD     ""
+#define DB_PASSWORD     "root"
 #define DB_NAME         "adrp"
 
 hook OnGameModeInit() {
@@ -26,7 +26,7 @@ hook OnGameModeInit() {
     } else {
         print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso.");
         print("[DATABASE] Verificando criação de tabelas...");
-        mysql_set_charset("latin1");
+        // mysql_set_charset("latin1");
         CheckTables();
     }
 
@@ -191,6 +191,27 @@ void:CheckPlayerTable() {
 
     print("[DATABASE] Tabela players_radio checada com sucesso.");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_radio checada com sucesso.");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_keys` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `pHouseKeySlot1` int NOT NULL,\
+    `pHouseKeySlot2` int NOT NULL,\
+    `pHouseKeySlot3` int NOT NULL,\
+    `pVehicleKeySlot1` int NOT NULL,\
+    `pVehicleKeySlot2` int NOT NULL,\
+    `pVehicleKeySlot3` int NOT NULL,\
+    `pHouseKey1` varchar(32) NOT NULL DEFAULT '0',\
+    `pHouseKey2` varchar(32) NOT NULL DEFAULT '0',\
+    `pHouseKey3` varchar(32) NOT NULL DEFAULT '0',\
+    `pVehicleKey1` varchar(32) NOT NULL DEFAULT '0',\
+    `pVehicleKey2` varchar(32) NOT NULL DEFAULT '0',\
+    `pVehicleKey3` varchar(32) NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_keys checada com sucesso.");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_keys checada com sucesso.");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_premium` (\

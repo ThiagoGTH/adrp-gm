@@ -153,12 +153,13 @@ void:CheckUserConditions(playerid) {
     if(IsUserRegistered(uInfo[playerid][uName])){
         ShowLoginTextdraws(playerid);
         //ClearPlayerChat(playerid);
-        Dialog_Show(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
+        Dialog_Show(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "{FFFFFF}SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
         \n           Digite sua senha:", "Autenticar", "Cancelar");
     } else {
         ShowLoginTextdraws(playerid);
-        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registro", "Bem vindo!\n \nO usuário ainda não foi registrado.\
-            \nPara continuar, digite uma senha de 6 a 16 caracteres abaixo", "Registrar", "Sair");
+        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre como criar sua conta.\n ", "Entendi", " ");
+        KickEx(playerid);
+
     }
 }
 

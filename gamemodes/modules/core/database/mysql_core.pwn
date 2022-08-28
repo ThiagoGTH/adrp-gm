@@ -59,6 +59,7 @@ void:CheckUserTable() {
     `password` varchar(128),\
     `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `discord_tag` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `discord_id` int NOT NULL DEFAULT '0',\
     `forum_username` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\

@@ -1,5 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
+forward PrivateMessageRegister(username[128], password[128]);
+
 forward ServerStatus(type);
 public ServerStatus(type){
     new title[32],
@@ -255,6 +257,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     DCC_GetUserDiscriminator(author, discriminator);
     new string[128];
     DCC_GetMessageContent(message, string);
+    new DCC_Guild:guild = DCC_FindGuildById("1000929204164112386");
 
     new bool:is_bot;
     if(!DCC_IsUserBot(author, is_bot))
@@ -275,13 +278,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
 
             if(!strcmp(command, "!registrar", true)){
                
-                new text[256],
-                    footer[128],
-                    title[64];
-                    /*timeValue[24],
-                    timestamp,
-                    log[512],
-                    logValue[512];*/
+                new text[256], footer[128], title[64];
 
                 if(isnull(parameters)){
                     format(text, 256, "**USE:** !registrar [nome do usuário]");
@@ -299,6 +296,27 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 }
 
                 new Cache:result;
+
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `discord_id` = '%d';", author);
+                result = mysql_query(DBConn, query);
+                
+                if(cache_num_rows()) {
+                    format(text, 256, "Foi encontrado um usuário vinculado ao seu Discord.");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_delete(result);
                 mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", parameters);
                 result = mysql_query(DBConn, query);
 
@@ -306,7 +324,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 if(cache_num_rows()) {
                     format(text, 256, "Ops... foi encontrado um usuário com este nome.");
                     utf8encode(text, text);
-                    format(title, 64, "Usuário Existente");
+                    format(title, 64, "Usuário existente");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
                     DCC_SetEmbedDescription(embed, text);
@@ -335,10 +353,24 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 format(password, sizeof(password), "%d%s%s%s%d%d%d%s%s", Number[Caracter1], Letter[Caracter2], Letter[Caracter3], Letter[Caracter4], Number[Caracter5], Number[Caracter6], Number[Caracter7], Letter[Caracter8], Letter[Caracter9]);
 
                 bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]", parameters);
-                
-                //CreateUser(parameters, password[]);
-                DCC_SendChannelMessage(channel, "Enviei!");
-                DCC_CreatePrivateChannel(author, "PrivateMessengeNewbie", "s[24]s[128]", parameters, password);
+                DCC_CreatePrivateChannel(author, "PrivateMessageRegister", "ss", parameters, password);
+                new DCC_Role:role = DCC_FindRoleById("1013523617985867776");
+                DCC_AddGuildMemberRole(guild, author, role);
+
+                format(title, 64, "Registro concluído!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, seu registro foi concluído e enviado no privado!\n", user_name);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);               
                 return true;
             } else {
                 new title[32];
@@ -959,8 +991,33 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     return true;
 }
 
-forward PrivateMessageRegister(name[24], password[128]);
-public PrivateMessageRegister(name[24], password[128]) {
-    DCC_SendChannelMessage(DCC_GetCreatedPrivateChannel(), "Seu usuario eh %s com senha %s", name, password);
+public PrivateMessageRegister(username[128], password[128]) {
+    new text[256], footer[128], title[64], title_field[128], text_field[256];
+    format(title, 64, "Registro concluído!");
+    utf8encode(title, title);
+    new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+    format(text, 256, "Bip-bip-bop-bip-bop-bip. Eis o seu registro para o **Closed Alpha**:\n");
+    utf8encode(text, text);
+    DCC_SetEmbedDescription(embed, text);
+
+    format(title_field, 128, "Usuário registrado:");
+    format(text_field, 256, "%s", username);
+    utf8encode(title_field, title_field);
+    utf8encode(text_field, text_field);
+    DCC_AddEmbedField(embed, title_field, text_field, true);
+
+    format(title_field, 128, "Senha registrada:");
+    format(text_field, 256, "%s", password);
+    utf8encode(title_field, title_field);
+    utf8encode(text_field, text_field);
+    DCC_AddEmbedField(embed, title_field, text_field, true);
+
+    format(footer, 128, "Ação realizada em %s.", GetFullDate(gettime()));
+    utf8encode(footer, footer);
+    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+    DCC_SetEmbedColor(embed, 0x5964F4);
+    DCC_SendChannelEmbedMessage(DCC_GetCreatedPrivateChannel(), embed);
     return true;
 }

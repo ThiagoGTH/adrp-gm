@@ -88,7 +88,7 @@ public OnPasswordChecked(playerid) {
         LoadUserInfo(playerid); 
         CheckUserBan(playerid);
         SetPlayerInterface(playerid, 2);
-	} else return SetPlayerInterface(playerid, 3);
+	} else return SetPlayerInterface(playerid, 1);
 	return true;
 
 }
@@ -97,7 +97,6 @@ public OnPasswordChecked(playerid) {
 
 NotifyWrongAttempt(playerid) {
     loginAttempts[playerid]++;
-    KillTimer(pInfo[playerid][pInterfaceTimer]);
     va_SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
     
     if(loginAttempts[playerid] >= 3) {

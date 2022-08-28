@@ -294,7 +294,6 @@ CheckUserBan(playerid) {
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM ban WHERE `banned_id` = '%d' AND `banned` = 1;", GetUserSQLID(playerid));
     mysql_query(DBConn, query);
-    printf("cache_num_rows() = %d", cache_num_rows());
     if(!cache_num_rows())
         return true;
 

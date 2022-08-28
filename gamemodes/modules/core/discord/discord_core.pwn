@@ -405,7 +405,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 return true;
             } 
             else if(!strcmp(command, "!criarpersonagem", true)){
-                new text[256], footer[128], title[64], user_id, user_name[24], Cache:result;
+                new text[256], footer[128], title[64], user_id, username[24], Cache:result;
                 
                 if(isnull(parameters)){
                     format(text, 256, "**USE:** !criarpersonagem [nome do personagem]\n:warning: Não esqueça de inserir o nome no formato **Nome_Sobrenome**!");
@@ -464,13 +464,13 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 }
 
                 cache_get_value_name_int(0, "ID", user_id);
-                cache_get_value_name(0, "name", user_name);
+                cache_get_value_name(0, "name", username);
                 CreateCharacter(parameters, user_id);
                 format(title, 64, "Personagem criado!");
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
 
-                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, seu personagem foi criado com o nome **%s**!\nLogue no servidor utilizando seu nome de usuário: %s.", user_name, parameters);
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, seu personagem foi criado com o nome **%s**!\nLogue no servidor utilizando seu nome de usuário: %s.", username, parameters);
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
 

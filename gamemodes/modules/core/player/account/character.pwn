@@ -89,19 +89,14 @@ Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
     ShowUsersCharacters(playerid);
 	return true;
 }
+*/
 
-CreateCharacter(playerid, characterName[]) {
-
+CreateCharacter(characterName[], userName) {
     mysql_format(DBConn, query, sizeof query,
-        "INSERT INTO players (`name`, `user_id`, `first_ip`) VALUES ('%s', '%d', '%s');",
-            characterName, uInfo[playerid][uID], GetPlayerIP(playerid));
+        "INSERT INTO players (`name`, `user_id`) VALUES ('%s', '%d');",
+            characterName, userName);
     mysql_query(DBConn, query);
-
-    pInfo[playerid][pName][0] = EOS;
-
-    printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
-
-}*/
+}
 
 LoadCharacterInfoID(playerid, id) {
     new first_login;

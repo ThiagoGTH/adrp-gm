@@ -2,7 +2,7 @@
 
 #define BCRYPT_COST 12
 
-forward OnPasswordHashed(user[]);
+forward OnPasswordHashed(author[], user[]);
 forward OnPasswordChecked(playerid);
 
 GetPlayerUserEx(playerid){
@@ -61,11 +61,11 @@ hook OnPlayerRequestClass(playerid, classid) {
 	return true;
 }*/
 
-public OnPasswordHashed(user[]) {
+public OnPasswordHashed(author[], user[]) {
 	new hash[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(hash);
 
-    CreateUser(user, hash);
+    CreateUser(author, user, hash);
     //CheckUserConditions(playerid);
 	return true;
 }
@@ -125,15 +125,12 @@ bool:IsUserRegistered(userName[]) {
     return resultState;
 }
 
-
-// Gerar o usuário e inserir na database sob as condições de checagem da função booleana acima.
-
-void:CreateUser(userName[], password[]) {
+void:CreateUser(author[], userName[], password[]) {
 
     if(IsUserRegistered(userName))
         return;
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO users (`username`, `password`) VALUES ('%s', '%s');", userName, password);
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO users (`username`, `password`, `discord_id`) VALUES ('%s', '%s', '%s');", userName, password, author);
     mysql_query(DBConn, query);
 
     new id = cache_insert_id();
@@ -144,8 +141,6 @@ void:CreateUser(userName[], password[]) {
     mysql_format(DBConn, query, sizeof query, "INSERT INTO users_premium (`user_id`) VALUES ('%d');", id);
     mysql_query(DBConn, query);
 }
-
-// Nada demais, só vai avaliar se o usuário está registrado (ou não) e mostrar as devidas dialogs
 
 void:CheckUserConditions(playerid) {
     KillTimer(pInfo[playerid][pInterfaceTimer]);
@@ -159,7 +154,6 @@ void:CheckUserConditions(playerid) {
         ShowLoginTextdraws(playerid);
         Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre como criar sua conta.\n ", "Entendi", " ");
         KickEx(playerid);
-
     }
 }
 

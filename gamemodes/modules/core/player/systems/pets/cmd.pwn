@@ -10,6 +10,8 @@ CMD:darpet(playerid, params[]) {
     PetData[targetid][petModelID] = petmodel;
     format(PetData[targetid][petName], 128, "Jack");
     SendServerMessage(playerid, "Você deu um animal de estimação para %s.", pNome(targetid));
+    format(logString, sizeof(logString), "%s (%s) deu um animal de estimação para %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(targetid));
+	logCreate(playerid, logString, 1);
     return true;
 }
 

@@ -819,7 +819,6 @@ ShowPlayerVehicles(playerid) {
 	new title[128];
 	format(title, 128, "Veículos_de_%s", pNome(playerid));
 	AdjustTextDrawString(title);
-
     Dialog_Show(playerid, ShowVehicles, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Spawnar", "Fechar");
 	return true;
 }

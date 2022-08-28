@@ -6,3 +6,4 @@
 #include "modules\core\player\systems\pets\function.pwn"
 #include "modules\core\player\systems\pets\cmd.pwn"
 #include "modules\core\player\systems\pets\models.pwn"
+#include "modules\core\player\systems\pets\buy.pwn"

@@ -28,7 +28,7 @@ timer Pet_Update[100](playerid, targetid) {
                 
                 if(GetDistance2D(plrX, plrY, actorX, actorY) > 2.0 && GetDistance2D(plrX, plrY, actorX, actorY) < 5.0) {
                     GetXYFromAngle(actorX, actorY, actorAngle, 0.1);
-                    ApplyActorAnimation(PetData[playerid][petModel], "ped", "WALK_civi", 4.1, 1, 1, 1, 1, 0);
+                    ApplyActorAnimation(PetData[playerid][petModel], "ped", "run_civi", 4.1, 1, 1, 1, 1, 0);
                     MapAndreas_FindZ_For2DCoord(actorX, actorY, actorZ);
                     SetFacingPlayer(PetData[playerid][petModel], targetid);
                     if(PetData[playerid][petModelID] == 20063) SetActorPos(PetData[playerid][petModel], actorX, actorY, actorZ+0.5);
@@ -47,7 +47,7 @@ timer Pet_Update[100](playerid, targetid) {
             {
                 if (GetDistance2D(plrX, plrY, actorX, actorY) > 2.0 && GetDistance2D(plrX, plrY, actorX, actorY) < 5.0) {
                     GetXYFromAngle(actorX, actorY, actorAngle, 0.1);
-                    ApplyActorAnimation(PetData[playerid][petModel], "ped", "WALK_civi", 4.1, 1, 1, 1, 1, 0);
+                    ApplyActorAnimation(PetData[playerid][petModel], "ped", "run_civi", 4.1, 1, 1, 1, 1, 0);
                     MapAndreas_FindZ_For2DCoord(actorX, actorY, actorZ);
                     SetFacingPlayer(PetData[playerid][petModel], targetid);
                     if(PetData[playerid][petModelID] == 20063) SetActorPos(PetData[playerid][petModel], actorX, actorY, actorZ+0.5);

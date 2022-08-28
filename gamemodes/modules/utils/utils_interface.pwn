@@ -54,7 +54,7 @@ public SetPlayerInterface(playerid, level) {
         KillTimer(pInfo[playerid][pInterfaceTimer]);
         NotifyWrongAttempt(playerid);
         HidePlayerFooter(playerid);
-        ShowPlayerFooter(playerid, "SENHA_INVÁLIDA", 2);
+        ShowPlayerFooter(playerid, "SENHA_INVÁLIDA", 1);
         pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
         
     } else if(level == 2) { // AUTENTICADO

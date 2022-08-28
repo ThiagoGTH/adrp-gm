@@ -87,9 +87,8 @@ public OnPasswordChecked(playerid) {
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid); 
         CheckUserBan(playerid);
-        pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 500, false, "dd", playerid, 2);
-	}
-	else return pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 500, false, "dd", playerid, 1);
+        SetPlayerInterface(playerid, 2);
+	} else return SetPlayerInterface(playerid, 3);
 	return true;
 
 }

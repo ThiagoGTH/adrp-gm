@@ -5,26 +5,24 @@ public OnPlayerRequestDownload(playerid, type, crc) {
 	if(!IsPlayerConnected(playerid))
 		return false;
 
-	InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1764.986206, -1501.460083, 238.376602, 12000);
-    InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1761.035888, -1498.431884, 237.901809, 12000);
+	InterpolateCameraPos(playerid, 1307.082153, -1441.499755, 221.137145, 1307.082153, -1441.499755, 221.137145, 1000);
+    InterpolateCameraLookAt(playerid, 1311.717285, -1439.645874, 220.856262, 1311.717285, -1439.645874, 220.856262, 1000);
 
 	new fullurl[256+1], dlfilename[64+1], foundfilename = 0;
-
 	if(type == DOWNLOAD_REQUEST_TEXTURE_FILE)
 		foundfilename = FindTextureFileNameFromCRC(crc, dlfilename, 64);
 	else if(type == DOWNLOAD_REQUEST_MODEL_FILE)
 		foundfilename = FindModelFileNameFromCRC(crc, dlfilename, 64);
 
-	if(foundfilename){
+	if(foundfilename) {
 		format(fullurl, 256, "%s/%s", baseurl, dlfilename);
 		RedirectDownload(playerid, fullurl);
 	}
-
 	return true;
 }
 
-public OnPlayerFinishedDownloading(playerid, virtualworld)
-{
+public OnPlayerFinishedDownloading(playerid, virtualworld) {
+	
 	return true;
 }
 

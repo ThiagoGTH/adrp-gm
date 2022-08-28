@@ -157,6 +157,9 @@ LoadCharacterInfoID(playerid, id) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_premium (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_pet (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
@@ -169,6 +172,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerPremium(playerid);
     LoadPlayerRadio(playerid);
     LoadPlayerInventory(playerid);
+    LoadPlayerPet(playerid);
 
     SpawnSelectedCharacter(playerid);
 }
@@ -323,6 +327,15 @@ SpawnSelectedCharacter(playerid) {
     return true;
 }
 
+LoadPlayerPet(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_pet WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "pet_model", PetData[playerid][petModelID]);
+    cache_get_value_name(0, "pet_name", PetData[targetid][petName]);
+    cache_delete(result);
+    return true;
+}
+
 forward SpawnPlayerPosCamera(playerid);
 public SpawnPlayerPosCamera(playerid) {
     pInfo[playerid][pLogged] = true;
@@ -399,6 +412,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerPremium(playerid);
     SavePlayerRadio(playerid);
     SavePlayerInventory(playerid);
+    SavePlayerPet(playerid);
     return true;
 }
 
@@ -551,6 +565,19 @@ SavePlayerRadio(playerid) {
     pInfo[playerid][pRadioNvl],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerPet(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_pet SET \
+    `pet_model` = '%d',        \
+    `pet_name` = '%s'    \
+    WHERE character_id = '%d';", 
+    PetData[playerid][petModelID],
+    PetData[targetid][petName],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
     return true;
 }
 

@@ -24,7 +24,6 @@ GetUserSQLID(playerid){
     return SQLID;
 }
 
-// Evento/gatilho de conexão estabelecida pelo jogador
 hook OnPlayerConnect(playerid) {
     TogglePlayerControllable(playerid, false);
     for (new i = 0; i < 70; i ++) {
@@ -48,25 +47,11 @@ hook OnPlayerRequestClass(playerid, classid) {
     return true;
 }
 
-/*Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[]) {
-	if(!response) return KickEx(playerid);
-        
-    if(strlen(inputtext) < 6 || strlen(inputtext) > 16) {
-        SendErrorMessage(playerid, "ERRO: A senha a ser registrada deve ter entre 6 e 16 caracteres.");
-        CheckUserConditions(playerid);
-        return false;
-    }
-
-    bcrypt_hash(inputtext, BCRYPT_COST, "OnPasswordHashed", "d", playerid);
-	return true;
-}*/
-
 public OnPasswordHashed(author[], user[]) {
 	new hash[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(hash);
 
     CreateUser(author, user, hash);
-    //CheckUserConditions(playerid);
 	return true;
 }
 
@@ -93,8 +78,6 @@ public OnPasswordChecked(playerid) {
 
 }
 
-// Simplesmente a função de notificar a senha incorreta digitada pelo jogador, numa tentativa máxima de três vezes.
-
 NotifyWrongAttempt(playerid) {
     loginAttempts[playerid]++;
     va_SendClientMessage(playerid, COLOR_LIGHTRED, "ERRO: Senha incorreta, tente novamente. [%d/3]", loginAttempts[playerid]);
@@ -109,8 +92,6 @@ NotifyWrongAttempt(playerid) {
     return true;
 }
 
-// Função booleana pra checar se o usuário já está registrado
-
 bool:IsUserRegistered(userName[]) {
     new bool: resultState;
 
@@ -124,7 +105,6 @@ bool:IsUserRegistered(userName[]) {
 }
 
 void:CreateUser(author[], userName[], password[]) {
-
     if(IsUserRegistered(userName))
         return;
 
@@ -155,7 +135,6 @@ void:CheckUserConditions(playerid) {
     }
 }
 
-// Caregar informações do usuário e adicioná-las às variáveis do enumerador. A variável de nome já é formatada ao logar.
 LoadUserInfo(playerid) {
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
@@ -214,7 +193,6 @@ LoadUserTeams(playerid) {
     return true;
 }
 
-// Dar um UPDATE no MySQL com as novas informações do usuário.
 SaveUserInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET \
     `admin`     =   %d,           \
@@ -283,7 +261,6 @@ SaveUserTeams(playerid) {
     mysql_query(DBConn, query);
     return true;
 }
-
 
 hook OnPlayerDisconnect(playerid, reason) {
     SaveUserInfo(playerid);

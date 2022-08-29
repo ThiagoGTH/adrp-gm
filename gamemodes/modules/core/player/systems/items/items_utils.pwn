@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 #define MAX_DYNAMIC_ITEMS               (10)
-#define MAX_DROPPED_ITEMS               (5)
+#define MAX_DROPPED_ITEMS               (500)
 
 #define MAX_INVENTORY_SLOTS             (30)
 
@@ -36,7 +36,7 @@ new DroppedItems[MAX_DROPPED_ITEMS][DROPPED_ITEMS_DATA];
 
 hook OnGameModeInit() {
     LoadItems();
-	//LoadDroppeds();
+	LoadDroppeds();
 }
 
 OrganizeInventory(playerid) {
@@ -93,4 +93,12 @@ IsWeaponModel(model) {
         return true;
 	}
 	return false;
+}
+
+Item_Nearest(playerid) {
+	for (new i = 0; i != MAX_DROPPED_ITEMS; i ++) if (DroppedItems[i][droppedModel] && IsPlayerInRangeOfPoint(playerid, 1.5, DroppedItems[i][droppedPos][0], DroppedItems[i][droppedPos][1], DroppedItems[i][droppedPos][2])) {
+		if (GetPlayerInterior(playerid) == DroppedItems[i][droppedInt] && GetPlayerVirtualWorld(playerid) == DroppedItems[i][droppedWorld])
+			return i;
+	}
+	return -1;
 }

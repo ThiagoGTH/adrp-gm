@@ -7,12 +7,13 @@
 #define MAX_OWNABLE_BUSINESSES      (3)
 #define MAX_PLAYER_VEHICLES         (20)
 
+#define MAX_LISTED_ITEMS (10)
+
 new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];
-new 
-    szBigString [256];
-    
+new szBigString [256];
+
 enum User_Data {
     uID,
     uName[24],
@@ -217,6 +218,8 @@ enum Player_Data {
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
+new NearestItems[MAX_PLAYERS][MAX_LISTED_ITEMS];
+
 new const g_aWeaponSlots[] = {
 	0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 10, 10, 10, 10, 10, 10, 8, 8, 8, 0, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 4, 6, 6, 7, 7, 7, 7, 8, 12, 9, 9, 9, 11, 11, 11
 };
@@ -414,6 +417,10 @@ void:ResetCharacterData(playerid) {
 	}
     pInfo[playerid][pInventoryItem] = -1;
     pInfo[playerid][pEditDropped] = 0;
+
+    for (new i = 0; i < MAX_LISTED_ITEMS; i ++) {
+	    NearestItems[playerid][i] = -1;
+	}
 }
 
 void:ResetCharacterSelection(playerid){

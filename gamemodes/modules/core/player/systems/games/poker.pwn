@@ -976,18 +976,15 @@ static PokerOptions(playerid, option)
 	}
 }
 
-static PokerCallHand(playerid)
-{
+static PokerCallHand(playerid) {
 	ShowCasinoGamesMenu(playerid, DIALOG_CGAMESCALLPOKER);
 }
 
-static PokerRaiseHand(playerid)
-{
+static PokerRaiseHand(playerid) {
 	ShowCasinoGamesMenu(playerid, DIALOG_CGAMESRAISEPOKER);
 }
 
-static PokerCheckHand(playerid)
-{
+static PokerCheckHand(playerid) {
 	if(ActiveHand[playerid]) 
 		strcpy(StatusString[playerid], "Check", 16);
 	
@@ -995,8 +992,7 @@ static PokerCheckHand(playerid)
 	ApplyAnimation(playerid, "CASINO", "cards_raise", 4.1, 0, 1, 1, 1, 1, 1);
 }
 
-static PokerFoldHand(playerid)
-{
+static PokerFoldHand(playerid) {
 	if(ActiveHand[playerid]) 
 	{
 		ActiveHand[playerid] = false;

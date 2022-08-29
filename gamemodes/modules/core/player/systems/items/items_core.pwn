@@ -1,5 +1,3 @@
-#include <YSI_Coding\y_hooks>
-
 ItemCreate(name, model) {
     for (new i = 0; i != MAX_DYNAMIC_ITEMS; i ++) {
         if (!diInfo[i][diExists]) {
@@ -26,7 +24,7 @@ LoadItems() {
     new loadeditems;
     mysql_query(DBConn, "SELECT * FROM `items` WHERE (`ID` != '0');");
 
-    for (new i; i < cache_num_rows(); i++) {
+    for (new i; i < cache_num_rows(); i++) if (i < MAX_DYNAMIC_ITEMS) {
         new id;
         cache_get_value_name_int(i, "ID", id);
         if (diInfo[id][diExists]) return false;
@@ -47,37 +45,33 @@ LoadItems() {
 
 LoadDroppeds() {
     new loadeddroppeds;
-    mysql_query(DBConn, "SELECT * FROM `items_dropped` WHERE (`item_world` != '0' OR `item_int` != '0');");
+    mysql_query(DBConn, "SELECT * FROM `items_dropped` WHERE (`item_world` = '0' OR `item_int` = '0');");
 
-    printf("cache_num_rows(): %d", cache_num_rows());
-    for (new i; i < cache_num_rows(); i++) {
+    for (new i; i < cache_num_rows(); i++) if (i < MAX_DROPPED_ITEMS) {
         new id;
-        cache_get_value_name_int(i, "ID", id);
-        //printf("id = %d", id);
+        cache_get_value_name_int(i, "ID", DroppedItems[i][droppedID]);
 
-        if (DroppedItems[id][droppedExists]) return false;
+        if (DroppedItems[i][droppedExists]) return false;
 
-        DroppedItems[id][droppedID] = id;
-        DroppedItems[id][droppedExists] = true;
+        DroppedItems[i][droppedExists] = true;
 
-        cache_get_value_name_int(i, "item_id", DroppedItems[id][droppedItem]);
-        cache_get_value_name_int(i, "item_player", DroppedItems[id][droppedPlayer]);
-        cache_get_value_name_int(i, "item_model", DroppedItems[id][droppedModel]);
-        cache_get_value_name_int(i, "item_quantity", DroppedItems[id][droppedQuantity]);
-        cache_get_value_name_int(i, "item_weapon", DroppedItems[id][droppedWeapon]);
-        cache_get_value_name_int(i, "item_ammo", DroppedItems[id][droppedAmmo]);
-        cache_get_value_name_int(i, "item_int", DroppedItems[id][droppedInt]);
-        cache_get_value_name_int(i, "item_world", DroppedItems[id][droppedWorld]);
+        cache_get_value_name_int(i, "item_id", DroppedItems[i][droppedItem]);
+        cache_get_value_name_int(i, "item_player", DroppedItems[i][droppedPlayer]);
+        cache_get_value_name_int(i, "item_model", DroppedItems[i][droppedModel]);
+        cache_get_value_name_int(i, "item_quantity", DroppedItems[i][droppedQuantity]);
+        cache_get_value_name_int(i, "item_weapon", DroppedItems[i][droppedWeapon]);
+        cache_get_value_name_int(i, "item_ammo", DroppedItems[i][droppedAmmo]);
+        cache_get_value_name_int(i, "item_int", DroppedItems[i][droppedInt]);
+        cache_get_value_name_int(i, "item_world", DroppedItems[i][droppedWorld]);
 
-        cache_get_value_name_float(i, "item_positionX", DroppedItems[id][droppedPos][0]);
-        cache_get_value_name_float(i, "item_positionY", DroppedItems[id][droppedPos][1]);
-        cache_get_value_name_float(i, "item_positionZ", DroppedItems[id][droppedPos][2]);
-        cache_get_value_name_float(i, "item_positionRX", DroppedItems[id][droppedPos][3]);
-        cache_get_value_name_float(i, "item_positionRY", DroppedItems[id][droppedPos][4]);
-        cache_get_value_name_float(i, "item_positionRZ", DroppedItems[id][droppedPos][5]);
+        cache_get_value_name_float(i, "item_positionX", DroppedItems[i][droppedPos][0]);
+        cache_get_value_name_float(i, "item_positionY", DroppedItems[i][droppedPos][1]);
+        cache_get_value_name_float(i, "item_positionZ", DroppedItems[i][droppedPos][2]);
+        cache_get_value_name_float(i, "item_positionRX", DroppedItems[i][droppedPos][3]);
+        cache_get_value_name_float(i, "item_positionRY", DroppedItems[i][droppedPos][4]);
+        cache_get_value_name_float(i, "item_positionRZ", DroppedItems[i][droppedPos][5]);
 
-        DroppedItems[id][droppedObject] = CreateDynamicObject(DroppedItems[id][droppedModel], DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2], DroppedItems[id][droppedPos][3], DroppedItems[id][droppedPos][4], DroppedItems[id][droppedPos][5], DroppedItems[id][droppedWorld], DroppedItems[id][droppedInt], -1);
-
+        DroppedItems[i][droppedObject] = CreateDynamicObject(DroppedItems[i][droppedModel], DroppedItems[i][droppedPos][0], DroppedItems[i][droppedPos][1], DroppedItems[i][droppedPos][2], DroppedItems[i][droppedPos][3], DroppedItems[i][droppedPos][4], DroppedItems[i][droppedPos][5], DroppedItems[i][droppedWorld], DroppedItems[i][droppedInt], -1);
         loadeddroppeds++;
     }
     printf("[ITENS DROPADOS]: %d itens dropados foram carregados.", loadeddroppeds);
@@ -152,10 +146,10 @@ ShowPlayerInventory(playerid){
             count++;
         }
     }
-    //AdjustTextDrawString(string);
 	format(title, sizeof(title), "Inventário de %s (%d/%d)", pNome(playerid), count, value);
 	AdjustTextDrawString(title);
 
+    AdjustTextDrawString(string);
     Dialog_Show(playerid, PlayerInventory, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
     return true;
 }
@@ -425,51 +419,4 @@ DropItem(playerid, item, model, quantity, Float:x, Float:y, Float:z, interior, w
         return i;
     }
     return -1;
-}
-
-hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz) {
-
-    new Float:oldX, Float:oldY, Float:oldZ,
-	Float:oldRotX, Float:oldRotY, Float:oldRotZ;
-	GetDynamicObjectPos(objectid, oldX, oldY, oldZ);
-	GetDynamicObjectRot(objectid, oldRotX, oldRotY, oldRotZ);
-
-    if(response == EDIT_RESPONSE_CANCEL) {
-        if (pInfo[playerid][pEditDropped] != -1 && DroppedItems[pInfo[playerid][pEditDropped]][droppedObject] == objectid) {
-			SetDynamicObjectPos(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], oldX, oldY, oldZ);
-			SetDynamicObjectRot(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], oldRotX, oldRotY, oldRotZ);
-			SendErrorMessage(playerid, "Você cancelou a edição do seu item dropado, ele foi colocado na posição anterior.");
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][0] = oldX;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][1] = oldY;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][2] = oldZ;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][3] = oldRotX;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][4] = oldRotY;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][5] = oldRotZ;
-			pInfo[playerid][pEditDropped] = 0;
-		}
-    } else if(response == EDIT_RESPONSE_FINAL) {
-        if (pInfo[playerid][pEditDropped] != -1 && DroppedItems[pInfo[playerid][pEditDropped]][droppedObject] == objectid) {
-			SetDynamicObjectPos(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], x, y, z);
-			SetDynamicObjectRot(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], rx, ry, rz);
-			SendClientMessage(playerid, -1, "Você ajustou com sucesso seu item dropado.");
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][0] = x;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][1] = y;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][2] = z;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][3] = rx;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][4] = ry;
-			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][5] = rz;
-
-            mysql_format(DBConn, query, sizeof query, "UPDATE `items_dropped` SET \
-            `item_positionX` = '%.4f',  \
-            `item_positionY` = '%.4f',  \
-            `item_positionZ` = '%.4f',  \
-            `item_positionRX` = '%.4f', \
-            `item_positionRY` = '%.4f', \
-            `item_positionRZ` = '%.4f' WHERE `item_id` = '%d'", x, y, z, rx, ry, rz, DroppedItems[pInfo[playerid][pEditDropped]][droppedID]);
-            new Cache:result = mysql_query(DBConn, query);
-            cache_delete(result);
-			pInfo[playerid][pEditDropped] = -1;
-		}
-    }
-    return true;
 }

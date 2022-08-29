@@ -38,7 +38,8 @@ CMD:menupet(playerid, params[]) {
     format(title, sizeof title, "Animais disponíveis");
     AdjustTextDrawString(title);
     AdjustTextDrawString(string);
-    return Dialog_Show(playerid, BuyPetsDialog, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Comprar", "Cancelar");
+    Dialog_Show(playerid, BuyPetsDialog, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Comprar", "Cancelar");
+    return true;
 }
 
 Dialog:BuyPetsDialog(playerid, response, listitem, inputtext[]) {

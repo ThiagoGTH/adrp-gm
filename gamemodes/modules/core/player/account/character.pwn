@@ -1,96 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-/*Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
-	if(!response || !strcmp(inputtext, " ")) return ShowUsersCharacters(playerid);
-
-    else if(!strcmp(inputtext, "Criar personagem")) {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", uInfo[playerid][uID]);
-        mysql_query(DBConn, query);
-
-        if(cache_num_rows() > uInfo[playerid][uCharSlots]) {
-            SendErrorMessage(playerid, "Você atingiu o limite de personagens. Adquira mais slots no UCP.");
-            return ShowUsersCharacters(playerid);
-        } else Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\nDigite com o padrão: 'Nome_Sobrenome'", 
-            "Continuar", "Voltar");
-
-    } else if(!strcmp(inputtext, "Deletar personagem")) {
-
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem \
-                que você gostaria de deletar.", "Continuar", "Voltar");
-
-    }
-	return true;
-}*/
-
-/*Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
-    if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][pName][0] = EOS;
-
-    if(strlen(inputtext) < 1) {
-        return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
-            "Continuar", "Voltar");
-    }
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players a, users b WHERE a.name = '%s'\
-        OR b.username = '%s';", inputtext, inputtext);
-    mysql_query(DBConn, query);
-
-    if(cache_num_rows()) {
-        SendClientMessage(playerid, COLOR_LIGHTRED, "Já existe outro usuário ou um personagem com este nome.");
-        return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
-            "Continuar", "Voltar");
-    }
-        
-    format(pInfo[playerid][pName], 24, "%s", inputtext);
-
-    CreateCharacter(playerid, pInfo[playerid][pName]);
-
-    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s.", inputtext);
-    SendServerMessage(playerid, "O personagem foi criado com sucesso e você já pode vê-lo na lista de personagens.");
-
-    ShowUsersCharacters(playerid);
-	return true;
-}
-
-Dialog:CHARACTER_DELETE(playerid, response, listitem, inputtext[]) {
-    new string[256];
-    if(!response) return ShowUsersCharacters(playerid);
-
-    if(!strlen(inputtext) || strlen(inputtext) > 24) {
-        SendErrorMessage(playerid, "Você deve digitar o nome válido de um personagem.");
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem que você gostaria de deletar.", "Continuar", "Voltar");
-    }
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s' AND `user_id` = '%d';", inputtext, uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-    if(!cache_num_rows()) {
-        SendErrorMessage(playerid, "Esse personagem não existe ou não é desse usuário.");
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem que você gostaria de deletar.", "Continuar", "Voltar");
-    }
-
-    format(pInfo[playerid][characterDelete], 24, "%s", inputtext);
-    format(string, 256, "Você realmente deseja deletar o personagem %s?\n \nEssa ação é irreversível.", pInfo[playerid][characterDelete]);
-    Dialog_Show(playerid, CHARACTER_DELETE_CONFIRM, DIALOG_STYLE_MSGBOX, "Deletar Personagem - Confirmar", string, "Deletar","Cancelar");
-	return true;
-}
-
-Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
-    if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][characterDelete][0] = EOS;
-
-    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `name` = '%s' AND `user_id` = '%d';", pInfo[playerid][characterDelete], uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-
-    va_SendClientMessage(playerid, -1, "SERVER: Você deletou o personagem %s com sucesso. A ação é irreversível.", pInfo[playerid][characterDelete]);
-    format(logString, sizeof(logString), "%s deletou o personagem %s.", uInfo[playerid][uName], pInfo[playerid][characterDelete]);
-	logCreate(playerid, logString, 4);
-    pInfo[playerid][characterDelete][0] = EOS;
-    ShowUsersCharacters(playerid);
-	return true;
-}
-*/
-
 CreateCharacter(characterName[], userName) {
     mysql_format(DBConn, query, sizeof query,
         "INSERT INTO players (`name`, `user_id`) VALUES ('%s', '%d');",
@@ -203,7 +112,6 @@ LoadPlayerInventory(playerid){
 }
 
 LoadPlayerApparence(playerid){
-    // PLAYER APPARENCE
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_apparence WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
     cache_get_value_name_int(0, "gender", pInfo[playerid][pGender]);

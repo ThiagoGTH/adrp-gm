@@ -102,3 +102,34 @@ Item_Nearest(playerid) {
 	}
 	return -1;
 }
+
+Item_Delete(itemid) {
+    if (itemid != -1 && DroppedItems[itemid][droppedModel]) {
+        DroppedItems[itemid][droppedModel] =
+		DroppedItems[itemid][droppedQuantity] =
+	    DroppedItems[itemid][droppedInt] =
+	    DroppedItems[itemid][droppedWorld] = 0;
+
+	    DroppedItems[itemid][droppedPos][0] =
+	    DroppedItems[itemid][droppedPos][1] =
+	    DroppedItems[itemid][droppedPos][2] =
+	    DroppedItems[itemid][droppedPos][3] =
+	    DroppedItems[itemid][droppedPos][4] =
+	    DroppedItems[itemid][droppedPos][5] = 0.0;
+
+		DroppedItems[itemid][droppedPlayer] = -1;
+		DroppedItems[itemid][droppedExists] = false;
+
+
+
+        if (IsValidDynamicObject(DroppedItems[itemid][droppedObject])) {
+	    	DestroyDynamicObject(DroppedItems[itemid][droppedObject]);
+	    	DroppedItems[itemid][droppedObject] = -1;
+		}
+
+		mysql_format(DBConn, query, sizeof query, "DELETE FROM `dropped` WHERE `ID` = '%d';", DroppedItems[itemid][droppedID]);
+    	new Cache:result = mysql_query(DBConn, query);
+		cache_delete(result);
+	}
+	return true;
+}

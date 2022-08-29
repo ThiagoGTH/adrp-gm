@@ -131,13 +131,6 @@ enum Player_Data {
     pESC,
     Float:pHealthMax,
 
-    pVehicles[MAX_PLAYER_VEHICLES],
-    pSpawnVehicle,
-	vListOpen,
-    pVehicleSell,
-	pVehicleSellPrice,
-    pSpawnVeh,
-
     // RADIO
     rRadioState,            // Estado do rádio, se ligado ou desligado
     rRadioSlot[7],          // Os canais conectados nos slots, vai do 1 ao 7
@@ -263,7 +256,7 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pUser]           = 0;
     pInfo   [playerid][pName][0]        =
     pInfo   [playerid][pFirstIP][0]     =
-    pInfo   [playerid][pLastIP][0]      = 
+    pInfo   [playerid][pLastIP][0]      =
     pInfo   [playerid][pBackground][0]  = EOS;
 
     pInfo   [playerid][pDonator]        =
@@ -274,20 +267,20 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pAdmin]          = 0;
     pInfo   [playerid][pHealth]         = 0.00;
     pInfo   [playerid][pArmour]         = 0.00;
-    pInfo   [playerid][pMoney]          = 
-    pInfo   [playerid][pBank]           = 
-    pInfo   [playerid][pSavings]        = 
-    pInfo   [playerid][pSkin]           = 
+    pInfo   [playerid][pMoney]          =
+    pInfo   [playerid][pBank]           =
+    pInfo   [playerid][pSavings]        =
+    pInfo   [playerid][pSkin]           =
     pInfo   [playerid][pScore]          = 0;
-    pInfo   [playerid][pPositionX]      = 
-    pInfo   [playerid][pPositionY]      = 
-    pInfo   [playerid][pPositionZ]      = 
+    pInfo   [playerid][pPositionX]      =
+    pInfo   [playerid][pPositionY]      =
+    pInfo   [playerid][pPositionZ]      =
     pInfo   [playerid][pPositionA]      = 0.00;
-    pInfo   [playerid][pVirtualWorld]   = 
-    pInfo   [playerid][pInterior]       = 
-    pInfo   [playerid][pEditandoBareira]= 
-    pInfo   [playerid][pLicence]        = 
-    pInfo   [playerid][pPhoneType]      = 
+    pInfo   [playerid][pVirtualWorld]   =
+    pInfo   [playerid][pInterior]       =
+    pInfo   [playerid][pEditandoBareira]=
+    pInfo   [playerid][pLicence]        =
+    pInfo   [playerid][pPhoneType]      =
     pInfo   [playerid][pPhoneNumber]    = 0;
 
     pInfo   [playerid][pGender]             =
@@ -339,14 +332,6 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pWatching] = false;
     pInfo[playerid][pWatchingPlayer] = INVALID_PLAYER_ID;
     pInfo[playerid][pCameraTimer] = -1;
-
-    for (new i = 0; i < 6; i ++)
-	{
-    	pInfo[playerid][pVehicles][i] = 0;
-	}
-    pInfo[playerid][pVehicleSell] = -1;
-    pInfo[playerid][pVehicleSellPrice] = 0;
-    pInfo[playerid][pSpawnVeh] = 0;
 
     // RADIO
     pInfo[playerid][rRadioState] = 0;

@@ -66,50 +66,41 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			    }
 		    }
 	  	 	if (count == 1) {
-		        new itemid = DroppedItems[id][droppedItem];
-					
 				/*if(itemid != -1 && GetPlayerHandStatus(playerid) != HANDS_CLEAN && g_aInventoryItems[itemid][e_InventoryHeavyItem])
 		    		return SendErrorMessage(playerid, "Você está com as mãos ocupadas.");*/
 
 				if (DroppedItems[id][droppedWeapon] != 0) {
-				        if (PlayerData[playerid][pLevel] < 2)
-							return SendErrorMessage(playerid, "Você deve possuir pelo menos level 2.");
+				    /*if (pInfo[playerid][pScore] < 2)
+						return SendErrorMessage(playerid, "Você deve possuir pelo menos level dois.");*/
 
-						if (PlayerData[playerid][pNewbie] == 1337)
-								return SendErrorMessage(playerid, "Você não pode ter armas pois é novato.");
+					if (uInfo[playerid][uNewbie] == 1337) return SendErrorMessage(playerid, "Você não pode ter armas pois é novato.");
 
-		   				GiveWeaponToPlayer(playerid, DroppedItems[id][droppedWeapon], DroppedItems[id][droppedAmmo]);
+		   			GiveWeaponToPlayer(playerid, DroppedItems[id][droppedWeapon], DroppedItems[id][droppedAmmo]);
 
-		   				SendClientMessageEx(playerid, -1, "SERVER: Você pegou uma %s (%d) do chão.", ReturnWeaponName(DroppedItems[id][droppedWeapon]), DroppedItems[id][droppedAmmo]);
+		   			SendServerMessage(playerid, "Você pegou uma %s (%d) do chão.", ReturnWeaponName(DroppedItems[id][droppedWeapon]), DroppedItems[id][droppedAmmo]);
 		                
-		                SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega uma %s do chão.", ReturnName(playerid, 0), ReturnWeaponName(DroppedItems[id][droppedWeapon]));
-	                    new log[128];
-						format(log, sizeof(log), "%s (%s) pegou um(a) %s (%d) (SQL: %d).", ReturnName(playerid, 0), PlayerData[playerid][pIP], ReturnWeaponName(DroppedItems[id][droppedWeapon]), DroppedItems[id][droppedAmmo], DroppedItems[id][droppedID]);
-						LogSQL_Create(playerid, log, 10);
+		            SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega uma %s do chão.", pNome(playerid), ReturnWeaponName(DroppedItems[id][droppedWeapon]));
 
-						Item_Delete(id);
-					}
-					else if (PickupItem(playerid, id))
-					{
-						new item_name[64];
-						format(item_name, sizeof(item_name), "%s", DroppedItems[id][droppedItem]);
-						new quantity = DroppedItems[id][droppedQuantity];
-		    	
-						if(!IsContainerItem(DroppedItems[id][droppedItem]))
-							Item_Delete(id);
+					format(logString, sizeof(logString), "%s (%s) pegou um(a) %s (%d) [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), ReturnWeaponName(DroppedItems[id][droppedWeapon]), DroppedItems[id][droppedAmmo], DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        			logCreate(playerid, logString, 18);
 
-						SendClientMessageEx(playerid, -1, "SERVER: Você pegou o item %s (%d) do chão.", item_name, quantity);
-
-						SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega o item \"%s\" do chão.", ReturnName(playerid, 0), item_name);
-						new log[128];
-						format(log, sizeof(log), "%s (%s) pegou um(a) %s em %s.", ReturnName(playerid, 0), PlayerData[playerid][pIP], item_name, GetPlayerLocation(playerid));
-						LogSQL_Create(playerid, log, 10);
-					}
-					else
-						SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+					Item_Delete(id);
 				}
-				else Dialog_Show(playerid, PickupItems, DIALOG_STYLE_LIST, "Pegar Itens", string, "Pegar", "Cancelar");
+				/*else if (PickupItem(playerid, id)) {
+					new itemid = DroppedItems[id][droppedItem];
+					new quantity = DroppedItems[id][droppedQuantity];
+
+					va_SendClientMessage(playerid, -1, "SERVER: Você pegou o item %s (%d) do chão.", diInfo[itemid][diName], quantity);
+
+					SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega o item \"%s\" do chão.", pNome(playerid), diInfo[itemid][diName]);
+
+					format(logString, sizeof(logString), "%s (%s) pegou um(a) %s (%d) [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), diInfo[itemid][diName], quantity, DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        			logCreate(playerid, logString, 18);
+
+					Item_Delete(id);
+				} else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");*/
 			}
+			else Dialog_Show(playerid, PickupItems, DIALOG_STYLE_LIST, "Pegar Itens", string, "Pegar", "Cancelar");	
 		}
 	}
     return true;

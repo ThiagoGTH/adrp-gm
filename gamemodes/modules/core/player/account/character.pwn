@@ -165,9 +165,7 @@ SpawnSelectedCharacter(playerid) {
     GivePlayerMoney(playerid, pInfo[playerid][pMoney]);
     SetPlayerHealth(playerid, pInfo[playerid][pHealth]);
     SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
-    
     SetPlayerScore(playerid, pInfo[playerid][pScore]);
-
     SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
     SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 
@@ -177,17 +175,8 @@ SpawnSelectedCharacter(playerid) {
         pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
 
-    if (GetPlayerSkin(playerid) < 1){
+    if (GetPlayerSkin(playerid) < 1)
         SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
-    }
-
-    switch(pInfo[playerid][pDonator]){
-	    case 0: pInfo[playerid][pSpawnVehicle] = 2;
-	    case 1: pInfo[playerid][pSpawnVehicle] = 3;
-	    case 2: pInfo[playerid][pSpawnVehicle] = 4;
-	    case 3: pInfo[playerid][pSpawnVehicle] = 5;
-        default: pInfo[playerid][pSpawnVehicle] = 2;
-	}
 
     SpawnPlayer(playerid);
     SetWeapons(playerid);
@@ -213,7 +202,7 @@ SpawnSelectedCharacter(playerid) {
     format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
-    
+
     if(pInfo[playerid][pInterior] != 0 || pInfo[playerid][pVirtualWorld] != 0) {
         TogglePlayerSpectating(playerid, false);
         SetCameraBehindPlayer(playerid);

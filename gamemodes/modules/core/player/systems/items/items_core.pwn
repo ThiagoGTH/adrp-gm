@@ -48,7 +48,6 @@ LoadDroppeds() {
     mysql_query(DBConn, "SELECT * FROM `items_dropped` WHERE (`item_world` = '0' OR `item_int` = '0');");
 
     for (new i; i < cache_num_rows(); i++) if (i < MAX_DROPPED_ITEMS) {
-        new id;
         cache_get_value_name_int(i, "ID", DroppedItems[i][droppedID]);
 
         if (DroppedItems[i][droppedExists]) return false;

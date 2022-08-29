@@ -30,6 +30,7 @@ hook OnGameModeInit(){
     LoadInterfaces();
 	LoadObjects();
 	LoadPets();
+	LoadItemsModels();
     return true;
 }
 

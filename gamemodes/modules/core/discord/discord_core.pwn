@@ -266,7 +266,9 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     if(is_bot)
         return false;
 
-    if(!strcmp(channel_name, "registro", true) && channel == DCC_FindChannelById("1013482041595146352")) { // #
+    ////////////////////////////////////////////////////////////////////////
+    // DISCORD CLOSED ALPHA
+    if(!strcmp(channel_name, "registro", true) && channel == DCC_FindChannelById("1013482041595146352")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
             new authorid[DCC_ID_SIZE];
@@ -503,11 +505,12 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")) {
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")){
         DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
         return true;
     }
     ////////////////////////////////////////////////////////////////////////
+    // DISCORD STAFF
     if(!strcmp(channel_name, "admin-chat", true) && channel == DCC_FindChannelById("989306920517136464")){
         new dest[255], nameee[255];
         utf8decode(dest, string);
@@ -526,8 +529,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
-    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")) //#comandos
-    {
+    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
             new authorid[DCC_ID_SIZE];
@@ -1009,7 +1011,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
-    if(!strcmp(channel_name, "manager-bot", true) && channel == DCC_FindChannelById("989305233299624007")){ // #manager-bot
+    if(!strcmp(channel_name, "manager-bot", true) && channel == DCC_FindChannelById("989305233299624007")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
             new authorid[DCC_ID_SIZE];
@@ -1097,7 +1099,11 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
     ////////////////////////////////////////////////////////////////////////
-    
+    // DISCORD PÚBLICO
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013952540393619557")){
+        DCC_SendChannelMessage(DCC_FindChannelById("277264357824528397"), string);
+        return true;
+    }
     return true;
 }
 

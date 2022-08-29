@@ -77,10 +77,10 @@ LoadDroppeds() {
     return true;
 }
 
-Inventory_Add(playerid, item[], quantity = 1){
+Inventory_Add(playerid, item, quantity = 1){
     new slotid = Inventory_SlotFree(playerid);
     if(slotid != -1){
-        pInfo[playerid][iItem][slotid] = GetItemID(playerid, item);
+        pInfo[playerid][iItem][slotid] = item;
         pInfo[playerid][iAmount][slotid] = quantity;
         return slotid;
     }
@@ -135,8 +135,8 @@ public GetItemID(playerid, item[]){
 ShowPlayerInventory(playerid){
     new string[2048], value = GetInventorySlots(playerid), money = GetMoney(playerid), count = 0, title[128];
 
-    if(money > 0) format(string, sizeof(string), "1212\tDinheiro~n~~g~US$ %s\n", FormatNumber(money));
-    else if(money <= 0) format(string, sizeof(string), "1212\tDinheiro~n~~r~US$ %s\n", FormatNumber(0));
+    if(money > 0) format(string, sizeof(string), "-6000\tDinheiro~n~~g~US$ %s\n", FormatNumber(money));
+    else if(money <= 0) format(string, sizeof(string), "-6000\tDinheiro~n~~r~US$ %s\n", FormatNumber(0));
 
     for (new i = 0; i < value; i++){
         if(pInfo[playerid][iItem][i] != 0) {
@@ -157,7 +157,7 @@ Dialog:PlayerInventory(playerid, response, listitem, inputtext[]) {
     if(response) {
         new model_id = strval(inputtext), slotid = listitem-1, title[128], string[256], money = GetMoney(playerid);
 
-        if (model_id == 1212){
+        if (model_id == -6000){
             if(GetMoney(playerid) < 1) return SendErrorMessage(playerid, "Você não possui dinheiro em mãos.");
 
             format(title, sizeof(title), "Dinheiro (US$ %s)", FormatNumber(money));
@@ -274,7 +274,7 @@ DropPlayerItem(playerid, slotid, quantity = 1) {
         format(logString, sizeof(logString), "%s (%s) dropou US$ %s em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(quantity), GetPlayerLocation(playerid), x, y, z);
         logCreate(playerid, logString, 18);
 
-        DropItem(playerid, -1, 1212, quantity, x, y, z, interior, world);
+        DropItem(playerid, -1, -6000, quantity, x, y, z, interior, world);
         GiveMoney(playerid, -quantity);
     } else {
         if(GetPlayerVirtualWorld(playerid) == 0) va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Este item desaparecerá no próximo shutdown diário, apenas itens dropados em interiores não somem após o shutdown.");
@@ -354,10 +354,9 @@ DropPlayerItemWithEdit(playerid, slotid, quantity = 1) {
         format(logString, sizeof(logString), "%s (%s) dropou US$ %s em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(quantity), GetPlayerLocation(playerid), x, y, z);
         logCreate(playerid, logString, 18);
 
-        pInfo[playerid][pEditDropped] = DropItem(playerid, -1, 1212, quantity, x, y, z, interior, world);
-
+        pInfo[playerid][pEditDropped] = DropItem(playerid, -1, -6000, quantity, x, y, z, interior, world);
         GiveMoney(playerid, -quantity);
-
+        
         SetTimerEx("EditDynObject", 1000, false, "ii", playerid, DroppedItems[pInfo[playerid][pEditDropped]][droppedObject]);
     } else {
         if(GetPlayerVirtualWorld(playerid) == 0) va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Este item desaparecerá no próximo shutdown diário, apenas itens dropados em interiores não somem após o shutdown.");
@@ -418,4 +417,13 @@ DropItem(playerid, item, model, quantity, Float:x, Float:y, Float:z, interior, w
         return i;
     }
     return -1;
+}
+
+PickupItem(playerid, itemid) {
+	if (itemid != -1 && DroppedItems[itemid][droppedModel]) {
+		new id = -1;
+	    if (id == -1) return SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+        id = Inventory_Add(playerid, DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
+	}
+	return true;
 }

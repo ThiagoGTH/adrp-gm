@@ -86,7 +86,19 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 					Item_Delete(id);
 				}
-				/*else if (PickupItem(playerid, id)) {
+				else if(DroppedItems[id][droppedModel] == -6000){
+					new quantity = DroppedItems[id][droppedQuantity];
+
+					va_SendClientMessage(playerid, -1, "SERVER: Você pegou US$ %s do chão.", FormatNumber(quantity));
+
+					SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pegou US$ %s do chão.", pNome(playerid), FormatNumber(quantity));
+
+					format(logString, sizeof(logString), "%s (%s) pegou US$ %s [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(quantity), DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        			logCreate(playerid, logString, 18);
+					GiveMoney(playerid, quantity);
+					Item_Delete(id);
+				}
+				else if (PickupItem(playerid, id)) {
 					new itemid = DroppedItems[id][droppedItem];
 					new quantity = DroppedItems[id][droppedQuantity];
 
@@ -98,7 +110,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
         			logCreate(playerid, logString, 18);
 
 					Item_Delete(id);
-				} else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");*/
+				} else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
 			}
 			else Dialog_Show(playerid, PickupItems, DIALOG_STYLE_LIST, "Pegar Itens", string, "Pegar", "Cancelar");	
 		}

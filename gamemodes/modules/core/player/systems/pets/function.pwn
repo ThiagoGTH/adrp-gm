@@ -111,7 +111,7 @@ PetStay(playerid) {
         PetData[playerid][petStatus] = PET_STAY;
         stop PetData[playerid][petTimer];
         ClearActorAnimations(PetData[playerid][petModel]);
-        SendServerMessage(playerid, "Your pet is now Stay!");
+        SendServerMessage(playerid, "Seu animal de estimação agora está parado.");
     }
     return 1;
 }

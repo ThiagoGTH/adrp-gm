@@ -78,11 +78,20 @@ LoadDroppeds() {
 }
 
 Inventory_Add(playerid, item, quantity = 1){
-    new slotid = Inventory_SlotFree(playerid);
-    if(slotid != -1){
-        pInfo[playerid][iItem][slotid] = item;
-        pInfo[playerid][iAmount][slotid] = quantity;
-        return slotid;
+    new value = GetInventorySlots(playerid);
+
+    for (new i = 0; i < value; i++) {
+        if(pInfo[playerid][iItem][i] == item) {
+            pInfo[playerid][iAmount][i] = quantity;
+            return i;
+        }
+    }
+    for(new slotid = 0; slotid < value; slotid ++) {
+        if(pInfo[playerid][iItem][slotid] == 0) {
+            pInfo[playerid][iItem][slotid] = item;
+            pInfo[playerid][iAmount][slotid] = quantity;
+            return slotid;
+        }
     }
     return -1;
 }
@@ -102,16 +111,15 @@ Inventory_Reset(playerid) {
 }
 
 Inventory_Quantity(playerid) {
-	new count = 0;
-
-	for (new i = 0; i < MAX_INVENTORY_SLOTS; i ++) {
+	new count = 0, value = GetInventorySlots(playerid);
+	for (new i = 0; i < value; i ++) {
 	    if(pInfo[playerid][iItem][i] != 0) count++;
 	}
 
 	return count;
 }
 
-Inventory_SlotFree(playerid){
+/*Inventory_SlotFree(playerid){
     new value = GetInventorySlots(playerid);
     for (new i = 0; i < value; i++){
         if(pInfo[playerid][iItem][i] == 0 && pInfo[playerid][iAmount][i] == 0) {
@@ -119,7 +127,7 @@ Inventory_SlotFree(playerid){
         }
     }
     return -1;
-}
+}*/
 
 forward GetItemID(playerid, item[]);
 public GetItemID(playerid, item[]){

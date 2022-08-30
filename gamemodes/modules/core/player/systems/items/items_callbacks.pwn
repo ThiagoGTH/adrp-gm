@@ -59,9 +59,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				        NearestItems[playerid][count++] = i;
 						new itemid = DroppedItems[i][droppedItem];
 					    new finalstr[64];
-						format(finalstr, sizeof(finalstr), "%s", diInfo[itemid][diName]);
-					    strcat(string, finalstr);
-					    strcat(string, "\n");
+						if(DroppedItems[i][droppedModel] == -6000){
+							format(finalstr, sizeof(finalstr), "Dinheiro (US$ %s)", FormatNumber(DroppedItems[i][droppedQuantity]));
+							strcat(string, finalstr);
+							strcat(string, "\n");
+						} else {
+							format(finalstr, sizeof(finalstr), "%s (%d)", diInfo[itemid][diName], DroppedItems[i][droppedQuantity]);
+							strcat(string, finalstr);
+							strcat(string, "\n");
+						}
 				    }
 			    }
 		    }

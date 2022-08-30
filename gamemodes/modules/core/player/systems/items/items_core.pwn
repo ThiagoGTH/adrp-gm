@@ -356,7 +356,7 @@ DropPlayerItemWithEdit(playerid, slotid, quantity = 1) {
 
         pInfo[playerid][pEditDropped] = DropItem(playerid, -1, -6000, quantity, x, y, z, interior, world);
         GiveMoney(playerid, -quantity);
-        
+
         SetTimerEx("EditDynObject", 1000, false, "ii", playerid, DroppedItems[pInfo[playerid][pEditDropped]][droppedObject]);
     } else {
         if(GetPlayerVirtualWorld(playerid) == 0) va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Este item desaparecerá no próximo shutdown diário, apenas itens dropados em interiores não somem após o shutdown.");
@@ -423,7 +423,53 @@ PickupItem(playerid, itemid) {
 	if (itemid != -1 && DroppedItems[itemid][droppedModel]) {
 		new id = -1;
 	    if (id == -1) return SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+        printf("%d %d", DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
         id = Inventory_Add(playerid, DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
+	}
+	return true;
+}
+
+Dialog:PickupItems(playerid, response, listitem, inputtext[]) {
+	if (response) {
+	    new id = NearestItems[playerid][listitem];
+
+		if (id != -1 && DroppedItems[id][droppedModel]) {
+		    if (DroppedItems[id][droppedWeapon] != 0) {
+  				if (pInfo[playerid][pScore] < 2) return SendErrorMessage(playerid, "Você deve possuir ao menos level dois.");
+				if (uInfo[playerid][uNewbie] == 1337) return SendErrorMessage(playerid, "Você não pode ter armas pois é novato.");
+
+                GiveWeaponToPlayer(playerid, DroppedItems[id][droppedWeapon], DroppedItems[id][droppedAmmo]);
+
+				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega uma %s do chão.", pNome(playerid), ReturnWeaponName(DroppedItems[id][droppedWeapon]));
+
+				format(logString, sizeof(logString), "%s (%s) pegou um(a) %s (%d) [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), ReturnWeaponName(DroppedItems[id][droppedWeapon]), DroppedItems[id][droppedAmmo], DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        		logCreate(playerid, logString, 18);
+
+				Item_Delete(id);
+			}
+            else if(DroppedItems[id][droppedModel] == -6000){
+				new quantity = DroppedItems[id][droppedQuantity];
+
+				va_SendClientMessage(playerid, -1, "SERVER: Você pegou US$ %s do chão.", FormatNumber(quantity));
+
+				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pegou US$ %s do chão.", pNome(playerid), FormatNumber(quantity));
+
+				format(logString, sizeof(logString), "%s (%s) pegou US$ %s [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(quantity), DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        		logCreate(playerid, logString, 18);
+				GiveMoney(playerid, quantity);
+				Item_Delete(id);
+			}
+			else if (PickupItem(playerid, id)) {
+				new itemid = DroppedItems[id][droppedItem], quantity = DroppedItems[id][droppedQuantity];
+				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega um(a) %s.", pNome(playerid), diInfo[itemid][diName]);
+				SendServerMessage(playerid, "O item foi adicionado ao seu inventário.");
+
+                format(logString, sizeof(logString), "%s (%s) pegou um(a) %s (%d) [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), diInfo[itemid][diName], quantity, DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
+        		logCreate(playerid, logString, 18);
+				Item_Delete(id);
+			}
+			else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+		} else SendErrorMessage(playerid, "Este item já foi pego.");
 	}
 	return true;
 }

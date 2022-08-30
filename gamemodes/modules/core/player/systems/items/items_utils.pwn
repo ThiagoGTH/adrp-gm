@@ -127,7 +127,7 @@ Item_Delete(itemid) {
 	    	DroppedItems[itemid][droppedObject] = -1;
 		}
 
-		mysql_format(DBConn, query, sizeof query, "DELETE FROM `dropped` WHERE `ID` = '%d';", DroppedItems[itemid][droppedID]);
+		mysql_format(DBConn, query, sizeof query, "DELETE FROM `items_dropped` WHERE `ID` = '%d';", DroppedItems[itemid][droppedID]);
     	new Cache:result = mysql_query(DBConn, query);
 		cache_delete(result);
 	}

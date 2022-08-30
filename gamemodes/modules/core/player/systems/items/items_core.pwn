@@ -446,8 +446,7 @@ Dialog:PickupItems(playerid, response, listitem, inputtext[]) {
         		logCreate(playerid, logString, 18);
 
 				Item_Delete(id);
-			}
-            else if(DroppedItems[id][droppedModel] == -6000){
+			} else if(DroppedItems[id][droppedModel] == -6000){
 				new quantity = DroppedItems[id][droppedQuantity];
 
 				va_SendClientMessage(playerid, -1, "SERVER: Você pegou US$ %s do chão.", FormatNumber(quantity));
@@ -458,8 +457,7 @@ Dialog:PickupItems(playerid, response, listitem, inputtext[]) {
         		logCreate(playerid, logString, 18);
 				GiveMoney(playerid, quantity);
 				Item_Delete(id);
-			}
-			else if (PickupItem(playerid, id)) {
+			} else if (PickupItem(playerid, id)) {
 				new itemid = DroppedItems[id][droppedItem], quantity = DroppedItems[id][droppedQuantity];
 				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega um(a) %s.", pNome(playerid), diInfo[itemid][diName]);
 				SendServerMessage(playerid, "O item foi adicionado ao seu inventário.");
@@ -467,9 +465,12 @@ Dialog:PickupItems(playerid, response, listitem, inputtext[]) {
                 format(logString, sizeof(logString), "%s (%s) pegou um(a) %s (%d) [SQL: %d] em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), diInfo[itemid][diName], quantity, DroppedItems[id][droppedID], GetPlayerLocation(playerid), DroppedItems[id][droppedPos][0], DroppedItems[id][droppedPos][1], DroppedItems[id][droppedPos][2]);
         		logCreate(playerid, logString, 18);
 				Item_Delete(id);
-			}
-			else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+			} else SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
+
+            for (new i = 0; i < MAX_LISTED_ITEMS; i ++) 
+                NearestItems[playerid][i] = -1;
+
 		} else SendErrorMessage(playerid, "Este item já foi pego.");
-	}
+	} else for (new i = 0; i < MAX_LISTED_ITEMS; i ++) NearestItems[playerid][i] = -1;
 	return true;
 }

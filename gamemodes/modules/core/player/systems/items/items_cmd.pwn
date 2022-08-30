@@ -2,7 +2,7 @@
 
 CMD:resetarinventario(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
-
+    new userid;
 	if (sscanf(params, "u", userid))
 		return  SendSyntaxMessage(playerid, "/resetarinventario [playerid/nome]");
 

@@ -78,11 +78,13 @@ LoadDroppeds() {
 }
 
 Inventory_Add(playerid, item, quantity = 1){
+    printf("item = %d, quantity = %d", item, quantity);
     new value = GetInventorySlots(playerid);
 
     for (new i = 0; i < value; i++) {
         if(pInfo[playerid][iItem][i] == item) {
-            pInfo[playerid][iAmount][i] = quantity;
+            pInfo[playerid][iAmount][i] += quantity;
+            printf("Inventory_Add ++");
             return i;
         }
     }
@@ -90,6 +92,7 @@ Inventory_Add(playerid, item, quantity = 1){
         if(pInfo[playerid][iItem][slotid] == 0) {
             pInfo[playerid][iItem][slotid] = item;
             pInfo[playerid][iAmount][slotid] = quantity;
+            printf("Inventory_Add Create");
             return slotid;
         }
     }
@@ -141,19 +144,18 @@ public GetItemID(playerid, item[]){
 }
 
 ShowPlayerInventory(playerid){
-    new string[2048], value = GetInventorySlots(playerid), money = GetMoney(playerid), count = 0, title[128];
+    new string[2048], money = GetMoney(playerid), title[128];
 
     if(money > 0) format(string, sizeof(string), "-6000\tDinheiro~n~~g~US$ %s\n", FormatNumber(money));
     else if(money <= 0) format(string, sizeof(string), "-6000\tDinheiro~n~~r~US$ %s\n", FormatNumber(0));
 
-    for (new i = 0; i < value; i++){
+    for (new i = 0; i < GetInventorySlots(playerid); i++){
         if(pInfo[playerid][iItem][i] != 0) {
             format(string, sizeof(string), "%s%d\t%s~n~~n~~n~~n~~n~~y~(%d)~n~~w~%d\n", string,
             diInfo[pInfo[playerid][iItem][i]][diModel], diInfo[pInfo[playerid][iItem][i]][diName], pInfo[playerid][iAmount][i], i);
-            count++;
         }
     }
-	format(title, sizeof(title), "Inventário de %s (%d/%d)", pNome(playerid), count, value);
+	format(title, sizeof(title), "Inventário de %s (%d/%d)", pNome(playerid), Inventory_Quantity(playerid), GetInventorySlots(playerid));
 	AdjustTextDrawString(title);
 
     AdjustTextDrawString(string);
@@ -289,10 +291,10 @@ DropPlayerItem(playerid, slotid, quantity = 1) {
 
         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s dropou um(a) %s.", pNome(playerid), diInfo[pInfo[playerid][iItem][slotid]][diName]);
 
+        DropItem(playerid, diInfo[pInfo[playerid][iItem][slotid]][diID], diInfo[pInfo[playerid][iItem][slotid]][diModel], quantity, x, y, z, interior, world);
+
         format(logString, sizeof(logString), "%s (%s) dropou um(a) %s (%d) em %s (%.4f, %.4f, %.4f)", pNome(playerid), GetPlayerUserEx(playerid), diInfo[pInfo[playerid][iItem][slotid]][diName], quantity, GetPlayerLocation(playerid), x, y, z);
         logCreate(playerid, logString, 18);
-
-        DropItem(playerid, diInfo[pInfo[playerid][iItem][slotid]][diID], diInfo[pInfo[playerid][iItem][slotid]][diModel], quantity, x, y, z, interior, world);
 
         Inventory_Remove(playerid, slotid, quantity);
     }
@@ -430,9 +432,9 @@ DropItem(playerid, item, model, quantity, Float:x, Float:y, Float:z, interior, w
 PickupItem(playerid, itemid) {
 	if (itemid != -1 && DroppedItems[itemid][droppedModel]) {
 		new id = -1;
-	    if (id == -1) return SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
-        printf("%d %d", DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
+        printf("PickupItem Item:%d, Quantidade:%d", DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
         id = Inventory_Add(playerid, DroppedItems[itemid][droppedItem], DroppedItems[itemid][droppedQuantity]);
+        if (id == -1) return SendErrorMessage(playerid, "Você não possui nenhum slot disponível no inventário.");
 	}
 	return true;
 }
@@ -440,8 +442,7 @@ PickupItem(playerid, itemid) {
 Dialog:PickupItems(playerid, response, listitem, inputtext[]) {
 	if (response) {
 	    new id = NearestItems[playerid][listitem];
-
-		if (id != -1 && DroppedItems[id][droppedModel]) {
+		if (id != -1) {
 		    if (DroppedItems[id][droppedWeapon] != 0) {
   				if (pInfo[playerid][pScore] < 2) return SendErrorMessage(playerid, "Você deve possuir ao menos level dois.");
 				if (uInfo[playerid][uNewbie] == 1337) return SendErrorMessage(playerid, "Você não pode ter armas pois é novato.");

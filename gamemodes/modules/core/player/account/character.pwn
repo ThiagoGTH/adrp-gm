@@ -62,6 +62,9 @@ LoadCharacterInfoID(playerid, id) {
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_premium (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_radio (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_pet (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
     }
@@ -158,6 +161,15 @@ LoadPlayerPremium(playerid){
     return true;
 }
 
+LoadPlayerPet(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_pet WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "pet_model", PetData[playerid][petModelID]);
+    cache_get_value_name(0, "pet_name", PetData[playerid][petName]);
+    cache_delete(result);
+    return true;
+}
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -216,15 +228,6 @@ SpawnSelectedCharacter(playerid) {
     InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
     InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
     SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid, 0);
-    return true;
-}
-
-LoadPlayerPet(playerid){
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_pet WHERE `character_id` = '%d'", pInfo[playerid][pID]);
-    new Cache:result = mysql_query(DBConn, query);
-    cache_get_value_name_int(0, "pet_model", PetData[playerid][petModelID]);
-    cache_get_value_name(0, "pet_name", PetData[playerid][petName]);
-    cache_delete(result);
     return true;
 }
 

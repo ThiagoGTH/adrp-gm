@@ -281,7 +281,7 @@ CMD:infoplayer(playerid, params[]) {
 
 CMD:skin(playerid, params[]) {
 	
-	if(GetPlayerAdmin(playerid) < 3) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
+	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	new userid, level;
 	if(sscanf(params, "ud", userid, level)) return SendSyntaxMessage(playerid, "/skin [playerid] [skin id]");
 	if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
@@ -534,7 +534,7 @@ CMD:clima(playerid, params[])
 }
 
 CMD:trazer(playerid, params[]) {
-  	if(GetPlayerAdmin(playerid) < 2) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
+  	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) return SendClientMessage(playerid, COLOR_LIGHTRED, "Esse administrador está em modo espectador em alguém, por isso não pode puxa-lo.");
 
 	new userid, Float: PlayerPos[3];
@@ -554,7 +554,7 @@ CMD:ir(playerid, params[]) {
 	  	type[24],
 		string[64];
 
-	if(GetPlayerAdmin(playerid) < 2) return SendClientMessage(playerid, COLOR_GREY, "Você não possui autorização para utilizar esse comando.");
+	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "u", id)) {
 	 	SendSyntaxMessage(playerid, "/ir [playerid ou syntax]");

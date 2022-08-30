@@ -8,6 +8,8 @@
 #include "modules\core\maps\exterior\factions\SAN1.pwn" 
 #include "modules\core\maps\exterior\factions\SEB.pwn" 
 
+#include "modules\core\maps\exterior\workshops\montgomery.pwn" 
+
 #include "modules\core\maps\exterior\env\idlewood.pwn"
 #include "modules\core\maps\exterior\env\sanpedro.pwn"
 #include "modules\core\maps\exterior\env\bahamas.pwn"
@@ -23,6 +25,7 @@
 #include "modules\core\maps\exterior\env\el_corona.pwn"
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
+
 #include "modules\core\maps\interior\mazebank.pwn"
 #include "modules\core\maps\interior\doj.pwn"
 #include "modules\core\maps\interior\nightclub1.pwn"

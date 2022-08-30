@@ -9,10 +9,10 @@ CMD:resetarinventario(playerid, params[]) {
 	if (userid == INVALID_PLAYER_ID)
 	    return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
 
-	GiveMoney(userid, amount);
-	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s resetou o inventário de %s.", pNome(playerid), pNome(userid));
+	Inventory_Reset(userid);
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s resetou o inventário de %s.", GetPlayerUserEx(playerid), pNome(userid));
 	
-	format(logString, sizeof(logString), "%s (%s) deu $%s para %s.", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(amount), pNome(userid));
+	format(logString, sizeof(logString), "%s (%s) resetou o inventário de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
     return true;
 }

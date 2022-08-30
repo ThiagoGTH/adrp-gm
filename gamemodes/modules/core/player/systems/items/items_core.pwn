@@ -77,30 +77,9 @@ LoadDroppeds() {
     return true;
 }
 
-Inventory_Add(playerid, item, quantity = 1){
-    printf("item = %d, quantity = %d", item, quantity);
-    new value = GetInventorySlots(playerid);
-
-    for (new i = 0; i < value; i++) {
-        if(pInfo[playerid][iItem][i] == item) {
-            pInfo[playerid][iAmount][i] += quantity;
-            printf("Inventory_Add ++");
-            return i;
-        }
-    }
-    for(new slotid = 0; slotid < value; slotid ++) {
-        if(pInfo[playerid][iItem][slotid] == 0) {
-            pInfo[playerid][iItem][slotid] = item;
-            pInfo[playerid][iAmount][slotid] = quantity;
-            printf("Inventory_Add Create");
-            return slotid;
-        }
-    }
-    return -1;
-}
-
 Inventory_Remove(playerid, slotid, quantity = 1){
     if(pInfo[playerid][iAmount][slotid] > 1) return pInfo[playerid][iAmount][slotid] -= quantity;
+    else if(pInfo[playerid][iAmount][slotid] == quantity) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0, OrganizeInventory(playerid);
     else if(pInfo[playerid][iAmount][slotid] == 1) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0, OrganizeInventory(playerid);
     return -1;
 }
@@ -121,16 +100,6 @@ Inventory_Quantity(playerid) {
 
 	return count;
 }
-
-/*Inventory_SlotFree(playerid){
-    new value = GetInventorySlots(playerid);
-    for (new i = 0; i < value; i++){
-        if(pInfo[playerid][iItem][i] == 0 && pInfo[playerid][iAmount][i] == 0) {
-            return i;
-        }
-    }
-    return -1;
-}*/
 
 forward GetItemID(playerid, item[]);
 public GetItemID(playerid, item[]){

@@ -133,3 +133,40 @@ Item_Delete(itemid) {
 	}
 	return true;
 }
+
+Inventory_Add(playerid, item, quantity = 1){
+    printf("item = %d, quantity = %d", item, quantity);
+    new value = GetInventorySlots(playerid);
+
+    for (new i = 0; i < value; i++) {
+        if(pInfo[playerid][iItem][i] == item) {
+            pInfo[playerid][iAmount][i] += quantity;
+            printf("Inventory_Add ++");
+            return i;
+        }
+    }
+    for(new slotid = 0; slotid < value; slotid ++) {
+        if(pInfo[playerid][iItem][slotid] == 0) {
+            pInfo[playerid][iItem][slotid] = item;
+            pInfo[playerid][iAmount][slotid] = quantity;
+            printf("Inventory_Add Create");
+            return slotid;
+        }
+    }
+    return -1;
+}
+
+Inventory_HasItem(playerid, const item[]) {
+	new exists = false, value = GetInventorySlots(playerid);
+	for (new i = 0; i < value; i ++) {
+		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item))
+			exists = true;
+	}
+	return exists;
+}
+
+CMD:celular(playerid, params[]){
+	if(Inventory_HasItem(playerid, "Celular")) return SendServerMessage(playerid, "Tem!");
+	else SendServerMessage(playerid, "Não tem!");
+	return true;
+}

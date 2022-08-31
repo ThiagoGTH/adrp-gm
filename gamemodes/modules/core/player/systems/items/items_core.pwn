@@ -79,7 +79,7 @@ LoadDroppeds() {
 
 Inventory_Remove(playerid, slotid, quantity = 1){
     if(pInfo[playerid][iAmount][slotid] > 1) return pInfo[playerid][iAmount][slotid] -= quantity;
-    else if(pInfo[playerid][iAmount][slotid] == quantity) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0, OrganizeInventory(playerid);
+    else if(pInfo[playerid][iAmount][slotid] >= quantity) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0, OrganizeInventory(playerid);
     else if(pInfo[playerid][iAmount][slotid] == 1) return pInfo[playerid][iItem][slotid] = 0, pInfo[playerid][iAmount][slotid] = 0, OrganizeInventory(playerid);
     return -1;
 }

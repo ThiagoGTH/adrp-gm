@@ -43,6 +43,7 @@
 #include "modules\core\player\systems\investment\investment.pwn"
 #include "modules\core\player\systems\factions\factions.pwn"
 #include "modules\core\player\systems\games\games.pwn"
+#include "modules\core\player\systems\animations\animations.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
 #include "modules\core\discord\discord_core.pwn"
 #include "modules\core\admin\admin.pwn"

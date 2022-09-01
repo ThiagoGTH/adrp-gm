@@ -26,6 +26,7 @@
 #include "modules\core\maps\exterior\env\sp_apartments.pwn"
 
 #include "modules\core\maps\exterior\business\petshop.pwn"
+#include "modules\core\maps\exterior\business\stacked.pwn"
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
 #include "modules\core\maps\interior\mazebank.pwn"

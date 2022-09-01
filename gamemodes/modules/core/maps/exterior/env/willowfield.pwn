@@ -83,20 +83,20 @@ hook OnGameModeInit() {
     AddSimpleModel (-1,1923, -1046, "maps/env/willowfield/WillowfieldHoodOne4.dff", "maps/env/willowfield/WillowfieldHoodOne4.txd");
     AddSimpleModel (-1,1923, -1047, "maps/env/willowfield/WillowfieldHoodOne5.dff", "maps/env/willowfield/WillowfieldHoodOne5.txd");
 
-    CreateObject(-1044, 2290.312988, -2170.430908, 10.876700, 0.000000, 0.000000, 0.000000, 700.00); 
-    CreateDynamicObject(-1045, 2283.602050, -2175.091064, 15.364000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
-    CreateDynamicObject(-1042, 2295.977050, -2180.725097, 15.161000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
-    CreateDynamicObject(-1046, 2305.486083, -2165.291992, 16.826000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
-    CreateObject(-1047, 2275.406982, -2095.265869, 12.507699, 0.000000, 0.000000, 0.000000, 700.00); 
+    CreateObject(-1044, 2290.312988, -2170.430908, 10.876700, 0.000000, 0.000000, 0.000000, 1000.00); 
+    CreateDynamicObject(-1045, 2283.602050, -2175.091064, 15.364000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00); 
+    CreateDynamicObject(-1042, 2295.977050, -2180.725097, 15.161000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00); 
+    CreateDynamicObject(-1046, 2305.486083, -2165.291992, 16.826000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00); 
+    CreateObject(-1047, 2275.406982, -2095.265869, 12.507699, 0.000000, 0.000000, 0.000000, 1000.00); 
 
     AddSimpleModel(-1, 1923, -1048, "maps/env/willowfield/WillowfieldHoodTwo1.dff", "maps/env/willowfield/WillowfieldHoodTwo1.txd");
     AddSimpleModel(-1, 1923, -1049, "maps/env/willowfield/WillowfieldHoodTwo2.dff", "maps/env/willowfield/WillowfieldHoodTwo2.txd");
     AddSimpleModel(-1, 1923, -1050, "maps/env/willowfield/WillowfieldHoodTwo3.dff", "maps/env/willowfield/WillowfieldHoodTwo3.txd");
     AddSimpleModel(-1, 8674, -1051, "maps/env/willowfield/WillowfieldHoodTwo4.dff", "maps/env/willowfield/WillowfieldHoodTwo4.txd");
 
-    CreateDynamicObject(-1048, 2297.689941, -2080.586914, 12.550000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
-    CreateDynamicObject(-1049, 2359.531005, -2109.460937, 15.371998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
-    CreateObject(-1050, 2360.936035, -2117.017089, 14.850998, 0.000000, 0.000000, 0.000000, 700.00); 
-    CreateDynamicObject(-1051, 2367.101074, -2104.678955, 13.670998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00); 
+    CreateDynamicObject(-1048, 2297.689941, -2080.586914, 12.550000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00);
+    CreateDynamicObject(-1049, 2359.531005, -2109.460937, 15.371998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00);
+    CreateObject(-1050, 2360.936035, -2117.017089, 14.850998, 0.000000, 0.000000, 0.000000, 1000.00);
+    CreateDynamicObject(-1051, 2367.101074, -2104.678955, 13.670998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 1000.00);
     return true;
 }

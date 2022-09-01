@@ -257,7 +257,8 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     DCC_GetUserDiscriminator(author, discriminator);
     new string[128];
     DCC_GetMessageContent(message, string);
-    new DCC_Guild:guild = DCC_FindGuildById("1000929204164112386");
+    new DCC_Guild:guild = DCC_FindGuildById("277264357824528397");
+    new DCC_Guild:guildCA = DCC_FindGuildById("1000929204164112386");
 
     new bool:is_bot;
     if(!DCC_IsUserBot(author, is_bot))
@@ -387,8 +388,10 @@ public DCC_OnMessageCreate(DCC_Message:message) {
 
                 bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]s[128]", authorid, parameters);
                 DCC_CreatePrivateChannel(author, "PrivateMessageRegister", "ss", parameters, password);
-                new DCC_Role:role = DCC_FindRoleById("1013523617985867776");
-                DCC_AddGuildMemberRole(guild, author, role);
+                new DCC_Role:role1 = DCC_FindRoleById("1013523617985867776");
+                new DCC_Role:role2 = DCC_FindRoleById("1014711599325511880");
+                DCC_AddGuildMemberRole(guildCA, author, role1);
+                DCC_AddGuildMemberRole(guild, author, role2);
 
                 format(title, 64, "Registro concluído!");
                 utf8encode(title, title);

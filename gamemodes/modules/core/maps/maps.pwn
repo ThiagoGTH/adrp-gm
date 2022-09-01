@@ -24,6 +24,8 @@
 #include "modules\core\maps\exterior\env\willowfield.pwn"
 #include "modules\core\maps\exterior\env\el_corona.pwn"
 
+#include "modules\core\maps\exterior\business\petshop.pwn"
+
 #include "modules\core\maps\interior\factions\SAN2.pwn"
 
 #include "modules\core\maps\interior\mazebank.pwn"

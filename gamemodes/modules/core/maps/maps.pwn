@@ -23,11 +23,11 @@
 #include "modules\core\maps\exterior\env\ocean_docks.pwn"
 #include "modules\core\maps\exterior\env\willowfield.pwn"
 #include "modules\core\maps\exterior\env\el_corona.pwn"
+#include "modules\core\maps\exterior\env\sp_apartments.pwn"
 
 #include "modules\core\maps\exterior\business\petshop.pwn"
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
-
 #include "modules\core\maps\interior\mazebank.pwn"
 #include "modules\core\maps\interior\doj.pwn"
 #include "modules\core\maps\interior\nightclub1.pwn"

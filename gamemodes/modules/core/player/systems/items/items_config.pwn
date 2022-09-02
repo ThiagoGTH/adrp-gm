@@ -1,37 +1,35 @@
-Dialog:DealershipConfig(playerid, response, listitem, inputtext[]){
+Dialog:ItemsConfig(playerid, response, listitem, inputtext[]){
     if(response) {
         new title[128], string[1024];
-        new model_id = strval(inputtext), price, premium, sqlid, category;
+        new model_id = strval(inputtext), name[64], desc[256], useful, sqlid, category;
         if(model_id == 19132){
-            Dialog_Show(playerid, DealershipAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar veículo à concessionária", "Digite o ID do veículo a ser adicionado:", "Adicionar", "<<");
+            Dialog_Show(playerid, ItemsAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Digite o ID do objeto a ser adicionado:", "Adicionar", "<<");
         } else {
-            mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d'", model_id);
+            mysql_format(DBConn, query, sizeof query, "SELECT * FROM `items` WHERE `item_model` = '%d'", model_id);
             new Cache:result = mysql_query(DBConn, query);
-            if(!cache_num_rows()) return SendErrorMessage(playerid, "DCx001 - Ocorreu um erro, reporte a um desenvolvedor.");
+
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "DIx001 - Ocorreu um erro, reporte a um desenvolvedor.");
+
             cache_get_value_name_int(0, "ID", sqlid);
-            cache_get_value_name_int(0, "category", category);
-            cache_get_value_name_int(0, "price", price);
-            cache_get_value_name_int(0, "premium", premium);
+            cache_get_value_name_int(0, "item_category", category);
+            cache_get_value_name_int(0, "item_useful", useful);
+            cache_get_value_name(0, "item_name", name);
+            cache_get_value_name(0, "item_desc", desc);
             cache_delete(result);
 
-            format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", ReturnVehicleModelName(model_id), sqlid);
+            format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", name, sqlid);
 
             format(string, sizeof(string), 
                 "{AFAFAF}Categoria\t{FFFFFF}%s\n\
-                {AFAFAF}Premium\t{FFFFFF}%s\n\
-                {AFAFAF}Valor\t{FFFFFF}US$ %s\n\t\n\
-                {FF0000}Deletar veículo", DealershipCategory(category), PremiumType(premium),FormatNumber(price)
+                {AFAFAF}Usável\t{FFFFFF}%s\n\
+                {AFAFAF}Descrição\t{FFFFFF]%s\n\t\n\
+                {FF0000}Deletar item", ItemCategory(category), useful > 0 ? ("Sim") : ("Não"), desc
             );
 
-            pInfo[playerid][dEditingSQL] = sqlid;
-            pInfo[playerid][dEditingModel] = model_id;
-            pInfo[playerid][dEditingPremium] = premium;
-            pInfo[playerid][dEditingCategory] = category;
-            pInfo[playerid][dEditingPrice] = price;
-            Dialog_Show(playerid, DealershipEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
+            Dialog_Show(playerid, ItemsEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
         }
     } else {
-        ResetDealershipMenuVars(playerid);
+        //ResetDealershipMenuVars(playerid);
     }
     return true;
 }

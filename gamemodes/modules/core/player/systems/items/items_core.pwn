@@ -161,14 +161,19 @@ Dialog:PlayerInventorySelected(playerid, response, listitem, inputtext[]) {
     if (response) {
         new slotid = pInfo[playerid][pInventoryItem];
         
+        if (!strcmp(inputtext, "Usar", true))
+			return SendServerMessage(playerid, "Indisponível no momento.");  
         if (!strcmp(inputtext, "Dar", true))
 			return PlayerGiveItem(playerid, slotid);
         if (!strcmp(inputtext, "Dropar", true))
             return PlayerDropItem(playerid, slotid);
         if (!strcmp(inputtext, "Dropar com edição", true))
-            return PlayerDropItemWithEdit(playerid, slotid);  
+            return PlayerDropItemWithEdit(playerid, slotid); 
+        if (!strcmp(inputtext, "Jogar no lixo", true))
+			return SendServerMessage(playerid, "Indisponível no momento."); 
         if (!strcmp(inputtext, "Descrição", true))
             return ShowItemDescription(playerid, slotid);
+            
     } else ShowPlayerInventory(playerid);
     return true;
 }

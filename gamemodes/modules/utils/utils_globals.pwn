@@ -208,6 +208,7 @@ enum Player_Data {
     iAmount[30],
     pInventoryItem,
     pEditDropped,
+    pGiveItem,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -402,6 +403,7 @@ void:ResetCharacterData(playerid) {
 	}
     pInfo[playerid][pInventoryItem] = -1;
     pInfo[playerid][pEditDropped] = 0;
+    pInfo[playerid][pGiveItem] = -1;
 
     for (new i = 0; i < MAX_LISTED_ITEMS; i ++) {
 	    NearestItems[playerid][i] = -1;

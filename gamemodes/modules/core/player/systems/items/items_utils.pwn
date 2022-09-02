@@ -135,13 +135,11 @@ Item_Delete(itemid) {
 }
 
 Inventory_Add(playerid, item, quantity = 1){
-    printf("item = %d, quantity = %d", item, quantity);
-    new value = GetInventorySlots(playerid);
+	new value = GetInventorySlots(playerid);
 
     for (new i = 0; i < value; i++) {
         if(pInfo[playerid][iItem][i] == item) {
             pInfo[playerid][iAmount][i] += quantity;
-            printf("Inventory_Add ++");
             return i;
         }
     }
@@ -149,7 +147,6 @@ Inventory_Add(playerid, item, quantity = 1){
         if(pInfo[playerid][iItem][slotid] == 0) {
             pInfo[playerid][iItem][slotid] = item;
             pInfo[playerid][iAmount][slotid] = quantity;
-            printf("Inventory_Add Create");
             return slotid;
         }
     }

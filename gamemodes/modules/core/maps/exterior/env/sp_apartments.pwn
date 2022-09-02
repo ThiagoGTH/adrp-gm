@@ -1,8 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
-hook OnPlayerConnect(playerid){
+hook OnPlayerConnect(playerid) {
     RemoveBuildingForPlayer(playerid, 17729, 2540.8281, -1350.5859, 40.8984, 0.25);
+    RemoveBuildingForPlayer(playerid, 17954, 2577.2344, -1350.3984, 56.5391, 0.25);
     RemoveBuildingForPlayer(playerid, 17679, 2540.8281, -1350.5859, 40.8984, 0.25);
+    RemoveBuildingForPlayer(playerid, 17591, 2606.3828, -1341.8438, 47.5469, 0.25);
     return true;
 }
 
@@ -34,8 +36,6 @@ hook OnGameModeInit() {
     CreateDynamicObject(-949, 2557.215087, -1423.345092, 40.885799, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00, 500.00); 
     CreateDynamicObject(-952, 2548.300781, -1411.657714, 37.163299, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00, 500.00); 
     CreateDynamicObject(-950, 2555.042236, -1407.225830, 41.112400, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00, 500.00); 
-
-
     return true;
 }
 

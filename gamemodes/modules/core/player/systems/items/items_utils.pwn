@@ -157,16 +157,14 @@ Inventory_Add(playerid, item, quantity = 1){
 }
 
 Inventory_HasItem(playerid, const item[]) {
-	new exists = false, value = GetInventorySlots(playerid);
-	for (new i = 0; i < value; i ++) {
-		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item))
-			exists = true;
+	new exists = false;
+	for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item)){
+			if(pInfo[playerid][iAmount][i] > 0){
+				exists = true;
+				return exists;
+			}
+		}
 	}
 	return exists;
-}
-
-CMD:celular(playerid, params[]){
-	if(Inventory_HasItem(playerid, "Celular")) return SendServerMessage(playerid, "Tem!");
-	else SendServerMessage(playerid, "Não tem!");
-	return true;
 }

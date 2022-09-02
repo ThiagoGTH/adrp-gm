@@ -22,7 +22,7 @@ Dialog:ItemsConfig(playerid, response, listitem, inputtext[]){
             format(string, sizeof(string), 
                 "{AFAFAF}Categoria\t{FFFFFF}%s\n\
                 {AFAFAF}Usável\t{FFFFFF}%s\n\
-                {AFAFAF}Descrição\t{FFFFFF]%s\n\t\n\
+                {AFAFAF}Descrição\t{FFFFFF}%s\n\t\n\
                 {FF0000}Deletar item", ItemCategory(category), useful > 0 ? ("Sim") : ("Não"), desc
             );
 

@@ -6,6 +6,7 @@
 	"dependencies": [
 		"sampctl/samp-stdlib",
 		"pawn-lang/sa-mp-fixes",
+		"NexiusTailer/Nex-AC",
 		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",

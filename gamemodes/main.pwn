@@ -24,11 +24,16 @@
 #include <colandreas>
 #include <mapandreas>
 
+#define DEBUG
+#include <nex-ac_pt.lang> //or any other
+#include <nex-ac>
+
 #define YSI_NO_HEAP_MALLOC
 
 /* ==============================[modules]============================== */
 
 #include "modules\utils\utils.pwn"
+#include "modules\core\anticheat\nex-ac.pwn"
 #include "modules\core\maps\maps.pwn"
 #include "modules\core\database\mysql_core.pwn"
 #include "modules\core\player\account\account.pwn"

@@ -263,6 +263,8 @@ SaveUserTeams(playerid) {
 }
 
 hook OnPlayerDisconnect(playerid, reason) {
+    if(pInfo[playerid][pLogged] == false) return false;
+
     SaveUserInfo(playerid);
     ResetUserData(playerid);
     return true;

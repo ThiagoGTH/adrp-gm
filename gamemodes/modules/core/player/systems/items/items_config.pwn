@@ -1,7 +1,34 @@
+ItemsConfigMain(playerid) {
+    ResetItemsMenuVars(playerid);
+
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` > 0 ORDER BY `ID` DESC");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[2048], model_id, id, name[64];
+    format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "item_model", model_id);
+        cache_get_value_name(i, "item_name", name);
+        cache_get_value_name_int(i, "ID", id);
+
+        format(string, sizeof(string), "%s%d\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, name, id);
+    }
+
+    cache_delete(result);
+    new title[128];
+    format(title, 128, "Gerenciar_Itens_Dinâmicos");
+    AdjustTextDrawString(title);
+    AdjustTextDrawString(string);
+
+    Dialog_Show(playerid, ItemsConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+    return true;
+}
+
 Dialog:ItemsConfig(playerid, response, listitem, inputtext[]){
     if(response) {
         new title[128], string[1024];
-        new model_id = strval(inputtext), name[64], desc[256], useful, sqlid, category;
+        new model_id = strval(inputtext), name[64], desc[256], useful, sqlid, legality, category;
         if(model_id == 19132){
             Dialog_Show(playerid, ItemsAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Digite o ID do objeto a ser adicionado:", "Adicionar", "<<");
         } else {
@@ -13,6 +40,7 @@ Dialog:ItemsConfig(playerid, response, listitem, inputtext[]){
             cache_get_value_name_int(0, "ID", sqlid);
             cache_get_value_name_int(0, "item_category", category);
             cache_get_value_name_int(0, "item_useful", useful);
+            cache_get_value_name_int(0, "item_legality", legality);
             cache_get_value_name(0, "item_name", name);
             cache_get_value_name(0, "item_desc", desc);
             cache_delete(result);
@@ -22,245 +50,270 @@ Dialog:ItemsConfig(playerid, response, listitem, inputtext[]){
             format(string, sizeof(string), 
                 "{AFAFAF}Categoria\t{FFFFFF}%s\n\
                 {AFAFAF}Usável\t{FFFFFF}%s\n\
+                {AFAFAF}Legalizado\t{FFFFFF}%s\n\
+                {AFAFAF}Nome\t{FFFFFF}%s\n\
                 {AFAFAF}Descrição\t{FFFFFF}%s\n\t\n\
-                {FF0000}Deletar item", ItemCategory(category), useful > 0 ? ("Sim") : ("Não"), desc
+                {FF0000}Deletar item", ItemCategory(category), useful > 0 ? ("Sim") : ("Não"), legality > 0 ? ("Sim") : ("Não"), name, desc
+            );
+
+            pInfo[playerid][iEditingSQL] = sqlid;
+            pInfo[playerid][iEditingModel] = model_id;
+            pInfo[playerid][iEditingUseful] = useful;
+            pInfo[playerid][iEditingLegality] = legality;
+            pInfo[playerid][iEditingCategory] = category;
+            format(pInfo[playerid][iEditingName], 64, "%s", name);
+            format(pInfo[playerid][iEditingDesc], 256, "%s", desc);
+
+            Dialog_Show(playerid, ItemsEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
+        }
+    } else ResetItemsMenuVars(playerid);
+    
+    return true;
+}
+
+Dialog:ItemsAdd(playerid, response, listitem, inputtext[]){
+    if(response){
+        new model_id = strval(inputtext);
+        if (isnull(inputtext)) return Dialog_Show(playerid, ItemsAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Você não especificou nenhum modelo.\nDigite o ID de objeto do item a ser criado:", "Adicionar", "<<");
+
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `items` WHERE `item_model` = '%d';", model_id);
+        new Cache:result = mysql_query(DBConn, query);
+        if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um item com este objeto."), cache_delete(result);
+
+        new id = ItemCreate(model_id);
+        if(id == -1) return SendErrorMessage(playerid, "O servidor atingiu o limite de itens dinâmicos. O item não foi criado."), ItemsConfigMain(playerid);
+
+        SendServerMessage(playerid, "Você adicionou o objeto %d como item dinâmico. Agora edite-o no painel.", model_id);
+        format(logString, sizeof(logString), "%s (%s) criou um item dinâmico com o objeto %d.", pNome(playerid), GetPlayerUserEx(playerid), model_id);
+	    logCreate(playerid, logString, 1);
+
+        ItemsConfigMain(playerid);
+
+    } else ItemsConfigMain(playerid);
+    return true;
+}
+
+Dialog:ItemsEdit(playerid, response, listitem, inputtext[]){
+    if(response) {
+        new string[512], title[128];
+        format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL]);
+        switch(listitem) {
+            case 0: {
+                switch(pInfo[playerid][iEditingCategory]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
+                    case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
+                    case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
+                    case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
+                }
+                pInfo[playerid][iEditingMenu] = 1;
+                Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 1: {
+                switch(pInfo[playerid][iEditingUseful]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Não utilizável\nUtilizável");
+                    case 1: format(string, sizeof(string), "Não utilizável\n{BBBBBB}>>> {FFFFFF}Utilizável");
+                }
+                pInfo[playerid][iEditingMenu] = 2;
+                Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 2: {
+                switch(pInfo[playerid][iEditingLegality]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Ilegal\nLegal");
+                    case 1: format(string, sizeof(string), "Ilegal\n{BBBBBB}>>> {FFFFFF}Legal");
+                }
+                pInfo[playerid][iEditingMenu] = 3;
+                Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            }
+            case 3: {
+                pInfo[playerid][iEditingMenu] = 4;
+                format(string, sizeof(string), "Digite o novo nome do item:\n\nNome atual:\n%s", pInfo[playerid][iEditingName]);
+                Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Editar", "<<");
+            }
+            case 4: {
+                pInfo[playerid][iEditingMenu] = 5;
+                format(string, sizeof(string), "Digite a nova descrição do item:\n\nDescrição atual:\n%s", pInfo[playerid][iEditingDesc]);
+                Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Editar", "<<");
+            }
+            case 6: {
+                mysql_format(DBConn, query, sizeof query, "DELETE FROM `items` WHERE `ID` = '%d';", pInfo[playerid][iEditingSQL]);
+                new Cache:result = mysql_query(DBConn, query);
+
+                SendServerMessage(playerid, "Você deletou o item dinâmico %s (SQL: %d) do servidor. Essa ação é irreversível.", pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL]);
+                cache_delete(result);
+
+                format(logString, sizeof(logString), "%s (%s) deletou o item dinâmico %s (SQL: %d) do servidor", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL]);
+	            logCreate(playerid, logString, 1);
+                ItemsConfigMain(playerid);
+            }
+        }
+    } else ItemsConfigMain(playerid);
+    return true;
+}
+
+Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
+    new string[1024], title[128], Cache:result;
+    format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL]);
+    if(response) {
+        if(pInfo[playerid][iEditingMenu] == 1) {
+            switch(listitem) {
+                switch(pInfo[playerid][iEditingCategory]){
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
+                    case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
+                    case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
+                    case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
+                }
+            }
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_category` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][iEditingSQL]);
+            result = mysql_query(DBConn, query);
+
+            for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
+                    diInfo[i][diCategory] = listitem;
+                }
+            }
+
+            SendServerMessage(playerid, "Você alterou a categoria do item %s de %s para %s.", pInfo[playerid][iEditingName], ItemCategory(pInfo[playerid][iEditingCategory]), ItemCategory(listitem));
+
+            format(logString, sizeof(logString), "%s (%s) alterou a categoria do item %s (%d) de %s para %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], ItemCategory(pInfo[playerid][iEditingCategory]), ItemCategory(listitem));
+	        logCreate(playerid, logString, 1);
+
+            pInfo[playerid][iEditingCategory] = listitem;
+            Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            cache_delete(result);
+        }
+        else if(pInfo[playerid][iEditingMenu] == 2) {
+            switch(pInfo[playerid][iEditingUseful]){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Não utilizável\nUtilizável");
+                case 1: format(string, sizeof(string), "Não utilizável\n{BBBBBB}>>> {FFFFFF}Utilizável");
+            }
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_useful` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][iEditingSQL]);
+            result = mysql_query(DBConn, query);
+
+            for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
+                    diInfo[i][diUseful] = listitem;
+                }
+            }
+
+            SendServerMessage(playerid, "Você definiu o item %s como %s.", pInfo[playerid][iEditingName], listitem > 0 ? ("utilizável") : ("inutilizável"));
+
+            format(logString, sizeof(logString), "%s (%s) alterou a categoria do item %s (%d) como %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], listitem > 0 ? ("utilizável") : ("inutilizável"));
+	        logCreate(playerid, logString, 1);
+
+            pInfo[playerid][iEditingCategory] = listitem;
+            Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            cache_delete(result);
+        }
+        else if(pInfo[playerid][iEditingMenu] == 3) {
+            switch(pInfo[playerid][iEditingLegality]){
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Ilegal\nLegal");
+                case 1: format(string, sizeof(string), "Ilegal\n{BBBBBB}>>> {FFFFFF}Legal");
+            }
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_legality` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][iEditingSQL]);
+            result = mysql_query(DBConn, query);
+
+            for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
+                    diInfo[i][diLegality] = listitem;
+                }
+            }
+
+            SendServerMessage(playerid, "Você definiu o item %s como %s.", pInfo[playerid][iEditingName], listitem > 0 ? ("legal") : ("ilegal"));
+
+            format(logString, sizeof(logString), "%s (%s) alterou a categoria do item %s (%d) como %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], listitem > 0 ? ("legal") : ("ilegal"));
+	        logCreate(playerid, logString, 1);
+
+            pInfo[playerid][iEditingCategory] = listitem;
+            Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
+            cache_delete(result);
+        }
+        else if(pInfo[playerid][iEditingMenu] == 4) {
+            format(string, sizeof(string), "Você não especificou nenhum nome.\n\nDigite o novo nome do item:\n\nNome atual:\n%s", pInfo[playerid][iEditingName]);
+            if (isnull(inputtext)) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
+
+            format(string, sizeof(string), "Você não especificou um nome grande demais.\nO limite é de 64 caracteres.\n\nDigite o novo nome do item:\n\nNome atual:\n%s", pInfo[playerid][iEditingName]);
+            if(strlen(inputtext) > 64) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
+
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_name` = '%s' WHERE `ID` = '%d';", inputtext, pInfo[playerid][iEditingSQL]);
+            result = mysql_query(DBConn, query);
+
+            SendServerMessage(playerid, "Você alterou o nome do item %s para %s.", pInfo[playerid][iEditingName], inputtext);
+
+            format(logString, sizeof(logString), "%s (%s) alterou o nome do item %s (%d) de para %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], inputtext);
+	        logCreate(playerid, logString, 1);
+
+            pInfo[playerid][iEditingName] = inputtext;
+            cache_delete(result);
+            
+            format(string, sizeof(string), 
+                "{AFAFAF}Categoria\t{FFFFFF}%s\n\
+                {AFAFAF}Usável\t{FFFFFF}%s\n\
+                {AFAFAF}Legalizado\t{FFFFFF}%s\n\
+                {AFAFAF}Nome\t{FFFFFF}%s\n\
+                {AFAFAF}Descrição\t{FFFFFF}%s\n\t\n\
+                {FF0000}Deletar item", ItemCategory(pInfo[playerid][iEditingCategory]), pInfo[playerid][iEditingUseful] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingLegality] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingName], pInfo[playerid][iEditingDesc]
+            );
+
+            Dialog_Show(playerid, ItemsEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
+        }
+        else if(pInfo[playerid][iEditingMenu] == 5) {    
+            format(string, sizeof(string), "Você não especificou nenhum texto.\n\nDigite a nova descrição do item:\n\nDescrição atual:\n%s", pInfo[playerid][iEditingDesc]);
+            if (isnull(inputtext)) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
+
+            format(string, sizeof(string), "Você não especificou um nome grande demais.\nO limite é de 256 caracteres.\n\nDigite a nova descrição do item:\n\nDescrição atual:\n%s", pInfo[playerid][iEditingDesc]);
+             if(strlen(inputtext) > 256) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
+
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_name` = '%s' WHERE `ID` = '%d';", inputtext, pInfo[playerid][iEditingSQL]);
+            result = mysql_query(DBConn, query);
+
+            SendServerMessage(playerid, "Você alterou a descrição do item %s.", pInfo[playerid][iEditingName]);
+
+            format(logString, sizeof(logString), "%s (%s) alterou a descrição do item %s (%d) para %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], inputtext);
+	        logCreate(playerid, logString, 1);
+
+            pInfo[playerid][iEditingDesc] = inputtext;
+            cache_delete(result);
+
+            format(string, sizeof(string), 
+                "{AFAFAF}Categoria\t{FFFFFF}%s\n\
+                {AFAFAF}Usável\t{FFFFFF}%s\n\
+                {AFAFAF}Legalizado\t{FFFFFF}%s\n\
+                {AFAFAF}Nome\t{FFFFFF}%s\n\
+                {AFAFAF}Descrição\t{FFFFFF}%s\n\t\n\
+                {FF0000}Deletar item", ItemCategory(pInfo[playerid][iEditingCategory]), pInfo[playerid][iEditingUseful] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingLegality] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingName], pInfo[playerid][iEditingDesc]
             );
 
             Dialog_Show(playerid, ItemsEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
         }
     } else {
-        //ResetDealershipMenuVars(playerid);
-    }
-    return true;
-}
-
-/*Dialog:DealershipAdd(playerid, response, listitem, inputtext[]){
-    if(response){
-        static model[32];
-        format(model, 32, "%s", inputtext);
-
-        if (isnull(inputtext)) return Dialog_Show(playerid, DealershipAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar veículo à concessionária", "Você não especificou nenhum modelo.\nDigite o ID do veículo a ser adicionado:", "Adicionar", "<<");
-
-        if ((model[0] = GetVehicleModelByName(model)) == 0) return Dialog_Show(playerid, DealershipAdd, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar veículo à concessionária", "O modelo especificado é inválido.\nDigite o ID do veículo a ser adicionado:", "Adicionar", "<<");
-
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d';", model[0]);
-        new Cache:result = mysql_query(DBConn, query);
-        if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um veículo com este modelo.");
-        cache_delete(result);
-
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO `vehicles_dealer` (`model_id`, `category`, `price`) VALUES ('%d', '1', '999999999');", model[0]);
-        result = mysql_query(DBConn, query);
-        cache_delete(result);
-
-        SendServerMessage(playerid, "Você adicionou o veículo %s na concessionária. Agora edite-o no painel.", ReturnVehicleModelName(model[0]));
-
-        format(logString, sizeof(logString), "%s (%s) adicionou o veículo %s na concessionária.", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]));
-	    logCreate(playerid, logString, 1);
-        // VOLTANDO AO MENU
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` DESC");
-        result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
-    } else {
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` DESC");
-        new Cache:result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
-    }
-    return true;
-}
-
-Dialog:DealershipEdit(playerid, response, listitem, inputtext[]){
-    if(response) {
-        new string[512], title[128];
-        format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL]);
-        switch(listitem) {
-            case 0: {
-                switch(pInfo[playerid][dEditingCategory]){
-                    case 1: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 2: format(string, sizeof(string), "Aviões\n{BBBBBB}>>> {FFFFFF}Barcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 3: format(string, sizeof(string), "Aviões\nBarcos\n{BBBBBB}>>> {FFFFFF}Bicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 4: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\n{BBBBBB}>>> {FFFFFF}Motos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 5: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\n{BBBBBB}>>> {FFFFFF}Sedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 6: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\n{BBBBBB}>>> {FFFFFF}SUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 7: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\n{BBBBBB}>>> {FFFFFF}Lowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 8: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\n{BBBBBB}>>> {FFFFFF}Esportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 9: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\n{BBBBBB}>>> {FFFFFF}Industriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                    case 10: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\n{BBBBBB}>>> {FFFFFF}Caminhonetes\nÚnicos\nTrailers industriais");
-                    case 11: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\n{BBBBBB}>>> {FFFFFF}Únicos\nTrailers industriais");
-                    case 12: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\n{BBBBBB}>>> {FFFFFF}Trailers industriais");
-                }
-                pInfo[playerid][dEditingMenu] = 1;
-                Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
-            }
-            case 1: {
-                switch(pInfo[playerid][dEditingPremium]){
-                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Comum\nPremium Bronze\nPremium Prata\nPremium Ouro");
-                    case 1: format(string, sizeof(string), "Comum\n{BBBBBB}>>> {FFFFFF}Premium Bronze\nPremium Prata\nPremium Ouro");
-                    case 2: format(string, sizeof(string), "Comum\nPremium Bronze\n{BBBBBB}>>> {FFFFFF}Premium Prata\nPremium Ouro");
-                    case 3: format(string, sizeof(string), "Comum\nPremium Bronze\nPremium Prata\n{BBBBBB}>>> {FFFFFF}Premium Ouro");
-
-                }
-                pInfo[playerid][dEditingMenu] = 2;
-                Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
-            }
-            case 2: {
-                pInfo[playerid][dEditingMenu] = 3;
-                format(string, sizeof(string), "Digite o novo valor do veículo:\n\nValor anterior: US$ %s", FormatNumber(pInfo[playerid][dEditingPrice]));
-                Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_INPUT, title, string, "Editar", "<<");
-            }
-            case 4: {
-                mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_dealer` WHERE `ID` = '%d';", pInfo[playerid][dEditingSQL]);
-                new Cache:result = mysql_query(DBConn, query);
-
-                SendServerMessage(playerid, "Você deletou o veículo %s (SQL: %d) da concessionária com sucesso. Essa ação é irreversível.", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL]);
-                cache_delete(result);
-
-                format(logString, sizeof(logString), "%s (%s) deletou o veículo %s (SQL: %d) da concessionária", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL]);
-	            logCreate(playerid, logString, 1);
-                ResetDealershipMenuVars(playerid);
-            }
-        }
-    } else{
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` ASC");
-        new Cache:result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
-    }
-    return true;
-}
-
-Dialog:DealershipEditOptions(playerid, response, listitem, inputtext[]) {
-    new string[512], title[128], Cache:result;
-    format(title, sizeof(title), "{FFFFFF}Gerenciar %s {AFAFAF}(SQL: %d)", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL]);
-    if(response) {
-        if(pInfo[playerid][dEditingMenu] == 1){
-            switch(listitem) {
-                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 1: format(string, sizeof(string), "Aviões\n{BBBBBB}>>> {FFFFFF}Barcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 2: format(string, sizeof(string), "Aviões\nBarcos\n{BBBBBB}>>> {FFFFFF}Bicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 3: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\n{BBBBBB}>>> {FFFFFF}Motos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 4: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\n{BBBBBB}>>> {FFFFFF}Sedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 5: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\n{BBBBBB}>>> {FFFFFF}SUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 6: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\n{BBBBBB}>>> {FFFFFF}Lowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 7: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\n{BBBBBB}>>> {FFFFFF}Esportivos\nIndustriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 8: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\n{BBBBBB}>>> {FFFFFF}Industriais\nCaminhonetes\nÚnicos\nTrailers industriais");
-                case 9: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\n{BBBBBB}>>> {FFFFFF}Caminhonetes\nÚnicos\nTrailers industriais");
-                case 10: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\n{BBBBBB}>>> {FFFFFF}Únicos\nTrailers industriais");
-                case 11: format(string, sizeof(string), "Aviões\nBarcos\nBicicletas\nMotos\nSedans\nSUVs & Wagons\nLowriders\nEsportivos\nIndustriais\nCaminhonetes\nÚnicos\n{BBBBBB}>>> {FFFFFF}Trailers industriais");
-            }
-            mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_dealer` SET `category` = '%d' WHERE `ID` = '%d';", listitem+1, pInfo[playerid][dEditingSQL]);
-            mysql_query(DBConn, query);
-
-            SendServerMessage(playerid, "Você alterou a categoria do veículo %s de %s para %s.", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), DealershipCategory(pInfo[playerid][dEditingCategory]), DealershipCategory(listitem+1));
-
-            format(logString, sizeof(logString), "%s (%s) alterou a categoria do veículo %s (%d) de %s para %s", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL], DealershipCategory(pInfo[playerid][dEditingCategory]), DealershipCategory(listitem+1));
-	        logCreate(playerid, logString, 1);
-
-            pInfo[playerid][dEditingCategory] = listitem+1;
-            Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
-            cache_delete(result);
-        }
-        else if(pInfo[playerid][dEditingMenu] == 2){
-            switch(listitem) {
-                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Comum\nPremium Bronze\nPremium Prata\nPremium Ouro");
-                case 1: format(string, sizeof(string), "Comum\n{BBBBBB}>>> {FFFFFF}Premium Bronze\nPremium Prata\nPremium Ouro");
-                case 2: format(string, sizeof(string), "Comum\nPremium Bronze\n{BBBBBB}>>> {FFFFFF}Premium Prata\nPremium Ouro");
-                case 3: format(string, sizeof(string), "Comum\nPremium Bronze\nPremium Prata\n{BBBBBB}>>> {FFFFFF}Premium Ouro");
-            }
-            mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_dealer` SET `premium` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][dEditingSQL]);
-            mysql_query(DBConn, query);
-
-            SendServerMessage(playerid, "Você alterou o premium do veículo %s de %s para %s.", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), PremiumType(pInfo[playerid][dEditingPremium]), PremiumType(listitem));
-
-            format(logString, sizeof(logString), "%s (%s) alterou o premium do veículo %s (%d) de %s para %s", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL], PremiumType(pInfo[playerid][dEditingPremium]), PremiumType(listitem));
-	        logCreate(playerid, logString, 1);
-
-            pInfo[playerid][dEditingPremium] = listitem;
-            Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
-            cache_delete(result);
-        }
-        else if(pInfo[playerid][dEditingMenu] == 3){
-            new price = strval(inputtext);
-        
-            format(string, sizeof(string), "Você não especificou nenhum valor.\nDigite o novo valor do veículo:\n\nValor anterior: US$ %s", FormatNumber(pInfo[playerid][dEditingPrice]));
-            if (isnull(inputtext)) return Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
-
-            format(string, sizeof(string), "O valor não pode ser igual ou menor a zero.\nDigite o novo valor do veículo:\n\nValor anterior: US$ %s", FormatNumber(pInfo[playerid][dEditingPrice]));
-            if (price < 1) return Dialog_Show(playerid, DealershipEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
-
-            mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_dealer` SET `price` = '%d' WHERE `ID` = '%d';", price, pInfo[playerid][dEditingSQL]);
-            mysql_query(DBConn, query);
-
-            SendServerMessage(playerid, "Você alterou o valor do veículo %s de US$ %s para US$ %s.", ReturnVehicleModelName(pInfo[playerid][dEditingModel]), FormatNumber(pInfo[playerid][dEditingPrice]), FormatNumber(price));
-
-            format(logString, sizeof(logString), "%s (%s) alterou o valor do veículo %s (%d) de US$ %s para US$ %s", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(pInfo[playerid][dEditingModel]), pInfo[playerid][dEditingSQL], FormatNumber(pInfo[playerid][dEditingPrice]), FormatNumber(price));
-	        logCreate(playerid, logString, 1);
-
-            pInfo[playerid][dEditingPrice] = price;
-
-            cache_delete(result);
-            
-            format(string, sizeof(string), 
-                "{AFAFAF}Categoria\t{FFFFFF}%s\n\
-                {AFAFAF}Premium\t{FFFFFF}%s\n\
-                {AFAFAF}Valor\t{FFFFFF}US$ %s\n\t\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
-            );
-            Dialog_Show(playerid, DealershipEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
-        }
-    } else {
         format(string, sizeof(string), 
             "{AFAFAF}Categoria\t{FFFFFF}%s\n\
-            {AFAFAF}Premium\t{FFFFFF}%s\n\
-            {AFAFAF}Valor\t{FFFFFF}US$ %s\n\t\n{FF0000}Deletar veículo", DealershipCategory(pInfo[playerid][dEditingCategory]), PremiumType(pInfo[playerid][dEditingPremium]),FormatNumber(pInfo[playerid][dEditingPrice])
+            {AFAFAF}Usável\t{FFFFFF}%s\n\
+            {AFAFAF}Legalizado\t{FFFFFF}%s\n\
+            {AFAFAF}Nome\t{FFFFFF}%s\n\
+            {AFAFAF}Descrição\t{FFFFFF}%s\n\t\n\
+            {FF0000}Deletar item", ItemCategory(pInfo[playerid][iEditingCategory]), pInfo[playerid][iEditingUseful] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingLegality] > 0 ? ("Sim") : ("Não"), pInfo[playerid][iEditingName], pInfo[playerid][iEditingDesc]
         );
 
-        Dialog_Show(playerid, DealershipEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
+        Dialog_Show(playerid, ItemsEdit, DIALOG_STYLE_TABLIST, title, string, "Selecionar", "<<");
     }
     return true;
-}*/
+}
+
+ResetItemsMenuVars(playerid) {
+    pInfo[playerid][iEditingSQL] =
+    pInfo[playerid][iEditingModel] =
+    pInfo[playerid][iEditingUseful] =
+    pInfo[playerid][iEditingLegality] =
+    pInfo[playerid][iEditingCategory] =
+    pInfo[playerid][iEditingMenu] = 0;
+    pInfo[playerid][iEditingDesc][0] =
+    pInfo[playerid][iEditingName][0] = EOS;
+    return true;
+}

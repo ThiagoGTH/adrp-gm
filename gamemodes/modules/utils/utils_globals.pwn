@@ -203,6 +203,15 @@ enum Player_Data {
     dEditingPrice,
     dEditingMenu,
 
+    iEditingSQL,
+    iEditingModel,
+    iEditingUseful,
+    iEditingLegality,
+    iEditingCategory,
+    iEditingMenu,
+    iEditingName[64],
+    iEditingDesc[256],
+
     // Inventory
     iItem[30],
     iAmount[30],
@@ -395,6 +404,15 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dEditingCategory] =
     pInfo[playerid][dEditingPrice] =
     pInfo[playerid][dEditingMenu] = 0;
+
+    pInfo[playerid][iEditingSQL] =
+    pInfo[playerid][iEditingModel] =
+    pInfo[playerid][iEditingUseful] =
+    pInfo[playerid][iEditingLegality] =
+    pInfo[playerid][iEditingCategory] =
+    pInfo[playerid][iEditingMenu] = 0;
+    pInfo[playerid][iEditingDesc][0] =
+    pInfo[playerid][iEditingName][0] = EOS;
     
     // INVENTORY
     for (new i = 0; i < 30; i ++) {

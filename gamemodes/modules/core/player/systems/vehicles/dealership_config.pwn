@@ -1,3 +1,26 @@
+DealershipConfigMain(playerid) {
+    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
+    ResetDealershipMenuVars(playerid);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` DESC");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[2048], model_id, id;
+    format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "model_id", model_id);
+        cache_get_value_name_int(i, "ID", id);
+
+        format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
+    }
+    cache_delete(result);
+    new title[128];
+    format(title, 128, "Gerenciar_Concessionária");
+    AdjustTextDrawString(title);
+
+    Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+    return true;
+}
+
 Dialog:DealershipConfig(playerid, response, listitem, inputtext[]){
     if(response) {
         new title[128], string[1024];
@@ -47,8 +70,8 @@ Dialog:DealershipAdd(playerid, response, listitem, inputtext[]){
 
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = '%d';", model[0]);
         new Cache:result = mysql_query(DBConn, query);
-        if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um veículo com este modelo.");
-        cache_delete(result);
+        if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um veículo com este modelo."), cache_delete(result);
+        
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO `vehicles_dealer` (`model_id`, `category`, `price`) VALUES ('%d', '1', '999999999');", model[0]);
         result = mysql_query(DBConn, query);
@@ -59,45 +82,9 @@ Dialog:DealershipAdd(playerid, response, listitem, inputtext[]){
         format(logString, sizeof(logString), "%s (%s) adicionou o veículo %s na concessionária.", pNome(playerid), GetPlayerUserEx(playerid), ReturnVehicleModelName(model[0]));
 	    logCreate(playerid, logString, 1);
         // VOLTANDO AO MENU
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` DESC");
-        result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+        DealershipConfigMain(playerid);
     } else {
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` DESC");
-        new Cache:result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
+        DealershipConfigMain(playerid);
     }
     return true;
 }
@@ -153,27 +140,9 @@ Dialog:DealershipEdit(playerid, response, listitem, inputtext[]){
                 ResetDealershipMenuVars(playerid);
             }
         }
-    } else{
-        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid); 
-        ResetDealershipMenuVars(playerid);
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_dealer WHERE `ID` > 0 ORDER BY `ID` ASC");
-        new Cache:result = mysql_query(DBConn, query);
-
-        new string[2048], model_id, id;
-        format(string, sizeof(string), "19132(0.0, 0.0, -80.0, 1.0)\t~g~Adicionar\n");
-        for(new i; i < cache_num_rows(); i++) {
-            cache_get_value_name_int(i, "model_id", model_id);
-            cache_get_value_name_int(i, "ID", id);
-
-            format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 1, 1)\t~w~%s (%d)~n~~n~~n~~n~~g~EDITAR\n", string, model_id, ReturnVehicleModelName(model_id), id);
-        }
-        cache_delete(result);
-        new title[128];
-        format(title, 128, "Gerenciar_Concessionária");
-        AdjustTextDrawString(title);
-
-        Dialog_Show(playerid, DealershipConfig, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Selecionar", "Fechar");
-    }
+    } else 
+       DealershipConfigMain(playerid);
+    
     return true;
 }
 

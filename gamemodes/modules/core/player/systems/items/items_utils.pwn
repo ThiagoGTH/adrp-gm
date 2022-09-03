@@ -11,6 +11,7 @@ enum DI_ITEMS_DATA {
     diName[64],
     diDescription[256],
     bool:diUseful,
+	bool:diLegality,
     diModel,
     diCategory,
 };

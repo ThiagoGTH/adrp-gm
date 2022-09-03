@@ -327,6 +327,7 @@ void:CheckItemsTable() {
     `item_name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
     `item_desc` varchar(256) NOT NULL DEFAULT 'Nenhum',\
     `item_useful` int NOT NULL DEFAULT '0',\
+    `item_legality` int NOT NULL DEFAULT '0',\
     `item_model` int NOT NULL DEFAULT '0',\
     `item_category` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");

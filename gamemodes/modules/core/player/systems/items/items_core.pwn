@@ -1,6 +1,7 @@
 ItemCreate(model) {
     for (new i = 0; i != MAX_DYNAMIC_ITEMS; i ++) {
         if (!diInfo[i][diExists]) {
+            new Cache:result;
             diInfo[i][diExists] = true;
             format(diInfo[i][diName], 64, "Inválido");
             format(diInfo[i][diDescription], 256, "N/A");

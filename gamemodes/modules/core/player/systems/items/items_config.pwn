@@ -159,15 +159,13 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
     if(response) {
         if(pInfo[playerid][iEditingMenu] == 1) {
             switch(listitem) {
-                switch(pInfo[playerid][iEditingCategory]){
-                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
-                    case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
-                    case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
-                    case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
-                }
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
+                case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
+                case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
+                case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
             }
             mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_category` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][iEditingSQL]);
             result = mysql_query(DBConn, query);
@@ -188,7 +186,7 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             cache_delete(result);
         }
         else if(pInfo[playerid][iEditingMenu] == 2) {
-            switch(pInfo[playerid][iEditingUseful]){
+            switch(listitem) {
                 case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Não utilizável\nUtilizável");
                 case 1: format(string, sizeof(string), "Não utilizável\n{BBBBBB}>>> {FFFFFF}Utilizável");
             }
@@ -197,7 +195,10 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
 
             for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
                 if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
-                    diInfo[i][diUseful] = listitem;
+                    switch(listitem){
+                        case 0: diInfo[i][diUseful] = false;
+                        case 1: diInfo[i][diUseful] = true;
+                    }
                 }
             }
 
@@ -211,7 +212,7 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             cache_delete(result);
         }
         else if(pInfo[playerid][iEditingMenu] == 3) {
-            switch(pInfo[playerid][iEditingLegality]){
+            switch(listitem){
                 case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Ilegal\nLegal");
                 case 1: format(string, sizeof(string), "Ilegal\n{BBBBBB}>>> {FFFFFF}Legal");
             }
@@ -219,8 +220,11 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             result = mysql_query(DBConn, query);
 
             for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
-                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
-                    diInfo[i][diLegality] = listitem;
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]) {
+                    switch(listitem){
+                        case 0: diInfo[i][diLegality] = false;
+                        case 1: diInfo[i][diLegality] = true;
+                    }
                 }
             }
 
@@ -248,7 +252,13 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             format(logString, sizeof(logString), "%s (%s) alterou o nome do item %s (%d) de para %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], inputtext);
 	        logCreate(playerid, logString, 1);
 
-            pInfo[playerid][iEditingName] = inputtext;
+            for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
+                    format(diInfo[i][diName], 64, "%s", inputtext);
+                }
+            }
+
+            format(pInfo[playerid][iEditingName], 64, "%s", inputtext);
             cache_delete(result);
             
             format(string, sizeof(string), 
@@ -267,17 +277,23 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             if (isnull(inputtext)) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
 
             format(string, sizeof(string), "Você não especificou um nome grande demais.\nO limite é de 256 caracteres.\n\nDigite a nova descrição do item:\n\nDescrição atual:\n%s", pInfo[playerid][iEditingDesc]);
-             if(strlen(inputtext) > 256) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
+            if(strlen(inputtext) > 256) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
 
             mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_name` = '%s' WHERE `ID` = '%d';", inputtext, pInfo[playerid][iEditingSQL]);
             result = mysql_query(DBConn, query);
+
+            for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+                if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
+                    format(diInfo[i][diDescription], 256, "%s", inputtext);
+                }
+            }
 
             SendServerMessage(playerid, "Você alterou a descrição do item %s.", pInfo[playerid][iEditingName]);
 
             format(logString, sizeof(logString), "%s (%s) alterou a descrição do item %s (%d) para %s", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][iEditingName], pInfo[playerid][iEditingSQL], inputtext);
 	        logCreate(playerid, logString, 1);
 
-            pInfo[playerid][iEditingDesc] = inputtext;
+            format(pInfo[playerid][iEditingDesc], 256, "%s", inputtext);
             cache_delete(result);
 
             format(string, sizeof(string), 

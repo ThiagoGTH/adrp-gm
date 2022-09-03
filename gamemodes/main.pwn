@@ -27,7 +27,7 @@
 #define DEBUG
 #pragma warning disable 214
 #pragma warning disable 239
-#include <nex-ac_pt.lang> //or any other
+#include <nex-ac_pt.lang>
 #include <nex-ac>
 #pragma warning enable 214
 #pragma warning enable 239

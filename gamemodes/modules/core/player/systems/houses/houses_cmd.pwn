@@ -424,7 +424,7 @@ CMD:comprar(playerid) {
         return SendErrorMessage(playerid, "Você não possui fundos o suficiente para comprar esta casa.");
 
     GiveMoney(playerid, -hInfo[houseID][hPrice]);
-    va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", hInfo[houseID][hAddress]);
+    va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(houseID));
     BuyHouse(houseID, playerid);
 
     return 1;

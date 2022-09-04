@@ -103,8 +103,8 @@ Inventory_Quantity(playerid) {
 	return count;
 }
 
-forward GetItemID(playerid, item[]);
-public GetItemID(playerid, item[]){
+forward GetItemID(item[]);
+public GetItemID(item[]){
     for (new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
         if(!diInfo[i][diExists])
             return -1;

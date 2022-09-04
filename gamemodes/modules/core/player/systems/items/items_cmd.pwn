@@ -14,12 +14,24 @@ CMD:resetarinventario(playerid, params[]) {
     return true;
 }
 
+CMD:listaitem(playerid, params[]) {
+	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
+	static string[2024];
+
+	if (!strlen(string)) {
+		for (new i = 0; i < MAX_DYNAMIC_ITEMS; i ++) if (diInfo[i][diExists]) if (diInfo[i][diCategory] > 0) {
+			format(string, sizeof(string), "%s%s\n", string, diInfo[i][diName]);
+		}
+	}
+	return true;
+}
+
 CMD:daritem(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 	new userid, amount, item[64], id = -1;
 	if (sscanf(params, "uds[64]", userid, amount, item)) return SendSyntaxMessage(playerid, "/daritem [id/nome] [quantia] [item nome]");
 	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
-	if (amout < 1) return SendErrorMessage(playerid, "A quantidade deve ser maior que zero.");
+	if (amount < 1) return SendErrorMessage(playerid, "A quantidade deve ser maior que zero.");
 	if (Inventory_Quantity(userid) >= GetInventorySlots(userid)) return SendErrorMessage(playerid, "O inventário deste jogador está cheio.");
 	id = GetItemID(item);
 	if(id == -1) return SendErrorMessage(playerid, "Você especificou um item inválido.");
@@ -42,3 +54,10 @@ CMD:inv(playerid, params[]) {
     ShowPlayerInventory(playerid);
     return true;
 } alias:inv("i", "inventario")
+
+Dialog:ShowOnly(playerid, response, listitem, inputtext[]) {
+	playerid = INVALID_PLAYER_ID;
+	response = 0;
+	listitem = 0;
+	inputtext[0] = '\0';
+}

@@ -100,13 +100,15 @@ Dialog:ItemsEdit(playerid, response, listitem, inputtext[]){
         switch(listitem) {
             case 0: {
                 switch(pInfo[playerid][iEditingCategory]){
-                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                    case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
-                    case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
-                    case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
-                    case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\n{BBBBBB}>>> {FFFFFF}Itens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                    case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
+                    case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
+                    case 7: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
+                    case 8: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
                 }
                 pInfo[playerid][iEditingMenu] = 1;
                 Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -159,13 +161,15 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
     if(response) {
         if(pInfo[playerid][iEditingMenu] == 1) {
             switch(listitem) {
-                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
-                case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
-                case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
-                case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
-                case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 1: format(string, sizeof(string), "Inválido\n{BBBBBB}>>> {FFFFFF}Itens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 2: format(string, sizeof(string), "Inválido\nItens gerais\n{BBBBBB}>>> {FFFFFF}Itens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 3: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\n{BBBBBB}>>> {FFFFFF}Itens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 4: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\n{BBBBBB}>>> {FFFFFF}Itens de evento\nItens de facções\nColetes\nDrogas\nArmas");
+                case 5: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\n{BBBBBB}>>> {FFFFFF}Itens de facções\nColetes\nDrogas\nArmas");
+                case 6: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\n{BBBBBB}>>> {FFFFFF}Coletes\nDrogas\nArmas");
+                case 7: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\n{BBBBBB}>>> {FFFFFF}Drogas\nArmas");
+                case 8: format(string, sizeof(string), "Inválido\nItens gerais\nItens comestíveis\nItens bebíveis\nItens de evento\nItens de facções\nColetes\nDrogas\n{BBBBBB}>>> {FFFFFF}Armas");
             }
             mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_category` = '%d' WHERE `ID` = '%d';", listitem, pInfo[playerid][iEditingSQL]);
             result = mysql_query(DBConn, query);

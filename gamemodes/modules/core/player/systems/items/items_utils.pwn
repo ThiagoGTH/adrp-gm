@@ -74,11 +74,14 @@ ItemCategory(type) {
 	switch(type) {
         case 0: format(category, sizeof(category), "Inválido");
 		case 1: format(category, sizeof(category), "Itens gerais");
-		case 2: format(category, sizeof(category), "Itens de evento");
-        case 3: format(category, sizeof(category), "Itens de facções");
-		case 4: format(category, sizeof(category), "Coletes");
-		case 5: format(category, sizeof(category), "Drogas");
-		case 6: format(category, sizeof(category), "Armas");
+		case 2: format(category, sizeof(category), "Itens comestíveis");
+		case 3: format(category, sizeof(category), "Itens bebíveis");
+		case 4: format(category, sizeof(category), "Itens gerais");
+		case 5: format(category, sizeof(category), "Itens de evento");
+        case 6: format(category, sizeof(category), "Itens de facções");
+		case 7: format(category, sizeof(category), "Coletes");
+		case 8: format(category, sizeof(category), "Drogas");
+		case 9: format(category, sizeof(category), "Armas");
 	}
 	return category;
 }

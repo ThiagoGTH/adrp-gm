@@ -259,6 +259,7 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
                 if(diInfo[i][diID] == pInfo[playerid][iEditingSQL]){
                     format(diInfo[i][diName], 64, "%s", inputtext);
+                    printf("oiii!");
                 }
             }
 

@@ -39,7 +39,9 @@ CMD:daritem(playerid, params[]) {
 	if(diInfo[id][diCategory] == 0) SendErrorMessage(playerid, "O item especificado não pode ser colocado no inventário.");
 	if(diInfo[id][diCategory] == 9) SendErrorMessage(playerid, "O item especificado é uma arma e só pode ser dado a um jogador a partir do comando /dararma.");
 
-	Inventory_Add(userid, diInfo[id][diID], amount);
+	new add = Inventory_Add(userid, id, amount);
+	if (add == -1) SendErrorMessage(playerid, "Ocorreu algum erro e não foi possível dar o item específicado ao jogador.");
+	OrganizeInventory(userid);
 
 	SendServerMessage(playerid, "Você deu a %s um(a) %s (%d).", pNome(userid), item, amount);
 	SendServerMessage(userid, "%s lhe deu um(a) %s (%d).", GetPlayerUserEx(playerid), item, amount);

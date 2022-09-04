@@ -28,7 +28,7 @@ LoadItems() {
     for (new i; i < cache_num_rows(); i++) if (i < MAX_DYNAMIC_ITEMS) {
         new id;
         cache_get_value_name_int(i, "ID", id);
-        if (diInfo[id][diExists]) return false;
+        if (diInfo[i][diExists]) return false;
 
         diInfo[id][diID] = id;
         diInfo[id][diExists] = true;
@@ -105,6 +105,17 @@ Inventory_Quantity(playerid) {
 
 forward GetItemID(item[]);
 public GetItemID(item[]){
+    printf("Item: %s", item);
+    for (new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
+
+        printf("strcmp: %s; %s", diInfo[i][diName], item);
+        if(!strcmp(diInfo[i][diName], item)) return diInfo[i][diID];
+    }
+    return -1;
+}
+
+forward GetItemRealID(item[]);
+public GetItemRealID(item[]){
     for (new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
         if(!diInfo[i][diExists])
             return -1;

@@ -23,6 +23,7 @@ CMD:listaitem(playerid, params[]) {
 			format(string, sizeof(string), "%s%s\n", string, diInfo[i][diName]);
 		}
 	}
+	Dialog_Show(playerid, ShowOnly, DIALOG_STYLE_LIST, "Lista de Itens", string, "Selecionar", "Cancelar");
 	return true;
 }
 
@@ -38,7 +39,7 @@ CMD:daritem(playerid, params[]) {
 	if(diInfo[id][diCategory] == 0) SendErrorMessage(playerid, "O item especificado não pode ser colocado no inventário.");
 	if(diInfo[id][diCategory] == 9) SendErrorMessage(playerid, "O item especificado é uma arma e só pode ser dado a um jogador a partir do comando /dararma.");
 
-	Inventory_Add(userid, id, amount);
+	Inventory_Add(userid, diInfo[id][diID], amount);
 
 	SendServerMessage(playerid, "Você deu a %s um(a) %s (%d).", pNome(userid), item, amount);
 	SendServerMessage(userid, "%s lhe deu um(a) %s (%d).", GetPlayerUserEx(playerid), item, amount);

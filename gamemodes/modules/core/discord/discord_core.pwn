@@ -5,13 +5,7 @@ forward PrivateMessageRegister(username[128], password[128]);
 forward ServerStatus(type);
 public ServerStatus(type){
     new title[32],
-        text[512],
-        forum1[256],
-        forum2[256],
-        ucp1[256],
-        ucp2[256],
-        server1[256],
-        server2[256],
+        text[1024],
         footer[128],
         rcon[128];
 
@@ -29,38 +23,27 @@ public ServerStatus(type){
         }
 
         // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status dos serviços do servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Nenhum problema ou ocorrência recente.");
+        format(text, 1024, "<:annou:931570978180431912> Nenhum problema ou ocorrência recente.\n\n\
+        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel");
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP");
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/orGtntq.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -74,39 +57,27 @@ public ServerStatus(type){
             SendRconCommand(rcon);
         }
 
-        // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status dos serviços do servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no fórum. Os desenvolvedores trabalhando em uma solução.\n");
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso fórum nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -121,38 +92,27 @@ public ServerStatus(type){
         }
 
         // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status dos serviços do servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no User Control Panel. Os desenvolvedores trabalhando em uma solução.\n");
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso User Control Panel nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -165,38 +125,27 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status dos serviços do servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no serviço SA-MP e o acesso aos jogadores foi suspenso para evitar danos.\nOs desenvolvedores trabalhando em uma solução.");
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso serviço SA-MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço SA-MP:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -209,37 +158,27 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status dos serviços do servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado em todos os serviços. Os desenvolvedores trabalhando em uma solução o mais rápido possível.\n");
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em todas as nossas plataformas nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço SA-MP:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/5jVAWdx.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }

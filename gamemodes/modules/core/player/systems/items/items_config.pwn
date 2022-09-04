@@ -283,7 +283,7 @@ Dialog:ItemsEditOptions(playerid, response, listitem, inputtext[]) {
             format(string, sizeof(string), "Você não especificou um nome grande demais.\nO limite é de 256 caracteres.\n\nDigite a nova descrição do item:\n\nDescrição atual:\n%s", pInfo[playerid][iEditingDesc]);
             if(strlen(inputtext) > 256) return Dialog_Show(playerid, ItemsEditOptions, DIALOG_STYLE_INPUT, title, string, "Alterar", "<<");
 
-            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_name` = '%s' WHERE `ID` = '%d';", inputtext, pInfo[playerid][iEditingSQL]);
+            mysql_format(DBConn, query, sizeof query, "UPDATE `items` SET `item_desc` = '%s' WHERE `ID` = '%d';", inputtext, pInfo[playerid][iEditingSQL]);
             result = mysql_query(DBConn, query);
 
             for(new i = 0; i < MAX_DYNAMIC_ITEMS; i++){

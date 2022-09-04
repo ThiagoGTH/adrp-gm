@@ -48,6 +48,7 @@ void:CheckTables() {
     CheckHousesTable();
     CheckTradingTable();
     CheckLicenceTable();
+    CheckFactionsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -361,6 +362,7 @@ void:CheckItemsTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela items checada com sucesso");
     logCreate(99998, logString, 5);
 }
+
 void:CheckBanTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ban` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -898,6 +900,129 @@ void:CheckLicenceTable() {
 
     print("[DATABASE] Tabela character_licences_driver checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela character_licences_driver checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    return true;
+}
+
+void:CheckFactionsTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(32) NOT NULL DEFAULT 'Nenhum',\
+    `type` int NOT NULL DEFAULT '0',\
+    `color` int NOT NULL DEFAULT '0',\
+    `maxranks` int NOT NULL DEFAULT '0',\
+    `locker` int NOT NULL DEFAULT '0',\
+    `vault` int NOT NULL DEFAULT '0',\
+    `status` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela factions checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_locker (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `faction_id` int NOT NULL DEFAULT '0',\
+    `x` float NOT NULL DEFAULT '0.0',\
+    `y` float NOT NULL DEFAULT '0.0',\
+    `z` float NOT NULL DEFAULT '0.0',\
+    `int` int NOT NULL DEFAULT '0',\
+    `world` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela factions_skins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_skins checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_skins (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `faction_id` int NOT NULL DEFAULT '0',\
+    `skins` varchar(256) NOT NULL DEFAULT '|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela factions_skins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_skins checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_ranks (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `faction_id` int NOT NULL DEFAULT '0',\
+    `rank1` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank2` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank3` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank4` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank5` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank6` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank7` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank8` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank9` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank10` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank11` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank12` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank13` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank14` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank15` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank16` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank17` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank18` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank19` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank20` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank21` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank22` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank23` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank24` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank25` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank26` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank27` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank28` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank29` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `rank30` varchar(256) NOT NULL DEFAULT 'Vazio',\
+    `paycheck` varchar(512) NOT NULL DEFAULT '|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela factions_skins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_skins checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_weapons (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `faction_id` int NOT NULL DEFAULT '0',\
+    `weapon` int NOT NULL DEFAULT '0',\
+    `weapon1` int NOT NULL DEFAULT '0',\
+    `ammo1` int NOT NULL DEFAULT '0',\
+    `weapon2` int NOT NULL DEFAULT '0',\
+    `ammo2` int NOT NULL DEFAULT '0',\
+    `weapon3` int NOT NULL DEFAULT '0',\
+    `ammo3` int NOT NULL DEFAULT '0',\
+    `weapon4` int NOT NULL DEFAULT '0',\
+    `ammo4` int NOT NULL DEFAULT '0',\
+    `weapon5` int NOT NULL DEFAULT '0',\
+    `ammo5` int NOT NULL DEFAULT '0',\
+    `weapon6` int NOT NULL DEFAULT '0',\
+    `ammo6` int NOT NULL DEFAULT '0',\
+    `weapon7` int NOT NULL DEFAULT '0',\
+    `ammo7` int NOT NULL DEFAULT '0',\
+    `weapon8` int NOT NULL DEFAULT '0',\
+    `ammo8` int NOT NULL DEFAULT '0',\
+    `weapon9` int NOT NULL DEFAULT '0',\
+    `ammo9` int NOT NULL DEFAULT '0',\
+    `weapon10` int NOT NULL DEFAULT '0',\
+    `ammo10` int NOT NULL DEFAULT '0',\
+    `weapon11` int NOT NULL DEFAULT '0',\
+    `ammo11` int NOT NULL DEFAULT '0',\
+    `weapon12` int NOT NULL DEFAULT '0',\
+    `ammo12` int NOT NULL DEFAULT '0',\
+    `weapon13` int NOT NULL DEFAULT '0',\
+    `ammo13` int NOT NULL DEFAULT '0',\
+    `weapon14` int NOT NULL DEFAULT '0',\
+    `ammo14` int NOT NULL DEFAULT '0',\
+    `weapon15` int NOT NULL DEFAULT '0',\
+    `ammo15` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela factions_weapons checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_weapons checada com sucesso");
     logCreate(99998, logString, 5);
 
     return true;

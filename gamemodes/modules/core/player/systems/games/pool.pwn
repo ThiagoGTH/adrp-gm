@@ -6,8 +6,6 @@
 #define PRESSED(%0)					(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 #define RELEASED(%0) 				(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
-#define DIALOG_POOL_WAGER 			1181
-
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
 #define DEFAULT_AIM 				(0.38)
@@ -180,7 +178,7 @@ hook OnPlayerConnect(playerid) {
 Dialog:DIALOG_POOL_WAGER(playerid, response, listitem, inputtext[]) {
     new
 		poolid = p_PoolID[playerid];
-
+ 
 	if (poolid == -1) return SendErrorMessage(playerid, "Não foi possível identificar a mesa de sinuca. Por favor, entre na mesa novamente.");
     if (response) {
 		g_poolTableData[poolid][E_READY] = true;
@@ -223,7 +221,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				}
 			}
 
-			// make pressing key fire annoying
+			/*// make pressing key fire annoying
 			if (RELEASED(KEY_FIRE) && g_poolTableData[poolid][E_AIMER] != playerid && ! p_PoolChalking[playerid]) {
 				// reset anims of player
 				if (IsPlayerPlayingPool(playerid)) {
@@ -242,7 +240,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (Pool_AreBallsStopped(poolid)) Pool_ResetBallPositions(poolid);
 				
 				return true;
-			}
+			}*/
 
 			// begin gameplay stuff
 			if (IsPlayerPlayingPool(playerid) && p_PoolID[playerid] == poolid) {
@@ -378,7 +376,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (pool_player_count >= 2) {
 					return SendErrorMessage(playerid, "Essa mesa de sinuca já está cheia.");
 				}
-
+// transformar em cmd \/
 				// ensure this player isn't already joined
 				if (!IsPlayerPlayingPool(playerid) && ! Iter_Contains(poolplayers<poolid>, playerid)) {
 					if (pool_player_count == 1 && ! g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Essa mesa de sinuca não está pronta.");
@@ -462,10 +460,10 @@ Pool_RemovePlayer(playerid){
 /* ================================ FUNÇÕES ================================ */
 CreatePoolTable(Float: X, Float: Y, Float: Z, Float: A = 0.0, E_POOL_SKINS:skin, interior = 0, world = 0) {
 	if (A != 0 && A != 90.0 && A != 180.0 && A != 270.0 && A != 360.0) {
-		format(logString, sizeof(logString), "SYSTEM: [POOL ERROR] As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 ou 360 graus.");
+		format(logString, sizeof(logString), "SYSTEM: [POOL ERRO] As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 ou 360 graus.");
         logCreate(99998, logString, 5);
 
-		return print("POOL ERROR: As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 e 360 ??graus."), 1;
+		return print("POOL ERROR: As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 e 360 graus."), 1;
 	}
 
 	new

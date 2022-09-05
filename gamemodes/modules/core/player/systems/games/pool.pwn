@@ -163,17 +163,17 @@ hook OnPlayerConnect(playerid) {
 	g_PoolPowerBar[playerid] = CreatePlayerProgressBar(playerid, 530.000000, 233.000000, 61.000000, 6.199999, -1429936641, 100.0000, 0);
 	RemoveBuildingForPlayer(playerid, 2964, 510.1016, -84.8359, 997.9375, 9999.9);
 
-	p_HelpBoxTD[ playerid ] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
-	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[ playerid ], 255);
-	PlayerTextDrawFont(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[ playerid ], 0.219999, 1.200000);
-	PlayerTextDrawColor(playerid, p_HelpBoxTD[ playerid ], -1);
-	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[ playerid ], 0);
-	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[ playerid ], 117);
-	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[ playerid ], 170.000000, 0.000000);
+	p_HelpBoxTD[playerid] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
+	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[playerid], 255);
+	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[playerid], 0.219999, 1.200000);
+	PlayerTextDrawColor(playerid, p_HelpBoxTD[playerid], -1);
+	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], 0);
+	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[playerid], 117);
+	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[playerid], 170.000000, 0.000000);
 	return true;
 }
 
@@ -432,7 +432,6 @@ Pool_RemovePlayer(playerid){
 	p_PoolHoleGuide[playerid] = -1;
 	RestoreCamera(playerid);
 	HidePlayerHelpDialog(playerid);
-	//HidePlayerHelpDialog(playerid);
 
 	// check if the player is even in the table
 	if (poolid != -1 && Iter_Contains(poolplayers< poolid >, playerid)) {
@@ -565,17 +564,15 @@ CreatePoolTable(Float: X, Float: Y, Float: Z, Float: A = 0.0, E_POOL_SKINS:skin,
 	return poolid;
 }
 
-Pool_GetClosestTable(playerid, &Float: dis = 99999.99) {
+Pool_GetClosestTable(playerid, &Float: dis = 35.00) {
 	new pooltable = -1;
 	new player_world = GetPlayerVirtualWorld(playerid);
 
-	foreach (new i : pooltables) if (g_poolTableData[i][E_WORLD] == player_world)
-	{
+	foreach (new i : pooltables) if (g_poolTableData[i][E_WORLD] == player_world) {
     	new
     		Float: dis2 = GetPlayerDistanceFromPoint(playerid, g_poolTableData[i][E_X], g_poolTableData[i][E_Y], g_poolTableData[i][E_Z]);
 
-    	if (dis2 < dis && dis2 != -1.00)
-    	{
+    	if (dis2 < dis && dis2 != -1.00) {
     	    dis = dis2;
     	    pooltable = i;
 		}
@@ -721,7 +718,8 @@ Pool_UpdateScoreboard(poolid, close = 0) {
 
 Pool_EndGame(poolid) {
 	// hide scoreboard in 5 seconds
-	Pool_UpdateScoreboard(poolid, 5000);
+    //HidePlayerHelpDialog(playerid);
+	Pool_UpdateScoreboard(poolid);
 
 	// unset pool variables
 	foreach (new i : poolplayers< poolid >) {
@@ -1500,24 +1498,23 @@ CMD:encerrarsinuca(playerid, params[]) {
 	}
 #endif
 
-ShowPlayerHelpDialog( playerid, timeout, const format[ ], va_args<>) {
+ShowPlayerHelpDialog(playerid, timeout, const format[], va_args<>) {
     static
-		out[ 255 ]
-	;
+		out[255];
 
-	if ( !IsPlayerConnected( playerid ) )
+	if (!IsPlayerConnected(playerid))
 		return false;
 
-    va_format( out, sizeof( out ), format, va_start<3> );
+    va_format(out, sizeof(out), format, va_start<3>);
 
-    PlayerTextDrawSetString(playerid, p_HelpBoxTD[ playerid ], out );
-    PlayerTextDrawShow( playerid, p_HelpBoxTD[ playerid ] );
+    PlayerTextDrawSetString(playerid, p_HelpBoxTD[playerid], out);
+    PlayerTextDrawShow(playerid, p_HelpBoxTD[playerid]);
 
-    KillTimer(p_HideHelpDialogTimer[ playerid ] );
-    p_HideHelpDialogTimer[ playerid ] = -1;
+    KillTimer(p_HideHelpDialogTimer[playerid]);
+    p_HideHelpDialogTimer[playerid] = -1;
 
-   	if ( timeout != 0 ) {
-   		p_HideHelpDialogTimer[ playerid ] = SetTimerEx( "HidePlayerHelpDialog", timeout, false, "d", playerid );
+   	if (timeout != 0 ) {
+   		p_HideHelpDialogTimer[playerid] = SetTimerEx("HidePlayerHelpDialog", timeout, false, "d", playerid);
    	}
 	return true;
 }

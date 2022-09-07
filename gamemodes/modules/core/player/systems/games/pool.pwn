@@ -1169,7 +1169,7 @@ public PHY_OnObjectUpdate(handleid) {
 	return true;
 }
 
-Pool_OnPlayerWin(poolid, winning_player) {
+Pool_OnPlayerWin(winning_player) {
 	if (!IsPlayerConnected(winning_player) && !IsPlayerNPC(winning_player))
 		return false;
 

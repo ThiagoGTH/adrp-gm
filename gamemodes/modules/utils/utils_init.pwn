@@ -62,7 +62,7 @@ public OnGameModeInit() {
 	SendRconCommand("ackslimit 11000");
     SendRconCommand("password snd2n189w--");
 
-    Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 1200);
+    Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 1000);
     Streamer_SetChunkSize(STREAMER_TYPE_OBJECT, 50);
 	Streamer_SetTickRate(200);
 

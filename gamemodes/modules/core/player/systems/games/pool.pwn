@@ -1,12 +1,10 @@
 
 #include <YSI_Coding\y_hooks>
 
-/* ================================ DEFINIÇÕES ================================ */
+/* ================================ DEFINIÃ‡Ã•ES ================================ */
 #define HOLDING(%0)             	((newkeys & (%0)) == (%0))
 #define PRESSED(%0)					(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 #define RELEASED(%0) 				(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
-
-#define DIALOG_POOL_WAGER 			1181
 
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
@@ -15,7 +13,7 @@
 #define POOL_FEE_RATE 				(0.02)
 
 #define MAX_POOL_TABLES 			(50)
-#define MAX_POOL_BALLS 				(16) // não modifique
+#define MAX_POOL_BALLS 				(16) // nÃ£o modifique
 
 #define SendPoolMessage(%0,%1)		va_SendClientMessage(%0,-1,"SINUCA:" # %1)
 
@@ -30,7 +28,7 @@ Float:GetDistanceFromPointToPoint( Float: fX, Float: fY, Float: fX1, Float: fY1)
 Float:GetDistanceBetweenPoints( Float: x1, Float: y1, Float: z1, Float: x2, Float: y2, Float: z2 )
     return VectorSize(x1 - x2, y1 - y2, z1 - z2);
 
-enum E_POOL_BALL_TYPE { // não modifique
+enum E_POOL_BALL_TYPE { // nÃ£o modifique
 	E_STRIPED,
 	E_SOLID,
 	E_CUE,
@@ -57,7 +55,7 @@ static const
 		{3003, 	"branca", 			E_CUE, 		0.5000, 	0.0000},
 		{3002, 	"um",				E_SOLID,	-0.300, 	0.0000},
 		{3100, 	"dois",				E_SOLID, 	-0.525, 	-0.040},
-		{3101, 	"três",				E_SOLID,	-0.375, 	0.0440},
+		{3101, 	"trÃªs",				E_SOLID,	-0.375, 	0.0440},
 		{3102, 	"quatro",			E_SOLID,	-0.600, 	0.0790},
 		{3103,	"cinco",			E_SOLID,	-0.525, 	0.1180},
 		{3104,	"seis",				E_SOLID,	-0.600, 	-0.157},
@@ -91,9 +89,9 @@ enum E_POOL_TABLE_DATA {
 	bool:E_STARTED, 				E_AIMER, 						E_AIMER_OBJECT,
 	E_NEXT_SHOOTER,					E_SHOTS_LEFT,					E_FOULS,						
 	bool:E_EXTRA_SHOT,				bool:E_CUE_POCKETED,			E_PLAYER_8BALL_TARGET[MAX_PLAYERS],
-	E_WAGER,						bool:E_READY,					E_CUEBALL_AREA,
-	Float:E_POWER,					E_DIRECTION,					E_TABLE,						
-	Text3D:E_LABEL, 				E_EXISTS,						E_ID,
+	bool:E_READY,					E_CUEBALL_AREA,                 Float:E_POWER,
+    E_DIRECTION,					E_TABLE,                        Text3D:E_LABEL, 				
+    E_EXISTS,						E_ID,
 }
 
 new
@@ -127,7 +125,7 @@ forward PlayPoolSound 				(poolid, soundid);
 hook OnScriptInit() {
 	// textdraws
 	new powerStr[128];
-    format(powerStr, sizeof(powerStr), "Força");
+    format(powerStr, sizeof(powerStr), "ForÃ§a");
     AdjustTextDrawString(powerStr);
 
 	g_PoolTextdraw = TextDrawCreate(529.000000, 218.000000, powerStr);
@@ -163,51 +161,31 @@ hook OnPlayerConnect(playerid) {
 	g_PoolPowerBar[playerid] = CreatePlayerProgressBar(playerid, 530.000000, 233.000000, 61.000000, 6.199999, -1429936641, 100.0000, 0);
 	RemoveBuildingForPlayer(playerid, 2964, 510.1016, -84.8359, 997.9375, 9999.9);
 
-	p_HelpBoxTD[ playerid ] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
-	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[ playerid ], 255);
-	PlayerTextDrawFont(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[ playerid ], 0.219999, 1.200000);
-	PlayerTextDrawColor(playerid, p_HelpBoxTD[ playerid ], -1);
-	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[ playerid ], 0);
-	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[ playerid ], 1);
-	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[ playerid ], 117);
-	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[ playerid ], 170.000000, 0.000000);
+	p_HelpBoxTD[playerid] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
+	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[playerid], 255);
+	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[playerid], 0.219999, 1.200000);
+	PlayerTextDrawColor(playerid, p_HelpBoxTD[playerid], -1);
+	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], 0);
+	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[playerid], 117);
+	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[playerid], 170.000000, 0.000000);
 	return true;
 }
 
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
-	if (dialogid == DIALOG_POOL_WAGER) {
-		new
-			poolid = p_PoolID[playerid];
-
-		if (poolid == -1) return SendErrorMessage(playerid, "Não foi possível identificar a mesa de sinuca. Por favor, entre na mesa novamente.");
-		
-
-		new
-			wager_amount = strval(inputtext);
-
-		if (response && wager_amount > 0)
-		{
-			if (wager_amount > GetMoney(playerid)) {
-				ShowPlayerDialog(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_INPUT, "{FFFFFF}Aposta da Mesa", "{FFFFFF}Por favor, especifique a taxa mínima de entrada para a mesa:\n\nVocê não tem todo esse dinheiro!", "Setar", "Sem Taxa");
-			} else {
-				GiveMoney(playerid, -wager_amount);
-				g_poolTableData[poolid][E_WAGER] = wager_amount;
-				g_poolTableData[poolid][E_READY] = true;
-				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s definiu a aposta da mesa de sinuca em $%s.", pNome(playerid), FormatNumber(wager_amount));
-				UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\n$%s entrada", FormatNumber(wager_amount)));
-			}
-			return true;
-		} else {
-			g_poolTableData[poolid][E_WAGER] = 0;
-			g_poolTableData[poolid][E_READY] = true;
-			SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s iniciou a mesa de sinuca sem apostas.", pNome(playerid));
-			UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\nPartida gratuita"));
-		}
+Dialog:DIALOG_POOL_WAGER(playerid, response, listitem, inputtext[]) {
+    new
+		poolid = p_PoolID[playerid];
+ 
+	if (poolid == -1) return SendErrorMessage(playerid, "NÃ£o foi possÃ­vel identificar a mesa de sinuca. Por favor, entre na mesa novamente.");
+    if (response) {
+		g_poolTableData[poolid][E_READY] = true;
+		SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s iniciou um jogo na mesa de sinuca.", pNome(playerid));
+		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\nEsperando por mais jogadores..."));
 	}
-	return true;
+    return true;
 }
 
 hook OnPlayerUpdateEx(playerid) {
@@ -243,7 +221,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				}
 			}
 
-			// make pressing key fire annoying
+			/*// make pressing key fire annoying
 			if (RELEASED(KEY_FIRE) && g_poolTableData[poolid][E_AIMER] != playerid && ! p_PoolChalking[playerid]) {
 				// reset anims of player
 				if (IsPlayerPlayingPool(playerid)) {
@@ -262,7 +240,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (Pool_AreBallsStopped(poolid)) Pool_ResetBallPositions(poolid);
 				
 				return true;
-			}
+			}*/
 
 			// begin gameplay stuff
 			if (IsPlayerPlayingPool(playerid) && p_PoolID[playerid] == poolid) {
@@ -276,8 +254,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (RELEASED(KEY_HANDBRAKE)) {
 					if (Pool_AreBallsStopped(poolid)) {
 						if (g_poolTableData[poolid][E_AIMER] != playerid) {
-							if (g_poolTableData[poolid][E_NEXT_SHOOTER] != playerid) return SendErrorMessage(playerid, "Não é a sua vez. Por favor, espere.");
-							if (g_poolTableData[poolid][E_CUE_POCKETED]) return SendErrorMessage(playerid, "Você pode apontar o taco assim que colocar a bola branca.");
+							if (g_poolTableData[poolid][E_NEXT_SHOOTER] != playerid) return SendErrorMessage(playerid, "NÃ£o Ã© a sua vez. Por favor, espere.");
+							if (g_poolTableData[poolid][E_CUE_POCKETED]) return SendErrorMessage(playerid, "VocÃª pode apontar o taco assim que colocar a bola branca.");
 							
 
 							if (!p_PoolChalking[playerid] && g_poolTableData[poolid][E_AIMER] == -1) {
@@ -287,7 +265,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 								GetPlayerPos(playerid, X, Y, Z);
 
-								if (Z > g_poolTableData[poolid][E_Z] + 0.5) return SendErrorMessage(playerid, "Você não pode jogar de cima da mesa.");
+								if (Z > g_poolTableData[poolid][E_Z] + 0.5) return SendErrorMessage(playerid, "VocÃª nÃ£o pode jogar de cima da mesa.");
 								
 								new objectid = PHY_GetHandleObject(g_poolBallData[poolid][E_BALL_PHY_HANDLE][0]);
 								GetDynamicObjectPos(objectid, Xa, Ya, Za);
@@ -396,23 +374,19 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				new pool_player_count = Iter_Count(poolplayers<poolid>);
 
 				if (pool_player_count >= 2) {
-					return SendErrorMessage(playerid, "Essa mesa de sinuca já está cheia.");
+					return SendErrorMessage(playerid, "Essa mesa de sinuca jÃ¡ estÃ¡ cheia.");
 				}
-
+// transformar em cmd \/
 				// ensure this player isn't already joined
 				if (!IsPlayerPlayingPool(playerid) && ! Iter_Contains(poolplayers<poolid>, playerid)) {
-					if (pool_player_count == 1 && ! g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Essa mesa de sinuca não está pronta.");
-					new entry_fee = g_poolTableData[poolid][E_WAGER];
-					if (GetMoney(playerid) < entry_fee && g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Você precisa de $%s para se juntar a essa mesa.", FormatNumber(entry_fee));
-					
+					if (pool_player_count == 1 && ! g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Essa mesa de sinuca nÃ£o estÃ¡ pronta.");
+
 					// add to table
 					Iter_Add(poolplayers< poolid >, playerid);
 					// reset variables
 					p_isPlayingPool[playerid] = true;
 					p_PoolID[playerid] = poolid;
-					// deduct cash
-					if (g_poolTableData[poolid][E_READY]) GiveMoney(playerid, -entry_fee);
-					
+
 					// start the game if there's two players
 					if (pool_player_count + 1 >= 2) {
 					    new random_cuer = Iter_Random(poolplayers<poolid>);
@@ -430,9 +404,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				    	Pool_UpdateScoreboard(poolid);
 						Pool_RespawnBalls(poolid);
 					} else {
-						g_poolTableData[poolid][E_WAGER] = 0;
 						g_poolTableData[poolid][E_READY] = false;
-						ShowPlayerDialog(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_INPUT, "{FFFFFF}Aposta da Mesa", "{FFFFFF}Por favor, especifique a taxa mínima de entrada para a mesa:", "Setar", "Sem Taxa");
+                        Dialog_Show(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_MSGBOX, "{FFFFFF}Partida de Sinuca", "{FFFFFF}VocÃª realmente deseja comeÃ§ar essa partida?", "Sim", "NÃ£o");
 						ShowPlayerHelpDialog(playerid, 0, "~y~~h~~k~~PED_LOCK_TARGET~ ~w~- Mirar taco~n~~y~~h~~k~~PED_FIREWEAPON~ ~w~- Fazer jogada~n~~y~~h~~k~~PED_JUMPING~ ~w~- Modo de camera~n~~y~~h~~k~~VEHICLE_ENTER_EXIT~ ~w~- Sair do jogo~n~~n~~r~~h~Esperando por mais um jogador...");
 						UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], -1, sprintf("Mesa de Sinuca\nIniciada por %s", pNome(playerid)));
 						Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s se juntou a partida de sinuca (1/2)", pNome(playerid));
@@ -457,7 +430,6 @@ Pool_RemovePlayer(playerid){
 	p_PoolHoleGuide[playerid] = -1;
 	RestoreCamera(playerid);
 	HidePlayerHelpDialog(playerid);
-	//HidePlayerHelpDialog(playerid);
 
 	// check if the player is even in the table
 	if (poolid != -1 && Iter_Contains(poolplayers< poolid >, playerid)) {
@@ -477,9 +449,7 @@ Pool_RemovePlayer(playerid){
 		} else {
 			// no players and is a ready table, then refund
 			if (!Iter_Count(poolplayers< poolid >) && g_poolTableData[poolid][E_READY]) {
-				GiveMoney(playerid, g_poolTableData[poolid][E_WAGER]);
 				g_poolTableData[poolid][E_READY] = false;
-				g_poolTableData[poolid][E_WAGER] = 0;
 			}
 			UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, DEFAULT_POOL_STRING);
 		}
@@ -487,13 +457,13 @@ Pool_RemovePlayer(playerid){
 	return true;
 }
 
-/* ================================ FUNÇÕES ================================ */
+/* ================================ FUNÃ‡Ã•ES ================================ */
 CreatePoolTable(Float: X, Float: Y, Float: Z, Float: A = 0.0, E_POOL_SKINS:skin, interior = 0, world = 0) {
 	if (A != 0 && A != 90.0 && A != 180.0 && A != 270.0 && A != 360.0) {
-		format(logString, sizeof(logString), "SYSTEM: [POOL ERROR] As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 ou 360 graus.");
+		format(logString, sizeof(logString), "SYSTEM: [POOL ERRO] As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 ou 360 graus.");
         logCreate(99998, logString, 5);
 
-		return print("POOL ERROR: As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 e 360 ??graus."), 1;
+		return print("POOL ERROR: As mesas de sinuca devem ser posicionadas em 0, 90, 180, 270 e 360 graus."), 1;
 	}
 
 	new
@@ -592,17 +562,15 @@ CreatePoolTable(Float: X, Float: Y, Float: Z, Float: A = 0.0, E_POOL_SKINS:skin,
 	return poolid;
 }
 
-Pool_GetClosestTable(playerid, &Float: dis = 99999.99) {
+Pool_GetClosestTable(playerid, &Float: dis = 35.00) {
 	new pooltable = -1;
 	new player_world = GetPlayerVirtualWorld(playerid);
 
-	foreach (new i : pooltables) if (g_poolTableData[i][E_WORLD] == player_world)
-	{
+	foreach (new i : pooltables) if (g_poolTableData[i][E_WORLD] == player_world) {
     	new
     		Float: dis2 = GetPlayerDistanceFromPoint(playerid, g_poolTableData[i][E_X], g_poolTableData[i][E_Y], g_poolTableData[i][E_Z]);
 
-    	if (dis2 < dis && dis2 != -1.00)
-    	{
+    	if (dis2 < dis && dis2 != -1.00) {
     	    dis = dis2;
     	    pooltable = i;
 		}
@@ -728,7 +696,7 @@ Pool_UpdateScoreboard(poolid, close = 0) {
 			is_playing = playerid == first_player ? first_player : (playerid == second_player ? second_player : -1);
 
 		if (g_poolTableData[poolid][E_BALLS_SCORED] && is_playing != -1) {
-			format(szBigString, sizeof(szBigString), "Suas_bolas_são_%s.~n~", g_poolTableData[poolid][E_PLAYER_BALL_TYPE][is_playing] == E_STRIPED ? ("listradas") : ("lisas"));
+			format(szBigString, sizeof(szBigString), "Suas_bolas_sÃ£o_%s.~n~", g_poolTableData[poolid][E_PLAYER_BALL_TYPE][is_playing] == E_STRIPED ? ("listradas") : ("lisas"));
 			AdjustTextDrawString(szBigString);
 		} else {
 			szBigString = "";
@@ -748,7 +716,8 @@ Pool_UpdateScoreboard(poolid, close = 0) {
 
 Pool_EndGame(poolid) {
 	// hide scoreboard in 5 seconds
-	Pool_UpdateScoreboard(poolid, 5000);
+    //HidePlayerHelpDialog(playerid);
+	Pool_UpdateScoreboard(poolid);
 
 	// unset pool variables
 	foreach (new i : poolplayers< poolid >) {
@@ -768,7 +737,6 @@ Pool_EndGame(poolid) {
 	g_poolTableData[poolid][E_FOULS] = 0;
 	g_poolTableData[poolid][E_EXTRA_SHOT] = false;
 	g_poolTableData[poolid][E_READY] = false;
-	g_poolTableData[poolid][E_WAGER] = 0;
 	g_poolTableData[poolid][E_CUE_POCKETED] = false;
 
 	KillTimer(g_poolTableData[poolid][E_TIMER]);
@@ -1095,8 +1063,8 @@ public PHY_OnObjectUpdate(handleid) {
 
 						// alert players in table
 						foreach (new playerid : poolplayers< poolid >) {
-							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s está jogando com as bolas %s.", pNome(first_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] == E_STRIPED ? ("listradas") : ("lisas"));
-							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s está jogando com as bolas %s.", pNome(second_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][second_player] == E_STRIPED ? ("listradas") : ("lisas"));
+							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s estÃ¡ jogando com as bolas %s.", pNome(first_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] == E_STRIPED ? ("listradas") : ("lisas"));
+							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s estÃ¡ jogando com as bolas %s.", pNome(second_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][second_player] == E_STRIPED ? ("listradas") : ("lisas"));
 	    				}
 	    			}
 				}
@@ -1107,7 +1075,7 @@ public PHY_OnObjectUpdate(handleid) {
 				if (g_poolBallOffsetData[poolball_index][E_BALL_TYPE] == E_CUE)
 				{
 	    			GameTextForPlayer(current_player, "~n~~n~~n~~r~bola errada!", 3000, 3);
-					SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaçapou a bola branca e %s vai definir a posição dela.", pNome(current_player), pNome(opposite_player));
+					SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaÃ§apou a bola branca e %s vai definir a posiÃ§Ã£o dela.", pNome(current_player), pNome(opposite_player));
 
 					// penalty for that
 					g_poolTableData[poolid][E_FOULS] ++;
@@ -1126,12 +1094,12 @@ public PHY_OnObjectUpdate(handleid) {
 					if (p_PoolScore[current_player] < 7) {
 						p_PoolScore[opposite_player] ++;
 
-						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaçapou a bola oito acidentalmente e %s ganhou a rodada.", pNome(current_player), pNome(opposite_player));
+						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaÃ§apou a bola oito acidentalmente e %s ganhou a rodada.", pNome(current_player), pNome(opposite_player));
 						Pool_OnPlayerWin(poolid, opposite_player);
 					} else if (g_poolTableData[poolid][E_PLAYER_8BALL_TARGET][current_player] != holeid) {
 						p_PoolScore[opposite_player] ++;
 
-						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaçapou a bola oito no lugar errado e %s ganhou a rodada.", pNome(current_player), pNome(opposite_player));
+						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaÃ§apou a bola oito no lugar errado e %s ganhou a rodada.", pNome(current_player), pNome(opposite_player));
 						Pool_OnPlayerWin(poolid, opposite_player);
 					} else {
 						p_PoolScore[current_player] ++;
@@ -1148,7 +1116,7 @@ public PHY_OnObjectUpdate(handleid) {
 					{
 	    				p_PoolScore[opposite_player] += 1;
 	    				GameTextForPlayer(current_player, "~n~~n~~n~~r~bola errada!", 3000, 3);
-						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaçapou a bola %s %s, invés de %s.", pNome(current_player),g_poolBallOffsetData[poolball_index][E_BALL_TYPE] == E_STRIPED ? ("listrada") : ("lisa"), g_poolBallOffsetData[poolball_index][E_BALL_NAME], g_poolTableData[poolid][E_PLAYER_BALL_TYPE][current_player] == E_STRIPED ? ("listrada") : ("lisa"));
+						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaÃ§apou a bola %s %s, invÃ©s de %s.", pNome(current_player),g_poolBallOffsetData[poolball_index][E_BALL_TYPE] == E_STRIPED ? ("listrada") : ("lisa"), g_poolBallOffsetData[poolball_index][E_BALL_NAME], g_poolTableData[poolid][E_PLAYER_BALL_TYPE][current_player] == E_STRIPED ? ("listrada") : ("lisa"));
 
 						// penalty for that
 						g_poolTableData[poolid][E_FOULS] ++;
@@ -1158,7 +1126,7 @@ public PHY_OnObjectUpdate(handleid) {
 	    				p_PoolScore[current_player] ++;
 	    				GameTextForPlayer(current_player, "~n~~n~~n~~g~+1 ponto", 3000, 3);
 
-						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaçapou uma bola %s %s.", pNome(current_player), g_poolBallOffsetData[poolball_index][E_BALL_TYPE] == E_STRIPED ? ("listrada") : ("lisa"), g_poolBallOffsetData[poolball_index][E_BALL_NAME]);
+						SendNearbyMessage(current_player, 30.0, COLOR_PURPLE, "** %s encaÃ§apou uma bola %s %s.", pNome(current_player), g_poolBallOffsetData[poolball_index][E_BALL_TYPE] == E_STRIPED ? ("listrada") : ("lisa"), g_poolBallOffsetData[poolball_index][E_BALL_NAME]);
 
 						// extra shot for scoring one's own
 						g_poolTableData[poolid][E_SHOTS_LEFT] = g_poolTableData[poolid][E_FOULS] > 0 ? 0 : 1;
@@ -1173,7 +1141,7 @@ public PHY_OnObjectUpdate(handleid) {
 							Pool_RotateXY(g_poolPotOffsetData[opposite_holeid][0], g_poolPotOffsetData[opposite_holeid][1], g_poolTableData[poolid][E_ANGLE], hole_x, hole_y);
 							p_PoolHoleGuide[player_being_marked] = CreateDynamicObject(18643, g_poolTableData[poolid][E_X] + hole_x, g_poolTableData[poolid][E_Y] + hole_y, g_poolTableData[poolid][E_Z] - 0.5, 0.0, -90.0, 0.0, .playerid = player_being_marked);
 							g_poolTableData[poolid][E_PLAYER_8BALL_TARGET][player_being_marked] = opposite_holeid;
-							SendPoolMessage(player_being_marked, "Agora você deve encaçapar a bola oito no lugar designado.");
+							SendPoolMessage(player_being_marked, "Agora vocÃª deve encaÃ§apar a bola oito no lugar designado.");
 							Streamer_Update(player_being_marked);
 						}
 					}
@@ -1201,21 +1169,15 @@ public PHY_OnObjectUpdate(handleid) {
 	return true;
 }
 
-Pool_OnPlayerWin(poolid, winning_player) {
+Pool_OnPlayerWin(winning_player) {
 	if (!IsPlayerConnected(winning_player) && !IsPlayerNPC(winning_player))
 		return false;
 
-	new win_amount = floatround(float(g_poolTableData[poolid][E_WAGER]) * (1 - POOL_FEE_RATE) * 2.0);
 	// restore camera
 	RestoreCamera(winning_player);
-	GiveMoney(winning_player, win_amount);
 	// winning player
-	SendNearbyMessage(winning_player, 30.0, COLOR_PURPLE, "** %s ganhou a partida de sinuca e levou $%s.", pNome(winning_player), FormatNumber(win_amount));
-
-	Pool_SendTableMessage(poolid, COLOR_GREEN, "%s ganhou a partida!", pNome(winning_player));
-	Pool_SendTableMessage(poolid, COLOR_GREEN, "Prêmio: %s | -%0.0f%s porcentagem de taxa", FormatNumber(win_amount), win_amount > 0 ? POOL_FEE_RATE * 100.0 : 0.0, "%%");
-
-	format(logString, sizeof(logString), "%s (%s) ganhou $%s em uma partida de sinuca.", pNome(winning_player), GetPlayerUserEx(winning_player), FormatNumber(win_amount));
+	SendNearbyMessage(winning_player, 30.0, COLOR_PURPLE, "** %s ganhou a partida de sinuca.", pNome(winning_player));
+	format(logString, sizeof(logString), "%s (%s) ganhou uma partida de sinuca.", pNome(winning_player), GetPlayerUserEx(winning_player));
 	logCreate(winning_player, logString, 12);
 	return true;
 }
@@ -1236,7 +1198,7 @@ Pool_QueueNextPlayer(poolid, current_player) {
 	    g_poolTableData[poolid][E_NEXT_SHOOTER] = current_player == first_player ? second_player : first_player;
 
 		// reset ball positions just incase
-		Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: É a vez de %s.", pNome(g_poolTableData[poolid][E_NEXT_SHOOTER]));
+		Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: Ã‰ a vez de %s.", pNome(g_poolTableData[poolid][E_NEXT_SHOOTER]));
 	}
 
 	// respawn the cue ball if it has been pocketed
@@ -1386,7 +1348,7 @@ CMD:criarsinuca(playerid, params[]) {
 	}
 
 	CreatePoolTable(x + 1.0, y + 1.0, z, a, POOL_SKIN_DEFAULT, GetPlayerInterior(playerid), GetPlayerVirtualWorld(playerid));
-	SendServerMessage(playerid, "Você criou uma mesa de sinuca com sucesso.");
+	SendServerMessage(playerid, "VocÃª criou uma mesa de sinuca com sucesso.");
 	
 	mysql_format(DBConn, query, sizeof query, "INSERT INTO pool_tables (`positionX`, `positionY`, `positionZ`, `positionA`, `virtual_world`, `interior`) VALUES ('%f', '%f', %f, '%f', '%d', '%d');", x + 1.0, y + 1.0, z, a, GetPlayerInterior(playerid), GetPlayerVirtualWorld(playerid));
     mysql_query(DBConn, query);
@@ -1405,8 +1367,8 @@ CMD:retirarsinuca(playerid, params[]){
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/retirarsinuca [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
-	SendServerMessage(playerid, "Você retirou %s da partida de sinuca.", pNome(userid));
-	SendServerMessage(userid, "O administrador %s retirou você da partida de sinuca.", GetPlayerUserEx(playerid));
+	SendServerMessage(playerid, "VocÃª retirou %s da partida de sinuca.", pNome(userid));
+	SendServerMessage(userid, "O administrador %s retirou vocÃª da partida de sinuca.", GetPlayerUserEx(playerid));
 	Pool_RemovePlayer(userid);
 
 	format(logString, sizeof(logString), "%s (%s) retirou %s de uma partida de sinuca.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
@@ -1417,12 +1379,12 @@ CMD:retirarsinuca(playerid, params[]){
 CMD:encerrarsinuca(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	new poolid = Pool_GetClosestTable(playerid);
-	if (poolid == -1) return SendErrorMessage(playerid, "Você deve estar perto de uma mesa de sinuca para utilizar este comando.");
+	if (poolid == -1) return SendErrorMessage(playerid, "VocÃª deve estar perto de uma mesa de sinuca para utilizar este comando.");
 
-	SendServerMessage(playerid, "Você forçou o encerramento do jogo da mesa de sinuca ID %d.", poolid);
+	SendServerMessage(playerid, "VocÃª forÃ§ou o encerramento do jogo da mesa de sinuca ID %d.", poolid);
 	Pool_EndGame(poolid);
 
-	format(logString, sizeof(logString), "%s (%s) forçou o encerramento do jogo da mesa de sinuca ID %d", pNome(playerid), GetPlayerUserEx(playerid), poolid);
+	format(logString, sizeof(logString), "%s (%s) forÃ§ou o encerramento do jogo da mesa de sinuca ID %d", pNome(playerid), GetPlayerUserEx(playerid), poolid);
 	logCreate(playerid, logString, 1);
 	return true;
 }
@@ -1534,24 +1496,23 @@ CMD:encerrarsinuca(playerid, params[]) {
 	}
 #endif
 
-ShowPlayerHelpDialog( playerid, timeout, const format[ ], va_args<>) {
+ShowPlayerHelpDialog(playerid, timeout, const format[], va_args<>) {
     static
-		out[ 255 ]
-	;
+		out[255];
 
-	if ( !IsPlayerConnected( playerid ) )
+	if (!IsPlayerConnected(playerid))
 		return false;
 
-    va_format( out, sizeof( out ), format, va_start<3> );
+    va_format(out, sizeof(out), format, va_start<3>);
 
-    PlayerTextDrawSetString(playerid, p_HelpBoxTD[ playerid ], out );
-    PlayerTextDrawShow( playerid, p_HelpBoxTD[ playerid ] );
+    PlayerTextDrawSetString(playerid, p_HelpBoxTD[playerid], out);
+    PlayerTextDrawShow(playerid, p_HelpBoxTD[playerid]);
 
-    KillTimer(p_HideHelpDialogTimer[ playerid ] );
-    p_HideHelpDialogTimer[ playerid ] = -1;
+    KillTimer(p_HideHelpDialogTimer[playerid]);
+    p_HideHelpDialogTimer[playerid] = -1;
 
-   	if ( timeout != 0 ) {
-   		p_HideHelpDialogTimer[ playerid ] = SetTimerEx( "HidePlayerHelpDialog", timeout, false, "d", playerid );
+   	if (timeout != 0 ) {
+   		p_HideHelpDialogTimer[playerid] = SetTimerEx("HidePlayerHelpDialog", timeout, false, "d", playerid);
    	}
 	return true;
 }

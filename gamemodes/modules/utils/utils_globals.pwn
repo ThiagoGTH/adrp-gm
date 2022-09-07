@@ -112,7 +112,13 @@ enum Player_Data {
     pLastBlow,
     Text3D:pBrutallyTag,
     Text3D:pNametag,
+
+    // PLAYERS CONFIG
+    pSetting,
+    pTogNewbie,
+    pTogAdmin,
     pNametagType,
+    pRenderObjects,
     
     pAllowRespawn,
     pLastKnockout,
@@ -153,9 +159,6 @@ enum Player_Data {
     pShowFooter,
     // FACTIONS
     pSwat,
-
-    // TOG
-    pTogNewbie,
 
     pJailed,
     // Temp variables
@@ -321,7 +324,12 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pJailed] = 0;
     pInfo[playerid][pSwat] = 0;
-    pInfo[playerid][pNametagType] = 0;
+
+    pInfo[playerid][pSetting] =
+    pInfo[playerid][pTogNewbie] =
+    pInfo[playerid][pTogAdmin] =
+    pInfo[playerid][pNametagType] =
+    pInfo[playerid][pRenderObjects] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;

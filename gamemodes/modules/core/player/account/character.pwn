@@ -67,6 +67,9 @@ LoadCharacterInfoID(playerid, id) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_pet (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_config (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
@@ -80,7 +83,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerRadio(playerid);
     LoadPlayerInventory(playerid);
     LoadPlayerPet(playerid);
-
+    LoadPlayerConfig(playerid);
     SpawnSelectedCharacter(playerid);
 }
 
@@ -170,6 +173,17 @@ LoadPlayerPet(playerid){
     return true;
 }
 
+LoadPlayerConfig(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_config WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "newbie_chat", pInfo[playerid][pTogNewbie]);
+    cache_get_value_name_int(0, "admin_chat", pInfo[playerid][pTogAdmin]);
+    cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
+    cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
+    cache_delete(result);
+    return true;
+}
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -210,6 +224,8 @@ SpawnSelectedCharacter(playerid) {
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '1' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);
+
+    Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, RenderingObjectsValue(playerid), playerid);
 
     format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
@@ -308,6 +324,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerRadio(playerid);
     SavePlayerInventory(playerid);
     SavePlayerPet(playerid);
+    SavePlayerConfig(playerid);
     return true;
 }
 
@@ -473,6 +490,22 @@ SavePlayerPet(playerid) {
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
+    return true;
+}
+
+SavePlayerConfig(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_config SET \
+    `newbie_chat` = '%d', \
+    `admin_chat` = '%d', \
+    `nametag` = '%d', \
+    `objects` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pTogNewbie],
+    pInfo[playerid][pTogAdmin],
+    pInfo[playerid][pNametagType],
+    pInfo[playerid][pRenderObjects],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
     return true;
 }
 

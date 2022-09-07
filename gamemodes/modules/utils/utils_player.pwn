@@ -1001,6 +1001,19 @@ DealershipCategory(type) {
 	return category;
 }
 
+RenderingObjectsValue(playerid) {
+	new value;
+	switch (pInfo[playerid][pRenderObjects]){
+		case 0: value = 1000;
+		case 1: value = 2000;
+        case 2: value = 5000;
+		case 3: value = 7000;
+        case 4: value = 10000;
+		default: value = 1000;
+	}
+	return value;
+}
+
 KickEx(playerid) {
 	if (pInfo[playerid][pKicked]) return false;
 

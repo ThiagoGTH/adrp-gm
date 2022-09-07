@@ -320,6 +320,19 @@ void:CheckPlayerTable() {
     print("[DATABASE] Tabela players_pet checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_pet checada com sucesso");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_config` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `newbie_chat` int NOT NULL DEFAULT '0',\
+    `admin_chat` int NOT NULL DEFAULT '0',\
+    `nametag` int NOT NULL DEFAULT '0',\
+    `objects` int NOT NULL DEFAULT '1000',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_config checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckItemsTable() {

@@ -120,8 +120,7 @@ public HttpVPNInfo(playerid, response_code, data[]){
 	dPlayerInfo[targetID[playerid]][Zip],
 	vpnMessage);
 
-	ShowPlayerDialog(playerid, 6156, DIALOG_STYLE_TABLIST_HEADERS, "Detalhes de IP", sdialog, "OK", "");
-
+	Dialog_Show(playerid, DIALOG_IP_CHECK, DIALOG_STYLE_TABLIST_HEADERS, "Detalhes de IP", sdialog, "Fechar", " ");
     return true;
 }
 

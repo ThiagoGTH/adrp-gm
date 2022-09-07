@@ -4,9 +4,6 @@
 #define DOORS_SPEED         (4.0)   // Movement speed of the doors.
 #define ELEVATOR_WAIT_TIME  (5000)  // Time in ms that the elevator will wait in each floor before continuing with the queue.
 									// Be sure to give enough time for doors to open.
-
-#define DIALOG_ID           (874)
-
 // Private:
 #define X_DOOR_CLOSED       (1786.627685)
 #define X_DOOR_R_OPENED     (1785.027685)
@@ -171,23 +168,18 @@ public OnObjectMoved(objectid) {
 	return true;
 }
 
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
-    if(dialogid == DIALOG_ID)
-    {
-        if(!response)
-            return false;
+Dialog:DIALOG_ELEVATOR(playerid, response, listitem, inputtext[]) {
+	if(!response)
+        return false;
 
-        if(FloorRequestedBy[listitem] != INVALID_PLAYER_ID || IsFloorInQueue(listitem))
-			SendErrorMessage(playerid, "O andar já está na fila.");
-		else if(DidPlayerRequestElevator(playerid))
-			SendErrorMessage(playerid, "Você já solicitou o elevador.");
-		else
-	        CallElevator(playerid, listitem);
+    if(FloorRequestedBy[listitem] != INVALID_PLAYER_ID || IsFloorInQueue(listitem))
+		SendErrorMessage(playerid, "O andar já está na fila.");
+	else if(DidPlayerRequestElevator(playerid))
+		SendErrorMessage(playerid, "Você já solicitou o elevador.");
+	else
+	    CallElevator(playerid, listitem);
 
-		return true;
-    }
-
-	return false;
+	return true;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -450,8 +442,7 @@ DidPlayerRequestElevator(playerid)
 	return false;
 }
 
-ShowElevatorDialog(playerid)
-{
+ShowElevatorDialog(playerid) {
 	new string[512];
 	for(new i; i < sizeof(ElevatorQueue); i ++)
 	{
@@ -462,8 +453,7 @@ ShowElevatorDialog(playerid)
 	    strcat(string, "\n");
 	}
 
-	ShowPlayerDialog(playerid, DIALOG_ID, DIALOG_STYLE_LIST, "Elevator", string, "Accept", "Cancel");
-
+	Dialog_Show(playerid, DIALOG_ELEVATOR, DIALOG_STYLE_MSGBOX, "{FFFFFF}Elevador", string, "Aceitar", "Fechar");
 	return true;
 }
 

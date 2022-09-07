@@ -11,8 +11,6 @@
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",
 		"Southclaws/pawn-chrono",
-		"katursis/Pawn.CMD",
-		"katursis/Pawn.RakNet",
 		"BigETI/pawn-memory",
 		"Y-Less/sscanf",
 		"Y-Less/indirection",
@@ -25,7 +23,8 @@
 		"Pottus/ColAndreas",
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
-		"philip1337/samp-plugin-mapandreas:v1.2.1"
+		"philip1337/samp-plugin-mapandreas:v1.2.1",
+		"katursis/Pawn.CMD:3.3.6"
 	],
 	"local": true,
 	"runtime": {
@@ -66,8 +65,7 @@
 		"cookielogging": false,
 		"output": true,
 		"extra": {
-			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ",
-			"useartwork": "1"
+			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ"
 		}
 	},
 	"builds": [

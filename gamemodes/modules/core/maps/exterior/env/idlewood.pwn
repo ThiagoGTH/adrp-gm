@@ -131,7 +131,7 @@ IdlewoodProject() {
     AddSimpleModel (-1,1923, -1144, "maps/env/idlewood/AlhambraIdlewood8.dff", "maps/env/idlewood/AlhambraIdlewood8.txd");
     AddSimpleModel (-1,1923, -1145, "maps/env/idlewood/AlhambraIdlewood9.dff", "maps/env/idlewood/AlhambraIdlewood9.txd");
     AddSimpleModel (-1,1923, -1146, "maps/env/idlewood/AlhambraIdlewood10.dff", "maps/env/idlewood/AlhambraIdlewood10.txd");
-    AddSimpleModel (-1,5633, -985, "maps/env/idlewood/AlhambraIdlewood11.dff", "maps/env/idlewood/AlhambraIdlewood11.txd");
+    AddSimpleModel (-1,5633, -1147, "maps/env/idlewood/AlhambraIdlewood11.dff", "maps/env/idlewood/AlhambraIdlewood11.txd");
     AddSimpleModel (-1,1923, -1255, "maps/env/idlewood/AlhambraIdlewood12.dff", "maps/env/idlewood/AlhambraIdlewood12.txd");
 
     // ALHAMBRA
@@ -146,7 +146,7 @@ IdlewoodProject() {
     CreateObject(-1145, 1901.030029, -1629.177856, 14.244000, 0.000000, 0.000000, 0.000000, 700.00); 
     CreateObject(-1139, 1932.348754, -1562.365844, 12.666000, 0.000000, 0.000000, 0.000000, 700.00); 
     CreateObject(-1255, 1868.668945, -1645.655517, 13.395700, 0.000000, 0.000000, 0.000000, 700.00); 
-    CreateObject(-985, 2089.359375, -1643.929687, 18.218799, 0.000000, 0.000000, 0.000000, 500.00);
+    CreateObject(-1147, 2089.359375, -1643.929687, 18.218799, 0.000000, 0.000000, 0.000000, 500.00);
 
 
     CreateDynamicObject(2114, 1955.414062, -1599.014526, 12.815999, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);  

@@ -227,7 +227,7 @@ SpawnSelectedCharacter(playerid) {
 
     Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, RenderingObjectsValue(playerid), playerid);
 
-    format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
+    format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
 
@@ -237,6 +237,7 @@ SpawnSelectedCharacter(playerid) {
         SetWeapons(playerid);
         SetPlayerArmedWeapon(playerid, 0);
         pInfo[playerid][pLogged] = true;
+        SetTimerEx("SetSkinPos", 100, false, "i", playerid, 0);
         return false;
     }
 
@@ -254,6 +255,13 @@ public SpawnPlayerPosCamera(playerid) {
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
+    SetTimerEx("SetSkinPos", 100, false, "i", playerid, 0);
+    return true;
+}
+
+forward SetSkinPos(playerid);
+public SetSkinPos(playerid) {
+    SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
     return true;
 }
 
@@ -524,7 +532,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 	SendNearbyMessage(playerid, 30.0, COLOR_WHITE, string);
 
     pInfo[playerid][pLogged] = false;
-    format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
+    format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
     printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
 

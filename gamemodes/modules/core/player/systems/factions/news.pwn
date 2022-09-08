@@ -17,8 +17,7 @@ GivePlayerCamera(playerid){
    	pInfo[playerid][pRecording] = true;
 	ClearAnimations(playerid);
 	SetPlayerSpecialAction(playerid , SPECIAL_ACTION_USECELLPHONE);
-	SetPlayerAttachedObject(playerid, 0, 19615, 6, -0.024000, -0.000000, 0.020998, -16.799999, 49.300083, -3.600008, 0.851000, 0.470998, 0.834999, 0xFF666666, 0xFF666666);
-	SetPlayerAttachedObject(playerid, 1, 19623, 6, 0.183999, -0.038000, -0.057000, 70.100051, -2.600011, 31.100006, 1.000000, 1.000000, 1.000000, 0xFF333333, 0xFF333333);
+	SetPlayerAttachedObject(playerid, 0, -6001, 6, 0.066999, -0.029999, -0.119999, -29.200008, 44.899986, 8.600002, 1.000000, 1.000000, 1.000000);
 	return true;
 }
 
@@ -27,7 +26,6 @@ RemovePlayerCamera(playerid){
 	ClearAnimations(playerid);
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 	RemovePlayerAttachedObject(playerid, 0);
-	RemovePlayerAttachedObject(playerid, 1);
 	return true;
 }
 
@@ -122,7 +120,7 @@ CMD:transmissao(playerid, params[]){
         va_SendClientMessageToAll(COLOR_YELLOW, "FACÇÃO NOME iniciou uma transmissão ao vivo, para assistir digite /assistir %d.", playerid);
     } else {
         RemovePlayerCamera(playerid);
-        va_SendClientMessageToAll(COLOR_YELLOW, "FACÇÃO NOME encerrou a transmissão ao vivo.", playerid);
+        va_SendClientMessageToAll(COLOR_YELLOW, "FACÇÃO NOME encerrou a transmissão ao vivo.");
     }
     return true;
 }

@@ -22,7 +22,7 @@ Dialog:PLAYER_CONFIG(playerid, response, listitem, inputtext[]){
             }
             case 1: { // Admin
                 format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Avisos Administrativos");
-                switch(pInfo[playerid][pTogAdmin]){
+                switch(pInfo[playerid][pTogAdmin]) {
                     case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Mensagens administrativas ativadas\nMensagens administrativas desativadas");
                     case 1: format(string, sizeof(string), "Mensagens administrativas ativadas\n{BBBBBB}>>> {FFFFFF}Mensagens administrativas desativadas");
                 }
@@ -47,6 +47,7 @@ Dialog:PLAYER_CONFIG(playerid, response, listitem, inputtext[]){
                     case 2: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\n{BBBBBB}>>> {FFFFFF}Alta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
                     case 3: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\n{BBBBBB}>>> {FFFFFF}Ultra (7.0)\nAbsurda (10.0)");
                     case 4: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\n{BBBBBB}>>> {FFFFFF}Absurda (10.0)");
+                    default: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
                 }
                 pInfo[playerid][pSetting] = 4;
                 Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -106,5 +107,10 @@ Dialog:PLAYER_CONFIG_OPTIONS(playerid, response, listitem, inputtext[]){
     } else {
         Dialog_Show(playerid, PLAYER_CONFIG, DIALOG_STYLE_LIST, "Gerenciamento do Usuário", "Help Center\nAvisos Administrativos\nNametag\nRenderização de Objetos\n", "Selecionar", "Fechar");
     }
+    return true;
+}
+
+CMD:sexo(playerid, params[]){
+    SendServerMessage(playerid, "QTD: %d", Streamer_GetVisibleItems(STREAMER_TYPE_OBJECT, playerid));
     return true;
 }

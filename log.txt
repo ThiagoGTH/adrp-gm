@@ -4436,3 +4436,1531 @@ encountered.  This could be caused by many things:
 [2022-09-07T20:30:09-0300] [Warning] Insufficient specifiers given to `format`: "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 27
 [2022-09-07T20:30:09-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
 [2022-09-07T20:30:09-0300] [Info] [part] John_Doe has left the server (0:1)
+[2022-09-07T20:38:40-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-07T20:38:40-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-07T20:38:40-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: crashdetect
+[2022-09-07T20:38:40-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: mysql
+[2022-09-07T20:38:40-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: chrono
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: pawn-memory
+[2022-09-07T20:38:40-0300] [Info] ========================
+[2022-09-07T20:38:40-0300] [Info] = Memory access plugin =
+[2022-09-07T20:38:40-0300] [Info] =       Made by BigETI =
+[2022-09-07T20:38:40-0300] [Info] = Loaded!              =
+[2022-09-07T20:38:40-0300] [Info] ========================
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: sscanf
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info]  ===============================
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info]       sscanf plugin loaded.     
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info]          Version: 2.13.1
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info]  ===============================
+[2022-09-07T20:38:40-0300] [Info] 
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: streamer
+[2022-09-07T20:38:40-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-07T20:38:40-0300] [Info] Loading plugin: discord-connector
+[2022-09-07T20:38:41-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-07T20:38:41-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-07T20:38:41-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-07T20:38:41-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-07T20:38:41-0300] [Info] Loading plugin: ColAndreas
+[2022-09-07T20:38:41-0300] [Info] *********************
+[2022-09-07T20:38:41-0300] [Info] ** Created By:     **
+[2022-09-07T20:38:41-0300] [Info] ** [uL]Chris42O    **
+[2022-09-07T20:38:41-0300] [Info] ** [uL]Slice       **
+[2022-09-07T20:38:41-0300] [Info] ** [uL]Pottus      **
+[2022-09-07T20:38:41-0300] [Info] *********************
+[2022-09-07T20:38:41-0300] [Info] No collision data found.
+[2022-09-07T20:38:41-0300] [Info] *********************
+[2022-09-07T20:38:41-0300] [Info]   ColAndreas Loaded
+[2022-09-07T20:38:41-0300] [Info]    v1.4.0
+[2022-09-07T20:38:41-0300] [Info] *********************
+[2022-09-07T20:38:41-0300] [Info] Loading plugin: mapandreas
+[2022-09-07T20:38:41-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-07T20:38:42-0300] [Warning] Deprecated function RedirectDownload used. This function was replaced by artwork cdn config option.
+[2022-09-07T20:38:42-0300] [Warning] Deprecated functions will be removed in the next open.mp release.
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Info]          ==============================================================
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-07T20:38:42-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-07T20:38:42-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-07T20:38:42-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-07T20:38:42-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T20:38:42-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-07T20:38:42-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-07T20:38:42-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-07T20:38:42-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-07T20:38:42-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          |                                                            |
+[2022-09-07T20:38:42-0300] [Info]          ==============================================================
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Info]  ========================================== 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-07T20:38:42-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-07T20:38:42-0300] [Info]  |  code generation works best with the   | 
+[2022-09-07T20:38:42-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-07T20:38:42-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  |             Please wait...             | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  |                 Done!                  | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  ========================================== 
+[2022-09-07T20:38:42-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-07T20:38:42-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-07T20:38:42-0300] [Info]  | Started:     07 Sep 2022 - 20:38:42    | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-07T20:38:42-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-07T20:38:42-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-07T20:38:42-0300] [Info]  | Built:       07 Sep 2022 - 20:38:16    | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-07T20:38:42-0300] [Info]  | Master:      -1                        | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-07T20:38:42-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-07T20:38:42-0300] [Info]  |                                        | 
+[2022-09-07T20:38:42-0300] [Info]  ========================================== 
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-07T20:38:42-0300] [Info] [debug] AMX backtrace:
+[2022-09-07T20:38:42-0300] [Info] [debug] #0 000058f4 in AMX_GetEntryPrefix (E_AMX_TABLE:table=0, idx=0, &buffer=@01ab2c08 0, pattern=1081690463) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:541
+[2022-09-07T20:38:42-0300] [Info] [debug] #1 00005b84 in AMX_GetPointerPrefix (E_AMX_TABLE:table=0, idx=0, &buffer=@01ab2c28 0, pattern=1598650688) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:724
+[2022-09-07T20:38:42-0300] [Info] [debug] #2 000095b4 in ScriptInit_PreInitFuncs_ () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_core_entry.inc:345
+[2022-09-07T20:38:42-0300] [Info] [debug] #3 00002dd8 in public ac_AntiCheatGetLastShotTime () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1155
+[2022-09-07T20:38:42-0300] [Info]  
+[2022-09-07T20:38:42-0300] [Warning] No bind address provided. Attempting to start webserver on 127.0.0.1:7777
+[2022-09-07T20:38:42-0300] [Info] Web server is running on http://127.0.0.1:7777/
+[2022-09-07T20:38:44-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-07T20:38:44-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-07T20:38:45-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-07T20:38:46-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-07T20:38:46-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-07T20:38:46-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-07T20:38:46-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-07T20:38:46-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-07T20:38:46-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-07T20:38:46-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-07T20:38:46-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-07T20:38:46-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-07T20:38:46-0300] [Info] Remote console disabled.
+[2022-09-07T20:38:46-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-07T20:38:46-0300] [Info]  
+[2022-09-07T20:38:46-0300] [Info] --------------------------------------
+[2022-09-07T20:38:46-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-07T20:38:46-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-07T20:38:46-0300] [Info]  Author: Nexius
+[2022-09-07T20:38:46-0300] [Info] --------------------------------------
+
+[2022-09-07T20:38:46-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-07T20:38:46-0300] [Info] Unknown command or variable: cookielogging 0
+[2022-09-07T20:38:46-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-07T20:38:46-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-07T20:38:46-0300] [Info] Legacy Network started on port 7777
+[2022-09-07T20:38:47-0300] [Info] Server password has been removed.
+[2022-09-07T20:38:47-0300] [Info] Failed to announce legacy network to open.mp list
+[2022-09-07T20:40:20-0300] [Info] [connection] incoming connection: 127.0.0.1:55124 id: 0
+[2022-09-07T20:40:20-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T20:40:22-0300] [Info] [part] Thiago has left the server (0:1)
+[2022-09-07T20:42:13-0300] [Info] [connection] incoming connection: 127.0.0.1:54989 id: 0
+[2022-09-07T20:42:13-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T20:42:55-0300] [Info] [part] Thiago has left the server (0:1)
+[2022-09-07T20:46:52-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-07T20:46:52-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-07T20:46:52-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: crashdetect
+[2022-09-07T20:46:52-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: mysql
+[2022-09-07T20:46:52-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: chrono
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: pawn-memory
+[2022-09-07T20:46:52-0300] [Info] ========================
+[2022-09-07T20:46:52-0300] [Info] = Memory access plugin =
+[2022-09-07T20:46:52-0300] [Info] =       Made by BigETI =
+[2022-09-07T20:46:52-0300] [Info] = Loaded!              =
+[2022-09-07T20:46:52-0300] [Info] ========================
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: sscanf
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info]  ===============================
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info]       sscanf plugin loaded.     
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info]          Version: 2.13.1
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info]  ===============================
+[2022-09-07T20:46:52-0300] [Info] 
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: streamer
+[2022-09-07T20:46:52-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-07T20:46:52-0300] [Info] Loading plugin: discord-connector
+[2022-09-07T20:46:53-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-07T20:46:53-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-07T20:46:53-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-07T20:46:53-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-07T20:46:53-0300] [Info] Loading plugin: ColAndreas
+[2022-09-07T20:46:53-0300] [Info] *********************
+[2022-09-07T20:46:53-0300] [Info] ** Created By:     **
+[2022-09-07T20:46:53-0300] [Info] ** [uL]Chris42O    **
+[2022-09-07T20:46:53-0300] [Info] ** [uL]Slice       **
+[2022-09-07T20:46:53-0300] [Info] ** [uL]Pottus      **
+[2022-09-07T20:46:53-0300] [Info] *********************
+[2022-09-07T20:46:53-0300] [Info] No collision data found.
+[2022-09-07T20:46:53-0300] [Info] *********************
+[2022-09-07T20:46:53-0300] [Info]   ColAndreas Loaded
+[2022-09-07T20:46:53-0300] [Info]    v1.4.0
+[2022-09-07T20:46:53-0300] [Info] *********************
+[2022-09-07T20:46:53-0300] [Info] Loading plugin: mapandreas
+[2022-09-07T20:46:53-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-07T20:46:53-0300] [Info]  
+[2022-09-07T20:46:53-0300] [Info]  
+[2022-09-07T20:46:53-0300] [Info]          ==============================================================
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-07T20:46:53-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-07T20:46:53-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-07T20:46:53-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-07T20:46:53-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T20:46:53-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-07T20:46:53-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-07T20:46:53-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-07T20:46:53-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-07T20:46:53-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          |                                                            |
+[2022-09-07T20:46:53-0300] [Info]          ==============================================================
+[2022-09-07T20:46:53-0300] [Info]  
+[2022-09-07T20:46:53-0300] [Info]  
+[2022-09-07T20:46:53-0300] [Info]  ========================================== 
+[2022-09-07T20:46:53-0300] [Info]  |                                        | 
+[2022-09-07T20:46:53-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-07T20:46:53-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-07T20:46:53-0300] [Info]  |  code generation works best with the   | 
+[2022-09-07T20:46:53-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-07T20:46:53-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-07T20:46:53-0300] [Info]  |                                        | 
+[2022-09-07T20:46:53-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-07T20:46:53-0300] [Info]  |                                        | 
+[2022-09-07T20:46:53-0300] [Info]  |             Please wait...             | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  |                 Done!                  | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  ========================================== 
+[2022-09-07T20:46:54-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-07T20:46:54-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-07T20:46:54-0300] [Info]  | Started:     07 Sep 2022 - 20:46:53    | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-07T20:46:54-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-07T20:46:54-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-07T20:46:54-0300] [Info]  | Built:       07 Sep 2022 - 20:46:16    | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-07T20:46:54-0300] [Info]  | Master:      -1                        | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-07T20:46:54-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-07T20:46:54-0300] [Info]  |                                        | 
+[2022-09-07T20:46:54-0300] [Info]  ========================================== 
+[2022-09-07T20:46:54-0300] [Info]  
+[2022-09-07T20:46:54-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-07T20:46:54-0300] [Info] [debug] AMX backtrace:
+[2022-09-07T20:46:54-0300] [Info] [debug] #0 00005a20 in AMX_GetEntryPrefix (E_AMX_TABLE:table=0, idx=78, &buffer=@01ab2b78 0, pattern=1598650688) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:564
+[2022-09-07T20:46:54-0300] [Info] [debug] #1 00005b84 in AMX_GetPointerPrefix (E_AMX_TABLE:table=0, idx=0, &buffer=@01ab2b98 0, pattern=1598650688) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:724
+[2022-09-07T20:46:54-0300] [Info] [debug] #2 000095b4 in ScriptInit_PreInitFuncs_ () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_core_entry.inc:345
+[2022-09-07T20:46:54-0300] [Info] [debug] #3 00002dd8 in public ac_AntiCheatGetLastSpawnTime () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1155
+[2022-09-07T20:46:54-0300] [Info]  
+[2022-09-07T20:46:54-0300] [Warning] No bind address provided. Attempting to start webserver on 127.0.0.1:7777
+[2022-09-07T20:46:54-0300] [Info] Web server is running on http://127.0.0.1:7777/
+[2022-09-07T20:46:55-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-07T20:46:55-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-07T20:46:56-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:46:57-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T20:46:58-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-07T20:46:58-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-07T20:46:58-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-07T20:46:58-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-07T20:46:58-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-07T20:46:58-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-07T20:46:58-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-07T20:46:58-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-07T20:46:58-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-07T20:46:58-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-07T20:46:58-0300] [Info] Remote console disabled.
+[2022-09-07T20:46:58-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-07T20:46:58-0300] [Info]  
+[2022-09-07T20:46:58-0300] [Info] --------------------------------------
+[2022-09-07T20:46:58-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-07T20:46:58-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-07T20:46:58-0300] [Info]  Author: Nexius
+[2022-09-07T20:46:58-0300] [Info] --------------------------------------
+
+[2022-09-07T20:46:58-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-07T20:46:58-0300] [Info] Unknown command or variable: cookielogging 0
+[2022-09-07T20:46:58-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-07T20:46:58-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-07T20:46:58-0300] [Info] Legacy Network started on port 7777
+[2022-09-07T20:46:59-0300] [Info] Server password has been removed.
+[2022-09-07T20:46:59-0300] [Info] Failed to announce legacy network to open.mp list
+[2022-09-07T20:48:13-0300] [Info] [connection] incoming connection: 127.0.0.1:55014 id: 0
+[2022-09-07T20:48:13-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T20:48:33-0300] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
+[2022-09-07T20:48:36-0300] [Info] [DATABASE] John_Doe foi carregado com sucesso do banco de dados.
+[2022-09-07T20:48:36-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T20:48:36-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T20:49:03-0300] [Info] [Nex-AC debug] Dist: 116.309822, dist set: 116.309822, acSet[7]: -1, speed: 567, old pos x, y: 1979.816772, -1751.480346
+[2022-09-07T20:49:03-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:04-0300] [Info] [Nex-AC debug] Dist: 143.869857, dist set: 257.272735, acSet[7]: -1, speed: 568, old pos x, y: 2034.084960, -1854.353759
+[2022-09-07T20:49:04-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:14-0300] [Info] [Nex-AC debug] Dist: 109.608390, dist set: 417.828430, acSet[7]: -1, speed: 196, old pos x, y: 2110.102783, -2085.816650
+[2022-09-07T20:49:14-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:15-0300] [Info] [Nex-AC debug] Dist: 81.280158, dist set: 377.958770, acSet[7]: -1, speed: 801, old pos x, y: 2219.421386, -2093.781738
+[2022-09-07T20:49:15-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:16-0300] [Info] [Nex-AC debug] Dist: 195.196929, dist set: 322.552856, acSet[7]: -1, speed: 815, old pos x, y: 2248.084472, -2017.723266
+[2022-09-07T20:49:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:16-0300] [Info] [Nex-AC debug] Speed: 732, old speed: 204
+[2022-09-07T20:49:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T20:49:17-0300] [Info] [Nex-AC debug] Dist: 160.199478, dist set: 392.969848, acSet[7]: -1, speed: 809, old pos x, y: 2293.207275, -1827.813354
+[2022-09-07T20:49:17-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:18-0300] [Info] [Nex-AC debug] Dist: 103.754150, dist set: 475.410949, acSet[7]: -1, speed: 197, old pos x, y: 2367.250732, -1685.751953
+[2022-09-07T20:49:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:19-0300] [Info] [Nex-AC debug] Speed: 670, old speed: 189
+[2022-09-07T20:49:19-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T20:49:21-0300] [Info] [Nex-AC debug] Dist: 107.499816, dist set: 654.618469, acSet[7]: -1, speed: 187, old pos x, y: 2462.872802, -1483.736938
+[2022-09-07T20:49:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:23-0300] [Info] [Nex-AC debug] Dist: 94.847465, dist set: 704.271545, acSet[7]: -1, speed: 630, old pos x, y: 2545.325683, -1355.350585
+[2022-09-07T20:49:23-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:24-0300] [Info] [Nex-AC debug] Dist: 107.764411, dist set: 642.553283, acSet[7]: -1, speed: 624, old pos x, y: 2497.176269, -1273.633544
+[2022-09-07T20:49:24-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:25-0300] [Info] [Nex-AC debug] Dist: 101.065887, dist set: 620.595214, acSet[7]: -1, speed: 622, old pos x, y: 2390.639160, -1257.415893
+[2022-09-07T20:49:25-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:26-0300] [Info] [Nex-AC debug] Dist: 148.680221, dist set: 580.886718, acSet[7]: -1, speed: 581, old pos x, y: 2297.439208, -1218.325195
+[2022-09-07T20:49:26-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:27-0300] [Info] [Nex-AC debug] Dist: 134.725692, dist set: 539.615661, acSet[7]: -1, speed: 605, old pos x, y: 2150.413085, -1196.208984
+[2022-09-07T20:49:27-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:49:28-0300] [Info] [Nex-AC debug] Speed: 593, old speed: 171
+[2022-09-07T20:49:28-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T20:49:29-0300] [Info] [Nex-AC debug] Dist: 85.493881, dist set: 421.641296, acSet[7]: -1, speed: 4, old pos x, y: 1996.717041, -1253.869018
+[2022-09-07T20:49:29-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:11-0300] [Info] [Nex-AC debug] Dist: 96.475090, dist set: 517.836608, acSet[7]: -1, speed: 616, old pos x, y: 2029.595947, -1332.787841
+[2022-09-07T20:52:11-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:12-0300] [Info] [Nex-AC debug] Speed: 547, old speed: 143
+[2022-09-07T20:52:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T20:52:12-0300] [Info] [Nex-AC debug] Dist: 82.175163, dist set: 470.604858, acSet[7]: -1, speed: 143, old pos x, y: 2049.023925, -1238.289184
+[2022-09-07T20:52:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:29-0300] [Info] [Nex-AC debug] Dist: 95.798995, dist set: 249.557357, acSet[7]: -1, speed: 145, old pos x, y: 2030.509521, -1416.123657
+[2022-09-07T20:52:29-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:41-0300] [Info] [Nex-AC debug] Dist: 84.467903, dist set: 173.382492, acSet[7]: -1, speed: 538, old pos x, y: 2104.357421, -1528.507568
+[2022-09-07T20:52:41-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:42-0300] [Info] [Nex-AC debug] Dist: 136.963958, dist set: 63.272300, acSet[7]: -1, speed: 563, old pos x, y: 2078.497802, -1608.919677
+[2022-09-07T20:52:42-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:43-0300] [Info] [Nex-AC debug] Dist: 145.163848, dist set: 152.634490, acSet[7]: -1, speed: 596, old pos x, y: 2042.213378, -1740.989990
+[2022-09-07T20:52:43-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:44-0300] [Info] [Nex-AC debug] Dist: 156.117324, dist set: 308.717529, acSet[7]: -1, speed: 616, old pos x, y: 2052.307128, -1885.802490
+[2022-09-07T20:52:44-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:52:44-0300] [Info] [Nex-AC debug] Speed: 559, old speed: 36
+[2022-09-07T20:52:44-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T20:52:55-0300] [Info] [Nex-AC debug] Dist: 90.168319, dist set: 296.506164, acSet[7]: -1, speed: 142, old pos x, y: 2230.132568, -2025.640747
+[2022-09-07T20:52:55-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T20:53:16-0300] [Info] Usuário 'Thiago' salvo com sucesso.
+[2022-09-07T20:53:16-0300] [Warning] Insufficient specifiers given to `format`: "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 27
+[2022-09-07T20:53:17-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
+[2022-09-07T20:53:17-0300] [Info] [part] John_Doe has left the server (0:1)
+[2022-09-07T21:06:15-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-07T21:06:15-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-07T21:06:15-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: crashdetect
+[2022-09-07T21:06:15-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: mysql
+[2022-09-07T21:06:15-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: chrono
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: pawn-memory
+[2022-09-07T21:06:15-0300] [Info] ========================
+[2022-09-07T21:06:15-0300] [Info] = Memory access plugin =
+[2022-09-07T21:06:15-0300] [Info] =       Made by BigETI =
+[2022-09-07T21:06:15-0300] [Info] = Loaded!              =
+[2022-09-07T21:06:15-0300] [Info] ========================
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: sscanf
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info]  ===============================
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info]       sscanf plugin loaded.     
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info]          Version: 2.13.1
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info]  ===============================
+[2022-09-07T21:06:15-0300] [Info] 
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: streamer
+[2022-09-07T21:06:15-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-07T21:06:15-0300] [Info] Loading plugin: discord-connector
+[2022-09-07T21:06:16-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-07T21:06:16-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-07T21:06:16-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-07T21:06:16-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-07T21:06:16-0300] [Info] Loading plugin: ColAndreas
+[2022-09-07T21:06:16-0300] [Info] *********************
+[2022-09-07T21:06:16-0300] [Info] ** Created By:     **
+[2022-09-07T21:06:16-0300] [Info] ** [uL]Chris42O    **
+[2022-09-07T21:06:16-0300] [Info] ** [uL]Slice       **
+[2022-09-07T21:06:16-0300] [Info] ** [uL]Pottus      **
+[2022-09-07T21:06:16-0300] [Info] *********************
+[2022-09-07T21:06:16-0300] [Info] No collision data found.
+[2022-09-07T21:06:16-0300] [Info] *********************
+[2022-09-07T21:06:16-0300] [Info]   ColAndreas Loaded
+[2022-09-07T21:06:16-0300] [Info]    v1.4.0
+[2022-09-07T21:06:16-0300] [Info] *********************
+[2022-09-07T21:06:16-0300] [Info] Loading plugin: mapandreas
+[2022-09-07T21:06:16-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-07T21:06:16-0300] [Info]  
+[2022-09-07T21:06:16-0300] [Info]  
+[2022-09-07T21:06:16-0300] [Info]          ==============================================================
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-07T21:06:16-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-07T21:06:16-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-07T21:06:16-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-07T21:06:16-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T21:06:16-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-07T21:06:16-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-07T21:06:16-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-07T21:06:16-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-07T21:06:16-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          |                                                            |
+[2022-09-07T21:06:16-0300] [Info]          ==============================================================
+[2022-09-07T21:06:16-0300] [Info]  
+[2022-09-07T21:06:16-0300] [Info]  
+[2022-09-07T21:06:16-0300] [Info]  ========================================== 
+[2022-09-07T21:06:16-0300] [Info]  |                                        | 
+[2022-09-07T21:06:16-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-07T21:06:16-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-07T21:06:16-0300] [Info]  |  code generation works best with the   | 
+[2022-09-07T21:06:16-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-07T21:06:16-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-07T21:06:16-0300] [Info]  |                                        | 
+[2022-09-07T21:06:16-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-07T21:06:16-0300] [Info]  |                                        | 
+[2022-09-07T21:06:16-0300] [Info]  |             Please wait...             | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  |                 Done!                  | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  ========================================== 
+[2022-09-07T21:06:17-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-07T21:06:17-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-07T21:06:17-0300] [Info]  | Started:     07 Sep 2022 - 21:06:16    | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-07T21:06:17-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-07T21:06:17-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-07T21:06:17-0300] [Info]  | Built:       07 Sep 2022 - 21:05:50    | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-07T21:06:17-0300] [Info]  | Master:      -1                        | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-07T21:06:17-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-07T21:06:17-0300] [Info]  |                                        | 
+[2022-09-07T21:06:17-0300] [Info]  ========================================== 
+[2022-09-07T21:06:17-0300] [Info]  
+[2022-09-07T21:06:17-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-07T21:06:17-0300] [Info] [debug] AMX backtrace:
+[2022-09-07T21:06:17-0300] [Info] [debug] #0 00005a54 in AMX_GetEntryPrefix (E_AMX_TABLE:table=0, idx=62, &buffer=@01ab2bb8 0, pattern=1598650688) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:566
+[2022-09-07T21:06:17-0300] [Info] [debug] #1 00005b84 in AMX_GetPointerPrefix (E_AMX_TABLE:table=0, idx=0, &buffer=@01ab2bd8 0, pattern=1598650688) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_amx_impl.inc:724
+[2022-09-07T21:06:17-0300] [Info] [debug] #2 000095b4 in ScriptInit_PreInitFuncs_ () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_core_entry.inc:345
+[2022-09-07T21:06:17-0300] [Info] [debug] #3 00002dd8 in public ac_AntiCheatGetLastShotWeapon () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1155
+[2022-09-07T21:06:17-0300] [Info]  
+[2022-09-07T21:06:17-0300] [Warning] No bind address provided. Attempting to start webserver on 127.0.0.1:7777
+[2022-09-07T21:06:17-0300] [Info] Web server is running on http://127.0.0.1:7777/
+[2022-09-07T21:06:19-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-07T21:06:19-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T21:06:20-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T21:06:21-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T21:06:22-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-07T21:06:22-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-07T21:06:22-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-07T21:06:22-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-07T21:06:22-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-07T21:06:22-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-07T21:06:22-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-07T21:06:22-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-07T21:06:22-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-07T21:06:22-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-07T21:06:22-0300] [Info] Remote console disabled.
+[2022-09-07T21:06:22-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-07T21:06:22-0300] [Info]  
+[2022-09-07T21:06:22-0300] [Info] --------------------------------------
+[2022-09-07T21:06:22-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-07T21:06:22-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-07T21:06:22-0300] [Info]  Author: Nexius
+[2022-09-07T21:06:22-0300] [Info] --------------------------------------
+
+[2022-09-07T21:06:22-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-07T21:06:22-0300] [Info] Unknown command or variable: cookielogging 0
+[2022-09-07T21:06:22-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-07T21:06:22-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-07T21:06:22-0300] [Info] Legacy Network started on port 7777
+[2022-09-07T21:06:23-0300] [Info] Server password has been removed.
+[2022-09-07T21:06:23-0300] [Info] Failed to announce legacy network to open.mp list
+[2022-09-07T21:08:02-0300] [Info] [connection] incoming connection: 127.0.0.1:65356 id: 0
+[2022-09-07T21:08:02-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T21:08:12-0300] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
+[2022-09-07T21:08:15-0300] [Info] [DATABASE] John_Doe foi carregado com sucesso do banco de dados.
+[2022-09-07T21:08:15-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T21:08:15-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T21:08:57-0300] [Info] [Nex-AC debug] Dist: 94.159729, dist set: 138.622207, acSet[7]: -1, speed: 172, old pos x, y: 2156.804931, -2053.922363
+[2022-09-07T21:08:57-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:09:06-0300] [Info] [Nex-AC debug] Dist: 84.720191, dist set: 243.421295, acSet[7]: -1, speed: 759, old pos x, y: 2100.871826, -1909.990844
+[2022-09-07T21:09:06-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:09:09-0300] [Info] [Nex-AC debug] Dist: 83.696273, dist set: 366.982299, acSet[7]: -1, speed: 741, old pos x, y: 2150.162841, -1792.410400
+[2022-09-07T21:09:09-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:09:10-0300] [Info] [Nex-AC debug] Speed: 678, old speed: 184
+[2022-09-07T21:09:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:09:10-0300] [Info] [Nex-AC debug] Dist: 81.081001, dist set: 445.929351, acSet[7]: -1, speed: 4, old pos x, y: 2170.065185, -1711.114868
+[2022-09-07T21:09:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:09:55-0300] [Info] [Nex-AC debug] Dist: 114.035873, dist set: 541.908447, acSet[7]: -1, speed: 184, old pos x, y: 2161.928466, -1609.017089
+[2022-09-07T21:09:55-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:09:59-0300] [Info] [Nex-AC debug] Dist: 146.212982, dist set: 720.699645, acSet[7]: -1, speed: 724, old pos x, y: 2133.373779, -1416.852661
+[2022-09-07T21:09:59-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:00-0300] [Info] [Nex-AC debug] Speed: 648, old speed: 181
+[2022-09-07T21:10:00-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:10:01-0300] [Info] [Nex-AC debug] Dist: 82.328079, dist set: 753.616394, acSet[7]: -1, speed: 655, old pos x, y: 2332.298828, -1365.332397
+[2022-09-07T21:10:01-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:02-0300] [Info] [Nex-AC debug] Dist: 99.386001, dist set: 746.524108, acSet[7]: -1, speed: 578, old pos x, y: 2406.694824, -1400.590698
+[2022-09-07T21:10:02-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:08-0300] [Info] [Nex-AC debug] Dist: 138.256072, dist set: 574.520568, acSet[7]: -1, speed: 552, old pos x, y: 2480.614746, -1530.343750
+[2022-09-07T21:10:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:09-0300] [Info] [Nex-AC debug] Dist: 141.963150, dist set: 501.536621, acSet[7]: -1, speed: 552, old pos x, y: 2351.266113, -1579.166625
+[2022-09-07T21:10:09-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:10-0300] [Info] [Nex-AC debug] Dist: 134.559738, dist set: 454.472137, acSet[7]: -1, speed: 590, old pos x, y: 2209.316406, -1581.119995
+[2022-09-07T21:10:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:12-0300] [Info] [Nex-AC debug] Dist: 147.220428, dist set: 448.191040, acSet[7]: -1, speed: 579, old pos x, y: 1995.288574, -1587.996826
+[2022-09-07T21:10:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:13-0300] [Info] [Nex-AC debug] Dist: 101.448028, dist set: 463.389831, acSet[7]: -1, speed: 580, old pos x, y: 1852.031616, -1621.927612
+[2022-09-07T21:10:13-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:15-0300] [Info] [Nex-AC debug] Dist: 111.018898, dist set: 531.111083, acSet[7]: -1, speed: 588, old pos x, y: 1733.583862, -1660.145507
+[2022-09-07T21:10:15-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:16-0300] [Info] [Nex-AC debug] Dist: 150.891632, dist set: 646.589782, acSet[7]: -1, speed: 594, old pos x, y: 1623.814331, -1676.754150
+[2022-09-07T21:10:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:17-0300] [Info] [Nex-AC debug] Dist: 155.517807, dist set: 788.335693, acSet[7]: -1, speed: 608, old pos x, y: 1472.989135, -1681.231079
+[2022-09-07T21:10:17-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:18-0300] [Info] [Nex-AC debug] Dist: 162.739944, dist set: 949.961242, acSet[7]: -1, speed: 650, old pos x, y: 1318.583374, -1662.666381
+[2022-09-07T21:10:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:19-0300] [Info] [Nex-AC debug] Dist: 145.386840, dist set: 1094.305541, acSet[7]: -1, speed: 587, old pos x, y: 1167.002929, -1603.440917
+[2022-09-07T21:10:19-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:20-0300] [Info] [Nex-AC debug] Dist: 149.487655, dist set: 1209.284912, acSet[7]: -1, speed: 579, old pos x, y: 1030.453002, -1553.526489
+[2022-09-07T21:10:20-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:21-0300] [Info] [Nex-AC debug] Dist: 148.065124, dist set: 1325.707153, acSet[7]: -1, speed: 580, old pos x, y: 886.533508, -1593.946044
+[2022-09-07T21:10:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:22-0300] [Info] [Nex-AC debug] Dist: 140.668243, dist set: 1448.255004, acSet[7]: -1, speed: 582, old pos x, y: 746.171997, -1641.083374
+[2022-09-07T21:10:22-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:23-0300] [Info] [Nex-AC debug] Dist: 154.182968, dist set: 1590.073852, acSet[7]: -1, speed: 593, old pos x, y: 609.270690, -1673.418945
+[2022-09-07T21:10:23-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:24-0300] [Info] [Nex-AC debug] Dist: 120.410446, dist set: 1708.400390, acSet[7]: -1, speed: 4, old pos x, y: 457.225921, -1699.007568
+[2022-09-07T21:10:24-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:31-0300] [Info] [Nex-AC debug] Dist: 90.586791, dist set: 1824.393920, acSet[7]: -1, speed: 601, old pos x, y: 305.911254, -1684.817993
+[2022-09-07T21:10:31-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:32-0300] [Info] [Nex-AC debug] Speed: 548, old speed: 150
+[2022-09-07T21:10:32-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:10:32-0300] [Info] [Nex-AC debug] Dist: 89.652542, dist set: 1907.303833, acSet[7]: -1, speed: 150, old pos x, y: 232.045425, -1632.379394
+[2022-09-07T21:10:32-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:34-0300] [Info] [Nex-AC debug] Dist: 165.601119, dist set: 1695.071411, acSet[7]: -1, speed: 775, old pos x, y: 196.197006, -1632.580932
+[2022-09-07T21:10:34-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:35-0300] [Info] [Nex-AC debug] Dist: 207.357162, dist set: 1568.271240, acSet[7]: -1, speed: 784, old pos x, y: 360.990234, -1648.918701
+[2022-09-07T21:10:35-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:36-0300] [Info] [Nex-AC debug] Dist: 192.523452, dist set: 1482.543090, acSet[7]: -1, speed: 769, old pos x, y: 528.559875, -1526.781860
+[2022-09-07T21:10:36-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:37-0300] [Info] [Nex-AC debug] Dist: 198.570037, dist set: 1322.405517, acSet[7]: -1, speed: 746, old pos x, y: 673.397338, -1399.945800
+[2022-09-07T21:10:37-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:38-0300] [Info] [Nex-AC debug] Dist: 187.705352, dist set: 1154.271728, acSet[7]: -1, speed: 741, old pos x, y: 869.897766, -1371.351318
+[2022-09-07T21:10:38-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:39-0300] [Info] [Nex-AC debug] Dist: 189.027038, dist set: 975.181152, acSet[7]: -1, speed: 744, old pos x, y: 1056.604248, -1390.690063
+[2022-09-07T21:10:39-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:40-0300] [Info] [Nex-AC debug] Dist: 191.737884, dist set: 819.486938, acSet[7]: -1, speed: 749, old pos x, y: 1237.161499, -1446.639160
+[2022-09-07T21:10:40-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:41-0300] [Info] [Nex-AC debug] Dist: 183.434555, dist set: 691.688842, acSet[7]: -1, speed: 748, old pos x, y: 1428.078247, -1464.365234
+[2022-09-07T21:10:41-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:42-0300] [Info] [Nex-AC debug] Dist: 190.278305, dist set: 571.026794, acSet[7]: -1, speed: 714, old pos x, y: 1611.126464, -1476.264160
+[2022-09-07T21:10:42-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:43-0300] [Info] [Nex-AC debug] Dist: 163.485061, dist set: 437.530670, acSet[7]: -1, speed: 643, old pos x, y: 1798.195312, -1511.064697
+[2022-09-07T21:10:43-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:45-0300] [Info] [Nex-AC debug] Dist: 181.801849, dist set: 385.077941, acSet[7]: -1, speed: 751, old pos x, y: 1952.098144, -1629.024169
+[2022-09-07T21:10:45-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:46-0300] [Info] [Nex-AC debug] Dist: 192.287643, dist set: 475.070251, acSet[7]: -1, speed: 751, old pos x, y: 2128.039794, -1674.811157
+[2022-09-07T21:10:46-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:47-0300] [Info] [Nex-AC debug] Dist: 164.459411, dist set: 591.679321, acSet[7]: -1, speed: 4, old pos x, y: 2320.209716, -1681.538818
+[2022-09-07T21:10:47-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:51-0300] [Info] [Nex-AC debug] Dist: 130.278564, dist set: 774.358093, acSet[7]: -1, speed: 4, old pos x, y: 2537.504394, -1670.755004
+[2022-09-07T21:10:51-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:58-0300] [Info] [Nex-AC debug] Dist: 134.106430, dist set: 515.875122, acSet[7]: -1, speed: 607, old pos x, y: 2475.801513, -1640.368896
+[2022-09-07T21:10:58-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:10:59-0300] [Info] [Nex-AC debug] Dist: 152.361206, dist set: 427.873870, acSet[7]: -1, speed: 607, old pos x, y: 2341.828857, -1646.357299
+[2022-09-07T21:10:59-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:00-0300] [Info] [Nex-AC debug] Dist: 159.900039, dist set: 388.565338, acSet[7]: -1, speed: 592, old pos x, y: 2189.612548, -1653.000488
+[2022-09-07T21:11:00-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:01-0300] [Info] [Nex-AC debug] Dist: 133.039016, dist set: 289.485076, acSet[7]: -1, speed: 602, old pos x, y: 2029.712768, -1653.288574
+[2022-09-07T21:11:01-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:02-0300] [Info] [Nex-AC debug] Dist: 155.222457, dist set: 135.518478, acSet[7]: -1, speed: 623, old pos x, y: 1948.313598, -1758.519531
+[2022-09-07T21:11:02-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:03-0300] [Info] [Nex-AC debug] Dist: 148.783050, dist set: 95.974113, acSet[7]: -1, speed: 185, old pos x, y: 1968.113403, -1912.473999
+[2022-09-07T21:11:03-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:04-0300] [Info] [Nex-AC debug] Dist: 141.287368, dist set: 236.443145, acSet[7]: -1, speed: 775, old pos x, y: 2093.058349, -1993.252441
+[2022-09-07T21:11:04-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:05-0300] [Info] [Nex-AC debug] Dist: 195.942321, dist set: 431.200897, acSet[7]: -1, speed: 770, old pos x, y: 2225.501708, -1944.050048
+[2022-09-07T21:11:05-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:06-0300] [Info] [Nex-AC debug] Dist: 195.286911, dist set: 625.937683, acSet[7]: -1, speed: 762, old pos x, y: 2414.060058, -1890.766479
+[2022-09-07T21:11:06-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:07-0300] [Info] [Nex-AC debug] Dist: 193.665496, dist set: 819.419860, acSet[7]: -1, speed: 751, old pos x, y: 2602.465332, -1839.381347
+[2022-09-07T21:11:07-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:07-0300] [Info] [Nex-AC debug] Speed: 681, old speed: 188
+[2022-09-07T21:11:07-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:11:08-0300] [Info] [Nex-AC debug] Dist: 80.899284, dist set: 900.315612, acSet[7]: -1, speed: 4, old pos x, y: 2788.655029, -1786.092285
+[2022-09-07T21:11:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:10-0300] [Info] [Nex-AC debug] Dist: 85.742187, dist set: 986.050720, acSet[7]: -1, speed: 764, old pos x, y: 2865.278076, -1760.138427
+[2022-09-07T21:11:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:11-0300] [Info] [Nex-AC debug] Dist: 196.466583, dist set: 1182.174438, acSet[7]: -1, speed: 765, old pos x, y: 2947.082763, -1734.453491
+[2022-09-07T21:11:11-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:11:12-0300] [Info] [Nex-AC debug] Dist: 151.487869, dist set: 1333.372802, acSet[7]: -1, speed: 4, old pos x, y: 3137.354248, -1685.505737
+[2022-09-07T21:11:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:46-0300] [Info] [Nex-AC debug] Dist: 154.928085, dist set: 1181.461791, acSet[7]: -1, speed: 652, old pos x, y: 3251.782714, -1640.629150
+[2022-09-07T21:12:46-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:47-0300] [Info] [Nex-AC debug] Dist: 167.354629, dist set: 1037.059204, acSet[7]: -1, speed: 658, old pos x, y: 3103.805419, -1594.744140
+[2022-09-07T21:12:47-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:48-0300] [Info] [Nex-AC debug] Dist: 166.452133, dist set: 896.055053, acSet[7]: -1, speed: 658, old pos x, y: 2937.377441, -1577.157226
+[2022-09-07T21:12:48-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:49-0300] [Info] [Nex-AC debug] Dist: 164.625198, dist set: 766.705566, acSet[7]: -1, speed: 657, old pos x, y: 2771.149902, -1568.513183
+[2022-09-07T21:12:49-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:50-0300] [Info] [Nex-AC debug] Dist: 171.549087, dist set: 649.167419, acSet[7]: -1, speed: 656, old pos x, y: 2606.747070, -1559.959594
+[2022-09-07T21:12:50-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:51-0300] [Info] [Nex-AC debug] Dist: 151.715118, dist set: 518.462524, acSet[7]: -1, speed: 613, old pos x, y: 2435.431396, -1551.013549
+[2022-09-07T21:12:51-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:52-0300] [Info] [Nex-AC debug] Dist: 158.092193, dist set: 362.510101, acSet[7]: -1, speed: 613, old pos x, y: 2294.897705, -1608.177856
+[2022-09-07T21:12:52-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:53-0300] [Info] [Nex-AC debug] Dist: 157.699172, dist set: 210.194213, acSet[7]: -1, speed: 613, old pos x, y: 2190.745361, -1727.112426
+[2022-09-07T21:12:53-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:54-0300] [Info] [Nex-AC debug] Dist: 159.394653, dist set: 80.962768, acSet[7]: -1, speed: 613, old pos x, y: 2086.765869, -1845.675903
+[2022-09-07T21:12:54-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:55-0300] [Info] [Nex-AC debug] Dist: 157.109100, dist set: 138.540557, acSet[7]: -1, speed: 613, old pos x, y: 1981.667846, -1965.513549
+[2022-09-07T21:12:55-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:56-0300] [Info] [Nex-AC debug] Dist: 147.771270, dist set: 275.922943, acSet[7]: -1, speed: 613, old pos x, y: 1878.076782, -2083.632812
+[2022-09-07T21:12:56-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:57-0300] [Info] [Nex-AC debug] Dist: 158.391494, dist set: 433.378936, acSet[7]: -1, speed: 615, old pos x, y: 1780.642211, -2194.731201
+[2022-09-07T21:12:57-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:58-0300] [Info] [Nex-AC debug] Dist: 155.647689, dist set: 588.772644, acSet[7]: -1, speed: 610, old pos x, y: 1662.170166, -2299.860839
+[2022-09-07T21:12:58-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:12:59-0300] [Info] [Nex-AC debug] Dist: 130.040130, dist set: 718.068237, acSet[7]: -1, speed: 592, old pos x, y: 1531.342041, -2384.182861
+[2022-09-07T21:12:59-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:13:04-0300] [Info] [Nex-AC debug] Dist: 156.229919, dist set: 595.768127, acSet[7]: -1, speed: 4, old pos x, y: 1412.132080, -2494.899902
+[2022-09-07T21:13:04-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:13:10-0300] [Info] [Nex-AC debug] Dist: 89.364624, dist set: 304.057312, acSet[7]: -1, speed: 193, old pos x, y: 1690.938232, -2265.952148
+[2022-09-07T21:13:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:13:33-0300] [Info] [Nex-AC debug] Speed: 694, old speed: 193
+[2022-09-07T21:13:33-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:13:34-0300] [Info] [Nex-AC debug] Dist: 114.803733, dist set: 118.680519, acSet[7]: -1, speed: 4, old pos x, y: 1816.117797, -2123.187011
+[2022-09-07T21:13:34-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:13:44-0300] [Info] [Nex-AC debug] Dist: 159.125610, dist set: 334.710205, acSet[7]: -1, speed: 625, old pos x, y: 1825.043212, -2071.997314
+[2022-09-07T21:13:44-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:08-0300] [Info] [Nex-AC debug] Dist: 202.105743, dist set: 48.556884, acSet[7]: -1, speed: 777, old pos x, y: 1848.756225, -2085.939453
+[2022-09-07T21:15:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:09-0300] [Info] [Nex-AC debug] Dist: 182.242797, dist set: 206.434753, acSet[7]: -1, speed: 705, old pos x, y: 2030.374755, -1997.274658
+[2022-09-07T21:15:09-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:10-0300] [Info] [Nex-AC debug] Dist: 150.231475, dist set: 327.544494, acSet[7]: -1, speed: 575, old pos x, y: 2212.567626, -2001.540405
+[2022-09-07T21:15:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:11-0300] [Info] [Nex-AC debug] Dist: 149.046142, dist set: 298.723815, acSet[7]: -1, speed: 553, old pos x, y: 2333.901367, -2090.127197
+[2022-09-07T21:15:11-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:12-0300] [Info] [Nex-AC debug] Dist: 130.421707, dist set: 211.331085, acSet[7]: -1, speed: 646, old pos x, y: 2252.904052, -2215.243896
+[2022-09-07T21:15:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:13-0300] [Info] [Nex-AC debug] Dist: 163.395553, dist set: 48.531108, acSet[7]: -1, speed: 694, old pos x, y: 2122.576904, -2220.209228
+[2022-09-07T21:15:13-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:14-0300] [Info] [Nex-AC debug] Dist: 183.248565, dist set: 137.060287, acSet[7]: -1, speed: 722, old pos x, y: 2029.974853, -2085.587646
+[2022-09-07T21:15:14-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:15-0300] [Info] [Nex-AC debug] Dist: 120.902374, dist set: 257.849487, acSet[7]: -1, speed: 727, old pos x, y: 2001.572265, -1904.553588
+[2022-09-07T21:15:15-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:16-0300] [Info] [Nex-AC debug] Dist: 174.155563, dist set: 415.408691, acSet[7]: -1, speed: 654, old pos x, y: 1986.984130, -1784.534545
+[2022-09-07T21:15:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:17-0300] [Info] [Nex-AC debug] Dist: 122.231056, dist set: 359.541717, acSet[7]: -1, speed: 696, old pos x, y: 1880.672363, -1646.592651
+[2022-09-07T21:15:17-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:18-0300] [Info] [Nex-AC debug] Dist: 182.055526, dist set: 206.337570, acSet[7]: -1, speed: 762, old pos x, y: 1807.335937, -1744.379150
+[2022-09-07T21:15:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:19-0300] [Info] [Nex-AC debug] Dist: 189.510513, dist set: 201.996536, acSet[7]: -1, speed: 687, old pos x, y: 1961.808105, -1840.725219
+[2022-09-07T21:15:19-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:20-0300] [Info] [Nex-AC debug] Dist: 177.752563, dist set: 294.347869, acSet[7]: -1, speed: 774, old pos x, y: 2144.602050, -1890.731323
+[2022-09-07T21:15:20-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:21-0300] [Info] [Nex-AC debug] Dist: 196.577651, dist set: 484.677246, acSet[7]: -1, speed: 775, old pos x, y: 2298.003662, -1980.530639
+[2022-09-07T21:15:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:21-0300] [Info] [Nex-AC debug] Speed: 718, old speed: 643
+[2022-09-07T21:15:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:15:24-0300] [Info] [Nex-AC debug] Dist: 126.978454, dist set: 606.621948, acSet[7]: -1, speed: 788, old pos x, y: 2484.406738, -1970.612182
+[2022-09-07T21:15:24-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:25-0300] [Info] [Nex-AC debug] Dist: 101.861129, dist set: 708.448974, acSet[7]: -1, speed: 4, old pos x, y: 2610.035644, -1952.148559
+[2022-09-07T21:15:25-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:28-0300] [Info] [Nex-AC debug] Dist: 151.629821, dist set: 519.489990, acSet[7]: -1, speed: 632, old pos x, y: 2670.278564, -1948.182861
+[2022-09-07T21:15:28-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:29-0300] [Info] [Nex-AC debug] Dist: 162.748855, dist set: 360.385864, acSet[7]: -1, speed: 622, old pos x, y: 2519.021972, -1937.550537
+[2022-09-07T21:15:29-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:30-0300] [Info] [Nex-AC debug] Dist: 161.239105, dist set: 202.002578, acSet[7]: -1, speed: 623, old pos x, y: 2356.324462, -1941.638183
+[2022-09-07T21:15:30-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:30-0300] [Info] [Nex-AC debug] Speed: 564, old speed: 157
+[2022-09-07T21:15:30-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:15:32-0300] [Info] [Nex-AC debug] Dist: 159.155349, dist set: 87.551391, acSet[7]: -1, speed: 619, old pos x, y: 2122.779296, -1966.269042
+[2022-09-07T21:15:32-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:33-0300] [Info] [Nex-AC debug] Dist: 157.725112, dist set: 224.862731, acSet[7]: -1, speed: 693, old pos x, y: 1963.626098, -1967.098266
+[2022-09-07T21:15:33-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:34-0300] [Info] [Nex-AC debug] Dist: 163.853897, dist set: 314.395751, acSet[7]: -1, speed: 780, old pos x, y: 1807.732543, -1943.131469
+[2022-09-07T21:15:34-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:35-0300] [Info] [Nex-AC debug] Dist: 199.200759, dist set: 456.099121, acSet[7]: -1, speed: 775, old pos x, y: 1833.339721, -1781.290893
+[2022-09-07T21:15:35-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:36-0300] [Info] [Nex-AC debug] Dist: 122.627754, dist set: 562.084106, acSet[7]: -1, speed: 777, old pos x, y: 1908.311889, -1596.737060
+[2022-09-07T21:15:36-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:37-0300] [Info] [Nex-AC debug] Dist: 180.595840, dist set: 699.018737, acSet[7]: -1, speed: 761, old pos x, y: 1952.237915, -1482.246582
+[2022-09-07T21:15:37-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:38-0300] [Info] [Nex-AC debug] Dist: 172.695571, dist set: 634.461608, acSet[7]: -1, speed: 673, old pos x, y: 2069.464599, -1344.868408
+[2022-09-07T21:15:38-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:39-0300] [Info] [Nex-AC debug] Dist: 172.925659, dist set: 560.882629, acSet[7]: -1, speed: 682, old pos x, y: 2213.355957, -1440.362060
+[2022-09-07T21:15:39-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:40-0300] [Info] [Nex-AC debug] Dist: 123.265510, dist set: 456.952331, acSet[7]: -1, speed: 590, old pos x, y: 2321.759277, -1575.091430
+[2022-09-07T21:15:40-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:41-0300] [Info] [Nex-AC debug] Dist: 158.377243, dist set: 360.342803, acSet[7]: -1, speed: 630, old pos x, y: 2311.440917, -1697.924316
+[2022-09-07T21:15:41-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:42-0300] [Info] [Nex-AC debug] Dist: 156.806259, dist set: 331.759338, acSet[7]: -1, speed: 626, old pos x, y: 2153.592285, -1710.853393
+[2022-09-07T21:15:42-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:15:42-0300] [Info] [Nex-AC debug] Speed: 568, old speed: 143
+[2022-09-07T21:15:42-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:15:43-0300] [Info] [Nex-AC debug] Dist: 89.388351, dist set: 339.812530, acSet[7]: -1, speed: 4, old pos x, y: 1996.789184, -1709.858154
+[2022-09-07T21:15:43-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:16:18-0300] [Info] [Nex-AC debug] Dist: 97.906616, dist set: 153.259002, acSet[7]: -1, speed: 196, old pos x, y: 1919.670898, -1741.666503
+[2022-09-07T21:16:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:17:26-0300] [Info] [Nex-AC debug] Dist: 92.562774, dist set: 443.838165, acSet[7]: -1, speed: 730, old pos x, y: 2287.105224, -2307.748291
+[2022-09-07T21:17:26-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:17:27-0300] [Info] [Nex-AC debug] Speed: 655, old speed: 186
+[2022-09-07T21:17:27-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T21:17:27-0300] [Info] [Nex-AC debug] Dist: 154.374343, dist set: 307.049560, acSet[7]: -1, speed: 186, old pos x, y: 2215.723632, -2248.820068
+[2022-09-07T21:17:27-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:17:37-0300] [Info] [Nex-AC debug] Dist: 131.250106, dist set: 203.277008, acSet[7]: -1, speed: 197, old pos x, y: 1939.588867, -1975.651733
+[2022-09-07T21:17:37-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:17:40-0300] [Info] [Nex-AC debug] Dist: 113.941139, dist set: 133.601867, acSet[7]: -1, speed: 150, old pos x, y: 2004.425659, -1819.020019
+[2022-09-07T21:17:40-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T21:20:31-0300] [Info] Usuário 'Thiago' salvo com sucesso.
+[2022-09-07T21:20:31-0300] [Warning] Insufficient specifiers given to `format`: "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 27
+[2022-09-07T21:20:31-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
+[2022-09-07T21:20:32-0300] [Info] [part] John_Doe has left the server (0:1)
+[2022-09-07T22:37:53-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-07T22:37:53-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-07T22:37:53-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: crashdetect
+[2022-09-07T22:37:53-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: mysql
+[2022-09-07T22:37:53-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: chrono
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: pawn-memory
+[2022-09-07T22:37:53-0300] [Info] ========================
+[2022-09-07T22:37:53-0300] [Info] = Memory access plugin =
+[2022-09-07T22:37:53-0300] [Info] =       Made by BigETI =
+[2022-09-07T22:37:53-0300] [Info] = Loaded!              =
+[2022-09-07T22:37:53-0300] [Info] ========================
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: sscanf
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info]  ===============================
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info]       sscanf plugin loaded.     
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info]          Version: 2.13.1
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info]  ===============================
+[2022-09-07T22:37:53-0300] [Info] 
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: streamer
+[2022-09-07T22:37:53-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-07T22:37:53-0300] [Info] Loading plugin: discord-connector
+[2022-09-07T22:37:57-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-07T22:37:57-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-07T22:37:57-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-07T22:37:57-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-07T22:37:57-0300] [Info] Loading plugin: ColAndreas
+[2022-09-07T22:37:57-0300] [Info] *********************
+[2022-09-07T22:37:57-0300] [Info] ** Created By:     **
+[2022-09-07T22:37:57-0300] [Info] ** [uL]Chris42O    **
+[2022-09-07T22:37:57-0300] [Info] ** [uL]Slice       **
+[2022-09-07T22:37:57-0300] [Info] ** [uL]Pottus      **
+[2022-09-07T22:37:57-0300] [Info] *********************
+[2022-09-07T22:37:57-0300] [Info] No collision data found.
+[2022-09-07T22:37:57-0300] [Info] *********************
+[2022-09-07T22:37:57-0300] [Info]   ColAndreas Loaded
+[2022-09-07T22:37:57-0300] [Info]    v1.4.0
+[2022-09-07T22:37:57-0300] [Info] *********************
+[2022-09-07T22:37:57-0300] [Info] Loading plugin: mapandreas
+[2022-09-07T22:37:57-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Info]          ==============================================================
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-07T22:37:57-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-07T22:37:57-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-07T22:37:57-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-07T22:37:57-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T22:37:57-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-07T22:37:57-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-07T22:37:57-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-07T22:37:57-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-07T22:37:57-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          |                                                            |
+[2022-09-07T22:37:57-0300] [Info]          ==============================================================
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Info]  ========================================== 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-07T22:37:57-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-07T22:37:57-0300] [Info]  |  code generation works best with the   | 
+[2022-09-07T22:37:57-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-07T22:37:57-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  |             Please wait...             | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  |                 Done!                  | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  ========================================== 
+[2022-09-07T22:37:57-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-07T22:37:57-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-07T22:37:57-0300] [Info]  | Started:     07 Sep 2022 - 22:37:57    | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-07T22:37:57-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-07T22:37:57-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-07T22:37:57-0300] [Info]  | Built:       07 Sep 2022 - 22:37:10    | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-07T22:37:57-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-07T22:37:57-0300] [Info] [debug] AMX backtrace:
+[2022-09-07T22:37:57-0300] [Info] [debug] #0 00001af0 in Server_PrintIntroPart (27995044) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:480
+[2022-09-07T22:37:57-0300] [Info] [debug] #1 00003c74 in YVers_PrintHeader () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:494
+[2022-09-07T22:37:57-0300] [Info] [debug] #2 00003eb0 in YVers_StartCheck () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:606
+[2022-09-07T22:37:57-0300] [Info] [debug] #3 00002db0 in public ac_AntiCheatGetLastShotTime () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1152
+[2022-09-07T22:37:57-0300] [Info]  | Master:      -1                        | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-07T22:37:57-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-07T22:37:57-0300] [Info]  |                                        | 
+[2022-09-07T22:37:57-0300] [Info]  ========================================== 
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Info]  
+[2022-09-07T22:37:57-0300] [Warning] No bind address provided. Attempting to start webserver on 127.0.0.1:7777
+[2022-09-07T22:37:58-0300] [Info] Web server is running on http://127.0.0.1:7777/
+[2022-09-07T22:37:59-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-07T22:37:59-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-07T22:38:00-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-07T22:38:01-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-07T22:38:01-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-07T22:38:01-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-07T22:38:01-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-07T22:38:01-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-07T22:38:01-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-07T22:38:01-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-07T22:38:01-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-07T22:38:01-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-07T22:38:01-0300] [Info] Remote console disabled.
+[2022-09-07T22:38:01-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-07T22:38:01-0300] [Info]  
+[2022-09-07T22:38:01-0300] [Info] --------------------------------------
+[2022-09-07T22:38:01-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-07T22:38:01-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-07T22:38:01-0300] [Info]  Author: Nexius
+[2022-09-07T22:38:01-0300] [Info] --------------------------------------
+
+[2022-09-07T22:38:02-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-07T22:38:02-0300] [Info] Unknown command or variable: cookielogging 0
+[2022-09-07T22:38:02-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-07T22:38:02-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-07T22:38:02-0300] [Info] Legacy Network started on port 7777
+[2022-09-07T22:38:03-0300] [Info] Server password has been removed.
+[2022-09-07T22:38:03-0300] [Info] Failed to announce legacy network to open.mp list
+[2022-09-07T22:39:16-0300] [Info] [connection] incoming connection: 127.0.0.1:60738 id: 0
+[2022-09-07T22:39:16-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T22:39:26-0300] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
+[2022-09-07T22:39:28-0300] [Info] [DATABASE] John_Doe foi carregado com sucesso do banco de dados.
+[2022-09-07T22:39:29-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T22:39:29-0300] [Warning] Insufficient specifiers given to `format`: "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 29
+[2022-09-07T22:39:51-0300] [Info] [Nex-AC debug] Dist: 115.155815, dist set: 162.208190, acSet[7]: -1, speed: 729, old pos x, y: 1953.358764, -1990.000610
+[2022-09-07T22:39:51-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:07-0300] [Info] [Nex-AC debug] Dist: 154.314941, dist set: 37.200946, acSet[7]: -1, speed: 143, old pos x, y: 1934.404174, -1914.799560
+[2022-09-07T22:40:07-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:10-0300] [Info] [Nex-AC debug] Dist: 101.298774, dist set: 91.129814, acSet[7]: -1, speed: 750, old pos x, y: 1994.303833, -2057.014648
+[2022-09-07T22:40:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:11-0300] [Info] [Nex-AC debug] Dist: 177.914886, dist set: 240.024551, acSet[7]: -1, speed: 700, old pos x, y: 2003.619628, -1956.145141
+[2022-09-07T22:40:11-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:12-0300] [Info] [Nex-AC debug] Dist: 122.976097, dist set: 356.226348, acSet[7]: -1, speed: 143, old pos x, y: 1913.925292, -1802.494140
+[2022-09-07T22:40:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:14-0300] [Info] [Nex-AC debug] Dist: 106.105186, dist set: 459.727111, acSet[7]: -1, speed: 802, old pos x, y: 1869.621215, -1664.240234
+[2022-09-07T22:40:14-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:15-0300] [Info] [Nex-AC debug] Dist: 196.064895, dist set: 636.160156, acSet[7]: -1, speed: 804, old pos x, y: 1932.519042, -1578.787475
+[2022-09-07T22:40:15-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:16-0300] [Info] [Nex-AC debug] Dist: 89.689994, dist set: 694.587585, acSet[7]: -1, speed: 765, old pos x, y: 2021.554443, -1404.104492
+[2022-09-07T22:40:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:22-0300] [Info] [Nex-AC debug] Dist: 123.211288, dist set: 745.769287, acSet[7]: -1, speed: 780, old pos x, y: 2111.526367, -1356.832153
+[2022-09-07T22:40:22-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:40:23-0300] [Info] [Nex-AC debug] Dist: 82.573326, dist set: 809.873657, acSet[7]: -1, speed: 4, old pos x, y: 2233.943847, -1342.868530
+[2022-09-07T22:40:23-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:04-0300] [Info] [Nex-AC debug] Dist: 125.219436, dist set: 905.247802, acSet[7]: -1, speed: 708, old pos x, y: 2333.178222, -1290.924194
+[2022-09-07T22:43:04-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:05-0300] [Info] [Nex-AC debug] Dist: 168.311447, dist set: 883.522094, acSet[7]: -1, speed: 639, old pos x, y: 2457.901855, -1279.792114
+[2022-09-07T22:43:05-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:06-0300] [Info] [Nex-AC debug] Dist: 152.255905, dist set: 784.406982, acSet[7]: -1, speed: 602, old pos x, y: 2575.014160, -1400.678222
+[2022-09-07T22:43:06-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:07-0300] [Info] [Nex-AC debug] Dist: 153.472549, dist set: 631.747802, acSet[7]: -1, speed: 617, old pos x, y: 2579.382080, -1552.871459
+[2022-09-07T22:43:07-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:08-0300] [Info] [Nex-AC debug] Dist: 101.454833, dist set: 539.544311, acSet[7]: -1, speed: 4, old pos x, y: 2467.972900, -1658.426269
+[2022-09-07T22:43:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:11-0300] [Info] [Nex-AC debug] Dist: 91.281890, dist set: 434.945587, acSet[7]: -1, speed: 631, old pos x, y: 2339.517089, -1685.085449
+[2022-09-07T22:43:11-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:43:12-0300] [Info] [Nex-AC debug] Dist: 145.774368, dist set: 294.135650, acSet[7]: -1, speed: 155, old pos x, y: 2252.775390, -1713.515380
+[2022-09-07T22:43:12-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T22:47:11-0300] [Info] Usuário 'Thiago' salvo com sucesso.
+[2022-09-07T22:47:11-0300] [Warning] Insufficient specifiers given to `format`: "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])" < 27
+[2022-09-07T22:47:11-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
+[2022-09-07T22:47:11-0300] [Info] [part] John_Doe has left the server (0:1)
+[2022-09-07T23:37:43-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-07T23:37:43-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-07T23:37:43-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: crashdetect
+[2022-09-07T23:37:43-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: mysql
+[2022-09-07T23:37:43-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: chrono
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: pawn-memory
+[2022-09-07T23:37:43-0300] [Info] ========================
+[2022-09-07T23:37:43-0300] [Info] = Memory access plugin =
+[2022-09-07T23:37:43-0300] [Info] =       Made by BigETI =
+[2022-09-07T23:37:43-0300] [Info] = Loaded!              =
+[2022-09-07T23:37:43-0300] [Info] ========================
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: sscanf
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info]  ===============================
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info]       sscanf plugin loaded.     
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info]          Version: 2.13.1
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info]  ===============================
+[2022-09-07T23:37:43-0300] [Info] 
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: streamer
+[2022-09-07T23:37:43-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-07T23:37:43-0300] [Info] Loading plugin: discord-connector
+[2022-09-07T23:37:44-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-07T23:37:44-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-07T23:37:44-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-07T23:37:44-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-07T23:37:44-0300] [Info] Loading plugin: ColAndreas
+[2022-09-07T23:37:44-0300] [Info] *********************
+[2022-09-07T23:37:44-0300] [Info] ** Created By:     **
+[2022-09-07T23:37:44-0300] [Info] ** [uL]Chris42O    **
+[2022-09-07T23:37:44-0300] [Info] ** [uL]Slice       **
+[2022-09-07T23:37:44-0300] [Info] ** [uL]Pottus      **
+[2022-09-07T23:37:44-0300] [Info] *********************
+[2022-09-07T23:37:44-0300] [Info] No collision data found.
+[2022-09-07T23:37:44-0300] [Info] *********************
+[2022-09-07T23:37:44-0300] [Info]   ColAndreas Loaded
+[2022-09-07T23:37:44-0300] [Info]    v1.4.0
+[2022-09-07T23:37:44-0300] [Info] *********************
+[2022-09-07T23:37:44-0300] [Info] Loading plugin: mapandreas
+[2022-09-07T23:37:44-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-07T23:37:44-0300] [Info]  
+[2022-09-07T23:37:44-0300] [Info]  
+[2022-09-07T23:37:44-0300] [Info]          ==============================================================
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-07T23:37:44-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-07T23:37:44-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-07T23:37:44-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-07T23:37:44-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-07T23:37:44-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-07T23:37:44-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-07T23:37:44-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-07T23:37:44-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-07T23:37:44-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          |                                                            |
+[2022-09-07T23:37:44-0300] [Info]          ==============================================================
+[2022-09-07T23:37:44-0300] [Info]  
+[2022-09-07T23:37:44-0300] [Info]  
+[2022-09-07T23:37:44-0300] [Info]  ========================================== 
+[2022-09-07T23:37:44-0300] [Info]  |                                        | 
+[2022-09-07T23:37:44-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-07T23:37:44-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-07T23:37:44-0300] [Info]  |  code generation works best with the   | 
+[2022-09-07T23:37:44-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-07T23:37:44-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-07T23:37:44-0300] [Info]  |                                        | 
+[2022-09-07T23:37:44-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-07T23:37:44-0300] [Info]  |                                        | 
+[2022-09-07T23:37:44-0300] [Info]  |             Please wait...             | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  |                 Done!                  | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  ========================================== 
+[2022-09-07T23:37:45-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-07T23:37:45-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-07T23:37:45-0300] [Info]  | Started:     07 Sep 2022 - 23:37:44    | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-07T23:37:45-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-07T23:37:45-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-07T23:37:45-0300] [Info]  | Built:       07 Sep 2022 - 23:37:19    | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-07T23:37:45-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-07T23:37:45-0300] [Info] [debug] AMX backtrace:
+[2022-09-07T23:37:45-0300] [Info] [debug] #0 00001af0 in Server_PrintIntroPart (27995108) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:480
+[2022-09-07T23:37:45-0300] [Info] [debug] #1 00003c74 in YVers_PrintHeader () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:494
+[2022-09-07T23:37:45-0300] [Info] [debug] #2 00003eb0 in YVers_StartCheck () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:606
+[2022-09-07T23:37:45-0300] [Info] [debug] #3 00002db0 in public ac_AntiCheatGetLastShotTime () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1152
+[2022-09-07T23:37:45-0300] [Info]  | Master:      -1                        | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-07T23:37:45-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-07T23:37:45-0300] [Info]  |                                        | 
+[2022-09-07T23:37:45-0300] [Info]  ========================================== 
+[2022-09-07T23:37:45-0300] [Info]  
+[2022-09-07T23:37:45-0300] [Info]  
+[2022-09-07T23:37:45-0300] [Warning] No bind address provided. Attempting to start webserver on 127.0.0.1:7777
+[2022-09-07T23:37:45-0300] [Info] Web server is running on http://127.0.0.1:7777/
+[2022-09-07T23:37:47-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-07T23:37:47-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-07T23:37:47-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-07T23:37:47-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-07T23:37:48-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-07T23:37:49-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-07T23:37:50-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-07T23:37:50-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-07T23:37:50-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-07T23:37:50-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-07T23:37:50-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-07T23:37:50-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-07T23:37:50-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-07T23:37:50-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-07T23:37:50-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-07T23:37:50-0300] [Info] Remote console disabled.
+[2022-09-07T23:37:50-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-07T23:37:50-0300] [Info]  
+[2022-09-07T23:37:50-0300] [Info] --------------------------------------
+[2022-09-07T23:37:50-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-07T23:37:50-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-07T23:37:50-0300] [Info]  Author: Nexius
+[2022-09-07T23:37:50-0300] [Info] --------------------------------------
+
+[2022-09-07T23:37:50-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-07T23:37:50-0300] [Info] Unknown command or variable: cookielogging 0
+[2022-09-07T23:37:50-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-07T23:37:50-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-07T23:37:50-0300] [Info] Legacy Network started on port 7777
+[2022-09-07T23:37:51-0300] [Info] Server password has been removed.
+[2022-09-07T23:37:51-0300] [Info] Failed to announce legacy network to open.mp list
+[2022-09-07T23:39:07-0300] [Info] [connection] incoming connection: 127.0.0.1:57093 id: 0
+[2022-09-07T23:39:07-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
+[2022-09-07T23:39:24-0300] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
+[2022-09-07T23:39:27-0300] [Info] [DATABASE] John_Doe foi carregado com sucesso do banco de dados.
+[2022-09-07T23:40:16-0300] [Error] String formatted incorrectly - parameter 6 (total 5)
+[2022-09-07T23:40:16-0300] [Warning] Insufficient specifiers given to `format`: "[Help-center] %s %s: %s" < 2
+[2022-09-07T23:40:40-0300] [Info] [chat] [John_Doe]: config
+[2022-09-07T23:40:46-0300] [Info] [Nex-AC debug] Dist: 81.141716, dist set: 404.991058, acSet[7]: -1, speed: 779, old pos x, y: 744.754760, -1349.955322
+[2022-09-07T23:40:46-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:47-0300] [Info] [Nex-AC debug] Dist: 100.797889, dist set: 503.430053, acSet[7]: -1, speed: 195, old pos x, y: 824.216369, -1366.381835
+[2022-09-07T23:40:47-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:52-0300] [Info] [Nex-AC debug] Dist: 83.752372, dist set: 835.131713, acSet[7]: -1, speed: 198, old pos x, y: 1169.028076, -1442.301879
+[2022-09-07T23:40:52-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:54-0300] [Info] [Nex-AC debug] Speed: 697, old speed: 196
+[2022-09-07T23:40:54-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:40:54-0300] [Info] [Nex-AC debug] Dist: 110.558265, dist set: 1012.783569, acSet[7]: -1, speed: 773, old pos x, y: 1318.887939, -1461.858032
+[2022-09-07T23:40:54-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:55-0300] [Info] [Nex-AC debug] Speed: 678, old speed: 192
+[2022-09-07T23:40:55-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:40:55-0300] [Info] [Nex-AC debug] Dist: 96.451774, dist set: 1108.935546, acSet[7]: -1, speed: 192, old pos x, y: 1427.950073, -1479.984863
+[2022-09-07T23:40:55-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:58-0300] [Info] [Nex-AC debug] Dist: 100.127517, dist set: 1318.177124, acSet[7]: -1, speed: 802, old pos x, y: 1637.203369, -1508.720214
+[2022-09-07T23:40:58-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:40:58-0300] [Info] [Nex-AC debug] Speed: 712, old speed: 200
+[2022-09-07T23:40:58-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:41:02-0300] [Info] [Nex-AC debug] Speed: 581, old speed: 160
+[2022-09-07T23:41:02-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:41:02-0300] [Info] [Nex-AC debug] Dist: 112.889266, dist set: 1524.148681, acSet[7]: -1, speed: 637, old pos x, y: 1879.893310, -1504.825439
+[2022-09-07T23:41:02-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:03-0300] [Info] [Nex-AC debug] Dist: 162.823410, dist set: 1615.335937, acSet[7]: -1, speed: 637, old pos x, y: 1927.487915, -1607.191162
+[2022-09-07T23:41:03-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:04-0300] [Info] [Nex-AC debug] Dist: 159.163375, dist set: 1714.304809, acSet[7]: -1, speed: 639, old pos x, y: 1991.553100, -1756.881225
+[2022-09-07T23:41:04-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:05-0300] [Info] [Nex-AC debug] Dist: 165.706558, dist set: 1855.337524, acSet[7]: -1, speed: 709, old pos x, y: 2053.625244, -1903.441894
+[2022-09-07T23:41:05-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:06-0300] [Info] [Nex-AC debug] Dist: 183.042526, dist set: 2032.325195, acSet[7]: -1, speed: 790, old pos x, y: 2158.574707, -2031.677124
+[2022-09-07T23:41:06-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:07-0300] [Info] [Nex-AC debug] Dist: 193.976211, dist set: 2123.057617, acSet[7]: -1, speed: 793, old pos x, y: 2340.942382, -2047.380493
+[2022-09-07T23:41:07-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:08-0300] [Info] [Nex-AC debug] Dist: 191.411285, dist set: 2143.273681, acSet[7]: -1, speed: 786, old pos x, y: 2476.959472, -1909.083251
+[2022-09-07T23:41:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:09-0300] [Info] [Nex-AC debug] Dist: 201.088760, dist set: 2155.835693, acSet[7]: -1, speed: 740, old pos x, y: 2535.458251, -1726.830200
+[2022-09-07T23:41:09-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:41:10-0300] [Info] [Nex-AC debug] Speed: 656, old speed: 143
+[2022-09-07T23:41:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:41:10-0300] [Info] [Nex-AC debug] Dist: 152.691024, dist set: 2148.349121, acSet[7]: -1, speed: 143, old pos x, y: 2570.666259, -1528.847656
+[2022-09-07T23:41:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:13-0300] [Info] [Nex-AC debug] Dist: 88.756584, dist set: 145.483535, acSet[7]: -1, speed: 156, old pos x, y: 2463.417968, -1575.622436
+[2022-09-07T23:43:13-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:16-0300] [Info] [Nex-AC debug] Dist: 101.100280, dist set: 394.311401, acSet[7]: -1, speed: 172, old pos x, y: 2235.714599, -1653.919555
+[2022-09-07T23:43:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:17-0300] [Info] [Nex-AC debug] Dist: 92.530693, dist set: 450.083618, acSet[7]: -1, speed: 671, old pos x, y: 2136.437744, -1673.034301
+[2022-09-07T23:43:17-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:18-0300] [Info] [Nex-AC debug] Dist: 126.256828, dist set: 573.015502, acSet[7]: -1, speed: 625, old pos x, y: 2062.945800, -1616.812744
+[2022-09-07T23:43:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:19-0300] [Info] [Nex-AC debug] Dist: 156.795822, dist set: 728.361022, acSet[7]: -1, speed: 626, old pos x, y: 1937.035156, -1607.469482
+[2022-09-07T23:43:19-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:20-0300] [Info] [Nex-AC debug] Dist: 161.828414, dist set: 889.621887, acSet[7]: -1, speed: 616, old pos x, y: 1780.285522, -1603.663818
+[2022-09-07T23:43:20-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:21-0300] [Info] [Nex-AC debug] Dist: 152.177200, dist set: 1026.479980, acSet[7]: -1, speed: 607, old pos x, y: 1618.458251, -1604.271728
+[2022-09-07T23:43:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:22-0300] [Info] [Nex-AC debug] Dist: 154.590820, dist set: 1159.201782, acSet[7]: -1, speed: 591, old pos x, y: 1490.189453, -1686.155883
+[2022-09-07T23:43:22-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:23-0300] [Info] [Nex-AC debug] Dist: 96.859718, dist set: 1101.190551, acSet[7]: -1, speed: 765, old pos x, y: 1374.480590, -1788.673095
+[2022-09-07T23:43:23-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:24-0300] [Info] [Nex-AC debug] Dist: 199.052703, dist set: 908.881469, acSet[7]: -1, speed: 751, old pos x, y: 1450.227783, -1849.040039
+[2022-09-07T23:43:24-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:25-0300] [Info] [Nex-AC debug] Dist: 178.595504, dist set: 775.880187, acSet[7]: -1, speed: 738, old pos x, y: 1648.990966, -1838.307983
+[2022-09-07T23:43:25-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:26-0300] [Info] [Nex-AC debug] Dist: 186.412673, dist set: 639.750976, acSet[7]: -1, speed: 694, old pos x, y: 1818.487182, -1894.587524
+[2022-09-07T23:43:26-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:27-0300] [Info] [Nex-AC debug] Dist: 182.166549, dist set: 598.518249, acSet[7]: -1, speed: 694, old pos x, y: 2001.820800, -1928.328735
+[2022-09-07T23:43:27-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:28-0300] [Info] [Nex-AC debug] Dist: 165.627685, dist set: 651.636962, acSet[7]: -1, speed: 628, old pos x, y: 2158.436279, -2021.367675
+[2022-09-07T23:43:28-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:29-0300] [Info] [Nex-AC debug] Dist: 137.484039, dist set: 788.826416, acSet[7]: -1, speed: 580, old pos x, y: 2271.919189, -2142.008300
+[2022-09-07T23:43:29-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:30-0300] [Info] [Nex-AC debug] Dist: 148.826324, dist set: 847.242797, acSet[7]: -1, speed: 621, old pos x, y: 2213.573974, -2266.498046
+[2022-09-07T23:43:30-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:31-0300] [Info] [Nex-AC debug] Dist: 169.921432, dist set: 794.333923, acSet[7]: -1, speed: 723, old pos x, y: 2065.021972, -2257.466064
+[2022-09-07T23:43:31-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:32-0300] [Info] [Nex-AC debug] Dist: 189.818420, dist set: 722.334838, acSet[7]: -1, speed: 753, old pos x, y: 1967.572875, -2118.264892
+[2022-09-07T23:43:32-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:33-0300] [Info] [Nex-AC debug] Dist: 186.828079, dist set: 654.629211, acSet[7]: -1, speed: 760, old pos x, y: 1907.005371, -1938.368774
+[2022-09-07T23:43:33-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:34-0300] [Info] [Nex-AC debug] Dist: 199.012191, dist set: 594.476318, acSet[7]: -1, speed: 783, old pos x, y: 1888.318969, -1752.477539
+[2022-09-07T23:43:34-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:35-0300] [Info] [Nex-AC debug] Dist: 201.898437, dist set: 548.503479, acSet[7]: -1, speed: 782, old pos x, y: 1911.169067, -1554.781494
+[2022-09-07T23:43:35-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:36-0300] [Info] [Nex-AC debug] Dist: 158.976806, dist set: 649.038879, acSet[7]: -1, speed: 644, old pos x, y: 1982.966308, -1366.080322
+[2022-09-07T23:43:36-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:37-0300] [Info] [Nex-AC debug] Dist: 165.849700, dist set: 811.773559, acSet[7]: -1, speed: 618, old pos x, y: 1941.089965, -1212.718017
+[2022-09-07T23:43:37-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:38-0300] [Info] [Nex-AC debug] Dist: 151.784851, dist set: 943.353942, acSet[7]: -1, speed: 612, old pos x, y: 1782.634033, -1163.750244
+[2022-09-07T23:43:38-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:39-0300] [Info] [Nex-AC debug] Dist: 95.207885, dist set: 1009.253356, acSet[7]: -1, speed: 630, old pos x, y: 1631.515136, -1177.953125
+[2022-09-07T23:43:39-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:41-0300] [Info] [Nex-AC debug] Dist: 114.313644, dist set: 938.159729, acSet[7]: -1, speed: 744, old pos x, y: 1516.201049, -1241.324340
+[2022-09-07T23:43:41-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:42-0300] [Info] [Nex-AC debug] Dist: 159.331680, dist set: 834.930297, acSet[7]: -1, speed: 610, old pos x, y: 1589.716796, -1328.863159
+[2022-09-07T23:43:42-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:43-0300] [Info] [Nex-AC debug] Dist: 146.228393, dist set: 862.341857, acSet[7]: -1, speed: 580, old pos x, y: 1673.193725, -1464.576782
+[2022-09-07T23:43:43-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:44-0300] [Info] [Nex-AC debug] Dist: 131.313217, dist set: 903.981140, acSet[7]: -1, speed: 649, old pos x, y: 1646.167114, -1608.285888
+[2022-09-07T23:43:44-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:45-0300] [Info] [Nex-AC debug] Dist: 174.186477, dist set: 772.563293, acSet[7]: -1, speed: 729, old pos x, y: 1624.661132, -1737.826049
+[2022-09-07T23:43:45-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:46-0300] [Info] [Nex-AC debug] Speed: 672, old speed: 189
+[2022-09-07T23:43:46-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:43:46-0300] [Info] [Nex-AC debug] Dist: 120.476997, dist set: 656.093078, acSet[7]: -1, speed: 36, old pos x, y: 1783.546142, -1809.215698
+[2022-09-07T23:43:46-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:50-0300] [Info] [Nex-AC debug] Speed: 602, old speed: 163
+[2022-09-07T23:43:50-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:43:50-0300] [Info] [Nex-AC debug] Dist: 94.347213, dist set: 574.985351, acSet[7]: -1, speed: 157, old pos x, y: 2025.576049, -1866.777709
+[2022-09-07T23:43:50-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:43:54-0300] [Info] [Nex-AC debug] Speed: 553, old speed: 143
+[2022-09-07T23:43:54-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:45:08-0300] [Info] [Nex-AC debug] Dist: 80.756454, dist set: 442.999908, acSet[7]: -1, speed: 199, old pos x, y: 2203.765869, -1769.277465
+[2022-09-07T23:45:08-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:09-0300] [Info] [Nex-AC debug] Dist: 151.193710, dist set: 588.453979, acSet[7]: -1, speed: 815, old pos x, y: 2208.339599, -1688.650634
+[2022-09-07T23:45:09-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:10-0300] [Info] [Nex-AC debug] Speed: 741, old speed: 202
+[2022-09-07T23:45:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:45:10-0300] [Info] [Nex-AC debug] Dist: 92.002723, dist set: 680.357604, acSet[7]: -1, speed: 199, old pos x, y: 2247.715820, -1542.674438
+[2022-09-07T23:45:10-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:13-0300] [Info] [Nex-AC debug] Dist: 132.841857, dist set: 898.076721, acSet[7]: -1, speed: 783, old pos x, y: 2291.236816, -1354.116699
+[2022-09-07T23:45:13-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:16-0300] [Info] [Nex-AC debug] Dist: 124.952896, dist set: 778.678771, acSet[7]: -1, speed: 630, old pos x, y: 2291.496337, -1229.164672
+[2022-09-07T23:45:16-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:17-0300] [Info] [Nex-AC debug] Dist: 165.013458, dist set: 622.207275, acSet[7]: -1, speed: 628, old pos x, y: 2296.285400, -1354.025756
+[2022-09-07T23:45:17-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:18-0300] [Info] [Nex-AC debug] Dist: 155.507446, dist set: 470.795318, acSet[7]: -1, speed: 640, old pos x, y: 2271.185791, -1517.119140
+[2022-09-07T23:45:18-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:19-0300] [Info] [Nex-AC debug] Dist: 166.361862, dist set: 332.335266, acSet[7]: -1, speed: 635, old pos x, y: 2222.845214, -1664.922241
+[2022-09-07T23:45:19-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:20-0300] [Info] [Nex-AC debug] Dist: 147.427322, dist set: 208.004409, acSet[7]: -1, speed: 627, old pos x, y: 2206.196777, -1830.448974
+[2022-09-07T23:45:20-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:21-0300] [Info] [Nex-AC debug] Dist: 150.761657, dist set: 116.883758, acSet[7]: -1, speed: 640, old pos x, y: 2151.367675, -1967.301391
+[2022-09-07T23:45:21-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:22-0300] [Info] [Nex-AC debug] Dist: 121.360977, dist set: 136.756301, acSet[7]: -1, speed: 635, old pos x, y: 2001.882690, -1947.722900
+[2022-09-07T23:45:22-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:23-0300] [Info] [Nex-AC debug] Dist: 105.358703, dist set: 213.589492, acSet[7]: -1, speed: 639, old pos x, y: 1880.550903, -1950.384643
+[2022-09-07T23:45:23-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:25-0300] [Info] [Nex-AC debug] Speed: 665, old speed: 186
+[2022-09-07T23:45:25-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 009 (1)
+[2022-09-07T23:45:25-0300] [Info] [Nex-AC debug] Dist: 120.762535, dist set: 149.296066, acSet[7]: -1, speed: 186, old pos x, y: 1703.123046, -1991.807983
+[2022-09-07T23:45:25-0300] [Info] [Nex-AC] Suspicion on the ID 0. Reason code: 002 (6)
+[2022-09-07T23:45:39-0300] [Info] Usuário 'Thiago' salvo com sucesso.
+[2022-09-07T23:45:40-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
+[2022-09-07T23:45:40-0300] [Info] [part] John_Doe has left the server (0:1)

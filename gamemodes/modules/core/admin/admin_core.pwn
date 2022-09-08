@@ -674,8 +674,7 @@ CMD:y(playerid, params[]){
 	return true;	
 }
 
-CMD:z(playerid, params[]){
-	
+CMD:z(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new Float:x, Float:y, Float:z, Float:npos;
 	
@@ -686,9 +685,7 @@ CMD:z(playerid, params[]){
 	return true;	
 }
 
-CMD:spec(playerid, params[])
-{
-	
+CMD:spec(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 
 	new userid;
@@ -715,10 +712,10 @@ CMD:spec(playerid, params[])
 	  	return SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você não está mais no modo espectador.");
 	}
 
-	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/spec <playerID/Nome>");
+	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/spec [playerid/nome]");
 	if (!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	if (IsPlayerWatchingCamera(userid)) return SendErrorMessage(playerid, "O jogador está assistindo uma transmissão, então não é possível espectar ele.");
-	if (GetPlayerState(userid) != PLAYER_STATE_SPECTATING) return SendErrorMessage(playerid, "O administrador está de spec em alguém, então não é possível espectar ele.");
+	if (GetPlayerState(userid) == PLAYER_STATE_SPECTATING) return SendErrorMessage(playerid, "O administrador está de spec em alguém, então não é possível espectar ele.");
 
 	if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING){
 		GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
@@ -745,8 +742,7 @@ CMD:spec(playerid, params[])
 	return true;
 }
 
-CMD:jetpack(playerid, params[]){
-	
+CMD:jetpack(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 3) return SendPermissionMessage(playerid);
 	new userid;
 	if (sscanf(params, "u", userid)){

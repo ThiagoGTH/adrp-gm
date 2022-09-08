@@ -327,7 +327,7 @@ void:CheckPlayerTable() {
     `newbie_chat` int NOT NULL DEFAULT '0',\
     `admin_chat` int NOT NULL DEFAULT '0',\
     `nametag` int NOT NULL DEFAULT '0',\
-    `objects` int NOT NULL DEFAULT '1000',\
+    `objects` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_config checada com sucesso");

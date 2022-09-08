@@ -24,7 +24,6 @@
 #include <colandreas>
 #include <mapandreas>
 
-#define DEBUG
 #pragma warning disable 214
 #pragma warning disable 239
 //#include <nex-ac_pt.lang>

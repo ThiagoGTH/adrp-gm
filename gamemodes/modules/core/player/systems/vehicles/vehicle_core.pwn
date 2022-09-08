@@ -13,7 +13,7 @@ VehicleCreate(ownerid, modelid, Float:x, Float:y, Float:z, Float:a, color1, colo
             vInfo[i][vExists] = true;
             vInfo[i][vOwner] = ownerid;
             vInfo[i][vModel] = modelid;
-
+            
             vInfo[i][vColor1] = color1;
             vInfo[i][vColor2] = color2;
 
@@ -293,6 +293,7 @@ SpawnVehicle(vehicleid) {
 		if (vInfo[vehicleid][vColor2] == -1)
 		    vInfo[vehicleid][vColor2] = random(127);
 
+        vInfo[vehicleid][vWindowsDown] = false;
         vInfo[vehicleid][vVehicle] =  CreateVehicle(vInfo[vehicleid][vModel], 
         vInfo[vehicleid][vPos][0], vInfo[vehicleid][vPos][1], vInfo[vehicleid][vPos][2], vInfo[vehicleid][vPos][3], 
         vInfo[vehicleid][vColor1], vInfo[vehicleid][vColor2], -1, false);
@@ -504,6 +505,7 @@ ResetVehicle(vehicleid) {
             vInfo[vehicleid][vAlarm] =
             vInfo[vehicleid][vEnergyResource] = 0;
 
+            vInfo[vehicleid][vWindowsDown] =
             vInfo[vehicleid][vLocked] = false;
 
             vInfo[vehicleid][vFuel] =

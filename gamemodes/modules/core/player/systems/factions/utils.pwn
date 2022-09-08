@@ -1,3 +1,5 @@
+#include <YSI_Coding\y_hooks>
+
 #define MAX_FACTIONS            (30)
 
 #define FACTION_MAX_RANKS       (30)
@@ -40,4 +42,4 @@ enum E_FACTION_DATA {
 }
 
 new FactionData[MAX_FACTIONS][E_FACTION_DATA];
-new FactionRanks[MAX_FACTIONS][20][32];
+new FactionRanks[MAX_FACTIONS][20][32]

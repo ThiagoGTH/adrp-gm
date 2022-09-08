@@ -705,7 +705,7 @@ CMD:spec(playerid, params[]) {
          0, 0, 0, 0, 0, 0);
 	    TogglePlayerSpectating(playerid, false);
 	    
-	  	EmSpec[playerid] = INVALID_PLAYER_ID;
+	  	pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
 		format(logString, sizeof(logString), "%s (%s) parou de observar.", pNome(playerid), GetPlayerUserEx(playerid));
 		logCreate(playerid, logString, 1);
 
@@ -735,7 +735,7 @@ CMD:spec(playerid, params[]) {
 		PlayerSpectatePlayer(playerid, userid);
 
 	va_SendClientMessage(playerid, COLOR_LIGHTRED, "Você agora está observando %s (ID: %d). Use '/spec off' para sair do spec.", pNome(userid), userid);
-	EmSpec[playerid] = userid;
+	pInfo[playerid][pSpectating] = userid;
 
 	format(logString, sizeof(logString), "%s (%s) está observando %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);

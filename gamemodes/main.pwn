@@ -56,4 +56,6 @@
 #include "modules\core\discord\discord_core.pwn"
 #include "modules\core\admin\admin.pwn"
 
+#include "modules\core\player\main\main.pwn"
+
 main() { }

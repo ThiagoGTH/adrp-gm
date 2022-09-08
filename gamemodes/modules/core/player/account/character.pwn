@@ -207,6 +207,7 @@ SpawnSelectedCharacter(playerid) {
     SpawnPlayer(playerid);
     SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
+    pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
     SetPlayerColor(playerid, 0xFFFFFFFF);
     ClearPlayerChat(playerid);
     va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s.", pNome(playerid));

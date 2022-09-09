@@ -70,6 +70,9 @@ LoadCharacterInfoID(playerid, id) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_config (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
@@ -84,6 +87,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerInventory(playerid);
     LoadPlayerPet(playerid);
     LoadPlayerConfig(playerid);
+    LoadPlayerFaction(playerid);
     SpawnSelectedCharacter(playerid);
 }
 
@@ -180,6 +184,15 @@ LoadPlayerConfig(playerid){
     cache_get_value_name_int(0, "admin_chat", pInfo[playerid][pTogAdmin]);
     cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
     cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
+    cache_delete(result);
+    return true;
+}
+
+LoadPlayerFaction(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_faction WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "faction_id", pInfo[playerid][pFaction]);
+    cache_get_value_name_int(0, "faction_rank", pInfo[playerid][pFactionRank]);
     cache_delete(result);
     return true;
 }
@@ -334,6 +347,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerInventory(playerid);
     SavePlayerPet(playerid);
     SavePlayerConfig(playerid);
+    SavePlayerFaction(playerid);
     return true;
 }
 
@@ -515,6 +529,19 @@ SavePlayerConfig(playerid) {
     pInfo[playerid][pRenderObjects],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerFaction(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_faction SET \
+    `faction_id` = '%d',        \
+    `faction_rank` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pFaction],
+    pInfo[playerid][pFactionRank],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
     return true;
 }
 

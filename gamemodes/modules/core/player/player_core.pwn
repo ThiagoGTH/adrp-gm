@@ -106,13 +106,6 @@ ResetWeapons(playerid){
 	return true;
 }*/
 
-IsPlayerSpawned(playerid)
-{
-	if (playerid < 0 || playerid >= MAX_PLAYERS)
-		return false;
-
-	return (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING && GetPlayerState(playerid) != PLAYER_STATE_NONE && GetPlayerState(playerid) != PLAYER_STATE_WASTED);
-}
 /*
 PlayerHasWeapon(playerid, weaponid)
 {

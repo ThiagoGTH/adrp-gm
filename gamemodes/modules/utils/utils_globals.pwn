@@ -158,6 +158,8 @@ enum Player_Data {
     pKicked,
     pShowFooter,
     // FACTIONS
+    pFaction,
+    pFactionRank,
     pSwat,
 
     pJailed,
@@ -180,6 +182,8 @@ enum Player_Data {
     pCharacterActorSkin,
     pCharacterActor,
     pCharacterFinalizing,
+
+    pSpectating,
 
     pEditingVeh,
     pOjectVeh,
@@ -323,6 +327,10 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pLimpingTime] = 0;
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pJailed] = 0;
+
+
+    pInfo[playerid][pFaction] = 0;
+    pInfo[playerid][pFactionRank] = 0;
     pInfo[playerid][pSwat] = 0;
 
     pInfo[playerid][pSetting] =
@@ -350,6 +358,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pWatching] = false;
     pInfo[playerid][pWatchingPlayer] = INVALID_PLAYER_ID;
     pInfo[playerid][pCameraTimer] = -1;
+
+    pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
 
     // RADIO
     pInfo[playerid][rRadioState] = 0;

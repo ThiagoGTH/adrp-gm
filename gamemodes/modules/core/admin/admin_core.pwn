@@ -759,6 +759,25 @@ CMD:jetpack(playerid, params[]) {
 	return true;
 }
 
+CMD:gravidade(playerid, params[]) {
+	static
+		userid,
+	  	Float:amount; 
+
+  	if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
+	if (sscanf(params, "uf", userid, amount)) return SendSyntaxMessage(playerid, "/gravidade [playerid/nome] [valor] (-1 retorna ao normal)");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+	if(amount == -1) amount = 0.008;
+
+	SetPlayerGravity(userid, amount);
+
+	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou a gravidade de %s em %.2f.", pNome(userid), amount);
+	format(logString, sizeof(logString), "%s (%s) setou a gravidade de %s em %.2f.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+
 GiveGMX() {
 	foreach(new i : Player) {
 		SendClientMessage(i, COLOR_LIGHTRED, "O servidor sofrerá um GMX em cinco minutos. Finalize o que você está fazendo e deslogue.");

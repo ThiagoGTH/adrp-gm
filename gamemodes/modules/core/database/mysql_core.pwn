@@ -13,6 +13,7 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 
 hook OnGameModeInit() {
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    mysql_log(ALL);
 
     if(mysql_errno(DBConn)) {
         print("\n[DATABASE] Houve um erro na tentativa de conexão com o MySQL.");
@@ -29,7 +30,6 @@ hook OnGameModeInit() {
         mysql_set_charset("latin1");
         CheckTables();
     }
-
     return true;
 }
 
@@ -168,6 +168,17 @@ void:CheckPlayerTable() {
 
     print("[DATABASE] Tabela players_apparence checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_faction` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `faction_id` int NOT NULL DEFAULT '-1',\
+    `faction_rank` int NOT NULL DEFAULT '-1',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_faction checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_faction checada com sucesso");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_radio` (\
@@ -951,7 +962,56 @@ void:CheckFactionsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_skins (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `faction_id` int NOT NULL DEFAULT '0',\
-    `skins` varchar(256) NOT NULL DEFAULT '|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|',\
+    `skin1` int NOT NULL',\
+    `skin2` int NOT NULL',\
+    `skin3` int NOT NULL',\
+    `skin4` int NOT NULL',\
+    `skin5` int NOT NULL',\
+    `skin6` int NOT NULL',\
+    `skin7` int NOT NULL',\
+    `skin8` int NOT NULL',\
+    `skin9` int NOT NULL',\
+    `skin10` int NOT NULL',\
+    `skin11` int NOT NULL',\
+    `skin12` int NOT NULL',\
+    `skin13` int NOT NULL',\
+    `skin14` int NOT NULL',\
+    `skin15` int NOT NULL',\
+    `skin16` int NOT NULL',\
+    `skin17` int NOT NULL',\
+    `skin18` int NOT NULL',\
+    `skin19` int NOT NULL',\
+    `skin20` int NOT NULL',\
+    `skin21` int NOT NULL',\
+    `skin22` int NOT NULL',\
+    `skin23` int NOT NULL',\
+    `skin24` int NOT NULL',\
+    `skin25` int NOT NULL',\
+    `skin26` int NOT NULL',\
+    `skin27` int NOT NULL',\
+    `skin28` int NOT NULL',\
+    `skin29` int NOT NULL',\
+    `skin30` int NOT NULL',\
+    `skin31` int NOT NULL',\
+    `skin32` int NOT NULL',\
+    `skin33` int NOT NULL',\
+    `skin34` int NOT NULL',\
+    `skin35` int NOT NULL',\
+    `skin36` int NOT NULL',\
+    `skin37` int NOT NULL',\
+    `skin38` int NOT NULL',\
+    `skin39` int NOT NULL',\
+    `skin40` int NOT NULL',\
+    `skin41` int NOT NULL',\
+    `skin42` int NOT NULL',\
+    `skin43` int NOT NULL',\
+    `skin44` int NOT NULL',\
+    `skin45` int NOT NULL',\
+    `skin46` int NOT NULL',\
+    `skin47` int NOT NULL',\
+    `skin48` int NOT NULL',\
+    `skin49` int NOT NULL',\
+    `skin50` int NOT NULL',\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela factions_skins checada com sucesso");
@@ -961,37 +1021,66 @@ void:CheckFactionsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_ranks (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `faction_id` int NOT NULL DEFAULT '0',\
-    `rank1` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank2` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank3` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank4` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank5` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank6` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank7` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank8` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank9` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank10` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank11` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank12` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank13` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank14` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank15` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank16` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank17` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank18` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank19` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank20` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank21` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank22` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank23` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank24` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank25` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank26` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank27` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank28` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank29` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `rank30` varchar(256) NOT NULL DEFAULT 'Vazio',\
-    `paycheck` varchar(512) NOT NULL DEFAULT '|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|',\
+    `rank1` varchar(256) DEFAULT 'Vazio',\
+    `paycheck1` int NOT NULL,\
+    `rank2` varchar(256) DEFAULT 'Vazio',\
+    `paycheck2` int NOT NULL,\
+    `rank3` varchar(256) DEFAULT 'Vazio',\
+    `paycheck3` int NOT NULL,\
+    `rank4` varchar(256) DEFAULT 'Vazio',\
+    `paycheck4` int NOT NULL,\
+    `rank5` varchar(256) DEFAULT 'Vazio',\
+    `paycheck5` int NOT NULL,\
+    `rank6` varchar(256) DEFAULT 'Vazio',\
+    `paycheck6` int NOT NULL,\
+    `rank7` varchar(256) DEFAULT 'Vazio',\
+    `paycheck7` int NOT NULL,\
+    `rank8` varchar(256) DEFAULT 'Vazio',\
+    `paycheck8` int NOT NULL,\
+    `rank9` varchar(256) DEFAULT 'Vazio',\
+    `paycheck9` int NOT NULL,\
+    `rank10` varchar(256) DEFAULT 'Vazio',\
+    `paycheck10` int NOT NULL,\
+    `rank11` varchar(256) DEFAULT 'Vazio',\
+    `paycheck11` int NOT NULL,\
+    `rank12` varchar(256) DEFAULT 'Vazio',\
+    `paycheck12` int NOT NULL,\
+    `rank13` varchar(256) DEFAULT 'Vazio',\
+    `paycheck13` int NOT NULL,\
+    `rank14` varchar(256) DEFAULT 'Vazio',\
+    `paycheck14` int NOT NULL,\
+    `rank15` varchar(256) DEFAULT 'Vazio',\
+    `paycheck15` int NOT NULL,\
+    `rank16` varchar(256) DEFAULT 'Vazio',\
+    `paycheck16` int NOT NULL,\
+    `rank17` varchar(256) DEFAULT 'Vazio',\
+    `paycheck17` int NOT NULL,\
+    `rank18` varchar(256) DEFAULT 'Vazio',\
+    `paycheck18` int NOT NULL,\
+    `rank19` varchar(256) DEFAULT 'Vazio',\
+    `paycheck19` int NOT NULL,\
+    `rank20` varchar(256) DEFAULT 'Vazio',\
+    `paycheck20` int NOT NULL,\
+    `rank21` varchar(256) DEFAULT 'Vazio',\
+    `paycheck21` int NOT NULL,\
+    `rank22` varchar(256) DEFAULT 'Vazio',\
+    `paycheck22` int NOT NULL,\
+    `rank23` varchar(256) DEFAULT 'Vazio',\
+    `paycheck23` int NOT NULL,\
+    `rank24` varchar(256) DEFAULT 'Vazio',\
+    `paycheck24` int NOT NULL,\
+    `rank25` varchar(256) DEFAULT 'Vazio',\
+    `paycheck25` int NOT NULL,\
+    `rank26` varchar(256) DEFAULT 'Vazio',\
+    `paycheck26` int NOT NULL,\
+    `rank27` varchar(256) DEFAULT 'Vazio',\
+    `paycheck27` int NOT NULL,\
+    `rank28` varchar(256) DEFAULT 'Vazio',\
+    `paycheck28` int NOT NULL,\
+    `rank29` varchar(256) DEFAULT 'Vazio',\
+    `paycheck29` int NOT NULL,\
+    `rank30` varchar(256) DEFAULT 'Vazio',\
+    `paycheck30` int NOT NULL,\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela factions_skins checada com sucesso");
@@ -1001,7 +1090,6 @@ void:CheckFactionsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_weapons (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `faction_id` int NOT NULL DEFAULT '0',\
-    `weapon` int NOT NULL DEFAULT '0',\
     `weapon1` int NOT NULL DEFAULT '0',\
     `ammo1` int NOT NULL DEFAULT '0',\
     `weapon2` int NOT NULL DEFAULT '0',\

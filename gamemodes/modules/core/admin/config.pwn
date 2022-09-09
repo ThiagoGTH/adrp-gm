@@ -191,7 +191,7 @@ Dialog:addInfoFurniture2(playerid, response, listitem, inputtext[]){
 
         format(pInfo[playerid][tempChar2], 64, "%s", inputtext);
         
-        Dialog_Show(playerid, addInfoFurniture3, DIALOG_STYLE_INPUT, "Gerenciar > Mobílias > Adicionar mobília", "Digite o ID de um objeto para ser a mobília:\nOBSERVAÇÃO: Você pode achar o ID dos objetos nativos do SA-MP em: www.dev.prineside.com\n\nPor favor, digite o ID do objeto que deseja adicionar:", "Adicionar", "<<");
+        Dialog_Show(playerid, addInfoFurniture3, DIALOG_STYLE_INPUT, "Gerenciar > Mobílias > Adicionar mobília", "Digite o ID de um objeto para ser a mobília:\nOBSERVAÇÃO: Você pode achar o ID dos objetos nativos do Open.MP em: www.dev.prineside.com\n\nPor favor, digite o ID do objeto que deseja adicionar:", "Adicionar", "<<");
 
     } else {
         if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);

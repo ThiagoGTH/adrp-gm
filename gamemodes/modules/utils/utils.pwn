@@ -10,4 +10,4 @@
 #include "modules\utils\utils_models.pwn"
 #include "modules\utils\utils_interface.pwn"
 #include "modules\utils\utils_init.pwn"
-#include "modules\core\player\systems\pets\core.pwn"
+#include "modules\core\player\systems\pets\p_core.pwn"

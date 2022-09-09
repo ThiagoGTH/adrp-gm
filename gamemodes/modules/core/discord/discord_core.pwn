@@ -29,7 +29,7 @@ public ServerStatus(type){
         DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 1024, "<:annou:931570978180431912> Nenhum problema ou ocorrência recente.\n\n\
-        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
         > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
         > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
         **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
@@ -63,7 +63,7 @@ public ServerStatus(type){
         DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso fórum nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
         > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
         > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
         **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
@@ -98,7 +98,7 @@ public ServerStatus(type){
         DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso User Control Panel nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço SA-MP:** Operante\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
         > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
         > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
         **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
@@ -130,8 +130,8 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso serviço SA-MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço SA-MP:** __Inoperante__\n\
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso Serviço Open.MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
         > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
         > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
         **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
@@ -164,7 +164,7 @@ public ServerStatus(type){
         DCC_SetEmbedColor(embed, 0x5964F4);
         
         format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em todas as nossas plataformas nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço SA-MP:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
         > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
         > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
         **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
@@ -973,7 +973,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                     format(title, 32, "Alterar Status de Serviço");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
-                    format(text, 1024, "**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
+                    format(text, 1024, "**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço Open.MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SetEmbedColor(embed, 0x5964F4);
@@ -987,7 +987,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                     format(title, 32, "Alterar Status de Serviço");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
-                    format(text, 1024, "**ERRO:** O valor inserido deve estar entre 1 e 5.\n\n**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
+                    format(text, 1024, "**ERRO:** O valor inserido deve estar entre 1 e 5.\n\n**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço Open.MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SetEmbedColor(embed, 0x5964F4);
@@ -1003,7 +1003,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                     case 1: whattype = "todos os serviços operantes";
                     case 2: whattype = "fórum inoperante";
                     case 3: whattype = "User Control Panel inoperante";
-                    case 4: whattype = "serviço SA-MP inoperante";
+                    case 4: whattype = "Serviço Open.MP inoperante";
                     case 5: whattype = "todos os serviços inoperantes";
                     default: whattype = "ERRO";
                 }

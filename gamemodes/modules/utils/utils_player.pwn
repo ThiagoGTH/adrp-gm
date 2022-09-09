@@ -13,8 +13,6 @@ sejam, necessariamente, pertecentes a um sistema específico. São funções úteis e
 #define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
 #define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
 
-new EmSpec[MAX_PLAYERS];
-
 enum e_InteriorData {
 	e_InteriorName[32],
 	e_InteriorID,

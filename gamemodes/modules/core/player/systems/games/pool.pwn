@@ -179,11 +179,11 @@ Dialog:DIALOG_POOL_WAGER(playerid, response, listitem, inputtext[]) {
     new
 		poolid = p_PoolID[playerid];
  
-	if (poolid == -1) return SendErrorMessage(playerid, "Não foi possÃ­vel identificar a mesa de sinuca. Por favor, entre na mesa novamente.");
+	if (poolid == -1) return SendErrorMessage(playerid, "Não foi possí­vel identificar a mesa de sinuca. Por favor, entre na mesa novamente.");
     if (response) {
 		g_poolTableData[poolid][E_READY] = true;
 		SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s iniciou um jogo na mesa de sinuca.", pNome(playerid));
-		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\nEsperando por mais jogadores..."));
+		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\nIniciada por %s", pNome(playerid)));
 	}
     return true;
 }
@@ -405,7 +405,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 						Pool_RespawnBalls(poolid);
 					} else {
 						g_poolTableData[poolid][E_READY] = false;
-                        Dialog_Show(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_MSGBOX, "{FFFFFF}Partida de Sinuca", "{FFFFFF}Você realmente deseja começar essa partida?", "Sim", "Não");
+                        Dialog_Show(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_MSGBOX, "{FFFFFF}Partida de Sinuca", "{FFFFFF}Você entrou na partida de sinuca.\nAguarde o próximo jogador entrar para começar.", "Entendi", "");
 						ShowPlayerHelpDialog(playerid, 0, "~y~~h~~k~~PED_LOCK_TARGET~ ~w~- Mirar taco~n~~y~~h~~k~~PED_FIREWEAPON~ ~w~- Fazer jogada~n~~y~~h~~k~~PED_JUMPING~ ~w~- Modo de camera~n~~y~~h~~k~~VEHICLE_ENTER_EXIT~ ~w~- Sair do jogo~n~~n~~r~~h~Esperando por mais um jogador...");
 						UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], -1, sprintf("Mesa de Sinuca\nIniciada por %s", pNome(playerid)));
 						Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s se juntou a partida de sinuca (1/2)", pNome(playerid));
@@ -485,7 +485,7 @@ CreatePoolTable(Float: X, Float: Y, Float: Z, Float: A = 0.0, E_POOL_SKINS:skin,
 		g_poolTableData[poolid][E_WORLD] = world;
 
 		g_poolTableData[poolid][E_TABLE] = CreateDynamicObject(2964, X, Y, Z - 1.0, 0.0, 0.0, A, .interiorid = interior, .worldid = world, .priority = 9999);
-		g_poolTableData[poolid][E_LABEL] = CreateDynamic3DTextLabel(DEFAULT_POOL_STRING, COLOR_GREY, X, Y, Z, 10.0, .interiorid = interior, .worldid = world, .priority = 9999);
+		g_poolTableData[poolid][E_LABEL] = CreateDynamic3DTextLabel(DEFAULT_POOL_STRING, COLOR_GREY, X, Y, Z, 5.0, .interiorid = interior, .worldid = world, .priority = 9999);
 
 		Pool_RotateXY(-0.964, -0.51, A, x_vertex[0], y_vertex[0]);
 		Pool_RotateXY(-0.964, 0.533, A, x_vertex[1], y_vertex[1]);

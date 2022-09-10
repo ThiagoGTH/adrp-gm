@@ -125,7 +125,7 @@ CMD:veraparencia(playerid, params[]) {
 }
 
 CMD:resetaraparencia(playerid, params[]){
-    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
     static
 	    userid,

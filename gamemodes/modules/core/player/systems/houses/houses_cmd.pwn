@@ -3,8 +3,7 @@
 CMD:criarcasa(playerid, params[]) {
     new price, address[256], Float:pos[4];
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "ds[256]", price, address))
         return SendSyntaxMessage(playerid, "/criarcasa [preço] [endereço único]");
@@ -42,8 +41,7 @@ CMD:criarcasa(playerid, params[]) {
 CMD:deletarcasa(playerid, params[]) {
     new id;
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "d", id))
         return SendSyntaxMessage(playerid, "/deletarcasa [id]");
@@ -69,8 +67,7 @@ CMD:deletarcasa(playerid, params[]) {
 CMD:editarcasa(playerid, params[]) {
     new id, option[64], value[64];
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if(sscanf(params, "ds[64]S()[64]", id, option, value)) {
         SendSyntaxMessage(playerid, "/editarcasa [id] [opção]");
@@ -181,14 +178,13 @@ CMD:ircasa(playerid, params[]) {
     return 1;
 }
 
-CMD:criarentrada(playerid, params[]) {
+CMD:criarcasaentrada(playerid, params[]) {
     new houseID, Float:pos[4];
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if(sscanf(params, "d", houseID))
-        return SendSyntaxMessage(playerid, "/criarentrada [id da casa]");
+        return SendSyntaxMessage(playerid, "/criarcasaentrada [id da casa]");
 
     if(!IsValidHouse(houseID))
         return SendErrorMessage(playerid, "Este ID de casa não existe.");
@@ -216,14 +212,13 @@ CMD:criarentrada(playerid, params[]) {
     return 1;
 }
 
-CMD:editarentrada(playerid, params[]) {
+CMD:editarcasaentrada(playerid, params[]) {
     new id, option[64], value[64];
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if(sscanf(params, "ds[64]S()[64]", id, option, value)) {
-        SendSyntaxMessage(playerid, "/editarentrada [id] [opção]");
+        SendSyntaxMessage(playerid, "/editarcasaentrada [id] [opção]");
         return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: entrada, interior, casa");
     }
 
@@ -298,14 +293,13 @@ CMD:editarentrada(playerid, params[]) {
     return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: entrada, interior, casa");
 }
 
-CMD:deletarentrada(playerid, params[]) {
+CMD:deletarcasaentrada(playerid, params[]) {
     new id;
 
-    if(GetPlayerAdmin(playerid) < 4) 
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "d", id))
-        return SendSyntaxMessage(playerid, "/deletarentrada [id]");
+        return SendSyntaxMessage(playerid, "/deletarcasaentrada [id]");
 
     if(!IsValidEntry(id))
         return SendErrorMessage(playerid, "Esse ID de entrada não existe.");
@@ -324,14 +318,13 @@ CMD:deletarentrada(playerid, params[]) {
     return 1;
 }
 
-CMD:irentrada(playerid, params[]) {
+CMD:ircasaentrada(playerid, params[]) {
     new id;
 
-    if(GetPlayerAdmin(playerid) < 2)
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
     if(sscanf(params, "d", id))
-        return SendSyntaxMessage(playerid, "/irentrada [id]");
+        return SendSyntaxMessage(playerid, "/ircasaentrada [id]");
 
     if(!IsValidEntry(id))
         return SendErrorMessage(playerid, "Esse ID de entrada não existe.");
@@ -346,14 +339,13 @@ CMD:irentrada(playerid, params[]) {
     return 1;
 }
 
-CMD:listaentradas(playerid, params[]) {
+CMD:listacasaentradas(playerid, params[]) {
     new id;
 
-    if(GetPlayerAdmin(playerid) < 2)
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
     if(sscanf(params, "d", id))
-        return SendSyntaxMessage(playerid, "/listaentradas [id da casa]");
+        return SendSyntaxMessage(playerid, "/listacasaentradas [id da casa]");
 
     if(!IsValidHouse(id))
         return SendErrorMessage(playerid, "Este ID de casa não existe.");
@@ -381,8 +373,7 @@ CMD:listaentradas(playerid, params[]) {
 CMD:atrancar(playerid, params[]) {
     new houseID = GetNearestHouseEntry(playerid), entryID = GetNearestHouseSecondEntry(playerid);
     
-    if(GetPlayerAdmin(playerid) < 2)
-        return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
     if(!houseID) {
         houseID = GetNearestHouseExit(playerid);

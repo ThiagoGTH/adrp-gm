@@ -12,6 +12,7 @@ public OnGamemodeLoad(playerid) {
             SendRconCommand(rcon);
             ServerStatus(1);
 
+            print("O servidor iniciou com acesso normal.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou com acesso normal.");
             logCreate(99998, logString, 5);
         } 
@@ -57,7 +58,6 @@ public OnGameModeInit() {
     SendRconCommand("hostname Advanced Roleplay | Iniciando serviços...");
     SendRconCommand("language Brazilian Portuguese");
     SendRconCommand("weburl http://advanced-roleplay.com.br");
-    SendRconCommand("cookielogging 0");
 	SendRconCommand("messageholelimit 9000");
 	SendRconCommand("ackslimit 11000");
     SendRconCommand("password snd2n189w--");
@@ -74,6 +74,7 @@ public OnGameModeInit() {
 	EnableVehicleFriendlyFire();
     DisableCrashDetectLongCall();
 
+    print("\n\n\nIniciando os serviços...");
     SetTimer("OnGamemodeLoad", 1000, false);
     return true;
 }
@@ -82,7 +83,7 @@ public OnPlayerCommandPerformed(playerid, cmd[], params[], result, flags) {
     if(!pInfo[playerid][pLogged]) return false;
     
     if(result == -1){
-		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
+		SendClientMessage(playerid, COLOR_WHITE, "ERRO: Este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");    
     }else{
         format(logString, sizeof(logString), "%s (%s) [%s]: /%s %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), cmd, params);
         logCreate(playerid, logString, 3);

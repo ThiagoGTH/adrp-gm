@@ -6,6 +6,7 @@
 #define MAX_PLAYERS (50)
 
 #include <streamer>
+
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
@@ -17,7 +18,6 @@
 #include <strlib>
 #include <bcrypt>
 #include <progress2>
-#include <streamer>
 #include <PreviewDialog>
 #include <easyDialog>  
 #include <modelsizes>

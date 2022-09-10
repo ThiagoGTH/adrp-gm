@@ -328,7 +328,6 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pJailed] = 0;
 
-
     pInfo[playerid][pFaction] = 0;
     pInfo[playerid][pFactionRank] = 0;
     pInfo[playerid][pSwat] = 0;

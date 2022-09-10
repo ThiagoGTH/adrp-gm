@@ -955,63 +955,63 @@ void:CheckFactionsTable() {
     `world` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (ID));");
 
-    print("[DATABASE] Tabela factions_skins checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_skins checada com sucesso");
+    print("[DATABASE] Tabela factions_lockers checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela factions_lockers checada com sucesso");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS factions_skins (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `faction_id` int NOT NULL DEFAULT '0',\
-    `skin1` int NOT NULL',\
-    `skin2` int NOT NULL',\
-    `skin3` int NOT NULL',\
-    `skin4` int NOT NULL',\
-    `skin5` int NOT NULL',\
-    `skin6` int NOT NULL',\
-    `skin7` int NOT NULL',\
-    `skin8` int NOT NULL',\
-    `skin9` int NOT NULL',\
-    `skin10` int NOT NULL',\
-    `skin11` int NOT NULL',\
-    `skin12` int NOT NULL',\
-    `skin13` int NOT NULL',\
-    `skin14` int NOT NULL',\
-    `skin15` int NOT NULL',\
-    `skin16` int NOT NULL',\
-    `skin17` int NOT NULL',\
-    `skin18` int NOT NULL',\
-    `skin19` int NOT NULL',\
-    `skin20` int NOT NULL',\
-    `skin21` int NOT NULL',\
-    `skin22` int NOT NULL',\
-    `skin23` int NOT NULL',\
-    `skin24` int NOT NULL',\
-    `skin25` int NOT NULL',\
-    `skin26` int NOT NULL',\
-    `skin27` int NOT NULL',\
-    `skin28` int NOT NULL',\
-    `skin29` int NOT NULL',\
-    `skin30` int NOT NULL',\
-    `skin31` int NOT NULL',\
-    `skin32` int NOT NULL',\
-    `skin33` int NOT NULL',\
-    `skin34` int NOT NULL',\
-    `skin35` int NOT NULL',\
-    `skin36` int NOT NULL',\
-    `skin37` int NOT NULL',\
-    `skin38` int NOT NULL',\
-    `skin39` int NOT NULL',\
-    `skin40` int NOT NULL',\
-    `skin41` int NOT NULL',\
-    `skin42` int NOT NULL',\
-    `skin43` int NOT NULL',\
-    `skin44` int NOT NULL',\
-    `skin45` int NOT NULL',\
-    `skin46` int NOT NULL',\
-    `skin47` int NOT NULL',\
-    `skin48` int NOT NULL',\
-    `skin49` int NOT NULL',\
-    `skin50` int NOT NULL',\
+    `skin1` int NOT NULL,\
+    `skin2` int NOT NULL,\
+    `skin3` int NOT NULL,\
+    `skin4` int NOT NULL,\
+    `skin5` int NOT NULL,\
+    `skin6` int NOT NULL,\
+    `skin7` int NOT NULL,\
+    `skin8` int NOT NULL,\
+    `skin9` int NOT NULL,\
+    `skin10` int NOT NULL,\
+    `skin11` int NOT NULL,\
+    `skin12` int NOT NULL,\
+    `skin13` int NOT NULL,\
+    `skin14` int NOT NULL,\
+    `skin15` int NOT NULL,\
+    `skin16` int NOT NULL,\
+    `skin17` int NOT NULL,\
+    `skin18` int NOT NULL,\
+    `skin19` int NOT NULL,\
+    `skin20` int NOT NULL,\
+    `skin21` int NOT NULL,\
+    `skin22` int NOT NULL,\
+    `skin23` int NOT NULL,\
+    `skin24` int NOT NULL,\
+    `skin25` int NOT NULL,\
+    `skin26` int NOT NULL,\
+    `skin27` int NOT NULL,\
+    `skin28` int NOT NULL,\
+    `skin29` int NOT NULL,\
+    `skin30` int NOT NULL,\
+    `skin31` int NOT NULL,\
+    `skin32` int NOT NULL,\
+    `skin33` int NOT NULL,\
+    `skin34` int NOT NULL,\
+    `skin35` int NOT NULL,\
+    `skin36` int NOT NULL,\
+    `skin37` int NOT NULL,\
+    `skin38` int NOT NULL,\
+    `skin39` int NOT NULL,\
+    `skin40` int NOT NULL,\
+    `skin41` int NOT NULL,\
+    `skin42` int NOT NULL,\
+    `skin43` int NOT NULL,\
+    `skin44` int NOT NULL,\
+    `skin45` int NOT NULL,\
+    `skin46` int NOT NULL,\
+    `skin47` int NOT NULL,\
+    `skin48` int NOT NULL,\
+    `skin49` int NOT NULL,\
+    `skin50` int NOT NULL,\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela factions_skins checada com sucesso");

@@ -23,7 +23,7 @@ public ServerStatus(type){
         }
 
         // DISCORD
-        format(title, 32, "Status dos serviços do servidor");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
@@ -57,7 +57,7 @@ public ServerStatus(type){
             SendRconCommand(rcon);
         }
 
-        format(title, 32, "Status dos serviços do servidor");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
@@ -92,7 +92,7 @@ public ServerStatus(type){
         }
 
         // DISCORD
-        format(title, 32, "Status dos serviços do servidor");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
@@ -125,7 +125,7 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "Status dos serviços do servidor");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
@@ -158,7 +158,7 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "Status dos serviços do servidor");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);

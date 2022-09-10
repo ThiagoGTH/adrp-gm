@@ -83,6 +83,86 @@ public LoadFactionSkins(i) {
     return true;
 }
 
+SaveFaction(factionid) {
+    new Cache:result;
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `factions` WHERE `id` = '%d';", FactionData[factionid][factionID]);
+    result = mysql_query(DBConn, query);
+
+    if(!cache_num_rows()) return false;
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `factions` SET \
+    `name` = '%s',                  \
+    `type` = '%d',                  \
+    `color` = '%d',                 \
+    `vault` = '%d',                 \
+    `status` = '%d',                \
+    `maxranks` = '%d',              \
+    `locker` = '%d'                 \
+    WHERE `id` = '%d';", 
+    FactionData[factionid][factionName],
+    FactionData[factionid][factionType],
+    FactionData[factionid][factionColor],
+    FactionData[factionid][factionVault],
+    FactionData[factionid][factionStatus],
+    FactionData[factionid][factionMaxRanks],
+    FactionData[factionid][factionHasLocker],
+    FactionData[factionid][factionID]);
+    result = mysql_query(DBConn, query);
+    cache_delete(result);
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `factions_locker` SET \
+    `x` = '%f',                     \
+    `y` = '%f',                     \
+    `z` = '%f',                     \
+    `int` = '%d',                   \
+    `world` = '%d'                  \
+    WHERE `id` = '%d';", 
+    FactionData[factionid][factionLockerPos][0],
+    FactionData[factionid][factionLockerPos][1],
+    FactionData[factionid][factionLockerPos][2],
+    FactionData[factionid][factionLockerInt],
+    FactionData[factionid][factionLockerWorld],
+    FactionData[factionid][factionID]);
+    result = mysql_query(DBConn, query);
+    cache_delete(result);
+
+    for (new i = 0; i < 15; i ++) { // WEAPONS
+        mysql_format(DBConn, query, sizeof query, "UPDATE `factions_weapons` SET \
+        `weapon%d` = '%d', \
+        `ammo%d` = '%d' \
+        WHERE `faction_id` = '%d'", 
+        i + 1, FactionData[factionid][factionWeapons][i], 
+        i + 1, FactionData[factionid][factionAmmo][i], 
+        FactionData[factionid][factionID]);
+        result = mysql_query(DBConn, query);
+	}
+    cache_delete(result);
+
+    for (new i = 0; i < 30; i ++) { // RANKS
+        mysql_format(DBConn, query, sizeof query, "UPDATE `factions_ranks` SET \
+        `rank%d` = '%s', \
+        `paycheck%d` = '%d', \
+        WHERE `faction_id` = '%d'", 
+        i + 1, FactionRanks[factionid][i], 
+        i + 1, FactionData[factionid][factionPaycheck][i], 
+        FactionData[factionid][factionID]);
+        result = mysql_query(DBConn, query);
+	}
+    cache_delete(result);
+
+    for (new i = 0; i < 50; i ++) { // SKINS
+        mysql_format(DBConn, query, sizeof query, "UPDATE `factions_skins` SET \
+        `skin%d` = '%d' \
+        WHERE `faction_id` = '%d'", 
+        i + 1, FactionData[factionid][factionSkins][i], 
+        FactionData[factionid][factionID]);
+        result = mysql_query(DBConn, query);
+	}
+    cache_delete(result);
+    
+    return true;
+}
+
 CreateFaction(const name[], type){
     for (new i = 0; i != MAX_FACTIONS; i ++) if (!FactionData[i][factionExists]) {
         new Cache:result;
@@ -157,6 +237,7 @@ DeleteFaction(factionid) {
 			if (pInfo[i][pFaction] == factionid) {
 		    	pInfo[i][pFaction] = -1;
 		    	pInfo[i][pFactionRank] = -1;
+                pInfo[i][pFactionEdit] = -1;
 			}
 		}
         cache_delete(result);
@@ -165,4 +246,14 @@ DeleteFaction(factionid) {
 	    FactionData[factionid][factionID] = 0;
     }
     return true;
+}
+
+UpdateFaction(factionid) {
+	if (factionid != -1 || FactionData[factionid][factionExists]) {
+	    foreach (new i : Player) if (pInfo[i][pFaction] == factionid) {
+ 			if (GetFactionType(i) == FACTION_CRIMINAL || (GetFactionType(i) != FACTION_CRIMINAL && pInfo[i][pOnDuty]))
+			 	SetFactionColor(i);
+		}
+	}
+	return true;
 }

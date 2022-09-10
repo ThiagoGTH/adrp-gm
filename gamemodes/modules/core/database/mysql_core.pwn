@@ -346,7 +346,7 @@ void:CheckPlayerTable() {
     logCreate(99998, logString, 5);
 }
 
-void:CheckItemsTable() {
+void:CheckItemsTable() { 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `items` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `item_name` varchar(64) NOT NULL DEFAULT 'Nenhum',\

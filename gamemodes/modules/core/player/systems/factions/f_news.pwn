@@ -112,15 +112,16 @@ public OnPlayerCameraUpdate(playerid, cameraman){
 }
 
 CMD:transmissao(playerid, params[]){
+	if (GetFactionType(playerid) != FACTION_NEWS) return SendErrorMessage(playerid, "Você não é de uma facção midiática.");
     if (IsPlayerWatchingCamera(playerid) == true) return SendErrorMessage(playerid, "Você não pode iniciar uma transmissão enquanto assiste outra.");
     if (IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Você não pode iniciar uma transmissão ao vivo de dentro de um veículo.");
 
     if (!pInfo[playerid][pRecording]){
         GivePlayerCamera(playerid);
-        va_SendClientMessageToAll(COLOR_YELLOW, "FACÇÃO NOME iniciou uma transmissão ao vivo, para assistir digite /assistir %d.", playerid);
+        va_SendClientMessageToAll(COLOR_YELLOW, "%s iniciou uma transmissão ao vivo, para assistir digite /assistir %d.", FactionData[pInfo[playerid][pFaction]][factionName], playerid);
     } else {
         RemovePlayerCamera(playerid);
-        va_SendClientMessageToAll(COLOR_YELLOW, "FACÇÃO NOME encerrou a transmissão ao vivo.");
+        va_SendClientMessageToAll(COLOR_YELLOW, "%s encerrou a transmissão ao vivo.", FactionData[pInfo[playerid][pFaction]][factionName]);
     }
     return true;
 }

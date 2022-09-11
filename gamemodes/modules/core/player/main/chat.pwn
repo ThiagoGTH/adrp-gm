@@ -2,9 +2,15 @@
 
 public OnPlayerText(playerid, text[]) {
     if (!pInfo[playerid][pLogged]) return false;
-    if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode falar enquanto assiste uma transmissão ao vivo.");
-    if (pInfo[playerid][pSpectating] != INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você não pode falar enquanto esta de spec em alguém.");
-
+    if (IsPlayerWatchingCamera(playerid)) {
+        SendErrorMessage(playerid, "Você não pode falar enquanto assiste uma transmissão ao vivo.");
+        return false;
+    }
+    if (pInfo[playerid][pSpectating] != INVALID_PLAYER_ID) {
+        SendErrorMessage(playerid, "Você não pode falar enquanto esta de spec em alguém.");
+        return false;
+    }
+    
     new str[256];
     if (IsPlayerInAnyVehicle(playerid) && IsWindowedVehicle(GetPlayerVehicleID(playerid)) && !vInfo[GetPlayerVehicleID(playerid)][vWindowsDown]) {
         if (strlen(text) > 64) {

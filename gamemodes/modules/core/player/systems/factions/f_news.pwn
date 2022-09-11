@@ -87,14 +87,6 @@ StopPlayerWatchingCamera(playerid){
 	return true;
 }
 
-GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance){
-	new Float:a;
-	GetPlayerPos(playerid, x, y, a);
-	GetPlayerFacingAngle(playerid, a);
-	x += (distance * floatsin(-a, degrees));
-	y += (distance * floatcos(-a, degrees));
-}
-
 forward OnPlayerCameraUpdate(playerid, cameraman);
 public OnPlayerCameraUpdate(playerid, cameraman){
     if(pInfo[playerid][pWatching]){

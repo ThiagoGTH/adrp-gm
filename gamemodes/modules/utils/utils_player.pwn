@@ -478,8 +478,7 @@ stock IsLethalMeele(id)
 	return false;
 }
 
-AdjustTextDrawString(string[])
-{
+AdjustTextDrawString(string[]) {
 	static const
 		scRealChars[256] =
 		{
@@ -500,19 +499,13 @@ AdjustTextDrawString(string[])
 			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
 			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
 		};
-	if (ispacked(string))
-	{
-		for (new i = 0, len = strlen(string); i != len; ++i)
-		{
+	if (ispacked(string)) {
+		for (new i = 0, len = strlen(string); i != len; ++i) {
 			string{i} = scRealChars[string{i}];
 		}
-	}
-	else
-	{
-		for (new i = 0, len = strlen(string), ch; i != len; ++i)
-		{
-			if (0 <= (ch = string[i]) < 256)
-			{
+	} else {
+		for (new i = 0, len = strlen(string), ch; i != len; ++i) {
+			if (0 <= (ch = string[i]) < 256) {
 				string[i] = scRealChars[ch];
 			}
 		}
@@ -1022,4 +1015,14 @@ forward KickTimer(playerid);
 public KickTimer(playerid) {
 	if (pInfo[playerid][pKicked]) return Kick(playerid);
 	return false;
+}
+
+Float:GetXYInFrontOfPlayer(playerid, &Float:q, &Float:w, Float:distance) {
+    new Float:a;
+    GetPlayerPos(playerid, q, w, a);
+    if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
+    else GetPlayerFacingAngle(playerid, a);
+    q += (distance * floatsin(-a, degrees));
+    w += (distance * floatcos(-a, degrees));
+    return a;
 }

@@ -146,7 +146,7 @@ SaveFaction(factionid) {
     for (new i = 0; i < 30; i ++) { // RANKS
         mysql_format(DBConn, query, sizeof query, "UPDATE `factions_ranks` SET \
         `rank%d` = '%s', \
-        `paycheck%d` = '%d', \
+        `paycheck%d` = '%d' \
         WHERE `faction_id` = '%d'", 
         i + 1, FactionRanks[factionid][i], 
         i + 1, FactionData[factionid][factionPaycheck][i], 
@@ -214,7 +214,7 @@ CreateFaction(const name[], type){
         cache_delete(result);
 
         FactionData[i][factionID] = id;
-        return true;
+        return i;
     }
     return -1;
 }

@@ -19,7 +19,7 @@
 #include <bcrypt>
 #include <progress2>
 #include <PreviewDialog>
-#include <easyDialog>  
+#include <easyDialog>
 #include <modelsizes>
 #include <physics>
 #include <colandreas>
@@ -35,6 +35,7 @@
 #define YSI_NO_HEAP_MALLOC
 
 /* ==============================[modules]============================== */
+#include <YSI_Coding\y_timers>
 
 #include "modules\utils\utils.pwn"
 #include "modules\core\anticheat\nex-ac.pwn"

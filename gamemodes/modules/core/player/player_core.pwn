@@ -9,7 +9,7 @@ CMD:ajuda(playerid, params[]) {
 		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
 		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos");
 		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
-		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa");
+		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca");
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "Se tiver dúvida na utilização de algum comando envie um /sos e fale com um administrador.");
 		return true;
@@ -24,7 +24,26 @@ CMD:ajuda(playerid, params[]) {
         SendClientMessage(playerid, COLOR_CYAN1, "[CASA] ble");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		return true;
-	} else if (!strcmp(type, "fly", true)){
+	} else if (!strcmp(type, "cassino", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[CAÇA-NÍQUEL] 'Y' próximo de uma máquina inicia o jogo");
+		SendClientMessage(playerid, COLOR_CYAN2, "[CAÇA-NÍQUEL] 'ESPAÇO' inicia a aposta");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CAÇA-NÍQUEL] 'F' ou 'ENTER' abandona a máquina");
+		SendClientMessage(playerid, COLOR_CYAN2, "[CAÇA-NÍQUEL] 'LSHIFT' aumenta o valor da aposta");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
+		return true;
+	} else if (!strcmp(type, "sinuca", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'Y' próximo de uma mesa inicia/deixa o jogo");
+		SendClientMessage(playerid, COLOR_CYAN2, "[SINUCA] 'botão de mirar' mira na bola");
+		SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'botão de atirar' define a força da tacada");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
+		return true;
+	}
+	
+	else if (!strcmp(type, "fly", true)){
 		
     	if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 

@@ -58,7 +58,7 @@ CMD:editarfaccao(playerid, params[]) {
 	if (sscanf(params, "ds[24]S()[128]", id, type, string)) {
  	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /editarfaccao [id] [opção]");
-	    SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, cor, tipo, armario, cargos, maxcargos, status, salario");
+	    SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, cor, tipo, armario, cargos, maxcargos, salário, status, skins");
 	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		return true;
 	} if ((id < 0 || id >= MAX_FACTIONS) || !FactionData[id][factionExists]) return SendErrorMessage(playerid, "Você especificou um ID de facção inválido.");
@@ -79,7 +79,7 @@ CMD:editarfaccao(playerid, params[]) {
 	    new color;
 
 	    if (sscanf(string, "h", color))
-	        return SendSyntaxMessage(playerid, "/editarfaccao [id] [color] [cor(em hex)]");
+	        return SendSyntaxMessage(playerid, "/editarfaccao [id] [cor] [cor(em hex)]");
 
 		SendServerMessage(playerid, "Você alterou a {%06x}cor{36A717} da facção %s (%d).", color >>> 8, FactionData[id][factionName], id);
 
@@ -111,11 +111,15 @@ CMD:editarfaccao(playerid, params[]) {
 	    FactionData[id][factionType] = typeint;
 		SaveFaction(id);
 
+	} else if (!strcmp(type, "armario", true)) {
+	    FactionConfigLocker(playerid, id);
+	} else if (!strcmp(type, "cargos", true)) {
+		FactionShowRanks(playerid, id);
 	} else if (!strcmp(type, "maxcargos", true)) {
 	    new ranks;
 
 	    if (sscanf(string, "d", ranks))
-	        return SendSyntaxMessage(playerid, "/editarfaccao [id] [maxcargos] [máximo de carogs]");
+	        return SendSyntaxMessage(playerid, "/editarfaccao [id] [maxcargos] [máximo de cargos]");
 
 		if (ranks < 1 || ranks > 30)
 		    return SendErrorMessage(playerid, "O máximo de cargos não pode ser menor que 1 ou maior que 30.");
@@ -127,14 +131,14 @@ CMD:editarfaccao(playerid, params[]) {
 
 		FactionData[id][factionMaxRanks] = ranks;
 		SaveFaction(id);
-	} else if (!strcmp(type, "armario", true)) {
-	    if(FactionData[id][factionType] == FACTION_CRIMINAL) return SendErrorMessage(playerid, "Você não pode editar armário de facções criminosas.");
-
-		new title[128];
-		format(title, 128, "Armário da Facção %s (%d)", FactionData[id][factionName], id);
-        pInfo[playerid][pFactionEdit] = id;
-		Dialog_Show(playerid, FactionLocker, DIALOG_STYLE_LIST, title, "Alterar Local\nArmas", "Selecionar", "Cancelar");
+	} else if (!strcmp(type, "salario", true) || !strcmp(type, "salário", true)) {
+		FactionPaycheck(playerid, id);
+	} else if (!strcmp(type, "skins", true)) {
+		FactionSetSkins(playerid, id);
 	}
+
+
+	else SendErrorMessage(playerid, "Você especificou um tipo inválido.");
 
 	return true;
 }

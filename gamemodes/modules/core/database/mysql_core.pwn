@@ -729,7 +729,7 @@ void:CheckPoolTable() {
     `positionA` float NOT NULL DEFAULT '0',\
     `virtual_world` int NOT NULL DEFAULT '0',\
     `interior` int NOT NULL DEFAULT '0',\
-    `skin` varchar(64) NOT NULL DEFAULT 'POOL_SKIN_DEFAULT',\
+    `skin` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela pool_tables checada com sucesso");

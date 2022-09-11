@@ -5,6 +5,11 @@ hook OnGameModeInit() {
     return true;
 }
 
+hook OnGameModeExit(){
+    for (new i = 0; i != MAX_FACTIONS; i ++) if (FactionData[i][factionExists]) SaveFaction(i);
+    return true;
+}
+
 LoadFactions() {
     new loadedfactions;
     mysql_query(DBConn, "SELECT * FROM `factions` WHERE (`ID` != '0');");
@@ -207,6 +212,8 @@ CreateFaction(const name[], type){
         mysql_format(DBConn, query, sizeof query, "INSERT INTO factions_weapons (`faction_id`) VALUES ('%d');", id);
         result = mysql_query(DBConn, query);
         cache_delete(result);
+
+        FactionData[i][factionID] = id;
         return true;
     }
     return -1;

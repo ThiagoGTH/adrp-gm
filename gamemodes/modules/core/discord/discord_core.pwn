@@ -10,7 +10,7 @@ public ServerStatus(type){
         rcon[128];
 
     new DCC_Channel:channel;
-    channel = DCC_FindChannelById("989747574367997982");
+    channel = DCC_FindChannelById("1018291621722341447");
     
     if(type == 1){ // TUDO FUNCIONANDO
         // SERVIDOR

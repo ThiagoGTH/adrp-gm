@@ -161,6 +161,7 @@ enum Player_Data {
     pFaction,
     pFactionRank,
     pFactionEdit,
+    pSelectedSlot,
 
     pOnDuty,
     pSwat,
@@ -334,6 +335,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pFaction] = 0;
     pInfo[playerid][pFactionRank] = 0;
     pInfo[playerid][pFactionEdit] = 0;
+    pInfo[playerid][pSelectedSlot] = 0;
 
     pInfo[playerid][pOnDuty] = 0;
     pInfo[playerid][pSwat] = 0;

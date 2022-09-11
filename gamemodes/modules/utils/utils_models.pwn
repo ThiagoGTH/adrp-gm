@@ -26,6 +26,7 @@ LoadInterfaces(){ // -9000 +
 	AddSimpleModel(-1, 19379, -9000, "interface/interface.dff", "interface/interface.txd");
 	AddSimpleModel(-1, 19379, -9001, "interface/interface.dff", "interface/notify.txd");
     AddSimpleModel(-1, 19379, -9002, "interface/interface.dff", "interface/news.txd");
+	AddSimpleModel(-1, 19379, -9003, "interface/interface.dff", "interface/slot_machine.txd");
 }
 
 

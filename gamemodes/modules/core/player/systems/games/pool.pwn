@@ -9,7 +9,7 @@
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
 #define DEFAULT_AIM 				(0.38)
-#define DEFAULT_POOL_STRING 		"Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar"
+#define DEFAULT_POOL_STRING 		"Mesa de Sinuca\n{FFFFFF}Aperte 'Y' para jogar"
 #define POOL_FEE_RATE 				(0.02)
 
 #define MAX_POOL_TABLES 			(50)
@@ -183,7 +183,7 @@ Dialog:DIALOG_POOL_WAGER(playerid, response, listitem, inputtext[]) {
     if (response) {
 		g_poolTableData[poolid][E_READY] = true;
 		SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s iniciou um jogo na mesa de sinuca.", pNome(playerid));
-		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte ENTER para jogar\nIniciada por %s", pNome(playerid)));
+		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, sprintf("Mesa de Sinuca\n{FFFFFF}Aperte 'Y' para jogar\nIniciada por %s", pNome(playerid)));
 	}
     return true;
 }
@@ -211,14 +211,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if (poolid != -1 && pooltable_distance < 2.5) {
 		if (g_poolTableData[poolid][E_STARTED]) {
 			// quit table
-			if (HOLDING(KEY_SECONDARY_ATTACK) && IsPlayerPlayingPool(playerid)) {
-				if (PRESSED(KEY_CROUCH)) {
-					HidePlayerHelpDialog(playerid);
-					Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
-					return Pool_RemovePlayer(playerid);
-				} else {
-					return GameTextForPlayer(playerid, "~~w~ Pressione ~r~~k~~PED_DUCK~~w~ para sair", 3500, 3), 1;
-				}
+			if (HOLDING(KEY_YES) && IsPlayerPlayingPool(playerid)) {
+				HidePlayerHelpDialog(playerid);
+				Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
+				return Pool_RemovePlayer(playerid);
 			}
 
 			/*// make pressing key fire annoying
@@ -363,8 +359,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				}
 			}
 		} else {
-			if (PRESSED(KEY_SECONDARY_ATTACK))
-			{
+			if (PRESSED(KEY_YES)) {
 				if (IsPlayerPlayingPool(playerid) && Iter_Contains(poolplayers<poolid>, playerid)) {
 					HidePlayerHelpDialog(playerid);
 					Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
@@ -376,7 +371,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (pool_player_count >= 2) {
 					return SendErrorMessage(playerid, "Essa mesa de sinuca já está cheia.");
 				}
-// transformar em cmd \/
+
 				// ensure this player isn't already joined
 				if (!IsPlayerPlayingPool(playerid) && ! Iter_Contains(poolplayers<poolid>, playerid)) {
 					if (pool_player_count == 1 && ! g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Essa mesa de sinuca não está pronta.");
@@ -406,7 +401,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					} else {
 						g_poolTableData[poolid][E_READY] = false;
                         Dialog_Show(playerid, DIALOG_POOL_WAGER, DIALOG_STYLE_MSGBOX, "{FFFFFF}Partida de Sinuca", "{FFFFFF}Você entrou na partida de sinuca.\nAguarde o próximo jogador entrar para começar.", "Entendi", "");
-						ShowPlayerHelpDialog(playerid, 0, "~y~~h~~k~~PED_LOCK_TARGET~ ~w~- Mirar taco~n~~y~~h~~k~~PED_FIREWEAPON~ ~w~- Fazer jogada~n~~y~~h~~k~~PED_JUMPING~ ~w~- Modo de camera~n~~y~~h~~k~~VEHICLE_ENTER_EXIT~ ~w~- Sair do jogo~n~~n~~r~~h~Esperando por mais um jogador...");
+						ShowPlayerHelpDialog(playerid, 0, "~y~~h~~k~~PED_LOCK_TARGET~ ~w~- Mirar taco~n~~y~~h~~k~~PED_FIREWEAPON~ ~w~- Fazer jogada~n~~y~Y ~w~- Sair do jogo~n~~n~~r~~h~Esperando por mais um jogador...");
 						UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], -1, sprintf("Mesa de Sinuca\nIniciada por %s", pNome(playerid)));
 						Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s se juntou a partida de sinuca (1/2)", pNome(playerid));
 					}
@@ -1064,7 +1059,6 @@ public PHY_OnObjectUpdate(handleid) {
 						// alert players in table
 						foreach (new playerid : poolplayers< poolid >) {
 							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s está jogando com as bolas %s.", pNome(first_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] == E_STRIPED ? ("listradas") : ("lisas"));
-							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s está jogando com as bolas %s.", pNome(second_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][second_player] == E_STRIPED ? ("listradas") : ("lisas"));
 	    				}
 	    			}
 				}

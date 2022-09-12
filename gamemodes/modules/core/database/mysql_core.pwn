@@ -8,8 +8,8 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 
 #define DB_HOST         "127.0.0.1"
 #define DB_USER         "root"
-#define DB_PASSWORD     ""
-#define DB_NAME         "adrp"
+#define DB_PASSWORD     "H2MUqBBzbhV8@WQ"
+#define DB_NAME         "adrp_gm"
 
 hook OnGameModeInit() {
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

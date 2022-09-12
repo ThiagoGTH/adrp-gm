@@ -47,7 +47,7 @@ hook OnGameModeInit() {
 forward DiscordStatus();
 public DiscordStatus() {
     new string[32];
-    format(string, sizeof string, "%d/%d", Iter_Count(Player), GetMaxPlayers());
+    format(string, sizeof string, "Closed Alpha: %d/%d", Iter_Count(Player), GetMaxPlayers());
     DCC_SetBotActivity(string);
     return true;
 }

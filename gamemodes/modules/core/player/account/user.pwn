@@ -130,7 +130,7 @@ void:CheckUserConditions(playerid) {
         \n           Digite sua senha:", "Autenticar", "Cancelar");
     } else {
         ShowLoginTextdraws(playerid);
-        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre como criar sua conta.\n ", "Entendi", " ");
+        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre como criar sua conta.\n", "Entendi", "");
         KickEx(playerid);
     }
 }

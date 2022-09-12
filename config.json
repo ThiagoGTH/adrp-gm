@@ -1,7 +1,7 @@
 {
     "announce": true,
     "artwork": {
-        "cdn": "http://26.244.244.209/models",
+        "cdn": "http://198.27.95.179/models_ocultos_ca2022",
         "enable": true,
         "models_path": "models"
     },

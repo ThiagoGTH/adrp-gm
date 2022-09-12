@@ -90,7 +90,7 @@ StopPlayerWatchingCamera(playerid){
 forward OnPlayerCameraUpdate(playerid, cameraman);
 public OnPlayerCameraUpdate(playerid, cameraman){
     if(pInfo[playerid][pWatching]){
-        if(pInfo[cameraman][pRecording]){
+        if(pInfo[cameraman][pRecording]) {
         	new Float:x, Float:y, Float:z;
         	GetPlayerPos(cameraman, x, y, z);
     		GetXYInFrontOfPlayer(cameraman, x, y, 0.6);
@@ -104,7 +104,7 @@ public OnPlayerCameraUpdate(playerid, cameraman){
 }
 
 CMD:transmissao(playerid, params[]){
-	if (GetFactionType(playerid) != FACTION_NEWS) return SendErrorMessage(playerid, "Você não é de uma facção midiática.");
+	/*if (GetFactionType(playerid) != FACTION_NEWS) return SendErrorMessage(playerid, "Você não é de uma facção midiática.");*/
     if (IsPlayerWatchingCamera(playerid) == true) return SendErrorMessage(playerid, "Você não pode iniciar uma transmissão enquanto assiste outra.");
     if (IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Você não pode iniciar uma transmissão ao vivo de dentro de um veículo.");
 

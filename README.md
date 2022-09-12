@@ -10,12 +10,21 @@ Todas as tabelas serão criadas automaticamente graças ao [mysql_core.pwn](http
 3. Installe o **Scoop** digitando `iex (new-object net.webclient).downloadstring('https://get.scoop.sh')`;
 4. Instale o **SampCTL** digitando `scoop bucket add southclaws https://github.com/Southclaws/scoops.git; scoop install sampctl`.
 
-## Como utilizar o Sampctl?
+## Como utilizar o Sampctl? (little guide by: Dobby)
 
-- `sampctl p(ackage) init` - inicializa um pacote do sampctl, isso é, o pawn.json e outros arquivos opcionais. Mas o pawn.json tem que ser sempre o mesmo pra todos nós, pra não dar conflito;
-- `sampctl p(ackage) build` - compila o pacote com as informações dadas no pawn.json. Normalmente, você já pode usar esse comando automaticamente com a task gerada automaticamente pelo init. CTRL + SHIFT + B (você pode compilar mesmo com o GM aberto ou rodando no server;
-- `sampctl p(ackage) run` - vai rodar o servidor no terminal, simplesmente isso;
-- `sampctl p(ackage) ensure` - vai ter a certeza de que todas includes, dependência, subdependências e plugins estejam 100% atualizados.
+sampctl p init - inits sampctl. lets you set up pawn.json/yml.
+sampctl p install <username:version> - Installs a package. EG: sampctl p install pawn-lang/samp-stdlib
+sampctl p uninstall <package name> - What it says on the tin. 
+sampctl p build builds the mode. 
+sampctl p run runs the mode
+sampctl p run --container runs it in a container if you use docker. 
+sampctl p ensure - Downloads all the packages again from your dependencies: section in pawn.json.
+sampctl p autocomplete - Generates an autocomplete file for your shell (bash for me). 
+
+You can append --verbose to any of the commands for verbose output.
+You can append --help to any command for help on that specific command. Just sampctl --help for the main one. 
+
+It gets the packages based on your operating system. So if your servers on Linux, it'll grab the Linux binaries. Same with Windows. You can automatically do this via sampctl p ensure --platform linux.
 
 Caso queira saber mais sobre o Sampctl, acesse o [repositório deles](https://github.com/Southclaws/sampctl).
 

@@ -2,6 +2,8 @@
 
 // IC:
 CMD:ame(playerid, params[]){
+	if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode usar esse comando enquanto assiste uma transmissão ao vivo.");
+
 	if (isnull(params)) return SendSyntaxMessage(playerid, "/ame [ação a ser realizada]");
     static string[128];
 
@@ -17,6 +19,8 @@ CMD:ame(playerid, params[]){
 }
 
 CMD:ado(playerid, params[]){
+	if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode usar esse comando enquanto assiste uma transmissão ao vivo.");
+
 	if (isnull(params)) return SendSyntaxMessage(playerid, "/ado [descrição]");
     static string[128];
 
@@ -31,8 +35,36 @@ CMD:ado(playerid, params[]){
 	return true;
 }
 
+CMD:me(playerid, params[]){
+	if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode usar esse comando enquanto assiste uma transmissão ao vivo.");
+
+	if (isnull(params))
+	    return SendSyntaxMessage(playerid, "/me [ação a ser realizada]");
+
+	if (strlen(params) > 64) {
+	    SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "* %s %.64s", pNome(playerid), params);
+	    SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "...%s", params[64]);
+	} else SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "* %s %s", pNome(playerid), params);
+	return true;
+}
+
+CMD:do(playerid, params[]){
+	if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode usar esse comando enquanto assiste uma transmissão ao vivo.");
+	
+	if (isnull(params))
+	    return SendSyntaxMessage(playerid, "/do [descrição]");
+
+	if (strlen(params) > 64) {
+	    SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "* %.64s", params);
+	    SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "...%s (( %s ))", params[64], pNome(playerid));
+	} else SendNearbyMessage(playerid, 25.0, COLOR_PURPLE, "* %s (( %s ))", params, pNome(playerid));
+	return true;
+}
+
 // OOC:
 CMD:b(playerid, params[]){
+	if (IsPlayerWatchingCamera(playerid)) return SendErrorMessage(playerid, "Você não pode usar esse comando enquanto assiste uma transmissão ao vivo.");
+
 	if (isnull(params)) return SendSyntaxMessage(playerid, "/b [OOC]");
 	
 	if (strlen(params) > 64){

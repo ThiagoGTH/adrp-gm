@@ -17,6 +17,6 @@ CMD:pegarpremium(playerid, params[]) {
   	pInfo[playerid][pDonator] = 3;
 	SavePlayerPremium(playerid);
 
-	SendServerMessage(playerid, "Você pegou Premium Ouro.")
+	SendServerMessage(playerid, "Você pegou Premium Ouro.");
 	return true;
 }

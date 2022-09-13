@@ -7,7 +7,7 @@ CMD:logs(playerid, params[]) {
 }
 
 ShowLogsInit(playerid) {
-    new Cache:type[22], rows[22], string[2048];
+    new Cache:type[22], rows[22], string[4096];
 
     for (new i = 0; i < sizeof(type); i++) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `type` = '%d';", i + 1);
@@ -30,7 +30,7 @@ ShowLogsInit(playerid) {
     9\tSupport Chat\t%d\n\
     10\tAnúncios\t%d\n\
     11\tPunições\t%d\n\
-    12\tSinuca\t%d\n\
+    12\tGames\t%d\n\
     13\tCasas\t%d\n\
     14\tEntradas\t%d\n\
     15\tInvestimentos\t%d\

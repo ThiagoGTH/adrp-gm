@@ -1026,3 +1026,16 @@ Float:GetXYInFrontOfPlayer(playerid, &Float:q, &Float:w, Float:distance) {
     w += (distance * floatcos(-a, degrees));
     return a;
 }
+
+bool:IsPlayerRecording(playerid){
+	return pInfo[playerid][pRecording];
+}
+
+bool:IsPlayerWatchingCamera(playerid){
+	return pInfo[playerid][pWatching];
+}
+
+stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){
+	if(pInfo[playerid][pWatchingPlayer] == cameraman) return true;
+	return false;
+}

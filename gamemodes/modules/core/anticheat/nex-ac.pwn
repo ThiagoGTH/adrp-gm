@@ -4,7 +4,7 @@ forward OnCheatDetected(playerid, ip_address[], type, code);
 public OnCheatDetected(playerid, ip_address[], type, code) {
 	if(type) BlockIpAddress(ip_address, 0);
 	else {
-		if(GetPlayerAdmin(playerid) > 1335) return true;
+		//if(GetPlayerAdmin(playerid) > 1335) return true;
 		switch(code) {
 			case 38: return true;
 			case 5, 6, 11, 14, 22, 32: return SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%s) suspeita de cheating (#%03d).", pNome(playerid), GetPlayerUserEx(playerid), code), format(logString, sizeof(logString), "%s (%s) suspeita de cheating (#%03d)", pNome(playerid), GetPlayerUserEx(playerid), code), logCreate(playerid, logString, 21);

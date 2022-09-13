@@ -29,19 +29,6 @@ RemovePlayerCamera(playerid){
 	return true;
 }
 
-stock bool:IsPlayerRecording(playerid){
-	return pInfo[playerid][pRecording];
-}
-
-stock bool:IsPlayerWatchingCamera(playerid){
-	return pInfo[playerid][pWatching];
-}
-
-stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){
-	if(pInfo[playerid][pWatchingPlayer] == cameraman) return true;
-	return false;
-}
-
 StartPlayerWatchingCamera(playerid, cameraman){
 	if(!pInfo[cameraman][pRecording] || !IsPlayerConnected(cameraman)) return false;
 	if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING){ // Salvar informações do jogador antes de setar a visão

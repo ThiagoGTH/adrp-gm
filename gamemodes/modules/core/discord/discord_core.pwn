@@ -16,9 +16,9 @@ public ServerStatus(type){
         // SERVIDOR
         if(Server_Instability){
             Server_Instability = 0;
-            format(rcon, sizeof(rcon), "hostname Advanced Roleplay | advanced-roleplay.com.br");
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
             SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password 0");
+            format(rcon, sizeof(rcon), "password closedalpha2022");
             SendRconCommand(rcon);
         }
 
@@ -182,6 +182,44 @@ public ServerStatus(type){
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
+}
+
+forward SendInfoClosedAlpha();
+public SendInfoClosedAlpha(){
+
+    new 
+        title[32],
+        text[2048],
+        footer[128];
+
+    new DCC_Channel:channel;
+    channel = DCC_FindChannelById("1000930434747740271");
+    
+    // DISCORD
+    format(title, 32, "Informações — Closed Alpha");
+    utf8encode(title, title);
+    new DCC_Embed:embed = DCC_CreateEmbed(title);
+    DCC_SetEmbedColor(embed, 0x5964F4);
+        
+    format(text, 1024, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
+    > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
+    > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
+    > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
+    > <:arrow:931570978163687454> O endereço de IP e a senha do servidor só serão liberados no dia em que ele for aberto para os testes, o que provavelmente ocorrerá na segunda semana de setembro;\n\
+    > <:arrow:931570978163687454> O compartilhamento do endereço de IP, senha ou qualquer informação que permita algum jogador não autorizado a entrar no servidor acarretará em banimento permanente de todas as versões de teste do servidor, podendo retomar, apenas, na versão de lançamento;\n\
+    > <:arrow:931570978163687454> O servidor não é para fazer roleplay, apenas testar os sistemas feitos até então;\n\
+    > <:arrow:931570978163687454> Para pegar administrador no servidor, utilize o comando `/pegaradmin` e, para pegar premium ouro, `/pegarpremium`;\n\
+    > <:arrow:931570978163687454> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback.\n");
+    utf8encode(text, text);
+    DCC_SetEmbedDescription(embed, text);
+
+    format(footer, 128, "© 2022 Advanced Roleplay — Closed Alpha");
+    utf8encode(footer, footer);
+
+    DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
+    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+    DCC_SendChannelEmbedMessage(channel, embed);
+     
 }
 
 public DCC_OnMessageCreate(DCC_Message:message) {
@@ -449,6 +487,24 @@ public DCC_OnMessageCreate(DCC_Message:message) {
 
     if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")){
         DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "informações", true) && channel == DCC_FindChannelById("1000930434747740271")){
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!info", true)) {
+                SendInfoClosedAlpha();
+                return true;
+            }
+        }
         return true;
     }
     ////////////////////////////////////////////////////////////////////////

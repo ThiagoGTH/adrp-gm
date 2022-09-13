@@ -6,8 +6,7 @@ Este módulo é dedicado ao /gerenciar, que será integrado ao MySQL e poderá adici
 
 #include <YSI_Coding\y_hooks>
 
-CMD:gerenciar(playerid, params[]){
-    
+CMD:gerenciar(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nConcessionária\nAdministradores", "Selecionar", "Fechar");

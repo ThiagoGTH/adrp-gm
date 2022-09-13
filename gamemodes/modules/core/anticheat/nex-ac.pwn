@@ -4,6 +4,7 @@ forward OnCheatDetected(playerid, ip_address[], type, code);
 public OnCheatDetected(playerid, ip_address[], type, code) {
 	if(type) BlockIpAddress(ip_address, 0);
 	else {
+		if(pInfo[playerid][pFlying]) return true;
 		//if(GetPlayerAdmin(playerid) > 1335) return true;
 		switch(code) {
 			case 38, 15: return true;

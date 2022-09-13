@@ -97,8 +97,7 @@ bool:StopFly(playerid) {
 	return true;
 }
 
-SetPlayerLookAt(playerid, Float:X, Float:Y) // credits to someone in samp forums I can not remember
-{
+SetPlayerLookAt(playerid, Float:X, Float:Y) { // credits to someone in samp forums I can not remember
 	new Float:Px, Float:Py, Float: Pa;
 	GetPlayerPos(playerid, Px, Py, Pa);
 	Pa = floatabs(atan((Y-Py)/(X-Px)));

@@ -7,7 +7,7 @@ CMD:logs(playerid, params[]) {
 }
 
 ShowLogsInit(playerid) {
-    new Cache:type[22], rows[22], string[4096];
+    new Cache:type[22], rows[22], string[2048];
 
     for (new i = 0; i < sizeof(type); i++) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `type` = '%d';", i + 1);
@@ -33,14 +33,14 @@ ShowLogsInit(playerid) {
     12\tGames\t%d\n\
     13\tCasas\t%d\n\
     14\tEntradas\t%d\n\
-    15\tInvestimentos\t%d\
-    16\tVeículos\t%d\
-    17\tLockpick\t%d\
-    18\tDrop de itens\t%d\
-    19\tPets\t%d\
-    20\tDinheiro\t%d\
-    21\tAnticheat\t%d\
-    22\tFacções\t%d",
+    15\tInvestimentos\t%d\n\
+    16\tVeículos\t%d\n\
+    17\tLockpick\t%d\n\
+    18\tDrop de itens\t%d\n\
+    19\tPets\t%d\n\
+    20\tDinheiro\t%d\n\
+    21\tAnticheat\t%d\n\
+    22\tFacções\t%d\n",
     rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], rows[7], rows[8], rows[9], rows[10], rows[11], rows[12], rows[13], rows[14], rows[15], rows[16], rows[17], rows[18], rows[19], rows[20], rows[21]
 	);
 

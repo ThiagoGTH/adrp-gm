@@ -8,7 +8,7 @@ public OnGamemodeLoad(playerid) {
 		else{
             format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
 		    SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password 0");
+            format(rcon, sizeof(rcon), "password closedalpha2022");
             SendRconCommand(rcon);
             ServerStatus(1);
 

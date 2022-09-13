@@ -8,7 +8,7 @@
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
 #define DEFAULT_AIM 				(0.38)
-#define DEFAULT_POOL_STRING 		"Mesa de Sinuca\n{FFFFFF}Aperte 'Y' para jogar"
+#define DEFAULT_POOL_STRING 		"Mesa de Sinuca\n{FFFFFF}Aperte 'ENTER' para jogar"
 #define POOL_FEE_RATE 				(0.02)
 
 #define MAX_POOL_TABLES 			(50)
@@ -173,7 +173,7 @@ Dialog:DIALOG_POOL_WAGER(playerid, response, listitem, inputtext[]) {
     if (response) {
 		g_poolTableData[poolid][E_READY] = true;
 		SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s iniciou um jogo na mesa de sinuca.", pNome(playerid));
-		format(string, sizeof(string), "Mesa de Sinuca\n{FFFFFF}Aperte 'Y' para jogar\nIniciada por %s", pNome(playerid));
+		format(string, sizeof(string), "Mesa de Sinuca\n{FFFFFF}Aperte 'ENTER' para jogar\nIniciada por %s", pNome(playerid));
 		UpdateDynamic3DTextLabelText(g_poolTableData[poolid][E_LABEL], COLOR_GREY, string);
 	}
     return true;
@@ -202,7 +202,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if (poolid != -1 && pooltable_distance < 2.5) {
 		if (g_poolTableData[poolid][E_STARTED]) {
 			// quit table
-			if (HOLDING(KEY_YES) && IsPlayerPlayingPool(playerid)) {
+			if (HOLDING(KEY_SECONDARY_ATTACK) && IsPlayerPlayingPool(playerid)) {
 				HidePlayerHelpDialog(playerid);
 				Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
 				return Pool_RemovePlayer(playerid);
@@ -213,16 +213,13 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				// reset anims of player
 				if (IsPlayerPlayingPool(playerid)) {
 					p_PoolChalking[playerid] = true;
-
 					SetPlayerArmedWeapon(playerid, 0);
 					SetPlayerAttachedObject(playerid, 0, 338, 6, 0, 0.07, -0.85, 0, 0, 0);
 					ApplyAnimation(playerid, "POOL", "POOL_ChalkCue", 3.0, 0, 1, 1, 1, 0, 1);
-
 					SetTimerEx("PlayPoolSound", 1400, false, "dd", playerid, 31807);
 					SetTimerEx("RestoreWeapon", 3500, false, "d", playerid);
 				} else ClearAnimations(playerid);
 				
-
 				// reset ball positions just in-case they hit it
 				if (Pool_AreBallsStopped(poolid)) Pool_ResetBallPositions(poolid);
 				
@@ -350,7 +347,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				}
 			}
 		} else {
-			if (PRESSED(KEY_YES)) {
+			if (PRESSED(KEY_SECONDARY_ATTACK))
+			{
 				if (IsPlayerPlayingPool(playerid) && Iter_Contains(poolplayers<poolid>, playerid)) {
 					HidePlayerHelpDialog(playerid);
 					Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
@@ -362,7 +360,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				if (pool_player_count >= 2) {
 					return SendErrorMessage(playerid, "Essa mesa de sinuca já está cheia.");
 				}
-
+// transformar em cmd \/
 				// ensure this player isn't already joined
 				if (!IsPlayerPlayingPool(playerid) && ! Iter_Contains(poolplayers<poolid>, playerid)) {
 					if (pool_player_count == 1 && ! g_poolTableData[poolid][E_READY]) return SendErrorMessage(playerid, "Essa mesa de sinuca não está pronta.");

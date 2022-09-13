@@ -2165,10 +2165,8 @@ static PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, F
 	return PokerTable[tableid][pkrObjectID];
 }
 
-static DestroyPokerTable(tableid)
-{
-	if(PokerTable[tableid][pkrPlaced] == 1) 
-	{
+static DestroyPokerTable(tableid) {
+	if(PokerTable[tableid][pkrPlaced] == 1) {
 
 		// Delete Table
 		if(IsValidDynamicObject(PokerTable[tableid][pkrObjectID]))

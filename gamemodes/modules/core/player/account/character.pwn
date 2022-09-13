@@ -245,23 +245,14 @@ SpawnSelectedCharacter(playerid) {
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
 
-    if(pInfo[playerid][pInterior] != 0 || pInfo[playerid][pVirtualWorld] != 0) {
-        TogglePlayerSpectating(playerid, false);
-        SetCameraBehindPlayer(playerid);
-        SetWeapons(playerid);
-        SetPlayerArmedWeapon(playerid, 0);
-        pInfo[playerid][pLogged] = true;
-        SetTimerEx("SetSkinPos", 100, false, "i", playerid, 0);
-        return false;
-    }
-
-    TogglePlayerSpectating(playerid, true);
-    InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
-    InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
-    SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid, 0);
+    pInfo[playerid][pLogged] = true;
+    TogglePlayerSpectating(playerid, false);
+    SetCameraBehindPlayer(playerid);
+    SetWeapons(playerid);
+    SetPlayerArmedWeapon(playerid, 0);
     return true;
 }
-
+/*
 forward SpawnPlayerPosCamera(playerid);
 public SpawnPlayerPosCamera(playerid) {
     pInfo[playerid][pLogged] = true;
@@ -271,7 +262,7 @@ public SpawnPlayerPosCamera(playerid) {
     SetPlayerArmedWeapon(playerid, 0);
     SetTimerEx("SetSkinPos", 100, false, "i", playerid, 0);
     return true;
-}
+}*/
 
 forward SetSkinPos(playerid);
 public SetSkinPos(playerid) {

@@ -884,7 +884,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
             if(vInfo[id][vNamePersonalized]) va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", vInfo[id][vName]);
 			else va_SendClientMessage(playerid, COLOR_WHITECYAN, "Bem-vindo(a) ao seu veículo %s.", ReturnVehicleModelName(vInfo[id][vModel]));
         }
-        SaveVehicle(id);
+        //SaveVehicle(id);
     }
     return true;
 }

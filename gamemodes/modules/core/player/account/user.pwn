@@ -6,9 +6,8 @@ forward OnPasswordHashed(author[], user[]);
 forward OnPasswordChecked(playerid);
 
 GetPlayerUserEx(playerid){
-    new name[24];
-    GetPlayerName(playerid, name, sizeof(name));
-    format(name,sizeof(name),"%s", uInfo[playerid][uName]);
+    new name[32];
+    format(name, sizeof(name), "%s", uInfo[playerid][uName]);
     return name;
 }
 
@@ -40,7 +39,8 @@ hook OnPlayerRequestClass(playerid, classid) {
     ShowLoginTextdraws(playerid);
     ClearPlayerChat(playerid);
 
-    format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
+
+    //format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
     CheckCharactersName(playerid);
     CheckUserConditions(playerid);
 
@@ -58,7 +58,7 @@ public OnPasswordHashed(author[], user[]) {
 Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[]) {
 	if(!response) return KickEx(playerid);
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", GetPlayerNameEx(playerid));
     mysql_query(DBConn, query);
     cache_get_value_name(0, "password", uInfo[playerid][uPass], 128);
     bcrypt_check(inputtext, uInfo[playerid][uPass], "OnPasswordChecked", "d", playerid);
@@ -123,27 +123,27 @@ void:CreateUser(author[], userName[], password[]) {
 void:CheckUserConditions(playerid) {
     KillTimer(pInfo[playerid][pInterfaceTimer]);
     ShowLoginTextdraws(playerid);
-    if(IsUserRegistered(uInfo[playerid][uName])){
+    if(IsUserRegistered(GetPlayerNameEx(playerid))){
         ShowLoginTextdraws(playerid);
         //ClearPlayerChat(playerid);
         Dialog_Show(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, " ", "{FFFFFF}SERVER: Você só pode errar sua senha três (3) vezes.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre sua conta\n\
         \n           Digite sua senha:", "Autenticar", "Cancelar");
     } else {
         ShowLoginTextdraws(playerid);
-        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nacesse-o para mais informações\nsobre como criar sua conta.\n", "Entendi", "");
+        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\n\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nAcesse-o para mais informaçõessobre como criar sua conta.\n", "Entendi", "");
         KickEx(playerid);
     }
 }
 
 LoadUserInfo(playerid) {
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", uInfo[playerid][uName]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", GetPlayerNameEx(playerid));
     mysql_query(DBConn, query);
 
     if(!cache_num_rows()) 
         return false;
 
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
+    cache_get_value_name(0, "username", uInfo[playerid][uName]);
     cache_get_value_name(0, "password", uInfo[playerid][uPass]);
     cache_get_value_name_int(0, "admin", uInfo[playerid][uAdmin]);
     
@@ -289,10 +289,10 @@ CheckCharactersName(playerid) {
     SendServerMessage(playerid, "Por precaução e segurança, não podemos deixar que você se autentique assim.");
     va_SendClientMessage(playerid, -1, "SERVER: Mas não se preocupe. Estamos redirecionando a sua conexão ao usuário %s.", realUserName);
         
-    format(uInfo[playerid][uName], 24, "%s", realUserName);
+    //format(uInfo[playerid][uName], 24, "%s", realUserName);
     SetPlayerName(playerid, realUserName);
 
-    va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", uInfo[playerid][uName]);
+    va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", realUserName);
     return true;
 }
 

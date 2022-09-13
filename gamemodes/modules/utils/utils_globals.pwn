@@ -239,6 +239,8 @@ new const g_aWeaponSlots[] = {
 };
 
 void:ResetUserData(playerid) {
+    uInfo[playerid][uName][0] = EOS;
+
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
     // Teams
@@ -268,8 +270,6 @@ void:ResetUserData(playerid) {
 
 
     uInfo        [playerid][uJailed]      = -1;
-
-    uInfo[playerid][uName][0] = EOS;
 }
 
 void:ResetCharacterData(playerid) {

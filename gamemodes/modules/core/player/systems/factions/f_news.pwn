@@ -97,10 +97,10 @@ CMD:transmissao(playerid, params[]){
 
     if (!pInfo[playerid][pRecording]){
         GivePlayerCamera(playerid);
-        va_SendClientMessageToAll(COLOR_YELLOW, "%s iniciou uma transmissão ao vivo, para assistir digite /assistir %d.", FactionData[pInfo[playerid][pFaction]][factionName], playerid);
+        va_SendClientMessageToAll(COLOR_YELLOW, "%s iniciou uma transmissão ao vivo, para assistir digite /assistir %d.", pNome(playerid), playerid);
     } else {
         RemovePlayerCamera(playerid);
-        va_SendClientMessageToAll(COLOR_YELLOW, "%s encerrou a transmissão ao vivo.", FactionData[pInfo[playerid][pFaction]][factionName]);
+        va_SendClientMessageToAll(COLOR_YELLOW, "%s encerrou a transmissão ao vivo.", pNome(playerid));
     }
     return true;
 }

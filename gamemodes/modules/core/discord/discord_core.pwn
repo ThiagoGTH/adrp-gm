@@ -13,14 +13,6 @@ public ServerStatus(type){
     channel = DCC_FindChannelById("1018291621722341447");
     
     if(type == 1){ // TUDO FUNCIONANDO
-        // SERVIDOR
-        if(Server_Instability){
-            Server_Instability = 0;
-            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
-            SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password closedalpha2022");
-            SendRconCommand(rcon);
-        }
 
         // DISCORD
         format(title, 32, "Status do Servidor");
@@ -201,7 +193,7 @@ public SendInfoClosedAlpha(){
     new DCC_Embed:embed = DCC_CreateEmbed(title);
     DCC_SetEmbedColor(embed, 0x5964F4);
         
-    format(text, 1024, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
+    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
     > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
     > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
     > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
@@ -209,7 +201,7 @@ public SendInfoClosedAlpha(){
     > <:arrow:931570978163687454> O compartilhamento do endereço de IP, senha ou qualquer informação que permita algum jogador não autorizado a entrar no servidor acarretará em banimento permanente de todas as versões de teste do servidor, podendo retomar, apenas, na versão de lançamento;\n\
     > <:arrow:931570978163687454> O servidor não é para fazer roleplay, apenas testar os sistemas feitos até então;\n\
     > <:arrow:931570978163687454> Para pegar administrador no servidor, utilize o comando `/pegaradmin` e, para pegar premium ouro, `/pegarpremium`;\n\
-    > <:arrow:931570978163687454> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback.\n");
+    > <:arrow:931570978163687454> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback. Você também receberá um cargo de **registrado** no Discord público do Advanced Rolelay. Esse cargo não será setado novamente caso você saia do servidor.\n");
     utf8encode(text, text);
     DCC_SetEmbedDescription(embed, text);
 

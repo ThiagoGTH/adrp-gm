@@ -275,6 +275,12 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 utf8encode(text_field, text_field);
                 DCC_AddEmbedField(embed, title_field, text_field, true);
 
+                format(title_field, 128, "!deletarconta");
+                format(text_field, 1024, "Deleta seu usuário permanentemente.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
                 DCC_SetEmbedColor(embed, 0x5964F4);
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
@@ -456,7 +462,52 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 DCC_SendChannelEmbedMessage(channel, embed);
                 cache_delete(result);       
                 return true;
-            } else {
+            } else if(!strcmp(command, "!deletarconta", true)){
+                new text[256], footer[128], title[64], user_id, username[24], Cache:result;
+
+                cache_delete(result);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `discord_id` = '%s';", authorid);
+                result = mysql_query(DBConn, query);
+        
+                // Verificar se já foi registrado pelo Discord
+                if(!cache_num_rows()) {
+                    format(text, 256, "Não foi encontrado um usuário vinculado ao seu Discord. :/\nRegistre-se utilizando o **!registrar**!");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_get_value_name_int(0, "ID", user_id);
+                cache_get_value_name(0, "username", username);
+               
+                UserDelete(user_id);
+                format(title, 64, "Usuário deletado!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, o registro do usuário **%s** foi deletado com sucesso!", user_name, username);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);
+                cache_delete(result);       
+                return true;
+            }
+            else {
                 new title[32];
                 format(title, 32, "Comando inválido");
                 utf8encode(title, title);
@@ -1066,6 +1117,24 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
+            } else if(!strcmp(command, "!gmx", true)) {
+                new title[32];
+                format(title, 32, "Reiniciando o servidor");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[1024];
+                new footer[128];
+                format(text, 1024, "Reinicialização do servidor forçada iniciada.\nO acesso dos jogadores foi bloqueado e o servidor será reiniciado em um minuto.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
+
+                GiveGMX();
+                return true;
             }
 
             else{

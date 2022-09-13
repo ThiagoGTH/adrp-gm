@@ -890,9 +890,10 @@ ShowCharactersTD(playerid) {
     mysql_query(DBConn, query);
 
     if(!cache_num_rows()){
-        SendServerMessage(playerid, "ERRO#23 - Reporte sobre este problema a um desenvolvedor o mais rápido possível.");
-        SendServerMessage(playerid, "Você será kickado do servidor agora. Tire uma screenshot desta tela.");
-        return KickEx(playerid);
+        SendServerMessage(playerid, "Você não possui nenhum personagem em sua conta. Se acha que isso é um erro, reporte a um desenvolvedor.");
+        SendServerMessage(playerid, "Você será kickado do servidor agora.");
+        Kick(playerid);
+        return false;
     }
     
     new characterName[24], string[128],

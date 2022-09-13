@@ -346,3 +346,21 @@ CMD:personagens(playerid, params[]) {
 
     return true;
 }
+
+UserDelete(userid){
+    new Cache:result;
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `users` WHERE `ID` = '%d';", userid);
+    result = mysql_query(DBConn, query);
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `users_premium` WHERE `user_id` = '%d';", userid);
+    result = mysql_query(DBConn, query);
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `users_teams` WHERE `user_id` = '%d';", userid);
+    result = mysql_query(DBConn, query);
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `user_id` = '%d';", userid);
+    result = mysql_query(DBConn, query);
+
+    cache_delete(result);
+    return true;
+}

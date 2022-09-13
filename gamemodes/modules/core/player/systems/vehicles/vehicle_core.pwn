@@ -919,5 +919,8 @@ public OnVehicleDeath(vehicleid, killerid) {
         vInfo[id][vVehicle] = 0;
         vInfo[id][vExists] = 0;
     }
+
+    ResetVehicleObjects(vehicleid);
+
     return true;
 }

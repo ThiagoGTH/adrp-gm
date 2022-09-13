@@ -803,14 +803,14 @@ CMD:gravidade(playerid, params[]) {
 
 GiveGMX() {
 	foreach(new i : Player) {
-		SendClientMessage(i, COLOR_LIGHTRED, "O servidor sofrerá um GMX em cinco minutos. Finalize o que você está fazendo e deslogue.");
+		SendClientMessage(i, COLOR_LIGHTRED, "O servidor sofrerá um GMX em um minuto. Finalize o que você está fazendo e deslogue.");
 		SaveCharacterInfo(i);
 		SaveUserInfo(i);
-		printf("[GMX] Reiniciando o servidor em cinco minutos.");
-		SendRconCommand("hostname Advanced Roleplay | REINICIANDO");
+		printf("[GMX] Reiniciando o servidor em um minuto.");
+		SendRconCommand("hostname Advanced Roleplay | Reiniciando...");
 		SendRconCommand("password 10102dmmdnsas7721jmm");
 	}
-	SetTimer("GMXA", 300000, false);
+	SetTimer("GMXA", 60000, false);
 }
 
 forward GMXA();
@@ -868,6 +868,7 @@ SendAdminAlert(color, const str[], {Float,_}:...) {
         foreach (new i : Player) {
 			if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);
 		}
+		return true;
 	}
 	foreach (new i : Player) {
 		if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);

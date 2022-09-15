@@ -1,5 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
+#include "modules\core\maps\maps_main.pwn"
+
 #include "modules\core\maps\exterior\streets.pwn"
 #include "modules\core\maps\exterior\cityhall.pwn"
 #include "modules\core\maps\exterior\tolls.pwn"

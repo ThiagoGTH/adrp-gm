@@ -39,6 +39,7 @@
 
 #include "modules\utils\utils.pwn"
 #include "modules\core\anticheat\nex-ac.pwn"
+#include "modules\core\anticheat\money-ac.pwn"
 #include "modules\core\maps\maps.pwn"
 #include "modules\core\database\mysql_core.pwn"
 #include "modules\core\player\account\account.pwn"

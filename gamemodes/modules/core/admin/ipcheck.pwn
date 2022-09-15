@@ -65,6 +65,7 @@ public HttpVPNInfo(playerid, response_code, data[]){
 				}
 			}
 	 	}
+		
 	 	else if(isVPN == 0) {
        		format(vpnMessage, sizeof(vpnMessage), "{00FF00}Negativo");
 	 	}
@@ -123,7 +124,6 @@ public HttpVPNInfo(playerid, response_code, data[]){
 	format(stitle, sizeof(stitle),
 	"IP de %s (%s)", pNome(targetID[playerid]), GetPlayerUserEx(targetID[playerid]));
 
-	utf8encode(sdialog, sdialog);
 	Dialog_Show(playerid, DIALOG_IP_CHECK, DIALOG_STYLE_TABLIST_HEADERS, stitle, sdialog, "Fechar", "");
     return true;
 }

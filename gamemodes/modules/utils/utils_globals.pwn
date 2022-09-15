@@ -63,6 +63,7 @@ enum Player_Data {
     Float:pArmour,
 
     pMoney,
+    pOldMoney,
     pBank,
     pSavings,
     pSkin,
@@ -289,6 +290,7 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pHealth]         = 0.00;
     pInfo   [playerid][pArmour]         = 0.00;
     pInfo   [playerid][pMoney]          =
+    pInfo   [playerid][pOldMoney]       =
     pInfo   [playerid][pBank]           =
     pInfo   [playerid][pSavings]        =
     pInfo   [playerid][pSkin]           =

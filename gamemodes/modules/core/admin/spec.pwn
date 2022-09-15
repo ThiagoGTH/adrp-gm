@@ -18,10 +18,16 @@ hook OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid) {
         foreach(new i : Player) {
             if(gPlayerIsSpectating[i] && gSpectatingPlayer[i] == playerid) {
                 PlayerSpectatePlayer(i, playerid);
+                SyncSpectate(playerid, i);
             }
         }
     }
     return true;
+}
+
+SyncSpectate(playerid, forplayerid) {
+	SetPlayerVirtualWorld(forplayerid, GetPlayerVirtualWorld(playerid));
+	SetPlayerInterior(forplayerid, GetPlayerInterior(playerid));
 }
 
 hook OnPlayerSpawn(playerid) {
@@ -73,12 +79,14 @@ CMD:spec(playerid, params[]) {
     if (IsPlayerWatchingCamera(target)) return SendErrorMessage(playerid, "O jogador está assistindo uma transmissão, então não é possível espectar ele.");
 	if (GetPlayerState(target) == PLAYER_STATE_SPECTATING) return SendErrorMessage(playerid, "O administrador está de spec em alguém, então não é possível espectar ele.");
 
-    GetPlayerHealth(playerid, pInfo[playerid][pHealth]);
-    GetPlayerArmour(playerid, pInfo[playerid][pArmour]);
-    GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
-	GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
-	pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
-	pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
+    if(!gPlayerIsSpectating[playerid]) {
+        GetPlayerHealth(playerid, pInfo[playerid][pHealth]);
+        GetPlayerArmour(playerid, pInfo[playerid][pArmour]);
+        GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
+        GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
+        pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
+        pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
+    }
 
     TogglePlayerSpectating(playerid, true);
     gPlayerIsSpectating[playerid] = true;
@@ -123,12 +131,14 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
             foreach(new i : Player) {
                 if(gPlayerIsSpectating[i] && gSpectatingPlayer[i] == playerid) {
                     PlayerSpectateVehicle(i, GetPlayerVehicleID(playerid));
+                    SyncSpectate(playerid, i);
                 }
             }
         } else if(oldstate == PLAYER_STATE_DRIVER && newstate == PLAYER_STATE_ONFOOT) {
             foreach(new i : Player)  {
                 if(gPlayerIsSpectating[i] && gSpectatingPlayer[i] == playerid) {
                     PlayerSpectatePlayer(i, playerid);
+                    SyncSpectate(playerid, i);
                 }
             }
         }

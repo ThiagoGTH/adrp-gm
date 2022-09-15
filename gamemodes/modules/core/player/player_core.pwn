@@ -247,8 +247,7 @@ UpdateWeapons(playerid)
 }*/
 
 forward SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z);
-public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
-{
+public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z) {
 	if (!IsPlayerInRangeOfPoint(playerid, 15.0, x, y, z))
 	    return false;
 
@@ -259,27 +258,7 @@ public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 	return true;
 }
 
-GiveMoney(playerid, amount) {
-	pInfo[playerid][pMoney] += amount;
-	GivePlayerMoney(playerid, amount);
-	return true;
-}
-
-GetMoney(playerid) {
-	return (pInfo[playerid][pMoney]);
-}
-
-GiveBankMoney(playerid, amount) {
-	pInfo[playerid][pBank] += amount;
-	return true;
-}
-
-GetBankMoney(playerid) {
-	return (pInfo[playerid][pBank]);
-}
-
-SetPlayerHealthEx(playerid, Float:hp)
-{
+SetPlayerHealthEx(playerid, Float:hp) {
 	if(hp <= 30) SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
  	else if(hp <= 40) SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
 	else SetPlayerWeaponSkill(playerid, FULL_SKILL);

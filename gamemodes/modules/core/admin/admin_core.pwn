@@ -87,7 +87,7 @@ ShowAdminCmds(playerid){
 	if(GetPlayerAdmin(playerid) >= 5) // LEAD ADMIN
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca, /deletarsinuca");
-		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /darcaravana, /darpet, /destruirinvestimento, /avobjeto");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /darcaravana, /darpet, /destruirinvestimento, /avobjeto, /checarspecs");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{
@@ -702,63 +702,6 @@ CMD:z(playerid, params[]) {
 	GetPlayerPos(playerid, x, y, z);
 	SetPlayerPos(playerid, x, y, z+npos);
 	return true;	
-}
-
-CMD:spec(playerid, params[]) {
-	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
-
-	new userid;
-	if (!isnull(params) && !strcmp(params, "off", true)) {
-	    if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING)
-			return SendServerMessage(playerid, "Você não está observando nenhum jogador.");
-
-	    PlayerSpectatePlayer(playerid, INVALID_PLAYER_ID);
-	    PlayerSpectateVehicle(playerid, INVALID_VEHICLE_ID);
-		SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
-		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-	    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], 
-        pInfo[playerid][pPositionY], 
-        pInfo[playerid][pPositionZ],
-        pInfo[playerid][pPositionA],
-         0, 0, 0, 0, 0, 0);
-	    TogglePlayerSpectating(playerid, false);
-	    
-	  	pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
-		format(logString, sizeof(logString), "%s (%s) parou de observar.", pNome(playerid), GetPlayerUserEx(playerid));
-		logCreate(playerid, logString, 1);
-
-	  	return SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você não está mais no modo espectador.");
-	}
-
-	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/spec [playerid/nome]");
-	if (!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
-	if (IsPlayerWatchingCamera(userid)) return SendErrorMessage(playerid, "O jogador está assistindo uma transmissão, então não é possível espectar ele.");
-	if (GetPlayerState(userid) == PLAYER_STATE_SPECTATING) return SendErrorMessage(playerid, "O administrador está de spec em alguém, então não é possível espectar ele.");
-
-	if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING){
-		GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
-		GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
-
-		pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
-		pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
-	}
-	SetPlayerInterior(playerid, GetPlayerInterior(userid));
-	SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(userid));
-
-	TogglePlayerSpectating(playerid, true);
-
-	if (IsPlayerInAnyVehicle(userid))
-	    PlayerSpectateVehicle(playerid, GetPlayerVehicleID(userid));
-	else
-		PlayerSpectatePlayer(playerid, userid);
-
-	va_SendClientMessage(playerid, COLOR_LIGHTRED, "Você agora está observando %s (ID: %d). Use '/spec off' para sair do spec.", pNome(userid), userid);
-	pInfo[playerid][pSpectating] = userid;
-
-	format(logString, sizeof(logString), "%s (%s) está observando %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
-	logCreate(playerid, logString, 1);
-	return true;
 }
 
 CMD:jetpack(playerid, params[]) {

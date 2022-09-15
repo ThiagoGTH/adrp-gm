@@ -112,8 +112,3 @@ Dialog:PLAYER_CONFIG_OPTIONS(playerid, response, listitem, inputtext[]){
     }
     return true;
 }
-
-CMD:sexo(playerid, params[]){
-    SendServerMessage(playerid, "QTD: %d", Streamer_GetVisibleItems(STREAMER_TYPE_OBJECT, playerid));
-    return true;
-}

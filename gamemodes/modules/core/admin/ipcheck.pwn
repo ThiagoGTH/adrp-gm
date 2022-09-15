@@ -121,8 +121,9 @@ public HttpVPNInfo(playerid, response_code, data[]){
 	vpnMessage);
 	new stitle[128];
 	format(stitle, sizeof(stitle),
-	"IP de: %s (%s)", pNome(playerid), GetPlayerUserEx(playerid));
+	"IP de %s (%s)", pNome(targetID[playerid]), GetPlayerUserEx(targetID[playerid]));
 
+	utf8encode(sdialog, sdialog);
 	Dialog_Show(playerid, DIALOG_IP_CHECK, DIALOG_STYLE_TABLIST_HEADERS, stitle, sdialog, "Fechar", "");
     return true;
 }
@@ -162,8 +163,7 @@ public HttpIPInfo(playerid, response_code, data[]){
 
 		format(string, sizeof(string), "%s%s", HTTP_VPN_API_URL, dPlayerInfo[targetID[playerid]][IP]);
 		HTTP(playerid, HTTP_GET, string, "", "HttpVPNInfo");
-    }
-    else {
+    } else {
         va_SendClientMessage(playerid, COLOR_GREY, "ERRO: Não foi possível obter informações desse IP. (Cod: %d) (%s)", response_code, data);
     }
 
@@ -189,8 +189,7 @@ stock RemoveChars(tID){
 }
 
 CMD:checarip(playerid, params[]){
-	
-	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
+	if(uInfo[playerid][uAdmin] < 1338) return SendPermissionMessage(playerid);
 
 	new targetid;
 	if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/checarip [playerid/nome]");

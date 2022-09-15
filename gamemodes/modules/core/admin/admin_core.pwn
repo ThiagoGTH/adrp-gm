@@ -537,9 +537,7 @@ static const TempoNomes[][] = {
 	/*44 -*/ 	"Tempo fechado"
 };
 
-CMD:clima(playerid, params[])
-{
-	
+CMD:clima(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 4) return SendPermissionMessage(playerid);
 
 	new weather, hora;
@@ -550,8 +548,7 @@ CMD:clima(playerid, params[])
 	SetWorldTime(hora);
 	SendInfoMessage(playerid, "Hora configurada para %dh e clima para %s.", hora, TempoNomes[weather]);
 
-	
-	format(logString, sizeof(logString), "%s (%s) configurou a hora para %d e o clima como '%s'.", pNome(playerid), hora, TempoNomes[weather]);
+	format(logString, sizeof(logString), "%s (%s) configurou a hora para %d e o clima como %s.", pNome(playerid), GetPlayerUserEx(playerid), hora, TempoNomes[weather]);
 	logCreate(playerid, logString, 1);
 	return true;
 }
@@ -610,7 +607,6 @@ CMD:ir(playerid, params[]) {
 
 	SendPlayerToPlayer(playerid, id);
 
-	
 	format(logString, sizeof(logString), "%s (%s) foi até %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(id));
 	logCreate(playerid, logString, 1);
 	return true;

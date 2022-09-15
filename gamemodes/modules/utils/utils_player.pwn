@@ -990,17 +990,31 @@ DealershipCategory(type) {
 	return category;
 }
 
+
 RenderingObjectsValue(playerid) {
 	new value;
 	switch (pInfo[playerid][pRenderObjects]){
-		case 0: value = 1000;
-		case 1: value = 2000;
-        case 2: value = 5000;
-		case 3: value = 7000;
+		case 0: value = 800;
+		case 1: value = 1000;
+        case 2: value = 2000;
+		case 3: value = 5000;
         case 4: value = 10000;
 		default: value = 1000;
 	}
 	return value;
+}
+
+Float:RenderingObjectsRadius(playerid) {
+	new Float:radius;
+	switch (pInfo[playerid][pRenderObjects]){
+		case 0: radius = 0.5;
+		case 1: radius = 1.0;
+        case 2: radius = 1.5;
+		case 3: radius = 3.0;
+        case 4: radius = 5.0;
+		default: radius = 1.0;
+	}
+	return radius;
 }
 
 KickEx(playerid) {

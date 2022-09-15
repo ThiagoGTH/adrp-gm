@@ -59,21 +59,20 @@ hook OnGameModeInit() {
 }
 
 LoadCreenshawModel() {
-    AddSimpleModel (-1, 1923, -1132, "maps/env/creenshaw/Crenshaw1.dff", "maps/env/creenshaw/Crenshaw1.txd");
-    AddSimpleModel (-1, 8674, -1133, "maps/env/creenshaw/Crenshaw2.dff", "maps/env/creenshaw/Crenshaw2.txd");
-    AddSimpleModel (-1, 1923, -1134, "maps/env/creenshaw/Crenshaw3.dff", "maps/env/creenshaw/Crenshaw3.txd");
-    AddSimpleModel (-1, 1923, -1135, "maps/env/creenshaw/Crenshaw4.dff", "maps/env/creenshaw/Crenshaw4.txd");
-    AddSimpleModel (-1, 1923, -1136, "maps/env/creenshaw/Crenshaw5.dff", "maps/env/creenshaw/Crenshaw5.txd");
-    AddSimpleModel (-1, 1923, -1530, "maps/env/creenshaw/Crenshaw6.dff", "maps/env/creenshaw/Crenshaw6.txd");
-    AddSimpleModel (-1, 1923, -1532, "maps/env/creenshaw/Crenshaw7.dff", "maps/env/creenshaw/Crenshaw7.txd");
+    AddSimpleModelEx(1923, -1120, "maps/env/creenshaw/Crenshaw1.dff", "maps/env/creenshaw/Crenshaw1.txd");
+    AddSimpleModelEx(8674, -1121, "maps/env/creenshaw/Crenshaw2.dff", "maps/env/creenshaw/Crenshaw2.txd");
+    AddSimpleModelEx(1923, -1122, "maps/env/creenshaw/Crenshaw3.dff", "maps/env/creenshaw/Crenshaw3.txd");
+    AddSimpleModelEx(1923, -1123, "maps/env/creenshaw/Crenshaw4.dff", "maps/env/creenshaw/Crenshaw4.txd");
+    AddSimpleModelEx(1923, -1124, "maps/env/creenshaw/Crenshaw5.dff", "maps/env/creenshaw/Crenshaw5.txd");
+    AddSimpleModelEx(1923, -1125, "maps/env/creenshaw/Crenshaw6.dff", "maps/env/creenshaw/Crenshaw6.txd");
 }
 
 CreenshawMap() {
-    CreateObject(-1134, 2249.512939, -1433.354858, 22.931900, 0.000000, 0.000000, 0.000000, 2500.00); 
-    CreateDynamicObject(-1136, 2235.562988, -1429.510742, 26.239000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
-    CreateDynamicObject(-1135, 2224.858886, -1431.989013, 24.332000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 800.00, 800.00); 
-    CreateDynamicObject(-1132, 2229.474121, -1434.008056, 24.916900, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1133, 2241.429931, -1433.671752, 31.281000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 800.00, 800.00); 
-    CreateDynamicObject(-1530, 2257.110595, -1436.774536, 23.354000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
-    CreateDynamicObject(-1532, 2263.039306, -1400.562622, 27.234800, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1120, 2229.474121, -1434.008056, 24.916900, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1121, 2241.429931, -1433.671752, 31.281000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1122, 2249.512939, -1433.354858, 22.931900, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1123, 2224.858886, -1431.989013, 24.332000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1124, 2235.562988, -1429.510742, 26.239000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1125, 2257.110595, -1436.774536, 23.354000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1125, 2263.039306, -1400.562622, 27.234800, 0.000000, 0.000000, 0.000000);
 }

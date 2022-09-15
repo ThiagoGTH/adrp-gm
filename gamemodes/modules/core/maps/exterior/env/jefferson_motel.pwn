@@ -32,11 +32,14 @@ hook OnGameModeInit() {
 }
 
 LoadJeffersonMotelModel() {
-    AddSimpleModel (-1,1923, -1105, "maps/env/jefferson_motel/JeffersonMotel1.dff", "maps/env/jefferson_motel/JeffersonMotel1.txd");
-    AddSimpleModel (-1,8674, -1106, "maps/env/jefferson_motel/JeffersonMotel2.dff", "maps/env/jefferson_motel/JeffersonMotel2.txd");
+    AddSimpleModelEx(1923, -1105, "maps/env/jefferson_motel/JeffersonMotel1.dff", "maps/env/jefferson_motel/JeffersonMotel1.txd");
+    AddSimpleModelEx(8674, -1106, "maps/env/jefferson_motel/JeffersonMotel2.dff", "maps/env/jefferson_motel/JeffersonMotel2.txd");
 }
 
 JeffersonMotelMap() {
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1105, 2222.992187, -1162.601440, 30.039100, 0.000000, 0.000000, 0.000000); 
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1106, 2184.500000, -1179.328125, 36.406200, 0.000000, 0.000000, 0.000000); 
+
     new tmpobjid;
     tmpobjid = CreateDynamicObject(1569,2225.6147460,-1190.5831290,28.4519000,0.0000000,0.0000000,0.0000000);
     SetObjectMaterial(tmpobjid, 0, 14666, "genintintsex", "backdoor_128", 0x00000000);
@@ -100,8 +103,4 @@ JeffersonMotelMap() {
     tmpobjid = CreateDynamicObject(1687,2226.5200190,-1185.2912590,34.7000270,-0.0000070,0.0000000,-89.9999690);
     tmpobjid = CreateDynamicObject(1689,2243.0500480,-1191.4012450,35.1062270,0.0000000,0.0000070,0.0000000);
     tmpobjid = CreateDynamicObject(1493,2233.6918940,-1158.7779540,24.8574140,0.0000000,0.0000000,161.5000000);
-
-    CreateObject(-1105, 2222.992187, -1162.601440, 30.039100, 0.000000, 0.000000, 0.000000, 2500.00); 
-    CreateDynamicObject(-1106, 2184.500000, -1179.328125, 36.406200, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00, 500.00); 
-
 }

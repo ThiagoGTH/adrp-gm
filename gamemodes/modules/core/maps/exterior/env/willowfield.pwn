@@ -77,26 +77,26 @@ hook OnPlayerConnect(playerid){
 }
 
 hook OnGameModeInit() {
-    AddSimpleModel (-1,8674, -1042, "maps/env/willowfield/WillowfieldHoodOne1.dff", "maps/env/willowfield/WillowfieldHoodOne1.txd");
-    AddSimpleModel (-1,1923, -1044, "maps/env/willowfield/WillowfieldHoodOne2.dff", "maps/env/willowfield/WillowfieldHoodOne2.txd");
-    AddSimpleModel (-1,1923, -1045, "maps/env/willowfield/WillowfieldHoodOne3.dff", "maps/env/willowfield/WillowfieldHoodOne3.txd");
-    AddSimpleModel (-1,1923, -1046, "maps/env/willowfield/WillowfieldHoodOne4.dff", "maps/env/willowfield/WillowfieldHoodOne4.txd");
-    AddSimpleModel (-1,1923, -1047, "maps/env/willowfield/WillowfieldHoodOne5.dff", "maps/env/willowfield/WillowfieldHoodOne5.txd");
+    AddSimpleModelEx(8674, -1047, "maps/env/willowfield/WillowfieldHoodOne1.dff", "maps/env/willowfield/WillowfieldHoodOne1.txd");
+    AddSimpleModelEx(1923, -1043, "maps/env/willowfield/WillowfieldHoodOne2.dff", "maps/env/willowfield/WillowfieldHoodOne2.txd");
+    AddSimpleModelEx(1923, -1044, "maps/env/willowfield/WillowfieldHoodOne3.dff", "maps/env/willowfield/WillowfieldHoodOne3.txd");
+    AddSimpleModelEx(1923, -1045, "maps/env/willowfield/WillowfieldHoodOne4.dff", "maps/env/willowfield/WillowfieldHoodOne4.txd");
+    AddSimpleModelEx(1923, -1046, "maps/env/willowfield/WillowfieldHoodOne5.dff", "maps/env/willowfield/WillowfieldHoodOne5.txd");
 
-    CreateObject(-1044, 2290.312988, -2170.430908, 10.876700, 0.000000, 0.000000, 0.000000, 2500.00); 
-    CreateDynamicObject(-1045, 2283.602050, -2175.091064, 15.364000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1042, 2295.977050, -2180.725097, 15.161000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1046, 2305.486083, -2165.291992, 16.826000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateObject(-1047, 2275.406982, -2095.265869, 12.507699, 0.000000, 0.000000, 0.000000, 2500.00); 
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1047, 2295.977050, -2180.725097, 15.161000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1043, 2290.312988, -2170.430908, 10.876700, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1044, 2283.602050, -2175.091064, 15.364000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1045, 2305.486083, -2165.291992, 16.826000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1046, 2275.406982, -2095.265869, 12.507699, 0.000000, 0.000000, 0.000000);  
 
-    AddSimpleModel(-1, 1923, -1048, "maps/env/willowfield/WillowfieldHoodTwo1.dff", "maps/env/willowfield/WillowfieldHoodTwo1.txd");
-    AddSimpleModel(-1, 1923, -1049, "maps/env/willowfield/WillowfieldHoodTwo2.dff", "maps/env/willowfield/WillowfieldHoodTwo2.txd");
-    AddSimpleModel(-1, 1923, -1050, "maps/env/willowfield/WillowfieldHoodTwo3.dff", "maps/env/willowfield/WillowfieldHoodTwo3.txd");
-    AddSimpleModel(-1, 8674, -1051, "maps/env/willowfield/WillowfieldHoodTwo4.dff", "maps/env/willowfield/WillowfieldHoodTwo4.txd");
+    AddSimpleModelEx(1923, -1051, "maps/env/willowfield/WillowfieldHoodTwo1.dff", "maps/env/willowfield/WillowfieldHoodTwo1.txd");
+    AddSimpleModelEx(1923, -1048, "maps/env/willowfield/WillowfieldHoodTwo2.dff", "maps/env/willowfield/WillowfieldHoodTwo2.txd");
+    AddSimpleModelEx(1923, -1049, "maps/env/willowfield/WillowfieldHoodTwo3.dff", "maps/env/willowfield/WillowfieldHoodTwo3.txd");
+    AddSimpleModelEx(8674, -1050, "maps/env/willowfield/WillowfieldHoodTwo4.dff", "maps/env/willowfield/WillowfieldHoodTwo4.txd");
 
-    CreateDynamicObject(-1048, 2297.689941, -2080.586914, 12.550000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00);
-    CreateDynamicObject(-1049, 2359.531005, -2109.460937, 15.371998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00);
-    CreateObject(-1050, 2360.936035, -2117.017089, 14.850998, 0.000000, 0.000000, 0.000000, 2500.00);
-    CreateDynamicObject(-1051, 2367.101074, -2104.678955, 13.670998, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1051, 2297.689941, -2080.586914, 12.550000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1048, 2359.531005, -2109.460937, 15.371998, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1049, 2360.936035, -2117.017089, 14.850998, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1050, 2367.101074, -2104.678955, 13.670998, 0.000000, 0.000000, 0.000000);
     return true;
 }

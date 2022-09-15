@@ -22,19 +22,19 @@ hook OnGameModeInit() {
 }
 
 LoadJeffersonParkModel() {
-    AddSimpleModel (-1, 1923, -1207, "maps/env/jefferson_park/JeffersonPark1.dff", "maps/env/jefferson_park/JeffersonPark1.txd");
-    AddSimpleModel (-1, 1923, -1208, "maps/env/jefferson_park/JeffersonPark2.dff", "maps/env/jefferson_park/JeffersonPark2.txd");
-    AddSimpleModel (-1, 19478, -1209, "maps/env/jefferson_park/JeffersonPark3.dff", "maps/env/jefferson_park/JeffersonPark3.txd");
-    AddSimpleModel (-1, 19325, -1210, "maps/env/jefferson_park/JeffersonPark4.dff", "maps/env/jefferson_park/JeffersonPark4.txd");
-    AddSimpleModel (-1, 5635, -1211, "maps/env/jefferson_park/JeffersonPark5.dff", "maps/env/jefferson_park/JeffersonPark5.txd");
-    AddSimpleModel (-1, 5265, -1212, "maps/env/jefferson_park/JeffersonPark6.dff", "maps/env/jefferson_park/JeffersonPark6.txd");
+    AddSimpleModelEx(1923, -1207, "maps/env/jefferson_park/JeffersonPark1.dff", "maps/env/jefferson_park/JeffersonPark1.txd");
+    AddSimpleModelEx(1923, -1208, "maps/env/jefferson_park/JeffersonPark2.dff", "maps/env/jefferson_park/JeffersonPark2.txd");
+    AddSimpleModelEx(19478, -1209, "maps/env/jefferson_park/JeffersonPark3.dff", "maps/env/jefferson_park/JeffersonPark3.txd");
+    AddSimpleModelEx(19325, -1210, "maps/env/jefferson_park/JeffersonPark4.dff", "maps/env/jefferson_park/JeffersonPark4.txd");
+    AddSimpleModelEx(5635, -1211, "maps/env/jefferson_park/JeffersonPark5.dff", "maps/env/jefferson_park/JeffersonPark5.txd");
+    AddSimpleModelEx(5265, -1212, "maps/env/jefferson_park/JeffersonPark6.dff", "maps/env/jefferson_park/JeffersonPark6.txd");
 }
 
 JeffersonParkMap() {
-    CreateDynamicObject(-1209, 2210.675292, -1318.487792, 23.976999, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1210, 2210.675292, -1318.487792, 23.976999, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
-    CreateObject(-1207, 2219.013427, -1342.268066, 23.001600, 0.000000, 0.000000, 0.000000, 2500.00); //
-    CreateDynamicObject(-1208, 2219.118652, -1342.496093, 25.214599, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1211, 2182.289062, -1324.750000, 28.601600, 0.000000, 0.000000, 0.000000, -1, -1, -1, 500.00, 500.00); 
-    CreateDynamicObject(-1212, 2263.520019, -1312.630004, 37.080001, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1207, 2219.013427, -1342.268066, 23.001600, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1208, 2219.118652, -1342.496093, 25.214599, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1209, 2210.675292, -1318.487792, 23.976999, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_2DFX, -1210, 2210.675292, -1318.487792, 23.976999, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1211, 2182.289062, -1324.750000, 28.601600, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1212, 2263.520019, -1312.630004, 37.080001, 0.000000, 0.000000, 0.000000);
 }

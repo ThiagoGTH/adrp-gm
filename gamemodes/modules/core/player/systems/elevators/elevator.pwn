@@ -453,7 +453,7 @@ ShowElevatorDialog(playerid) {
 	    strcat(string, "\n");
 	}
 
-	Dialog_Show(playerid, DIALOG_ELEVATOR, DIALOG_STYLE_MSGBOX, "{FFFFFF}Elevador", string, "Aceitar", "Fechar");
+	Dialog_Show(playerid, DIALOG_ELEVATOR, DIALOG_STYLE_LIST, "{FFFFFF}Elevador", string, "Aceitar", "Fechar");
 	return true;
 }
 

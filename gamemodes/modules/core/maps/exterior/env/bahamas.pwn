@@ -7,15 +7,7 @@ hook OnPlayerConnect(playerid){
 }
 
 hook OnGameModeInit() {
-    LoadBahamasModel();
-    BahamasMap();
+    AddSimpleModelEx(19379, -20017, "maps/env/bahamas/bahamas.dff", "maps/env/bahamas/bahamas.txd");
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -20017, 2011.468994, -1300.900024, 28.694999, 0.000000, 0.000000, 0.000000); 
     return true;
-}
-
-LoadBahamasModel() {
-	AddSimpleModel (-1, 19379, -20017, "maps/env/bahamas/bahamas.dff", "maps/env/bahamas/bahamas.txd");
-}
-
-BahamasMap() {
-    CreateObject(-20017, 2011.468994, -1300.900024, 28.694999, 0.000000, 0.000000, 0.000000, 2500.00); 
 }

@@ -136,16 +136,18 @@ hook OnPlayerConnect(playerid){
 }
 
 hook OnGameModeInit() {
-    AddSimpleModel(-1,1923, -1038, "maps/env/ocean_docks/OldWeaponFact1.dff", "maps/env/ocean_docks/OldWeaponFact1.txd");
-    AddSimpleModel(-1,1923, -1039, "maps/env/ocean_docks/OldWeaponFact2.dff", "maps/env/ocean_docks/OldWeaponFact2.txd");
-    AddSimpleModel(-1,1923, -1040, "maps/env/ocean_docks/OldWeaponFact3.dff", "maps/env/ocean_docks/OldWeaponFact3.txd");
-    AddSimpleModel(-1,8674, -1041, "maps/env/ocean_docks/OldWeaponFact4.dff", "maps/env/ocean_docks/OldWeaponFact4.txd");
-    AddSimpleModel(-1,1923, -1043, "maps/env/ocean_docks/OldWeaponFact5.dff", "maps/env/ocean_docks/OldWeaponFact5.txd");
-    CreateObject(-1043, 2219.604003, -2200.492919, 12.508000, 0.000000, 0.000000, 0.000000, 2500.00); 
-    CreateObject(-1039, 2182.197998, -2273.257080, 13.074000, 0.000000, 0.000000, 0.000000, 2500.00);
-    CreateDynamicObject(-1038, 2215.278076, -2240.804931, 14.717000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1041, 2216.606933, -2242.823974, 18.781000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00); 
-    CreateDynamicObject(-1040, 2219.648925, -2243.659912, 17.162000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.00, 2500.00);
+    AddSimpleModelEx(1923, -1038, "maps/env/ocean_docks/OldWeaponFact1.dff", "maps/env/ocean_docks/OldWeaponFact1.txd");
+    AddSimpleModelEx(1923, -1039, "maps/env/ocean_docks/OldWeaponFact2.dff", "maps/env/ocean_docks/OldWeaponFact2.txd");
+    AddSimpleModelEx(1923, -1040, "maps/env/ocean_docks/OldWeaponFact3.dff", "maps/env/ocean_docks/OldWeaponFact3.txd");
+    AddSimpleModelEx(8674, -1041, "maps/env/ocean_docks/OldWeaponFact4.dff", "maps/env/ocean_docks/OldWeaponFact4.txd");
+    AddSimpleModelEx(1923, -1042, "maps/env/ocean_docks/OldWeaponFact5.dff", "maps/env/ocean_docks/OldWeaponFact5.txd");
+
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1038, 2215.278076, -2240.804931, 14.717000, 0.000000, 0.000000, 0.000000); 
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1039, 2182.197998, -2273.257080, 13.074000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_OBJECTS, -1040, 2219.648925, -2243.659912, 17.162000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1041, 2216.606933, -2242.823974, 18.781000, 0.000000, 0.000000, 0.000000); 
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -1042, 2219.604003, -2200.492919, 12.508000, 0.000000, 0.000000, 0.000000); 
+
     CreateDynamicObject(2957, 2197.2199700, -2246.8400870, 14.1780000, 0.0000000, 0.0000000, 0.0000000);
     CreateDynamicObject(17951, 2223.4799800, -2220.5000000, 14.2399990, 0.0000000, 0.0000000, 0.0000000);
     CreateDynamicObject(2957, 2217.6298820, -2267.0900870, 14.1920000, 0.0000000, 0.0000000, 0.0000000);

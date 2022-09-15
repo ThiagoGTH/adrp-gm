@@ -23,15 +23,16 @@ hook OnGameModeInit() {
 }
 
 SanPedro() {
-    AddSimpleModel(-1, 1923, -20073, "maps/sanpedro/-1071.dff", "maps/sanpedro/-1071.txd");
-    AddSimpleModel(-1, 17863, -20074, "maps/sanpedro/-1072.dff", "maps/sanpedro/-1072.txd");
-    AddSimpleModel(-1, 1923, -20075, "maps/sanpedro/-1073.dff", "maps/sanpedro/-1073.txd");
-    AddSimpleModel(-1, 1923, -20076, "maps/sanpedro/-1074.dff", "maps/sanpedro/-1074.txd");
+    AddSimpleModelEx(1923, -20073, "maps/sanpedro/-1071.dff", "maps/sanpedro/-1071.txd");
+    AddSimpleModelEx(17863, -20074, "maps/sanpedro/-1072.dff", "maps/sanpedro/-1072.txd");
+    AddSimpleModelEx(1923, -20075, "maps/sanpedro/-1073.dff", "maps/sanpedro/-1073.txd");
+    AddSimpleModelEx(1923, -20076, "maps/sanpedro/-1074.dff", "maps/sanpedro/-1074.txd");
 
-    CreateObject(-20073, 2490.906250, -1504.328125, 22.921899, 0.000000, 0.000000, 0.000000, 2500.0);
-	CreateDynamicObject(-20074, 2467.460937, -1538.250000, 27.601600, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.0, 2500.0);
-	CreateDynamicObject(-20075, 2510.477050, -1543.272949, 21.711000, 0.000000, 0.000000, 0.000000, -1, -1, -1, 2500.0, 2500.0);
-	CreateObject(-20076, 2510.477050, -1543.272949, 21.711000, 0.000000, 0.000000, 0.000000, 2500.0);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20073, 2490.906250, -1504.328125, 22.921899, 0.000000, 0.000000, 0.000000);
+	CreateModelObject(MODEL_TYPE_VEGETATION, -20074, 2467.460937, -1538.250000, 27.601600, 0.000000, 0.000000, 0.000000);
+	CreateModelObject(MODEL_TYPE_OBJECTS, -20075, 2510.477050, -1543.272949, 21.711000, 0.000000, 0.000000, 0.000000);
+	CreateModelObject(MODEL_TYPE_LANDMASSES, -20076, 2510.477050, -1543.272949, 21.711000, 0.000000, 0.000000, 0.000000);
+
 	CreateDynamicObject(673, 2519.460938, -1560.968994, 22.621000, 0.0, 0.0, 0.0);
 	CreateDynamicObject(673, 2500.833008, -1575.083984, 22.643000, 0.0, 0.0, 0.0);
 	CreateDynamicObject(673, 2532.801025, -1545.797974, 22.436001, 0.0, 0.0, 0.0);

@@ -7,7 +7,6 @@ hook OnPlayerConnect(playerid){
     RemoveBuildingForPlayer(playerid, 700, 1761.458, -1651.739, 14.312, 0.250);
     RemoveBuildingForPlayer(playerid, 1294, 1753.770, -1632.060, 17.250, 0.250);
     RemoveBuildingForPlayer(playerid, 1531, 1767.208, -1617.540, 15.038, 0.250);
-    RemoveBuildingForPlayer(playerid, 4077, 1781.479, -1648.420, 26.835, 0.250);
     return true;
 }
 

@@ -4,7 +4,7 @@ hook OnGameModeInit(){
     LoadSEBExterior();
 }
 
-LoadSEBExterior(){
+LoadSEBExterior() {
     AddSimpleModelEx(5076, -20013, "maps/factions/LSSD/SEB/sebmap1obje1.dff", "maps/factions/LSSD/SEB/sebmap1.txd");
     AddSimpleModelEx(1923, -20014, "maps/factions/LSSD/SEB/sebmap1obje2.dff", "maps/factions/LSSD/SEB/sebmap1.txd");
     AddSimpleModelEx(16335, -20015, "maps/factions/LSSD/SEB/sebmap2obje1.dff", "maps/factions/LSSD/SEB/sebmap2.txd");

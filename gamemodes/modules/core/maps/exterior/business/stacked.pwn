@@ -8,9 +8,8 @@ hook OnPlayerConnect(playerid) {
 }
 
 hook OnGameModeInit() {
-    AddSimpleModel(-1, 12849, -2005, "maps/business/stacked/twsp.dff", "maps/business/stacked/twsp.txd");
-
-    CreateObject(-2005, 2112.939941, -1797.086425, 19.342802, 0.000000, 0.000000, 0.000000, 2500.00); 
+    AddSimpleModelEx(12849, -2005, "maps/business/stacked/twsp.dff", "maps/business/stacked/twsp.txd");
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -2005, 2112.939941, -1797.086425, 19.342802, 0.000000, 0.000000, 0.000000);
     return true;
 }
 

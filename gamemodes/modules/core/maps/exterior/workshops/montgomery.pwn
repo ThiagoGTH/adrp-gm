@@ -19,15 +19,15 @@ hook OnPlayerConnect(playerid){
 
 hook OnGameModeInit(){
 
-    AddSimpleModel(-1, 12849, -5793, "/maps/workshop/montgomery/mtshp.dff", "/maps/workshop/montgomery/mtshp.txd");
-    AddSimpleModel(-1, 12854, -5794, "/maps/workshop/montgomery/crne.dff", "/maps/workshop/montgomery/crne.txd");
-    AddSimpleModel(-1, 2974, -5795, "/maps/workshop/montgomery/oil_display.dff", "/maps/workshop/montgomery/oil_display.txd");
-    AddSimpleModel(-1, 2975, -5796, "/maps/workshop/montgomery/estante_01.dff", "/maps/workshop/montgomery/estante_01.txd");
-    AddSimpleModel(-1, 2976, -5797, "/maps/workshop/montgomery/wheel_display.dff", "/maps/workshop/montgomery/wheel_display.txd");
-    AddSimpleModel(-1, 2977, -5798, "/maps/workshop/montgomery/work_table.dff", "/maps/workshop/montgomery/work_table.txd");
-    AddSimpleModel(-1, 2978, -5799, "/maps/workshop/montgomery/estante_03.dff", "/maps/workshop/montgomery/estante_03.txd");
-    AddSimpleModel(-1, 2979, -5800, "/maps/workshop/montgomery/estante_02.dff", "/maps/workshop/montgomery/estante_02.txd");
-    AddSimpleModel(-1, 2980, -5801, "/maps/workshop/montgomery/gtewrkshp_ext.dff", "/maps/workshop/montgomery/gtewrkshp_ext.txd");
+    AddSimpleModel(-1, 12849, -5793, "maps/workshop/montgomery/mtshp.dff", "maps/workshop/montgomery/mtshp.txd");
+    AddSimpleModel(-1, 12854, -5794, "maps/workshop/montgomery/crne.dff", "maps/workshop/montgomery/crne.txd");
+    AddSimpleModel(-1, 2974, -5795, "maps/workshop/montgomery/oil_display.dff", "maps/workshop/montgomery/oil_display.txd");
+    AddSimpleModel(-1, 2975, -5796, "maps/workshop/montgomery/estante_01.dff", "maps/workshop/montgomery/estante_01.txd");
+    AddSimpleModel(-1, 2976, -5797, "maps/workshop/montgomery/wheel_display.dff", "maps/workshop/montgomery/wheel_display.txd");
+    AddSimpleModel(-1, 2977, -5798, "maps/workshop/montgomery/work_table.dff", "maps/workshop/montgomery/work_table.txd");
+    AddSimpleModel(-1, 2978, -5799, "maps/workshop/montgomery/estante_03.dff", "maps/workshop/montgomery/estante_03.txd");
+    AddSimpleModel(-1, 2979, -5800, "maps/workshop/montgomery/estante_02.dff", "maps/workshop/montgomery/estante_02.txd");
+    AddSimpleModel(-1, 2980, -5801, "maps/workshop/montgomery/gtewrkshp_ext.dff", "maps/workshop/montgomery/gtewrkshp_ext.txd");
 
 
     new tmpobjid;

@@ -83,7 +83,6 @@ hook OnGameModeInit() {
 		int, vw;
 
 	for(new i = 0; i < sizeof(SlotMachinePositions); i++) {
-
 		x = SlotMachinePositions[i][E_SLOT_MACHINE_X];
 		y = SlotMachinePositions[i][E_SLOT_MACHINE_Y];
 		z = SlotMachinePositions[i][E_SLOT_MACHINE_Z];
@@ -93,9 +92,9 @@ hook OnGameModeInit() {
 		int = SlotMachinePositions[i][E_SLOT_MACHINE_INTERIOR];
 		vw = SlotMachinePositions[i][E_SLOT_MACHINE_WORLD];
 
-		SlotMachineArea[i] = CreateDynamicSphere(x, y, z, 1.0);
+		SlotMachineArea[i] = CreateDynamicSphere(x, y, z, 1.5);
 
-		CreateDynamic3DTextLabel("Pressione ~k~~CONVERSATION_YES~ para jogar", COLOR_WHITE, x, y, z, 0.5, .testlos = false, .worldid = vw, .interiorid = int);
+		CreateDynamic3DTextLabel("Pressione ~k~~CONVERSATION_YES~ para jogar", COLOR_WHITE, x, y, z, 1.0, .testlos = false, .worldid = vw, .interiorid = int);
 		
 		CreateDynamicObject(2754, x, y, z, rx, ry, rz, vw, int, -1, STREAMER_OBJECT_SD, STREAMER_OBJECT_DD);
 	}
@@ -327,6 +326,10 @@ timer PlayerBeginGambling[GAMBLE_TIMER](playerid) {
 			pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
 
 	        PlayerBalance[playerid] += money;
+			SendNearbyMessage(playerid, 7.0, COLOR_PURPLE, "** %s ganhou US$ %s no caça-níquel.", pNome(playerid), FormatNumber(money));
+
+			format(logString, sizeof(logString), "%s (%s) ganhou US$ %s no caça-níquel.", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(money));
+			logCreate(playerid, logString, 12);
 
 	        Updateslot_BetTD(playerid);
 
@@ -334,8 +337,7 @@ timer PlayerBeginGambling[GAMBLE_TIMER](playerid) {
 	        PlayerSlotID[playerid][0] = random(5);
 			PlayerSlotID[playerid][1] = random(5);
 			PlayerSlotID[playerid][2] = random(5);
-	    }
-	    else {
+	    } else {
 	        if (PlayerSlotID[playerid][0] == PlayerSlotID[playerid][1] || PlayerSlotID[playerid][1] == PlayerSlotID[playerid][2] || PlayerSlotID[playerid][0] == PlayerSlotID[playerid][2]) {
 				ShowPlayerFooter(playerid, "Quase lá!", 2);
 				pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);

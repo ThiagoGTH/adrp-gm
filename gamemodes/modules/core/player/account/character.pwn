@@ -240,6 +240,8 @@ SpawnSelectedCharacter(playerid) {
     mysql_query(DBConn, query);
 
     Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, RenderingObjectsValue(playerid), playerid);
+    Streamer_SetRadiusMultiplier(STREAMER_TYPE_OBJECT, RenderingObjectsRadius(playerid), playerid);
+    Streamer_Update(playerid);
 
     format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
@@ -250,23 +252,6 @@ SpawnSelectedCharacter(playerid) {
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
-    return true;
-}
-/*
-forward SpawnPlayerPosCamera(playerid);
-public SpawnPlayerPosCamera(playerid) {
-    pInfo[playerid][pLogged] = true;
-    TogglePlayerSpectating(playerid, false);
-    SetCameraBehindPlayer(playerid);
-    SetWeapons(playerid);
-    SetPlayerArmedWeapon(playerid, 0);
-    SetTimerEx("SetSkinPos", 100, false, "i", playerid, 0);
-    return true;
-}*/
-
-forward SetSkinPos(playerid);
-public SetSkinPos(playerid) {
-    SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
     return true;
 }
 
@@ -308,7 +293,7 @@ SaveCharacterInfo(playerid) {
     `positionA` = '%f', \
     `phone_number` = '%d', \
     `phone_type` = '%d' \
-    WHERE ID = '%d';", 
+    WHERE ID = '%d'", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
     pInfo[playerid][pPlayingMinutes],

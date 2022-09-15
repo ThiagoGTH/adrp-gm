@@ -1,6 +1,6 @@
 IsPetSpawned(playerid) {
     if(PetData[playerid][petSpawn])
-        return 1;
+        return true;
 
     return 0;
 }
@@ -14,7 +14,7 @@ ShowPetMenu(playerid) {
     else format(string, sizeof(string), "Alterar nome\n\t\n{36A717}Spawnar");
 
     Dialog_Show(playerid, PETMENU, DIALOG_STYLE_LIST, title, string, "Selecionar", "Fechar");
-    return 1;
+    return true;
 }
 
 PetSpawn(playerid) {
@@ -37,7 +37,7 @@ PetSpawn(playerid) {
 
     format(logString, sizeof(logString), "%s (%s) spawnou seu animal de estimação em %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerLocation(playerid));
     logCreate(playerid, logString, 19);
-    return 1;
+    return true;
 }
 
 PetDespawn(playerid) {
@@ -54,7 +54,7 @@ PetDespawn(playerid) {
         format(logString, sizeof(logString), "%s (%s) desespawnou seu animal de estimação em %s", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerLocation(playerid));
         logCreate(playerid, logString, 19);
     }
-    return 1;
+    return true;
 }
 
 PetSit(playerid) {
@@ -69,7 +69,7 @@ PetSit(playerid) {
         
         SendServerMessage(playerid, "Seu animal de estimação agora está sentado.");
     }
-    return 1;
+    return true;
 }
 
 PetLay(playerid) {
@@ -84,7 +84,7 @@ PetLay(playerid) {
         ApplyActorAnimation(PetData[playerid][petModel], "CRACK", "crckidle2", 4.1, 0, 0, 0, 1, 0);
         SendServerMessage(playerid, "Seu animal de estimação agora está deitado.");
     }
-    return 1;
+    return true;
 }
 
 PetJump(playerid) {
@@ -99,7 +99,7 @@ PetJump(playerid) {
         ApplyActorAnimation(PetData[playerid][petModel], "BSKTBALL", "BBALL_DEF_JUMP_SHOT", 4.1, 1, 0, 0, 0, 0);
         SendServerMessage(playerid, "Seu animal de estimação agora está pulando.");
     }
-    return 1;
+    return true;
 }
 
 PetStay(playerid) {
@@ -113,15 +113,14 @@ PetStay(playerid) {
         ClearActorAnimations(PetData[playerid][petModel]);
         SendServerMessage(playerid, "Seu animal de estimação agora está parado.");
     }
-    return 1;
+    return true;
 }
 
 PetFollow(playerid, targetid) {
     if(!IsPetSpawned(playerid))
         return SendErrorMessage(playerid, "Seu animal de estimação não está spawnado.");
 
-    if(IsValidActor(PetData[playerid][petModel]))
-    {
+    if(IsValidActor(PetData[playerid][petModel])) {
         if(PetData[playerid][petStatus] == PET_FOLLOW)
         {
             stop PetData[playerid][petTimer];
@@ -131,7 +130,7 @@ PetFollow(playerid, targetid) {
         PetData[playerid][petTimer] = repeat Pet_Update(playerid, targetid);
         SendServerMessage(playerid, "Seu animal de estimação agora está acompanhando.");
     }
-    return 1;
+    return true;
 }
 
 PetName(playerid) {
@@ -142,7 +141,7 @@ PetName(playerid) {
         return SendErrorMessage(playerid, "O nome do seu animal de estimação não pode mais ser alterado.");
 
     Dialog_Show(playerid, PET_NAME, DIALOG_STYLE_INPUT, "Alterar Nome", "{FFFFFF}ATENÇÃO: Você só pode alterar os nomes dos animais de estimação uma vez\n\nDigite o nome desejado:", "Confirmar", "Cancelar");
-    return 1;
+    return true;
 }
 
 Dialog:PET_NAME(playerid, response, listitem, inputtext[]) {
@@ -158,7 +157,7 @@ Dialog:PET_NAME(playerid, response, listitem, inputtext[]) {
         format(logString, sizeof(logString), "%s (%s) definiu o nome do seu animal de estimação como %s", pNome(playerid), GetPlayerUserEx(playerid), inputtext);
         logCreate(playerid, logString, 19);
     }
-    return 1;
+    return true;
 }
 
 Dialog:PETMENU(playerid, response, listitem, inputtext[]) {
@@ -198,14 +197,14 @@ Dialog:PET_MENU_FOLLOW(playerid, response, listitem, inputtext[]) {
         if(targetid == INVALID_PLAYER_ID || !IsPlayerSpawned(targetid))
             return Dialog_Show(playerid, PET_MENU_FOLLOW, DIALOG_STYLE_INPUT, "Ação: Segue", "{FF0000}ERRO: O jogador especificado é inválido.\n\n{FFFFFF}Insira o ID do jogador que você deseja que seu animal de estimação siga:", "Seguir", "Cancelar");
         
-        if(!IsPlayerNearPlayer(playerid, targetid, 20.0)) return Dialog_Show(playerid, PET_MENU_FOLLOW, DIALOG_STYLE_INPUT, "Ação: Segue", "{FF0000}ERRO: O jogador especificado não está perto o suficiente.\n\n{FFFFFF}Insira o ID do jogador que você deseja que seu animal de estimação siga:", "Seguir", "Cancelar");
+        if(!IsPlayerNearPlayer(playerid, targetid, 10.0)) return Dialog_Show(playerid, PET_MENU_FOLLOW, DIALOG_STYLE_INPUT, "Ação: Segue", "{FF0000}ERRO: O jogador especificado não está perto o suficiente.\n\n{FFFFFF}Insira o ID do jogador que você deseja que seu animal de estimação siga:", "Seguir", "Cancelar");
         
         PetFollow(playerid, targetid);
         SendServerMessage(playerid, "Seu animal de estimação agora está seguindo %s.", pNome(targetid));
         format(logString, sizeof(logString), "%s (%s) colocou seu animal de estimação para seguir %s", pNome(playerid), GetPlayerUserEx(playerid), pNome(targetid));
         logCreate(playerid, logString, 19);
     }
-    return 1;
+    return true;
 }
 
 Float:GetDistance2D(Float:x1, Float:y1, Float:x2, Float:y2) {
@@ -268,7 +267,7 @@ SetFacingPoint(actorid, Float:x, Float:y) {
 IsValidPetModel(skinid) {
     switch(skinid) {
         case 29900..29919:
-            return 1;
+            return true;
     }
-    return 0;
+    return false;
 }

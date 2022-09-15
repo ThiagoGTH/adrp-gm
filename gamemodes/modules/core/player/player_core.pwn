@@ -6,15 +6,21 @@ CMD:ajuda(playerid, params[]) {
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
 		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
-		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /baixo, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
 		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos");
-		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
-		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca");
+		SendClientMessage(playerid, COLOR_CYAN1, "[OUTROS] /config, /tela");
+		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca, /ajuda tela");
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "Se tiver dúvida na utilização de algum comando envie um /sos e fale com um administrador.");
 		return true;
 	}
-	if (!strcmp(type, "empresa", true)){
+	if (!strcmp(type, "tela", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[TELA] /tela 0 desativa; /tela 1 ao 4 define um tipo específico.");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		return true; 
+	} 
+	else if (!strcmp(type, "empresa", true)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "[EMPRESA] ble");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");

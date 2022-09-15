@@ -969,10 +969,8 @@ SendVehicleMessage(vehicleid, color, const str[], {Float,_}:...) {
 		#emit LCTRL 5
 		#emit SCTRL 4
 
-		foreach(new i : Player)
-		{
-		 	if (GetPlayerVehicleID(i) == vehicleid)
-		 	{
+		foreach(new i : Player) {
+		 	if (GetPlayerVehicleID(i) == vehicleid) {
 			    SendClientMessage(i, color, string);
 				foreach(new ix : Player) {
 				    if(pInfo[ix][pSpectating] == i)

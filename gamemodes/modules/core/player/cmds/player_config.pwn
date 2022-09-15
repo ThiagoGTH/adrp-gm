@@ -4,7 +4,7 @@ CMD:config(playerid, params[]){
     Dialog_Show(playerid, PLAYER_CONFIG, DIALOG_STYLE_LIST, "Gerenciamento do Usuário", "Help Center\nAvisos Administrativos\nNametag\nRenderização de Objetos\n", "Selecionar", "Fechar");
     return true;
 }
-
+ 
 Dialog:PLAYER_CONFIG(playerid, response, listitem, inputtext[]){
     if(response){
         new string[512], title[128];
@@ -42,12 +42,12 @@ Dialog:PLAYER_CONFIG(playerid, response, listitem, inputtext[]){
             case 3: { // Objects
                 format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Renderização");
                 switch(pInfo[playerid][pRenderObjects]){
-                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                    case 1: format(string, sizeof(string), "Padrão (1.0)\n{BBBBBB}>>> {FFFFFF}Média (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                    case 2: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\n{BBBBBB}>>> {FFFFFF}Alta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                    case 3: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\n{BBBBBB}>>> {FFFFFF}Ultra (7.0)\nAbsurda (10.0)");
-                    case 4: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\n{BBBBBB}>>> {FFFFFF}Absurda (10.0)");
-                    default: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
+                    case 1: format(string, sizeof(string), "Baixa (0.5)\n{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
+                    case 2: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\n{BBBBBB}>>> {FFFFFF}Média (1.5)\nAlta (3.0)\nUltra (5.0)");
+                    case 3: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\n{BBBBBB}>>> {FFFFFF}Alta (3.0)\nUltra (5.0)");
+                    case 4: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\nAlta (3.0)\n{BBBBBB}>>> {FFFFFF}Ultra (5.0)");
+                    default: format(string, sizeof(string), "Baixa (0.5)\n{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
                 }
                 pInfo[playerid][pSetting] = 4;
                 Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -93,15 +93,18 @@ Dialog:PLAYER_CONFIG_OPTIONS(playerid, response, listitem, inputtext[]){
         else if (pInfo[playerid][pSetting] == 4) {
             format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Nametag");
             switch(listitem){
-                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                case 1: format(string, sizeof(string), "Padrão (1.0)\n{BBBBBB}>>> {FFFFFF}Média (2.0)\nAlta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                case 2: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\n{BBBBBB}>>> {FFFFFF}Alta (5.0)\nUltra (7.0)\nAbsurda (10.0)");
-                case 3: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\n{BBBBBB}>>> {FFFFFF}Ultra (7.0)\nAbsurda (10.0)");
-                case 4: format(string, sizeof(string), "Padrão (1.0)\nMédia (2.0)\nAlta (5.0)\nUltra (7.0)\n{BBBBBB}>>> {FFFFFF}Absurda (10.0)");
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
+                case 1: format(string, sizeof(string), "Baixa (0.5)\n{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
+                case 2: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\n{BBBBBB}>>> {FFFFFF}Média (1.5)\nAlta (3.0)\nUltra (5.0)");
+                case 3: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\n{BBBBBB}>>> {FFFFFF}Alta (3.0)\nUltra (5.0)");
+                case 4: format(string, sizeof(string), "Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\nAlta (3.0)\n{BBBBBB}>>> {FFFFFF}Ultra (5.0)");
             }
 
             pInfo[playerid][pRenderObjects] = listitem;
             Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, RenderingObjectsValue(playerid), playerid);
+            Streamer_SetRadiusMultiplier(STREAMER_TYPE_OBJECT, RenderingObjectsRadius(playerid), playerid);
+            Streamer_Update(playerid);
+
             Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
         }
     } else {

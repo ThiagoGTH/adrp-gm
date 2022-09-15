@@ -1,8 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 new Text:Blind, Text:Blind2, Text:Blind3, Text:Blind4;
-hook OnGameModeInit()
-{
+hook OnGameModeInit() {
 	Blind = TextDrawCreate(641.199951, 1.500000, "anything");
 	TextDrawLetterSize(Blind, 0.000000, 49.378147);
 	TextDrawAlignment(Blind, 3);
@@ -29,19 +28,15 @@ hook OnGameModeInit()
 	return true;
 }
 
-CMD:tela(playerid,params[])
-{
-	new option;
-	if(sscanf(params, "d", option))
-	{
-		SendClientMessage(playerid, COLOR_GREY, "USE: /tela 1-4");
-		return SendClientMessage(playerid, COLOR_GREY, "INFO: Utilize /ajuda tela para para mais informações.");
+CMD:tela(playerid,params[]) {
+	static option;
+	if(sscanf(params, "d", option)) {
+		SendSyntaxMessage(playerid, "/tela 0-4");
+		return SendClientMessage(playerid, COLOR_BEGE, "INFO: Utilize /ajuda tela para para mais informações.");
 	}
 
-	switch(option)
-	{
-		case 0:
-		{
+	switch(option) {
+		case 0: {
 			TextDrawHideForPlayer(playerid, Blind);
 			TextDrawHideForPlayer(playerid, Blind2);
 			TextDrawHideForPlayer(playerid, Blind3);
@@ -51,7 +46,7 @@ CMD:tela(playerid,params[])
 		case 2: TextDrawShowForPlayer(playerid, Blind2);
         case 3: TextDrawShowForPlayer(playerid, Blind3);
         case 4: TextDrawShowForPlayer(playerid, Blind4);
-		default: SendClientMessage(playerid, 0xDE3838FF, "ERRO: Opção inválida! Utilize /ajuda tela para mais informações.");
+		default: SendErrorMessage(playerid, "Opção inválida. Utilize /ajuda tela para mais informações.");
 	}
 	return true;
 }

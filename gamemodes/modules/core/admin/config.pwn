@@ -1,9 +1,3 @@
-/*
-
-Este módulo é dedicado ao /gerenciar, que será integrado ao MySQL e poderá adicionar tudo dinamicamente.
- 
-*/
-
 #include <YSI_Coding\y_hooks>
 
 CMD:gerenciar(playerid, params[]) {

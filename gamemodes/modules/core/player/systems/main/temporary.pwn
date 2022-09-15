@@ -35,3 +35,10 @@ CMD:pegarpremium(playerid, params[]) {
 	SendServerMessage(playerid, "Você pegou Premium Ouro.");
 	return true;
 }
+
+CMD:nometeste(playerid, params[]) {
+	foreach (new i : Player) {
+		va_SendClientMessage(playerid, -1, "%s / %s", uInfo[i][uName], GetPlayerUserEx(i));
+	}
+	return true;
+}

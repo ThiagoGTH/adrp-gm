@@ -95,7 +95,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				else if(DroppedItems[id][droppedModel] == -6000){
 					new quantity = DroppedItems[id][droppedQuantity];
 
-					va_SendClientMessage(playerid, -1, "SERVER: Você pegou US$ %s do chão.", FormatNumber(quantity));
+					SendServerMessage(playerid, "Você pegou US$ %s do chão.", FormatNumber(quantity));
 
 					SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pegou US$ %s do chão.", pNome(playerid), FormatNumber(quantity));
 
@@ -108,7 +108,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					new itemid = DroppedItems[id][droppedItem];
 					new quantity = DroppedItems[id][droppedQuantity];
 
-					va_SendClientMessage(playerid, -1, "SERVER: Você pegou o item %s (%d) do chão.", diInfo[itemid][diName], quantity);
+					SendServerMessage(playerid, "Você pegou o item %s (%d) do chão.", diInfo[itemid][diName], quantity);
 
 					SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s pega o item \"%s\" do chão.", pNome(playerid), diInfo[itemid][diName]);
 

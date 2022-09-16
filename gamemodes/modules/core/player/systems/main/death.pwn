@@ -107,7 +107,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 	pInfo[damagedid][pShotTime] = gettime();
 
 	new bool:armourhit = false; 
-	/*switch(bodypart)
+	switch(bodypart)
 	{
 		case BODY_PART_CHEST, BODY_PART_GROIN: armourhit = true;
 
@@ -135,27 +135,25 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 		{
 			if(pInfo[damagedid][pSwat]) amount = amount/4;
 		}
-	}*/
+	}
 	if(armour > 0.0 && armourhit){
         armour -= amount;
         if(armour < 0.0){
-         	SetPlayerArmour(playerid, 0.0);
-            pInfo[playerid][pArmour] = 0.0;
+         	SetPlayerArmour(damagedid, 0.0);
+            pInfo[damagedid][pArmour] = 0.0;
             health += armour;
-        } else SetPlayerArmour(playerid, armour);
+        } else SetPlayerArmour(damagedid, armour);
     } else health -= amount;
 	SetPlayerHealthEx(damagedid, health);
 	CallbackDamages(damagedid, playerid, bodypart, weaponid, amount);
 	if(health > 10 && health < 30){
 		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){
 			SetPlayerWeaponSkill(damagedid, MEDIUM_SKILL);
-			SendClientMessage(damagedid, COLOR_LIGHTRED, "-> Vida baixa, suas skills de tiros estão no médio.");
 		}
     }
     if(health < 10){
 		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){
 			SetPlayerWeaponSkill(damagedid, MINIMUM_SKILL);
-			SendClientMessage(damagedid, COLOR_LIGHTRED, "-> Vida crítica, suas skills de tiros estão no mínimo.");
 		}
     }
 	if(health < 1){
@@ -394,13 +392,13 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
                     countwep++;
             }
             if(countwep > 0) {
-                va_SendClientMessage(playerid, -1, "SERVER: Por segurança, estas eram as armas de %s antes de morrer.", pNome(playerid));
+                SendServerMessage(playerid, "Por segurança, estas eram as armas de %s antes de morrer.", pNome(playerid));
                 va_SendClientMessage(playerid, COLOR_LIGHTRED, "Armas:");
                 for (new i = 0; i < 12; i ++) if (pInfo[playerid][pGuns][i] && pInfo[playerid][pAmmo][i] > 0) {
                     va_SendClientMessage(playerid, -1, "%s (%d)", ReturnWeaponName(pInfo[playerid][pGuns][i]), pInfo[playerid][pAmmo][i]);
                 }
                 ResetWeapons(playerid);	
-            } else va_SendClientMessage(playerid, -1, "SERVER: Você não possuia nenhuma arma quando morreu.");
+            } else SendServerMessage(playerid, "Você não possuia nenhuma arma quando morreu.");
 			
 			new textstring[512];
 			if (!IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag])) {
@@ -675,11 +673,11 @@ CMD:deletecorpse(playerid, params[])
 
 CMD:investida(playerid, params[]){
 	if (!pInfo[playerid][pTackleMode]){
-		va_SendClientMessage(playerid, -1, "SERVER: Você ativou o modo investida. A partir de agora se você socar alguém, haverá chances de derruba-lo.");
-		va_SendClientMessage(playerid, -1, "SERVER: Se o jogador for derrubado e não interpretar corretamente, utilize o /report.");
+		SendServerMessage(playerid, "Você ativou o modo investida. A partir de agora se você socar alguém, haverá chances de derruba-lo.");
+		SendServerMessage(playerid, "Se o jogador for derrubado e não interpretar corretamente, utilize o /report.");
 		pInfo[playerid][pTackleMode] = true;
 	}else{
-		va_SendClientMessage(playerid, -1, "SERVER: Você desativou o modo investida.");
+		SendServerMessage(playerid, "Você desativou o modo de investida.");
 		pInfo[playerid][pTackleMode] = false;
 	}
 	return true;

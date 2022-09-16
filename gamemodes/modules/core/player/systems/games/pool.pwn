@@ -1071,10 +1071,8 @@ public PHY_OnObjectUpdate(handleid) {
 							g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] = g_poolTableData[poolid][E_PLAYER_BALL_TYPE][second_player] == E_STRIPED ? E_SOLID : E_STRIPED;
 						}
 
-						// alert players in table
-						foreach (new playerid : poolplayers< poolid >) {
-							SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s está jogando com as bolas %s.", pNome(first_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] == E_STRIPED ? ("listradas") : ("lisas"));
-	    				}
+						SendNearbyMessage(first_player, 30.0, COLOR_PURPLE, "* %s está jogando com as bolas %s.", pNome(first_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][first_player] == E_STRIPED ? ("listradas") : ("lisas"));
+						SendNearbyMessage(second_player, 30.0, COLOR_PURPLE, "* %s está jogando com as bolas %s.", pNome(second_player), g_poolTableData[poolid][E_PLAYER_BALL_TYPE][second_player] == E_STRIPED ? ("listradas") : ("lisas"));
 	    			}
 				}
 

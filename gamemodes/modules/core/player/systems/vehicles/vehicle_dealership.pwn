@@ -681,6 +681,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][pPositionA],
             0, 0, 0, 0, 0, 0);
             SpawnPlayer(playerid);
+            SetWeapons(playerid);
             return true;
         }
         new id, vaga = randomEx(0, 193);
@@ -720,6 +721,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][pPositionA],
             0, 0, 0, 0, 0, 0);
             SpawnPlayer(playerid);
+            SetWeapons(playerid);
             ResetDealershipVars(playerid);
             return true;
         } 
@@ -742,6 +744,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
         SpawnPlayer(playerid);
+        SetWeapons(playerid);
         ResetDealershipVars(playerid);
     } else {
         SendErrorMessage(playerid, "Você desistiu da compra.");
@@ -755,6 +758,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
         SpawnPlayer(playerid);
+        SetWeapons(playerid);
     }
     return true;
 }

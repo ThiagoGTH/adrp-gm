@@ -4,11 +4,11 @@ CMD:aceitarboquete(playerid, params[]) {
     new targetid = pInfo[playerid][pBJOffer];
     if(!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Você não está perto deste jogador.");
 
-    SetPlayerToFacePlayer(playerid, targetid);
-	SetPlayerToFacePlayer(targetid, playerid);
+/*    SetPlayerToFacePlayer(playerid, targetid);
+	SetPlayerToFacePlayer(targetid, playerid);*/
 
-	ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_START_P", 1.0, 1, 1, 1, 0, 0, 1);
-	ApplyAnimation(targetid, "BLOWJOBZ", "BJ_STAND_START_W", 1.0, 1, 1, 1, 0, 0, 1);
+	ApplyAnimation(playerid, "BLOWJOBZ", "BJ_Car_Start_P", 1.0, 1, 1, 1, 0, 0, 1);
+	ApplyAnimation(targetid, "BLOWJOBZ", "BJ_Car_Start_W", 1.0, 1, 1, 1, 0, 0, 1);
 
 	SetTimerEx("BlowJob", 1500, false, "ddd", targetid, playerid, 0);
 
@@ -38,22 +38,20 @@ public BlowJob(playerid, userid, step) {
 	switch(step) {
 	    case 0:
 	    {
-			ApplyAnimation(userid, "BLOWJOBZ", "BJ_STAND_LOOP_P", 2.0, 1, 1, 1, 0, 0, 1);
-			ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_LOOP_W", 2.0, 1, 1, 1, 0, 0, 1);
+			ApplyAnimation(userid, "BLOWJOBZ", "BJ_Car_Loop_P", 2.0, 1, 1, 1, 0, 0, 1);
+			ApplyAnimation(playerid, "BLOWJOBZ", "BJ_Car_Loop_W", 2.0, 1, 1, 1, 0, 0, 1);
             SetTimerEx("BlowJob", 10000, false, "ddd", playerid, userid, 1);
 	    }
 	    case 1:
 	    {
-			ApplyAnimation(userid, "BLOWJOBZ", "BJ_STAND_END_P", 2.0, 0, 1, 1, 0, 0, 1);
-			ApplyAnimation(playerid, "BLOWJOBZ", "BJ_STAND_END_W", 2.0, 1, 1, 1, 0, 0, 1);
+			ApplyAnimation(userid, "BLOWJOBZ", "BJ_Car_End_P", 2.0, 0, 1, 1, 0, 0, 1);
+			ApplyAnimation(playerid, "BLOWJOBZ", "BJ_Car_End_W", 2.0, 1, 1, 1, 0, 0, 1);
             SetTimerEx("BlowJob", 2500, false, "ddd", playerid, userid, 2);
 	    }
 	    case 2:
 	    {
-			TogglePlayerControllable(playerid, 1);
-			TogglePlayerControllable(userid, 1);
-	        ClearAnimations(playerid), SetCameraBehindPlayer(playerid);
-	        ClearAnimations(userid), SetCameraBehindPlayer(userid);
+	        ClearAnimations(playerid);
+	        ClearAnimations(userid);
 	    }
 	}
 }

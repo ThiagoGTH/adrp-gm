@@ -287,7 +287,7 @@ CheckCharactersName(playerid) {
     ClearPlayerChat(playerid);
     SendServerMessage(playerid, "Detectamos que o seu nome de usuário é o nome de um personagem existente.");
     SendServerMessage(playerid, "Por precaução e segurança, não podemos deixar que você se autentique assim.");
-    va_SendClientMessage(playerid, -1, "SERVER: Mas não se preocupe. Estamos redirecionando a sua conexão ao usuário %s.", realUserName);
+    SendServerMessage(playerid, "Mas não se preocupe. Estamos redirecionando a sua conexão ao usuário %s.", realUserName);
         
     //format(uInfo[playerid][uName], 24, "%s", realUserName);
     SetPlayerName(playerid, realUserName);

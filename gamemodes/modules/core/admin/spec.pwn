@@ -69,6 +69,7 @@ CMD:spec(playerid, params[]) {
         pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
         TogglePlayerSpectating(playerid, false);
         SpawnPlayer(playerid);
+        SetWeapons(playerid);
 	    
 	  	return SendServerMessage(playerid, "SERVER: Você não está mais no modo espectador.");
 	}
@@ -155,6 +156,7 @@ hook OnPlayerDisconnect(playerid, reason) {
 	            logCreate(i, logString, 1);
                 TogglePlayerSpectating(i, false);
                 SpawnPlayer(i);
+                SetWeapons(i);
             }
         }
     }

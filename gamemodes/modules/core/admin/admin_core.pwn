@@ -70,12 +70,12 @@ ShowAdminCmds(playerid){
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa, /irentrada, /atrancar");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listaentradas, /irveiculo, /trazerveiculo, /respawnarveiculo, /rtc");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /aremovercallsign, /checarveiculos, /novato");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /aremovercallsign, /checarveiculos, /novato, /ferimentos (em modo trabalho)");
 	} 
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /skin, /jetpack, /checarip, /ultimoatirador, /resetararmas, /encerrarsinuca");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /resetaraparencia, /entrarveiculo");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 2]{FFFFFF} /resetaraparencia, /entrarveiculo, /abrutal, /amatar");
 	}
 	if(GetPlayerAdmin(playerid) >= 4) // GAME ADMIN 3
 	{
@@ -184,26 +184,8 @@ CMD:vida(playerid, params[]) {
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s setou a vida de %s em %.2f.", GetPlayerUserEx(playerid), pNome(userid), amount);
 
 	SetPlayerHealthEx(userid, amount);
-	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou %s com %.2f de vida.", pNome(userid), amount);
+	SendServerMessage(playerid, "Você setou %s com %.2f de vida.", pNome(userid), amount);
 	format(logString, sizeof(logString), "%s (%s) setou %s com %.2f de vida.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
-	logCreate(playerid, logString, 1);
-	return true;
-}
-
-CMD:reclife(playerid, params[]) {
-	static
-		userid; 
-
-	
-  	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
-	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/reclife [playerid/nome]");
-	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
-
-	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s recuperou a vida de %s.", GetPlayerUserEx(playerid), pNome(userid));
-
-	SetPlayerHealthEx(userid, pInfo[userid][pHealthMax]);
-	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você recuperou a vida de %s.", pNome(userid));
-	format(logString, sizeof(logString), "%s (%s) recuperou a vida de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 	return true;
 }
@@ -219,7 +201,7 @@ CMD:colete(playerid, params[]) {
 	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
 
   	SetPlayerArmour(userid, amount);
-	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou %s com %.2f de colete.", pNome(userid), amount);
+	SendServerMessage(playerid, "Você setou %s com %.2f de colete.", pNome(userid), amount);
 	format(logString, sizeof(logString), "%s (%s) setou %s com %.2f de colete.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
 	logCreate(playerid, logString, 1);
 	return true;
@@ -235,7 +217,7 @@ CMD:resetararmas(playerid, params[]) {
   	if (userid == INVALID_PLAYER_ID) return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
 
 	ResetWeapons(userid);
-	va_SendClientMessage(playerid, -1, "SERVER: Você resetou as armas de %s.", pNome(userid));
+	SendServerMessage(playerid, "Você resetou as armas de %s.", pNome(userid));
 	
 	format(logString, sizeof(logString), "%s (%s) resetou as armas de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
@@ -383,7 +365,7 @@ CMD:dararma(playerid, params[]) {
 	if (weaponid <= 0 || weaponid > 46 || (weaponid >= 19 && weaponid <= 21)) return SendErrorMessage(playerid, "Você específicou uma arma inválida.");
 
 	GiveWeaponToPlayer(userid, weaponid, ammo);
-	va_SendClientMessage(playerid, -1, "SERVER: Você deu para %s uma %s com %d munições.", pNome(userid), ReturnWeaponName(weaponid), ammo);
+	SendServerMessage(playerid, "Você deu para %s uma %s com %d munições.", pNome(userid), ReturnWeaponName(weaponid), ammo);
 
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s deu uma %s (%d) para %s.", GetPlayerUserEx(playerid), ReturnWeaponName(weaponid), ammo, pNome(userid));
 	
@@ -594,7 +576,7 @@ CMD:ir(playerid, params[]) {
 			if (GetPlayerAdmin(playerid) < 3) return SendErrorMessage(playerid, "Você não possui autorização para utilizar esse comando.");
 			if (sscanf(string, "fff", X2, Y2, Z2)) return SendSyntaxMessage(playerid, "/ir pos [x] [y] [z]");
 			SetPlayerPos(playerid, X2, Y2, Z2);
-	    	return va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você foi até as coordenadas.");
+	    	return SendServerMessage(playerid, "Você foi até as coordenadas.");
 		}
 
 		else if (!strcmp(type, "interior", true)){
@@ -733,7 +715,7 @@ CMD:gravidade(playerid, params[]) {
 
 	SetPlayerGravity(userid, amount);
 
-	va_SendClientMessage(playerid, COLOR_WHITE, "SERVER: Você setou a gravidade de %s em %.2f.", pNome(userid), amount);
+	SendServerMessage(playerid, "Você setou a gravidade de %s em %.2f.", pNome(userid), amount);
 	format(logString, sizeof(logString), "%s (%s) setou a gravidade de %s em %.2f.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), amount);
 	logCreate(playerid, logString, 1);
 	return true;

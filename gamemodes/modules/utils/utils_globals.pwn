@@ -9,6 +9,10 @@
 
 #define MAX_LISTED_ITEMS (10)
 
+#define MINIMUM_SKILL           (1)
+#define MEDIUM_SKILL	        (2)
+#define FULL_SKILL		        (3)
+
 new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];

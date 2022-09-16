@@ -218,12 +218,13 @@ SpawnSelectedCharacter(playerid) {
         SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
 
     SpawnPlayer(playerid);
+    PreloadAnimations(playerid);
     SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
     pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
     SetPlayerColor(playerid, 0xFFFFFFFF);
     ClearPlayerChat(playerid);
-    va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s.", pNome(playerid));
+    SendServerMessage(playerid, "Você está jogando com o personagem %s.", pNome(playerid));
     if(uInfo[playerid][uJailed] > 0){
         SetPlayerPos(playerid, 197.6346, 175.3765, 1003.0234);
         SetPlayerHealth(playerid, pInfo[playerid][pHealthMax]);
@@ -234,7 +235,7 @@ SpawnSelectedCharacter(playerid) {
         ResetWeapons(playerid);
         SendServerMessage(playerid, "Você logou com uma prisão administrativa pendente. Restam %d minutos.", uInfo[playerid][uJailed]/60);
     }
-    if (uInfo[playerid][uAdmin] > 0) va_SendClientMessage(playerid, -1, "SERVER: Você logou com o nível administrativo %d.", uInfo[playerid][uAdmin]);
+    if (uInfo[playerid][uAdmin] > 0) SendServerMessage(playerid, "Você logou com o nível administrativo %d.", uInfo[playerid][uAdmin]);
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '1' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);

@@ -170,7 +170,7 @@ public HttpIPInfo(playerid, response_code, data[]){
     return true;
 }
 
-stock RemoveChars(tID){
+RemoveChars(tID){
     strreplace(dPlayerInfo[tID][Country], "\"", "");
     strreplace(dPlayerInfo[tID][CountryCode], "\"", "");
     strreplace(dPlayerInfo[tID][Region], "\"", "");

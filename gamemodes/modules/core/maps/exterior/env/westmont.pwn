@@ -17,27 +17,25 @@ hook OnPlayerConnect(playerid){
     RemoveBuildingForPlayer(playerid, 620, 2121.507, -1909.531, 10.804, 0.250);
     RemoveBuildingForPlayer(playerid, 620, 2110.273, -1906.585, 5.031, 0.250);
     RemoveBuildingForPlayer(playerid, 1226, 2118.289, -1939.398, 16.390, 0.250);
-
     return true;
 }
 
 hook OnGameModeInit() {
-    AddSimpleModel (-1,1923, -1223, "maps/env/westmont/Westmont1.dff", "maps/env/westmont/Westmont1.txd");
-    AddSimpleModel (-1,1923, -1224, "maps/env/westmont/Westmont2.dff", "maps/env/westmont/Westmont2.txd");
-    AddSimpleModel (-1,19478, -1225, "maps/env/westmont/Westmont3.dff", "maps/env/westmont/Westmont3.txd");
+    AddSimpleModelEx(1923, -1223, "maps/env/westmont/Westmont1.dff", "maps/env/westmont/Westmont1.txd");
+    AddSimpleModelEx(1923, -1224, "maps/env/westmont/Westmont2.dff", "maps/env/westmont/Westmont2.txd");
+    AddSimpleModelEx(19478, -1225, "maps/env/westmont/Westmont3.dff", "maps/env/westmont/Westmont3.txd");
+
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1223, 2167.039062, -1925.203125, 15.828100, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_BUILDINGS, -1224, 2115.000000, -1921.523437, 15.390000, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_VEGETATION, -1225, 2115.000000, -1921.523437, 15.390600, 0.000000, 0.000000, 0.000000);
 
     new tmpobjid;
-    tmpobjid = CreateObject(19772, 2133.663574, -1947.373657, 13.035597, 0.000000, 0.000000, 360.000000, 500.00); 
+    tmpobjid = CreateModelObject(MODEL_TYPE_OBJECTS, 19772, 2133.663574, -1947.373657, 13.035597, 0.000000, 0.000000, 360.000000); 
     SetObjectMaterial(tmpobjid, 0, 1220, "boxes", "cardboxes_128", 0xFFFFFFFF);
-
-    tmpobjid = CreateObject(946, 2143.109619, -1941.089355, 14.704661, 0.000000, 0.000000, 270.000000, 500.00); 
-    tmpobjid = CreateObject(2114, 2147.359375, -1940.924072, 12.684659, 0.000000, 0.000000, 0.000000, 500.00); 
-    tmpobjid = CreateObject(946, 2156.798339, -1941.160156, 14.707798, 0.000000, 0.000000, 90.000000, 500.00); 
-    tmpobjid = CreateObject(-1224, 2115.000000, -1921.523437, 15.390000, 0.000000, 0.000000, 0.000000, 500.00); 
-    tmpobjid = CreateObject(-1223, 2167.039062, -1925.203125, 15.828100, 0.000000, 0.000000, 0.000000, 500.00); 
-    tmpobjid = CreateObject(-1225, 2115.000000, -1921.523437, 15.390600, 0.000000, 0.000000, 0.000000, 500.00); 
-    tmpobjid = CreateObject(1308, 2092.035156, -1904.749389, 12.807279, -5.299998, 0.000000, 35.800010, 500.00); 
-
+    CreateModelObject(MODEL_TYPE_OBJECTS, 946, 2143.109619, -1941.089355, 14.704661, 0.000000, 0.000000, 270.000000); 
+    CreateModelObject(MODEL_TYPE_OBJECTS, 2114, 2147.359375, -1940.924072, 12.684659, 0.000000, 0.000000, 0.000000); 
+    CreateModelObject(MODEL_TYPE_OBJECTS, 946, 2156.798339, -1941.160156, 14.707798, 0.000000, 0.000000, 90.000000); 
+    CreateModelObject(MODEL_TYPE_OBJECTS, 1308, 2092.035156, -1904.749389, 12.807279, -5.299998, 0.000000, 35.800010); 
     return true;
 }
 

@@ -1,121 +1,16 @@
 #include <YSI_Coding\y_hooks>
 
-Dialog:CHARACTER_SELECT(playerid, response, listitem, inputtext[]) {
-	if(!response || !strcmp(inputtext, " ")) return ShowUsersCharacters(playerid);
-
-    else if(!strcmp(inputtext, "Criar personagem")) {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d';", uInfo[playerid][uID]);
-        mysql_query(DBConn, query);
-
-        if(cache_num_rows() > uInfo[playerid][uCharSlots]) {
-            SendErrorMessage(playerid, "Você atingiu o limite de personagens. Adquira mais slots no UCP.");
-            return ShowUsersCharacters(playerid);
-        } else Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\nDigite com o padrão: 'Nome_Sobrenome'", 
-            "Continuar", "Voltar");
-
-    } else if(!strcmp(inputtext, "Deletar personagem")) {
-
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem \
-                que você gostaria de deletar.", "Continuar", "Voltar");
-
-    } else {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", inputtext);
-        mysql_query(DBConn, query);
-        if(!cache_num_rows())
-            return ShowUsersCharacters(playerid);
-                
-        ResetCharacterData(playerid);
-        LoadCharacterInfo(playerid, inputtext);
-        SpawnSelectedCharacter(playerid);
-    }
-	return true;
-}
-
-Dialog:CHARACTER_CREATE_NAME(playerid, response, listitem, inputtext[]) {
-    if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][pName][0] = EOS;
-
-    if(strlen(inputtext) < 1) {
-        return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
-            "Continuar", "Voltar");
-    }
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players a, users b WHERE a.name = '%s'\
-        OR b.username = '%s';", inputtext, inputtext);
-    mysql_query(DBConn, query);
-
-    if(cache_num_rows()) {
-        SendClientMessage(playerid, COLOR_LIGHTRED, "Já existe outro usuário ou um personagem com este nome.");
-        return Dialog_Show(playerid, CHARACTER_CREATE_NAME, DIALOG_STYLE_INPUT, "Criar Personagem - Nome", 
-            "Para começar a registrar um personagem, você deverá colocar o nome dele(a) abaixo.\n \nDigite com o padrão: Nome_Sobrenome",
-            "Continuar", "Voltar");
-    }
-        
-    format(pInfo[playerid][pName], 24, "%s", inputtext);
-
-    CreateCharacter(playerid, pInfo[playerid][pName]);
-
-    va_SendClientMessage(playerid, -1, "O seu novo personagem será chamado de %s.", inputtext);
-    SendServerMessage(playerid, "O personagem foi criado com sucesso e você já pode vê-lo na lista de personagens.");
-
-    ShowUsersCharacters(playerid);
-	return true;
-}
-
-Dialog:CHARACTER_DELETE(playerid, response, listitem, inputtext[]) {
-    new string[256];
-    if(!response) return ShowUsersCharacters(playerid);
-
-    if(!strlen(inputtext) || strlen(inputtext) > 24) {
-        SendErrorMessage(playerid, "Você deve digitar o nome válido de um personagem.");
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem que você gostaria de deletar.", "Continuar", "Voltar");
-    }
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s' AND `user_id` = '%d';", inputtext, uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-    if(!cache_num_rows()) {
-        SendErrorMessage(playerid, "Esse personagem não existe ou não é desse usuário.");
-        return Dialog_Show(playerid, CHARACTER_DELETE, DIALOG_STYLE_INPUT, "Deletar Personagem", "Digite o nome do personagem que você gostaria de deletar.", "Continuar", "Voltar");
-    }
-
-    format(pInfo[playerid][characterDelete], 24, "%s", inputtext);
-    format(string, 256, "Você realmente deseja deletar o personagem %s?\n \nEssa ação é irreversível.", pInfo[playerid][characterDelete]);
-    Dialog_Show(playerid, CHARACTER_DELETE_CONFIRM, DIALOG_STYLE_MSGBOX, "Deletar Personagem - Confirmar", string, "Deletar","Cancelar");
-	return true;
-}
-
-Dialog:CHARACTER_DELETE_CONFIRM(playerid, response, listitem, inputtext[]) {
-    if(!response) return ShowUsersCharacters(playerid), pInfo[playerid][characterDelete][0] = EOS;
-
-    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players` WHERE `name` = '%s' AND `user_id` = '%d';", pInfo[playerid][characterDelete], uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-
-    va_SendClientMessage(playerid, -1, "SERVER: Você deletou o personagem %s com sucesso. A ação é irreversível.", pInfo[playerid][characterDelete]);
-    format(logString, sizeof(logString), "%s deletou o personagem %s.", uInfo[playerid][uName], pInfo[playerid][characterDelete]);
-	logCreate(playerid, logString, 4);
-    pInfo[playerid][characterDelete][0] = EOS;
-    ShowUsersCharacters(playerid);
-	return true;
-}
-
-CreateCharacter(playerid, characterName[]) {
-
+CreateCharacter(characterName[], userName) {
     mysql_format(DBConn, query, sizeof query,
-        "INSERT INTO players (`name`, `user_id`, `first_ip`) VALUES ('%s', '%d', '%s');",
-            characterName, uInfo[playerid][uID], GetPlayerIP(playerid));
+        "INSERT INTO players (`name`, `user_id`) VALUES ('%s', '%d');",
+            characterName, userName);
     mysql_query(DBConn, query);
-
-    pInfo[playerid][pName][0] = EOS;
-
-    printf("[DATABASE] %s (User: %s) foi inserido na database.", characterName, GetPlayerNameEx(playerid));
-
 }
 
-LoadCharacterInfo(playerid, playerName[]) {
+LoadCharacterInfoID(playerid, id) {
     new first_login;
 
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s'", playerName);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d'", id);
     new Cache:result = mysql_query(DBConn, query);
 
     cache_get_value_name_int(0, "ID", pInfo[playerid][pID]);
@@ -166,19 +61,34 @@ LoadCharacterInfo(playerid, playerName[]) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_premium (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_radio (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_pet (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_config (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
     mysql_query(DBConn, query);
 
-    printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", playerName);
+    printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", pInfo[playerid][pName]);
     LoadLicencesData(playerid);
     LoadPlayerWeapons(playerid);
     LoadPlayerApparence(playerid);
     LoadPlayerPremium(playerid);
     LoadPlayerRadio(playerid);
     LoadPlayerInventory(playerid);
-
+    LoadPlayerPet(playerid);
+    LoadPlayerConfig(playerid);
+    LoadPlayerFaction(playerid);
+    SpawnSelectedCharacter(playerid);
 }
 
 LoadPlayerWeapons(playerid){
@@ -212,7 +122,6 @@ LoadPlayerInventory(playerid){
 }
 
 LoadPlayerApparence(playerid){
-    // PLAYER APPARENCE
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_apparence WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
     cache_get_value_name_int(0, "gender", pInfo[playerid][pGender]);
@@ -259,6 +168,35 @@ LoadPlayerPremium(playerid){
     return true;
 }
 
+LoadPlayerPet(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_pet WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "pet_model", PetData[playerid][petModelID]);
+    cache_get_value_name(0, "pet_name", PetData[playerid][petName]);
+    cache_delete(result);
+    return true;
+}
+
+LoadPlayerConfig(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_config WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "newbie_chat", pInfo[playerid][pTogNewbie]);
+    cache_get_value_name_int(0, "admin_chat", pInfo[playerid][pTogAdmin]);
+    cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
+    cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
+    cache_delete(result);
+    return true;
+}
+
+LoadPlayerFaction(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_faction WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "faction_id", pInfo[playerid][pFaction]);
+    cache_get_value_name_int(0, "faction_rank", pInfo[playerid][pFactionRank]);
+    cache_delete(result);
+    return true;
+}
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -266,9 +204,7 @@ SpawnSelectedCharacter(playerid) {
     GivePlayerMoney(playerid, pInfo[playerid][pMoney]);
     SetPlayerHealth(playerid, pInfo[playerid][pHealth]);
     SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
-    
     SetPlayerScore(playerid, pInfo[playerid][pScore]);
-
     SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
     SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 
@@ -278,24 +214,17 @@ SpawnSelectedCharacter(playerid) {
         pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
 
-    if (GetPlayerSkin(playerid) < 1){
+    if (GetPlayerSkin(playerid) < 1)
         SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
-    }
-
-    switch(pInfo[playerid][pDonator]){
-	    case 0: pInfo[playerid][pSpawnVehicle] = 2;
-	    case 1: pInfo[playerid][pSpawnVehicle] = 3;
-	    case 2: pInfo[playerid][pSpawnVehicle] = 4;
-	    case 3: pInfo[playerid][pSpawnVehicle] = 5;
-        default: pInfo[playerid][pSpawnVehicle] = 2;
-	}
 
     SpawnPlayer(playerid);
+    PreloadAnimations(playerid);
     SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
+    pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
     SetPlayerColor(playerid, 0xFFFFFFFF);
     ClearPlayerChat(playerid);
-    va_SendClientMessage(playerid, -1, "SERVER: Você está jogando com o personagem %s.", pNome(playerid));
+    SendServerMessage(playerid, "Você está jogando com o personagem %s.", pNome(playerid));
     if(uInfo[playerid][uJailed] > 0){
         SetPlayerPos(playerid, 197.6346, 175.3765, 1003.0234);
         SetPlayerHealth(playerid, pInfo[playerid][pHealthMax]);
@@ -306,34 +235,19 @@ SpawnSelectedCharacter(playerid) {
         ResetWeapons(playerid);
         SendServerMessage(playerid, "Você logou com uma prisão administrativa pendente. Restam %d minutos.", uInfo[playerid][uJailed]/60);
     }
-    if (uInfo[playerid][uAdmin] > 0) va_SendClientMessage(playerid, -1, "SERVER: Você logou com o nível administrativo %d.", uInfo[playerid][uAdmin]);
+    if (uInfo[playerid][uAdmin] > 0) SendServerMessage(playerid, "Você logou com o nível administrativo %d.", uInfo[playerid][uAdmin]);
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `online` = '1' WHERE `ID` = '%d';", pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
-    format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
+    Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, RenderingObjectsValue(playerid), playerid);
+    Streamer_SetRadiusMultiplier(STREAMER_TYPE_OBJECT, RenderingObjectsRadius(playerid), playerid);
+    Streamer_Update(playerid);
+
+    format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
-    
-    if(pInfo[playerid][pInterior] != 0 || pInfo[playerid][pVirtualWorld] != 0) {
-        TogglePlayerSpectating(playerid, false);
-        SetCameraBehindPlayer(playerid);
-        SetWeapons(playerid);
-        SetPlayerArmedWeapon(playerid, 0);
-        pInfo[playerid][pLogged] = true;
-        return false;
-    }
 
-    TogglePlayerSpectating(playerid, true);
-    InterpolateCameraPos(playerid,  pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+500, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+300, 5000);
-    InterpolateCameraLookAt(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+495, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]+295, 5000);
-    SetTimerEx("SpawnPlayerPosCamera", 5000, false, "i", playerid, 0);
-    
-    return true;
-}
-
-forward SpawnPlayerPosCamera(playerid);
-public SpawnPlayerPosCamera(playerid) {
     pInfo[playerid][pLogged] = true;
     TogglePlayerSpectating(playerid, false);
     SetCameraBehindPlayer(playerid);
@@ -380,7 +294,7 @@ SaveCharacterInfo(playerid) {
     `positionA` = '%f', \
     `phone_number` = '%d', \
     `phone_type` = '%d' \
-    WHERE ID = '%d';", 
+    WHERE ID = '%d'", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
     pInfo[playerid][pPlayingMinutes],
@@ -408,6 +322,9 @@ SaveCharacterInfo(playerid) {
     SavePlayerPremium(playerid);
     SavePlayerRadio(playerid);
     SavePlayerInventory(playerid);
+    SavePlayerPet(playerid);
+    SavePlayerConfig(playerid);
+    SavePlayerFaction(playerid);
     return true;
 }
 
@@ -541,7 +458,7 @@ SavePlayerRadio(playerid) {
     `rRadioName5`='%s', \
     `rRadioName6`='%s', \
     `rRadioName7`='%s', \
-    `pRadioNvl`='%i' WHERE `character_id`='%d'", 
+    `pRadioNvl`='%i' WHERE `character_id` = '%d'", 
     pInfo[playerid][rRadioState],
     pInfo[playerid][rRadioSlot][0],
     pInfo[playerid][rRadioSlot][1],
@@ -557,8 +474,51 @@ SavePlayerRadio(playerid) {
     pInfo[playerid][rRadioName5],
     pInfo[playerid][rRadioName6],
     pInfo[playerid][rRadioName7],
+    pInfo[playerid][pRadioNvl],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerPet(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_pet SET \
+    `pet_model` = '%d',        \
+    `pet_name` = '%s'    \
+    WHERE character_id = '%d';", 
+    PetData[playerid][petModelID],
+    PetData[playerid][petName],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
+    return true;
+}
+
+SavePlayerConfig(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_config SET \
+    `newbie_chat` = '%d', \
+    `admin_chat` = '%d', \
+    `nametag` = '%d', \
+    `objects` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pTogNewbie],
+    pInfo[playerid][pTogAdmin],
+    pInfo[playerid][pNametagType],
+    pInfo[playerid][pRenderObjects],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerFaction(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_faction SET \
+    `faction_id` = '%d',        \
+    `faction_rank` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pFaction],
+    pInfo[playerid][pFactionRank],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
     return true;
 }
 
@@ -577,12 +537,14 @@ hook OnPlayerDisconnect(playerid, reason) {
 	SendNearbyMessage(playerid, 30.0, COLOR_WHITE, string);
 
     pInfo[playerid][pLogged] = false;
-    format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
+    format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
     printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
 
     SaveCharacterInfo(playerid);
+    PetDespawn(playerid);
     ResetCharacterData(playerid);
+    ResetCharacterSelection(playerid);
     SOS_Clear(playerid);
     Report_Clear(playerid);
     return true;

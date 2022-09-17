@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 #define MAX_DYNAMIC_ITEMS               (10)
-#define MAX_DROPPED_ITEMS               (5)
+#define MAX_DROPPED_ITEMS               (500)
 
 #define MAX_INVENTORY_SLOTS             (30)
 
@@ -11,6 +11,7 @@ enum DI_ITEMS_DATA {
     diName[64],
     diDescription[256],
     bool:diUseful,
+	bool:diLegality,
     diModel,
     diCategory,
 };
@@ -73,11 +74,14 @@ ItemCategory(type) {
 	switch(type) {
         case 0: format(category, sizeof(category), "Inválido");
 		case 1: format(category, sizeof(category), "Itens gerais");
-		case 2: format(category, sizeof(category), "Itens de evento");
-        case 3: format(category, sizeof(category), "Itens de facções");
-		case 4: format(category, sizeof(category), "Coletes");
-		case 5: format(category, sizeof(category), "Drogas");
-		case 6: format(category, sizeof(category), "Armas");
+		case 2: format(category, sizeof(category), "Itens comestíveis");
+		case 3: format(category, sizeof(category), "Itens bebíveis");
+		case 4: format(category, sizeof(category), "Itens gerais");
+		case 5: format(category, sizeof(category), "Itens de evento");
+        case 6: format(category, sizeof(category), "Itens de facções");
+		case 7: format(category, sizeof(category), "Coletes");
+		case 8: format(category, sizeof(category), "Drogas");
+		case 9: format(category, sizeof(category), "Armas");
 	}
 	return category;
 }
@@ -93,4 +97,75 @@ IsWeaponModel(model) {
         return true;
 	}
 	return false;
+}
+
+Item_Nearest(playerid) {
+	for (new i = 0; i != MAX_DROPPED_ITEMS; i ++) if (DroppedItems[i][droppedModel] && IsPlayerInRangeOfPoint(playerid, 1.5, DroppedItems[i][droppedPos][0], DroppedItems[i][droppedPos][1], DroppedItems[i][droppedPos][2])) {
+		if (GetPlayerInterior(playerid) == DroppedItems[i][droppedInt] && GetPlayerVirtualWorld(playerid) == DroppedItems[i][droppedWorld])
+			return i;
+	}
+	return -1;
+}
+
+Item_Delete(itemid) {
+    if (itemid != -1 && DroppedItems[itemid][droppedModel]) {
+        DroppedItems[itemid][droppedModel] =
+		DroppedItems[itemid][droppedQuantity] =
+	    DroppedItems[itemid][droppedInt] =
+	    DroppedItems[itemid][droppedWorld] = 0;
+
+	    DroppedItems[itemid][droppedPos][0] =
+	    DroppedItems[itemid][droppedPos][1] =
+	    DroppedItems[itemid][droppedPos][2] =
+	    DroppedItems[itemid][droppedPos][3] =
+	    DroppedItems[itemid][droppedPos][4] =
+	    DroppedItems[itemid][droppedPos][5] = 0.0;
+
+		DroppedItems[itemid][droppedPlayer] = -1;
+		DroppedItems[itemid][droppedExists] = false;
+
+
+
+        if (IsValidDynamicObject(DroppedItems[itemid][droppedObject])) {
+	    	DestroyDynamicObject(DroppedItems[itemid][droppedObject]);
+	    	DroppedItems[itemid][droppedObject] = -1;
+		}
+
+		mysql_format(DBConn, query, sizeof query, "DELETE FROM `items_dropped` WHERE `ID` = '%d';", DroppedItems[itemid][droppedID]);
+    	new Cache:result = mysql_query(DBConn, query);
+		cache_delete(result);
+	}
+	return true;
+}
+
+Inventory_Add(playerid, item, quantity = 1){
+	new value = GetInventorySlots(playerid);
+
+    for (new i = 0; i < value; i++) {
+        if(pInfo[playerid][iItem][i] == item) {
+            pInfo[playerid][iAmount][i] += quantity;
+            return i;
+        }
+    }
+    for(new slotid = 0; slotid < value; slotid ++) {
+        if(pInfo[playerid][iItem][slotid] == 0) {
+            pInfo[playerid][iItem][slotid] = item;
+            pInfo[playerid][iAmount][slotid] = quantity;
+            return slotid;
+        }
+    }
+    return -1;
+}
+
+Inventory_HasItem(playerid, const item[]) {
+	new exists = false;
+	for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item)){
+			if(pInfo[playerid][iAmount][i] > 0){
+				exists = true;
+				return exists;
+			}
+		}
+	}
+	return exists;
 }

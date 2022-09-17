@@ -2,44 +2,41 @@
 
 /* ============================= FUNÇÕES ============================= */
 InvestmentUpdate() {
-    for (new id = 1; id < 100; id++) {
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM tradings WHERE `ID` = '%d'", id);
-        new Cache:result2 = mysql_query(DBConn, query);
+    new Cache:result2 = mysql_query(DBConn, "SELECT * FROM `tradings` WHERE (`ID` != '0');");
 
-        new Float:capital, Float:oldbuy_value, Float:buy_value, Float:sell_value, Float:new_value, Float:min_value, Float:max_value;
-        for(new i; i < cache_num_rows(); i++){
-            cache_get_value_name_float(i, "capital", capital);
-            cache_get_value_name_float(i, "oldbuy_value", oldbuy_value);
-            cache_get_value_name_float(i, "buy_value", buy_value);
-            cache_get_value_name_float(i, "sell_value", sell_value);
-            cache_get_value_name_float(i, "min_value", min_value);
-            cache_get_value_name_float(i, "max_value", max_value);
+    new Float:capital, Float:oldbuy_value, Float:buy_value, Float:sell_value, Float:new_value, Float:min_value, Float:max_value;
+    for(new i; i < cache_num_rows(); i++){
+        cache_get_value_name_float(i, "capital", capital);
+        cache_get_value_name_float(i, "oldbuy_value", oldbuy_value);
+        cache_get_value_name_float(i, "buy_value", buy_value);
+        cache_get_value_name_float(i, "sell_value", sell_value);
+        cache_get_value_name_float(i, "min_value", min_value);
+        cache_get_value_name_float(i, "max_value", max_value);
 
-            new variation = randomEx(-20, 20);
-            new_value = buy_value + (buy_value / 10000 * variation);
+        new variation = randomEx(-20, 20);
+        new_value = buy_value + (buy_value / 10000 * variation);
 
-            format(logString, sizeof(logString), "[SISTEMA] Investimento %d alterado de %s para %s", id, FormatFloat(buy_value), FormatFloat(new_value));
-            logCreate(99998, logString, 15);
+        format(logString, sizeof(logString), "[SISTEMA] Investimento %d alterado de %s para %s", i, FormatFloat(buy_value), FormatFloat(new_value));
+        logCreate(99998, logString, 15);
 
-            mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `capital` = `capital` + '%f' WHERE `ID` = '%d'", new_value*randomEx(-5, 5), id);
+        mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `capital` = `capital` + '%f' WHERE `ID` = '%d'", new_value*randomEx(-5, 5), i);
+        mysql_query(DBConn, query);
+
+        if(new_value > max_value){
+            mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `max_value` = '%f' WHERE `ID` = '%d'", new_value, i);
             mysql_query(DBConn, query);
-
-            if(new_value > max_value){
-                mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `max_value` = '%f' WHERE `ID` = '%d'", new_value, id);
-                mysql_query(DBConn, query);
-            } 
-            if(new_value <= min_value){
-                mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `min_value` = '%f' WHERE `ID` = '%d'", new_value, id);
-                mysql_query(DBConn, query);
-            } 
-
-            mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `oldbuy_value` = `buy_value` WHERE `ID` = '%d'", id);
-            mysql_query(DBConn, query);
-            mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `buy_value` = '%f', `sell_value` = '%f' WHERE `ID` = '%d'", new_value, new_value, id);
-            mysql_query(DBConn, query);        
         }
-        cache_delete(result2);
+        if(new_value <= min_value){
+            mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `min_value` = '%f' WHERE `ID` = '%d'", new_value, i);
+            mysql_query(DBConn, query);
+        }
+
+        mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `oldbuy_value` = `buy_value` WHERE `ID` = '%d'", i);
+        mysql_query(DBConn, query);
+        mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `buy_value` = '%f', `sell_value` = '%f' WHERE `ID` = '%d'", new_value, new_value, i);
+        mysql_query(DBConn, query);        
     }
+    cache_delete(result2);
 }
 
 InvestmentCreate(playerid, type, name[]) { // Criar um investimento

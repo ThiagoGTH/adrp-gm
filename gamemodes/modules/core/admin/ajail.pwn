@@ -9,7 +9,6 @@ CMD:libertar(playerid, params[]) {
 	static
 		userid;
 
-	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/libertar [id/nome]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -70,8 +69,7 @@ CMD:ajail(playerid, params[]) {
 
 CMD:ajailoff(playerid, params[]) {
     new userName[24], reason[128], minutes;
-
-    
+ 
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
     if(sscanf(params, "s[24]ds[128]", userName, minutes, reason)) return SendSyntaxMessage(playerid, "/ajailoff [usuário] [dias] [motivo]");
     if (minutes < 1) return SendErrorMessage(playerid, "Você não pode prender um jogador por um valor menor que um.");

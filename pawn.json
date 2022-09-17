@@ -6,13 +6,11 @@
 	"dependencies": [
 		"sampctl/samp-stdlib",
 		"pawn-lang/sa-mp-fixes",
+		"NexiusTailer/Nex-AC",
 		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",
 		"Southclaws/pawn-chrono",
-		"katursis/Pawn.CMD:3.3.6",
-		"katursis/Pawn.RakNet:1.5.1",
-		"BrunoBM16/samp-attachments-fix",
 		"BigETI/pawn-memory",
 		"Y-Less/sscanf",
 		"Y-Less/indirection",
@@ -24,15 +22,14 @@
 		"samp-incognito/samp-streamer-plugin",
 		"Pottus/ColAndreas",
 		"Southclaws/progress2",
-		"Awsomedude/easyDialog"
+		"Awsomedude/easyDialog",
+		"philip1337/samp-plugin-mapandreas:v1.2.1",
+		"katursis/Pawn.CMD:3.3.6"
 	],
 	"local": true,
 	"runtime": {
-		"version": "0.3.DL",
+		"version": "openmp",
 		"mode": "server",
-		"filterscripts": [
-			"cameditor"
-		],
 		"rcon_password": "$2y$12$jMgQpLyoJamGeMAaCTNzgOYuR",
 		"port": 7777,
 		"hostname": "Advanced Roleplay",
@@ -68,8 +65,7 @@
 		"cookielogging": false,
 		"output": true,
 		"extra": {
-			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ",
-			"useartwork": "1"
+			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ"
 		}
 	},
 	"builds": [

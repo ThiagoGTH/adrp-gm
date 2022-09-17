@@ -7,4 +7,5 @@
 #include "modules\core\admin\reports.pwn"
 #include "modules\core\admin\ajail.pwn"
 #include "modules\core\admin\log_search.pwn"
+#include "modules\core\admin\spec.pwn"
 #include "modules\core\admin\admin_core.pwn"

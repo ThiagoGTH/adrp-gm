@@ -24,19 +24,19 @@ hook OnGameModeInit() {
 }
 
 LoadStreetsModels() {
-    AddSimpleModel(-1, 19379, -20021, "maps/env/streets/yolayrimi1.dff", "maps/env/streets/yolayrimi.txd");
-    AddSimpleModel(-1, 19379, -20022, "maps/env/streets/yolayrimi2.dff", "maps/env/streets/yolayrimi.txd");
-    AddSimpleModel(-1, 19379, -20023, "maps/env/streets/yolayrimi3.dff", "maps/env/streets/yolayrimi.txd");
+    AddSimpleModelEx(0, -20021, "maps/env/streets/yolayrimi1.dff", "maps/env/streets/yolayrimi.txd");
+    AddSimpleModelEx(0, -20022, "maps/env/streets/yolayrimi2.dff", "maps/env/streets/yolayrimi.txd");
+    AddSimpleModelEx(0, -20023, "maps/env/streets/yolayrimi3.dff", "maps/env/streets/yolayrimi.txd");
 
-    AddSimpleModel(-1, 19379, -20024, "maps/env/streets/a2.dff", "maps/env/streets/a2.txd");
-    AddSimpleModel(-1, 19379, -20025, "maps/env/streets/b2.dff", "maps/env/streets/b2.txd");
+    AddSimpleModelEx(0, -20024, "maps/env/streets/a2.dff", "maps/env/streets/a2.txd");
+    AddSimpleModelEx(0, -20025, "maps/env/streets/b2.dff", "maps/env/streets/b2.txd");
 }
 
 StreetsExterior() {
-    CreateObject(-20021, 1050.078125, -1864.312377, 12.398453, 0.000000, 0.000000, 0.000000, 1000.00);
-    CreateObject(-20022, 798.093994, -1763.101440, 12.695322, 0.000000, 0.000000, 0.000000, 1000.00);
-    CreateObject(-20023, 576.640991, -1730.421630, 11.882777, 0.000000, 0.000000, 0.000000, 1000.00);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20021, 1050.078125, -1864.312377, 12.398453, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20022, 798.093994, -1763.101440, 12.695322, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20023, 576.640991, -1730.421630, 11.882777, 0.000000, 0.000000, 0.000000);
 
-    CreateObject(-20024, 1306.515625, -1630.359375, 12.468799, 0.000000, 0.000000, 0.000000, 1000.00); 
-    CreateObject(-20025, 437.898406, -1715.101562, 8.593799, 0.000000, 0.000000, 0.000000, 1000.00); 
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20024, 1306.515625, -1630.359375, 12.468799, 0.000000, 0.000000, 0.000000);
+    CreateModelObject(MODEL_TYPE_LANDMASSES, -20025, 437.898406, -1715.101562, 8.593799, 0.000000, 0.000000, 0.000000);
 }

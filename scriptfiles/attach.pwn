@@ -1,0 +1,5 @@
+
+DENNIS12 ATTACHED OBJECT CREATOR
+
+//Slot 0 | Project Name: sex
+SetPlayerAttachedObject(playerid, 0, -6001, 6, 0.066999, -0.029999, -0.119999, -29.200008, 44.899986, 8.600002, 1.000000, 1.000000, 1.000000);

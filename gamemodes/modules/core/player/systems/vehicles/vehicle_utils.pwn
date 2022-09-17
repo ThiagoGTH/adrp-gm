@@ -76,6 +76,8 @@ enum E_VEHICLE_DATA {
 	Float:vObjectRotX[5],
 	Float:vObjectRotY[5],
 	Float:vObjectRotZ[5],
+	
+	vWindowsDown,
 };
 new vInfo[MAX_DYNAMIC_VEHICLES][E_VEHICLE_DATA];
 
@@ -459,8 +461,8 @@ stock const arrBatteryEngine[141][vehicleattributes] = {
     {406, 100.000, 100.000, 2, 110.0, 10500.0, 7.0, 50.0}, //Dumper
     {434, 100.000, 100.000, 2, 170.0, 2300.0, 7.0, 30.0},//Hotknife
     //Turbo
-    {593, 100.000, 100.000, 4, 200.0, 10000.0, 10.0, 250.0}, //Dodo
-    {563, 100.000, 100.000, 4, 200.0, 10000.0, 10.0, 250.0}, //Raindance
+    {593, 100.000, 100.000, 4, 200.0, 2500.0, 10.0, 250.0}, //Dodo
+    {563, 100.000, 100.000, 4, 200.0, 2500.0, 10.0, 250.0}, //Raindance
     {519, 100.000, 100.000, 4, 200.0, 15000.0, 10.0, 250.0}, //Shamal
     {469, 100.000, 100.000, 4, 200.0, 2500.0, 10.0, 250.0}, //Sparrow
     {446, 100.000, 100.000, 4, 200.0, 2500.0, 10.0, 250.0}, //Squalo
@@ -909,6 +911,85 @@ public VehicleCheck() {
 		
  		vInfo[vehicleid][vHealthRepair] = 300.0;
 	    SetEngineStatus(i, false);
+	}
+	return true;
+}
+
+IsWindowedVehicle(vehicleid) {
+	static const g_aWindowStatus[] = {
+	    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	    1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+	    1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1,
+	    1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1,
+	    1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+	    1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	    1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0,
+	    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	    1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1,
+		1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0
+	};
+	new modelid = GetVehicleModel(vehicleid);
+
+    if (modelid < 400 || modelid > 611)
+        return false;
+
+    return (g_aWindowStatus[modelid - 400]);
+}
+
+SendVehicleMessage(vehicleid, color, const str[], {Float,_}:...) {
+	static
+	    args,
+	    start,
+	    end;
+
+	static string[144];
+	
+	string[0] = '\0';
+
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+
+	if (args > 12)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+
+	    for (end = start + (args - 12); end > start; end -= 4)
+		{
+	        #emit LREF.pri end
+	        #emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 144
+		#emit PUSH.C string
+		#emit PUSH.C args
+
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+
+		foreach(new i : Player) {
+		 	if (GetPlayerVehicleID(i) == vehicleid) {
+			    SendClientMessage(i, color, string);
+				foreach(new ix : Player) {
+				    if(pInfo[ix][pSpectating] == i)
+				        va_SendClientMessage(ix, color, "[CHAT SPEC %s] %s", pNome(i), string);
+				}
+			}
+		}
+		return true;
+	}
+
+	foreach(new i : Player) {
+		if (GetPlayerVehicleID(i) == vehicleid) {
+ 			SendClientMessage(i, color, string);
+
+			foreach(new ix : Player) {
+				if(pInfo[ix][pSpectating] == i)
+				    va_SendClientMessage(ix, color, "[CHAT SPEC %s] %s", pNome(i), string);
+			}
+		}
 	}
 	return true;
 }

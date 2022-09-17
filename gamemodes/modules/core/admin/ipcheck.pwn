@@ -65,6 +65,7 @@ public HttpVPNInfo(playerid, response_code, data[]){
 				}
 			}
 	 	}
+		
 	 	else if(isVPN == 0) {
        		format(vpnMessage, sizeof(vpnMessage), "{00FF00}Negativo");
 	 	}
@@ -119,9 +120,11 @@ public HttpVPNInfo(playerid, response_code, data[]){
 	dPlayerInfo[targetID[playerid]][RegionName],
 	dPlayerInfo[targetID[playerid]][Zip],
 	vpnMessage);
+	new stitle[128];
+	format(stitle, sizeof(stitle),
+	"IP de %s (%s)", pNome(targetID[playerid]), GetPlayerUserEx(targetID[playerid]));
 
-	ShowPlayerDialog(playerid, 6156, DIALOG_STYLE_TABLIST_HEADERS, "Detalhes de IP", sdialog, "OK", "");
-
+	Dialog_Show(playerid, DIALOG_IP_CHECK, DIALOG_STYLE_TABLIST_HEADERS, stitle, sdialog, "Fechar", "");
     return true;
 }
 
@@ -160,15 +163,14 @@ public HttpIPInfo(playerid, response_code, data[]){
 
 		format(string, sizeof(string), "%s%s", HTTP_VPN_API_URL, dPlayerInfo[targetID[playerid]][IP]);
 		HTTP(playerid, HTTP_GET, string, "", "HttpVPNInfo");
-    }
-    else {
+    } else {
         va_SendClientMessage(playerid, COLOR_GREY, "ERRO: Não foi possível obter informações desse IP. (Cod: %d) (%s)", response_code, data);
     }
 
     return true;
 }
 
-stock RemoveChars(tID){
+RemoveChars(tID){
     strreplace(dPlayerInfo[tID][Country], "\"", "");
     strreplace(dPlayerInfo[tID][CountryCode], "\"", "");
     strreplace(dPlayerInfo[tID][Region], "\"", "");
@@ -187,11 +189,10 @@ stock RemoveChars(tID){
 }
 
 CMD:checarip(playerid, params[]){
-	
-	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
+	if(uInfo[playerid][uAdmin] < 1338) return SendPermissionMessage(playerid);
 
 	new targetid;
-	if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/checarip <playerID/nome>");
+	if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/checarip [playerid/nome]");
   	if(!IsPlayerConnected(targetid)) return SendErrorMessage(playerid, "Este jogador não está online.");
 		
 	new string[160], playerIP[16];
@@ -200,7 +201,7 @@ CMD:checarip(playerid, params[]){
   	format(dPlayerInfo[targetid][IP], 16, playerIP);
 	format(string, sizeof(string), "%s/%s%s", HTTP_IP_API_URL, playerIP, HTTP_IP_API_END);
 	HTTP(playerid, HTTP_GET, string, "", "HttpIPInfo");
-  	SendServerMessage(playerid, "SERVER: Recebendo informações de %s [%s]", pNome(targetid), playerIP);
+  	SendServerMessage(playerid, "Recebendo informações de %s [%s]", pNome(targetid), playerIP);
 
 	format(logString, sizeof(logString), "%s (%s) checou o IP de %s [%s]", pNome(playerid), GetPlayerUserEx(playerid), pNome(targetid), playerIP);
 	logCreate(playerid, logString, 1);

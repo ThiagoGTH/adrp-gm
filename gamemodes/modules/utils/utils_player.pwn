@@ -1,19 +1,7 @@
-/*
-
-Num aspecto geral, esse módulo é dedicado às funções e utilidades públicas que sejam interessantes a vários outros módulos, mas que não
-sejam, necessariamente, pertecentes a um sistema específico. São funções úteis e, se podemos chamá-las assim, 'gerais'.
-
-*/
-
 #include <a_samp>
 
-#define MINIMUM_SKILL           (1)
-#define MEDIUM_SKILL	        (2)
-#define FULL_SKILL		        (3)
 #define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
 #define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
-
-new EmSpec[MAX_PLAYERS];
 
 enum e_InteriorData {
 	e_InteriorName[32],
@@ -205,10 +193,7 @@ SendPermissionMessage(playerid)
 SendNotConnectedMessage(playerid)
     return SendErrorMessage(playerid, "Este jogador não está conectado ou não existe.");
 
-// Checar se um usuário está conectado.
-
-pNome(playerid)
-{
+pNome(playerid) {
 	if(playerid > -1 && playerid < MAX_PLAYERS){
 		static 
 			name[MAX_PLAYER_NAME + 1];
@@ -235,14 +220,12 @@ pNome(playerid)
 // Pegar o ID de um jogador pelo nome, ao invés do contrário
 GetPlayerByName(const playerName[]) {
     new returnID = -1;
-
     foreach(new i : Player) {
         if(!strcmp(playerName, GetPlayerNameEx(i))) {
             returnID = i;
             break;
         }
     }
-
     return returnID;
 }
 
@@ -262,117 +245,7 @@ IsPlayerNearPlayer(playerid, n_playerid, Float:radius) {
     return false;
 }
 
-//CheckCam
-stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
-{
-	return floatround(floatsqroot(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)) + ((z1 - z2) * (z1 - z2))));
-}
-stock Float:DistanceCameraTargetToLocation(Float:fCameraX, Float:fCameraY, Float:fCameraZ, Float:fObjectX, Float:fObjectY, Float:fObjectZ, Float:fVectorX, Float:fVectorY, Float:fVectorZ)
-{
-	new
-		Float:fX,
-		Float:fY,
-		Float:fZ,
-		Float:fDistance;
-
-	fDistance = GetDistance(fCameraX, fCameraY, fCameraZ, fObjectX, fObjectY, fObjectZ);
-
-	fX = fVectorX * fDistance + fCameraX;
-	fY = fVectorY * fDistance + fCameraY;
-	fZ = fVectorZ * fDistance + fCameraZ;
-
-	return floatsqroot((fX - fObjectX) * (fX - fObjectX) + (fY - fObjectY) * (fY - fObjectY) + (fZ - fObjectZ) * (fZ - fObjectZ));
-}
-
-//Mensagem pra todos com defines
-stock SendClientMessageToAllEx(color, const text[], {Float, _}:...)
-{
-	static
-	    args,
-	    str[144];
-
-	/*
-     *  Custom function that uses #emit to format variables into a string.
-     *  This code is very fragile; touching any code here will cause crashing!
-	*/
-	if ((args = numargs()) == 2)
-	{
-	    SendClientMessageToAll(color, text);
-	}
-	else
-	{
-		while (--args >= 2)
-		{
-			#emit LCTRL 5
-			#emit LOAD.alt args
-			#emit SHL.C.alt 2
-			#emit ADD.C 12
-			#emit ADD
-			#emit LOAD.I
-			#emit PUSH.pri
-		}
-		#emit PUSH.S text
-		#emit PUSH.C 144
-		#emit PUSH.C str
-		#emit LOAD.S.pri 8
-		#emit ADD.C 4
-		#emit PUSH.pri
-		#emit SYSREQ.C format
-		#emit LCTRL 5
-		#emit SCTRL 4
-
-		SendClientMessageToAll(color, str);
-
-		#emit RETN
-	}
-	return true;
-}
-
-//Nome das Armas
-ReturnWeaponName(weaponid)
-{
-	static
-		name[32];
-
-	GetWeaponName(weaponid, name, sizeof(name));
-
-	if (!weaponid)
-	    name = "N/A";
-
-	else if (weaponid == 18)
-	    name = "Coquetel Molotov";
-
-	else if (weaponid == 44)
-	    name = "Visão noturna";
-
-	else if (weaponid == 45)
-	    name = "Infravermelho";
-
-	return name;
-}
-
-stock SetPlayerWeaponSkill(playerid, skill) {
-	switch(skill) {
-	    case MINIMUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
-            SetPlayerSkillLevel(playerid, 0, 40);
-            SetPlayerSkillLevel(playerid, 6, 50);
-	    }
-	    case MEDIUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
-            SetPlayerSkillLevel(playerid, 0, 500);
-            SetPlayerSkillLevel(playerid, 6, 500);
-	    }
-	    case FULL_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
-            SetPlayerSkillLevel(playerid, 0, 998);
-            SetPlayerSkillLevel(playerid, 6, 998);
-	    }
-	}
-}
-
-stock SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...)
-{
+SendNearbyMessage(playerid, Float:radius, color, const str[], {Float,_}:...) {
 	static
 		args,
 		start,
@@ -457,12 +330,8 @@ FormatFloat(Float:number) { // by Anakin2000
 
 PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
 {
-    for(new i=0; i<=MAX_PLAYERS; i++)
-    {
-        if(IsPlayerConnected(i) && IsPlayerInRangeOfPoint(i,range,x,y,z))
-        {
-            PlayerPlaySound(i, soundid, x, y, z);
-        }
+    for(new i = 0; i <= MAX_PLAYERS; i++) {
+        if(IsPlayerConnected(i) && IsPlayerInRangeOfPoint(i, range, x, y, z)) PlayerPlaySound(i, soundid, x, y, z);
     }
 }
 
@@ -484,8 +353,7 @@ stock IsLethalMeele(id)
 	return false;
 }
 
-AdjustTextDrawString(string[])
-{
+AdjustTextDrawString(string[]) {
 	static const
 		scRealChars[256] =
 		{
@@ -506,19 +374,13 @@ AdjustTextDrawString(string[])
 			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
 			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
 		};
-	if (ispacked(string))
-	{
-		for (new i = 0, len = strlen(string); i != len; ++i)
-		{
+	if (ispacked(string)) {
+		for (new i = 0, len = strlen(string); i != len; ++i) {
 			string{i} = scRealChars[string{i}];
 		}
-	}
-	else
-	{
-		for (new i = 0, len = strlen(string), ch; i != len; ++i)
-		{
-			if (0 <= (ch = string[i]) < 256)
-			{
+	} else {
+		for (new i = 0, len = strlen(string), ch; i != len; ++i) {
+			if (0 <= (ch = string[i]) < 256) {
 				string[i] = scRealChars[ch];
 			}
 		}
@@ -1001,4 +863,68 @@ DealershipCategory(type) {
 		default: format(category, sizeof(category), "Inválido");
 	}
 	return category;
+}
+
+
+RenderingObjectsValue(playerid) {
+	new value;
+	switch (pInfo[playerid][pRenderObjects]){
+		case 0: value = 800;
+		case 1: value = 1000;
+        case 2: value = 2000;
+		case 3: value = 5000;
+        case 4: value = 10000;
+		default: value = 1000;
+	}
+	return value;
+}
+
+Float:RenderingObjectsRadius(playerid) {
+	new Float:radius;
+	switch (pInfo[playerid][pRenderObjects]){
+		case 0: radius = 0.5;
+		case 1: radius = 1.0;
+        case 2: radius = 1.5;
+		case 3: radius = 3.0;
+        case 4: radius = 5.0;
+		default: radius = 1.0;
+	}
+	return radius;
+}
+
+KickEx(playerid) {
+	if (pInfo[playerid][pKicked]) return false;
+
+	pInfo[playerid][pKicked] = 1;
+	SetTimerEx("KickTimer", 200, false, "d", playerid);
+	return true;
+}
+
+forward KickTimer(playerid);
+public KickTimer(playerid) {
+	if (pInfo[playerid][pKicked]) return Kick(playerid);
+	return false;
+}
+
+Float:GetXYInFrontOfPlayer(playerid, &Float:q, &Float:w, Float:distance) {
+    new Float:a;
+    GetPlayerPos(playerid, q, w, a);
+    if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
+    else GetPlayerFacingAngle(playerid, a);
+    q += (distance * floatsin(-a, degrees));
+    w += (distance * floatcos(-a, degrees));
+    return a;
+}
+
+bool:IsPlayerRecording(playerid){
+	return pInfo[playerid][pRecording];
+}
+
+bool:IsPlayerWatchingCamera(playerid){
+	return pInfo[playerid][pWatching];
+}
+
+stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){
+	if(pInfo[playerid][pWatchingPlayer] == cameraman) return true;
+	return false;
 }

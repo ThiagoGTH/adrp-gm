@@ -230,7 +230,7 @@ CMD:admins(playerid, params[]) {
 
     foreach (new i : Player) if (uInfo[i][uAdmin] > 0)
 	{
-		if(pInfo[playerid][pAdminDuty])
+		if(pInfo[i][pAdminDuty])
 			va_SendClientMessage(playerid, COLOR_GREEN, "%s %s (%s) (ID: %d) | Status: Em serviço administrativo", AdminRankName(i), pNome(i), GetPlayerUserEx(i), i);
 		else
 			va_SendClientMessage(playerid, COLOR_GREY, "%s %s (%s) | Status: Em roleplay", AdminRankName(i), pNome(i), GetPlayerUserEx(i));

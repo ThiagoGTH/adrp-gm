@@ -3,7 +3,7 @@
 CMD:aceitarboquete(playerid, params[]) {
     new targetid = pInfo[playerid][pBJOffer];
     if(!IsPlayerNearPlayer(playerid, targetid, 5.0)) return SendErrorMessage(playerid, "Você não está perto deste jogador.");
-
+ 
 /*    SetPlayerToFacePlayer(playerid, targetid);
 	SetPlayerToFacePlayer(targetid, playerid);*/
 

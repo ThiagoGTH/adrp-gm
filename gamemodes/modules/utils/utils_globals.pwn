@@ -114,6 +114,7 @@ enum Player_Data {
     pBrutallyWounded, 
     pDead,
     pDeadTime,
+    pDeadBy[128],
     pLastBlow,
     Text3D:pBrutallyTag,
     Text3D:pNametag,
@@ -329,6 +330,9 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pLastKnockout] = 0;
     pInfo[playerid][pDead] = 0;
     pInfo[playerid][pDeadTime] = 0;
+    pInfo[playerid][pDeadBy][0] = EOS;
+	
+
     pInfo[playerid][pAllowRespawn] = 0;
     pInfo[playerid][pLastBlow] = 0;
     pInfo[playerid][pTotalDamages] = 0;

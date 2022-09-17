@@ -11,6 +11,15 @@ public OnPlayerDeath(playerid, killerid, reason) {
     GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
     GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
 
+	SetSpawnInfo(playerid, NO_TEAM, pInfo[playerid][pSkin], 
+	pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
+	0, 0, 0, 0, 0, 0);
+
+	SetPlayerSkin(playerid, GetPlayerSkin(playerid) > 0 ? (pInfo[playerid][pSkin]) : (23));
+	SpawnPlayer(playerid);
+
+	OnPlayerGetDeath(playerid, killerid, reason);
+
 	if (killerid != INVALID_PLAYER_ID) {
 		if (reason == 50 && killerid != INVALID_PLAYER_ID)
 		    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s matou %s com heli-kill.", pNome(killerid), pNome(playerid));
@@ -177,6 +186,9 @@ OnPlayerGetDeath(playerid, issuerid, weaponid) {
     pInfo[playerid][pBrutallyWounded] = false;
 	pInfo[playerid][pDead] = true;
 	pInfo[playerid][pDeadTime] = 60;
+	if(weaponid != 999) format(pInfo[playerid][pDeadBy], 128, "Ferimentos de %s", ReturnWeaponName(weaponid));
+	else format(pInfo[playerid][pDeadBy], 128, "Morte desconhecida");
+
 	pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
 	pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
 	GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
@@ -200,9 +212,11 @@ OnPlayerGetDeath(playerid, issuerid, weaponid) {
         va_SendClientMessage(playerid, COLOR_LIGHTRED, "Armas:");
         for (new i = 0; i < 12; i ++) if (pInfo[playerid][pGuns][i] && pInfo[playerid][pAmmo][i] > 0) {
             va_SendClientMessage(playerid, -1, "%s (%d)", ReturnWeaponName(pInfo[playerid][pGuns][i]), pInfo[playerid][pAmmo][i]);
-        } ResetWeapons(playerid);	
+        }	
     } else SendServerMessage(playerid, "Você não possuia nenhuma arma quando morreu.");
-			
+	
+	ResetWeapons(playerid);
+
 	new textstring[512];
 	if (!IsValidDynamic3DTextLabel(pInfo[playerid][pBrutallyTag])) {
 		format(textstring, sizeof(textstring), "(( ESTE JOGADOR ESTÁ MORTO ))");
@@ -256,23 +270,34 @@ forward DeathTimer(); public DeathTimer() {
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
-    if(pInfo[playerid][pDead]) return false;
-
     if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){
 	    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
-			if(newkeys & KEY_JUMP && !(oldkeys & KEY_JUMP)) {
+			if(newkeys & KEY_JUMP) {
 				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
 				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
 			}
 		}
 	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
-			if(newkeys & KEY_SPRINT && !(oldkeys & KEY_SPRINT)) {
+			if(newkeys & KEY_SPRINT) {
 				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
 				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
 			}
 		}
 	}
     return true;
+}
+
+public OnPlayerStateChange(playerid, newstate, oldstate) {
+
+	if (newstate == PLAYER_STATE_WASTED)
+	{
+		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 
+			OnPlayerGetBrutallyWounded(playerid, 999, 999);
+		} else if(pInfo[playerid][pBrutallyWounded]) { // MORTO 
+			OnPlayerGetDeath(playerid, 999, 999);
+		}
+	}
+	return true;
 }
 
 OnPlayerRevive(playerid){
@@ -295,3 +320,42 @@ OnPlayerRevive(playerid){
 	SetPlayerHealthEx(playerid, pInfo[playerid][pHealthMax]);
 	return true;
 }
+
+SendPlayerHospital(playerid){
+	SetPlayerInterior(playerid, 0);
+	SetPlayerVirtualWorld(playerid, 0);
+	SetPlayerPos(playerid, 1177.3075, -1323.5679, 14.0642);
+	SetPlayerFacingAngle(playerid, 268.3186);
+	SetCameraBehindPlayer(playerid);
+    TogglePlayerControllable(playerid, true);
+	ClearAnimations(playerid);
+
+	return true;
+}
+
+/*static const Float:arrHospitalSpawns[6][4] = {
+	{-2655.1240, 638.6232, 14.4531, 180.0000},
+	{-318.8799, 1049.2433, 20.3403, 0.0000},
+	{1607.4869, 1816.0693, 10.8203, 0.0000},
+	{1173.0907, -1323.3217, 15.3965, 90.4037},
+	{2034.0670, -1402.6815, 17.2938, 180.0000},
+	{1241.6802, 326.4038, 19.7555, 335.0000}
+};
+
+GetClosestHospital(playerid) {
+	new
+	    Float:fDistance[2] = {99999.0, 0.0},
+	    iIndex = -1
+	;
+	for (new i = 0; i < sizeof(arrHospitalSpawns); i ++)
+	{
+		fDistance[1] = GetPlayerDistanceFromPoint(playerid, arrHospitalSpawns[i][0], arrHospitalSpawns[i][1], arrHospitalSpawns[i][2]);
+
+		if (fDistance[1] < fDistance[0])
+		{
+		    fDistance[0] = fDistance[1];
+		    iIndex = i;
+		}
+	}
+	return iIndex;
+}*/

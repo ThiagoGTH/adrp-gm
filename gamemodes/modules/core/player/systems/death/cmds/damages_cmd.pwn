@@ -40,7 +40,9 @@ CMD:respawnar(playerid, params[]){
 	if (!pInfo[playerid][pDead]) return SendErrorMessage(playerid, "Você não está morto.");
 	if (pInfo[playerid][pDeadTime] > 30) return SendErrorMessage(playerid, "Você deve aguardar mais %d segundos para respawnar.", pInfo[playerid][pDeadTime]-30);
 
+	CreateDeadBody(playerid);
 	OnPlayerRevive(playerid);
+	SendPlayerHospital(playerid);
 	SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "(( %s respawnou após sua morte ))", pNome(playerid));
 	SendServerMessage(playerid, "Você respawnou e não poderá lembrar de nada que ocasionou sua última morte.");
 	return true;

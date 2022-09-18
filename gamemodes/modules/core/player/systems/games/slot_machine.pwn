@@ -52,7 +52,7 @@ enum E_SLOT_MACHINE_DATA {
 
 
 static const SlotMachinePositions[][E_SLOT_MACHINE_DATA] = {
-	{1954.0913, -1767.5002, 13.5469, 0.0, 0.0, 0.0, 0, 0}
+	{1950.631835, -1770.526245, 11.776875, 270.000000, 0.000000, 180.000000, 0, 0}
 };
 
 static
@@ -96,7 +96,7 @@ hook OnGameModeInit() {
 
 		CreateDynamic3DTextLabel("Pressione ~k~~CONVERSATION_YES~ para jogar", COLOR_WHITE, x, y, z, 1.0, .testlos = false, .worldid = vw, .interiorid = int);
 		
-		CreateDynamicObject(2754, x, y, z, rx, ry, rz, vw, int, -1, STREAMER_OBJECT_SD, STREAMER_OBJECT_DD);
+		CreateDynamicObject(-6002, x, y, z, rx, ry, rz, vw, int, -1, STREAMER_OBJECT_SD, STREAMER_OBJECT_DD);
 	}
 	return true;
 }

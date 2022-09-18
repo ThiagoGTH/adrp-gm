@@ -1,18 +1,22 @@
 #include <YSI_Coding\y_hooks>
+new DraggingCorpse[MAX_PLAYERS];
+new CarryingCorpse[MAX_PLAYERS][24];
+new Timer:CorpseTimer[MAX_PLAYERS];
+new Float:LastX[MAX_PLAYERS];
+new Float:LastY[MAX_PLAYERS];
+new Float:LastZ[MAX_PLAYERS];
+new Float:LastA[MAX_PLAYERS];
 
 forward DeleteDeadBody(playerid); 
 public DeleteDeadBody(playerid) {
-    if(IsValidDynamicActor(DeadBody[playerid][e_ACTOR])) {
-        DestroyDynamicActor(DeadBody[playerid][e_ACTOR]);
-        DeadBody[playerid][e_ACTOR] = -1;
+    if(IsValidActor(DeadBody[playerid][e_ACTOR])) {
+        DestroyActor(DeadBody[playerid][e_ACTOR]);
     }
 
     if(IsValidDynamic3DTextLabel(DeadBody[playerid][e_TEXT])) {
         DestroyDynamic3DTextLabel(DeadBody[playerid][e_TEXT]);
-        DeadBody[playerid][e_TEXT] = Text3D:INVALID_3DTEXT_ID; 
     }
 
-    KillTimer(DeadBody[playerid][e_TIME]);
     DeadBody[playerid][e_SKIN] = -1;
     DeadBody[playerid][e_POS][0] = 0.0;
     DeadBody[playerid][e_POS][1] = 0.0;
@@ -22,6 +26,14 @@ public DeleteDeadBody(playerid) {
     DeadBody[playerid][e_INTERIOR] = 0;
     DeadBody[playerid][e_DEADBY][0] = EOS;
     DeadBody[playerid][e_NAME][0] = EOS;
+
+    DestroyActor(DeadBody[playerid][e_ACTOR]);
+    DeadBody[playerid][e_ACTOR] = -1;
+
+    DestroyDynamic3DTextLabel(DeadBody[playerid][e_TEXT]);
+    DeadBody[playerid][e_TEXT] = Text3D:INVALID_3DTEXT_ID;
+
+    KillTimer(DeadBody[playerid][e_TIME]);
     return true;
 }
 
@@ -35,11 +47,11 @@ CreateDeadBody(playerid) {
     DeadBody[playerid][e_SKIN] = pInfo[playerid][pSkin];
 
     DeadBody[playerid][e_ACTOR] = playerid;
-    DeadBody[playerid][e_ACTOR] = CreateDynamicActor(DeadBody[playerid][e_SKIN], DeadBody[playerid][e_POS][0], DeadBody[playerid][e_POS][1], DeadBody[playerid][e_POS][2], DeadBody[playerid][e_POS][3], .worldid = DeadBody[playerid][e_WORLD], .interiorid = DeadBody[playerid][e_INTERIOR]);
-        
-    SetDynamicActorFacingAngle(DeadBody[playerid][e_ACTOR], DeadBody[playerid][e_POS][3]);
-    SetDynamicActorVirtualWorld(DeadBody[playerid][e_ACTOR], DeadBody[playerid][e_WORLD]);
-    ApplyDynamicActorAnimation(DeadBody[playerid][e_ACTOR], "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 1);
+    DeadBody[playerid][e_ACTOR] = CreateActor(DeadBody[playerid][e_SKIN], DeadBody[playerid][e_POS][0], DeadBody[playerid][e_POS][1], DeadBody[playerid][e_POS][2], DeadBody[playerid][e_POS][3]);
+
+    SetActorFacingAngle(DeadBody[playerid][e_ACTOR], DeadBody[playerid][e_POS][3]);
+    SetActorVirtualWorld(DeadBody[playerid][e_ACTOR], DeadBody[playerid][e_WORLD]);
+    ApplyActorAnimation(DeadBody[playerid][e_ACTOR], "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 1);
 
     format(DeadBody[playerid][e_NAME], 24, "%s", pNome(playerid));
     format(DeadBody[playerid][e_DEADBY], 128, "%s", pInfo[playerid][pDeadBy]);
@@ -49,11 +61,11 @@ CreateDeadBody(playerid) {
 
     DeadBody[playerid][e_TEXT] = CreateDynamic3DTextLabel(string, 0xFFFFFFFF, DeadBody[playerid][e_POS][0], DeadBody[playerid][e_POS][1], DeadBody[playerid][e_POS][2]-0.5, 5.0);
 
-    DeadBody[playerid][e_TIME] = SetTimerEx("DeleteDeadBody", 300000, false, "i", playerid); // 300000 = 3min
+    DeadBody[playerid][e_TIME] = SetTimerEx("DeleteDeadBody", 300000, false, "d", playerid); // 300000 5 min
     return true;
 }
 
-GetClosestDeadBody(playerid, &Float: dis = 15.00) {
+GetClosestDeadBody(playerid, &Float: dis = 5.00) {
 	new deadbody = -1, player_world = GetPlayerVirtualWorld(playerid);
 
 	for (new i = 0; i < MAX_PLAYERS; i++) if (DeadBody[i][e_WORLD] == player_world) {
@@ -68,7 +80,42 @@ GetClosestDeadBody(playerid, &Float: dis = 15.00) {
 	return deadbody;
 }
 
-hook OnPlayerDisconnect(playerid, reason){
+hook OnPlayerDisconnect(playerid, reason) {
     DeleteDeadBody(playerid);
+    DraggingCorpse[playerid] = INVALID_ACTOR_ID;
     return true;
+}
+
+SetActorBehindPlayer(actorid, playerid, Float:distance = 0.2) {
+    new Float:x, Float:y, Float:z, Float:a;
+    GetPlayerPos(playerid, x, y, z);
+    GetPlayerFacingAngle(playerid, a);
+
+    x += (distance * floatsin( -a + 180, degrees));
+    y += (distance * floatcos( -a + 180, degrees));
+
+    SetActorPos(actorid, x, y, z + 0.80);
+    SetActorFacingAngle(actorid, a-180);
+    return true;
+}
+
+timer UpdateCorpse[100](playerid) {
+    if(DraggingCorpse[playerid] != INVALID_ACTOR_ID) {
+        new actor = DraggingCorpse[playerid];
+
+        new Float:x, Float:y, Float:z, Float:a;
+        GetPlayerPos(playerid, x, y, z);
+        GetPlayerFacingAngle(playerid, a);
+
+        if(x != LastX[playerid] || y != LastY[playerid] || z != LastZ[playerid] || a != LastA[playerid]) {
+            SetActorPos(actor, x, y, z + 1.5);
+            SetActorFacingAngle(actor, a);
+            ApplyActorAnimation(actor, "PED", "Drown", 4.1, false, true, true, true, 1);
+            SetActorBehindPlayer(actor, playerid);
+
+            GetPlayerPos(playerid, LastX[playerid], LastY[playerid], LastZ[playerid]);
+            GetPlayerFacingAngle(playerid, LastA[playerid]);
+        }
+        defer UpdateCorpse(playerid);
+    }
 }

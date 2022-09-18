@@ -13,7 +13,6 @@ CMD:deletarcorpo(playerid, params[]) {
 	SendServerMessage(playerid, "Você deletou o corpo de %s.", pNome(userid));
 	format(logString, sizeof(logString), "%s (%s) deletou o corpo de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
-
     return true;
 }
 

@@ -6,20 +6,6 @@ hook OnGameModeInit(){
 }
 
 public OnPlayerDeath(playerid, killerid, reason) {
-    pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
-    pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);
-    GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
-    GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
-
-	SetSpawnInfo(playerid, NO_TEAM, pInfo[playerid][pSkin], 
-	pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
-	0, 0, 0, 0, 0, 0);
-
-	SetPlayerSkin(playerid, GetPlayerSkin(playerid) > 0 ? (pInfo[playerid][pSkin]) : (23));
-	SpawnPlayer(playerid);
-
-	OnPlayerGetDeath(playerid, killerid, reason);
-
 	if (killerid != INVALID_PLAYER_ID) {
 		if (reason == 50 && killerid != INVALID_PLAYER_ID)
 		    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s matou %s com heli-kill.", pNome(killerid), pNome(playerid));
@@ -34,6 +20,10 @@ public OnPlayerDeath(playerid, killerid, reason) {
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
 	if(pInfo[damagedid][pDead]) return false;
+
+	if(weaponid == 0){
+		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]) return false;
+	}
 
     if(weaponid == 0 && pInfo[playerid][pTackleMode]) {
         if(pInfo[playerid][pTackleTimer] < gettime()){
@@ -270,17 +260,20 @@ forward DeathTimer(); public DeathTimer() {
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
+	if(pInfo[playerid][pDead]) return false;
+
     if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){
 	    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
 			if(newkeys & KEY_JUMP) {
-				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
-				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.0, 0, 1, 1, 0, 0, 1);
 			}
 		}
 	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
 			if(newkeys & KEY_SPRINT) {
-				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
-				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
+				ClearAnimations(playerid, 1);
+
+				ApplyAnimation(playerid, "Ped", "FALL_collapse", 3.0, 0, 1, 1, 0, 0, 1);
 			}
 		}
 	}
@@ -288,7 +281,6 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 }
 
 public OnPlayerStateChange(playerid, newstate, oldstate) {
-
 	if (newstate == PLAYER_STATE_WASTED)
 	{
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 

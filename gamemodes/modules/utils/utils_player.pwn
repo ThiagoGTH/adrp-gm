@@ -869,7 +869,7 @@ DealershipCategory(type) {
 RenderingObjectsValue(playerid) {
 	new value;
 	switch (pInfo[playerid][pRenderObjects]){
-		case 0: value = 800;
+		case 0: value = 500;
 		case 1: value = 1000;
         case 2: value = 2000;
 		case 3: value = 5000;
@@ -882,7 +882,7 @@ RenderingObjectsValue(playerid) {
 Float:RenderingObjectsRadius(playerid) {
 	new Float:radius;
 	switch (pInfo[playerid][pRenderObjects]){
-		case 0: radius = 0.5;
+		case 0: radius = 0.2;
 		case 1: radius = 1.0;
         case 2: radius = 1.5;
 		case 3: radius = 3.0;

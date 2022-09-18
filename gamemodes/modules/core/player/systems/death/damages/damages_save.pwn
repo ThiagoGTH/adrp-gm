@@ -57,12 +57,14 @@ ShowPlayerDamages(damageid, playerid, view){
         str[1024];
         //longstr[1200];
 
-    format(caption, sizeof(caption), "%s — %d ferimentos", pNome(damageid), pInfo[damageid][pTotalDamages]);
+	if(pInfo[damageid][pTotalDamages] <= 0) format(caption, sizeof(caption), "%s — nenhum ferimento", pNome(damageid));
+	else if (pInfo[damageid][pTotalDamages] == 1) format(caption, sizeof(caption), "%s — %d ferimento", pNome(damageid), pInfo[damageid][pTotalDamages]);
+	else format(caption, sizeof(caption), "%s — %d ferimentos", pNome(damageid), pInfo[damageid][pTotalDamages]);
 
     if (pInfo[damageid][pTotalDamages] < 1)
 		return Dialog_Show(playerid, damagesDialog, DIALOG_STYLE_LIST, caption, "Não existe nenhum dano para mostrar.", "Fechar", "");
     
-    switch(view){
+    switch(view) {
         case 0:
         {
 			format(str, sizeof(str), "Parte do corpo\tArma\tTempo\tDano\n");
@@ -71,7 +73,7 @@ ShowPlayerDamages(damageid, playerid, view){
 				if(!DamageInfo[damageid][i][eDamageTaken])
 					continue;
 
-				format(str, sizeof(str), "%s%s\t%s\t%ds\t(%d)\n", str,
+				format(str, sizeof(str), "%s%s\t%s\t%ds\t%d\n", str,
 				ReturnBodypartName(DamageInfo[damageid][i][eDamageBodypart]), 
 				ReturnWeaponName(DamageInfo[damageid][i][eDamageWeapon]), 
 				gettime() - DamageInfo[damageid][i][eDamageTime],
@@ -88,7 +90,7 @@ ShowPlayerDamages(damageid, playerid, view){
                 if(!DamageInfo[damageid][i][eDamageTaken])
                     continue;
 
-				format(str, sizeof(str), "%s%s\t%s\t%ds\t(%d)\n", str,
+				format(str, sizeof(str), "%s%s\t%s\t%ds\t%d\n", str,
 				ReturnBodypartName(DamageInfo[damageid][i][eDamageBodypart]), 
 				ReturnWeaponName(DamageInfo[damageid][i][eDamageWeapon]), 
 				pNome(DamageInfo[damageid][i][eDamageBy]),
@@ -124,13 +126,13 @@ ClearDamages(playerid){
 ReturnBodypartName(bodypart){
 	new bodyname[20];
 	switch(bodypart){
-		case BODY_PART_CHEST:bodyname = "PEITO";
-		case BODY_PART_GROIN:bodyname = "VIRILHA";
-		case BODY_PART_LEFT_ARM:bodyname = "BRAÇO ESQUERDO";
-		case BODY_PART_RIGHT_ARM:bodyname = "BRAÇO DIREITO";
-		case BODY_PART_LEFT_LEG:bodyname = "PERNA ESQUERDA";
-		case BODY_PART_RIGHT_LEG:bodyname = "PERNA DIREITA";
-		case BODY_PART_HEAD:bodyname = "CABEÇA";
+		case BODY_PART_CHEST:bodyname = "Peito";
+		case BODY_PART_GROIN:bodyname = "Virilha";
+		case BODY_PART_LEFT_ARM:bodyname = "Braço esquerdo";
+		case BODY_PART_RIGHT_ARM:bodyname = "Braço direito";
+		case BODY_PART_LEFT_LEG:bodyname = "Perna esquerda";
+		case BODY_PART_RIGHT_LEG:bodyname = "Perna direita";
+		case BODY_PART_HEAD:bodyname = "Cabeça";
 	}
 	return bodyname;
 }

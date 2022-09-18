@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-#define MAX_PET 1000
+#define MAX_PET 100
 
 #define PET_NONE    (0)
 #define PET_FOLLOW  (1)

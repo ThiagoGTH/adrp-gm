@@ -57,6 +57,7 @@ CMD:reclife(playerid, params[]) {
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s recuperou a vida de %s.", GetPlayerUserEx(playerid), pNome(userid));
 
 	SetPlayerHealthEx(userid, pInfo[userid][pHealthMax]);
+	ClearDamages(userid);
 	SendServerMessage(playerid, "Você recuperou a vida de %s.", pNome(userid));
 	format(logString, sizeof(logString), "%s (%s) recuperou a vida de %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);

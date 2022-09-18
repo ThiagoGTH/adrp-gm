@@ -57,21 +57,6 @@ CreateModelObject(MODEL_TYPES:model_type, modelid, Float:x, Float:y, Float:z, Fl
 	if(ObjectsInfo[_:model_type][StaticObject]) Streamer_ToggleItemStatic(STREAMER_TYPE_OBJECT, objectid, true);
 	return objectid;
 }
-new DebugMode[MAX_PLAYERS];
-
-CMD:startdebug(playerid, params[]){
-	if (DebugMode[playerid] == 0) DebugMode[playerid] = 1, SendServerMessage(playerid, "Ativou.");
-	else DebugMode[playerid] = 0, SendServerMessage(playerid, "Desativou.");
-
-	return true;
-}
-
-public OnPlayerShootDynamicObject(playerid, weaponid, STREAMER_TAG_OBJECT:objectid, Float:x, Float:y, Float:z) {
-	if (DebugMode[playerid] == 1){
-		va_SendClientMessage(playerid, -1, "%d, %.4f, %.4f, %.4f", objectid, x, y, z);
-	}
-    return 1;
-}
 
 hook OnGameModeInit(){
     LoadInterfaces();

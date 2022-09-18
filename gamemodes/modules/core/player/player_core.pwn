@@ -161,13 +161,10 @@ GetInitials(const string[])
 	return ret;
 }*/
 
-/*ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0)
-{
+ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0) {
 	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
-
-	pInfo[playerid][pLoopAnim] = true;
 	return true;
-}*/
+}
 
 
 /*PlayerHasTazer(playerid)

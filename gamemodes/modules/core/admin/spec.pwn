@@ -115,7 +115,7 @@ CMD:checarspecs(playerid, params[]) {
     foreach(new i : Player) {
         if(gPlayerIsSpectating[i]) {
             if(!spectating) SendServerMessage(playerid, "Administradores espiando:");
-            va_SendClientMessage(playerid, COLOR_GREY, "%s está espiando %s %s.", GetPlayerUserEx(i), pNome(gSpectatingPlayer[i]), GetPlayerUserEx(gSpectatingPlayer[i]));
+            va_SendClientMessage(playerid, COLOR_GREY, "%s está espiando %s (%s).", GetPlayerUserEx(i), pNome(gSpectatingPlayer[i]), GetPlayerUserEx(gSpectatingPlayer[i]));
             spectating++;
         }
     }

@@ -1,64 +1,41 @@
 #include <YSI_Coding\y_hooks>
 
+forward PrivateMessageRegister(username[128], password[128]);
+
 forward ServerStatus(type);
 public ServerStatus(type){
     new title[32],
-        text[512],
-        forum1[256],
-        forum2[256],
-        ucp1[256],
-        ucp2[256],
-        server1[256],
-        server2[256],
+        text[1024],
         footer[128],
         rcon[128];
 
     new DCC_Channel:channel;
-    channel = DCC_FindChannelById("989747574367997982");
+    channel = DCC_FindChannelById("1018291621722341447");
     
     if(type == 1){ // TUDO FUNCIONANDO
-        // SERVIDOR
-        if(Server_Instability){
-            Server_Instability = 0;
-            format(rcon, sizeof(rcon), "hostname Advanced Roleplay | advanced-roleplay.com.br");
-            SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password 0");
-            SendRconCommand(rcon);
-        }
 
         // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Nenhum problema ou ocorrência recente.", text);
+        format(text, 1024, "<:annou:931570978180431912> Nenhum problema ou ocorrência recente.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/orGtntq.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -72,39 +49,27 @@ public ServerStatus(type){
             SendRconCommand(rcon);
         }
 
-        // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no fórum. Os desenvolvedores trabalhando em uma solução.\n", text);
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso fórum nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -119,38 +84,27 @@ public ServerStatus(type){
         }
 
         // DISCORD
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no User Control Panel. Os desenvolvedores trabalhando em uma solução.\n", text);
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso User Control Panel nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
+        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Operante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -163,38 +117,27 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado no serviço SA-MP e o acesso aos jogadores foi suspenso para evitar danos.\nOs desenvolvedores trabalhando em uma solução.", text);
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso Serviço Open.MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
+        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Operante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Operante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
 
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/fFacF9o.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
@@ -207,44 +150,71 @@ public ServerStatus(type){
         SendRconCommand(rcon);
 
         // DISCORD:
-        format(title, 32, "STATUS DE SERVIÇOS");
+        format(title, 32, "Status do Servidor");
         utf8encode(title, title);
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 512, "Um problema foi encontrado em todos os serviços. Os desenvolvedores trabalhando em uma solução o mais rápido possível.\n", text);
+        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em todas as nossas plataformas nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
+        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
+        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
+        <:arrow:931570978163687454> Endereço de IP: %s\n\
+        <:arrow:931570978163687454> User Control Panel: %s\n\
+        <:arrow:931570978163687454> Fórum: %s\n\n\
+        ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
-        
-        format(forum1, 256, "Status: Inoperante\nLINK: %s", SERVERFORUM);
-        utf8encode(forum1, forum1);
-        format(forum2, 256, "Fórum", forum2);
-        utf8encode(forum2, forum2);
-        DCC_AddEmbedField(embed, forum2, forum1, false);
-        
-        format(ucp1, 256, "Status: Inoperante\nLINK: %s", SERVERUCP);
-        utf8encode(ucp1, ucp1);
-        format(ucp2, 256, "User Control Panel", ucp2);
-        utf8encode(ucp2, ucp2);
-        DCC_AddEmbedField(embed, ucp2, ucp1, false);
-
-        format(server1, 256, "Status: Inoperante\nÚltima atualização: %s\nVersão: %s\nIP: %s", LASTEST_RELEASE, VERSIONING, SERVERIP);
-        utf8encode(server1, server1);
-        format(server2, 256, "SA-MP", server2);
-        utf8encode(server2, server2);
-        DCC_AddEmbedField(embed, server2, server1, false);
 
         format(footer, 128, "© 2022 Advanced Roleplay");
         utf8encode(footer, footer);
-        DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/5jVAWdx.png");
-        DCC_SetEmbedImage(embed, "https://i.imgur.com/bqmbGEm.png");
+
+        DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
         DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
         DCC_SendChannelEmbedMessage(channel, embed);
     }
 }
 
-public DCC_OnMessageCreate(DCC_Message:message)
-{
+forward SendInfoClosedAlpha();
+public SendInfoClosedAlpha(){
+
+    new 
+        title[32],
+        text[2048],
+        footer[128];
+
+    new DCC_Channel:channel;
+    channel = DCC_FindChannelById("1000930434747740271");
+    
+    // DISCORD
+    format(title, 32, "Informações — Closed Alpha");
+    utf8encode(title, title);
+    new DCC_Embed:embed = DCC_CreateEmbed(title);
+    DCC_SetEmbedColor(embed, 0x5964F4);
+        
+    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
+    > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
+    > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
+    > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
+    > <:arrow:931570978163687454> O endereço de IP e a senha do servidor só serão liberados no dia em que ele for aberto para os testes, o que provavelmente ocorrerá na segunda semana de setembro;\n\
+    > <:arrow:931570978163687454> O compartilhamento do endereço de IP, senha ou qualquer informação que permita algum jogador não autorizado a entrar no servidor acarretará em banimento permanente de todas as versões de teste do servidor, podendo retomar, apenas, na versão de lançamento;\n\
+    > <:arrow:931570978163687454> O servidor não é para fazer roleplay, apenas testar os sistemas feitos até então;\n\
+    > <:arrow:931570978163687454> Para pegar administrador no servidor, utilize o comando `/pegaradmin` e, para pegar premium ouro, `/pegarpremium`;\n\
+    > <:arrow:931570978163687454> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback. Você também receberá um cargo de **registrado** no Discord público do Advanced Rolelay. Esse cargo não será setado novamente caso você saia do servidor.\n");
+    utf8encode(text, text);
+    DCC_SetEmbedDescription(embed, text);
+
+    format(footer, 128, "© 2022 Advanced Roleplay — Closed Alpha");
+    utf8encode(footer, footer);
+
+    DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
+    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+    DCC_SendChannelEmbedMessage(channel, embed);
+     
+}
+
+public DCC_OnMessageCreate(DCC_Message:message) {
     new channel_name[32];
     new DCC_Channel:channel;
     DCC_GetMessageChannel(message, channel);
@@ -256,6 +226,8 @@ public DCC_OnMessageCreate(DCC_Message:message)
     DCC_GetUserDiscriminator(author, discriminator);
     new string[128];
     DCC_GetMessageContent(message, string);
+    new DCC_Guild:guild = DCC_FindGuildById("277264357824528397");
+    new DCC_Guild:guildCA = DCC_FindGuildById("1000929204164112386");
 
     new bool:is_bot;
     if(!DCC_IsUserBot(author, is_bot))
@@ -264,26 +236,9 @@ public DCC_OnMessageCreate(DCC_Message:message)
     if(is_bot)
         return false;
 
-    if(!strcmp(channel_name, "admin-chat", true) && channel == DCC_FindChannelById("989306920517136464")){
-        new dest[255], nameee[255];
-        utf8decode(dest, string);
-        utf8decode(nameee, user_name);
-        
-        if (strlen(string) > 64){
-            SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s (Discord): %.64s", nameee, dest);
-            SendAdminAlert(COLOR_ADMINCHAT, "...%s **", dest[64]);
-        }
-        else SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s (Discord): %s", nameee, dest);
-        return true;
-    }
-
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("989306578199003197")){
-        DCC_SendChannelMessage(DCC_FindChannelById("989305002952622110"), string);
-        return true;
-    }
-
-    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")) //#comandos
-    {
+    ////////////////////////////////////////////////////////////////////////
+    // DISCORD CLOSED ALPHA
+    if(!strcmp(channel_name, "registro", true) && channel == DCC_FindChannelById("1013482041595146352")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
             new authorid[DCC_ID_SIZE];
@@ -304,7 +259,339 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(title, title);
                 new DCC_Embed:embed = DCC_CreateEmbed(title);
 
-                format(text, 1024, "Bip-bip-bop-bip-bop-bip. Eis o que posso fazer:\n", text);
+                format(text, 1024, "Bip-bip-bop-bip-bop-bip. Eis o que posso fazer:\n");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(title_field, 128, "!registrar");
+                format(text_field, 1024, "Registrar um usuário no banco de dados do Advanced Roleplay. Uma senha será enviada em seu privado.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!criarpersonagem");
+                format(text_field, 1024, "Cria um personagem no seu usuário.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!deletarconta");
+                format(text_field, 1024, "Deleta seu usuário permanentemente.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+                return true;
+            }
+            else if(!strcmp(command, "!registrar", true)){
+                new text[256], footer[128], title[64], Cache:result;
+                if(isnull(parameters)){
+                    format(text, 256, "**USE:** !registrar [nome do usuário]");
+                    utf8encode(text, text);
+                    format(title, 64, "Registrar UCP");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    return true;
+                }
+
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `discord_id` = '%s';", authorid);
+                result = mysql_query(DBConn, query);
+        
+                // Verificar se já foi registrado pelo Discord
+                if(cache_num_rows()) {
+                    format(text, 256, "Foi encontrado um usuário vinculado ao seu Discord.");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_delete(result);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s';", parameters);
+                result = mysql_query(DBConn, query);
+
+                // Verificar existência do usuário
+                if(cache_num_rows()) {
+                    format(text, 256, "Foi encontrado um usuário com este nome.");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                static const Letter[27][] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+                static const Number[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+                new password[128], Caracter1, Caracter2, Caracter3, Caracter4, Caracter5, Caracter6, Caracter7, Caracter8, Caracter9;
+                Caracter1 = randomEx(0, 9);     //Numero
+                Caracter2 = randomEx(0, 26);    //Letra
+                Caracter3 = randomEx(0, 26);    //Letra
+                Caracter4 = randomEx(0, 26);    //Letra
+                Caracter5 = randomEx(0, 9);     //Numero
+                Caracter6 = randomEx(0, 9);     //Numero
+                Caracter7 = randomEx(0, 9);     //Numero
+                Caracter8 = randomEx(0, 26);    //Letra
+                Caracter9 = randomEx(0, 26);    //Letra
+                format(password, sizeof(password), "%d%s%s%s%d%d%d%s%s", Number[Caracter1], Letter[Caracter2], Letter[Caracter3], Letter[Caracter4], Number[Caracter5], Number[Caracter6], Number[Caracter7], Letter[Caracter8], Letter[Caracter9]);
+
+                bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]s[128]", authorid, parameters);
+                DCC_CreatePrivateChannel(author, "PrivateMessageRegister", "ss", parameters, password);
+                new DCC_Role:role1 = DCC_FindRoleById("1013523617985867776");
+                new DCC_Role:role2 = DCC_FindRoleById("1014711599325511880");
+                DCC_AddGuildMemberRole(guildCA, author, role1);
+                DCC_AddGuildMemberRole(guild, author, role2);
+
+                format(title, 64, "Registro concluído!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, seu registro foi concluído e enviado no privado!\n", user_name);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);               
+                return true;
+            } 
+            else if(!strcmp(command, "!criarpersonagem", true)){
+                new text[256], footer[128], title[64], user_id, username[24], Cache:result;
+                
+                if(isnull(parameters)){
+                    format(text, 256, "**USE:** !criarpersonagem [nome do personagem]\n:warning: Não esqueça de inserir o nome no formato **Nome_Sobrenome**!");
+                    utf8encode(text, text);
+                    format(title, 64, "Criar Personagem");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    return true;
+                }
+
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `name` = '%s';", parameters);
+                result = mysql_query(DBConn, query);
+        
+                // Verificar se já existe o personagem
+                if(cache_num_rows()) {
+                    format(text, 256, "Foi encontrado um personagem com este nome.");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_delete(result);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `discord_id` = '%s';", authorid);
+                result = mysql_query(DBConn, query);
+        
+                // Verificar se já foi registrado pelo Discord
+                if(!cache_num_rows()) {
+                    format(text, 256, "Não foi encontrado um usuário vinculado ao seu Discord. :/\nRegistre-se utilizando o **!registrar**!");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_get_value_name_int(0, "ID", user_id);
+                cache_get_value_name(0, "username", username);
+                CreateCharacter(parameters, user_id);
+                format(title, 64, "Personagem criado!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, seu personagem foi criado com o nome **%s**!\nLogue no servidor utilizando seu nome de usuário: %s.", user_name, parameters, username);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);
+                cache_delete(result);       
+                return true;
+            } else if(!strcmp(command, "!deletarconta", true)){
+                new text[256], footer[128], title[64], user_id, username[24], Cache:result;
+
+                cache_delete(result);
+                mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `discord_id` = '%s';", authorid);
+                result = mysql_query(DBConn, query);
+        
+                // Verificar se já foi registrado pelo Discord
+                if(!cache_num_rows()) {
+                    format(text, 256, "Não foi encontrado um usuário vinculado ao seu Discord. :/\nRegistre-se utilizando o **!registrar**!");
+                    utf8encode(text, text);
+                    format(title, 64, "Ops...");
+                    utf8encode(title, title);
+                    new DCC_Embed:embed = DCC_CreateEmbed(title);
+                    DCC_SetEmbedDescription(embed, text);
+                    DCC_SetEmbedColor(embed, 0x5964F4);
+                    format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                    utf8encode(footer, footer);
+                    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                    DCC_SendChannelEmbedMessage(channel, embed);
+                    cache_delete(result);
+                    return true;
+                }
+
+                cache_get_value_name_int(0, "ID", user_id);
+                cache_get_value_name(0, "username", username);
+               
+                UserDelete(user_id);
+                format(title, 64, "Usuário deletado!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, o registro do usuário **%s** foi deletado com sucesso!", user_name, username);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);
+                cache_delete(result);       
+                return true;
+            }
+            else {
+                new title[32];
+                format(title, 32, "Comando inválido");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[512];
+                format(text, 512, "Digite **!ajuda** para obter a lista de comandos completa.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                new footer[128];
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+            }
+        }
+        return true;
+    }
+
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")){
+        DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "informações", true) && channel == DCC_FindChannelById("1000930434747740271")){
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!info", true)) {
+                SendInfoClosedAlpha();
+                return true;
+            }
+        }
+        return true;
+    }
+    ////////////////////////////////////////////////////////////////////////
+    // DISCORD STAFF
+    if(!strcmp(channel_name, "admin-chat", true) && channel == DCC_FindChannelById("989306920517136464")){
+        new dest[255], nameee[255];
+        utf8decode(dest, string);
+        utf8decode(nameee, user_name);
+        
+        if (strlen(string) > 64){
+            SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s (Discord): %.64s", nameee, dest);
+            SendAdminAlert(COLOR_ADMINCHAT, "...%s **", dest[64]);
+        }
+        else SendAdminAlert(COLOR_ADMINCHAT, "[STAFF] %s (Discord): %s", nameee, dest);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("989306578199003197")){
+        DCC_SendChannelMessage(DCC_FindChannelById("989305002952622110"), string);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")){
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!ajuda", true)){
+                new text[1024],
+                    title[32],
+                    footer[128],
+                    title_field[128], 
+                    text_field[1024];
+
+                format(title, 32, "Comandos disponíveis");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 1024, "Bip-bip-bop-bip-bop-bip. Eis o que posso fazer:\n");
                 utf8encode(text, text);
                 DCC_SetEmbedDescription(embed, text);
 
@@ -470,7 +757,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -491,7 +778,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!personagens", true)){
@@ -557,7 +844,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -577,7 +864,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!usuario", true)){
@@ -599,7 +886,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -618,7 +905,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
                 format(title, 64, "Usuário de %s", parameters);
@@ -639,7 +926,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
             else if(!strcmp(command, "!checarban", true)){
@@ -704,7 +991,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                    DCC_SendChannelEmbedMessage(channel, embed);
                     return true;
                 }
 
@@ -739,7 +1026,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
-                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305002952622110"), embed);
+                DCC_SendChannelEmbedMessage(channel, embed);
                 cache_delete(result); // Limpar o cachê do MySQL
                 return true;
             }
@@ -765,7 +1052,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
         return true;
     }
 
-    if(!strcmp(channel_name, "manager-bot", true) && channel == DCC_FindChannelById("989305233299624007")){ // #manager-bot
+    if(!strcmp(channel_name, "manager-bot", true) && channel == DCC_FindChannelById("989305233299624007")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {
             new authorid[DCC_ID_SIZE];
@@ -785,7 +1072,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(title, 32, "Alterar Status de Serviço");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
-                    format(text, 1024, "**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
+                    format(text, 1024, "**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço Open.MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SetEmbedColor(embed, 0x5964F4);
@@ -799,7 +1086,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     format(title, 32, "Alterar Status de Serviço");
                     utf8encode(title, title);
                     new DCC_Embed:embed = DCC_CreateEmbed(title);
-                    format(text, 1024, "**ERRO:** O valor inserido deve estar entre 1 e 5.\n\n**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço SA-MP inoperante\n`5` = Todos os serviços inoperantes");
+                    format(text, 1024, "**ERRO:** O valor inserido deve estar entre 1 e 5.\n\n**USE:** !status [1 à 5]\n`1` = Todos os serviços operantes\n`2` = Fórum inoperante\n`3` = UCP inoperante\n`4` = Serviço Open.MP inoperante\n`5` = Todos os serviços inoperantes");
                     utf8encode(text, text);
                     DCC_SetEmbedDescription(embed, text);
                     DCC_SetEmbedColor(embed, 0x5964F4);
@@ -815,7 +1102,7 @@ public DCC_OnMessageCreate(DCC_Message:message)
                     case 1: whattype = "todos os serviços operantes";
                     case 2: whattype = "fórum inoperante";
                     case 3: whattype = "User Control Panel inoperante";
-                    case 4: whattype = "serviço SA-MP inoperante";
+                    case 4: whattype = "Serviço Open.MP inoperante";
                     case 5: whattype = "todos os serviços inoperantes";
                     default: whattype = "ERRO";
                 }
@@ -830,6 +1117,24 @@ public DCC_OnMessageCreate(DCC_Message:message)
                 utf8encode(footer, footer);
                 DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
                 DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
+            } else if(!strcmp(command, "!gmx", true)) {
+                new title[32];
+                format(title, 32, "Reiniciando o servidor");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[1024];
+                new footer[128];
+                format(text, 1024, "Reinicialização do servidor forçada iniciada.\nO acesso dos jogadores foi bloqueado e o servidor será reiniciado em um minuto.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(DCC_FindChannelById("989305233299624007"), embed);
+
+                GiveGMX();
+                return true;
             }
 
             else{
@@ -852,6 +1157,42 @@ public DCC_OnMessageCreate(DCC_Message:message)
         }
         return true;
     }
-    
+    ////////////////////////////////////////////////////////////////////////
+    // DISCORD PÚBLICO
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013952540393619557")){
+        DCC_SendChannelMessage(DCC_FindChannelById("277264357824528397"), string);
+        return true;
+    }
+    return true;
+}
+
+public PrivateMessageRegister(username[128], password[128]) {
+    new text[256], footer[128], title[64], title_field[128], text_field[256];
+    format(title, 64, "Registro concluído!");
+    utf8encode(title, title);
+    new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+    format(text, 256, "Bip-bip-bop-bip-bop-bip. Eis o seu registro para o **Closed Alpha**:\n");
+    utf8encode(text, text);
+    DCC_SetEmbedDescription(embed, text);
+
+    format(title_field, 128, "Usuário registrado:");
+    format(text_field, 256, "%s", username);
+    utf8encode(title_field, title_field);
+    utf8encode(text_field, text_field);
+    DCC_AddEmbedField(embed, title_field, text_field, true);
+
+    format(title_field, 128, "Senha registrada:");
+    format(text_field, 256, "%s", password);
+    utf8encode(title_field, title_field);
+    utf8encode(text_field, text_field);
+    DCC_AddEmbedField(embed, title_field, text_field, true);
+
+    format(footer, 128, "Ação realizada em %s.", GetFullDate(gettime()));
+    utf8encode(footer, footer);
+    DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+    DCC_SetEmbedColor(embed, 0x5964F4);
+    DCC_SendChannelEmbedMessage(DCC_GetCreatedPrivateChannel(), embed);
     return true;
 }

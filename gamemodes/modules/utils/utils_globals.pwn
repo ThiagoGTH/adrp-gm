@@ -9,12 +9,17 @@
 
 #define INVALID_HOUSE_ID            (-1)
 
+#define MAX_LISTED_ITEMS            (10)
+
+#define MINIMUM_SKILL               (1)
+#define MEDIUM_SKILL	            (2)
+#define FULL_SKILL		            (3)
+
 new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];
-new 
-    szBigString [256];
-    
+new szBigString [256];
+
 enum User_Data {
     uID,
     uName[24],
@@ -64,6 +69,7 @@ enum Player_Data {
     Float:pArmour,
 
     pMoney,
+    pOldMoney,
     pBank,
     pSavings,
     pSkin,
@@ -110,10 +116,17 @@ enum Player_Data {
     pBrutallyWounded, 
     pDead,
     pDeadTime,
+    pDeadBy[128],
     pLastBlow,
     Text3D:pBrutallyTag,
     Text3D:pNametag,
+
+    // PLAYERS CONFIG
+    pSetting,
+    pTogNewbie,
+    pTogAdmin,
     pNametagType,
+    pRenderObjects,
     
     pAllowRespawn,
     pLastKnockout,
@@ -131,13 +144,6 @@ enum Player_Data {
 
     pESC,
     Float:pHealthMax,
-
-    pVehicles[MAX_PLAYER_VEHICLES],
-    pSpawnVehicle,
-	vListOpen,
-    pVehicleSell,
-	pVehicleSellPrice,
-    pSpawnVeh,
 
     // RADIO
     rRadioState,            // Estado do rádio, se ligado ou desligado
@@ -157,11 +163,16 @@ enum Player_Data {
 	bool:pRecording,
 	pCameraTimer,
 
+    pKicked,
+    pShowFooter,
     // FACTIONS
-    pSwat,
+    pFaction,
+    pFactionRank,
+    pFactionEdit,
+    pSelectedSlot,
 
-    // TOG
-    pTogNewbie,
+    pOnDuty,
+    pSwat,
 
     pJailed,
     pRenting,
@@ -179,6 +190,13 @@ enum Player_Data {
     pTimerSpawn,
     pDelayNewbie,
     pInvestment,
+    pChoosingCharacter,
+    pCharacterChoosed,
+    pCharacterActorSkin,
+    pCharacterActor,
+    pCharacterFinalizing,
+
+    pSpectating,
 
     pEditingVeh,
     pOjectVeh,
@@ -205,19 +223,36 @@ enum Player_Data {
     dEditingPrice,
     dEditingMenu,
 
+    iEditingSQL,
+    iEditingModel,
+    iEditingUseful,
+    iEditingLegality,
+    iEditingCategory,
+    iEditingMenu,
+    iEditingName[64],
+    iEditingDesc[256],
+
     // Inventory
     iItem[30],
     iAmount[30],
     pInventoryItem,
     pEditDropped,
+    pGiveItem,
+
+    // Keys
+    pKeySelected,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
+
+new NearestItems[MAX_PLAYERS][MAX_LISTED_ITEMS];
 
 new const g_aWeaponSlots[] = {
 	0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 10, 10, 10, 10, 10, 10, 8, 8, 8, 0, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 4, 6, 6, 7, 7, 7, 7, 8, 12, 9, 9, 9, 11, 11, 11
 };
 
 void:ResetUserData(playerid) {
+    //uInfo[playerid][uName][0] = EOS;
+
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
     // Teams
@@ -247,8 +282,6 @@ void:ResetUserData(playerid) {
 
 
     uInfo        [playerid][uJailed]      = -1;
-
-    uInfo[playerid][uName][0] = EOS;
 }
 
 void:ResetCharacterData(playerid) {
@@ -256,7 +289,7 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pUser]           = 0;
     pInfo   [playerid][pName][0]        =
     pInfo   [playerid][pFirstIP][0]     =
-    pInfo   [playerid][pLastIP][0]      = 
+    pInfo   [playerid][pLastIP][0]      =
     pInfo   [playerid][pBackground][0]  = EOS;
 
     pInfo   [playerid][pDonator]        =
@@ -267,20 +300,21 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pAdmin]          = 0;
     pInfo   [playerid][pHealth]         = 0.00;
     pInfo   [playerid][pArmour]         = 0.00;
-    pInfo   [playerid][pMoney]          = 
-    pInfo   [playerid][pBank]           = 
-    pInfo   [playerid][pSavings]        = 
-    pInfo   [playerid][pSkin]           = 
+    pInfo   [playerid][pMoney]          =
+    pInfo   [playerid][pOldMoney]       =
+    pInfo   [playerid][pBank]           =
+    pInfo   [playerid][pSavings]        =
+    pInfo   [playerid][pSkin]           =
     pInfo   [playerid][pScore]          = 0;
-    pInfo   [playerid][pPositionX]      = 
-    pInfo   [playerid][pPositionY]      = 
-    pInfo   [playerid][pPositionZ]      = 
+    pInfo   [playerid][pPositionX]      =
+    pInfo   [playerid][pPositionY]      =
+    pInfo   [playerid][pPositionZ]      =
     pInfo   [playerid][pPositionA]      = 0.00;
-    pInfo   [playerid][pVirtualWorld]   = 
-    pInfo   [playerid][pInterior]       = 
-    pInfo   [playerid][pEditandoBareira]= 
-    pInfo   [playerid][pLicence]        = 
-    pInfo   [playerid][pPhoneType]      = 
+    pInfo   [playerid][pVirtualWorld]   =
+    pInfo   [playerid][pInterior]       =
+    pInfo   [playerid][pEditandoBareira]=
+    pInfo   [playerid][pLicence]        =
+    pInfo   [playerid][pPhoneType]      =
     pInfo   [playerid][pPhoneNumber]    = 0;
 
     pInfo   [playerid][pGender]             =
@@ -302,6 +336,9 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pLastKnockout] = 0;
     pInfo[playerid][pDead] = 0;
     pInfo[playerid][pDeadTime] = 0;
+    pInfo[playerid][pDeadBy][0] = EOS;
+	
+
     pInfo[playerid][pAllowRespawn] = 0;
     pInfo[playerid][pLastBlow] = 0;
     pInfo[playerid][pTotalDamages] = 0;
@@ -311,8 +348,20 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pRenting] = INVALID_HOUSE_ID;
     pInfo[playerid][pJailed] = 0;
+
+    pInfo[playerid][pFaction] = 0;
+    pInfo[playerid][pFactionRank] = 0;
+    pInfo[playerid][pFactionEdit] = 0;
+    pInfo[playerid][pSelectedSlot] = 0;
+
+    pInfo[playerid][pOnDuty] = 0;
     pInfo[playerid][pSwat] = 0;
-    pInfo[playerid][pNametagType] = 0;
+
+    pInfo[playerid][pSetting] =
+    pInfo[playerid][pTogNewbie] =
+    pInfo[playerid][pTogAdmin] =
+    pInfo[playerid][pNametagType] =
+    pInfo[playerid][pRenderObjects] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;
@@ -334,13 +383,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pWatchingPlayer] = INVALID_PLAYER_ID;
     pInfo[playerid][pCameraTimer] = -1;
 
-    for (new i = 0; i < 6; i ++)
-	{
-    	pInfo[playerid][pVehicles][i] = 0;
-	}
-    pInfo[playerid][pVehicleSell] = -1;
-    pInfo[playerid][pVehicleSellPrice] = 0;
-    pInfo[playerid][pSpawnVeh] = 0;
+    pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
 
     // RADIO
     pInfo[playerid][rRadioState] = 0;
@@ -358,6 +401,8 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][rRadioName5], 90, "0");
     format(pInfo[playerid][rRadioName6], 90, "0");
     format(pInfo[playerid][rRadioName7], 90, "0");
+
+    pInfo[playerid][pKicked] = 0;
     
     // TEMP VARS
     pInfo[playerid][tempChar][0] = 
@@ -402,6 +447,15 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][dEditingPrice] =
     pInfo[playerid][dEditingMenu] = 0;
 
+    pInfo[playerid][iEditingSQL] =
+    pInfo[playerid][iEditingModel] =
+    pInfo[playerid][iEditingUseful] =
+    pInfo[playerid][iEditingLegality] =
+    pInfo[playerid][iEditingCategory] =
+    pInfo[playerid][iEditingMenu] = 0;
+    pInfo[playerid][iEditingDesc][0] =
+    pInfo[playerid][iEditingName][0] = EOS;
+    
     // INVENTORY
     for (new i = 0; i < 30; i ++) {
     	pInfo[playerid][iItem][i] = 0;
@@ -409,4 +463,18 @@ void:ResetCharacterData(playerid) {
 	}
     pInfo[playerid][pInventoryItem] = -1;
     pInfo[playerid][pEditDropped] = 0;
+    pInfo[playerid][pGiveItem] = -1;
+
+    for (new i = 0; i < MAX_LISTED_ITEMS; i ++) {
+	    NearestItems[playerid][i] = -1;
+	}
+}
+
+void:ResetCharacterSelection(playerid){
+    pInfo[playerid][pShowFooter] = 0;
+    pInfo[playerid][pChoosingCharacter] = 0;
+    pInfo[playerid][pCharacterChoosed] = 0;
+    pInfo[playerid][pCharacterActorSkin] = 0;
+    pInfo[playerid][pCharacterActor] = 0;
+    DestroyActor(pInfo[playerid][pCharacterActor]);
 }

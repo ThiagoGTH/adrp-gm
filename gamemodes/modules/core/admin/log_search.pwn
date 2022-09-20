@@ -7,9 +7,9 @@ CMD:logs(playerid, params[]) {
 }
 
 ShowLogsInit(playerid) {
-    new Cache:type[15], rows[15], string[1024];
+    new Cache:type[22], rows[22], string[2048];
 
-    for (new i = 0; i < sizeof(type); i++){
+    for (new i = 0; i < sizeof(type); i++) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `type` = '%d';", i + 1);
         type[i] = mysql_query(DBConn, query);
         rows[i] = cache_num_rows();
@@ -21,7 +21,7 @@ ShowLogsInit(playerid) {
     {BBBBBB}Pesquisar{FFFFFF}\n\
     1\tAdministrativo\t%d\n\
 	2\tLogin/Logout\t%d\n\
-    3\tComandos usados\t%d\n\
+    3\tComandos\t%d\n\
     4\tDeletar personagem\t%d\n\
     5\tSistema\t%d\n\
     6\tMortes\t%d\n\
@@ -30,11 +30,18 @@ ShowLogsInit(playerid) {
     9\tSupport Chat\t%d\n\
     10\tAnúncios\t%d\n\
     11\tPunições\t%d\n\
-    12\tSinuca\t%d\n\
+    12\tGames\t%d\n\
     13\tCasas\t%d\n\
     14\tEntradas\t%d\n\
-    15\tInvestimentos\t%d",
-    rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], rows[7], rows[8], rows[9], rows[10], rows[11], rows[12], rows[13], rows[14]
+    15\tInvestimentos\t%d\n\
+    16\tVeículos\t%d\n\
+    17\tLockpick\t%d\n\
+    18\tDrop de itens\t%d\n\
+    19\tPets\t%d\n\
+    20\tDinheiro\t%d\n\
+    21\tAnticheat\t%d\n\
+    22\tFacções\t%d\n",
+    rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], rows[7], rows[8], rows[9], rows[10], rows[11], rows[12], rows[13], rows[14], rows[15], rows[16], rows[17], rows[18], rows[19], rows[20], rows[21]
 	);
 
     Dialog_Show(playerid, dialogLogs, DIALOG_STYLE_TABLIST_HEADERS, "Central de Logs", string, "Selecionar", "Fechar");

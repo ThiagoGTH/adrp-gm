@@ -444,13 +444,13 @@ MakePlayerSuffer(playerid){
                     countwep++;
             }
             if(countwep > 0) {
-                va_SendClientMessage(playerid, -1, "SERVER: Por segurança, estas eram as armas de %s antes de morrer.", pNome(playerid));
+                SendServerMessage(playerid, "Por segurança, estas eram as armas de %s antes de morrer.", pNome(playerid));
                 va_SendClientMessage(playerid, COLOR_LIGHTRED, "Armas:");
                 for (new i = 0; i < 12; i ++) if (pInfo[playerid][pGuns][i] && pInfo[playerid][pAmmo][i] > 0) {
                     va_SendClientMessage(playerid, -1, "%s (%d)", ReturnWeaponName(pInfo[playerid][pGuns][i]), pInfo[playerid][pAmmo][i]);
                 }
                 ResetWeapons(playerid);	
-            } else va_SendClientMessage(playerid, -1, "SERVER: Você não possuia nenhuma arma quando morreu.");
+            } else SendServerMessage(playerid, "Você não possuia nenhuma arma quando morreu.");
 
             va_SendClientMessage(playerid, COLOR_LIGHTRED, "Você está brutalmente ferido, agora se um médico ou alguém não lhe ajudar, você irá morrer.");
             va_SendClientMessage(playerid, COLOR_LIGHTRED, "Para aceitar a morte digite /aceitarmorte.");
@@ -591,11 +591,11 @@ CMD:aceitarmorte(playerid, params[]){
 
 CMD:investida(playerid, params[]){
 	if (!pInfo[playerid][pTackleMode]){
-		va_SendClientMessage(playerid, -1, "SERVER: Você ativou o modo investida. A partir de agora se você socar alguém, haverá chances de derruba-lo.");
-		va_SendClientMessage(playerid, -1, "SERVER: Se o jogador for derrubado e não interpretar corretamente, utilize o /report.");
+		SendServerMessage(playerid, "Você ativou o modo investida. A partir de agora se você socar alguém, haverá chances de derruba-lo.");
+		SendServerMessage(playerid, "Se o jogador for derrubado e não interpretar corretamente, utilize o /report.");
 		pInfo[playerid][pTackleMode] = true;
 	}else{
-		va_SendClientMessage(playerid, -1, "SERVER: Você desativou o modo investida.");
+		SendServerMessage(playerid, "Você desativou o modo investida.");
 		pInfo[playerid][pTackleMode] = false;
 	}
 	return true;

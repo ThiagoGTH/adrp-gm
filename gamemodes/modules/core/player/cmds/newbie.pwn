@@ -126,14 +126,14 @@ SendNewbieChat(const str[], {Float,_}:...) {
 		#emit SCTRL 4
 
         foreach (new i : Player) {
-			if (pInfo[i][pTogNewbie] == 1) {
+			if (pInfo[i][pTogNewbie] == 0) {
   				SendClientMessage(i, 0x0195EFFF, string);
 			}
 		}
 		return true;
 	}
 	foreach (new i : Player) {
-		if (pInfo[i][pTogNewbie] >= 1) {
+		if (pInfo[i][pTogNewbie] == 0) {
 			SendClientMessage(i, 0x0195EFFF, str);
 		}
 	}

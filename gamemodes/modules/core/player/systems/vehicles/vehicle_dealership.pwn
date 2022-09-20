@@ -6,6 +6,15 @@
 #define SUNPASS_PRICE_1                 (500)
 #define LEGALITY_PRICE_1                (3000)
 
+hook OnGameModeInit() {
+    CreateDynamicPickup(1239, 23, 542.0506, -1292.9080, 17.2422);
+	CreateDynamic3DTextLabel("Grotti Dealership\n{FFFFFF}/concessionaria", COLOR_WHITE, 542.0506, -1292.9080, 17.2422, 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1);
+
+    CreateDynamicPickup(1239, 23, 2131.8108, -1150.8969, 24.1069);
+	CreateDynamic3DTextLabel("Coutt & Schutz Dealership\n{FFFFFF}/concessionaria", COLOR_WHITE, 2131.8108, -1150.8969, 24.1069, 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1);
+    return true;
+}
+
 CMD:concessionaria(playerid, params[]){
     if(IsPlayerInRangeOfPoint(playerid, 5.0, 542.0506, -1292.9080, 17.2422)) Dialog_Show(playerid, Dealership_Init1, DIALOG_STYLE_LIST, "Grotti", "1. Aviões\n2. Barcos\n3. Motos\n4. Esportivos", "Selecionar", "Fechar");
     else if(IsPlayerInRangeOfPoint(playerid, 5.0, 2131.8108, -1150.8969, 24.1069)) Dialog_Show(playerid, Dealership_Init2, DIALOG_STYLE_LIST, "Coutt & Schutz", "1. Bicicletas\n2. Motos\n3. Sedans\n4. SUVs & Wagons\n5. Lowriders\n6. Industriais\n7. Caminhonetes\n8. Trailers Industriais", "Selecionar", "Fechar");
@@ -672,6 +681,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][pPositionA],
             0, 0, 0, 0, 0, 0);
             SpawnPlayer(playerid);
+            SetWeapons(playerid);
             return true;
         }
         new id, vaga = randomEx(0, 193);
@@ -711,6 +721,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             pInfo[playerid][pPositionA],
             0, 0, 0, 0, 0, 0);
             SpawnPlayer(playerid);
+            SetWeapons(playerid);
             ResetDealershipVars(playerid);
             return true;
         } 
@@ -733,6 +744,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
         SpawnPlayer(playerid);
+        SetWeapons(playerid);
         ResetDealershipVars(playerid);
     } else {
         SendErrorMessage(playerid, "Você desistiu da compra.");
@@ -746,6 +758,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
         SpawnPlayer(playerid);
+        SetWeapons(playerid);
     }
     return true;
 }

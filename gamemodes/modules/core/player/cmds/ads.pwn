@@ -105,8 +105,6 @@ Dialog:pubAdvertise(playerid, response, listitem, inputtext[]){
     return true;
 }
 
-// FUNCTIONS
-
 hook OnGameModeInit(){
     SetTimer("adsTimer", 1000, true);
     return true;
@@ -145,7 +143,7 @@ public adsTimer(){
                     format(footer, 128, "Anúncio enviado em %s.", GetFullDate(gettime()));
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer);
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("1018291872545910845"), embed);
                 } else {
 					if(strlen(AdvertData[i][ad_text]) > 80) {
 						format(str, sizeof(str), "[Anúncio] %.80s ...", AdvertData[i][ad_text]);
@@ -168,7 +166,7 @@ public adsTimer(){
                     format(footer, 128, "Anúncio enviado em %s.", GetFullDate(gettime()));
                     utf8encode(footer, footer);
                     DCC_SetEmbedFooter(embed, footer);
-                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("989747574367997982"), embed);
+                    DCC_SendChannelEmbedMessage(DCC_FindChannelById("1018291872545910845"), embed);
 			    }
 
                 AdvertData[i][ad_id] = 0;

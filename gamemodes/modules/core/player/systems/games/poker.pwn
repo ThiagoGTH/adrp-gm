@@ -121,17 +121,17 @@ enum pkrInfo
 	pkrWinners,
 	pkrWinnerID,
 };
-
-static PokerTable[MAX_POKERTABLES][pkrInfo];
+static 
+	PokerTable[MAX_POKERTABLES][pkrInfo];
 
 static 
 	Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
-		{-1.25, -0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 2)
-		{-1.25, 0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 1)
-		{0.01, 1.85, 0.1, 0.0, 0.0, 90.0},  // (Slot 6)
-		{1.25, 0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 5)
-		{1.25, -0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 4)
-		{-0.01, -1.85, 0.1, 0.0, 0.0, -90.0} // (Slot 3)
+{-1.25, -0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 2)
+{-1.25, 0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 1)
+{0.01, 1.85, 0.1, 0.0, 0.0, 90.0},  // (Slot 6)
+{1.25, 0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 5)
+{1.25, -0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 4)
+{-0.01, -1.85, 0.1, 0.0, 0.0, -90.0} // (Slot 3)
 };
 
 static const HAND_RANKS[][] =
@@ -148,7 +148,6 @@ static const HAND_RANKS[][] =
 	{"Straight Flush"},
 	{"Royal Flush"}
 };
-
 enum E_CARD_SUITS
 {
 	SUIT_SPADES,
@@ -164,7 +163,6 @@ enum E_CARD_DATA
 	E_CARD_SUITS:E_CARD_SUIT,
 	E_CARD_RANK
 };
-
 static const CardData[52][E_CARD_DATA] = {
 	//Spades
     {"LD_CARD:cd2s", 		"Two of Spades", 		SUIT_SPADES,		0},
@@ -333,7 +331,6 @@ timer PokerExit[250](playerid)
 	CancelSelectTextDraw(playerid);
 }
 
-/*
 task PokerPulse[1000]()
 {
 	foreach(new tableid: PokerTables)
@@ -908,7 +905,7 @@ task PokerPulse[1000]()
 		}
 	}
 	return 1;
-}*/
+}
 
 static CameraRadiusSetPos(playerid, Float:x, Float:y, Float:z, Float:degree = 0.0, Float:height = 3.0, Float:radius = 8.0)
 {
@@ -2168,10 +2165,8 @@ static PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, F
 	return PokerTable[tableid][pkrObjectID];
 }
 
-static DestroyPokerTable(tableid)
-{
-	if(PokerTable[tableid][pkrPlaced] == 1) 
-	{
+static DestroyPokerTable(tableid) {
+	if(PokerTable[tableid][pkrPlaced] == 1) {
 
 		// Delete Table
 		if(IsValidDynamicObject(PokerTable[tableid][pkrObjectID]))

@@ -6,15 +6,21 @@ CMD:ajuda(playerid, params[]) {
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
 		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
-		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /ooc, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /baixo, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
 		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos");
-		SendClientMessage(playerid, COLOR_CYAN1, "[SCREEN] /tela");
-		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa");
+		SendClientMessage(playerid, COLOR_CYAN1, "[OUTROS] /config, /tela");
+		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca, /ajuda tela");
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "Se tiver dúvida na utilização de algum comando envie um /sos e fale com um administrador.");
 		return true;
 	}
-	if (!strcmp(type, "empresa", true)){
+	if (!strcmp(type, "tela", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[TELA] /tela 0 desativa; /tela 1 ao 4 define um tipo específico.");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		return true; 
+	} 
+	else if (!strcmp(type, "empresa", true)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "[EMPRESA] ble");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
@@ -24,7 +30,26 @@ CMD:ajuda(playerid, params[]) {
         SendClientMessage(playerid, COLOR_CYAN1, "[CASA] ble");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		return true;
-	} else if (!strcmp(type, "fly", true)){
+	} else if (!strcmp(type, "cassino", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[CAÇA-NÍQUEL] 'Y' próximo de uma máquina inicia o jogo");
+		SendClientMessage(playerid, COLOR_CYAN2, "[CAÇA-NÍQUEL] 'ESPAÇO' inicia a aposta");
+		SendClientMessage(playerid, COLOR_CYAN1, "[CAÇA-NÍQUEL] 'F' ou 'ENTER' abandona a máquina");
+		SendClientMessage(playerid, COLOR_CYAN2, "[CAÇA-NÍQUEL] 'LSHIFT' aumenta o valor da aposta");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
+		return true;
+	} else if (!strcmp(type, "sinuca", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'Y' próximo de uma mesa inicia/deixa o jogo");
+		SendClientMessage(playerid, COLOR_CYAN2, "[SINUCA] 'botão de mirar' mira na bola");
+		SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'botão de atirar' define a força da tacada");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
+		return true;
+	}
+	
+	else if (!strcmp(type, "fly", true)){
 		
     	if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
@@ -106,13 +131,6 @@ ResetWeapons(playerid){
 	return true;
 }*/
 
-IsPlayerSpawned(playerid)
-{
-	if (playerid < 0 || playerid >= MAX_PLAYERS)
-		return false;
-
-	return (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING && GetPlayerState(playerid) != PLAYER_STATE_NONE && GetPlayerState(playerid) != PLAYER_STATE_WASTED);
-}
 /*
 PlayerHasWeapon(playerid, weaponid)
 {
@@ -229,8 +247,7 @@ UpdateWeapons(playerid)
 }*/
 
 forward SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z);
-public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
-{
+public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z) {
 	if (!IsPlayerInRangeOfPoint(playerid, 15.0, x, y, z))
 	    return false;
 
@@ -241,27 +258,7 @@ public SetPlayerToUnfreeze(playerid, Float:x, Float:y, Float:z)
 	return true;
 }
 
-GiveMoney(playerid, amount) {
-	pInfo[playerid][pMoney] += amount;
-	GivePlayerMoney(playerid, amount);
-	return true;
-}
-
-GetMoney(playerid) {
-	return (pInfo[playerid][pMoney]);
-}
-
-GiveBankMoney(playerid, amount) {
-	pInfo[playerid][pBank] += amount;
-	return true;
-}
-
-GetBankMoney(playerid) {
-	return (pInfo[playerid][pBank]);
-}
-
-SetPlayerHealthEx(playerid, Float:hp)
-{
+SetPlayerHealthEx(playerid, Float:hp) {
 	if(hp <= 30) SetPlayerWeaponSkill(playerid, MINIMUM_SKILL);
  	else if(hp <= 40) SetPlayerWeaponSkill(playerid, MEDIUM_SKILL);
 	else SetPlayerWeaponSkill(playerid, FULL_SKILL);

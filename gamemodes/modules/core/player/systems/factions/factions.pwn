@@ -5,3 +5,5 @@
 #include "modules\core\player\systems\factions\f_functions.pwn"
 #include "modules\core\player\systems\factions\f_news.pwn"
 #include "modules\core\player\systems\factions\f_cmds.pwn"
+
+#include "modules\core\player\systems\factions\systems\graffiti\graffiti.pwn"

@@ -209,18 +209,10 @@ void:CheckPlayerTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_keys` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
-    `pHouseKeySlot1` int NOT NULL,\
-    `pHouseKeySlot2` int NOT NULL,\
-    `pHouseKeySlot3` int NOT NULL,\
-    `pVehicleKeySlot1` int NOT NULL,\
-    `pVehicleKeySlot2` int NOT NULL,\
-    `pVehicleKeySlot3` int NOT NULL,\
-    `pHouseKey1` varchar(32) NOT NULL DEFAULT '0',\
-    `pHouseKey2` varchar(32) NOT NULL DEFAULT '0',\
-    `pHouseKey3` varchar(32) NOT NULL DEFAULT '0',\
-    `pVehicleKey1` varchar(32) NOT NULL DEFAULT '0',\
-    `pVehicleKey2` varchar(32) NOT NULL DEFAULT '0',\
-    `pVehicleKey3` varchar(32) NOT NULL DEFAULT '0',\
+    `key_type` int NOT NULL,\
+    `property_id` int NOT NULL,\
+    `key_name` varchar(256) NOT NULL,\
+    `key_model` int NOT NULL,\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_keys checada com sucesso.");

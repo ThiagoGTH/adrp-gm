@@ -73,6 +73,9 @@ LoadCharacterInfoID(playerid, id) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
+        
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_keys (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
     }
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
@@ -88,6 +91,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerPet(playerid);
     LoadPlayerConfig(playerid);
     LoadPlayerFaction(playerid);
+    LoadPlayerKeys(playerid);
     SpawnSelectedCharacter(playerid);
 }
 

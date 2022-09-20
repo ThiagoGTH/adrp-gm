@@ -235,6 +235,9 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+    // Keys
+    pKeySelected,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 

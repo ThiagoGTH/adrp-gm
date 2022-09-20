@@ -1,157 +1,241 @@
 #include <YSI_Coding\y_hooks>
 
-Dialog:Character_Keys(playerid, response, listitem, inputtext[])
-{
-	if(response)
-	{
-        static 
-			rows, 
-			fields;
-        
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM character_keys WHERE `keyOwner` = '%d'", pInfo[playerid][pID]);
-        new Cache:result = mysql_query(DBConn, query);
-		
-		new count=0;
+enum E_KEY_DATA {
+    kID,
+    kOwner,
+    kType,
+    kProperty,
+    kName[256],
+    kModel,
+}
 
-		for(new i = 0; i < rows; i++)
-		{
-			if(count == listitem)	
-			{
-				pInfo[playerid][pKeySelected] = cache_get_value_name_int(i, "keyID");
+new kInfo[MAX_PLAYERS][E_KEY_DATA];
 
-				new title[256];
-				format(title, 256, "Chave [ID: %d]", pInfo[playerid][pKeySelected]);
-				Dialog_Show(playerid, Character_Keys_Options, DIALOG_STYLE_LIST, title, "Dar\nApagar", "Selecionar", "Fechar");
-				break;
-			}
-			else
-				count++;
-		}
+SavePlayerKeys(playerId) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `players_keys` WHERE `character_id` = %d;", playerId);
+    mysql_query(DBConn, query);
 
-		cache_delete(result);
-	}
+    if(!cache_num_rows())
+        return 0;
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `players_keys` SET `key_type` = %d, `property_id` = %d, `key_name` = %s, `key_model` = %d WHERE `character_id` = %d;",
+        kInfo[playerId][kType], kInfo[playerId][kProperty], kInfo[playerId][kName], kInfo[playerId][kModel], playerId);
+    mysql_query(DBConn, query);
+
+    return 1;
+}
+
+LoadPlayerKeys(playerId) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `players_keys` WHERE `character_id` = %d;", playerId);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+    
+    for(new i; i < cache_num_rows(); i++) {
+        new id;
+        cache_get_value_name_int(i, "id", id);
+        kInfo[playerId][kID] = id;
+
+        cache_get_value_name_int(i, "character_id", kInfo[playerId][kOwner]);
+        cache_get_value_name_int(i, "key_type", kInfo[playerId][kType]);
+        cache_get_value_name_int(i, "property_id", kInfo[playerId][kProperty]);
+        cache_get_value_name(i, "key_name", kInfo[playerId][kName]);
+        cache_get_value_name_int(i, "key_model", kInfo[playerId][kModel]);
+    }
+
+    return 1;
+}
+
+CreatePropertyKey(playerId, propertyId, propertyType){
+    new keyModel, keyName[256];
+
+    if(propertyType == 1){
+        keyModel = 1147;
+        format(keyName, sizeof(keyName), "Chave da casa em %s. ((ID: %d))", hInfo[propertyId][hAddress], hInfo[propertyId][hID]);
+    } 
+    if(propertyType == 2){
+        keyModel = 1150;
+        if(vInfo[propertyId][vLegal] == 0 && vInfo[propertyId][vNamePersonalized]){
+            format(keyName, sizeof(keyName), "Chave do veiculo %s. ((%s - ID: %d))", 
+                vInfo[propertyId][vName], 
+                ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                propertyId);
+        }
+
+        if(vInfo[propertyId][vLegal] == 0 && !vInfo[propertyId][vNamePersonalized]){
+            format(keyName, sizeof(keyName), "Chave de um veiculo. ((%s - ID: %d))", 
+                ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                propertyId);        
+        }
+    }
+
+    mysql_format(DBConn, query, sizeof query,
+        "INSERT INTO players_keys (`character_id`, `property_id`, `key_type`, `key_name`, `key_model`) VALUES (%d, %d, %d, '%s', %d);",
+            pInfo[playerId][pID], propertyId, propertyType, keyName, keyModel);
+    mysql_query(DBConn, query);
+
+    LoadPlayerKeys(playerId);
+
+    new id = cache_insert_id();
+
+    kInfo[playerId][kID] = id;
+    kInfo[playerId][kOwner] = pInfo[playerId][pID];
+    kInfo[playerId][kProperty] = propertyId;
+    kInfo[playerId][kType] = propertyType;
+    kInfo[playerId][kName] = keyName;
+    kInfo[playerId][kModel] = keyModel;
+
+    format(logString, sizeof(logString), "%s criou uma chave a chave ID #%d.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected]);
+	logCreate(playerId, logString, 18);
+
+    SavePlayerKeys(playerId);
+
+    switch(propertyType){
+        case 1:{
+
+            va_SendClientMessage(playerId, -1, "Você fez uma cópia da chave da sua casa no endereço %s. ((%d))", GetHouseAddress(propertyId), propertyId);
+
+            return 1;
+        }
+
+        case 2:{
+            if(vInfo[propertyId][vLegal] == 0 && vInfo[propertyId][vNamePersonalized]){
+                va_SendClientMessage(playerId, -1, 
+                    "Você fez uma cópia da chave do seu carro modelo %s. ((%s - ID: %d))", 
+                    vInfo[propertyId][vName], 
+                    ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                    propertyId
+                );
+            }
+
+            else if(vInfo[propertyId][vLegal] == 0 && !vInfo[propertyId][vNamePersonalized]){
+                va_SendClientMessage(playerId, -1, 
+                    "Você fez uma cópia da chave do seu carro. ((%s - ID: %d))", 
+                    ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                    propertyId
+                );
+            }
+            
+	        else if(vInfo[propertyId][vNamePersonalized]){
+                va_SendClientMessage(playerId, -1, 
+                    "Você fez uma cópia da chave do seu carro modelo %s, de placa %s. ((%s - ID: %d))", 
+                    vInfo[propertyId][vName], 
+                    vInfo[propertyId][vPlate], 
+                    ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                    propertyId
+                );
+            }
+	        else va_SendClientMessage(playerId, -1, 
+                    "Você fez uma cópia da chave do seu carro de placa %s. ((%s - ID: %d))", 
+                    vInfo[propertyId][vPlate], 
+                    ReturnVehicleModelName(vInfo[propertyId][vModel]), 
+                    propertyId
+                );
+
+	        return 1;
+        }
+    }
+
+    return 1;
+}
+
+SetPlayerKey(playerId, keyid){
+	mysql_format(DBConn, query, sizeof query, "UPDATE `players_keys` SET `character_id` = %d WHERE `property_id` = %d", pInfo[playerId][pID], keyid);
+	mysql_query(DBConn, query);
+
 	return 1;
 }
 
-Dialog:Character_Keys_Options(playerid, response, listitem, inputtext[]){
+DestroyPlayerKey(playerId, keyid){
+	mysql_format(DBConn, query, sizeof query, "DELETE FROM `players_keys` WHERE `character_id` = %d AND `ID` = %d", pInfo[playerId][pID], keyid);
+	mysql_query(DBConn, query);
+
+	return 1;
+}
+
+Dialog:Player_Keys(playerId, response, listitem, inputtext[]){
+    if(response){
+        
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_keys WHERE `character_id` = %d", pInfo[playerId][pID]);
+        new Cache:result = mysql_query(DBConn, query);
+
+        new count = 0;
+
+        for(new i = 0; i < cache_num_rows(); i++){
+            if(count == listitem){
+
+                cache_get_value_name_int(i, "ID", pInfo[playerId][pKeySelected]);
+
+                new title[256];
+                format(title, 256, "Chave [ID: %d]", pInfo[playerId][pKeySelected]);
+
+                Dialog_Show(playerId, Key_Options, DIALOG_STYLE_LIST, title, "Dar\nApagar", "Selecionar", "Fechar");
+
+                break;
+            }
+            else{
+                count++;
+            }
+        }
+
+        cache_delete(result);
+    }
+    return 1;
+}
+
+Dialog:Key_Options(playerId, response, listitem, inputtext[]){
 	if(response)
 	{
 		switch(listitem)
 		{
-			case 0:
-			{
+			case 0:{
 				new string[256];
 				format(string, sizeof(string), "Digite o nome ou ID do jogador:");
-				Dialog_Show(playerid, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", string, "Confirmar", "Fechar");
+				Dialog_Show(playerId, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", string, "Confirmar", "Fechar");
 			}
-			case 1:
-			{
-				new log[128];
-				format(log, sizeof(log), "%s deletou a chave ID #%d.", ReturnName(playerid, 0), pInfo[playerid][pKeySelected]);
-				LogSQL_Create(playerid, log, 28);
-				SendServerMessage(playerid, "A chave #%d foi deletada com sucesso.", pInfo[playerid][pKeySelected]);
-				DestroyPlayerKey(playerid, pInfo[playerid][pKeySelected]);
-				pInfo[playerid][pKeySelected] = 0;
+			case 1:{
+				format(logString, sizeof(logString), "%s deletou a chave ID #%d.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected]);
+				logCreate(playerId, logString, 18);
+
+				SendServerMessage(playerId, "A chave #%d foi deletada com sucesso.", pInfo[playerId][pKeySelected]);
+				DestroyPlayerKey(playerId, pInfo[playerId][pKeySelected]);
+
+				pInfo[playerId][pKeySelected] = 0;
 			}
 		}
 	}
 	return 1;
 }
 
-Dialog:Character_Give_Key(playerid, response, listitem, inputtext[]) {
-	if(response)
-	{
- 		static
- 			userid;
+Dialog:Character_Give_Key(playerId, response, listitem, inputtext[]) {
+	if(response){
+ 		new userid;
 
 		if (sscanf(inputtext, "u", userid))
-		    return Dialog_Show(playerid, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "Digite o nome ou ID do jogador:", "Confirmar", "Voltar");
+		    return Dialog_Show(playerId, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "Digite o nome ou ID do jogador:", "Confirmar", "Voltar");
 
-		if (userid == INVALID_PLAYER_ID || !SQL_IsLogged(userid))
-		    return Dialog_Show(playerid, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "ERRO: O jogador especificado é inválido.\n\nDigite o nome ou ID do jogador abaixo:", "Continuar", "Voltar");
+		if (userid == INVALID_PLAYER_ID)
+		    return Dialog_Show(playerId, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "ERRO: O jogador especificado é inválido.\n\nDigite o nome ou ID do jogador abaixo:", "Continuar", "Voltar");
 
-		if (userid == playerid)
-		    return Dialog_Show(playerid, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "ERRO: Você não pode dar a chave para sí mesmo.\nDigite o nome ou ID do jogador abaixo:", "Continuar", "Voltar");
+		if (userid == playerId)
+		    return Dialog_Show(playerId, Character_Give_Key, DIALOG_STYLE_INPUT, "Dar chave", "ERRO: Você não pode dar a chave para sí mesmo.\nDigite o nome ou ID do jogador abaixo:", "Continuar", "Voltar");
 
-        if (!IsPlayerNearPlayer(playerid, userid, 5.0))
-	    	return SendErrorMessage(playerid, "Você deve estar próximo a este jogador.");
+        if (!IsPlayerNearPlayer(playerId, userid, 5.0))
+	    	return SendErrorMessage(playerId, "Você deve estar próximo a este jogador.");
 
-		SendServerMessage(playerid, "Você deu uma chave para %s.", ReturnName(userid, 0));
-		SendServerMessage(userid, "%s lhe deu uma chave.", ReturnName(playerid, 0));
-		SetPlayerKey(userid, pInfo[playerid][pKeySelected]);
-		DestroyPlayerKey(playerid, pInfo[playerid][pKeySelected]);
-		new log[128];
-		format(log, sizeof(log), "%s deu a chave ID #%d para %s.", ReturnName(playerid, 0), pInfo[playerid][pKeySelected], ReturnName(userid, 0));
-		LogSQL_Create(playerid, log, 28);
+		SendServerMessage(playerId, "Você deu uma chave para %s.", GetPlayerNameEx(userid));
+		SendServerMessage(userid, "%s lhe deu uma chave.", GetPlayerNameEx(playerId));
 
-		pInfo[playerid][pKeySelected] = 0;
+		SetPlayerKey(userid, pInfo[playerId][pKeySelected]);
+		DestroyPlayerKey(playerId, pInfo[playerId][pKeySelected]);
+
+		new log[200];
+		format(log, sizeof(log), "%s deu a chave ID #%d para %s.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected], GetPlayerNameEx(userid));
+		logCreate(playerId, log, 15);
+
+		pInfo[playerId][pKeySelected] = 0;
 	}
-	return 1;
-}
 
-//Check if the player have specific key
-GetPlayerThisKey(playerid, type, propertyid)
-{
-	new query[300];
-	format(query, sizeof(query), "SELECT * FROM `character_keys` WHERE `keyOwner` = '%d' AND `keyType` = '%d' AND `keyPropertyID` = '%d'", pInfo[playerid][pID], type, propertyid);
-
-	new Cache:result = mysql_query(g_iHandle, query),
-		rows = cache_num_rows();
-
-	//cache_delete(result);
-
-	if(rows > 0){
-		cache_delete(result);
-		return 1;
-	}
-	else{
-		cache_delete(result);
-		return 0;
-	}
-}
-
-//Set some character key to specific player. This function is used to transfer the key ownership between players
-SetPlayerKey(playerid, keyid)
-{
-	new query[256];
-	format(query, sizeof(query), "UPDATE `character_keys` SET `keyOwner` = '%d' WHERE `keyID` = '%d'", pInfo[playerid][pID], keyid);
-	mysql_function_query(g_iHandle, query, false, "", "");
-	return 1;
-}
-
-//Destroy a character key
-DestroyPlayerKey(playerid, keyid)
-{
-	new query[256];
-	format(query, sizeof(query), "DELETE FROM `character_keys` WHERE `keyOwner` = '%d' AND `keyID` = '%d'", pInfo[playerid][pID], keyid);
-	mysql_function_query(g_iHandle, query, false, "", "");
-	return 1;
-}
-
-//Create a character key
-CreatePlayerKey(playerid, type, propertyid)
-{
-	new query[512];
-	format(query, sizeof(query), "INSERT INTO `character_keys` (`keyOwner`, `keyType`, `keyPropertyID`) VALUES('%d', '%d', '%d')", pInfo[playerid][pID], type, propertyid);
-	mysql_function_query(g_iHandle, query, false, "", "");
-	return 1;
-}
-
-//Reset all keys with the ID
-ResetPlayerKey(keyid){
-
-	static 
-		rows, 
-		fields;
-
-	new query[512];
-	format(query, sizeof(query), "SELECT * FROM `character_keys`");
-	cache_get_data(rows, fields, g_iHandle);
-
-	for (new i = 0; i < rows; i ++) 
-	{
-		format(query, sizeof(query), "DELETE FROM `character_keys` WHERE `keyPropertyID` = '%d'", keyid);
-		mysql_function_query(g_iHandle, query, false, "", "");
-	}
 	return 1;
 }

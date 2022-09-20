@@ -24,7 +24,8 @@
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
 		"philip1337/samp-plugin-mapandreas:v1.2.1",
-		"katursis/Pawn.CMD:3.3.6"
+		"katursis/Pawn.CMD:3.3.6",
+		"dakyskye/pawn-env:1.1.1"
 	],
 	"local": true,
 	"runtime": {

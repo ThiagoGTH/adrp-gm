@@ -24,6 +24,7 @@
 #include <physics>
 #include <colandreas>
 #include <mapandreas>
+#include <env>
 
 #pragma warning disable 214
 #pragma warning disable 239

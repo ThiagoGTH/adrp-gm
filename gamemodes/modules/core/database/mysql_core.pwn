@@ -6,14 +6,33 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 
 #include <YSI_Coding\y_hooks>
 
-#define DB_HOST         "127.0.0.1"
-#define DB_USER         "root"
-#define DB_PASSWORD     "H2MUqBBzbhV8@WQ"
-#define DB_NAME         "adrp_gm"
-
 hook OnGameModeInit() {
+    new DB_HOST[128];
+    if(Env_Has("MYSQL_HOST")) {
+        Env_Get("MYSQL_HOST", DB_HOST, sizeof(DB_HOST));
+    }
+
+    new DB_USER[128];
+    if(Env_Has("MYSQL_USER")) {
+        Env_Get("MYSQL_USER", DB_USER, sizeof(DB_USER));
+    }
+
+    new DB_PASSWORD[128];
+    if(Env_Has("MYSQL_PASSWORD")) {
+        Env_Get("MYSQL_PASSWORD", DB_PASSWORD, sizeof(DB_PASSWORD));
+    }
+
+    new DB_NAME[128];
+    if(Env_Has("MYSQL_DATABASE")) {
+        Env_Get("MYSQL_DATABASE", DB_NAME, sizeof(DB_NAME));
+    }
+
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     mysql_log(ALL);
+    new MySQLOpt: options = mysql_init_options();
+    mysql_set_option(options, AUTO_RECONNECT, true);
+    mysql_set_option(options, MULTI_STATEMENTS, true);
+    mysql_set_option(options, POOL_SIZE, 2);
 
     if(mysql_errno(DBConn)) {
         print("\n[DATABASE] Houve um erro na tentativa de conexão com o MySQL.");
@@ -49,6 +68,7 @@ void:CheckTables() {
     CheckTradingTable();
     CheckLicenceTable();
     CheckFactionsTable();
+    CheckGraffitisTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -1127,4 +1147,27 @@ void:CheckFactionsTable() {
     logCreate(99998, logString, 5);
 
     return true;
+}
+
+void:CheckGraffitisTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS graffiti (\
+    `gID` int NOT NULL AUTO_INCREMENT,\
+    `gX` float NOT NULL DEFAULT '0.0',\
+    `gY` float NOT NULL DEFAULT '0.0',\
+    `gZ` float NOT NULL DEFAULT '0.0',\
+    `gRX` float NOT NULL DEFAULT '0.0',\
+    `gRY` float NOT NULL DEFAULT '0.0',\
+    `gRZ` float NOT NULL DEFAULT '0.0',\
+    `gText` varchar(64) NOT NULL DEFAULT 'Nenhum',\
+    `gFont` varchar(32) NOT NULL DEFAULT 'N/A',\
+    `gSize` int NOT NULL DEFAULT '5',\
+    `gColor` int NOT NULL DEFAULT '0',\
+    `gBold` int NOT NULL DEFAULT '0',\
+    `gAuthor` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (gID));");
+
+    print("[DATABASE] Tabela graffits checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
+    logCreate(99998, logString, 5);
+
 }

@@ -380,6 +380,7 @@ SaveCharacterInfo(playerid) {
     `positionA` = '%f', \
     `phone_number` = '%d', \
     `phone_type` = '%d' \
+    `rented_house` = '%d', \
     WHERE ID = '%d';", 
     pInfo[playerid][pName], 
     pInfo[playerid][pLastIP], 
@@ -400,6 +401,7 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPositionA],
     pInfo[playerid][pPhoneType],
     pInfo[playerid][pPhoneNumber],
+    pInfo[playerid][pRenting],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 

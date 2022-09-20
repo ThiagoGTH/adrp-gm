@@ -7,6 +7,8 @@
 #define MAX_OWNABLE_BUSINESSES      (3)
 #define MAX_PLAYER_VEHICLES         (20)
 
+#define INVALID_HOUSE_ID            (-1)
+
 new MySQL:DBConn;
 new logString[255];
 new loginAttempts[MAX_PLAYERS];
@@ -162,6 +164,7 @@ enum Player_Data {
     pTogNewbie,
 
     pJailed,
+    pRenting,
     // Temp variables
     bool:pLogged,
     pBJOffer,
@@ -306,6 +309,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pLimping] = 0;
     pInfo[playerid][pLimpingTime] = 0;
     pInfo[playerid][pPassedOut] = false;
+    pInfo[playerid][pRenting] = INVALID_HOUSE_ID;
     pInfo[playerid][pJailed] = 0;
     pInfo[playerid][pSwat] = 0;
     pInfo[playerid][pNametagType] = 0;

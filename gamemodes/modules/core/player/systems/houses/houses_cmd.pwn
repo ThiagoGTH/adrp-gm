@@ -421,7 +421,7 @@ CMD:comprar(playerid) {
         return SendErrorMessage(playerid, "Esta casa já possui um dono.");
 
     if(GetMoney(playerid) < hInfo[houseID][hPrice])
-        return SendErrorMessage(playerid, "Você não possui fundos o suficiente para comprar esta casa.");
+        return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta casa.");
 
     GiveMoney(playerid, -hInfo[houseID][hPrice]);
     va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", hInfo[houseID][hAddress]);
@@ -474,6 +474,49 @@ CMD:precoaluguel(playerid, params[]) {
     
     SetRentPrice(houseID, playerid, price);
     va_SendClientMessage(playerid, COLOR_YELLOW, "Você alterou o preço do aluguel da sua casa para $%s", FormatNumber(price));
+
+    return 1;
+}
+
+CMD:alugarquarto(playerid) {
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    if(!HouseHasOwner(houseID))
+        return SendErrorMessage(playerid, "Essa casa não possui um dono.");
+    
+    if(hInfo[houseID][hOwner] == playerid)
+        return SendErrorMessage(playerid, "Você é o dono dessa casa.");
+
+    if(!hInfo[houseID][hRentable])
+        return SendErrorMessage(playerid, "Essa casa não é alugável.");
+    
+    if(GetMoney(playerid) < hInfo[houseID][hRent])
+        return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para alugar um quarto nessa casa.");
+
+    GiveMoney(playerid, -hInfo[houseID][hRent]);
+    va_SendClientMessage(playerid, COLOR_YELLOW, "Você alugou um quarto da casa no endereço %s.", hInfo[houseID][hAddress]);
+    RentHouse(houseID, playerid);
+
+    return 1;
+}
+
+CMD:desalugarquarto(playerid) {
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(pInfo[playerid][pRenting] == INVALID_HOUSE_ID)
+        return SendErrorMessage(playerid, "Você não está alugando nenhum quarto em nenhuma casa.");
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    if(pInfo[playerid][pRenting] != houseID)
+        return SendErrorMessage(playerid, "Você não está alugando nenhum quarto nessa casa.");
+    
+    va_SendClientMessage(playerid, COLOR_YELLOW, "Você deixou de alugar um quarto da casa no endereço %s.", hInfo[houseID][hAddress]);
+    UnrentHouse(houseID, playerid);
 
     return 1;
 }

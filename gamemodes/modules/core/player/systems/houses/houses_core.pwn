@@ -393,3 +393,23 @@ SetRentPrice(id, playerid, value) {
 
     return 1;
 }
+
+RentHouse(id, playerid) {
+    pInfo[playerid][pRenting] = hInfo[id][hID];
+    SaveCharacterInfo(playerid);
+
+    format(logString, sizeof(logString), "%s (%s) alugou um quarto na casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hRent]));
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+UnrentHouse(id, playerid) {
+    pInfo[playerid][pRenting] = INVALID_HOUSE_ID;
+    SaveCharacterInfo(playerid);
+
+    format(logString, sizeof(logString), "%s (%s) desalugou um quarto na casa ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}

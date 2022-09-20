@@ -144,6 +144,7 @@ void:CheckPlayerTable() {
     `positionA` float NOT NULL DEFAULT '0',\
     `phone_number` int NOT NULL DEFAULT '0',\
     `phone_type` int NOT NULL DEFAULT '0',\
+    `rented_house` int NOT NULL DEFAULT '0',\
     `online` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 

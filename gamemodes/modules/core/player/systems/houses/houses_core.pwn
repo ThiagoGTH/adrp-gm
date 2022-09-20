@@ -402,6 +402,8 @@ RentHouse(id, playerid) {
     pInfo[playerid][pRenting] = hInfo[id][hID];
     SaveCharacterInfo(playerid);
 
+    CreatePropertyKey(playerid, id, 1, true);
+
     format(logString, sizeof(logString), "%s (%s) alugou um quarto na casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hRent]));
 	logCreate(playerid, logString, 13);
 
@@ -411,6 +413,11 @@ RentHouse(id, playerid) {
 UnrentHouse(id, playerid) {
     pInfo[playerid][pRenting] = INVALID_HOUSE_ID;
     SaveCharacterInfo(playerid);
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players_keys` WHERE `character_id` = %d AND `property_id` = %d", pInfo[playerid][pID], id);
+    mysql_query(DBConn, query);
+
+    SavePlayerKeys(playerid);
 
     format(logString, sizeof(logString), "%s (%s) desalugou um quarto na casa ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
 	logCreate(playerid, logString, 13);

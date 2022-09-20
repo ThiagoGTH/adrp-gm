@@ -47,7 +47,7 @@ LoadPlayerKeys(playerId) {
     return 1;
 }
 
-CreatePropertyKey(playerId, propertyId, propertyType){
+CreatePropertyKey(playerId, propertyId, propertyType, bool:renting){
     new keyModel, keyName[256];
 
     if(propertyType == 1){
@@ -86,15 +86,19 @@ CreatePropertyKey(playerId, propertyId, propertyType){
     kInfo[playerId][kName] = keyName;
     kInfo[playerId][kModel] = keyModel;
 
-    format(logString, sizeof(logString), "%s criou uma chave a chave ID #%d.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected]);
-	logCreate(playerId, logString, 18);
+    if(renting)
+        format(logString, sizeof(logString), "%s recebeu uma cópia da chave ID #%d.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected]);
+	    logCreate(playerId, logString, 18);
+    else
+        format(logString, sizeof(logString), "%s criou uma chave ID #%d.", GetPlayerNameEx(playerId), pInfo[playerId][pKeySelected]);
+        logCreate(playerId, logString, 18);
 
     SavePlayerKeys(playerId);
 
     switch(propertyType){
         case 1:{
 
-            va_SendClientMessage(playerId, -1, "Você fez uma cópia da chave da sua casa no endereço %s. ((%d))", GetHouseAddress(propertyId), propertyId);
+            va_SendClientMessage(playerId, -1, "Você recebeu uma cópia da chave da casa no endereço %s. ((%d))", GetHouseAddress(propertyId), propertyId);
 
             return 1;
         }

@@ -434,6 +434,8 @@ EvictFromRent(id, playerid, evictedplayerid) {
     mysql_format(DBConn, query, sizeof query, "DELETE FROM `players_keys` WHERE `character_id` = %d AND `property_id` = %d", pInfo[evictedplayerid][pID], id);
     mysql_query(DBConn, query);
 
+    SavePlayerKeys(playerId);
+
     format(string, sizeof(string), "Você despejou %s da sua casa.", GetPlayerNameEx(evictedplayerid));
     SendClientMessageEx(playerid, COLOR_WHITE, string);
 

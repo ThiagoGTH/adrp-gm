@@ -494,6 +494,26 @@ CMD:alugarquarto(playerid) {
     return 1;
 }
 
+CMD:despejar(playerid, params[]) {
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Você não é o dono dessa casa.");
+
+    if(sscanf(params, "u", evictedplayerid)) 
+        return SendSyntaxMessage(playerid, "/despejar [id]");
+
+    if(IsPlayerConnected(evictedplayerid))
+        return SendErrorMessage(playerid, "Você especificou um jogador inválido.");
+    
+    if(pinfo[evictedplayerid][pRenting] != houseID)
+        return SendErrorMessage(playerid, "Esse jogador não está alugando sua casa.");
+
+    EvictFromRent(houseID, playerid, evictedplayerid);
+
+    return 1;
+}
+
 CMD:desalugarquarto(playerid) {
     new houseID = GetNearestHouseEntry(playerid);
 

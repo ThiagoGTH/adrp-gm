@@ -424,3 +424,18 @@ UnrentHouse(id, playerid) {
 
     return 1;
 }
+
+EvictFromRent(id, playerid, evictedplayerid) {
+    PlayerInfo[evictedplayerid][pRenting] = INVALID_HOUSE_ID;
+
+    format(string, sizeof(string), "%s despejou você da casa dele no endereço %s.", GetPlayerNameEx(playerid), hInfo[id][hAddress]);
+    SendClientMessageEx(evictedplayerid, COLOR_WHITE, string);
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `players_keys` WHERE `character_id` = %d AND `property_id` = %d", pInfo[evictedplayerid][pID], id);
+    mysql_query(DBConn, query);
+
+    format(string, sizeof(string), "Você despejou %s da sua casa.", GetPlayerNameEx(evictedplayerid));
+    SendClientMessageEx(playerid, COLOR_WHITE, string);
+
+    return 1;
+}

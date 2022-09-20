@@ -146,7 +146,7 @@ void:CheckPlayerTable() {
     `positionA` float NOT NULL DEFAULT '0',\
     `phone_number` int NOT NULL DEFAULT '0',\
     `phone_type` int NOT NULL DEFAULT '0',\
-    `rented_house` int NOT NULL DEFAULT '0',\
+    `rented_house` int NOT NULL DEFAULT '-1',\
     `online` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
@@ -755,11 +755,11 @@ void:CheckHousesTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `houses` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `address` varchar(256) DEFAULT 'Endereco desconhecido',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
     `rentable` int DEFAULT '0',\
-    `rent` int DEFAULT '0',\
+    `rent_price` int DEFAULT '0',\
     `storage_money` int DEFAULT '0',\
     `entry_x` float DEFAULT '0',\
     `entry_y` float DEFAULT '0',\

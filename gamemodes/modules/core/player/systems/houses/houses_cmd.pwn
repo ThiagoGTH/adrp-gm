@@ -478,7 +478,7 @@ CMD:alugarquarto(playerid) {
     if(!HouseHasOwner(houseID))
         return SendErrorMessage(playerid, "Essa casa não possui um dono.");
     
-    if(hInfo[houseID][hOwner] == playerid)
+    if(hInfo[houseID][hOwner] == pInfo[playerid][pID])
         return SendErrorMessage(playerid, "Você é o dono dessa casa.");
 
     if(!hInfo[houseID][hRentable])

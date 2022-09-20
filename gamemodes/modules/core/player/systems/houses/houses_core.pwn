@@ -78,6 +78,8 @@ LoadHouses() {
         cache_get_value_name_float(i, "exit_a", hInfo[id][hExitPos][3]);
         cache_get_value_name_int(i, "vw_exit", hInfo[id][vwExit]);
         cache_get_value_name_int(i, "interior_exit", hInfo[id][interiorExit]);
+        cache_get_value_name_int(i, "rentable", hInfo[id][hRentable]);
+        cache_get_value_name_int(i, "rent_price", hInfo[id][hRent]);
 
         loadedHouses++;
     }
@@ -112,6 +114,8 @@ LoadHouse(id) {
     cache_get_value_name_float(0, "exit_a", hInfo[id][hExitPos][3]);
     cache_get_value_name_int(0, "vw_exit", hInfo[id][vwExit]);
     cache_get_value_name_int(0, "interior_exit", hInfo[id][interiorExit]);
+    cache_get_value_name_int(0, "rentable", hInfo[id][hRentable]);
+    cache_get_value_name_int(0, "rent_price", hInfo[id][hRent]);
 
     return 1;
 }
@@ -125,9 +129,9 @@ SaveHouses() {
 
         mysql_format(DBConn, query, sizeof query, "UPDATE `houses` SET `character_id` = '%d', `address` = '%e', `locked` = '%d', `storage_money` = '%d', `price` = '%d', \
             `entry_x` = '%f', `entry_y` = '%f', `entry_z` = '%f', `entry_a` = '%f', `vw_entry` = '%d', `interior_entry` = '%d', \
-            `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d WHERE `id` = %d;", hInfo[i][hOwner], hInfo[i][hAddress], hInfo[i][hLocked], hInfo[i][hStorageMoney], hInfo[i][hPrice],
+            `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d, `rentable` = %d, `rent_price` = %d WHERE `id` = %d;", hInfo[i][hOwner], hInfo[i][hAddress], hInfo[i][hLocked], hInfo[i][hStorageMoney], hInfo[i][hPrice],
             hInfo[i][hEntryPos][0], hInfo[i][hEntryPos][1], hInfo[i][hEntryPos][2], hInfo[i][hEntryPos][3], hInfo[i][vwEntry], hInfo[i][interiorEntry],
-            hInfo[i][hExitPos][0], hInfo[i][hExitPos][1], hInfo[i][hExitPos][2], hInfo[i][hExitPos][3], hInfo[i][vwExit], hInfo[i][interiorExit], i);
+            hInfo[i][hExitPos][0], hInfo[i][hExitPos][1], hInfo[i][hExitPos][2], hInfo[i][hExitPos][3], hInfo[i][vwExit], hInfo[i][interiorExit], hInfo[i][hRentable], hInfo[i][hRent], i);
         mysql_query(DBConn, query);
 
         savedHouses++;
@@ -147,9 +151,9 @@ SaveHouse(id) {
 
     mysql_format(DBConn, query, sizeof query, "UPDATE `houses` SET `character_id` = '%d', `address` = '%e', `locked` = '%d', `storage_money` = '%d', `price` = '%d', \
         `entry_x` = '%f', `entry_y` = '%f', `entry_z` = '%f', `entry_a` = '%f', `vw_entry` = '%d', `interior_entry` = '%d', \
-        `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d WHERE `id` = %d;", hInfo[id][hOwner], hInfo[id][hAddress], hInfo[id][hLocked], hInfo[id][hStorageMoney], hInfo[id][hPrice],
+        `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d, `rentable` = %d, `rent_price` = %d WHERE `id` = %d;", hInfo[id][hOwner], hInfo[id][hAddress], hInfo[id][hLocked], hInfo[id][hStorageMoney], hInfo[id][hPrice],
         hInfo[id][hEntryPos][0], hInfo[id][hEntryPos][1], hInfo[id][hEntryPos][2], hInfo[id][hEntryPos][3], hInfo[id][vwEntry], hInfo[id][interiorEntry],
-        hInfo[id][hExitPos][0], hInfo[id][hExitPos][1], hInfo[id][hExitPos][2], hInfo[id][hExitPos][3], hInfo[id][vwExit], hInfo[id][interiorExit], id);
+        hInfo[id][hExitPos][0], hInfo[id][hExitPos][1], hInfo[id][hExitPos][2], hInfo[id][hExitPos][3], hInfo[id][vwExit], hInfo[id][interiorExit], hInfo[id][hRentable], hInfo[id][hRent], id);
     mysql_query(DBConn, query);
 
     return 1;

@@ -310,11 +310,17 @@ CMD:proximo(playerid, params[]) {
 	new count = 0;
 
 	if(GetPlayerAdmin(playerid) > 5){
-		if ((id = Pool_GetClosestTable(playerid)) != -1) {
-			SendServerMessage(playerid, "Você está próximo da mesa de sinuca: %d.", id);
-			count++;
-		}
+
 	}
+
+	if ((id = Pool_GetClosestTable(playerid)) != -1) {
+		SendServerMessage(playerid, "Você está próximo da mesa de sinuca: %d.", id);
+		count++;
+	} if ((id = GetClosestGraffiti(playerid)) != -1) {
+		SendServerMessage(playerid, "Você está próximo do grafite: %d.", Graffiti[id][gID]);
+		count++;
+	}
+	
 
 	if(!count) SendErrorMessage(playerid, "Você não está próximo a nada dinâmico.");
 	return true;

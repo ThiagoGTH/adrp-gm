@@ -10,8 +10,7 @@ enum GRAFFITI_INFO {
     Float: gRY,
     Float: gRZ,
     gObject,
-    Text3D: gText3D,
-    gText[40],
+    gText[64],
     gFont[32],
     gSize,
     gColor,
@@ -20,7 +19,7 @@ enum GRAFFITI_INFO {
 }
 new Graffiti[MAX_GRAFFITI][GRAFFITI_INFO];
 
-new graffiti_text[4096];
+new graffiti_text[3072];
 
 new GraffitiColors[][] =
 {

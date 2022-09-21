@@ -71,7 +71,7 @@ Dialog:GraffitiChooseText(playerid, response, listitem, inputtext[]) {
         GetPVarInt(playerid, "Graffiti:Size"), inputtext
     );
 
-    return Dialog_Show(playerid, "GraffitiConfirm", DIALOG_STYLE_MSGBOX, "Informações do Grafite", body, "Confirmar", "Cancelar");
+    return Dialog_Show(playerid, GraffitiConfirm, DIALOG_STYLE_MSGBOX, "Informações do Grafite", body, "Confirmar", "Cancelar");
 }
 
 Dialog:GraffitiConfirm(playerid, response, listitem, inputtext[]) {
@@ -100,8 +100,8 @@ Dialog:GraffitiConfirm(playerid, response, listitem, inputtext[]) {
     GetPlayerPos(playerid, x, y, z);
     GetPlayerFacingAngle(playerid, ang);
 
-    GetPVarString(playerid, "Graffiti:Font", Graffiti[id][gFont], 32);
-    GetPVarString(playerid, "Graffiti:Text", Graffiti[id][gText], 32);
+    GetPVarString(playerid, "Graffiti:Font", Graffiti[id][gFont], 128);
+    GetPVarString(playerid, "Graffiti:Text", Graffiti[id][gText], 128);
 
     Graffiti[id][gExists] = true;
     Graffiti[id][gID] = 100000 + random(899999);
@@ -132,19 +132,19 @@ Dialog:GraffitiConfirm(playerid, response, listitem, inputtext[]) {
 }
 
 _Graffiti_Size(playerid) {
-    return Dialog_Show(playerid, "GraffitiChooseSize", DIALOG_STYLE_INPUT, "Grafite — Fonte",
+    return Dialog_Show(playerid, GraffitiChooseSize, DIALOG_STYLE_INPUT, "Grafite — Fonte",
         "{FFFFFF}Especifique o tamanho da fonte:\n\n{A7A7A7}De 5 a 50.\n",
         ">>>", "Cancelar");
 }
 
 _Graffiti_Bold(playerid) {
-    return Dialog_Show(playerid, "GraffitiChooseBold", DIALOG_STYLE_MSGBOX, "Grafite — Negrito",
+    return Dialog_Show(playerid, GraffitiChooseBold, DIALOG_STYLE_MSGBOX, "Grafite — Negrito",
         "{FFFFFF}Você deseja deixar a fonte do grafite em negrito?",
         "Sim", "Não");
 }
 
 _Graffiti_Text(playerid) {
-    return Dialog_Show(playerid, "GraffitiChooseText", DIALOG_STYLE_INPUT, "Grafite — Texto",
+    return Dialog_Show(playerid, GraffitiChooseText, DIALOG_STYLE_INPUT, "Grafite — Texto",
         "{FFFFFF}Digite o texto para grafitar:\n\n{A7A7A7}O texto deve estar entre 3 e 30 caracteres.\n",
         ">>>", "Cancelar");
 }

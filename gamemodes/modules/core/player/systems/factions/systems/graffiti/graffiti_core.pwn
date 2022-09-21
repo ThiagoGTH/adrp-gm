@@ -51,16 +51,29 @@ graffitiEdit(playerid, objectid, response, Float: x, Float: y, Float: z, Float: 
     Graffiti[id][gRY] = ry;
     Graffiti[id][gRZ] = rz;
 
-    new string[256];
-    format(string, sizeof(string), "Grafite #%d", Graffiti[id][gID]);
+    if (IsValidDynamicObject(Graffiti[id][gObject]))
+        DestroyDynamicObject(Graffiti[id][gObject]);
 
-    Graffiti[id][gText3D] = CreateDynamic3DTextLabel(
-        string, 0xFFFFFF33,
-        Graffiti[id][gX], Graffiti[id][gY], Graffiti[id][gZ], 2.0
+    Graffiti[id][gObject] = CreateDynamicObject(
+        19477,
+        Graffiti[id][gX], Graffiti[id][gY], Graffiti[id][gZ],
+        Graffiti[id][gRX], Graffiti[id][gRY], Graffiti[id][gRZ]
     );
 
-    new font[64], text[64];
+    SetDynamicObjectMaterialText(
+        Graffiti[id][gObject],
+        0,
+        Graffiti[id][gText],
+        OBJECT_MATERIAL_SIZE_512x256,
+        Graffiti[id][gFont],
+        Graffiti[id][gSize] * 5,
+        Graffiti[id][gBold], // bold
+        Graffiti[id][gColor],
+        0, // backcolor
+        2  // center
+    );
 
+    new font[128], text[128];
     mysql_escape_string(Graffiti[id][gText], text);
     mysql_escape_string(Graffiti[id][gFont], font);
 
@@ -125,14 +138,6 @@ public OnGraffitiLoad() {
             0, // backcolor
             2 // center
         );
-
-        new string[256];
-        format(string, sizeof(string), "Grafite #%d", Graffiti[i][gID]);
-
-        Graffiti[i][gText3D] = CreateDynamic3DTextLabel(
-            string, 0xFFFFFF33,
-            Graffiti[i][gX], Graffiti[i][gY], Graffiti[i][gZ], 2.0
-        );
     }
 
     new end = GetTickCount();
@@ -146,7 +151,7 @@ public OnGraffitiCreated(playerid) {
     SendServerMessage(playerid, "Grafite criado com sucesso. %d", Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
     SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) criou o grafite %d.", pNome(playerid), playerid, Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
 	format(logString, sizeof(logString), "%s (%s) criou o grafite %d", pNome(playerid), GetPlayerUserEx(playerid), Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
-	logCreate(playerid, logString, 22);
+	logCreate(playerid, logString, 23);
     return true;
 }
 
@@ -154,6 +159,20 @@ forward OnGraffitiDelete(playerid, id);
 public OnGraffitiDelete(playerid, id) {
     SendServerMessage(playerid, "Grafite removido com sucesso.");
     format(logString, sizeof(logString), "%s (%s) deletou o grafite %d", pNome(playerid), GetPlayerUserEx(playerid), id);
-	logCreate(playerid, logString, 22);
+	logCreate(playerid, logString, 23);
     return true;
+}
+
+GetClosestGraffiti(playerid, &Float: dis = 5.00) {
+	new graffiti = -1;
+	for (new i = 0; i < MAX_GRAFFITI; i++)  if (!Graffiti[i][gExists]) {
+    	new
+    		Float: dis2 = GetPlayerDistanceFromPoint(playerid, Graffiti[i][gX], Graffiti[i][gY], Graffiti[i][gZ]);
+
+    	if (dis2 < dis && dis2 != -1.00) {
+    	    dis = dis2;
+    	    graffiti = i;
+		}
+	}
+	return graffiti;
 }

@@ -10,7 +10,7 @@ new Server_Instability = 0;
 // 0 = Acesso normal
 // 1 = Acesso suspenso
 
-new Server_Type = 0;
+new Server_Type = 1;
 // 0 - localhost
 // 1 - closed alpha
 // 2 - sandbox

@@ -39,7 +39,6 @@ hook OnPlayerRequestClass(playerid, classid) {
     ShowLoginTextdraws(playerid);
     ClearPlayerChat(playerid);
 
-
     //format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
     CheckCharactersName(playerid);
     CheckUserConditions(playerid);

@@ -1671,3 +1671,210 @@ Iniciando os serviços...
 [2022-09-20T20:45:11-0300] [Info] O servidor iniciou no local host.
 [2022-09-20T20:45:11-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
 [2022-09-20T20:45:11-0300] [Info] Legacy Network started on port 7777
+[2022-09-20T20:48:09-0300] [Info] [artwork:info] Loading artconfig.txt
+[2022-09-20T20:48:09-0300] [Info] [artwork:info] Using CDN http://26.244.244.209/models/
+[2022-09-20T20:48:09-0300] [Info] [Pawn.CMD] plugin v3.3.6 loading...
+[2022-09-20T20:48:09-0300] [Info] [Pawn.CMD] 
+
+    | Pawn.CMD 3.3.6 | omp-beta7 | 2016 - 2022
+    |-----------------------------------------
+    | Author and maintainer: katursis
+
+
+    | Compiled: Sep  8 2022 at 03:43:40
+    |----------------------------------------------------------
+    | Repository: https://github.com/katursis/Pawn.CMD/tree/omp
+
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: crashdetect
+[2022-09-20T20:48:09-0300] [Info]   CrashDetect plugin 4.20
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: mysql
+[2022-09-20T20:48:09-0300] [Info]  >> plugin.mysql: R41-4 successfully loaded.
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: chrono
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: pawn-memory
+[2022-09-20T20:48:09-0300] [Info] ========================
+[2022-09-20T20:48:09-0300] [Info] = Memory access plugin =
+[2022-09-20T20:48:09-0300] [Info] =       Made by BigETI =
+[2022-09-20T20:48:09-0300] [Info] = Loaded!              =
+[2022-09-20T20:48:09-0300] [Info] ========================
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: sscanf
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info]  ===============================
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info]       sscanf plugin loaded.     
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info]          Version: 2.13.2
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info]    (c) 2022 Alex "Y_Less" Cole  
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info]  ===============================
+[2022-09-20T20:48:09-0300] [Info] 
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: streamer
+[2022-09-20T20:48:09-0300] [Info] 
+
+*** Streamer Plugin v2.9.5 by Incognito loaded ***
+
+[2022-09-20T20:48:09-0300] [Info] Loading plugin: discord-connector
+[2022-09-20T20:48:10-0300] [Info]  >> plugin.dc-connector: v0.3.5 successfully loaded.
+[2022-09-20T20:48:10-0300] [Info] Loading plugin: bcrypt-samp
+[2022-09-20T20:48:10-0300] [Info]   plugin.bcrypt v2.2.3 was loaded.
+[2022-09-20T20:48:10-0300] [Info]   plugin.bcrypt: 8 cores detected, 7 threads will be used.
+[2022-09-20T20:48:10-0300] [Info] Loading plugin: ColAndreas
+[2022-09-20T20:48:10-0300] [Info] *********************
+[2022-09-20T20:48:10-0300] [Info] ** Created By:     **
+[2022-09-20T20:48:10-0300] [Info] ** [uL]Chris42O    **
+[2022-09-20T20:48:10-0300] [Info] ** [uL]Slice       **
+[2022-09-20T20:48:10-0300] [Info] ** [uL]Pottus      **
+[2022-09-20T20:48:10-0300] [Info] *********************
+[2022-09-20T20:48:10-0300] [Info] No collision data found.
+[2022-09-20T20:48:10-0300] [Info] *********************
+[2022-09-20T20:48:10-0300] [Info]   ColAndreas Loaded
+[2022-09-20T20:48:10-0300] [Info]    v1.4.0
+[2022-09-20T20:48:10-0300] [Info] *********************
+[2022-09-20T20:48:10-0300] [Info] Loading plugin: mapandreas
+[2022-09-20T20:48:10-0300] [Error] Skipping legacy plugin 'pawncmd'; There is an open.mp compatible version you can find here: https://github.com/katursis/Pawn.CMD/releases , make sure to download x.x.x-omp version.
+[2022-09-20T20:48:10-0300] [Info] Loading plugin: env
+[2022-09-20T20:48:10-0300] [Info]  
+[2022-09-20T20:48:10-0300] [Info]  
+[2022-09-20T20:48:10-0300] [Info]          ==============================================================
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          |    YYYYYYY       YYYYYYY    SSSSSSSSSSSSSSS  IIIIIIIIII    |
+[2022-09-20T20:48:10-0300] [Info]          |    Y:::::Y       Y:::::Y  SS:::::::::::::::S I::::::::I    |
+[2022-09-20T20:48:10-0300] [Info]          |    Y:::::Y       Y:::::Y S:::::SSSSSS::::::S I::::::::I    |
+[2022-09-20T20:48:10-0300] [Info]          |    Y::::::Y     Y::::::Y S:::::S     SSSSSSS II::::::II    |
+[2022-09-20T20:48:10-0300] [Info]          |    YYY:::::Y   Y:::::YYY S:::::S               I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |       Y:::::Y Y:::::Y    S:::::S               I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |        Y:::::Y:::::Y      S::::SSSS            I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |         Y:::::::::Y        SS::::::SSSSS       I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |          Y:::::::Y           SSS::::::::SS     I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |           Y:::::Y               SSSSSS::::S    I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |           Y:::::Y                    S:::::S   I::::I      |
+[2022-09-20T20:48:10-0300] [Info]          |           Y:::::Y        SSSSSSS     S:::::S II::::::II    |
+[2022-09-20T20:48:10-0300] [Info]          |        YYYY:::::YYYY     S::::::SSSSSS:::::S I::::::::I    |
+[2022-09-20T20:48:10-0300] [Info]          |        Y:::::::::::Y     S:::::::::::::::SS  I::::::::I    |
+[2022-09-20T20:48:10-0300] [Info]          |        YYYYYYYYYYYYY      SSSSSSSSSSSSSSS    IIIIIIIIII    |
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          |                      (c) 2021 MPL v1.1                     |
+[2022-09-20T20:48:10-0300] [Info]          |            Alex "Y_Less" Cole and contributors.            |
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          |                                                            |
+[2022-09-20T20:48:10-0300] [Info]          ==============================================================
+[2022-09-20T20:48:10-0300] [Info]  
+[2022-09-20T20:48:10-0300] [Info]  
+[2022-09-20T20:48:10-0300] [Info]  ========================================== 
+[2022-09-20T20:48:10-0300] [Info]  |                                        | 
+[2022-09-20T20:48:10-0300] [Info]  |   Generating code, this may take a     | 
+[2022-09-20T20:48:10-0300] [Info]  |  little bit of time.  Note that this   | 
+[2022-09-20T20:48:10-0300] [Info]  |  code generation works best with the   | 
+[2022-09-20T20:48:10-0300] [Info]  |     JIT plugin, which you are not      | 
+[2022-09-20T20:48:10-0300] [Info]  |     currently using.  Get it here:     | 
+[2022-09-20T20:48:10-0300] [Info]  |                                        | 
+[2022-09-20T20:48:10-0300] [Info]  |       https://git.io/jit-plugin        | 
+[2022-09-20T20:48:10-0300] [Info]  |                                        | 
+[2022-09-20T20:48:10-0300] [Info]  |             Please wait...             | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  |                 Done!                  | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  ========================================== 
+[2022-09-20T20:48:11-0300] [Info] Unknown command or variable: FIXES_OnClientCheckResponse
+[2022-09-20T20:48:11-0300] [Info] Filterscript '../scriptfiles/callbackfix' loaded.
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  | Server:      open.mp 0.0.8.2099 (Wind  | 
+[2022-09-20T20:48:11-0300] [Info]  | Started:     20 Sep 2022 - 20:48:10    | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info] [debug] Long callback execution detected (hang or performance issue)
+[2022-09-20T20:48:11-0300] [Info] [debug] AMX backtrace:
+[2022-09-20T20:48:11-0300] [Info] [debug] #0 000033c0 in Script_GetCompilerString (version[]=@01b3e5d4 "Started:     20 Sep 2022 - 20:48:10", os[]=@01b3e5ac "", vlen=38, olen=10) at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:180
+[2022-09-20T20:48:11-0300] [Info] [debug] #1 00003a24 in YVers_PrintHeader () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:468
+[2022-09-20T20:48:11-0300] [Info] [debug] #2 00003f00 in YVers_StartCheck () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_version.inc:606
+[2022-09-20T20:48:11-0300] [Info] [debug] #3 00002e00 in public ac_AntiCheatIsConnected () at C:\sampctl\advanced-roleplay\dependencies\YSI-Includes\YSI_Coding\y_va\..\..\YSI_Core\y_core\y_scriptinit_impl.inc:1152
+[2022-09-20T20:48:11-0300] [Info]  | Compiler:    3.10.10 (Windows)         | 
+[2022-09-20T20:48:11-0300] [Info]  | Includes:    0.3DL                     | 
+[2022-09-20T20:48:11-0300] [Info]  | Codepage:    <none>                    | 
+[2022-09-20T20:48:11-0300] [Info]  | Built:       20 Sep 2022 - 20:44:34    | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  | YSI:         v5.06.1932                | 
+[2022-09-20T20:48:11-0300] [Info]  | Master:      -1                        | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  | JIT:         <none>                    | 
+[2022-09-20T20:48:11-0300] [Info]  | Crashdetect: <found>                   | 
+[2022-09-20T20:48:11-0300] [Info]  |                                        | 
+[2022-09-20T20:48:11-0300] [Info]  ========================================== 
+[2022-09-20T20:48:11-0300] [Info]  
+[2022-09-20T20:48:11-0300] [Info]  
+[2022-09-20T20:48:11-0300] [Info] 
+[DATABASE] A conexão com o MySQL foi feita com sucesso
+[2022-09-20T20:48:11-0300] [Info] [DATABASE] Verificando criação de tabelas...
+[2022-09-20T20:48:11-0300] [Info] [DATABASE] Tabela serverlogs checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela users checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela users_premium checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela users_teams checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela ucp_apps checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela ucp_posts checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela ucp_choices checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela ucp_notifications checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela ucp_questions checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela players checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela players_apparence checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela players_faction checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela players_radio checada com sucesso
+[2022-09-20T20:48:12-0300] [Info] [DATABASE] Tabela players_premium checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela players_weapons checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela players_inv checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela players_pet checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela players_config checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela items checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela ban checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela furniture_info checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela interiors checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela advertisement checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_caravan checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_dealer checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_damages checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_stats checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_objects checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_tunings checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela vehicles_weapons checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela pool_tables checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela houses checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela houses_other_entries checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela tradings checada com sucesso
+[2022-09-20T20:48:13-0300] [Info] [DATABASE] Tabela tradings_owners checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela character_licences_driver checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela factions checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela factions_lockers checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela factions_skins checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela factions_weapons checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Tabela graffits checada com sucesso
+[2022-09-20T20:48:14-0300] [Info] [DATABASE] Todas tabelas foram carregadas com sucesso
+[2022-09-20T20:48:14-0300] [Info] * Note que se alguma tabela faltar, funções não funcionarão de modo correto.
+
+[2022-09-20T20:48:14-0300] [Info] [ITENS DINÂMICOS]: 1 itens dinâmicos carregados com sucesso.
+[2022-09-20T20:48:14-0300] [Info] [ITENS DROPADOS]: 0 itens dropados foram carregados.
+[2022-09-20T20:48:14-0300] [Info] [VEÍCULOS]: 0 veículos carregados com sucesso.
+[2022-09-20T20:48:14-0300] [Info] [CASAS]: 0 casas carregadas com sucesso.
+[2022-09-20T20:48:14-0300] [Info] [CASAS]: 0 entradas secundárias carregadas com sucesso.
+[2022-09-20T20:48:14-0300] [Info] [FACÇÕES]: 3 facções carregadas.
+[2022-09-20T20:48:14-0300] [Info] [MESAS DE SINUCA]: 0 mesas de sinuca foram criadas.
+[2022-09-20T20:48:14-0300] [Warning] Deprecated console variable "rcon", use "rcon.enable" instead.
+[2022-09-20T20:48:14-0300] [Info] Remote console disabled.
+[2022-09-20T20:48:14-0300] [Warning] Deprecated console variable "lagcompmode", use "game.lag_compensation_mode" instead.
+[2022-09-20T20:48:14-0300] [Info]  
+[2022-09-20T20:48:14-0300] [Info] --------------------------------------
+[2022-09-20T20:48:14-0300] [Info]  Anticheat Nex-AC loaded!
+[2022-09-20T20:48:14-0300] [Info]  Anticheat version: 1.9.60
+[2022-09-20T20:48:14-0300] [Info]  Author: Nexius
+[2022-09-20T20:48:14-0300] [Info] --------------------------------------
+
+[2022-09-20T20:48:14-0300] [Info] Setting server language to: "Brazilian Portuguese"
+[2022-09-20T20:48:14-0300] [Info] Setting server password to: "snd2n189w--"
+[2022-09-20T20:48:14-0300] [Info] Iniciando os serviços...
+[2022-09-20T20:48:14-0300] [Info] Server password has been removed.
+[2022-09-20T20:48:14-0300] [Info] O servidor iniciou no local host.
+[2022-09-20T20:48:14-0300] [Info] [Nex-AC] This version of the anticheat is not suitable for the server version
+[2022-09-20T20:48:14-0300] [Info] Legacy Network started on port 7777

@@ -1,4 +1,4 @@
-CMD:grafitar(playerid) {
+CMD:grafitar(playerid, params[]) {
     if (GetPVarInt(playerid, "Graffiti:Creating") > 0) 
         return SendErrorMessage(playerid, "Você já está criando um grafite.");
     if (GetPlayerInterior(playerid) != 0) 
@@ -8,7 +8,9 @@ CMD:grafitar(playerid) {
     
     SetPVarString(playerid, "Graffiti:Font", "Arial");
     SetPVarInt(playerid, "Graffiti:Creating", 1);
-    return _Graffiti_Color(playerid);
+    Dialog_Show(playerid, "GraffitiChooseColor", DIALOG_STYLE_LIST,
+        "Grafite — Cor", graffiti_text, ">>>", "Cancelar");
+    return true;
 }
 
 CMD:deletargrafite(playerid, params[]) {

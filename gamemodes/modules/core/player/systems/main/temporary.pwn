@@ -38,7 +38,7 @@ CMD:pegarpremium(playerid, params[]) {
 
 CMD:nometeste(playerid, params[]) {
 	foreach (new i : Player) {
-		va_SendClientMessage(playerid, -1, "%s / %s", uInfo[i][uName], GetPlayerUserEx(i));
+		va_SendClientMessage(playerid, -1, "%d - %s / %s", i, uInfo[i][uName], GetPlayerUserEx(i));
 	}
 	return true;
 }

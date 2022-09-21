@@ -131,11 +131,6 @@ Dialog:GraffitiConfirm(playerid, response, listitem, inputtext[]) {
     return true;
 }
 
-_Graffiti_Color(playerid) {
-    return Dialog_Show(playerid, "GraffitiChooseColor", DIALOG_STYLE_LIST,
-        "Grafite — Cor", graffiti_text, ">>>", "Cancelar");
-}
-
 _Graffiti_Size(playerid) {
     return Dialog_Show(playerid, "GraffitiChooseSize", DIALOG_STYLE_INPUT, "Grafite — Fonte",
         "{FFFFFF}Especifique o tamanho da fonte:\n\n{A7A7A7}De 5 a 50.\n",

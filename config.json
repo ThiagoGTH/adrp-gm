@@ -1,7 +1,7 @@
 {
     "announce": true,
     "artwork": {
-        "cdn": "http://198.27.95.179/models_ocultos_ca2022",
+        "cdn": "http://26.244.244.209/models/",
         "enable": true,
         "models_path": "models"
     },
@@ -19,7 +19,7 @@
         "player_marker_draw_radius": 250.0,
         "player_marker_mode": 1,
         "time": 12,
-        "use_all_animations": false,
+        "use_all_animations": true,
         "use_chat_radius": false,
         "use_entry_exit_markers": true,
         "use_instagib": false,

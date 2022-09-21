@@ -260,7 +260,6 @@ SaveCharacterInfo(playerid) {
     new Float:pos[4];
 
     pInfo[playerid][pMoney] = GetMoney(playerid);
-    pInfo[playerid][pSkin] = GetPlayerSkin(playerid);
     pInfo[playerid][pHealth] = GetPlayerHealthEx(playerid);
     pInfo[playerid][pArmour] = GetPlayerArmourEx(playerid);
     pInfo[playerid][pScore] = GetPlayerScore(playerid);

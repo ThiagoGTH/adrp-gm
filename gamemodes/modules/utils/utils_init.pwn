@@ -1,10 +1,24 @@
 #include <YSI_Coding\y_hooks>
 
-forward OnGamemodeLoad(playerid);
-public OnGamemodeLoad(playerid) {
+forward OnGamemodeLoad();
+public OnGamemodeLoad() {
     new rcon[255];
-    if(Server_Type == 1){
-		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
+    if(Server_Type == 0){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Local Host | Open.MP");
+		else{
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Local Host | Open.MP");
+		    SendRconCommand(rcon);
+            format(rcon, sizeof(rcon), "password 0");
+            SendRconCommand(rcon);
+
+            print("O servidor iniciou no local host.");
+            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou mo local host.");
+            logCreate(99998, logString, 5);
+        } 
+	}
+
+    else if(Server_Type == 1){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
 		else{
             format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
 		    SendRconCommand(rcon);
@@ -12,8 +26,8 @@ public OnGamemodeLoad(playerid) {
             SendRconCommand(rcon);
             ServerStatus(1);
 
-            print("O servidor iniciou com acesso normal.");
-            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou com acesso normal.");
+            print("O servidor iniciou em modo Closed Alpha.");
+            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Alpha.");
             logCreate(99998, logString, 5);
         } 
 	}
@@ -35,7 +49,7 @@ public OnGamemodeLoad(playerid) {
         format(rcon, sizeof(rcon), "password adrpthiagao");
         SendRconCommand(rcon);
 
-        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo manutenção.");
+        format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo normal.");
         logCreate(99998, logString, 5);
 	}
 
@@ -74,8 +88,8 @@ public OnGameModeInit() {
 	EnableVehicleFriendlyFire();
     DisableCrashDetectLongCall();
 
-    print("\n\n\nIniciando os serviços...");
-    SetTimer("OnGamemodeLoad", 1000, false);
+    print("Iniciando os serviços...");
+    OnGamemodeLoad();
     return true;
 }
 

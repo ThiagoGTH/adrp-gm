@@ -245,7 +245,7 @@ new const g_aWeaponSlots[] = {
 };
 
 void:ResetUserData(playerid) {
-    //uInfo[playerid][uName][0] = EOS;
+    uInfo[playerid][uName][0] = EOS;
 
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 

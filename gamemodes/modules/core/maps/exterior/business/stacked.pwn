@@ -8,8 +8,8 @@ hook OnPlayerConnect(playerid) {
 }
 
 hook OnGameModeInit() {
-    AddSimpleModelEx(12849, -2005, "maps/business/stacked/stacked_arc.dff", "maps/business/stacked/stacked_arc.txd");
-    AddSimpleModelEx(12849, -2006, "maps/business/stacked/stacked_furn_01.dff", "maps/business/stacked/stacked_furn_01.txd");
+    AddSimpleModelEx(19478, -2005, "maps/business/stacked/stacked_arc.dff", "maps/business/stacked/stacked_arc.txd");
+    AddSimpleModelEx(19475, -2006, "maps/business/stacked/stacked_furn_01.dff", "maps/business/stacked/stacked_furn_01.txd");
     CreateModelObject(MODEL_TYPE_BUILDINGS, -2005, 2112.939941, -1797.086425, 19.342802, 0.000000, 0.000000, 0.000000);
     CreateModelObject(MODEL_TYPE_OBJECTS, -2006, 2108.476318, -1806.634887, 13.372796, 0.000000, 0.000000, 0.000000);
 

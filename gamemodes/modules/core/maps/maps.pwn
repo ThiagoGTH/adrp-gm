@@ -31,6 +31,7 @@
 #include "modules\core\maps\exterior\business\stacked.pwn"
 
 #include "modules\core\maps\interior\factions\SAN2.pwn"
+#include "modules\core\maps\interior\factions\LSPD_interior.pwn"
 #include "modules\core\maps\interior\mazebank.pwn"
 #include "modules\core\maps\interior\doj.pwn"
 #include "modules\core\maps\interior\nightclub1.pwn"

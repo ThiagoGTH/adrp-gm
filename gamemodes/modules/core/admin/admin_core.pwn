@@ -304,7 +304,6 @@ CMD:skin(playerid, params[]) {
 }
 
 CMD:proximo(playerid, params[]) {
-    
 	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	static id = -1;
 	new count = 0;

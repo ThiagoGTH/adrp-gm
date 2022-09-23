@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 hook OnGameModeInit() {
-    mysql_tquery(DBConn, "SELECT * FROM `graffiti", "OnGraffitiLoad");
+    mysql_tquery(DBConn, "SELECT * FROM `graffiti` WHERE (`gID` != '0')", "OnGraffitiLoad");
     return true;
 }
 
@@ -102,7 +102,6 @@ hook OnPlayerDisconnect(playerid, reason) {
 
 forward OnGraffitiLoad();
 public OnGraffitiLoad() {
-    new start = GetTickCount();
     for (new i = 0; i < cache_num_rows(); i++) {
         Graffiti[i][gExists] = true;
 
@@ -139,9 +138,8 @@ public OnGraffitiLoad() {
             2 // center
         );
     }
-
-    new end = GetTickCount();
-    printf("[GRAFFITI SYSTEM] %d grafites carregados em %ds.", cache_num_rows(), end - start);
+    printf("[GRAFITES] %d grafites carregados.", cache_num_rows());
+    return true;
 }
 
 forward OnGraffitiCreated(playerid);

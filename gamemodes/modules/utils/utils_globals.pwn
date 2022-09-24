@@ -165,6 +165,7 @@ enum Player_Data {
     pShowFooter,
     // FACTIONS
     pFaction,
+    pFactionID,
     pFactionRank,
     pFactionEdit,
     pSelectedSlot,
@@ -342,7 +343,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pPassedOut] = false;
     pInfo[playerid][pJailed] = 0;
 
-    pInfo[playerid][pFaction] = 0;
+    pInfo[playerid][pFaction] = -1;
+    pInfo[playerid][pFactionID] = -1;
     pInfo[playerid][pFactionRank] = 0;
     pInfo[playerid][pFactionEdit] = 0;
     pInfo[playerid][pSelectedSlot] = 0;

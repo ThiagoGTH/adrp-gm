@@ -17,7 +17,7 @@ CMD:reviver(playerid, params[]) {
 	static
 		userid; 
 
-  	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
+  	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/reviver [playerid/nome]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 

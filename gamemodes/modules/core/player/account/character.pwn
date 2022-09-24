@@ -191,7 +191,7 @@ LoadPlayerConfig(playerid){
 LoadPlayerFaction(playerid){
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_faction WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
-    cache_get_value_name_int(0, "faction_id", pInfo[playerid][pFaction]);
+    cache_get_value_name_int(0, "faction_id", pInfo[playerid][pFactionID]);
     cache_get_value_name_int(0, "faction_rank", pInfo[playerid][pFactionRank]);
     cache_delete(result);
     return true;
@@ -247,6 +247,14 @@ SpawnSelectedCharacter(playerid) {
     format(logString, sizeof(logString), "%s (%s) logou como %s. ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9],
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
+
+
+    if (pInfo[playerid][pFactionID] != -1) {
+	    pInfo[playerid][pFaction] = GetFactionByID(pInfo[playerid][pFactionID]);
+
+	    if (pInfo[playerid][pFaction] == -1)
+	        ResetFaction(playerid);
+	}
 
     pInfo[playerid][pLogged] = true;
     TogglePlayerSpectating(playerid, false);
@@ -513,7 +521,7 @@ SavePlayerFaction(playerid) {
     `faction_id` = '%d',        \
     `faction_rank` = '%d'    \
     WHERE character_id = '%d';", 
-    pInfo[playerid][pFaction],
+    pInfo[playerid][pFactionID],
     pInfo[playerid][pFactionRank],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);

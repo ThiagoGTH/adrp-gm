@@ -124,12 +124,12 @@ CMD:editarfaccao(playerid, params[]) {
 		if (ranks < 1 || ranks > 30)
 		    return SendErrorMessage(playerid, "O máximo de cargos não pode ser menor que 1 ou maior que 30.");
 
-		SendServerMessage(playerid, "Você alterou o máximo de cargos da facção %s (%d) de %d para %d.", FactionData[id][factionName], id, FactionData[id][factionMaxRanks], ranks);
+		SendServerMessage(playerid, "Você alterou o máximo de cargos da facção %s (%d) de %d para %d.", FactionData[id][factionName], id, FactionData[id][factionRanks], ranks);
 
-		format(logString, sizeof(logString), "%s (%s) alterou o máximo de cargos da facção %s (%d) de %d para %d", pNome(playerid), GetPlayerUserEx(playerid), FactionData[id][factionName], id, FactionData[id][factionMaxRanks], ranks);
+		format(logString, sizeof(logString), "%s (%s) alterou o máximo de cargos da facção %s (%d) de %d para %d", pNome(playerid), GetPlayerUserEx(playerid), FactionData[id][factionName], id, FactionData[id][factionRanks], ranks);
 		logCreate(playerid, logString, 1);
 
-		FactionData[id][factionMaxRanks] = ranks;
+		FactionData[id][factionRanks] = ranks;
 		SaveFaction(id);
 	} else if (!strcmp(type, "salario", true) || !strcmp(type, "salário", true)) {
 		FactionPaycheck(playerid, id);
@@ -141,6 +141,36 @@ CMD:editarfaccao(playerid, params[]) {
 	else SendErrorMessage(playerid, "Você especificou um tipo inválido.");
 
 	return true;
+}
+
+CMD:lider(playerid, params[]) {
+	static
+		userid,
+		id;
+
+   	if (GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 1)) return SendPermissionMessage(playerid);
+	if (sscanf(params, "ud", userid, id)) return SendSyntaxMessage(playerid, "/lider [id/nome] [ID da facção] (Utilize -1 para remover um líder)");
+	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
+    if ((id < -1 || id >= MAX_FACTIONS) || (id != -1 && !FactionData[id][factionExists])) return SendErrorMessage(playerid, "Você especificou um ID de facção inválido.");
+
+	if (id == -1) {
+	    ResetFaction(userid);
+
+		SendServerMessage(playerid, "Você removeu %s da liderança da facção.", pNome(userid));
+		SendServerMessage(userid, "%s removeu você da liderença da facção.", GetPlayerUserEx(playerid));
+
+		format(logString, sizeof(logString), "%s (%s) removeu a liderança da facção de %s (%s)", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid), GetPlayerUserEx(userid));
+	} else {
+		SetFaction(userid, id);
+		pInfo[userid][pFactionRank] = FactionData[id][factionRanks];
+
+		SendServerMessage(playerid, "Você deu a liderança da facção %s para %s.", FactionData[id][factionName], pNome(userid));
+		SendServerMessage(userid, "%s lhe deu a liderança da facção %s.", GetPlayerUserEx(playerid), FactionData[id][factionName]);
+
+		format(logString, sizeof(logString), "%s (%s) deu a liderança da facção %s para %s (%s)", pNome(playerid), GetPlayerUserEx(playerid), FactionData[id][factionName], pNome(userid), GetPlayerUserEx(userid));
+		logCreate(playerid, logString, 1);
+	}
+    return true;
 }
 
 CMD:listafaccoes(playerid, params[]) {

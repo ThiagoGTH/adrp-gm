@@ -25,7 +25,7 @@ LoadFactions() {
         cache_get_value_name_int(i, "vault", FactionData[i][factionVault]);
         cache_get_value_name_int(i, "status", FactionData[i][factionStatus]);
 
-        cache_get_value_name_int(i, "maxranks", FactionData[i][factionMaxRanks]);
+        cache_get_value_name_int(i, "maxranks", FactionData[i][factionRanks]);
         cache_get_value_name_int(i, "locker", FactionData[i][factionHasLocker]);
         
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `factions_skins` WHERE `faction_id` = '%d'", FactionData[i][factionID]);
@@ -109,7 +109,7 @@ SaveFaction(factionid) {
     FactionData[factionid][factionColor],
     FactionData[factionid][factionVault],
     FactionData[factionid][factionStatus],
-    FactionData[factionid][factionMaxRanks],
+    FactionData[factionid][factionRanks],
     FactionData[factionid][factionHasLocker],
     FactionData[factionid][factionID]);
     result = mysql_query(DBConn, query);
@@ -179,7 +179,7 @@ CreateFaction(const name[], type){
 
         FactionData[i][factionHasLocker] = 0;
         FactionData[i][factionVault] = 0;
-        FactionData[i][factionMaxRanks] = 5;
+        FactionData[i][factionRanks] = 5;
 
         for (new j = 0; j < 50; j ++) {
             FactionData[i][factionSkins][j] = 0;

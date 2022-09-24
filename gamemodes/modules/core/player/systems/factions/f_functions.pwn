@@ -8,7 +8,7 @@ FactionShowRanks(playerid, factionid) {
 
 		string[0] = 0;
 
-		for (new i = 0; i < FactionData[factionid][factionMaxRanks]; i ++)
+		for (new i = 0; i < FactionData[factionid][factionRanks]; i ++)
 		    format(string, sizeof(string), "%sCargo %d: %s\n", string, i + 1, FactionRanks[factionid][i]);
 
 		pInfo[playerid][pFactionEdit] = factionid;
@@ -60,7 +60,7 @@ FactionPaycheck(playerid, factionid) {
 
 		string[0] = 0;
 
-		for (new i = 0; i < FactionData[factionid][factionMaxRanks]; i ++)
+		for (new i = 0; i < FactionData[factionid][factionRanks]; i ++)
 		    format(string, sizeof(string), "%s%d. %s: US$ %s\n", string, i + 1, FactionGetRankName(factionid, i), FormatNumber(FactionData[factionid][factionPaycheck][i]));
 
 		pInfo[playerid][pFactionEdit] = factionid;
@@ -227,8 +227,31 @@ FactionGetRankName(factionid, rankid) {
 GetFactionType(playerid) {
 	if (pInfo[playerid][pFaction] == -1)
 	    return false;
+	else if (pInfo[playerid][pFactionID] == -1)
+	    return false;
 
 	return (FactionData[pInfo[playerid][pFaction]][factionType]);
+}
+
+SetFaction(playerid, id) {
+	if (id != -1 && FactionData[id][factionExists]) {
+		pInfo[playerid][pFaction] = id;
+		pInfo[playerid][pFactionID] = FactionData[id][factionID];
+	}
+	return true;
+}
+
+ResetFaction(playerid) {
+    pInfo[playerid][pFaction] = -1;
+    pInfo[playerid][pFactionID] = -1;
+    pInfo[playerid][pFactionRank] = 0;
+}
+
+GetFactionByID(sqlid) {
+	for (new i = 0; i != MAX_FACTIONS; i ++) if (FactionData[i][factionExists] && FactionData[i][factionID] == sqlid)
+	    return i;
+
+	return -1;
 }
 
 GetFactionTypeID(type){

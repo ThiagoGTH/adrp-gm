@@ -21,7 +21,7 @@ enum E_FACTION_DATA {
     factionName[32],
     factionType,
     factionColor,
-    factionMaxRanks,
+    factionRanks,
     factionPaycheck[30],
 
     factionHasLocker,

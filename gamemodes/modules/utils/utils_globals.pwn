@@ -122,6 +122,7 @@ enum Player_Data {
     // PLAYERS CONFIG
     pSetting,
     pTogNewbie,
+    pTogFaction,
     pTogAdmin,
     pNametagType,
     pRenderObjects,
@@ -354,6 +355,7 @@ void:ResetCharacterData(playerid) {
 
     pInfo[playerid][pSetting] =
     pInfo[playerid][pTogNewbie] =
+    pInfo[playerid][pTogFaction] =
     pInfo[playerid][pTogAdmin] =
     pInfo[playerid][pNametagType] =
     pInfo[playerid][pRenderObjects] = 0;

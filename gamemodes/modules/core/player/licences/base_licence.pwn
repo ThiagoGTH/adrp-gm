@@ -14,7 +14,7 @@ REVOGADA - 3
 
 Observação de Funcionamento: As licenças não vão resetar, apenas mudar de STATUS conforme disposto acima.
 A licença será gerada quando o jogador escolher qual teste irá fazer primeiro (Moto, Carro, Caminhão) e
-irá sofrer um "UPGRADE" sempre que o jogador for tirar a prÃ³xima.
+irá sofrer um "UPGRADE" sempre que o jogador for tirar a próxima.
 
 */
 #include <YSI_Coding\y_hooks>
@@ -243,8 +243,6 @@ CMD:criarlicenca(playerid, params[]){
 
 CMD:mostrarlicenca(playerid, params[])
 {
-	
-
 	if(pInfo[playerid][pLicence] == 0) return SendErrorMessage(playerid,"Você não tem uma licença de motorista.");
 	
 	for(new i; i < MAX_DRIVERLICENCE; i++) {

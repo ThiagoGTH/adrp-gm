@@ -213,6 +213,18 @@ FactionConfigLocker(playerid, factionid) {
 }
 
 // OTHERS
+IsACruiser(vehicleid) {
+	switch (GetVehicleModel(vehicleid)) {
+	    case 407, 544, 426, 523, 415, 541, 560, 427, 490, 482, 528, 596..599, 601: {
+			new id = VehicleGetID(vehicleid);
+
+			if(vInfo[id][vFaction] == 1)
+ 				return true;
+	    }
+	}
+	return 0;
+}
+
 FactionGetRankName(factionid, rankid) {
     new
 		rank[32] = "Nenhum";
@@ -222,6 +234,29 @@ FactionGetRankName(factionid, rankid) {
 
 	format(rank, 32, FactionRanks[factionid][rankid]);
 	return rank;
+}
+
+Faction_GetRank(playerid) {
+    new
+		factionid = pInfo[playerid][pFaction],
+		rank[32] = "Nenhum";
+
+ 	if (factionid == -1)
+	    return rank;
+
+	format(rank, 32, FactionRanks[factionid][pInfo[playerid][pFactionRank] - 1]);
+	return rank;
+}
+
+FactionGetName(factionid) {
+    new
+		faction[32] = "Inválido";
+
+ 	if (factionid == -1)
+	    return faction;
+
+	format(faction, 32, FactionData[factionid][factionName]);
+	return faction;
 }
 
 GetFactionType(playerid) {
@@ -280,4 +315,44 @@ SetFactionColor(playerid) {
 
 RemoveAlpha(color) {
     return (color & ~0xFF);
+}
+
+SendFactionMessageGOV(factionid, color, const str[], {Float,_}:...) {
+	static
+	    args,
+	    start,
+	    end,
+	    string[144]
+	;
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+
+	if (args > 12)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+
+	    for (end = start + (args - 12); end > start; end -= 4)
+		{
+	        #emit LREF.pri end
+	        #emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 144
+		#emit PUSH.C string
+		#emit PUSH.C args
+
+		#emit SYSREQ.C format
+		#emit LCTRL 5
+		#emit SCTRL 4
+
+		foreach (new i : Player) if (pInfo[i][pFaction] == factionid && !pInfo[i][pTogFaction]) {
+		    SendClientMessage(i, color, string);
+		}
+		return 1;
+	}
+	foreach (new i : Player) if (pInfo[i][pFaction] == factionid && !pInfo[i][pTogFaction]) {
+ 		SendClientMessage(i, color, str);
+	}
+	return 1;
 }

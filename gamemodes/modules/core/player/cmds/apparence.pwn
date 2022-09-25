@@ -113,7 +113,7 @@ CMD:veraparencia(playerid, params[]) {
 
     va_SendClientMessage(playerid, COLOR_GREEN, "___________________[Aparência de %s]___________________", pNome(userid));
     va_SendClientMessage(playerid, COLOR_WHITE, "Etnia: %s | Cabelo: %s | Olhos: %s", ethnicity, color_hair, color_eyes);
-    va_SendClientMessage(playerid, COLOR_WHITE, "Físico: %s | Peso: %.2f | Altura: %dcm", build, pInfo[userid][pWeight], pInfo[userid][pHeight]);
+    va_SendClientMessage(playerid, COLOR_WHITE, "Físico: %s | Peso: %.1fkg | Altura: %dcm", build, pInfo[userid][pWeight], pInfo[userid][pHeight]);
     va_SendClientMessage(playerid, COLOR_WHITE, "Descrição:");
     if (strlen(pInfo[userid][pDescription]) > 64){
         va_SendClientMessage(playerid, COLOR_PURPLE, "* %s %.64s", pInfo[userid][pDescription]);
@@ -234,7 +234,7 @@ CMD:editaraparencia(playerid, params[]){
     Olhos:\t%s\n\
     Físico:\t%s\n\
     Altura:\t%dcm\n\
-    Peso:\t%.2fkg\n\n\
+    Peso:\t%.1fkg\n\n\
     Descrição:\t%s", 
     gender, 
     ethnicity,
@@ -479,7 +479,7 @@ Dialog:ChangeWeight(playerid, response, listitem, inputtext[]){
 
     pInfo[playerid][pWeight] = floatstr(inputtext);
 
-    SendServerMessage(playerid, "Seu peso foi alterado para %.2fkg", pInfo[playerid][pWeight]);
+    SendServerMessage(playerid, "Seu peso foi alterado para %.1fkg", pInfo[playerid][pWeight]);
     return true;
 }
 

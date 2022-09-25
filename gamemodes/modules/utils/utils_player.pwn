@@ -217,6 +217,16 @@ pNome(playerid) {
 	}
 }
 
+SQLName(id) {
+    new name[24];
+    mysql_format(DBConn, query, sizeof(query), "SELECT `name` FROM `players` WHERE ID = %i LIMIT 1", id);
+    new Cache: cache = mysql_query(DBConn, query);
+    if(!cache_num_rows()) name = "Inválido";
+    else cache_get_value_name(0, "name", name);
+    cache_delete(cache);
+    return name;
+}
+
 // Pegar o ID de um jogador pelo nome, ao invés do contrário
 GetPlayerByName(const playerName[]) {
     new returnID = -1;
@@ -374,17 +384,24 @@ AdjustTextDrawString(string[]) {
 			151, 152, 153, 153, 154, 229, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
 			240, 174, 165, 166, 167, 167, 168, 247, 248, 169, 170, 171, 172, 253, 254, 255
 		};
-	if (ispacked(string)) {
-		for (new i = 0, len = strlen(string); i != len; ++i) {
+	if (ispacked(string))
+	{
+		for (new i = 0, len = strlen(string); i != len; ++i)
+		{
 			string{i} = scRealChars[string{i}];
 		}
-	} else {
-		for (new i = 0, len = strlen(string), ch; i != len; ++i) {
-			if (0 <= (ch = string[i]) < 256) {
+	}
+	else
+	{
+		for (new i = 0, len = strlen(string), ch; i != len; ++i)
+		{
+			if (0 <= (ch = string[i]) < 256)
+			{
 				string[i] = scRealChars[ch];
 			}
 		}
 	}
+	return true;
 }
 
 forward ProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5);
@@ -864,7 +881,6 @@ DealershipCategory(type) {
 	}
 	return category;
 }
-
 
 RenderingObjectsValue(playerid) {
 	new value;

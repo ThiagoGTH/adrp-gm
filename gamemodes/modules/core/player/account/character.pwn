@@ -181,6 +181,7 @@ LoadPlayerConfig(playerid){
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_config WHERE `character_id` = '%d'", pInfo[playerid][pID]);
     new Cache:result = mysql_query(DBConn, query);
     cache_get_value_name_int(0, "newbie_chat", pInfo[playerid][pTogNewbie]);
+    cache_get_value_name_int(0, "faction_chat", pInfo[playerid][pTogFaction]);
     cache_get_value_name_int(0, "admin_chat", pInfo[playerid][pTogAdmin]);
     cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
     cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
@@ -503,11 +504,13 @@ SavePlayerPet(playerid) {
 SavePlayerConfig(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE players_config SET \
     `newbie_chat` = '%d', \
+    `faction_chat` = '%d', \
     `admin_chat` = '%d', \
     `nametag` = '%d', \
     `objects` = '%d'    \
     WHERE character_id = '%d';", 
     pInfo[playerid][pTogNewbie],
+    pInfo[playerid][pTogFaction],
     pInfo[playerid][pTogAdmin],
     pInfo[playerid][pNametagType],
     pInfo[playerid][pRenderObjects],

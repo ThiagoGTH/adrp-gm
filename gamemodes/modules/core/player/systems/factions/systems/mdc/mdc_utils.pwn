@@ -12,6 +12,13 @@
 #define MDC_PAGE_LOOKUP_PLATE				(11)
 #define MDC_PAGE_LOOKUP_BUILDING			(21)
 
+#define MAX_EMERGENCY_SHOW 					(4)
+#define MAX_BOLO_SHOW 						(20)
+#define MAX_ROSTER_SHOW 					(19)
+#define MAX_CRIMINALDATA_SHOW 				(20)
+#define MAX_PENAL_SHOW 						(19)
+#define MAX_ADRESSLIST_SHOW 				(3)
+
 new PlayerText:MDC_Main[MAX_PLAYERS][18];
 new PlayerText:MDC_MainScreen[MAX_PLAYERS][8];
 

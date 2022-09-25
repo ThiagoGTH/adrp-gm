@@ -5,6 +5,7 @@ Esse módulo é dedicado integralmente a lidar com conexões e integrações com o My
 */
 
 #include <YSI_Coding\y_hooks>
+#include "modules\core\database\mysql_functions.pwn"
 
 hook OnGameModeInit() {
     new DB_HOST[128];
@@ -356,6 +357,7 @@ void:CheckPlayerTable() {
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
     `newbie_chat` int NOT NULL DEFAULT '0',\
+    `faction_chat` int NOT NULL DEFAULT '0',\
     `admin_chat` int NOT NULL DEFAULT '0',\
     `nametag` int NOT NULL DEFAULT '0',\
     `objects` int NOT NULL DEFAULT '0',\

@@ -63,7 +63,7 @@ CMD:doublepd(playerid, params[]){
 }
 
 CMD:pegarpaycheck(playerid, params[]){
-    if(Server_Type == 2) {
+    if(SERVER_TYPE == 2) {
         
         if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
         pInfo[playerid][pPlayingMinutes] = 60;

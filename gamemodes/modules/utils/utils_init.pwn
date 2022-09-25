@@ -3,7 +3,7 @@
 forward OnGamemodeLoad();
 public OnGamemodeLoad() {
     new rcon[255];
-    if(Server_Type == 0){
+    if(SERVER_TYPE == 0){
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Local Host | Open.MP");
 		else{
             format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Local Host | Open.MP");
@@ -17,7 +17,7 @@ public OnGamemodeLoad() {
         } 
 	}
 
-    else if(Server_Type == 1){
+    else if(SERVER_TYPE == 1){
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
 		else{
             format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
@@ -32,7 +32,7 @@ public OnGamemodeLoad() {
         } 
 	}
 
-	else if(Server_Type == 2) {
+	else if(SERVER_TYPE == 2) {
 		format(rcon, sizeof(rcon), "hostname Advanced Sandbox | Open.MP");
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password sandbox333");
@@ -42,7 +42,7 @@ public OnGamemodeLoad() {
         logCreate(99998, logString, 5);
 	}
 
-	else if(Server_Type == 3) {
+	else if(SERVER_TYPE == 3) {
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
 		else format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Open.MP");
 		SendRconCommand(rcon);

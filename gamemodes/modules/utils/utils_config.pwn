@@ -10,14 +10,31 @@ new Server_Instability = 0;
 // 0 = Acesso normal
 // 1 = Acesso suspenso
 
-new Server_Type = 1;
+new SERVER_TYPE;
 // 0 - localhost
-// 1 - closed alpha
+// 1 - closedalpha
 // 2 - sandbox
 // 3 - normal
 
-new SERVER_MAINTENANCE = 0;
-// 0 = fora de manutenção
-// 1 = em manutenção
+new SERVER_MAINTENANCE;
+// false = fora de manutenção
+// true = em manutenção
 
 new query[2048];
+
+hook OnGameModeInit() {
+    new servertype[256], maintence[256];
+    if(Env_Has("SERVER_TYPE")) Env_Get("SERVER_TYPE", servertype, sizeof(servertype));
+    
+    if (!strcmp(servertype, "localhost", true)) SERVER_TYPE = 0;
+    else if (!strcmp(servertype, "closedalpha", true)) SERVER_TYPE = 1;
+    else if (!strcmp(servertype, "sandbox", true)) SERVER_TYPE = 2;
+    else if (!strcmp(servertype, "normal", true)) SERVER_TYPE = 3;
+
+    if(Env_Has("SERVER_MAINTENANCE")) Env_Get("SERVER_MAINTENANCE", maintence, sizeof(maintence));
+    
+    if (!strcmp(maintence, "false", true)) SERVER_MAINTENANCE = 0;
+    else if (!strcmp(maintence, "true", true)) SERVER_MAINTENANCE = 1;
+
+    return true;
+}

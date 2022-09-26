@@ -77,15 +77,17 @@ graffitiEdit(playerid, objectid, response, Float: x, Float: y, Float: z, Float: 
     mysql_escape_string(Graffiti[id][gText], text);
     mysql_escape_string(Graffiti[id][gFont], font);
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO `graffiti` (`gID`, `gX`,    `gY`, `gZ`, `gRX`, `gRY`, `gRZ`,\
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `graffiti` (`gX`, `gY`, `gZ`, `gRX`, `gRY`, `gRZ`,\
         `gText`, `gFont`, `gSize`, `gColor`, `gBold`, `gAuthor`) VALUES (\
-        %d, %f, %f, %f, %f, %f, %f, '%s', '%s', %d, %d, %d, %d)", Graffiti[id][gID],
+        %d, %f, %f, %f, %f, %f, %f, '%s', '%s', %d, %d, %d, %d)",
         Graffiti[id][gX], Graffiti[id][gY], Graffiti[id][gZ],
         Graffiti[id][gRX], Graffiti[id][gRY], Graffiti[id][gRZ],
         text, font, Graffiti[id][gSize], Graffiti[id][gColor], Graffiti[id][gBold],
         Graffiti[id][gAuthor]
     );
+
     mysql_tquery(DBConn, query, "OnGraffitiCreated", "i", playerid);
+    SetPVarInt(playerid, "Graffiti:Id", cache_insert_id());
 
     return SendServerMessage(playerid, "Grafitando...");
 }
@@ -146,18 +148,30 @@ forward OnGraffitiCreated(playerid);
 public OnGraffitiCreated(playerid) {
     SetPVarInt(playerid, "Graffiti:Creating", 0);
 
-    SendServerMessage(playerid, "Grafite criado com sucesso. %d", Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
+    //SendServerMessage(playerid, "Grafite criado com sucesso. %d", Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
+    new string[128];
+    new factionid = pInfo[playerid][pFaction];
     SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) criou o grafite %d.", pNome(playerid), playerid, Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
-	format(logString, sizeof(logString), "%s (%s) criou o grafite %d", pNome(playerid), GetPlayerUserEx(playerid), Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
-	logCreate(playerid, logString, 23);
+
+    SendFactionMessage(factionid, COLOR_FACTION, "[Facção]: %s %s criou um grafite em %s.", Faction_GetRank(playerid), 
+    pNome(playerid), GetPlayerLocation(playerid));
+
+    GetPVarString(playerid, "Graffiti:Text", string, 128);
+	format(logString, sizeof(logString), "[%s] %s (%s) criou o grafite %d em %s, escrito: %s", FactionData[factionid][factionName], pNome(playerid), GetPlayerUserEx(playerid), Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID], GetPlayerLocation(playerid), string);
+	logCreate(playerid, logString, 22);
     return true;
 }
 
 forward OnGraffitiDelete(playerid, id);
 public OnGraffitiDelete(playerid, id) {
+    for (new i = 0; i < MAX_GRAFFITI; i++)  if (id == Graffiti[id][gID]) {
+    	if (IsValidDynamicObject(Graffiti[i][gObject]))
+            DestroyDynamicObject(Graffiti[i][gObject]);
+	}
+
     SendServerMessage(playerid, "Grafite removido com sucesso.");
     format(logString, sizeof(logString), "%s (%s) deletou o grafite %d", pNome(playerid), GetPlayerUserEx(playerid), id);
-	logCreate(playerid, logString, 23);
+	logCreate(playerid, logString, 22);
     return true;
 }
 

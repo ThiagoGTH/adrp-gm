@@ -43,8 +43,42 @@ Dialog:GraffitiChooseBold(playerid, response, listitem, inputtext[]) {
         SetPVarInt(playerid, "Graffiti:Bold", 0);
     }
 
-    return _Graffiti_Text(playerid);
+    return _Graffiti_Font(playerid);
+}
+
+Dialog:GraffitiChooseFont(playerid, response, listitem, inputtext[]) {
+    if (!response) {
+        SetPVarInt(playerid, "Graffiti:Creating", 0);
+        return SendErrorMessage(playerid, "Você cancelou a criação do grafite.");
     }
+
+    if(listitem == 0){
+        SendServerMessage(playerid, "Você definiu a fonte como Arial.");
+        SetPVarString(playerid, "Graffiti:Font", "Arial");
+    }
+    else if(listitem == 1){
+        SendServerMessage(playerid, "Você definiu a fonte como Comic Sans.");
+        SetPVarString(playerid, "Graffiti:Font", "Comic Sans MS");
+    }
+	else if(listitem == 2){
+        SendServerMessage(playerid, "Você definiu a fonte como Diploma.");
+        SetPVarString(playerid, "Graffiti:Font", "Diploma");
+    }
+	else if(listitem == 3){
+        SendServerMessage(playerid, "Você definiu a fonte como Dripping.");
+        SetPVarString(playerid, "Graffiti:Font", "a dripping marker");
+    }
+	else if(listitem == 4){
+        SendServerMessage(playerid, "Você definiu a fonte como Levi Brush.");
+        SetPVarString(playerid, "Graffiti:Font", "LeviBrush");
+    }
+	else if(listitem == 5){
+        SendServerMessage(playerid, "Você definiu a fonte como Gang Bang Crime.");
+        SetPVarString(playerid, "Graffiti:Font", "Gang Bang Crime");
+    }
+
+    return _Graffiti_Text(playerid);
+}
 
 Dialog:GraffitiChooseText(playerid, response, listitem, inputtext[]) {
     if (!response) {
@@ -60,15 +94,20 @@ Dialog:GraffitiChooseText(playerid, response, listitem, inputtext[]) {
 
     new string[128];
     format(string, sizeof(string), "{%06x}%s", GraffitiColorARGB[GetPVarInt(playerid, "Graffiti:Color")] & 0xFFFFFF, inputtext);
+
     SetPVarString(playerid, "Graffiti:Text", string);
 
-    new body[512];
+    new body[512], string2[32];
+    GetPVarString(playerid, "Graffiti:Font", string2, 32);
     format(body, sizeof(body), "{FFFFFF}Antes de finalizar o grafite, verifique\nse as informações estão corretas:\n\n\
     {A7A7A7}Cor:{FFFFFF} %s\n\
-    {A7A7A7}Fonte:{FFFFFF} %d\n\
+    {A7A7A7}Tamanho:{FFFFFF} %d\n\
+    {A7A7A7}Fonte:{FFFFFF} %s\n\
     {A7A7A7}Texto:{FFFFFF} %s", 
         GraffitiColors[GetPVarInt(playerid, "Graffiti:Color")],
-        GetPVarInt(playerid, "Graffiti:Size"), inputtext
+        GetPVarInt(playerid, "Graffiti:Size"),
+        string2,
+        inputtext
     );
 
     return Dialog_Show(playerid, GraffitiConfirm, DIALOG_STYLE_MSGBOX, "Informações do Grafite", body, "Confirmar", "Cancelar");
@@ -141,6 +180,12 @@ _Graffiti_Bold(playerid) {
     return Dialog_Show(playerid, GraffitiChooseBold, DIALOG_STYLE_MSGBOX, "Grafite — Negrito",
         "{FFFFFF}Você deseja deixar a fonte do grafite em negrito?",
         "Sim", "Não");
+}
+
+_Graffiti_Font(playerid) {
+    return Dialog_Show(playerid, GraffitiChooseFont, DIALOG_STYLE_LIST, "Grafite — Fonte",
+        "Arial\nComic Sans\nDiploma\nDripping\nLevi Brush\nGang Bang Crime",
+    ">>>", "Cancelar");
 }
 
 _Graffiti_Text(playerid) {

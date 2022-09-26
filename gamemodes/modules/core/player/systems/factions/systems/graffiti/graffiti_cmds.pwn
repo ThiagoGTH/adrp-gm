@@ -1,10 +1,17 @@
 CMD:grafitar(playerid, params[]) {
-    if (GetPVarInt(playerid, "Graffiti:Creating") > 0) 
+    if (GetFactionType(playerid) != FACTION_CRIMINAL) return SendPermissionMessage(playerid);
+
+    if (GetPVarInt(playerid, "Graffiti:Creating") > 0)
         return SendErrorMessage(playerid, "Você já está criando um grafite.");
-    if (GetPlayerInterior(playerid) != 0) 
+    if (GetPlayerWeapon(playerid) != 41)
+        return SendErrorMessage(playerid, "Você não está com um spray can em mãos.");
+    if (GetPlayerInterior(playerid) != 0)
         return SendErrorMessage(playerid, "Você não pode criar um grafite em um interior.");
-    if (GetPlayerVirtualWorld(playerid) != 0) 
+    if (GetPlayerVirtualWorld(playerid) != 0)
         return SendErrorMessage(playerid, "Você não pode criar um grafite em um interior.");
+    if (IsPlayerInAnyVehicle(playerid))
+        return SendErrorMessage(playerid, "Você não pode criar um grafite de dentro de um veículo.");
+
     format(graffiti_text, sizeof(graffiti_text),  
     "{FFFFCC}FFFFCC\n{FFFF99}FFFF99\n{FFFF66}FFFF66\n{FFFF33}FFFF33\n{FFFF00}FFFF00\n{CCCC00}CCCC00\n\
     {FF9900}FF9900\n{FF9933}FF9933\n{CC9966}CC9966\n{CC6600}CC6600\n{996633}996633\n{663300}663300\n\
@@ -29,7 +36,6 @@ CMD:grafitar(playerid, params[]) {
 
     Dialog_Show(playerid, GraffitiChooseColor, DIALOG_STYLE_LIST,
         "Grafite — Cor", graffiti_text, ">>>", "Cancelar");
-    SetPVarString(playerid, "Graffiti:Font", "Arial");
     SetPVarInt(playerid, "Graffiti:Creating", 1);
     return true;
 }

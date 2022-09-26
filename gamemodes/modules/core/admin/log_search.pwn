@@ -56,7 +56,7 @@ Dialog:dialogLogs(playerid, response, listitem, inputtext[]) {
             mysql_format(DBConn, query, sizeof query, "SELECT * FROM serverlogs WHERE `type` = '%d' ORDER BY `timestamp` DESC LIMIT 15;", strval(inputtext));
             new Cache:result = mysql_query(DBConn, query);
 
-            if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar nenhum log do tipo selecionado.", strval(inputtext));
+            if(!cache_num_rows()) return SendErrorMessage(playerid, "Não foi possível encontrar nenhum log do tipo selecionado.");
 
             new string[2056], timestamp, log[255];
             format(string, sizeof(string), "{FF6347}ATENÇÃO: Os logs são exibidos de acordo com o horário e apenas os últimos quinze são contabilizados.\nPara informações mais detalhadas, busque auxilio de um membro da Log Team.\n\n");

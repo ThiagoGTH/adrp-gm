@@ -41,7 +41,7 @@ MDC_AddCharge(playerid, charge)
 
 	MDC_ShowPenalCode(playerid);
 
-	SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùi ùzerinde %d dakikalùk suùlamada bulundu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid], CalculateChargeTime(playerid, charge)));
+	SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùi ùzerinde %d dakikalùk suùlamada bulundu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid], CalculateChargeTime(playerid, charge)));
 	RefreshChargeButton(playerid);
 	return 1;
 }

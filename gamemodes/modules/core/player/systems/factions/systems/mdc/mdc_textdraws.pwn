@@ -226,7 +226,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_format(DBConn, query, sizeof(query), "UPDATE players SET DriversLicense = 0 WHERE id = %i", MDC_PlastLastSearched_SQLID[playerid]);
 		mysql_tquery(DBConn, query);
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetini iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetini iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 	if(playertextid == MDC_ManageLicense[playerid][7]) // Sùrùcù Lisansù uyarma
@@ -242,7 +242,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 						SaveSQLInt(pInfo[pl][pID], "players", "DriversLicense", pInfo[pl][pDriversLicense]);
 						SaveSQLInt(pInfo[pl][pID], "players", "DriversLicenseWarning", pInfo[pl][DriversLicenseWarning]);
 						MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-						SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetine ùùùncù uyarù sebebiyle el koydu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+						SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetine ùùùncù uyarù sebebiyle el koydu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 
 						return 1;
 					}
@@ -272,7 +272,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_format(DBConn, query_properties, sizeof(query_properties), "UPDATE players SET DriversLicenseWarning = %d WHERE id = %i", warnings+1, MDC_PlastLastSearched_SQLID[playerid]);
 		mysql_tquery(DBConn, query_properties);
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetine uyarù puanù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetine uyarù puanù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 
@@ -305,7 +305,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_format(DBConn, query, sizeof(query), "UPDATE players SET MedicalLicense = 0 WHERE id = %i", MDC_PlastLastSearched_SQLID[playerid]);
 		mysql_tquery(DBConn, query);
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin medikal lisansùnù iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin medikal lisansùnù iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 	if(playertextid == MDC_ManageLicense[playerid][30])
@@ -340,7 +340,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_format(DBConn, query, sizeof(query), "UPDATE players SET MedicalLicense = 1 WHERE id = %i", MDC_PlastLastSearched_SQLID[playerid]);
 		mysql_tquery(DBConn, query);
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin medikal lisansù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin medikal lisansù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 	if(playertextid == MDC_ManageLicense[playerid][21]) // Silah lisansù verme
@@ -376,7 +376,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_tquery(DBConn, query);
 
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùiye silah lisansù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùiye silah lisansù verdi. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 	if(playertextid == MDC_ManageLicense[playerid][20]) // Silah lisansù iptal
@@ -411,7 +411,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		mysql_format(DBConn, query, sizeof(query), "UPDATE players SET WeaponsLicense = 0 WHERE id = %i", MDC_PlastLastSearched_SQLID[playerid]);
 		mysql_tquery(DBConn, query);
 		MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
-		SendFactionMessageGOV(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin silah lisansùnù iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
+		SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin silah lisansùnù iptal etti. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
 	}
 
 	if(playertextid == MDC_PenalCode[playerid][0]) // Penal Code geri gelme butonu, geri dùndùkten sonra en son kimi arattùùù tekrar ùùkmalù.

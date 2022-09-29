@@ -53,6 +53,9 @@ LoadCharacterInfoID(playerid, id) {
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_apparence (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_licence (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_weapons (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
@@ -79,7 +82,7 @@ LoadCharacterInfoID(playerid, id) {
     mysql_query(DBConn, query);
 
     printf("[DATABASE] %s foi carregado com sucesso do banco de dados.", pInfo[playerid][pName]);
-    LoadLicencesData(playerid);
+    LoadPlayerLicences(playerid);
     LoadPlayerWeapons(playerid);
     LoadPlayerApparence(playerid);
     LoadPlayerPremium(playerid);
@@ -325,6 +328,7 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
 
+    SavePlayerLicences(playerid);
     SavePlayerWeapons(playerid);
     SavePlayerApparence(playerid);
     SavePlayerPremium(playerid);

@@ -46,7 +46,9 @@
 #include "modules\core\player\account\account.pwn"
 #include "modules\core\player\player_core.pwn"
 #include "modules\core\player\cmds\cmds.pwn"
-#include "modules\core\player\licences\base_licence.pwn"
+
+// SISTEMAS
+#include "modules\core\player\systems\licences\licences.pwn"
 #include "modules\core\player\systems\main\systems.pwn"
 #include "modules\core\player\systems\death\damages.pwn"
 #include "modules\core\player\systems\items\items.pwn"
@@ -58,6 +60,8 @@
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\animations\animations.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
+
+// OUTROS
 #include "modules\core\discord\discord_core.pwn"
 #include "modules\core\admin\admin.pwn"
 

@@ -203,10 +203,10 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 		{
 			if(strlen(MDC_PlayerLastSearched[playerid]) == strlen(pNome(pl)))
 			{
-				if(pInfo[pl][pDriversLicense] == false)
+				if(pInfo[pl][pLicence] == false)
 					return SendErrorMessage(playerid, "Bu kiùi bir ehliyete sahip deùil.");
 
-				pInfo[pl][pDriversLicense] = false;
+				pInfo[pl][pLicence] = false;
 			}
 		}
 		
@@ -237,9 +237,9 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 			{
 				if(pInfo[pl][DriversLicenseWarning] == 2)
 					{
-						pInfo[pl][pDriversLicense] = false;
+						pInfo[pl][pLicence] = false;
 						pInfo[pl][DriversLicenseWarning] = 0;
-						SaveSQLInt(pInfo[pl][pID], "players", "DriversLicense", pInfo[pl][pDriversLicense]);
+						SaveSQLInt(pInfo[pl][pID], "players", "DriversLicense", pInfo[pl][pLicence]);
 						SaveSQLInt(pInfo[pl][pID], "players", "DriversLicenseWarning", pInfo[pl][DriversLicenseWarning]);
 						MDC_ShowManageLicense(MDC_PlastLastSearched_SQLID[playerid], playerid);
 						SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùinin ehliyetine ùùùncù uyarù sebebiyle el koydu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid]));
@@ -247,7 +247,7 @@ hook ClickDynamicPlayerTD(playerid, PlayerText:playertextid) {
 						return 1;
 					}
 
-				if(pInfo[pl][pDriversLicense] != true)
+				if(pInfo[pl][pLicence] != true)
 					return SendErrorMessage(playerid, "Ehliyeti olmayan birisine uyarù puanù veremezsiniz.");
 
 				pInfo[pl][DriversLicenseWarning] +=1;

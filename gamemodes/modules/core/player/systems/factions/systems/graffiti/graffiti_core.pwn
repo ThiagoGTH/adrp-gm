@@ -86,8 +86,8 @@ graffitiEdit(playerid, objectid, response, Float: x, Float: y, Float: z, Float: 
         Graffiti[id][gAuthor]
     );
 
-    mysql_tquery(DBConn, query, "OnGraffitiCreated", "i", playerid);
     SetPVarInt(playerid, "Graffiti:Id", cache_insert_id());
+    mysql_tquery(DBConn, query, "OnGraffitiCreated", "i", playerid);
 
     return SendServerMessage(playerid, "Grafitando...");
 }
@@ -151,12 +151,13 @@ public OnGraffitiCreated(playerid) {
     //SendServerMessage(playerid, "Grafite criado com sucesso. %d", Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
     new string[128];
     new factionid = pInfo[playerid][pFaction];
-    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) criou o grafite %d.", pNome(playerid), playerid, Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
+    GetPVarString(playerid, "Graffiti:Text", string, 128);
+
+    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) criou o grafite %s [%d].", pNome(playerid), playerid, string, Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID]);
 
     SendFactionMessage(factionid, COLOR_FACTION, "[Facção]: %s %s criou um grafite em %s.", Faction_GetRank(playerid), 
     pNome(playerid), GetPlayerLocation(playerid));
 
-    GetPVarString(playerid, "Graffiti:Text", string, 128);
 	format(logString, sizeof(logString), "[%s] %s (%s) criou o grafite %d em %s, escrito: %s", FactionData[factionid][factionName], pNome(playerid), GetPlayerUserEx(playerid), Graffiti[GetPVarInt(playerid, "Graffiti:Id")][gID], GetPlayerLocation(playerid), string);
 	logCreate(playerid, logString, 22);
     return true;
@@ -165,8 +166,8 @@ public OnGraffitiCreated(playerid) {
 forward OnGraffitiDelete(playerid, id);
 public OnGraffitiDelete(playerid, id) {
     for (new i = 0; i < MAX_GRAFFITI; i++)  if (id == Graffiti[id][gID]) {
-    	if (IsValidDynamicObject(Graffiti[i][gObject]))
-            DestroyDynamicObject(Graffiti[i][gObject]);
+    	if (IsValidDynamicObject(Graffiti[id][gObject]))
+            DestroyDynamicObject(Graffiti[id][gObject]);
 	}
 
     SendServerMessage(playerid, "Grafite removido com sucesso.");
@@ -177,7 +178,7 @@ public OnGraffitiDelete(playerid, id) {
 
 GetClosestGraffiti(playerid, &Float: dis = 5.00) {
 	new graffiti = -1;
-	for (new i = 0; i < MAX_GRAFFITI; i++)  if (!Graffiti[i][gExists]) {
+	for (new i = 0; i < MAX_GRAFFITI; i++) {
     	new
     		Float: dis2 = GetPlayerDistanceFromPoint(playerid, Graffiti[i][gX], Graffiti[i][gY], Graffiti[i][gZ]);
 

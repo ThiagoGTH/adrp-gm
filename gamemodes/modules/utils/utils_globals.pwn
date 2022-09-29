@@ -96,7 +96,6 @@ enum Player_Data {
     pPhoneType,
 
     pEditandoBareira,
-    pLicence,
 
     pFreeze,
     pFreezeTimer,
@@ -286,6 +285,7 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pName][0]        =
     pInfo   [playerid][pFirstIP][0]     =
     pInfo   [playerid][pLastIP][0]      =
+    pInfo   [playerid][pDateOfBirth][0] =
     pInfo   [playerid][pBackground][0]  = EOS;
 
     pInfo   [playerid][pDonator]        =
@@ -309,7 +309,6 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pVirtualWorld]   =
     pInfo   [playerid][pInterior]       =
     pInfo   [playerid][pEditandoBareira]=
-    pInfo   [playerid][pLicence]        =
     pInfo   [playerid][pPhoneType]      =
     pInfo   [playerid][pPhoneNumber]    = 0;
 

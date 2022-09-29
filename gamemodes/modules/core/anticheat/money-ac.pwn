@@ -1,5 +1,5 @@
 #include <YSI_Coding\y_hooks>
-
+/*
 hook OnPlayerSecondUpdate(playerid) {
     if ((GetPlayerMoney(playerid) != pInfo[playerid][pMoney]) && (GetPlayerMoney(playerid) > pInfo[playerid][pMoney])) {
         pInfo[playerid][pOldMoney] = pInfo[playerid][pMoney];
@@ -8,7 +8,7 @@ hook OnPlayerSecondUpdate(playerid) {
         GivePlayerMoney(playerid, pInfo[playerid][pOldMoney]);
     }
     return true;
-}
+}*/
 
 GiveMoney(playerid, amount) {
 	pInfo[playerid][pMoney] += amount;
@@ -28,7 +28,7 @@ GiveBankMoney(playerid, amount) {
 GetBankMoney(playerid) {
 	return (pInfo[playerid][pBank]);
 }
-
+/*
 hook native GivePlayerMoney(playerid, money) {
     pInfo[playerid][pMoney] += money;
     if(GetPlayerMoney(playerid) != pInfo[playerid][pMoney]) {
@@ -42,4 +42,4 @@ hook native ResetPlayerMoney(playerid) {
     return continue(playerid);
 }
 
-forward OnPlayerMoneyChange(playerid, previous, current);
+forward OnPlayerMoneyChange(playerid, previous, current);*/

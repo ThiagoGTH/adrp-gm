@@ -21,15 +21,15 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
 }
 
 StartTestingLicence(playerid) {
-    if(DMVTestType[playerid] == 0){ //Carro
-	    pInfo[playerid][pMoney] -= PRECO_EXAME_CAR;
+    if(DMVTestType[playerid] == 1){ //Carro
+	    pInfo[playerid][pMoney] -= DMV_VEHICLE_VALUE;
 	    SetPlayerInterior(playerid, 0);
 	    SetPlayerVirtualWorld(playerid, playerid+1);
 	    SetPlayerPos(playerid, 1778.2292, -1934.1807, 13.3856);
 	    SetPlayerFacingAngle(playerid, 270.8737);
 	    SetCameraBehindPlayer(playerid);
-	    carrodmv[playerid] = CreateVehicle(DMV_VEICULO_CAR, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
-	    SetVehicleVirtualWorld(carrodmv[playerid], playerid+1);
+	    vehicleDMV[playerid] = CreateVehicle(DMV_VEHICLE, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
+	    SetVehicleVirtualWorld(vehicleDMV[playerid], playerid+1);
         SendServerMessage(playerid, "Você iniciou o teste de direção para a licença de Motorista de carros.");
 	    SendServerMessage(playerid, "Entre no manana para continuar com o exame.");
 	    emExame[playerid] = true;
@@ -40,8 +40,8 @@ StartTestingLicence(playerid) {
 
 FinishTestingLicence(playerid) {
 	new Float:lataria;
-	GetVehicleHealth(carrodmv[playerid], lataria);
-	if(lataria <= MAX_VEHICLE_HEALTH){
+	GetVehicleHealth(vehicleDMV[playerid], lataria);
+	if(lataria <= DMV_MAX_VEHICLE_HEALTH){
 		SendErrorMessage(playerid, "O veículo está muito danificado e por isso você reprovou no exame.");
 		FailedExam(playerid);
 		return true;
@@ -51,7 +51,7 @@ FinishTestingLicence(playerid) {
 	SetPlayerFacingAngle(playerid, 270.8737);
 	SetCameraBehindPlayer(playerid);
 	emExame[playerid] = false;
-	DestroyVehicle(carrodmv[playerid]);
+	DestroyVehicle(vehicleDMV[playerid]);
 	DisablePlayerCheckpoint(playerid);
 	SetPlayerVirtualWorld(playerid, 0);
 	CreateNewLicence(playerid);
@@ -59,10 +59,13 @@ FinishTestingLicence(playerid) {
 }
 
 SetDMVRoute(playerid) {
-	if(emExame[playerid]) SetPlayerCheckpoint(playerid, 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][0], 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][1], 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][2], 5.0);
+	if(emExame[playerid]) {
+        SetPlayerCheckpoint(playerid, 
+        DMV_Checkpoint[DMVCheckpoint[playerid]][0], 
+        DMV_Checkpoint[DMVCheckpoint[playerid]][1], 
+        DMV_Checkpoint[DMVCheckpoint[playerid]][2], 
+        5.0);
+    }
 	return true;
 }
 
@@ -72,7 +75,7 @@ FailedExam(playerid) {
 	SetPlayerPos(playerid, 1778.2292, -1934.1807, 13.3856);
 	SetPlayerFacingAngle(playerid, 270.8737);
 	SetCameraBehindPlayer(playerid);
-	DestroyVehicle(carrodmv[playerid]);
+	DestroyVehicle(vehicleDMV[playerid]);
 	DisablePlayerCheckpoint(playerid);
 	emExame[playerid] = false;
     DMVTestType[playerid] = -1;
@@ -81,9 +84,9 @@ FailedExam(playerid) {
 
 DMVUpdate(playerid) {
 	if(!IsPlayerInRangeOfPoint(playerid, 5, 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][0], 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][1], 
-    DMV_Checkpoint[DMVTestType[playerid]][DMVCheckpoint[playerid]][2]))
+    DMV_Checkpoint[DMVCheckpoint[playerid]][0], 
+    DMV_Checkpoint[DMVCheckpoint[playerid]][1], 
+    DMV_Checkpoint[DMVCheckpoint[playerid]][2]))
 		return SendErrorMessage(playerid, "Você não está no checkpoint correto.");
 
     new MaxCheckpoints;
@@ -107,9 +110,9 @@ DMV_StateChange(playerid, newstate, oldstate) {
   		new engine, lights, alarm, doors, bonnet, boot, objective,
   			vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-		if(!(vehicleid == carrodmv[playerid])) return va_SendClientMessage(playerid, COLOR_GREEN, "Você precisa entrar no veículo.");
+		if(!(vehicleid == vehicleDMV[playerid])) return va_SendClientMessage(playerid, COLOR_GREEN, "Você precisa entrar no veículo.");
 		SendServerMessage(playerid, "Você iniciou o exame. Siga os checkpoints e não danifique o veículo.");
-		SetVehicleParamsEx(carrodmv[playerid], true, lights, alarm, doors, bonnet, boot, objective);
+		SetVehicleParamsEx(vehicleDMV[playerid], true, lights, alarm, doors, bonnet, boot, objective);
 		SetDMVRoute(playerid);
 	}
 	return true;
@@ -119,7 +122,7 @@ DMV_EnterCheckpoint(playerid) {
 	if(emExame[playerid]) {
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(DMVTestType[playerid] == 0){ //Carro
-			if (GetVehicleModel(vehicleid) != DMV_VEICULO_CAR) {
+			if (GetVehicleModel(vehicleid) != DMV_VEHICLE) {
 		    	SendErrorMessage(playerid,"Você não está dirigindo o veículo correto e por isso o teste foi cancelado.");
 		    	FailedExam(playerid);
 			}

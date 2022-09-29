@@ -71,3 +71,16 @@ CMD:licencamotorista(playerid, params[]) {
 	
 	return true;
 }
+
+CMD:iniciarexame(playerid, params[]){
+	//if(!IsPlayerInRangeOfPoint(playerid, 2.0, 1490.3473,1306.2144,1093.2964)) return SendErrorMessage(playerid,"Você não está próximo de um DMV.");
+
+	new string [512];
+	format(string, sizeof(string), "ID\tLicença\tValor\n \
+		1\tLicença Veícular\t%d",
+		DMV_VEHICLE_VALUE
+	);
+	
+	Dialog_Show(playerid, DIALOG_DMV_ROUTE, DIALOG_STYLE_TABLIST_HEADERS, "Licenças", string, "Selecionar", "Cancelar");
+	return true;
+}

@@ -16,8 +16,9 @@ new Float:DMV_Checkpoint[9][3] = {
 };
 
 new DMVCheckpoint[MAX_PLAYERS],
-    bool:emExame[MAX_PLAYERS],
+    bool:InDMV[MAX_PLAYERS],
     vehicleDMV[MAX_PLAYERS],
+    Text3D:DMV3dTEXT[MAX_PLAYERS],
     DMVTestType[MAX_PLAYERS] = 0;
 
 enum E_LICENCES_DATA {

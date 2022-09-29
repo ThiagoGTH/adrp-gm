@@ -775,7 +775,9 @@ public LoadVehicleWeapons(vehicleid) {
 }
 
 hook OnPlayerEnterCheckpoint(playerid) {
-    DisablePlayerCheckpoint(playerid);
+    if(!InDMV[playerid]) {
+        DisablePlayerCheckpoint(playerid);
+    }
     return true;
 }
 

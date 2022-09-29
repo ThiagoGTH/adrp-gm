@@ -8,7 +8,7 @@ hook OnPlayerEnterCheckpoint(playerid, vehicleid, ispassenger) {
 hook OnPlayerExitVehicle(playerid, vehicleid) {
 	if(IsPlayerNPC(playerid)) return true;		
 
-	if(emExame[playerid] == true) {
+	if(InDMV[playerid] == true) {
 		SendErrorMessage(playerid, "Você abandonou o carro e por isso reprovou no exame de direção.");
 		FailedExam(playerid);
 	}
@@ -22,17 +22,26 @@ hook OnPlayerStateChange(playerid, newstate, oldstate) {
 
 StartTestingLicence(playerid) {
     if(DMVTestType[playerid] == 1){ //Carro
-	    pInfo[playerid][pMoney] -= DMV_VEHICLE_VALUE;
-	    SetPlayerInterior(playerid, 0);
-	    SetPlayerVirtualWorld(playerid, playerid+1);
+        GiveMoney(playerid, -DMV_VEHICLE_VALUE);
+	    //SetPlayerInterior(playerid, 0);
+	    //SetPlayerVirtualWorld(playerid, playerid+1);
 	    SetPlayerPos(playerid, 1778.2292, -1934.1807, 13.3856);
 	    SetPlayerFacingAngle(playerid, 270.8737);
 	    SetCameraBehindPlayer(playerid);
-	    vehicleDMV[playerid] = CreateVehicle(DMV_VEHICLE, 1791.1338, -1933.0410, 13.0918, 1.000, 0, 0, -1);
-	    SetVehicleVirtualWorld(vehicleDMV[playerid], playerid+1);
+
+	    vehicleDMV[playerid] = CreateVehicle(DMV_VEHICLE, 1791.1338, -1933.0410, 13.0918, 1.000, random(127), random(127), -1);
+	    SetVehicleVirtualWorld(vehicleDMV[playerid], 0);
+
+        new string[64];
+        format(string, sizeof(string), "DMV #%3d", playerid);
+        DMV3dTEXT[playerid] = Create3DTextLabel(string, COLOR_WHITE, 0.0, 0.0, -1000.0, 15.0, -1, 0);
+		Attach3DTextLabelToVehicle(DMV3dTEXT[playerid], vehicleDMV[playerid], -1.0, -1.0, 0.0);
+
+        SetVehicleNumberPlate(vehicleDMV[playerid], "{FF0000}DMV");
+
         SendServerMessage(playerid, "Você iniciou o teste de direção para a licença de Motorista de carros.");
-	    SendServerMessage(playerid, "Entre no manana para continuar com o exame.");
-	    emExame[playerid] = true;
+	    SendServerMessage(playerid, "Entre no Manana para continuar com o exame.");
+	    InDMV[playerid] = true;
         return true;
     }
 	return true;
@@ -41,7 +50,7 @@ StartTestingLicence(playerid) {
 FinishTestingLicence(playerid) {
 	new Float:lataria;
 	GetVehicleHealth(vehicleDMV[playerid], lataria);
-	if(lataria <= DMV_MAX_VEHICLE_HEALTH){
+	if(lataria <= DMV_MAX_VEHICLE_HEALTH) {
 		SendErrorMessage(playerid, "O veículo está muito danificado e por isso você reprovou no exame.");
 		FailedExam(playerid);
 		return true;
@@ -50,8 +59,9 @@ FinishTestingLicence(playerid) {
 	SetPlayerPos(playerid, 1778.2292, -1934.1807, 13.3856);
 	SetPlayerFacingAngle(playerid, 270.8737);
 	SetCameraBehindPlayer(playerid);
-	emExame[playerid] = false;
+	InDMV[playerid] = false;
 	DestroyVehicle(vehicleDMV[playerid]);
+    Delete3DTextLabel(DMV3dTEXT[playerid]);
 	DisablePlayerCheckpoint(playerid);
 	SetPlayerVirtualWorld(playerid, 0);
 	CreateNewLicence(playerid);
@@ -59,7 +69,7 @@ FinishTestingLicence(playerid) {
 }
 
 SetDMVRoute(playerid) {
-	if(emExame[playerid]) {
+	if(InDMV[playerid]) {
         SetPlayerCheckpoint(playerid, 
         DMV_Checkpoint[DMVCheckpoint[playerid]][0], 
         DMV_Checkpoint[DMVCheckpoint[playerid]][1], 
@@ -76,8 +86,9 @@ FailedExam(playerid) {
 	SetPlayerFacingAngle(playerid, 270.8737);
 	SetCameraBehindPlayer(playerid);
 	DestroyVehicle(vehicleDMV[playerid]);
+    Delete3DTextLabel(DMV3dTEXT[playerid]);
 	DisablePlayerCheckpoint(playerid);
-	emExame[playerid] = false;
+	InDMV[playerid] = false;
     DMVTestType[playerid] = -1;
 	return true;
 }
@@ -106,7 +117,7 @@ DMVUpdate(playerid) {
 
 DMV_StateChange(playerid, newstate, oldstate) {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
-  		if(!emExame[playerid]) return true;
+  		if(!InDMV[playerid]) return true;
   		new engine, lights, alarm, doors, bonnet, boot, objective,
   			vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -119,7 +130,7 @@ DMV_StateChange(playerid, newstate, oldstate) {
 }
 
 DMV_EnterCheckpoint(playerid) {
-	if(emExame[playerid]) {
+	if(InDMV[playerid]) {
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(DMVTestType[playerid] == 0){ //Carro
 			if (GetVehicleModel(vehicleid) != DMV_VEHICLE) {

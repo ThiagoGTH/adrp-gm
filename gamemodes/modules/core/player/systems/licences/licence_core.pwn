@@ -30,7 +30,7 @@ SavePlayerLicences(playerid) {
 		`licence_vehicle` = '%i', \
         `licence_medical` = '%i', \
         `licence_plane` = '%i', \
-        `licence_gun` = '%i', \
+        `licence_gun` = '%i' \
         WHERE `character_id`= '%i';",
 		pLicences[playerid][licence_number],
 		pLicences[playerid][licence_status],

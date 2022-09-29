@@ -67,7 +67,6 @@ void:CheckTables() {
     CheckPoolTable();
     CheckHousesTable();
     CheckTradingTable();
-    CheckLicenceTable();
     CheckFactionsTable();
     CheckGraffitisTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
@@ -189,6 +188,25 @@ void:CheckPlayerTable() {
 
     print("[DATABASE] Tabela players_apparence checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS players_licence (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `licence_number` int NOT NULL DEFAULT 0,\
+    `licence_status` int NOT NULL DEFAULT 0,\
+    `licence_warnings` int NOT NULL DEFAULT 0,\
+	`licence_vehicle` int NOT NULL DEFAULT 0,\
+    `licence_plane` int NOT NULL DEFAULT 0,\
+	`licence_medical` int NOT NULL DEFAULT 0,\
+	`licence_gun` int NOT NULL DEFAULT 0,\
+	`warning_one` varchar(128) NOT NULL DEFAULT 'Vazio',\
+	`warning_two` varchar(128) NOT NULL DEFAULT 'Vazio',\
+	`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
+    PRIMARY KEY (ID));");
+
+    print("[DATABASE] Tabela players_licence checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_licence checada com sucesso");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_faction` (\
@@ -926,29 +944,6 @@ void:CheckUCPTable() {
     print("[DATABASE] Tabela ucp_questions checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_questions checada com sucesso");
     logCreate(99998, logString, 5);
-}
-
-void:CheckLicenceTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS character_licences_driver (\
-    ID int NOT NULL AUTO_INCREMENT,\
-    `character_id` int NOT NULL DEFAULT 0,\
-    `licence_number` int NOT NULL DEFAULT 0,\
-    `licence_status` int NOT NULL DEFAULT 0,\
-    `licence_warnings` int NOT NULL DEFAULT 0,\
-	`licence_car` int NOT NULL DEFAULT 0,\
-	`licence_bike` int NOT NULL DEFAULT 0,\
-	`licence_truck` int NOT NULL DEFAULT 0,\
-	`licence_gun` int NOT NULL DEFAULT 0,\
-	`warning_one` varchar(128) NOT NULL DEFAULT 'Vazio',\
-	`warning_two` varchar(128) NOT NULL DEFAULT 'Vazio',\
-	`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
-    PRIMARY KEY (ID));");
-
-    print("[DATABASE] Tabela character_licences_driver checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela character_licences_driver checada com sucesso");
-    logCreate(99998, logString, 5);
-
-    return true;
 }
 
 void:CheckFactionsTable() {

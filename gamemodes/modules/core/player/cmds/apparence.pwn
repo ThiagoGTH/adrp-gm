@@ -61,7 +61,7 @@ CMD:veraparencia(playerid, params[]) {
 
     new gender[128], ethnicity[128], color_eyes[128], color_hair[128], build[128];
 
-    switch(pInfo[playerid][pGender]) {
+    switch(pInfo[userid][pGender]) {
 		case 1: format(gender, sizeof(gender), "Masculino");
 		case 2: format(gender, sizeof(gender), "Feminino");
 		default: format(gender, sizeof(gender), "Inválido");

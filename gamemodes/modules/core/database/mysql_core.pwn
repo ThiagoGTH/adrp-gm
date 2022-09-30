@@ -190,23 +190,23 @@ void:CheckPlayerTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_apparence checada com sucesso");
     logCreate(99998, logString, 5);
 
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS players_licence (\
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS players_license (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `character_id` int NOT NULL,\
-    `licence_number` int NOT NULL DEFAULT 0,\
-    `licence_status` int NOT NULL DEFAULT 0,\
-    `licence_warnings` int NOT NULL DEFAULT 0,\
-	`licence_vehicle` int NOT NULL DEFAULT 0,\
-    `licence_plane` int NOT NULL DEFAULT 0,\
-	`licence_medical` int NOT NULL DEFAULT 0,\
-	`licence_gun` int NOT NULL DEFAULT 0,\
+    `license_number` int NOT NULL DEFAULT 0,\
+    `license_status` int NOT NULL DEFAULT 0,\
+    `license_warnings` int NOT NULL DEFAULT 0,\
+	`license_vehicle` int NOT NULL DEFAULT 0,\
+    `license_plane` int NOT NULL DEFAULT 0,\
+	`license_medical` int NOT NULL DEFAULT 0,\
+	`license_gun` int NOT NULL DEFAULT 0,\
 	`warning_one` varchar(128) NOT NULL DEFAULT 'Vazio',\
 	`warning_two` varchar(128) NOT NULL DEFAULT 'Vazio',\
 	`warning_three` varchar(128) NOT NULL DEFAULT 'Vazio',\
     PRIMARY KEY (ID));");
 
-    print("[DATABASE] Tabela players_licence checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_licence checada com sucesso");
+    print("[DATABASE] Tabela players_license checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_license checada com sucesso");
     logCreate(99998, logString, 5);
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_faction` (\

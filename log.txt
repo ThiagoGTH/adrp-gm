@@ -5620,3 +5620,6 @@ Iniciando os serviços...
 [2022-09-29T20:38:10-0300] [Info] [join] Thiago has joined the server (0:127.0.0.1)
 [2022-09-29T20:38:19-0300] [Warning] Invalid dialog ID -1 used.  Use `HidePlayerDialog()`.
 [2022-09-29T20:38:21-0300] [Info] [DATABASE] John_Doe foi carregado com sucesso do banco de dados.
+[2022-09-29T20:49:21-0300] [Info] Usuário 'Thiago' salvo com sucesso.
+[2022-09-29T20:49:21-0300] [Info] [DATABASE] John_Doe desconectado do servidor e salvo na database.
+[2022-09-29T20:49:22-0300] [Info] [part] John_Doe has left the server (0:1)

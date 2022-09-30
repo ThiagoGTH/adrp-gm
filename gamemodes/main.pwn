@@ -48,7 +48,7 @@
 #include "modules\core\player\cmds\cmds.pwn"
 
 // SISTEMAS
-#include "modules\core\player\systems\licences\licences.pwn"
+#include "modules\core\player\systems\licenses\licenses.pwn"
 #include "modules\core\player\systems\main\systems.pwn"
 #include "modules\core\player\systems\death\damages.pwn"
 #include "modules\core\player\systems\items\items.pwn"

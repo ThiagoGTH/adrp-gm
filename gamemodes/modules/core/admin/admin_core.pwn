@@ -88,6 +88,7 @@ ShowAdminCmds(playerid){
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /setarequipe, /dararma, /setaradmin, /limparhistoricoban, /gerenciar, /darveiculo, /doublepd, /criarsinuca, /deletarsinuca");
 		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /darcaravana, /darpet, /destruirinvestimento, /avobjeto, /checarspecs");
+		va_SendClientMessage(playerid, -1, "{33AA33}[LEAD ADMIN]{FFFFFF} /darlicenca");
 	}
 	if(GetPlayerAdmin(playerid) >= 1335) // MANAGEMENT
 	{

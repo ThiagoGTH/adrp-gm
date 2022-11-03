@@ -374,6 +374,19 @@ BuyHouse(id, playerid) {
     return 1;
 }
 
+SellHouseToPlayer(id, playerid, buyerid, price) {
+    format(string, sizeof(string), "Você ofereceu sua casa para %s por $%s.", GetPlayerNameEx(giveplayerid), price);
+    va_SendClientMessage(playerid, COLOR_LIGHTBLUE, string);
+    format(string, sizeof(string), "* %s has offered you their house for $%s, (type /accept house) to buy.", GetPlayerNameEx(playerid), number_format(price));
+    va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, string);
+    DeletePVar(playerid, "confirmhousell");
+    return 1;
+}
+
+BuyHouseFromPlayer(id, playerid) {
+    
+}
+
 RentableHouse(id, playerid, rentable) {
     if(rentable != 1)
         rentable = 0;
@@ -429,7 +442,7 @@ EvictFromRent(id, playerid, evictedplayerid) {
     PlayerInfo[evictedplayerid][pRenting] = INVALID_HOUSE_ID;
 
     format(string, sizeof(string), "%s despejou você da casa dele no endereço %s.", GetPlayerNameEx(playerid), hInfo[id][hAddress]);
-    SendClientMessageEx(evictedplayerid, COLOR_WHITE, string);
+    va_SendClientMessage(evictedplayerid, COLOR_WHITE, string);
 
     mysql_format(DBConn, query, sizeof query, "DELETE FROM `players_keys` WHERE `character_id` = %d AND `property_id` = %d", pInfo[evictedplayerid][pID], id);
     mysql_query(DBConn, query);
@@ -437,7 +450,7 @@ EvictFromRent(id, playerid, evictedplayerid) {
     SavePlayerKeys(playerId);
 
     format(string, sizeof(string), "Você despejou %s da sua casa.", GetPlayerNameEx(evictedplayerid));
-    SendClientMessageEx(playerid, COLOR_WHITE, string);
+    va_SendClientMessage(playerid, COLOR_WHITE, string);
 
     return 1;
 }

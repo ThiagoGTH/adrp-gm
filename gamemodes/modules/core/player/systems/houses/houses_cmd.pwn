@@ -402,7 +402,7 @@ CMD:atrancar(playerid, params[]) {
     return 1;
 }
 
-CMD:comprar(playerid) {
+CMD:comprarcasa(playerid) {
     new houseID = GetNearestHouseEntry(playerid);
 
     if(!houseID)
@@ -419,6 +419,33 @@ CMD:comprar(playerid) {
     BuyHouse(houseID, playerid);
 
     return 1;
+}
+
+CMD:vendercasa(playerid, params[]) {
+    new buyerid, price;
+
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Essa casa não é sua.");
+    
+    if(sscanf(params, "ud", giveplayerid, price)) 
+        return SendSyntaxMessage(playerid, "/vendercasa [id] [preço]");
+    
+    if(IsPlayerConnected(evictedplayerid))
+        return SendErrorMessage(playerid, "Você especificou um jogador inválido.");
+    
+    if(!IsPlayerNearPlayer(playerid, evictedplayerid, 5.0)) 
+        return SendErrorMessage(playerid, "Você não está perto deste jogador.");
+
+
+    if(price < 1)
+        return SendErrorMessage(playerid, "O preço da venda deve ser maior do que $1.");
+    
+    SellHouseToPlayer(houseID, playerid, buyerid, price);
 }
 
 CMD:alugavel(playerid) {
@@ -495,6 +522,8 @@ CMD:alugarquarto(playerid) {
 }
 
 CMD:despejar(playerid, params[]) {
+    new evictedplayerid;
+
     new houseID = GetNearestHouseEntry(playerid);
 
     if(hInfo[houseID][hOwner] != pInfo[playerid][pID])

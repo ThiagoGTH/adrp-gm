@@ -64,7 +64,7 @@ CMD:editarfaccao(playerid, params[]) {
 	} if ((id < 0 || id >= MAX_FACTIONS) || !FactionData[id][factionExists]) return SendErrorMessage(playerid, "Você especificou um ID de facção inválido.");
 
 	if (!strcmp(type, "nome", true)) {
-	    new name[32];
+	    new name[64];
 
 	    if (sscanf(string, "s[32]", name)) return SendSyntaxMessage(playerid, "/editarfaccao [id] [nome] [novo nome]");
 

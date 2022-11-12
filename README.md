@@ -2,65 +2,65 @@
 #### SA-MP SERVER (0.0.1a - BETA)
 
 ## Como fazer o setup do projeto local?
-Passo à passo:
+Passo Ã  passo:
 1. [Fazendo setup do banco de dados](setup-do-banco-de-dados)
-2. [Fazendo setup de ferramentas e arquivos necessários](setup-de-ferramentas-e-necessarios)
+2. [Fazendo setup de ferramentas e arquivos necessÃ¡rios](setup-de-ferramentas-e-necessarios)
 3. [Por fim, fazendo setup do gamemode](setup-do-gamemode)
 ## Setup do banco de dados
-Antes do setup do banco de dados em si, você precisa criar uma cópia do `example.env` e renomear para `.env` apenas. 
+Antes do setup do banco de dados em si, vocÃª precisa criar uma cÃ³pia do `example.env` e renomear para `.env` apenas. 
 
-O setup do banco de dados é simples. Tudo o que vocês precisam fazer é iniciar um banco de dados MySQL vazio, e o `sampctl` aqui e o próprio plugin que utilizamos no [`mysql_core.pwn`](gamemodes/modules/core/database/mysql_core.pwn) vai criar as tabelas e iniciar o banco em si. Preencha os valores das variáveis no `.env` com os dados do banco que você criou.
+O setup do banco de dados Ã© simples. Tudo o que vocÃªs precisam fazer Ã© iniciar um banco de dados MySQL vazio, e o `sampctl` aqui e o prÃ³prio plugin que utilizamos no [`mysql_core.pwn`](gamemodes/modules/core/database/mysql_core.pwn) vai criar as tabelas e iniciar o banco em si. Preencha os valores das variÃ¡veis no `.env` com os dados do banco que vocÃª criou.
 
 ## Setup de ferramentas e necessarios
-Por enquanto, a única ferramenta que utilizamos aqui é o `sampctl`. Vocês podem seguir o [guia de instalação dele aqui](docs/TOOLS.md), e também tem um mini guia de utilização dos comandos.
+Por enquanto, a Ãºnica ferramenta que utilizamos aqui Ã© o `sampctl`. VocÃªs podem seguir o [guia de instalaÃ§Ã£o dele aqui](docs/TOOLS.md), e tambÃ©m tem um mini guia de utilizaÃ§Ã£o dos comandos.
 
-Você vai precisar de alguns arquivos também para que a build possa ocorrer sem problemas;
+VocÃª vai precisar de alguns arquivos tambÃ©m para que a build possa ocorrer sem problemas;
 
 - [download dos arquivos de servidor OMP](https://github.com/openmultiplayer/server-beta/releases/tag/build10), colocar na pasta raiz do projeto
 - [download do .dll do Pawn.CMD](https://github.com/katursis/Pawn.CMD/releases), colocar na pasta `components`
 
-Antes de você poder utilizar o `sampctl` para instalação e atualização dos pacotes, você vai ter que gerar um `token` no Github para poder utilizar a instalação de pacotes sem limitações. 
+Antes de vocÃª poder utilizar o `sampctl` para instalaÃ§Ã£o e atualizaÃ§Ã£o dos pacotes, vocÃª vai ter que gerar um `token` no Github para poder utilizar a instalaÃ§Ã£o de pacotes sem limitaÃ§Ãµes. 
 Segue abaixo o passo-a-passo:
 
-- Acesse [`configurações`](https://github.com/settings/profile) do Github;
-- No menu lateral esquerdo, vá até o último item, `configurações de desenvolvedor`;
-- Em Configurações do Desenvolvedor, clique em `token de acesso pessoal` e selecione o `tokens(clássico)`;
-- Clique em `gerar novo token` e nomeie como você quiser. Selecione a opção de permissões para `write:packages` (com a sub-opção escolhida)
-- É interessante você setar o token sem tempo para expirar, ou vai ter que fazer isso todo mês.
+- Acesse [`configuraÃ§Ãµes`](https://github.com/settings/profile) do Github;
+- No menu lateral esquerdo, vÃ¡ atÃ© o Ãºltimo item, `configuraÃ§Ãµes de desenvolvedor`;
+- Em ConfiguraÃ§Ãµes do Desenvolvedor, clique em `token de acesso pessoal` e selecione o `tokens(clÃ¡ssico)`;
+- Clique em `gerar novo token` e nomeie como vocÃª quiser. Selecione a opÃ§Ã£o de permissÃµes para `write:packages` (com a sub-opÃ§Ã£o escolhida)
+- Ã‰ interessante vocÃª setar o token sem tempo para expirar, ou vai ter que fazer isso todo mÃªs.
 - Copie seu token.
   
-Agora que possui seu token, você precisa dar acesso a ele para o `sampctl`;
-- Aperte `Botão do Windows + r` e digite `%AppData%`;
+Agora que possui seu token, vocÃª precisa dar acesso a ele para o `sampctl`;
+- Aperte `BotÃ£o do Windows + r` e digite `%AppData%`;
 - Acesse a pasta do `sampctl` e abra o arquivo `config.json`
-- Preencha o campo "github_token": `seu_token`, caso não tenha o campo, adicione ele;
+- Preencha o campo "github_token": `seu_token`, caso nÃ£o tenha o campo, adicione ele;
 - Feito. 
 
 
-Após fazer toda a instalação do necessário, você pode partir pro setup do gamemode.
+ApÃ³s fazer toda a instalaÃ§Ã£o do necessÃ¡rio, vocÃª pode partir pro setup do gamemode.
 
 ## Setup do Gamemode
 
-Antes de tudo, agora, você vai fazer a instalação das dependências do projeto, os pacotes. Você vai rodar `sampctl p ensure`, e ele te dará a certeza de que os pacotes foram instalados corretamente. O resultado deve ser `INFO: ensured dependencies for package`.
+Antes de tudo, agora, vocÃª vai fazer a instalaÃ§Ã£o das dependÃªncias do projeto, os pacotes. VocÃª vai rodar `sampctl p ensure`, e ele te darÃ¡ a certeza de que os pacotes foram instalados corretamente. O resultado deve ser `INFO: ensured dependencies for package`.
 
-Logo após, você vai buildar o projeto, rodando `sampctl p build`. Agora, tenha certeza que os arquivos `libmariadb.dll`, `log-core.dll`, `log-core2.dll` foram gerados.
+Logo apÃ³s, vocÃª vai buildar o projeto, rodando `sampctl p build`. Agora, tenha certeza que os arquivos `libmariadb.dll`, `log-core.dll`, `log-core2.dll` foram gerados.
 
+E entÃ£o, Ã© sÃ³ vocÃª rodar `sampctl p run` e o gamemode vai rodar.
 
-Seguindo todos os passoas acima (corretamente), vocÃª conseguirÃ¡ executar o servidor sem nenhum problema. 
-AlÃ©m do mais, todos os problemas, dÃºvidas ou questÃµes que sejam acerca do **Advanced Roleplay** deverÃ£o serem enviadas ao [Thiago](https://github.com/ThiagoGTH/).
+Qualquer outra dÃºvida, entrem em contato com o Philipe ou o Thiago.
 
 ## Erros comuns & Possiveis Solucoes
 
 ```
 CConnection::CConnection - establishing connection to MySQL database failed: #2019 'Can't initialize character set unknown (path: compiled_in)'
 ```
-**Possível Solução**: Comentar a linha `mysql_set_charset("latin1");` no mysql_core.pwn
+**PossÃ­vel SoluÃ§Ã£o**: Comentar a linha `mysql_set_charset("latin1");` no mysql_core.pwn
 
 
 ```
 servidor rodando 0.3.7-R2
 ```
-**Possível Solução**: `windows + r` -> `%AppData%` -> joga [isso](https://cdn.discordapp.com/attachments/932385744083882074/1012906340382953583/samp03DL_svr_R1_win32.zip) na pasta do sampctl lá. 
-Checa `pawn.json` na pasta raiz do gamemode se tá a versão 0.3DL, e lembre-se de rodar `sampctl p ensure`.
+**PossÃ­vel SoluÃ§Ã£o**: `windows + r` -> `%AppData%` -> joga [isso](https://cdn.discordapp.com/attachments/932385744083882074/1012906340382953583/samp03DL_svr_R1_win32.zip) na pasta do sampctl lÃ¡. 
+Checa `pawn.json` na pasta raiz do gamemode se tÃ¡ a versÃ£o 0.3DL, e lembre-se de rodar `sampctl p ensure`.
 
 NOTA: 
-Lembre-se de que sempre que você passar por um erro no setup, venha até aqui e adicione ele com a sua solução como **Possível Solução** para o próximo desenvolvedor que lidar com ele.
+Lembre-se de que sempre que vocÃª passar por um erro no setup, venha atÃ© aqui e adicione ele com a sua soluÃ§Ã£o como **PossÃ­vel SoluÃ§Ã£o** para o prÃ³ximo desenvolvedor que lidar com ele.

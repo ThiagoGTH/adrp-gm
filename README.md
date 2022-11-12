@@ -1,32 +1,66 @@
 # Advanced Roleplay
 #### SA-MP SERVER (0.0.1a - BETA)
- 
-Todas as tabelas serÃ£o criadas automaticamente graÃ§as ao [mysql_core.pwn](https://github.com/ThiagoGTH/advanced-roleplay-gm/blob/main/gamemodes/modules/core/database/mysql_core.pwn), entÃ£o isso definitivamente nÃ£o Ã© uma preocupaÃ§Ã£o. No entanto, o sampctl Ã© uma obrigaÃ§Ã£o, assim como o MySQL.
 
-## Como instalar o Sampctl?
+## Como fazer o setup do projeto local?
+Passo à passo:
+1. [Fazendo setup do banco de dados](setup-do-banco-de-dados)
+2. [Fazendo setup de ferramentas e arquivos necessários](setup-de-ferramentas-e-necessarios)
+3. [Por fim, fazendo setup do gamemode](setup-do-gamemode)
+## Setup do banco de dados
+Antes do setup do banco de dados em si, você precisa criar uma cópia do `example.env` e renomear para `.env` apenas. 
 
-1. Abra o PowerShell;
-2. Digite `set-executionpolicy remotesigned -scope currentuser`;
-3. Installe o **Scoop** digitando `iex (new-object net.webclient).downloadstring('https://get.scoop.sh')`;
-4. Instale o **SampCTL** digitando `scoop bucket add southclaws https://github.com/Southclaws/scoops.git; scoop install sampctl`.
+O setup do banco de dados é simples. Tudo o que vocês precisam fazer é iniciar um banco de dados MySQL vazio, e o `sampctl` aqui e o próprio plugin que utilizamos no [`mysql_core.pwn`](gamemodes/modules/core/database/mysql_core.pwn) vai criar as tabelas e iniciar o banco em si. Preencha os valores das variáveis no `.env` com os dados do banco que você criou.
 
-## Como utilizar o Sampctl? (little guide by: Dobby)
+## Setup de ferramentas e necessarios
+Por enquanto, a única ferramenta que utilizamos aqui é o `sampctl`. Vocês podem seguir o [guia de instalação dele aqui](docs/TOOLS.md), e também tem um mini guia de utilização dos comandos.
 
-sampctl p init - inits sampctl. lets you set up pawn.json/yml.
-sampctl p install <username:version> - Installs a package. EG: sampctl p install pawn-lang/samp-stdlib
-sampctl p uninstall <package name> - What it says on the tin. 
-sampctl p build builds the mode. 
-sampctl p run runs the mode
-sampctl p run --container runs it in a container if you use docker. 
-sampctl p ensure - Downloads all the packages again from your dependencies: section in pawn.json.
-sampctl p autocomplete - Generates an autocomplete file for your shell (bash for me). 
+Você vai precisar de alguns arquivos também para que a build possa ocorrer sem problemas;
 
-You can append --verbose to any of the commands for verbose output.
-You can append --help to any command for help on that specific command. Just sampctl --help for the main one. 
+- [download dos arquivos de servidor OMP](https://github.com/openmultiplayer/server-beta/releases/tag/build10), colocar na pasta raiz do projeto
+- [download do .dll do Pawn.CMD](https://github.com/katursis/Pawn.CMD/releases), colocar na pasta `components`
 
-It gets the packages based on your operating system. So if your servers on Linux, it'll grab the Linux binaries. Same with Windows. You can automatically do this via sampctl p ensure --platform linux.
+Antes de você poder utilizar o `sampctl` para instalação e atualização dos pacotes, você vai ter que gerar um `token` no Github para poder utilizar a instalação de pacotes sem limitações. 
+Segue abaixo o passo-a-passo:
 
-Caso queira saber mais sobre o Sampctl, acesse o [repositÃ³rio deles](https://github.com/Southclaws/sampctl).
+- Acesse [`configurações`](https://github.com/settings/profile) do Github;
+- No menu lateral esquerdo, vá até o último item, `configurações de desenvolvedor`;
+- Em Configurações do Desenvolvedor, clique em `token de acesso pessoal` e selecione o `tokens(clássico)`;
+- Clique em `gerar novo token` e nomeie como você quiser. Selecione a opção de permissões para `write:packages` (com a sub-opção escolhida)
+- É interessante você setar o token sem tempo para expirar, ou vai ter que fazer isso todo mês.
+- Copie seu token.
+  
+Agora que possui seu token, você precisa dar acesso a ele para o `sampctl`;
+- Aperte `Botão do Windows + r` e digite `%AppData%`;
+- Acesse a pasta do `sampctl` e abra o arquivo `config.json`
+- Preencha o campo "github_token": `seu_token`, caso não tenha o campo, adicione ele;
+- Feito. 
+
+
+Após fazer toda a instalação do necessário, você pode partir pro setup do gamemode.
+
+## Setup do Gamemode
+
+Antes de tudo, agora, você vai fazer a instalação das dependências do projeto, os pacotes. Você vai rodar `sampctl p ensure`, e ele te dará a certeza de que os pacotes foram instalados corretamente. O resultado deve ser `INFO: ensured dependencies for package`.
+
+Logo após, você vai buildar o projeto, rodando `sampctl p build`. Agora, tenha certeza que os arquivos `libmariadb.dll`, `log-core.dll`, `log-core2.dll` foram gerados.
+
 
 Seguindo todos os passoas acima (corretamente), vocÃª conseguirÃ¡ executar o servidor sem nenhum problema. 
 AlÃ©m do mais, todos os problemas, dÃºvidas ou questÃµes que sejam acerca do **Advanced Roleplay** deverÃ£o serem enviadas ao [Thiago](https://github.com/ThiagoGTH/).
+
+## Erros comuns & Possiveis Solucoes
+
+```
+CConnection::CConnection - establishing connection to MySQL database failed: #2019 'Can't initialize character set unknown (path: compiled_in)'
+```
+**Possível Solução**: Comentar a linha `mysql_set_charset("latin1");` no mysql_core.pwn
+
+
+```
+servidor rodando 0.3.7-R2
+```
+**Possível Solução**: `windows + r` -> `%AppData%` -> joga [isso](https://cdn.discordapp.com/attachments/932385744083882074/1012906340382953583/samp03DL_svr_R1_win32.zip) na pasta do sampctl lá. 
+Checa `pawn.json` na pasta raiz do gamemode se tá a versão 0.3DL, e lembre-se de rodar `sampctl p ensure`.
+
+NOTA: 
+Lembre-se de que sempre que você passar por um erro no setup, venha até aqui e adicione ele com a sua solução como **Possível Solução** para o próximo desenvolvedor que lidar com ele.

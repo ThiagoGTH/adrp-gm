@@ -3,9 +3,15 @@
 
 ## Como fazer o setup do projeto local?
 Passo à passo:
-1. [Fazendo setup do banco de dados](setup-do-banco-de-dados)
-2. [Fazendo setup de ferramentas e arquivos necessários](setup-de-ferramentas-e-necessarios)
-3. [Por fim, fazendo setup do gamemode](setup-do-gamemode)
+1. [Clonando o Projeto](#clonando-o-projeto)
+1. [Fazendo setup do banco de dados](#setup-do-banco-de-dados)
+2. [Fazendo setup de ferramentas e arquivos necessários](#setup-de-ferramentas-e-necessarios)
+3. [Por fim, fazendo setup do gamemode](#setup-do-gamemode)
+
+## Clonando o Projeto
+Você vai ter rodar o básico mesmo pra clonar o projeto, apenas. 
+`git clone git@github.com:advanced-roleplay/gamemode.git`
+
 ## Setup do banco de dados
 Antes do setup do banco de dados em si, você precisa criar uma cópia do `example.env` e renomear para `.env` apenas. 
 

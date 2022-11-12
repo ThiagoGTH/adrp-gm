@@ -5,7 +5,8 @@
 
 - Caso você use o **chocolatey** só instalar pelo comando `choco`
 1. Instale o **Scoop** digitando `iex (new-object net.webclient).downloadstring('https://get.scoop.sh')`
-2. Instale o **SampCTL** digitando `scoop bucket add southclaws https://github.com/Southclaws/scoops.git; scoop install sampctl`
+2. Adicione o **SampCTL** ao Scoop digitando `scoop bucket add southclaws https://github.com/Southclaws/scoops.git;
+3. Instale `scoop install sampctl`
 
 ## Como utilizar o Sampctl? (little guide by: Dobby)
 

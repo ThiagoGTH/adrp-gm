@@ -60,6 +60,7 @@
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\animations\animations.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
+#include "modules\core\player\systems\business\business.pwn"
 
 // OUTROS
 #include "modules\core\discord\discord_core.pwn"

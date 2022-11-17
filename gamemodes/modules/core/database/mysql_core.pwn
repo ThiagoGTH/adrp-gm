@@ -66,7 +66,7 @@ void:CheckTables() {
     CheckVehiclesTable();
     CheckPoolTable();
     CheckHousesTable();
-    CheckBusinessTable();
+    CheckBusinesssTable();
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
@@ -828,7 +828,7 @@ void:CheckHousesTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso");
 }
 
-void:CheckBusinessTable() {
+void:CheckBusinesssTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
@@ -836,11 +836,9 @@ void:CheckBusinessTable() {
     `locked` int DEFAULT '0',\
     `name` varchar(256) DEFAULT 'Empresa desconhecida',\
     `type` int DEFAULT '0',\
-    `price` int DEFAULT '0',\
-    `price` int DEFAULT '0',\
-    `Inventory` int DEFAULT '0',\
-    `rent` int DEFAULT '0',\
+    `inventory` int DEFAULT '0',\
     `storage_money` int DEFAULT '0',\
+    `price` int DEFAULT '0',\
     `entry_x` float DEFAULT '0',\
     `entry_y` float DEFAULT '0',\
     `entry_z` float DEFAULT '0',\
@@ -858,7 +856,6 @@ void:CheckBusinessTable() {
     print("[DATABASE] Tabela business checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business checada com sucesso");
     logCreate(99998, logString, 5);
-
 }
 
 void:CheckTradingTable() {

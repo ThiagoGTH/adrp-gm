@@ -356,4 +356,21 @@ BuyBusiness(id, playerid) {
     return 1;
 }
 
+LockedBusiness(playerid) {
+    new businessID = GetNearestBusinessEntry(playerid);
+
+    if(!businessID) {
+        businessID = GetNearestBusinessExit(playerid);
+    }
+
+    if(businessID) {
+        bInfo[businessID][bLocked] = !bInfo[businessID][bLocked];
+        PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
+        GameTextForPlayer(playerid, bInfo[businessID][bLocked] ? "~r~CASA TRANCADA" : "~g~~h~CASA DESTRANCADA", 2500, 4);
+    
+        return 1;
+    }
+    return 1;
+}
+
 // ============================================================================================================================================

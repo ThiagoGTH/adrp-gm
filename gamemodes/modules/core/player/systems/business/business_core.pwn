@@ -7,7 +7,7 @@ enum E_BUSINESS_DATA {
     bOwner,             // ID do personagem dono da empresa
     bAddress[256],      // Endereço
     bool:bLocked,       // Trancado
-    bName[256],              // Nome da empresa
+    bName[256],         // Nome da empresa
     bType,              // Tipo da empresa (lojas (eletronicos, mercado, entre outros), concecionaria, "firma")
     bInventory,         // Estoque da empresa
     bStorageMoney,      // Dinheiro guardado/cofre da empresa
@@ -68,7 +68,6 @@ hook OnGamemodeExit() {
 }
 
 // ============================================================================================================================================
-
 //Carrega todas empresas (MySQL).
 LoadBusinesss() {
     new     
@@ -301,7 +300,7 @@ BusinessType(id) {
 		case 4: format(btype, sizeof(btype), "Fast Food");
 		case 5: format(btype, sizeof(btype), "Concessionária");
 		case 6: format(btype, sizeof(btype), "Posto de gasolina");
-        case 7: format(btype, sizeof(btype), "Firma");
+        case 7: format(btype, sizeof(btype), "Firma/Empresa");
 		default: format(btype, sizeof(btype), "Inválido");
 	}
 	return btype;
@@ -366,7 +365,7 @@ LockedBusiness(playerid) {
     if(businessID) {
         bInfo[businessID][bLocked] = !bInfo[businessID][bLocked];
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
-        GameTextForPlayer(playerid, bInfo[businessID][bLocked] ? "~r~CASA TRANCADA" : "~g~~h~CASA DESTRANCADA", 2500, 4);
+        GameTextForPlayer(playerid, bInfo[businessID][bLocked] ? "~r~EMPRESA TRANCADA" : "~g~~h~EMPRESA DESTRANCADA", 2500, 4);
     
         return 1;
     }

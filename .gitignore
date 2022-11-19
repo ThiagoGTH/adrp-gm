@@ -13,6 +13,8 @@ dependencies/
 # Dependency versions lockfile
 pawn.lock
 
+# env variables
+.env
 
 #
 # Server/gamemode related files
@@ -39,6 +41,7 @@ samp-npc
 logs/
 server_log.txt
 crashinfo.txt
+log.txt
 
 # Ban list
 samp.ban

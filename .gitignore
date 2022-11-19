@@ -20,6 +20,9 @@ pawn.lock
 # Server/gamemode related files
 #
 
+# env variables and values
+.env
+
 # compiled settings file
 # keep `samp.json` file on version control
 # but make sure the `rcon_password` field is set externally

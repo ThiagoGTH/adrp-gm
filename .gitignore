@@ -20,6 +20,9 @@ pawn.lock
 # Server/gamemode related files
 #
 
+# models directory
+models/
+
 # env variables and values
 .env
 

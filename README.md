@@ -1,6 +1,8 @@
 # Advanced Roleplay
 #### SA-MP SERVER (0.0.1a - BETA)
 
+REGRA ÚNICA REFORÇADA: UTILIZEM A BRANCH `development`, TANTO PARA PULL REQUEST, QUANTO PARA HOTFIXES, WHATEVER. NÃO FAÇAM NENHUMA ALTERAÇÃO DIRETA OU INDIRETA À BRANCH `main`. 
+
 ## Como fazer o setup do projeto local?
 Passo à passo:
 1. [Clonando o Projeto](#clonando-o-projeto)

@@ -360,16 +360,6 @@ GetHouseAddress(id) {
     return address;
 }
 
-BuyHouse(id, playerid) {
-    hInfo[id][hOwner] = pInfo[playerid][pID];
-    SaveHouse(id);
-
-    format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hPrice]));
-	logCreate(playerid, logString, 13);
-
-    return 1;
-}
-
 RentableHouse(id, playerid, rentable) {
     if(rentable != 1)
         rentable = 0;

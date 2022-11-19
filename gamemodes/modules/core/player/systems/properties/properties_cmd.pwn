@@ -77,3 +77,40 @@ CMD:sair(playerid) {
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma saída");
 
 }
+
+CMD:comprar(playerid) {
+    new propertyType;
+    new houseID = GetNearestHouseEntry(playerid);
+    new businessID = GetNearestBusinessEntry(playerid);
+
+    if(!houseID && !businessID)
+        return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
+
+    if(HouseHasOwner(houseID) || BusinessHasOwner(businessID))
+        return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
+
+    if(GetMoney(playerid) < hInfo[houseID][hPrice] || GetMoney(playerid) < bInfo[businessID][bPrice])
+        return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.");
+
+    if(houseID !== -1) {
+        propertyType = 1;
+
+        GiveMoney(playerid, -hInfo[houseID][hPrice]);
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(houseID));
+        BuyProperty(houseID, playerid, propertyType);
+
+        return 1;
+    }
+
+    if(businessID !== -1) {
+        propertyType = 2;
+
+        GiveMoney(playerid, -bInfo[businessID][bPrice]);
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetBusinessAddress(houseID));
+        BuyProperty(houseID, playerid, propertyType);
+
+        return 1;
+    }
+
+    return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade");
+}

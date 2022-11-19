@@ -308,17 +308,6 @@ BusinessType(id) {
 
 // ============================================================================================================================================
 
-//Comprar empresa
-BuyBusiness(id, playerid) {
-    bInfo[id][bOwner] = pInfo[playerid][pID];
-    SaveBusiness(id);
-
-    format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(bInfo[id][bPrice]));
-	logCreate(playerid, logString, 13);
-
-    return 1;
-}
-
 LockedBusiness(playerid) {
     new businessID = GetNearestBusinessEntry(playerid);
 

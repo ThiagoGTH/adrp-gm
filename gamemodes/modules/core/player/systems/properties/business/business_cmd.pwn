@@ -63,31 +63,6 @@ CMD:deletarempresa(playerid, params[]) {
 
 // ============================================================================================================================================
 
-//Comanda para comprar empresa
-CMD:comprarempresa(playerid) {
-    new businessID = GetNearestBusinessEntry(playerid);
-
-    if(!businessID)
-        return SendErrorMessage(playerid, "Você não está próximo à nenhuma empresa.");
-
-    if(BusinessHasOwner(businessID))
-        return SendErrorMessage(playerid, "Esta empresa já possui um dono.");
-
-    if(GetMoney(playerid) < bInfo[businessID][bPrice])
-        return SendErrorMessage(playerid, "Você não possui fundos o suficiente para comprar esta casa.");
-
-    GiveMoney(playerid, -bInfo[businessID][bPrice]);
-    va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a empresa no endereço %s.", GetBusinessAddress(businessID));
-    
-    if(!BuyBusiness(businessID, playerid))
-    {
-        SendErrorMessage(playerid, "Bx020 - Encaminhe este código para um desenvolvedor.");
-        format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: Bx020)", pNome(playerid), GetPlayerUserEx(playerid));
-	    logCreate(playerid, logString, 13);
-    }
-    return 1;
-}
-
 //Comando de trancar/destrancar empresa (temporário)
 CMD:trancarempresa(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);

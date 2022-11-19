@@ -402,25 +402,6 @@ CMD:atrancar(playerid, params[]) {
     return 1;
 }
 
-CMD:comprar(playerid) {
-    new houseID = GetNearestHouseEntry(playerid);
-
-    if(!houseID)
-        return SendErrorMessage(playerid, "Você não está próximmo à nenhuma casa.");
-
-    if(HouseHasOwner(houseID))
-        return SendErrorMessage(playerid, "Esta casa já possui um dono.");
-
-    if(GetMoney(playerid) < hInfo[houseID][hPrice])
-        return SendErrorMessage(playerid, "Você não possui fundos o suficiente para comprar esta casa.");
-
-    GiveMoney(playerid, -hInfo[houseID][hPrice]);
-    va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(houseID));
-    BuyHouse(houseID, playerid);
-
-    return 1;
-}
-
 CMD:alugavel(playerid) {
     new houseID = GetNearestHouseEntry(playerid);
 

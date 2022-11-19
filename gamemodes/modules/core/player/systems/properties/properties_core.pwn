@@ -24,6 +24,8 @@ BuyProperty(id, playerid, propertyType) {
         hInfo[id][hOwner] = pInfo[playerid][pID];
         SaveHouse(id);
         format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hPrice]));
+    
+        return 1;
     }
 
     if(propertyType === 2) {
@@ -32,6 +34,8 @@ BuyProperty(id, playerid, propertyType) {
 
         format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(bInfo[id][bPrice]));
         logCreate(playerid, logString, 13);
+
+        return 1;
     }
 
 	logCreate(playerid, logString, 13);

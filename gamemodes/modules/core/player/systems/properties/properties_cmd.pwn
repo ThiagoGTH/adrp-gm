@@ -97,7 +97,7 @@ CMD:comprar(playerid) {
 
         GiveMoney(playerid, -hInfo[houseID][hPrice]);
         va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(houseID));
-        BuyProperty(houseID, playerid, propertyType);
+        BuyProperty(playerid, houseID, propertyType);
 
         return 1;
     }
@@ -106,11 +106,47 @@ CMD:comprar(playerid) {
         propertyType = 2;
 
         GiveMoney(playerid, -bInfo[businessID][bPrice]);
-        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetBusinessAddress(houseID));
-        BuyProperty(houseID, playerid, propertyType);
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetBusinessAddress(businessID));
+        BuyProperty(playerid, businessID, propertyType);
 
         return 1;
     }
 
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade");
+}
+
+CMD:trancarempresa(playerid, params[]) {
+    new propertyType;
+    new houseID = GetNearestHouseEntry(playerid);
+    new businessID = GetNearestBusinessEntry(playerid);
+
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
+
+    if(!houseID)
+        houseID = GetNearestHouseExit(playerid);
+
+    if(!businessID)
+        businessID = GetNearestBusinessExit(playerid)
+
+    if(!houseID && !businessID)
+        return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
+    
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID] || bInfo[businessID][bOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Essa propriedade não é sua.");
+
+    if(houseID !== -1) {
+        propertyType = 1;
+        LockProperty(playerid, houseID, propertyType);
+
+        return 1;
+    }
+
+    if(businessID !== -1) {
+        propertyType = 2;
+        LockProperty(playerid, businessID, propertyType);
+
+        return 1;
+    }
+
+    return 1;
 }

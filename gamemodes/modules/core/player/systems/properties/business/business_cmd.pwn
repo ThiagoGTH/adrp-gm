@@ -62,11 +62,3 @@ CMD:deletarempresa(playerid, params[]) {
 } 
 
 // ============================================================================================================================================
-
-//Comando de trancar/destrancar empresa (temporário)
-CMD:trancarempresa(playerid, params[]) {
-    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
-
-    LockedBusiness(playerid);
-    return 1;
-}

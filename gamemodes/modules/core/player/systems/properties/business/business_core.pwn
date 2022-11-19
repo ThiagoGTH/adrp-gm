@@ -308,42 +308,6 @@ BusinessType(id) {
 
 // ============================================================================================================================================
 
-//Função para entrar na empresa
-EntryBusiness(playerid) {
-    new businessID = GetNearestBusinessEntry(playerid);
-    
-    if(businessID) {
-        if(bInfo[businessID][bLocked])
-            return SendErrorMessage(playerid, "Está empresa está trancada.");
-
-        SetPlayerVirtualWorld(playerid, bInfo[businessID][vwExit]);
-        SetPlayerInterior(playerid, bInfo[businessID][interiorExit]);
-        SetPlayerPos(playerid, bInfo[businessID][bExitPos][0], bInfo[businessID][bExitPos][1], bInfo[businessID][bExitPos][2]);
-        SetPlayerFacingAngle(playerid, bInfo[businessID][bExitPos][3]);
-        
-        return 1;
-    }
-    return 1;
-}
-
-//Função para sair da empresa
-ExitBusiness(playerid) {
-    new businessID = GetNearestBusinessExit(playerid);
-    
-    if(businessID) {
-        if(bInfo[businessID][bLocked])
-            return SendErrorMessage(playerid, "Está empresa está trancada.");
-
-        SetPlayerVirtualWorld(playerid, bInfo[businessID][vwEntry]);
-        SetPlayerInterior(playerid, bInfo[businessID][interiorEntry]);
-        SetPlayerPos(playerid, bInfo[businessID][bEntryPos][0], bInfo[businessID][bEntryPos][1], bInfo[businessID][bEntryPos][2]);
-        SetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
-
-        return 1;
-    }
-    return 1;
-}
-
 //Comprar empresa
 BuyBusiness(id, playerid) {
     bInfo[id][bOwner] = pInfo[playerid][pID];

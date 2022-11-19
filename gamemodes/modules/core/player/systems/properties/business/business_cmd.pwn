@@ -63,18 +63,6 @@ CMD:deletarempresa(playerid, params[]) {
 
 // ============================================================================================================================================
 
-//Para entrar na empresa (comando temporário)
-CMD:entrarempresa(playerid) {
-    EntryBusiness(playerid);
-    return 1;
-}
-
-//Para sair da empresa (comando temporário)
-CMD:sairempresa(playerid) {
-    ExitBusiness(playerid);
-    return 1;
-}
-
 //Comanda para comprar empresa
 CMD:comprarempresa(playerid) {
     new businessID = GetNearestBusinessEntry(playerid);

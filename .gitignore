@@ -18,6 +18,9 @@ pawn.lock
 # Server/gamemode related files
 #
 
+# models directory
+models/
+
 # env variables and values
 .env
 
@@ -42,6 +45,7 @@ samp-npc
 logs/
 server_log.txt
 crashinfo.txt
+log.txt
 
 # Ban list
 samp.ban

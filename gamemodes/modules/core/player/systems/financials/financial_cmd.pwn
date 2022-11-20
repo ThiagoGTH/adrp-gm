@@ -1,32 +1,27 @@
 CMD:pagar(playerid, params[])
 {
-	new userid, amount, str[128]; 
+	new userid, amount;
 
 	if(sscanf(params, "ui", userid, amount))
-		return SendSyntaxMessage(playerid, "/pagar [id OU nome] [valor]");
+		return SendSyntaxMessage(playerid, "/pagar [id/nome] [valor]");
 
 	if (!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
-		
-	if(!IsPlayerNearPlayer(playerid, userid, 5.0))
-		return SendErrorMessage(playerid, "Você não está próximo desse jogador."); 
 
-    if(playerid == userid)
-		return SendErrorMessage(playerid, "Você não pode pagar a si mesmo."); 
+	if (!IsPlayerNearPlayer(playerid, userid, 5.0))
+		return SendErrorMessage(playerid, "Você não está próximo desse jogador.");
 
-    if(amount < 1)
-		return SendErrorMessage(playerid, "Você não pode pagar menos de $1.");
+    if (playerid == userid)
+		return SendErrorMessage(playerid, "Você não pode pagar a si mesmo.");
 
-	if(amount > GetMoney(playerid))
+    if (amount < 1)
+		return SendErrorMessage(playerid, "Você não pode pagar essa quantia.");
+
+	if (amount > GetMoney(playerid))
 		return SendErrorMessage(playerid, "Você não tem essa quantidade de dinheiro.");
-	
-    if(!strcmp(GetPlayerIp(playerid), GetPlayerIp(userid)))
-    {
-        format(str, sizeof(str), "%s (ID: %d) tentou pagar dinheiro para %s (ID: %d) com o mesmo IP.", GetPlayerNameEx(playerid), playerid, GetPlayerNameEx(userid), userid);
-		SendAdminWarning(1, str);
 
-        return 1;
-    }
-
-    PayPlayer(playerid, userid, amount)
+    if (!strcmp(GetPlayerIP(playerid), GetPlayerIP(userid)))
+		return SendAdminWarning(1, "%s (ID: %i) tentou pagar %s (ID: %i) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid);
+		
+    PayPlayer(playerid, userid, amount);
 	return 1;
 }

@@ -50,7 +50,7 @@ LockProperty(playerid, propertyId, propertyType) {
         SaveHouse(propertyId);
 
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
-        GameTextForPlayer(playerid, hInfo[propertyId][hLocked] ? "~r~EMPRESA TRANCADA" : "~g~~h~EMPRESA DESTRANCADA", 2500, 4);
+        GameTextForPlayer(playerid, hInfo[propertyId][hLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
         return 1;
     }
@@ -60,7 +60,7 @@ LockProperty(playerid, propertyId, propertyType) {
         SaveBusiness(propertyId);
 
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
-        GameTextForPlayer(playerid, bInfo[propertyId][bLocked] ? "~r~EMPRESA TRANCADA" : "~g~~h~EMPRESA DESTRANCADA", 2500, 4);
+        GameTextForPlayer(playerid, bInfo[propertyId][bLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
         return 1;
     }

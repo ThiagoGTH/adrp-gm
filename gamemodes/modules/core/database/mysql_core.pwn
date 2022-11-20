@@ -70,6 +70,7 @@ void:CheckTables() {
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
+    CheckBankAccountsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -1198,4 +1199,22 @@ void:CheckGraffitisTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
     logCreate(99998, logString, 5);
 
+}
+
+void:CheckBankAccountsTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `player_bankaccounts` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int DEFAULT '0',\
+    `sec_character_id` int DEFAULT '0',\
+    `account_number` varchar(16) NOT NULL DEFAULT '0',\
+    `account_pass` varchar(16) NOT NULL DEFAULT '0',\
+    `blocked` boolean NOT NULL DEFAULT '0',\
+    `account_ammount` int NOT NULL DEFAULT '0',\
+    `account_savings` int NOT NULL DEFAULT '0',\
+    `shared` boolean NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela player_bankaccounts checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
+    logCreate(99998, logString, 5);
 }

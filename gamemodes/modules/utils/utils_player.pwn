@@ -940,6 +940,10 @@ bool:IsPlayerWatchingCamera(playerid){
 	return pInfo[playerid][pWatching];
 }
 
+bool:IsPlayerLogged(playerid){
+	return pInfo[playerid][pLogged];
+}
+
 stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){
 	if(pInfo[playerid][pWatchingPlayer] == cameraman) return true;
 	return false;

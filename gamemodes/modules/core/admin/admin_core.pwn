@@ -47,6 +47,20 @@ GetUserTeam(playerid, team) {
 	return false;
 }
 
+SendAdminWarning(level, string[]){
+    foreach(new i: Player){
+        if(GetPlayerAdmin(playerid) >= 1)
+        {
+            if(strlen(string) > 116)
+            {
+                va_SendClientMessage(i, COLOR_LIGHTRED, "Aviso(%d): {FFFF00}%.116s ...", level, string);
+                va_SendClientMessage(i, COLOR_LIGHTRED, "Aviso(%d): {FFFF00}... %s", level, string[116]);
+            }
+            else va_SendClientMessage(i, COLOR_LIGHTRED, "Aviso(%d): {FFFF00}%s", level, string);
+        }
+    }
+}
+
 CMD:aa(playerid, params[]) {	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);

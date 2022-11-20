@@ -82,6 +82,11 @@ enum Player_Data {
     pVirtualWorld,
     pInterior,
 
+    // OFFERS
+
+    pGreetingOffer,
+    pGreetingType,
+
     // INFOS
     pGender,
     pEthnicity,

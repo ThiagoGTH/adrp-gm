@@ -53,13 +53,15 @@
 #include "modules\core\player\systems\death\damages.pwn"
 #include "modules\core\player\systems\items\items.pwn"
 #include "modules\core\player\systems\vehicles\vehicles.pwn"
-#include "modules\core\player\systems\houses\houses.pwn"
 #include "modules\core\player\systems\pets\pets.pwn"
 #include "modules\core\player\systems\investment\investment.pwn"
 #include "modules\core\player\systems\factions\factions.pwn"
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\animations\animations.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"
+#include "modules\core\player\systems\properties\business\business.pwn"
+#include "modules\core\player\systems\properties\houses\houses.pwn"
+#include "modules\core\player\systems\properties\properties.pwn"
 
 // OUTROS
 #include "modules\core\discord\discord_core.pwn"

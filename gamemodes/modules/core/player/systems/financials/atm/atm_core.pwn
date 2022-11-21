@@ -7,6 +7,7 @@ enum E_ATM_DATA {
     atmObject = 2942,  // (Apenas uma varíavel não ultilizavel) - ID do Objeto da ATM (isto para futuras mudanças no quesito ATM - porém já ultilizo para)
     atmInterior,       // Interior da ATM
     atmWorld,          // Mundo da ATM
+    bool:active,       // Mundo da ATM
     bool:Status,       // Ativado/Desativado
     Float:Position[4], // Posições (X, Y, Z, A)
 };
@@ -84,7 +85,7 @@ SaveATMS() {
             atmInfo[i][atmInterior], atmInfo[i][atmWorld], atmInfo[i][atmObject], i);
         mysql_query(DBConn, query);
 
-        //OnRefreshATM(i);
+        //OnRefreshATM(i); -- cria todas ATMs
         savedATMS++;
     }
 
@@ -108,6 +109,49 @@ SaveATM(id) {
     return 1;
 }
 
+// Recarrega ás ATMs (+ destroy todos os objetos existentes dela e create (novamente))
 /* OnRefreshATM(atmID) {
     return 1;   
 } */
+
+// ============================================================================================================================================
+//Verifica se o ID/atm  existe (MySQL) - ele retorna false (se o ID não existir).
+IsValidAtm(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `atm` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    return 1;
+}
+
+// Verifica a ATM (se possui alguma próxima ou não)
+GetNearestAtm(playerid, Float:distance = 2.0) {
+    for(new i; i < MAX_ATM; i++) {
+        if(!atmInfo[i][atmID])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, atmInfo[i][Position][0], atmInfo[i][Position][1], atmInfo[i][Position][2]))
+            continue;
+
+        if(GetPlayerVirtualWorld(playerid) != atmInfo[i][atmWorld] || GetPlayerInterior(playerid) != atmInfo[i][atmInterior])
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
+/* (Comentado para impedir o warming (de não estar sendo ultilizada)) 
+// Verifica se ATM está sendo usada (ela retorna true caso esteja livre).
+IsCheckingActivity(atmID) {
+    if(!atmInfo[atmID][active]) 
+        return 1;
+}
+
+// (em teste) - muda o resultado da atm (se está ou não sendo ultilizada)
+OnUsingAtm(playerid, atmID) {
+    return atmInfo[atmID][active] = !atmInfo[atmID][active];
+}  */

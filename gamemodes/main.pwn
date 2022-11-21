@@ -62,6 +62,7 @@
 #include "modules\core\player\systems\properties\business\business.pwn"
 #include "modules\core\player\systems\properties\houses\houses.pwn"
 #include "modules\core\player\systems\properties\properties.pwn"
+#include "modules\core\player\systems\financials\financial.pwn"
 
 // OUTROS
 #include "modules\core\discord\discord_core.pwn"

@@ -61,6 +61,7 @@
 #include "modules\core\player\systems\elevators\elevator.pwn"
 #include "modules\core\player\systems\properties\business\business.pwn"
 #include "modules\core\player\systems\properties\houses\houses.pwn"
+#include "modules\core\player\systems\properties\garages\garages.pwn"
 #include "modules\core\player\systems\properties\properties.pwn"
 #include "modules\core\player\systems\financials\financial.pwn"
 

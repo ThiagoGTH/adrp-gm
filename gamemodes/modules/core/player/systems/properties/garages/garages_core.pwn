@@ -1,22 +1,22 @@
 #define MAX_GARAGES          2000
 
 enum E_GARAGE_DATA {
-	gID,                    // ID da garagem no MySQL
-	gOwner,                 // ID do personagem dono da garagem
-    gHouse,                 // ID da casa atrelada (caso haja)
-	gAddress[24],           // Endereço da Garagem, podendo ser o mesmo da casa
-	bool:gLocked,           // Garagem trancada
-    gInv,                   // ID do inventário da Garagem
-    gPrice,                 // Preço de venda (pelo servidor)
-    gStorageMoney,          // Dinheiro guardado
-    Float:gStorageItem[6]   // Itens no Armazenamento da Garagem
-    Float:gStorageAmount[6] // Quantidade do Item no Armazenamento da Garagem
-    Float:gEntryPos[4],     // Posições (X, Y, Z, A) do exterior
-    gVwEntry,               // VW do exterior
-    gInteriorEntry,         // Interior do exterior
-    Float:gExitPos[4],      // Posições (X, Y, Z, A) do interior
-    gVwExit,                // VW do interior
-    gInteriorExit,          // Interior do interior
+	gID,                        // ID da garagem no MySQL
+	gOwner,                     // ID do personagem dono da garagem
+    gHouse,                     // ID da casa atrelada (caso haja)
+	gAddress[24],               // Endereço da Garagem, podendo ser o mesmo da casa
+	bool:gLocked,               // Garagem trancada
+    gInv,                       // ID do inventário da Garagem
+    gPrice,                     // Preço de venda (pelo servidor)
+    gStorageMoney,              // Dinheiro guardado
+    Float:gStorageItem[6],      // Itens no Armazenamento da Garagem
+    Float:gStorageAmount[6],    // Quantidade do Item no Armazenamento da Garagem
+    Float:gEntryPos[4],         // Posições (X, Y, Z, A) do exterior
+    gVwEntry,                   // VW do exterior
+    gInteriorEntry,             // Interior do exterior
+    Float:gExitPos[4],          // Posições (X, Y, Z, A) do interior
+    gVwExit,                    // VW do interior
+    gInteriorExit,              // Interior do interior
 };
 
 new gInfo[MAX_GARAGES][E_GARAGE_DATA];
@@ -45,25 +45,25 @@ LoadGarages() {
     for(new i; i < cache_num_rows(); i++) {
         new id;
         cache_get_value_name_int(i, "id", id);
-        gInfo[id][hID] = id;
+        gInfo[id][gID] = id;
 
         cache_get_value_name_int(i, "character_id", gInfo[id][gOwner]);
-        cache_get_value_name(i, "address", gInfo[id][hAddress]);
+        cache_get_value_name(i, "address", gInfo[id][gAddress]);
         cache_get_value_name_int(i, "locked", gInfo[id][gLocked]);
         cache_get_value_name_int(i, "price", gInfo[id][gPrice]);
         cache_get_value_name_int(i, "storage_money", gInfo[id][gStorageMoney]);
-        cache_get_value_name_int(i, "storage_item1", gInfo[id][gStorageItem][0]);
-        cache_get_value_name_int(i, "storage_item2", gInfo[id][gStorageItem][1]);
-        cache_get_value_name_int(i, "storage_item3", gInfo[id][gStorageItem][2]);
-        cache_get_value_name_int(i, "storage_item4", gInfo[id][gStorageItem][3]);
-        cache_get_value_name_int(i, "storage_item5", gInfo[id][gStorageItem][4]);
-        cache_get_value_name_int(i, "storage_item6", gInfo[id][gStorageItem][5]);
-        cache_get_value_name_int(i, "storage_amount1", gInfo[id][gStorageAmount][0]);
-        cache_get_value_name_int(i, "storage_amount2", gInfo[id][gStorageAmount][1]);
-        cache_get_value_name_int(i, "storage_amount3", gInfo[id][gStorageAmount][2]);
-        cache_get_value_name_int(i, "storage_amount4", gInfo[id][gStorageAmount][3]);
-        cache_get_value_name_int(i, "storage_amount5", gInfo[id][gStorageAmount][4]);
-        cache_get_value_name_int(i, "storage_amount6", gInfo[id][gStorageAmount][5]);
+        cache_get_value_name_float(i, "storage_item1", gInfo[id][gStorageItem][0]);
+        cache_get_value_name_float(i, "storage_item2", gInfo[id][gStorageItem][1]);
+        cache_get_value_name_float(i, "storage_item3", gInfo[id][gStorageItem][2]);
+        cache_get_value_name_float(i, "storage_item4", gInfo[id][gStorageItem][3]);
+        cache_get_value_name_float(i, "storage_item5", gInfo[id][gStorageItem][4]);
+        cache_get_value_name_float(i, "storage_item6", gInfo[id][gStorageItem][5]);
+        cache_get_value_name_float(i, "storage_amount1", gInfo[id][gStorageAmount][0]);
+        cache_get_value_name_float(i, "storage_amount2", gInfo[id][gStorageAmount][1]);
+        cache_get_value_name_float(i, "storage_amount3", gInfo[id][gStorageAmount][2]);
+        cache_get_value_name_float(i, "storage_amount4", gInfo[id][gStorageAmount][3]);
+        cache_get_value_name_float(i, "storage_amount5", gInfo[id][gStorageAmount][4]);
+        cache_get_value_name_float(i, "storage_amount6", gInfo[id][gStorageAmount][5]);
         cache_get_value_name_float(i, "entry_x", gInfo[id][gEntryPos][0]);
         cache_get_value_name_float(i, "entry_y", gInfo[id][gEntryPos][1]);
         cache_get_value_name_float(i, "entry_z", gInfo[id][gEntryPos][2]);
@@ -92,36 +92,36 @@ LoadGarage(id) {
     if(!cache_num_rows())
         return 0;
 
-    gInfo[id][hID] = id;
-    cache_get_value_name_int(i, "character_id", gInfo[id][gOwner]);
-    cache_get_value_name(i, "address", gInfo[id][hAddress]);
-    cache_get_value_name_int(i, "locked", gInfo[id][gLocked]);
-    cache_get_value_name_int(i, "price", gInfo[id][gPrice]);
-    cache_get_value_name_int(i, "storage_money", gInfo[id][gStorageMoney]);
-    cache_get_value_name_int(i, "storage_item1", gInfo[id][gStorageItem][0]);
-    cache_get_value_name_int(i, "storage_item2", gInfo[id][gStorageItem][1]);
-    cache_get_value_name_int(i, "storage_item3", gInfo[id][gStorageItem][2]);
-    cache_get_value_name_int(i, "storage_item4", gInfo[id][gStorageItem][3]);
-    cache_get_value_name_int(i, "storage_item5", gInfo[id][gStorageItem][4]);
-    cache_get_value_name_int(i, "storage_item6", gInfo[id][gStorageItem][5]);
-    cache_get_value_name_int(i, "storage_amount1", gInfo[id][gStorageAmount][0]);
-    cache_get_value_name_int(i, "storage_amount2", gInfo[id][gStorageAmount][1]);
-    cache_get_value_name_int(i, "storage_amount3", gInfo[id][gStorageAmount][2]);
-    cache_get_value_name_int(i, "storage_amount4", gInfo[id][gStorageAmount][3]);
-    cache_get_value_name_int(i, "storage_amount5", gInfo[id][gStorageAmount][4]);
-    cache_get_value_name_int(i, "storage_amount6", gInfo[id][gStorageAmount][5]);
-    cache_get_value_name_float(i, "entry_x", gInfo[id][gEntryPos][0]);
-    cache_get_value_name_float(i, "entry_y", gInfo[id][gEntryPos][1]);
-    cache_get_value_name_float(i, "entry_z", gInfo[id][gEntryPos][2]);
-    cache_get_value_name_float(i, "entry_a", gInfo[id][gEntryPos][3]);
-    cache_get_value_name_int(i, "vw_entry", gInfo[id][gVwEntry]);
-    cache_get_value_name_int(i, "interior_entry", gInfo[id][gInteriorEntry]);
-    cache_get_value_name_float(i, "exit_x", gInfo[id][gExitPos][0]);
-    cache_get_value_name_float(i, "exit_y", gInfo[id][gExitPos][1]);
-    cache_get_value_name_float(i, "exit_z", gInfo[id][gExitPos][2]);
-    cache_get_value_name_float(i, "exit_a", gInfo[id][gExitPos][3]);
-    cache_get_value_name_int(i, "vw_exit", gInfo[id][gVwExit]);
-    cache_get_value_name_int(i, "interior_exit", gInfo[id][gInteriorExit]);
+    gInfo[id][gID] = id;
+    cache_get_value_name_int(0, "character_id", gInfo[id][gOwner]);
+    cache_get_value_name(0, "address", gInfo[id][gAddress]);
+    cache_get_value_name_int(0, "locked", gInfo[id][gLocked]);
+    cache_get_value_name_int(0, "price", gInfo[id][gPrice]);
+    cache_get_value_name_int(0, "storage_money", gInfo[id][gStorageMoney]);
+    cache_get_value_name_float(0, "storage_item1", gInfo[id][gStorageItem][0]);
+    cache_get_value_name_float(0, "storage_item2", gInfo[id][gStorageItem][1]);
+    cache_get_value_name_float(0, "storage_item3", gInfo[id][gStorageItem][2]);
+    cache_get_value_name_float(0, "storage_item4", gInfo[id][gStorageItem][3]);
+    cache_get_value_name_float(0, "storage_item5", gInfo[id][gStorageItem][4]);
+    cache_get_value_name_float(0, "storage_item6", gInfo[id][gStorageItem][5]);
+    cache_get_value_name_float(0, "storage_amount1", gInfo[id][gStorageAmount][0]);
+    cache_get_value_name_float(0, "storage_amount2", gInfo[id][gStorageAmount][1]);
+    cache_get_value_name_float(0, "storage_amount3", gInfo[id][gStorageAmount][2]);
+    cache_get_value_name_float(0, "storage_amount4", gInfo[id][gStorageAmount][3]);
+    cache_get_value_name_float(0, "storage_amount5", gInfo[id][gStorageAmount][4]);
+    cache_get_value_name_float(0, "storage_amount6", gInfo[id][gStorageAmount][5]);
+    cache_get_value_name_float(0, "entry_x", gInfo[id][gEntryPos][0]);
+    cache_get_value_name_float(0, "entry_y", gInfo[id][gEntryPos][1]);
+    cache_get_value_name_float(0, "entry_z", gInfo[id][gEntryPos][2]);
+    cache_get_value_name_float(0, "entry_a", gInfo[id][gEntryPos][3]);
+    cache_get_value_name_int(0, "vw_entry", gInfo[id][gVwEntry]);
+    cache_get_value_name_int(0, "interior_entry", gInfo[id][gInteriorEntry]);
+    cache_get_value_name_float(0, "exit_x", gInfo[id][gExitPos][0]);
+    cache_get_value_name_float(0, "exit_y", gInfo[id][gExitPos][1]);
+    cache_get_value_name_float(0, "exit_z", gInfo[id][gExitPos][2]);
+    cache_get_value_name_float(0, "exit_a", gInfo[id][gExitPos][3]);
+    cache_get_value_name_int(0, "vw_exit", gInfo[id][gVwExit]);
+    cache_get_value_name_int(0, "interior_exit", gInfo[id][gInteriorExit]);
 
     return 1;
 }
@@ -129,8 +129,8 @@ LoadGarage(id) {
 SaveGarages() {
     new savedGarages;
 
-    for(new i; i < MAX_HOUSES; i++) {
-        if(!gInfo[i][hID])
+    for(new i; i < MAX_GARAGES; i++) {
+        if(!gInfo[i][gID])
             continue;
 
         mysql_format(DBConn, query, sizeof query, "UPDATE `garages` SET `character_id` = '%d', \
@@ -247,7 +247,7 @@ GarageHasOwner(id) {
     return IsValidGarage(id) && (gInfo[id][gOwner]);
 }
 
-CreateGarage(price, address[256], Float:pos[4]){
+CreateGarage(playerid, price, address[256], Float:pos[4]){
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `garages` WHERE `address` = '%e';", address);
     mysql_query(DBConn, query);

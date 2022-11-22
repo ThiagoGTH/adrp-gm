@@ -9,7 +9,7 @@ CMD:criargaragem(playerid, params[]) {
     if(price < 1000)
         return SendErrorMessage(playerid, "O preço da garagem deve ser maior do que $1000.");
     
-    CreateGarage(price, address, pos);
+    CreateGarage(playerid, price, address, pos);
 
     return 1;
 }

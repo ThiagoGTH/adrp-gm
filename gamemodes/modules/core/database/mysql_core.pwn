@@ -71,6 +71,7 @@ void:CheckTables() {
     CheckFactionsTable();
     CheckGraffitisTable();
     CheckBankAccountsTable();
+    CheckGaragesTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -1239,6 +1240,10 @@ void:CheckGaragesTable() {
     
     print("[DATABASE] Tabela garages checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela garages checada com sucesso");
+    logCreate(99998, logString, 5);
+
+}
+
 void:CheckBankAccountsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `player_bankaccounts` (\
     `id` int NOT NULL AUTO_INCREMENT,\

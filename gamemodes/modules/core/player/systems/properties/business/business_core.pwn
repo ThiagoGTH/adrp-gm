@@ -322,3 +322,17 @@ EditNameBusiness(businessID, newName) {
     SaveBusiness(businessID);
     return 1;
 }
+
+//Função que edita o preço
+EditPriceBusiness(businessID, newName) {
+    bInfo[businessID][bPrice] = newName;
+    SaveBusiness(businessID);
+    return 1;
+}
+
+//Função que edita o tipo da empresa
+EditTypeBusiness(businessID, newType) {
+    bInfo[businessID][bType] = newType;
+    SaveBusiness(businessID);
+    return 1;
+}

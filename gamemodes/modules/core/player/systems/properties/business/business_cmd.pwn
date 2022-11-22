@@ -71,13 +71,13 @@ CMD:editarempresa(playerid, params[]) {
 
 	if(sscanf(params, "ds[64]S()[64]", businessID, option, value)) {
         SendSyntaxMessage(playerid, "/editarempresa [id] [opção]");
-        return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, entrada");
+        return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, entrada, preço, tipo");
     }
     
     if(!IsValidBusiness(businessID))
         return SendErrorMessage(playerid, "Esse ID de empresa não existe.");
     
-    // Editar o nome
+    // Editar o nome da empresa
     if(!strcmp(option, "nome", true) || !strcmp(option, "nome", true)) {
         new newName = strval(value);
         
@@ -93,19 +93,54 @@ CMD:editarempresa(playerid, params[]) {
         return 1;
     }      
 
+    //Edita a entrada da empresa
     if(!strcmp(option, "entrada", true) || !strcmp(option, "entrada", true)) {
-        
-        if(!newName)
+        new newEntry = strval(value);
+
+        if(!newEntry)
             return SendErrorMessage(playerid, "Você precisa especificar um nome. (/editarempresa [id] [opção] [novo nome])");
 
         //Função para editar o nome da empresa.
-        EditNameBusiness(playerid, businessID);
+        EditEntryBusiness(playerid, businessID);
 
-        SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d para $%s.", businessID, newName);
-        format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newName);
+        SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d para $%s.", businessID, newEntry);
+        format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newEntry);
 	    logCreate(playerid, logString, 13);
         return 1;
     }   
+
+     // Editar o preço da empresa
+    if(!strcmp(option, "preço", true) || !strcmp(option, "preço", true)) {
+        new newPrice = strval(value);
+
+        if(newPrice < 1000)
+            return SendErrorMessage(playerid, "O preço da empresa deve ser maior do que $1000.");
+        //Função para editar o preço da empresa.
+        EditPriceBusiness(businessID, newPrice);
+
+        SendServerMessage(playerid, "Você editou o preço da empresa de ID %d para $%s.", businessID, newPrice);
+        format(logString, sizeof(logString), "%s (%s) editou o preço da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newPrice);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }  
+
+     // Editar o tipo da empresa
+    if(!strcmp(option, "tipo", true) || !strcmp(option, "tipo", true)) {
+        new newType = strval(value);
+
+        if (newType < 1 || newType > 7) {
+            SendErrorMessage(playerid, "Tipo inválido. Tipos de 1 á 7. (/editarempresa [id] [opção] [tipo]).");
+            SendErrorMessage(playerid, "[TIPOS] 1: 24/7 | 2: Ammunation | 3: Loja de roupas | 4: Fast Food | 5: Concessionária | 6: Posto de gasolina | 7: Firma");
+            return 1;
+        }
+        //Função para editar o tipo da empresa.
+        EditTypeBusiness(businessID, newType);
+
+        SendServerMessage(playerid, "Você editou o tipo da empresa de ID %d para $%s.", businessID, newType);
+        format(logString, sizeof(logString), "%s (%s) editou o tipo da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newType);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }
     return 1;
 }
 // ============================================================================================================================================

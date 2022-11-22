@@ -74,12 +74,12 @@ alias:gritar("g")
 CMD:s(playerid, params[])
 {
     if(pInfo[playerid][pInjured])
-        return va_SendClientMessage(playerid, COLOR_GRAD1, "Você não pode sussurrar no momento.");
+        return va_SendClientMessage(playerid, COLOR_WHITE, "Você não pode sussurrar no momento.");
 
 	new userid, text[128];
 
     if(sscanf(params, "us[128]", userid, text))
-	    return va_SendClientMessage(playerid, COLOR_GRAD2, "USAGE: (/s)ussurrar [ID/Parte do nome] [texto do sussurro.]");
+	    return va_SendClientMessage(playerid, COLOR_WHITE, "USAGE: (/s)ussurrar [ID/Parte do nome] [texto do sussurro.]");
 
 	if(userid == playerid)
 	    return va_SendClientMessage(playerid, COLOR_YELLOW, "Esse é o seu ID.");
@@ -88,18 +88,18 @@ CMD:s(playerid, params[])
 	    return SendErrorMessage(playerid, "Você não está perto desse jogador.");
 
     if(strlen(text) > 80) {
-	    va_SendClientMessage(userid, COLOR_YELLOW, "%s sussurrou: %.80s", pNome(playerid, 0), text);
+	    va_SendClientMessage(userid, COLOR_YELLOW, "%s sussurrou: %.80s", pNome(playerid), text);
 	    va_SendClientMessage(userid, COLOR_YELLOW, "... %s **", text[80]);
 
-	    va_SendClientMessage(playerid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid, 0), text);
+	    va_SendClientMessage(playerid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid), text);
 	}
 	else {
-	    va_SendClientMessage(userid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid, 0), text);
-		va_SendClientMessage(playerid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid, 0), text);
+	    va_SendClientMessage(userid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid), text);
+		va_SendClientMessage(playerid, COLOR_YELLOW, "%s sussurrou: %s", pNome(playerid), text);
 	}
 
-	format(text, sizeof(text), "* %s sussurra alguma coisa.", pNome(playerid, 0));
-	_SetPlayerChatBubble(playerid, text, COLOR_PURPLE, 20.0, 3000);
+	format(text, sizeof(text), "* %s sussurra alguma coisa.", pNome(playerid));
+	SetPlayerChatBubble(playerid, text, COLOR_PURPLE, 20.0, 3000);
 	return 1;
 		
 }
@@ -112,17 +112,16 @@ CMD:mebaixo(playerid, params[])
 
 	if(strlen(params) > 80)
 	{
-		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s %.80s ...", pNome(playerid, 0), params);
-		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* ... %s (( %s ))", params[80], pNome(playerid, 0));
+		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s %.80s ...", pNome(playerid), params);
+		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* ... %s (( %s ))", params[80], pNome(playerid));
 	}
-	else SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s %s", pNome(playerid, 0), params);
+	else SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s %s", pNome(playerid), params);
 
 	return true;
 	
-	>
-	alias:mebaixo("meb")
-
 }
+alias:mebaixo("meb")
+
 
 CMD:dobaixo(playerid, params[])
 {
@@ -131,15 +130,15 @@ CMD:dobaixo(playerid, params[])
 
 	if(strlen(params) > 80)
 	{
-		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %.80s ... (( %s ))", params, pNome(playerid, 0));
-		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s (( %s ))", params[80], pNome(playerid, 0));
+		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %.80s ... (( %s ))", params, pNome(playerid));
+		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s (( %s ))", params[80], pNome(playerid));
 	}
-	else SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s (( %s ))", params, pNome(playerid, 0));
+	else SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s (( %s ))", params, pNome(playerid));
 
 	return true;
 
 }
-alias:("dob")
+alias:dobaixo("dob")
 
 
 // OOC:

@@ -61,4 +61,51 @@ CMD:deletarempresa(playerid, params[]) {
     return 1;
 } 
 
+CMD:editarempresa(playerid, params[]) {
+    new 
+        businessID,
+        option[64],
+        value[64]; 
+
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
+
+	if(sscanf(params, "ds[64]S()[64]", businessID, option, value)) {
+        SendSyntaxMessage(playerid, "/editarempresa [id] [opção]");
+        return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, entrada");
+    }
+    
+    if(!IsValidBusiness(businessID))
+        return SendErrorMessage(playerid, "Esse ID de empresa não existe.");
+    
+    // Editar o nome
+    if(!strcmp(option, "nome", true) || !strcmp(option, "nome", true)) {
+        new newName = strval(value);
+        
+        if(!newName)
+            return SendErrorMessage(playerid, "Você precisa especificar um nome. (/editarempresa [id] [opção] [novo nome])");
+
+        //Função para editar o nome da empresa.
+        EditNameBusiness(businessID, newName);
+
+        SendServerMessage(playerid, "Você editou o nome da empresa de ID %d para $%s.", businessID, newName);
+        format(logString, sizeof(logString), "%s (%s) editou o nome da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newName);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }      
+
+    if(!strcmp(option, "entrada", true) || !strcmp(option, "entrada", true)) {
+        
+        if(!newName)
+            return SendErrorMessage(playerid, "Você precisa especificar um nome. (/editarempresa [id] [opção] [novo nome])");
+
+        //Função para editar o nome da empresa.
+        EditNameBusiness(playerid, businessID);
+
+        SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d para $%s.", businessID, newName);
+        format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newName);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }   
+    return 1;
+}
 // ============================================================================================================================================

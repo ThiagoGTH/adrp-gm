@@ -212,8 +212,7 @@ CreateBusiness(playerid, type, price, address[256]) {
 }
 
 //Deletar/excluir empresa (MySQL)
-DeleteBusiness(playerid, id) 
-{
+DeleteBusiness(playerid, id)  {
     mysql_format(DBConn, query, sizeof query, "DELETE FROM `business` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
 
@@ -307,3 +306,19 @@ BusinessType(id) {
 }
 
 // ============================================================================================================================================
+
+EditEntryBusiness(playerid, businessID) {
+    GetPlayerPos(playerid, bInfo[businessID][bEntryPos][0], bInfo[businessID][bEntryPos][1], bInfo[businessID][bEntryPos][2]);
+    GetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
+    bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
+    bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
+    SaveBusiness(businessID);
+    return 1;
+}
+
+//Função que edita nome da empresa
+EditNameBusiness(businessID, newName) {
+    bInfo[businessID][bName] = newName;
+    SaveBusiness(businessID);
+    return 1;
+}

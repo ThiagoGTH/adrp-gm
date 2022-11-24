@@ -205,6 +205,12 @@ enum Player_Data {
     pOjectVeh,
     pSlotEdVeh,
 
+    // BANK ACCOUNT
+
+    pAccountList[2],
+    pAccountChoosed,
+    pAccountPassword[16],
+
     // Dealership
     dModel,
     dColor1,
@@ -404,7 +410,12 @@ void:ResetCharacterData(playerid) {
     format(pInfo[playerid][rRadioName7], 90, "0");
 
     pInfo[playerid][pKicked] = 0;
-    
+
+    // BANK ACCOUNT
+
+    pInfo[playerid][pAccountChoosed] = 0;
+    format(pInfo[playerid][pAccountPassword], 16, "NULL");
+
     // TEMP VARS
     pInfo[playerid][tempChar][0] = 
     pInfo[playerid][tempChar2][0] = 

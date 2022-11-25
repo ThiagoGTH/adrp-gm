@@ -157,7 +157,7 @@ Inventory_Add(playerid, item, quantity = 1){
     return -1;
 }
 
-stock Inventory_HasItem(playerid, const item[]) {
+Inventory_HasItem(playerid, const item[]) {
 	new exists = false;
 	for (new i = 0; i < GetInventorySlots(playerid); i ++) {
 		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item)){

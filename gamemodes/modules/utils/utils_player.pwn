@@ -217,7 +217,7 @@ pNome(playerid) {
 	}
 }
 
-stock SQLName(id) {
+SQLName(id) {
     new name[24];
     mysql_format(DBConn, query, sizeof(query), "SELECT `name` FROM `players` WHERE ID = %i LIMIT 1", id);
     new Cache: cache = mysql_query(DBConn, query);
@@ -938,10 +938,6 @@ bool:IsPlayerRecording(playerid){
 
 bool:IsPlayerWatchingCamera(playerid){
 	return pInfo[playerid][pWatching];
-}
-
-bool:IsPlayerLogged(playerid){
-	return pInfo[playerid][pLogged];
 }
 
 stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){

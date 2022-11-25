@@ -66,11 +66,9 @@ void:CheckTables() {
     CheckVehiclesTable();
     CheckPoolTable();
     CheckHousesTable();
-    CheckBusinesssTable();
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
-    CheckBankAccountsTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -829,36 +827,6 @@ void:CheckHousesTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso");
 }
 
-void:CheckBusinesssTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
-    `locked` int DEFAULT '0',\
-    `name` varchar(256) DEFAULT 'Empresa desconhecida',\
-    `type` int DEFAULT '0',\
-    `inventory` int DEFAULT '0',\
-    `storage_money` int DEFAULT '0',\
-    `price` int DEFAULT '0',\
-    `entry_x` float DEFAULT '0',\
-    `entry_y` float DEFAULT '0',\
-    `entry_z` float DEFAULT '0',\
-    `entry_a` float DEFAULT '0',\
-    `vw_entry` int DEFAULT '0',\
-    `interior_entry` int DEFAULT '0',\
-    `exit_x` float DEFAULT '0',\
-    `exit_y` float DEFAULT '0',\
-    `exit_z` float DEFAULT '0',\
-    `exit_a` float DEFAULT '0',\
-    `vw_exit` int DEFAULT '0',\
-    `interior_exit` int DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela business checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business checada com sucesso");
-    logCreate(99998, logString, 5);
-}
-
 void:CheckTradingTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -1199,22 +1167,4 @@ void:CheckGraffitisTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
     logCreate(99998, logString, 5);
 
-}
-
-void:CheckBankAccountsTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `player_bankaccounts` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `character_id` int DEFAULT '0',\
-    `sec_character_id` int DEFAULT '0',\
-    `account_number` varchar(16) NOT NULL DEFAULT '0',\
-    `account_pass` varchar(16) NOT NULL DEFAULT '0',\
-    `blocked` boolean NOT NULL DEFAULT '0',\
-    `account_ammount` int NOT NULL DEFAULT '0',\
-    `account_savings` int NOT NULL DEFAULT '0',\
-    `shared` boolean NOT NULL DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela player_bankaccounts checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
-    logCreate(99998, logString, 5);
 }

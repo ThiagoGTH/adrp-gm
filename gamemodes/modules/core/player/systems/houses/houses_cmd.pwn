@@ -402,6 +402,25 @@ CMD:atrancar(playerid, params[]) {
     return 1;
 }
 
+CMD:comprar(playerid) {
+    new houseID = GetNearestHouseEntry(playerid);
+
+    if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximmo à nenhuma casa.");
+
+    if(HouseHasOwner(houseID))
+        return SendErrorMessage(playerid, "Esta casa já possui um dono.");
+
+    if(GetMoney(playerid) < hInfo[houseID][hPrice])
+        return SendErrorMessage(playerid, "Você não possui fundos o suficiente para comprar esta casa.");
+
+    GiveMoney(playerid, -hInfo[houseID][hPrice]);
+    va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(houseID));
+    BuyHouse(houseID, playerid);
+
+    return 1;
+}
+
 CMD:alugavel(playerid) {
     new houseID = GetNearestHouseEntry(playerid);
 
@@ -446,6 +465,66 @@ CMD:precoaluguel(playerid, params[]) {
     
     SetRentPrice(houseID, playerid, price);
     va_SendClientMessage(playerid, COLOR_YELLOW, "Você alterou o preço do aluguel da sua casa para $%s", FormatNumber(price));
+
+    return 1;
+}
+
+CMD:entrar(playerid) {
+    new houseID = GetNearestHouseEntry(playerid), entryID = GetNearestHouseSecondEntry(playerid);
+    
+    if(houseID) {
+        if(hInfo[houseID][hLocked])
+            return SendErrorMessage(playerid, "Esta casa está trancada.");
+
+        SetPlayerVirtualWorld(playerid, hInfo[houseID][vwExit]);
+        SetPlayerInterior(playerid, hInfo[houseID][interiorExit]);
+        SetPlayerPos(playerid, hInfo[houseID][hExitPos][0], hInfo[houseID][hExitPos][1], hInfo[houseID][hExitPos][2]);
+        SetPlayerFacingAngle(playerid, hInfo[houseID][hExitPos][3]);
+        
+        return 1;
+    }
+
+    if(entryID) {
+        if(sInfo[entryID][sLocked])
+            return SendErrorMessage(playerid, "Esta entrada da casa está trancada.");
+
+        SetPlayerVirtualWorld(playerid, sInfo[entryID][sExitVW]);
+        SetPlayerInterior(playerid, sInfo[entryID][sExitInterior]);
+        SetPlayerPos(playerid, sInfo[entryID][sExitPos][0], sInfo[entryID][sExitPos][1], sInfo[entryID][sExitPos][2]);
+        SetPlayerFacingAngle(playerid, sInfo[entryID][sExitPos][3]);
+
+        return 1;
+    } 
+
+    return 1;
+}
+
+CMD:sair(playerid) {
+    new houseID = GetNearestHouseExit(playerid), entryID = GetNearestHouseSecondExit(playerid);
+    
+    if(houseID) {
+        if(hInfo[houseID][hLocked])
+            return SendErrorMessage(playerid, "Esta casa está trancada.");
+
+        SetPlayerVirtualWorld(playerid, hInfo[houseID][vwEntry]);
+        SetPlayerInterior(playerid, hInfo[houseID][interiorEntry]);
+        SetPlayerPos(playerid, hInfo[houseID][hEntryPos][0], hInfo[houseID][hEntryPos][1], hInfo[houseID][hEntryPos][2]);
+        SetPlayerFacingAngle(playerid, hInfo[houseID][hEntryPos][3]);
+
+        return 1;
+    }
+
+    if(entryID) {
+        if(sInfo[entryID][sLocked])
+            return SendErrorMessage(playerid, "Esta entrada está trancada.");
+
+        SetPlayerVirtualWorld(playerid, sInfo[entryID][sEntryVW]);
+        SetPlayerInterior(playerid, sInfo[entryID][sEntryInterior]);
+        SetPlayerPos(playerid, sInfo[entryID][sEntryPos][0], sInfo[entryID][sEntryPos][1], sInfo[entryID][sEntryPos][2]);
+        SetPlayerFacingAngle(playerid, sInfo[entryID][sEntryPos][3]);
+
+        return 1;
+    }
 
     return 1;
 }

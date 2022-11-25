@@ -1,4 +1,4 @@
-stock CountLicenseWarnings(playerid) {
+CountLicenseWarnings(playerid) {
 	new count;
 	if(strlen(pLicenses[playerid][warning_one]) > 1) count++;
 	if(strlen(pLicenses[playerid][warning_two]) > 1) count++;
@@ -6,7 +6,7 @@ stock CountLicenseWarnings(playerid) {
 	return count;
 }
 
-stock ResetLicenseWarnings(playerid) {
+ResetLicenseWarnings(playerid) {
 	format(pLicenses[playerid][warning_one], MAX_DRIVERLICENCE_WAR, "");
 	format(pLicenses[playerid][warning_two], MAX_DRIVERLICENCE_WAR, "");
 	format(pLicenses[playerid][warning_three], MAX_DRIVERLICENCE_WAR, "");

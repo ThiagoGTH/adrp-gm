@@ -158,7 +158,7 @@ public OnObjectMoved(objectid) {
 	    Floor_OpenDoors(ElevatorFloor);
 
 	    GetObjectPos(Obj_Elevator, x, y, z);
-	    Label_Elevator	= Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFFFF, 1784.9822, -1302.0426, z - 0.9, 2.0, 0, true);
+	    Label_Elevator	= Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFFFF, 1784.9822, -1302.0426, z - 0.9, 2.0, 0, 1);
 		PlaySoundForPlayersInRange(6401, 10.0, x, y, z);
 
 	    ElevatorState 	= ELEVATOR_STATE_WAITING;
@@ -222,7 +222,7 @@ Elevator_Initialize()
 	Obj_ElevatorDoors[0] 	= CreateObject(18757, X_DOOR_CLOSED, -1303.459472, GROUND_Z_COORD, 0.000000, 0.000000, 270.000000);
 	Obj_ElevatorDoors[1] 	= CreateObject(18756, X_DOOR_CLOSED, -1303.459472, GROUND_Z_COORD, 0.000000, 0.000000, 270.000000);
 
-	Label_Elevator          = Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFFFF, 1784.9822, -1302.0426, 13.6491, 2.0, 0, true);
+	Label_Elevator          = Create3DTextLabel("Pressione 'F' para usar o elevador", 0xFFFFFFFF, 1784.9822, -1302.0426, 13.6491, 2.0, 0, 1);
 
 	new string[128],
 		Float:z;
@@ -239,7 +239,7 @@ Elevator_Initialize()
 		else
 		    z = 13.4713 + 8.7396 + ((i-1) * 5.45155);
 
-		Label_Floors[i]         = Create3DTextLabel(string, 0xFFFFFFFF, 1783.9799, -1300.7660, z, 2.0, 0, true);
+		Label_Floors[i]         = Create3DTextLabel(string, 0xFFFFFFFF, 1783.9799, -1300.7660, z, 2.0, 0, 1);
 		// Label_Elevator, Text3D:Label_Floors[21];
 	}
 

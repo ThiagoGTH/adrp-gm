@@ -1,4 +1,32 @@
-EntryProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3) {
+EnterGarage(playerid, gExitVw, gExitInterior, Float:gExitPos0, Float:gExitPos1, Float:gExitPos2, Float:gExitPos3) {
+    SetPlayerVirtualWorld(playerid, gExitVw);
+    SetPlayerInterior(playerid, gExitInterior);
+
+    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+        SetVehiclePos(GetPlayerVehicleID(playerid), gExitPos0, gExitPos1, gExitPos2);
+        SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), gExitVw);
+        LinkVehicleToInterior(GetPlayerVehicleID(playerid), gExitInterior);
+
+        foreach(new passenger : Player) {
+            if(passenger != playerid) {
+                if(IsPlayerInVehicle(passenger, GetPlayerVehicleID(playerid))) {
+                    SetPlayerInterior(passenger, gExitInterior);
+                    pInfo[passenger][pInterior] = gExitInterior;
+                    pInfo[passenger][pVirtualWorld] = gExitVw;
+                    SetPlayerVirtualWorld(passenger, gExitInterior);
+                }
+            }
+        }
+    } else {
+        SetPlayerPos(playerid, gExitPos0, gExitPos1, gExitPos2);
+        SetPlayerFacingAngle(playerid, gExitPos3);
+        SetCameraBehindPlayer(playerid);
+    }
+
+    return 1;
+}
+
+EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3) {
 
     SetPlayerVirtualWorld(playerid, vwExitProperty);
     SetPlayerInterior(playerid, interiorExitProperty);

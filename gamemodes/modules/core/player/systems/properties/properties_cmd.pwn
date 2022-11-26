@@ -3,10 +3,11 @@ CMD:entrar(playerid) {
 
     new houseID = GetNearestHouseEntry(playerid);
     new businessID = GetNearestBusinessEntry(playerid);
+    new garageID = GetNearestGarageEntry(playerid);
     
     if(houseID != -1) {
         if(hInfo[houseID][hLocked])
-            return SendErrorMessage(playerid, "Esta casa está trancada.");
+            return SendErrorMessage(playerid, "Essa casa está trancada.");
         
         vw = hInfo[houseID][vwExit];
         interior = hInfo[houseID][interiorExit];
@@ -14,14 +15,14 @@ CMD:entrar(playerid) {
         exitPos1 = hInfo[houseID][hExitPos][1];
         exitPos2 = hInfo[houseID][hExitPos][2];
         exitPos3 = hInfo[houseID][hExitPos][3];
-        EntryProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3);
+        EnterProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3);
 
         return 1;
     }
 
     if (businessID != -1) {
         if(bInfo[businessID][bLocked])
-            return SendErrorMessage(playerid, "Está empresa está trancada.");
+            return SendErrorMessage(playerid, "Essa empresa está trancada.");
         
         vw = bInfo[businessID][vwExit];
         interior = bInfo[businessID][interiorExit];
@@ -29,9 +30,23 @@ CMD:entrar(playerid) {
         exitPos1 = bInfo[businessID][bExitPos][1];
         exitPos2 = bInfo[businessID][bExitPos][2];
         exitPos3 = bInfo[businessID][bExitPos][3];
-        EntryProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3);
+        EnterProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3);
 
         return 1;
+    }
+
+    if (garageID != -1) {
+        if(gInfo[garageID][gLocked])
+            return SendErrorMessage(playerid, "Essa garagem está trancada.");
+        
+        vw = gInfo[garageID][gVwExit];
+        interior = gInfo[garageID][gInteriorExit];
+        exitPos0 = gInfo[garageID][gExitPos][0];
+        exitPos1 = gInfo[garageID][gExitPos][1];
+        exitPos2 = gInfo[garageID][gExitPos][2];
+        exitPos3 = gInfo[garageID][gExitPos][3];
+
+        EnterGarage(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3);
     }
 
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");

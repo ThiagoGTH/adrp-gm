@@ -247,6 +247,23 @@ GarageHasOwner(id) {
     return IsValidGarage(id) && (gInfo[id][gOwner]);
 }
 
+GetNearestGarageEntry(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_GARAGES; i++) {
+        if(!gInfo[i][gID])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, gInfo[i][gEntryPos][0], gInfo[i][gEntryPos][1], gInfo[i][gEntryPos][2]))
+            continue;
+
+        if(GetPlayerVirtualWorld(playerid) != gInfo[i][gVwEntry] || GetPlayerInterior(playerid) != gInfo[i][gInteriorEntry])
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
 CreateGarage(playerid, price, address[256], Float:pos[4]){
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `garages` WHERE `address` = '%e';", address);

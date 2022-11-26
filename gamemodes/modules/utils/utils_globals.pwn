@@ -144,7 +144,7 @@ enum Player_Data {
     Float:pHealthMax,
 
     // RADIO
-    rRadioState,            // Estado do rádio, se ligado ou desligado
+    rRadioState,            // Estado do rï¿½dio, se ligado ou desligado
     rRadioSlot[7],          // Os canais conectados nos slots, vai do 1 ao 7
     rRadioName1[32],        //
     rRadioName2[32],        //
@@ -153,7 +153,7 @@ enum Player_Data {
     rRadioName5[32],        //
     rRadioName6[32],        //
     rRadioName7[32],        //
-    pRadioNvl[4],           // O nível do rádio
+    pRadioNvl[4],           // O nï¿½vel do rï¿½dio
 
     // CAMERA-MAN
     bool:pWatching,
@@ -236,6 +236,12 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+    pHasMask,
+    pMasked,
+    pMask_Name[MAX_PLAYER_NAME],
+    pMaskID[2],
+
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -311,6 +317,11 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pEditandoBareira]=
     pInfo   [playerid][pPhoneType]      =
     pInfo   [playerid][pPhoneNumber]    = 0;
+
+    pInfo   [playerid][pHasMask]        = 0;
+    pInfo   [playerid][pMasked]         = 0;
+    pInfo   [playerid][pMask_Name]      = 
+    pInfo   [playerid][pMaskID]         =
 
     pInfo   [playerid][pGender]             =
     pInfo   [playerid][pEthnicity]          = 

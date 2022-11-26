@@ -26,6 +26,34 @@ EnterGarage(playerid, gExitVw, gExitInterior, Float:gExitPos0, Float:gExitPos1, 
     return 1;
 }
 
+ExitGarage(playerid, gEntryVw, gEntryInterior, Float:gEntryPos0, Float:gEntryPos1, Float:gEntryPos2, Float:gEntryPos3) {
+    SetPlayerVirtualWorld(playerid, gEntryVw);
+    SetPlayerInterior(playerid, gEntryInterior);
+
+    if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
+        SetVehiclePos(GetPlayerVehicleID(playerid), gEntryPos0, gEntryPos1, gEntryPos2);
+        SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), gEntryVw);
+        LinkVehicleToInterior(GetPlayerVehicleID(playerid), gEntryInterior);
+
+        foreach(new passenger : Player) {
+            if(passenger != playerid) {
+                if(IsPlayerInVehicle(passenger, GetPlayerVehicleID(playerid))) {
+                    SetPlayerInterior(passenger, gEntryInterior);
+                    pInfo[passenger][pInterior] = gEntryInterior;
+                    pInfo[passenger][pVirtualWorld] = gEntryVw;
+                    SetPlayerVirtualWorld(passenger, gEntryInterior);
+                }
+            }
+        }
+    } else {
+        SetPlayerPos(playerid, gEntryPos0, gEntryPos1, gEntryPos2);
+        SetPlayerFacingAngle(playerid, gEntryPos3);
+        SetCameraBehindPlayer(playerid);
+    }
+
+    return 1;
+}
+
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3) {
 
     SetPlayerVirtualWorld(playerid, vwExitProperty);
@@ -49,10 +77,35 @@ ExitProperty(playerid, vwEntryProperty, interiorEntryProperty, Float:entryPos0, 
 BuyProperty(playerid, propertyId, propertyType) {
 
     if(propertyType == 1) {
+        new garageId;
+
         hInfo[propertyId][hOwner] = pInfo[playerid][pID];
+        garageId = hInfo[propertyId][hGarage]
+
+        if(garageId) {
+            if(GarageHasOwner(garageId))
+                va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetBusinessAddress(propertyId));
+                continue;
+
+            gInfo[garageId][gOwner] = pInfo[playerid][pID];
+            SaveGarage(garageId);
+
+            format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d e atrelado à ela, a garagem ID %d.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, garageId);
+            logCreate(playerid, logString, 25);
+            logCreate(playerid, logString, 13);
+
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(propertyId));
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Junto da sua casa nova, no mesmo endereço, você também adquiriu a garagem dela.");
+
+            return 1;
+        }
+
         SaveHouse(propertyId);
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(propertyId));
+
         format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(hInfo[propertyId][hPrice]));
-    
+        logCreate(playerid, logString, 13);
+
         return 1;
     }
 
@@ -61,18 +114,27 @@ BuyProperty(playerid, propertyId, propertyType) {
         SaveBusiness(propertyId);
 
         format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
-        logCreate(playerid, logString, 13);
+        logCreate(playerid, logString, 24);
 
         return 1;
     }
 
-	logCreate(playerid, logString, 13);
+    if(propertyType == 3) {
+        gInfo[propertyId][gOwner] = pInfo[playerid][pID];
+        SaveGarage(propertyId);
+
+        format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
+        logCreate(playerid, logString, 25);
+
+        return 1;
+    }
 
     return 1;
 }
 
 LockProperty(playerid, propertyId, propertyType) {
 
+    // house
     if(propertyType == 1) {
         hInfo[propertyId][hLocked] = !hInfo[propertyId][hLocked];
         SaveHouse(propertyId);
@@ -83,12 +145,24 @@ LockProperty(playerid, propertyId, propertyType) {
         return 1;
     }
 
+    // business
     if(propertyType == 2) {
         bInfo[propertyId][bLocked] = !bInfo[propertyId][bLocked];
         SaveBusiness(propertyId);
 
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, bInfo[propertyId][bLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
+    
+        return 1;
+    }
+
+    // garage
+    if(propertyType == 3) {
+        gInfo[propertyId][gLocked] = !gInfo[propertyId][gLocked];
+        SaveBusiness(propertyId);
+
+        PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
+        GameTextForPlayer(playerid, gInfo[propertyId][gLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
         return 1;
     }

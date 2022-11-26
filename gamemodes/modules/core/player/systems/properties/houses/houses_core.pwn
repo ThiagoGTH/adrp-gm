@@ -7,6 +7,7 @@ enum E_HOUSE_DATA {
     hID,                // ID da casa no MySQL
     hOwner,             // ID do personagem dono da casa
     hAddress[256],      // Endereço
+    hGarage,            // ID da garagem atrelada a casa CASO EXISTA
     bool:hLocked,       // Trancado 
     hRentable,          // Alugavel
     hRent,              // Preço do aluguel

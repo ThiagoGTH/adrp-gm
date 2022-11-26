@@ -95,16 +95,18 @@ CMD:sair(playerid) {
 
 CMD:comprar(playerid) {
     new propertyType;
+
     new houseID = GetNearestHouseEntry(playerid);
     new businessID = GetNearestBusinessEntry(playerid);
+    new garageID = GetNearestGarageEntry(playerid);
 
-    if(!houseID && !businessID)
+    if(!houseID && !businessID && !garageID)
         return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
 
-    if(HouseHasOwner(houseID) || BusinessHasOwner(businessID))
+    if(HouseHasOwner(houseID) || BusinessHasOwner(businessID) || GarageHasOwner(garageID))
         return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
 
-    if(GetMoney(playerid) < hInfo[houseID][hPrice] || GetMoney(playerid) < bInfo[businessID][bPrice])
+    if(GetMoney(playerid) < hInfo[houseID][hPrice] || GetMoney(playerid) < bInfo[businessID][bPrice] || GetMoney(playerid) < gInfo[garageID][gPrice])
         return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.");
 
     if(houseID != -1) {
@@ -121,8 +123,16 @@ CMD:comprar(playerid) {
         propertyType = 2;
 
         GiveMoney(playerid, -bInfo[businessID][bPrice]);
-        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetBusinessAddress(businessID));
         BuyProperty(playerid, businessID, propertyType);
+
+        return 1;
+    }
+
+    if(garageID != -1) {
+        propertyType = 3;
+
+        GiveMoney(playerid, -gInfo[garageID][gPrice]);
+        BuyProperty(playerid, garageID, propertyType);
 
         return 1;
     }
@@ -134,6 +144,7 @@ CMD:trancar(playerid, params[]) {
     new propertyType;
     new houseID = GetNearestHouseEntry(playerid);
     new businessID = GetNearestBusinessEntry(playerid);
+    new garageID = GetNearestGarageEntry(playerid);
 
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
@@ -143,7 +154,10 @@ CMD:trancar(playerid, params[]) {
     if(!businessID)
         businessID = GetNearestBusinessExit(playerid);
 
-    if(!houseID && !businessID)
+    if(!garageID)
+        garageID = GetNearestGarageExit(playerid);
+
+    if(!houseID && !businessID && !garageID)
         return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
     
 
@@ -164,6 +178,16 @@ CMD:trancar(playerid, params[]) {
         
         propertyType = 2;
         LockProperty(playerid, businessID, propertyType);
+
+        return 1;
+    }
+
+    if(garageID != -1) {
+        if(gInfo[garageID][gOwner] != pInfo[playerid][pID])
+            return SendErrorMessage(playerid, "Essa propriedade não é sua.");
+        
+        propertyType = 3;
+        LockProperty(playerid, garageID, propertyType);
 
         return 1;
     }

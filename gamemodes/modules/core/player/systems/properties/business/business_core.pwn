@@ -306,7 +306,7 @@ BusinessType(id) {
 	return btype;
 }
 
-//Seta interior de forma automatica
+//Seta interior de forma automatica (MySQL)
 SetIntDefaultBusiness(businessID) {
     new bint[128];
 	switch(bInfo[businessID][bType]) {

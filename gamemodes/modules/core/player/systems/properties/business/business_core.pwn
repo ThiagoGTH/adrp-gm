@@ -311,58 +311,58 @@ SetIntDefaultBusiness(businessID) {
     new bint[128];
 	switch(bInfo[businessID][bType]) {
         case 1: {
-        	bInfo[businessID][bEntryPos][0] = -27.3074;
-        	bInfo[businessID][bEntryPos][1] = -30.8741;
-        	bInfo[businessID][bEntryPos][2] = 1003.5573;
-        	bInfo[businessID][bEntryPos][3] = 0.0000;
+        	bInfo[businessID][bExitPos][0] = -27.3074;
+        	bInfo[businessID][bExitPos][1] = -30.8741;
+        	bInfo[businessID][bExitPos][2] = 1003.5573;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 4;
             SetWorldBusiness(businessID);
         }
         case 2: {
-        	bInfo[businessID][bEntryPos][0] = 316.3963;
-        	bInfo[businessID][bEntryPos][1] = -169.8375;
-        	bInfo[businessID][bEntryPos][2] = 999.6010;
-        	bInfo[businessID][bEntryPos][3] = 0.0000;
+        	bInfo[businessID][bExitPos][0] = 316.3963;
+        	bInfo[businessID][bExitPos][1] = -169.8375;
+        	bInfo[businessID][bExitPos][2] = 999.6010;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
             SetWorldBusiness(businessID);
 		}
 		case 3: {
-        	bInfo[businessID][bEntryPos][0] = 161.4801;
-        	bInfo[businessID][bEntryPos][1] = -96.5368;
-        	bInfo[businessID][bEntryPos][2] = 1001.8047;
-            bInfo[businessID][bEntryPos][3] = 0.0000;
+        	bInfo[businessID][bExitPos][0] = 161.4801;
+        	bInfo[businessID][bExitPos][1] = -96.5368;
+        	bInfo[businessID][bExitPos][2] = 1001.8047;
+            bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 18;
             SetWorldBusiness(businessID);
 		}
 		case 4: {
-        	bInfo[businessID][bEntryPos][0] = 363.3402;
-        	bInfo[businessID][bEntryPos][1] = -74.6679;
-        	bInfo[businessID][bEntryPos][2] = 1001.5078;
-        	bInfo[businessID][bEntryPos][3] = 315.0000;
+        	bInfo[businessID][bExitPos][0] = 363.3402;
+        	bInfo[businessID][bExitPos][1] = -74.6679;
+        	bInfo[businessID][bExitPos][2] = 1001.5078;
+        	bInfo[businessID][bExitPos][3] = 315.0000;
 			bInfo[businessID][interiorEntry] = 10;
             SetWorldBusiness(businessID);
 		}
 		case 5: {
-        	bInfo[businessID][bEntryPos][0] = 1494.5612;
-        	bInfo[businessID][bEntryPos][1] = 1304.2061;
-        	bInfo[businessID][bEntryPos][2] = 1093.2891;
-        	bInfo[businessID][bEntryPos][3] = 0.0000;
+        	bInfo[businessID][bExitPos][0] = 1494.5612;
+        	bInfo[businessID][bExitPos][1] = 1304.2061;
+        	bInfo[businessID][bExitPos][2] = 1093.2891;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 3;
             SetWorldBusiness(businessID);
 		}
 		case 6: {
-			bInfo[businessID][bEntryPos][0] = -27.3383;
-   			bInfo[businessID][bEntryPos][1] = -57.6909;
-		   	bInfo[businessID][bEntryPos][2] = 1003.5469;
-      		bInfo[businessID][bEntryPos][3] = 0.0000;
+			bInfo[businessID][bExitPos][0] = -27.3383;
+   			bInfo[businessID][bExitPos][1] = -57.6909;
+		   	bInfo[businessID][bExitPos][2] = 1003.5469;
+      		bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
             SetWorldBusiness(businessID);
 		}
 		case 7: {
-			bInfo[businessID][bEntryPos][0] = -2240.4954;
-   			bInfo[businessID][bEntryPos][1] = 128.3774;
-		   	bInfo[businessID][bEntryPos][2] = 1035.4210;
-      		bInfo[businessID][bEntryPos][3] = 270.0000;
+			bInfo[businessID][bExitPos][0] = -2240.4954;
+   			bInfo[businessID][bExitPos][1] = 128.3774;
+		   	bInfo[businessID][bExitPos][2] = 1035.4210;
+      		bInfo[businessID][bExitPos][3] = 270.0000;
 			bInfo[businessID][interiorEntry] = 6;
             SetWorldBusiness(businessID);
 		}

@@ -114,7 +114,7 @@ SaveInteriors() {
 }
 
 //Salva interior específica (MySQL).
-SaveInterior(id) {
+/*SaveInterior(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
 
@@ -127,9 +127,9 @@ SaveInterior(id) {
     mysql_query(DBConn, query);
 
     return 1;
-}
+} */
 
-// Criar interior (MySQL)
+//Criar interior (MySQL)
 CreateInterior(playerid, type, name[256]) {
     new
        Float:pos[4];
@@ -150,8 +150,22 @@ CreateInterior(playerid, type, name[256]) {
 	logCreate(playerid, logString, 13);
     return 1;
 }
+//Deletar/excluir inteior (MySQL)
+DeleteInterior(playerid, id)  {
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `interiors` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
 
-//Tipos de interior
+    SendServerMessage(playerid, "Você deletou o interior de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) deletou o interior de ID %d. (%s)", pNome(playerid), GetPlayerUserEx(playerid), id, intInfo[id][iName]);
+	logCreate(playerid, logString, 13);
+
+    new dummyReset[E_INTERIORS_DATA];
+    intInfo[id] = dummyReset;
+    return 1;
+} 
+
+//Tipos de interiores
 InteriorType(id) {
 	new itype[128];
 	switch(intInfo[id][iType]) {
@@ -161,6 +175,17 @@ InteriorType(id) {
 		default: format(itype, sizeof(itype), "Inválido");
 	}
 	return itype;
+}
+
+//Verifica se o ID existe o interior (MySQL) - ele retorna false (se o ID não existir).
+IsValidInterior(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    return 1;
 }
 
 // ============================================================================================================================================

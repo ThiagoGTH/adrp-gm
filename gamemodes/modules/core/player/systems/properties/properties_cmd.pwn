@@ -156,6 +156,7 @@ CMD:trancar(playerid, params[]) {
     return 1;
 }
 
+//Comando para criar um interir
 CMD:criarinterior(playerid, params[]) {
     new 
         type,
@@ -187,5 +188,26 @@ CMD:criarinterior(playerid, params[]) {
 	    logCreate(playerid, logString, 13);
     }
 
+    return 1;
+}
+
+//Comanda para deletar um interior.
+CMD:deletarinterior(playerid, params[]) {
+    new id;
+
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
+
+	if (sscanf(params, "d", id))
+        return SendSyntaxMessage(playerid, "/deletarinterior [id]");
+
+    if(!IsValidInterior(id))
+        return SendErrorMessage(playerid, "Esse ID de interior não existe.");
+
+    if(!DeleteInterior(playerid, id))
+    {
+        SendErrorMessage(playerid, "ix010 - Encaminhe este código para um desenvolvedor.");
+        format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: ix010)", pNome(playerid), GetPlayerUserEx(playerid));
+	    logCreate(playerid, logString, 13);
+    }
     return 1;
 }

@@ -67,6 +67,7 @@ void:CheckTables() {
     CheckPoolTable();
     CheckHousesTable();
     CheckBusinesssTable();
+    CheckInteriorsTable();
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
@@ -856,6 +857,24 @@ void:CheckBusinesssTable() {
     
     print("[DATABASE] Tabela business checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckInteriorsTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(256) DEFAULT 'Indefinido',\
+    `status` int DEFAULT '0',\
+    `type` int DEFAULT '0',\
+    `interior` int DEFAULT '0',\
+    `int_x` float DEFAULT '0',\
+    `int_y` float DEFAULT '0',\
+    `int_z` float DEFAULT '0',\
+    `int_a` float DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela interiors checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
     logCreate(99998, logString, 5);
 }
 

@@ -57,7 +57,7 @@ LoadInteriors() {
         intInfo[id][iID] = id;
 
         cache_get_value_name(i, "name", intInfo[id][iName]);
-        cache_get_value_name_int(0, "status", intInfo[id][iStatus]);
+        cache_get_value_name_int(i, "status", intInfo[id][iStatus]);
         cache_get_value_name_int(i, "type", intInfo[id][iType]);
         cache_get_value_name_int(i, "interior", intInfo[id][iNumber]);
         cache_get_value_name_float(i, "int_x", intInfo[id][iPosition][0]);
@@ -69,6 +69,26 @@ LoadInteriors() {
 
     printf("[INTERIORES]: %d interiores carregados com sucesso.", loadedInteriors);
 
+    return 1;
+}
+
+//Carrega empresa específica (MySQL).
+LoadInterior(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    intInfo[id][iID] = id;
+    cache_get_value_name(0, "name", intInfo[id][iName]);
+    cache_get_value_name_int(0, "status", intInfo[id][iStatus]);
+    cache_get_value_name_int(0, "type", intInfo[id][iType]);
+    cache_get_value_name_int(0, "interior", intInfo[id][iNumber]);
+    cache_get_value_name_float(0, "int_x", intInfo[id][iPosition][0]);
+    cache_get_value_name_float(0, "int_y", intInfo[id][iPosition][1]);
+    cache_get_value_name_float(0, "int_z", intInfo[id][iPosition][2]);
+    cache_get_value_name_float(0, "int_a", intInfo[id][iPosition][3]);
     return 1;
 }
 
@@ -107,6 +127,40 @@ SaveInterior(id) {
     mysql_query(DBConn, query);
 
     return 1;
+}
+
+// Criar interior (MySQL)
+CreateInterior(playerid, type, name[256]) {
+    new
+       Float:pos[4];
+
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `interiors` (`name`, `type`, `int_x`, `int_y`, `int_z`, `int_a`, `interior`) \
+        VALUES ('%s', %d, %f, %f, %f, %f, %d);", name, type, pos[0], pos[1], pos[2], pos[3], GetPlayerInterior(playerid));
+    mysql_query(DBConn, query);
+
+    new id = cache_insert_id();
+
+    LoadInterior(id);
+
+    SendServerMessage(playerid, "Você criou o interior de ID %d de nome: '%s' (Tipo: %s)", id, intInfo[id][iName], InteriorType(id));
+    format(logString, sizeof(logString), "%s (%s) criou o interior de ID %d no nome: '%s'. (tipo: %s)", pNome(playerid), GetPlayerUserEx(playerid), id, name, InteriorType(id));
+	logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Tipos de interior
+InteriorType(id) {
+	new itype[128];
+	switch(intInfo[id][iType]) {
+        case 1: format(itype, sizeof(itype), "Casa");
+		case 2: format(itype, sizeof(itype), "Empresa");
+		case 3: format(itype, sizeof(itype), "Outros");
+		default: format(itype, sizeof(itype), "Inválido");
+	}
+	return itype;
 }
 
 // ============================================================================================================================================

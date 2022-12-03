@@ -155,3 +155,59 @@ CMD:trancar(playerid, params[]) {
 
     return 1;
 }
+
+//Comando para criar um interir
+CMD:criarinterior(playerid, params[]) {
+    new 
+        type,
+        price,
+        name[256];
+
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
+
+	if (sscanf(params, "ds[256]", type, name))
+    {
+        SendSyntaxMessage(playerid, "/criarinterior [tipo] [nome único]");
+        SendSyntaxMessage(playerid, "[TIPOS] 1: Casa | 2: Empresa | 3: Outros");
+        return 1;
+    }
+    
+    if (type < 1 || type > 3)
+        return SendErrorMessage(playerid, "Tipo inválido. Tipos de 1 á 3.");
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `name` = '%e';", name);
+    mysql_query(DBConn, query);
+
+    if(cache_num_rows())
+        return SendErrorMessage(playerid, "Este nome já está registrado em outro interior!");
+
+    if(!CreateInterior(playerid, type, name))
+    {
+        SendErrorMessage(playerid, "Ix001 - Encaminhe este código para um desenvolvedor.");
+        format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao criar o interior (cod: Ix001)", pNome(playerid), GetPlayerUserEx(playerid));
+	    logCreate(playerid, logString, 13);
+    }
+
+    return 1;
+}
+
+//Comanda para deletar um interior.
+CMD:deletarinterior(playerid, params[]) {
+    new id;
+
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
+
+	if (sscanf(params, "d", id))
+        return SendSyntaxMessage(playerid, "/deletarinterior [id]");
+
+    if(!IsValidInterior(id))
+        return SendErrorMessage(playerid, "Esse ID de interior não existe.");
+
+    if(!DeleteInterior(playerid, id))
+    {
+        SendErrorMessage(playerid, "ix010 - Encaminhe este código para um desenvolvedor.");
+        format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: ix010)", pNome(playerid), GetPlayerUserEx(playerid));
+	    logCreate(playerid, logString, 13);
+    }
+    return 1;
+}

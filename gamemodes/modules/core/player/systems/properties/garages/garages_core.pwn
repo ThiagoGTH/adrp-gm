@@ -8,7 +8,6 @@ enum E_GARAGE_DATA {
     gHouse,                     // ID da casa atrelada (caso haja)
 	gAddress[24],               // Endereço da Garagem, podendo ser o mesmo da casa
 	bool:gLocked,               // Garagem trancada
-    gInv,                       // ID do inventário da Garagem
     gPrice,                     // Preço de venda (pelo servidor)
     gStorageMoney,              // Dinheiro guardado
     Float:gStorageItem[6],      // Itens no Armazenamento da Garagem

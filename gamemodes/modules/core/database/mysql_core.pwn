@@ -785,6 +785,7 @@ void:CheckHousesTable() {
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
     `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `garage_id` int DEFAULT '0',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
     `rentable` int DEFAULT '0',\

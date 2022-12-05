@@ -1,3 +1,5 @@
+#include <YSI_Coding\y_hooks>
+
 #define MAX_GARAGES          2000
 
 enum E_GARAGE_DATA {
@@ -20,7 +22,6 @@ enum E_GARAGE_DATA {
 };
 
 new gInfo[MAX_GARAGES][E_GARAGE_DATA];
-
 
 // ============================================================================================================================================
 
@@ -50,6 +51,7 @@ LoadGarages() {
         cache_get_value_name_int(i, "character_id", gInfo[id][gOwner]);
         cache_get_value_name(i, "address", gInfo[id][gAddress]);
         cache_get_value_name_int(i, "locked", gInfo[id][gLocked]);
+        cache_get_value_name_int(i, "house_id", gInfo[id][gHouse]);
         cache_get_value_name_int(i, "price", gInfo[id][gPrice]);
         cache_get_value_name_int(i, "storage_money", gInfo[id][gStorageMoney]);
         cache_get_value_name_float(i, "storage_item1", gInfo[id][gStorageItem][0]);
@@ -95,6 +97,7 @@ LoadGarage(id) {
     gInfo[id][gID] = id;
     cache_get_value_name_int(0, "character_id", gInfo[id][gOwner]);
     cache_get_value_name(0, "address", gInfo[id][gAddress]);
+    cache_get_value_name(0, "house_id", gInfo[id][gHouse]);
     cache_get_value_name_int(0, "locked", gInfo[id][gLocked]);
     cache_get_value_name_int(0, "price", gInfo[id][gPrice]);
     cache_get_value_name_int(0, "storage_money", gInfo[id][gStorageMoney]);
@@ -133,45 +136,11 @@ SaveGarages() {
         if(!gInfo[i][gID])
             continue;
 
-        mysql_format(DBConn, query, sizeof query, "UPDATE `garages` SET `character_id` = '%d', \
-            `address` = '%e', \
-            `locked` = '%d', \
-            `storage_money` = '%d', \
-            `price` = '%d', \
-            `storage_money` = '%d',\
-            `storage_item1` = '%d',\
-            `storage_amount1` = '%d',\
-            `storage_item2` = '%d',\
-            `storage_amount2` = '%d',\
-            `storage_item3` = '%d',\
-            `storage_amount3` = '%d',\
-            `storage_item4` = '%d',\
-            `storage_amount4` = '%d',\
-            `storage_item5` = '%d',\
-            `storage_amount5` = '%d',\
-            `storage_item6` = '%d',\
-            `storage_amount6` = '%d',\
-            `entry_x` = '%f', \
-            `entry_y` = '%f', \
-            `entry_z` = '%f', \
-            `entry_a` = '%f', \
-            `vw_entry` = '%d', \
-            `interior_entry` = '%d', \
-            `exit_x` = '%f', \
-            `exit_y` = '%f', \
-            `exit_z` = '%f', \
-            `exit_a` = '%f', \
-            `vw_exit` = '%d', \
-            `interior_exit` = %d WHERE `id` = %d;", 
-            gInfo[i][gOwner], gInfo[i][gAddress], gInfo[i][gLocked], gInfo[i][gStorageMoney], 
-            gInfo[i][gStorageItem][0], gInfo[i][gStorageItem][1], gInfo[i][gStorageItem][2], 
-            gInfo[i][gStorageItem][3], gInfo[i][gStorageItem][4], gInfo[i][gStorageItem][5], 
-            gInfo[i][gStorageAmount][0], gInfo[i][gStorageAmount][1], gInfo[i][gStorageAmount][2], 
-            gInfo[i][gStorageAmount][3], gInfo[i][gStorageAmount][4], gInfo[i][gStorageAmount][5], 
-            gInfo[i][gPrice], gInfo[i][gEntryPos][0], gInfo[i][gEntryPos][1], gInfo[i][gEntryPos][2], 
-            gInfo[i][gEntryPos][3], gInfo[i][gVwEntry], gInfo[i][gInteriorEntry],gInfo[i][gExitPos][0], 
-            gInfo[i][gExitPos][1], gInfo[i][gExitPos][2], gInfo[i][gExitPos][3], gInfo[i][gVwExit], 
-            gInfo[i][gInteriorExit], i);
+        mysql_format(DBConn, query, sizeof query, "UPDATE `garages` SET `character_id` = '%d', `address` = '%e', `house_id` = '%d, `locked` = '%d', `storage_money` = '%d', `price` = '%d', \
+            `entry_x` = '%f', `entry_y` = '%f', `entry_z` = '%f', `entry_a` = '%f', `vw_entry` = '%d', `interior_entry` = '%d', \
+            `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d WHERE `id` = %d;", gInfo[i][gOwner], gInfo[i][gAddress], gInfo[i][gHouse], gInfo[i][gLocked], gInfo[i][gStorageMoney], gInfo[i][gPrice],
+            gInfo[i][gEntryPos][0], gInfo[i][gEntryPos][1], gInfo[i][gEntryPos][2], gInfo[i][gEntryPos][3], gInfo[i][gVwEntry], gInfo[i][gInteriorEntry],
+            gInfo[i][gExitPos][0], gInfo[i][gExitPos][1], gInfo[i][gExitPos][2], gInfo[i][gExitPos][3], gInfo[i][gVwExit], gInfo[i][gInteriorExit], i);
         mysql_query(DBConn, query);
 
         savedGarages++;
@@ -183,52 +152,22 @@ SaveGarages() {
 }
 
 SaveGarage(id) {
+    printf("Saving garage ID %d", id);
+
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `garages` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
         return 0;
 
-    mysql_format(DBConn, query, sizeof query, "UPDATE `garages` SET `character_id` = '%d', \
-        `address` = '%e', \
-        `locked` = '%d', \
-        `storage_money` = '%d', \
-        `price` = '%d', \
-        `storage_money` = '%d',\
-        `storage_item1` = '%d',\
-        `storage_amount1` = '%d',\
-        `storage_item2` = '%d',\
-        `storage_amount2` = '%d',\
-        `storage_item3` = '%d',\
-        `storage_amount3` = '%d',\
-        `storage_item4` = '%d',\
-        `storage_amount4` = '%d',\
-        `storage_item5` = '%d',\
-        `storage_amount5` = '%d',\
-        `storage_item6` = '%d',\
-        `storage_amount6` = '%d',\
-        `entry_x` = '%f', \
-        `entry_y` = '%f', \
-        `entry_z` = '%f', \
-        `entry_a` = '%f', \
-        `vw_entry` = '%d', \
-        `interior_entry` = '%d', \
-        `exit_x` = '%f', \
-        `exit_y` = '%f', \
-        `exit_z` = '%f', \
-        `exit_a` = '%f', \
-        `vw_exit` = '%d', \
-        `interior_exit` = %d WHERE `id` = %d;", 
-        gInfo[i][gOwner], gInfo[i][gAddress], gInfo[i][gLocked], gInfo[i][gStorageMoney], 
-        gInfo[i][gStorageItem][0], gInfo[i][gStorageItem][1], gInfo[i][gStorageItem][2], 
-        gInfo[i][gStorageItem][3], gInfo[i][gStorageItem][4], gInfo[i][gStorageItem][5], 
-        gInfo[i][gStorageAmount][0], gInfo[i][gStorageAmount][1], gInfo[i][gStorageAmount][2], 
-        gInfo[i][gStorageAmount][3], gInfo[i][gStorageAmount][4], gInfo[i][gStorageAmount][5], 
-        gInfo[i][gPrice], gInfo[i][gEntryPos][0], gInfo[i][gEntryPos][1], gInfo[i][gEntryPos][2], 
-        gInfo[i][gEntryPos][3], gInfo[i][gVwEntry], gInfo[i][gInteriorEntry],gInfo[i][gExitPos][0], 
-        gInfo[i][gExitPos][1], gInfo[i][gExitPos][2], gInfo[i][gExitPos][3], gInfo[i][gVwExit], 
-        gInfo[i][gInteriorExit], i);
+    mysql_format(DBConn, query, sizeof query, "UPDATE `garages` SET `character_id` = '%d', `address` = '%e', `house_id` = '%d', `locked` = '%d', `storage_money` = '%d', `price` = '%d', \
+        `entry_x` = '%f', `entry_y` = '%f', `entry_z` = '%f', `entry_a` = '%f', `vw_entry` = '%d', `interior_entry` = '%d', \
+        `exit_x` = '%f', `exit_y` = '%f', `exit_z` = '%f', `exit_a` = '%f', `vw_exit` = '%d', `interior_exit` = %d WHERE `id` = %d;", gInfo[id][gOwner], gInfo[id][gAddress], gInfo[id][gHouse], gInfo[id][gLocked], gInfo[id][gStorageMoney], gInfo[id][gPrice],
+        gInfo[id][gEntryPos][0], gInfo[id][gEntryPos][1], gInfo[id][gEntryPos][2], gInfo[id][gEntryPos][3], gInfo[id][gVwEntry], gInfo[id][gInteriorEntry],
+        gInfo[id][gExitPos][0], gInfo[id][gExitPos][1], gInfo[id][gExitPos][2], gInfo[id][gExitPos][3], gInfo[id][gVwExit], gInfo[id][gInteriorExit], id);
     mysql_query(DBConn, query);
+
+    printf("Saved garage ID %d", id);
 
     return 1;
 }
@@ -247,7 +186,16 @@ GarageHasOwner(id) {
     return IsValidGarage(id) && (gInfo[id][gOwner]);
 }
 
-GetNearestGarageEntry(playerid, Float:distance = 1.0) {
+GetGarageAddress(id) {
+    IsValidGarage(id);
+
+    new address[256];
+    format(address, sizeof(address), "%s", gInfo[id][gAddress]);
+
+    return address;
+}
+
+GetNearestGarageEntry(playerid, Float:distance = 7.0) {
     for(new i; i < MAX_GARAGES; i++) {
         if(!gInfo[i][gID])
             continue;
@@ -256,6 +204,23 @@ GetNearestGarageEntry(playerid, Float:distance = 1.0) {
             continue;
 
         if(GetPlayerVirtualWorld(playerid) != gInfo[i][gVwEntry] || GetPlayerInterior(playerid) != gInfo[i][gInteriorEntry])
+            continue;
+
+        return i;
+    }
+
+    return 0;
+}
+
+GetNearestGarageExit(playerid, Float:distance = 1.0) {
+    for(new i; i < MAX_GARAGES; i++) {
+        if(!gInfo[i][gID])
+            continue;
+        
+        if(GetPlayerVirtualWorld(playerid) != gInfo[i][gVwExit] || GetPlayerInterior(playerid) != gInfo[i][gInteriorExit])
+            continue;
+
+        if(!IsPlayerInRangeOfPoint(playerid, distance, gInfo[i][gExitPos][0], gInfo[i][gExitPos][1], gInfo[i][gExitPos][2]))
             continue;
 
         return i;
@@ -289,6 +254,80 @@ CreateGarage(playerid, price, address[256], Float:pos[4]){
     SendServerMessage(playerid, "Você criou a garagem de ID %d no endereço: '%s'. ($%s)", id, address, FormatNumber(price));
     format(logString, sizeof(logString), "%s (%s) criou a garagem de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
 	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+ChangeGarageInterior(playerid, id) {
+    new Float:pos[4];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    gInfo[id][gExitPos][0] = pos[0];
+    gInfo[id][gExitPos][1] = pos[1];
+    gInfo[id][gExitPos][2] = pos[2];
+    gInfo[id][gExitPos][3] = pos[3];
+    gInfo[id][gInteriorExit] = GetPlayerInterior(playerid);
+
+    SaveGarage(id);
+
+    SendServerMessage(playerid, "Você editou o interior da garagem de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) mudou o interior da garagem de ID %d para (Pos: %d, %d, %d, %d, VW: %d, Int: %d).", pNome(playerid), GetPlayerUserEx(playerid), id, gInfo[id][gExitPos][0], gInfo[id][gExitPos][1], gInfo[id][gExitPos][2], gInfo[id][gExitPos][3], gInfo[id][gVwExit], gInfo[id][gInteriorExit]);
+    logCreate(playerid, logString, 25);
+
+    return 1;
+}
+
+ChangeGarageEntry(playerid, id) {
+    new Float:pos[4];
+
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    gInfo[id][gEntryPos][0] = pos[0];
+    gInfo[id][gEntryPos][1] = pos[1];
+    gInfo[id][gEntryPos][2] = pos[2];
+    gInfo[id][gEntryPos][3] = pos[3];
+    gInfo[id][gVwEntry] = GetPlayerVirtualWorld(playerid);
+    gInfo[id][gInteriorEntry] = GetPlayerInterior(playerid);
+
+    SaveGarage(id);
+
+    SendServerMessage(playerid, "Você editou a entrada da garagem de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) editou a entrada da garagem de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
+    logCreate(playerid, logString, 25);
+
+    return 1;
+}
+
+AttachGarageToHouse(playerid, houseid, garageid) {
+    hInfo[houseid][hGarage] = gInfo[garageid][gID];
+    SaveHouse(houseid);
+
+    gInfo[garageid][gHouse] = hInfo[houseid][hID];
+    SaveGarage(garageid);
+
+    SendServerMessage(playerid, "Você atrelou a garagem de ID %d na casa de ID %d.", garageid, houseid);
+
+
+    format(logString, sizeof(logString), "%s (%s) atrelou a garagem ID %d na casa ID %d.", pNome(playerid), GetPlayerUserEx(playerid), garageid, houseid);
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+SendPlayerGarage(playerid, garageid) {
+    if(!gInfo[garageid][gID])
+        return SendErrorMessage(playerid, "Esse ID de garagem não existe.");
+
+    SetPlayerVirtualWorld(playerid, gInfo[garageid][gVwEntry]);
+    SetPlayerInterior(playerid, gInfo[garageid][gInteriorEntry]);
+    SetPlayerPos(playerid, gInfo[garageid][gEntryPos][0], gInfo[garageid][gEntryPos][1], gInfo[garageid][gEntryPos][2]);
+    SetPlayerFacingAngle(playerid, gInfo[garageid][gEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a garagem de ID %d.", garageid);
 
     return 1;
 }

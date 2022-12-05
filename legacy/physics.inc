@@ -343,7 +343,7 @@ public PHY_CoreTimer()
 								}
 							}
 						}
-						else Iter_SafeRemove(ITER_Object, b, b); //, printf("SAFE REMOVED B %d", b);
+						else Iter_Remove(ITER_Object, b); //, printf("SAFE REMOVED B %d", b);
 					}
 				}
 
@@ -380,7 +380,7 @@ public PHY_CoreTimer()
 							}
 						}
 						else
-							Iter_SafeRemove(ITER_Wall, w, w);
+							Iter_Remove(ITER_Wall, w);
 					}
 				}
 
@@ -421,7 +421,7 @@ public PHY_CoreTimer()
 							}
 						}
 						else
-							Iter_SafeRemove(ITER_Cylinder, c, c);
+							Iter_Remove(ITER_Cylinder, c);
 					}
 				}
 
@@ -490,7 +490,7 @@ public PHY_CoreTimer()
 		}
 		else
 		{
-			Iter_SafeRemove(ITER_Object, a, a); //, printf("SAFE REMOVED A %d", a);
+			Iter_Remove(ITER_Object, a); //, printf("SAFE REMOVED A %d", a);
 		}
 	}
 	return 1;

@@ -203,6 +203,7 @@ CreateBusiness(playerid, type, price, address[256]) {
     mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `vw_exit` = %d WHERE `id` = %d;", id + 10000, id);
     mysql_query(DBConn, query);
 
+    SetIntDefaultBusiness(id);
     LoadBusiness(id);
 
     SendServerMessage(playerid, "Você criou a empresa de ID %d no endereço: '%s' ($%s) (Tipo: %s)", id, bInfo[id][bAddress], FormatNumber(price), BusinessType(id));
@@ -212,8 +213,7 @@ CreateBusiness(playerid, type, price, address[256]) {
 }
 
 //Deletar/excluir empresa (MySQL)
-DeleteBusiness(playerid, id) 
-{
+DeleteBusiness(playerid, id)  {
     mysql_format(DBConn, query, sizeof query, "DELETE FROM `business` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
 
@@ -306,4 +306,107 @@ BusinessType(id) {
 	return btype;
 }
 
+//Seta interior de forma automatica (MySQL)
+SetIntDefaultBusiness(businessID) {
+    new bint[128];
+	switch(bInfo[businessID][bType]) {
+        case 1: {
+        	bInfo[businessID][bExitPos][0] = -27.3074;
+        	bInfo[businessID][bExitPos][1] = -30.8741;
+        	bInfo[businessID][bExitPos][2] = 1003.5573;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
+			bInfo[businessID][interiorEntry] = 4;
+            SetWorldBusiness(businessID);
+        }
+        case 2: {
+        	bInfo[businessID][bExitPos][0] = 316.3963;
+        	bInfo[businessID][bExitPos][1] = -169.8375;
+        	bInfo[businessID][bExitPos][2] = 999.6010;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
+			bInfo[businessID][interiorEntry] = 6;
+            SetWorldBusiness(businessID);
+		}
+		case 3: {
+        	bInfo[businessID][bExitPos][0] = 161.4801;
+        	bInfo[businessID][bExitPos][1] = -96.5368;
+        	bInfo[businessID][bExitPos][2] = 1001.8047;
+            bInfo[businessID][bExitPos][3] = 0.0000;
+			bInfo[businessID][interiorEntry] = 18;
+            SetWorldBusiness(businessID);
+		}
+		case 4: {
+        	bInfo[businessID][bExitPos][0] = 363.3402;
+        	bInfo[businessID][bExitPos][1] = -74.6679;
+        	bInfo[businessID][bExitPos][2] = 1001.5078;
+        	bInfo[businessID][bExitPos][3] = 315.0000;
+			bInfo[businessID][interiorEntry] = 10;
+            SetWorldBusiness(businessID);
+		}
+		case 5: {
+        	bInfo[businessID][bExitPos][0] = 1494.5612;
+        	bInfo[businessID][bExitPos][1] = 1304.2061;
+        	bInfo[businessID][bExitPos][2] = 1093.2891;
+        	bInfo[businessID][bExitPos][3] = 0.0000;
+			bInfo[businessID][interiorEntry] = 3;
+            SetWorldBusiness(businessID);
+		}
+		case 6: {
+			bInfo[businessID][bExitPos][0] = -27.3383;
+   			bInfo[businessID][bExitPos][1] = -57.6909;
+		   	bInfo[businessID][bExitPos][2] = 1003.5469;
+      		bInfo[businessID][bExitPos][3] = 0.0000;
+			bInfo[businessID][interiorEntry] = 6;
+            SetWorldBusiness(businessID);
+		}
+		case 7: {
+			bInfo[businessID][bExitPos][0] = -2240.4954;
+   			bInfo[businessID][bExitPos][1] = 128.3774;
+		   	bInfo[businessID][bExitPos][2] = 1035.4210;
+      		bInfo[businessID][bExitPos][3] = 270.0000;
+			bInfo[businessID][interiorEntry] = 6;
+            SetWorldBusiness(businessID);
+		}
+		default: {
+            format(bint, sizeof(bint), "Inválido");
+        }
+	}
+	return bint;
+}
+
+//Seta o interior da empresa de forma automatizada (sem repetir numeros)
+SetWorldBusiness(businessID) {
+    bInfo[businessID][vwEntry] = businessID + 10;
+    SaveBusiness(businessID);
+}
+
 // ============================================================================================================================================
+
+EditEntryBusiness(playerid, businessID) {
+    GetPlayerPos(playerid, bInfo[businessID][bEntryPos][0], bInfo[businessID][bEntryPos][1], bInfo[businessID][bEntryPos][2]);
+    GetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
+    bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
+    bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
+    SaveBusiness(businessID);
+    return 1;
+}
+
+//Função que edita nome da empresa
+EditNameBusiness(businessID, newName) {
+    bInfo[businessID][bName] = newName;
+    SaveBusiness(businessID);
+    return 1;
+}
+
+//Função que edita o preço
+EditPriceBusiness(businessID, newName) {
+    bInfo[businessID][bPrice] = newName;
+    SaveBusiness(businessID);
+    return 1;
+}
+
+//Função que edita o tipo da empresa
+EditTypeBusiness(businessID, newType) {
+    bInfo[businessID][bType] = newType;
+    SetIntDefaultBusiness(businessID); // Seta o interior da empresa + salva os dados.
+    return 1;
+}

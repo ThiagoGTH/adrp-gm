@@ -864,12 +864,13 @@ void:CheckATMsTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `atm` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `object` int,\
-    `postion_x` float DEFAULT '0',\
+    `position_x` float DEFAULT '0',\
     `position_y` float DEFAULT '0',\
     `position_z` float DEFAULT '0',\
     `position_a` float DEFAULT '0',\
     `interior` int DEFAULT '0',\
     `world` int DEFAULT '0',\
+    `status` int DEFAULT '0',\
     PRIMARY KEY (`id`));");
     
     print("[DATABASE] Tabela atm checada com sucesso");

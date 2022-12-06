@@ -241,6 +241,10 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+    // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))
+    //oEditType, // Tipo de edição.
+    oEditATM, // Guarda o (ID) da ATM que está sendo editado.
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 

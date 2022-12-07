@@ -10,3 +10,4 @@
 #include "modules\core\player\cmds\player_config.pwn"
 #include "modules\core\player\cmds\radio.pwn"
 #include "modules\core\player\cmds\blowjob.pwn"
+#include "modules\core\player\cmds\blindfold.pwn"

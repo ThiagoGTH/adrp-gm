@@ -241,6 +241,8 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+    pBlindfolded,
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -337,6 +339,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pDead] = 0;
     pInfo[playerid][pDeadTime] = 0;
     pInfo[playerid][pDeadBy][0] = EOS;
+
+    pInfo[playerid][pBlindfolded] = 0;
 	
 
     pInfo[playerid][pAllowRespawn] = 0;

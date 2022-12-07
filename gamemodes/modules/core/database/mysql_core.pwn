@@ -73,6 +73,7 @@ void:CheckTables() {
     CheckFactionsTable();
     CheckGraffitisTable();
     CheckBankAccountsTable();
+    CheckGaragesTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -785,7 +786,8 @@ void:CheckHousesTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `houses` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `address` varchar(256) DEFAULT 'Endere�o desconhecido',\
+    `garage_id` int DEFAULT '0',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
     `rentable` int DEFAULT '0',\
@@ -1234,6 +1236,48 @@ void:CheckGraffitisTable() {
 
     print("[DATABASE] Tabela graffits checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
+    logCreate(99998, logString, 5);
+
+}
+
+void:CheckGaragesTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `garages` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int DEFAULT '0',\
+    `house_id` int DEFAULT '0',\
+    `address` varchar(256) DEFAULT 'Endere�o desconhecido',\
+    `locked` int DEFAULT '0',\
+    `garage_inv` int DEFAULT '0',\
+    `price` int DEFAULT '0',\
+    `storage_money` int DEFAULT '0',\
+    `storage_item1` int DEFAULT '0',\
+    `storage_amount1` int DEFAULT '0',\
+    `storage_item2` int DEFAULT '0',\
+    `storage_amount2` int DEFAULT '0',\
+    `storage_item3` int DEFAULT '0',\
+    `storage_amount3` int DEFAULT '0',\
+    `storage_item4` int DEFAULT '0',\
+    `storage_amount4` int DEFAULT '0',\
+    `storage_item5` int DEFAULT '0',\
+    `storage_amount5` int DEFAULT '0',\
+    `storage_item6` int DEFAULT '0',\
+    `storage_amount6` int DEFAULT '0',\
+    `entry_x` float DEFAULT '0',\
+    `entry_y` float DEFAULT '0',\
+    `entry_z` float DEFAULT '0',\
+    `entry_a` float DEFAULT '0',\
+    `vw_entry` int DEFAULT '0',\
+    `interior_entry` int DEFAULT '0',\
+    `exit_x` float DEFAULT '0',\
+    `exit_y` float DEFAULT '0',\
+    `exit_z` float DEFAULT '0',\
+    `exit_a` float DEFAULT '0',\
+    `vw_exit` int DEFAULT '0',\
+    `interior_exit` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela garages checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela garages checada com sucesso");
     logCreate(99998, logString, 5);
 
 }

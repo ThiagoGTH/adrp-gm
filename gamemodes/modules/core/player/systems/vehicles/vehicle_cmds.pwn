@@ -7,7 +7,7 @@ CMD:v(playerid, params[]) {
  	    SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 	 	SendClientMessage(playerid, COLOR_BEGE, "USE: /v [ação]");
 		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: lista, estacionar, mudarvaga, stats");
-		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca");
+		SendClientMessage(playerid, COLOR_BEGE, "[Ações]: trancar, portamalas, upgrade, placa, removerplaca, venderconce");
 		SendClientMessage(playerid, COLOR_BEGE, "[Deletar]: deletar (não recebe nada)");
 		SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		return true;
@@ -17,6 +17,7 @@ CMD:v(playerid, params[]) {
 	else if (!strcmp(type, "mudarvaga", true)) return ChangeParkPlayerVehicle(playerid);
 	else if (!strcmp(type, "stats", true)) return CheckVehicleStats(playerid);
 	else if (!strcmp(type, "trancar", true)) return SetVehicleLock(playerid);
+	else if (!strcmp(type, "venderconce")) return SellVehicleToDealer(playerid);
 
 	return true;
 }
@@ -827,7 +828,7 @@ CMD:rtc(playerid, params[]) {
 	new vehicleid;
 
 	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
-	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/rtc [veículo]");
 	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
 	new id = VehicleGetID(vehicleid);
 	if (vInfo[id][vFaction] != 0 || vInfo[id][vBusiness] != 0 || vInfo[id][vJob] != 0) return SendErrorMessage(playerid, "Você não pode dar respawn total em um veículo fixo.");
@@ -848,7 +849,7 @@ CMD:rtc(playerid, params[]) {
 CMD:aremovercallsign(playerid, params[]) {
 	new vehicleid;
 	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
-	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (sscanf(params, "d", vehicleid)) return SendSyntaxMessage(playerid, "/aremovercallsign [veículo]");
 	if (vehicleid < 1 || vehicleid > MAX_VEHICLES || !IsValidVehicle(vehicleid)) return SendErrorMessage(playerid, "Você especificou o ID de veículo inválido.");
 	
 	SendServerMessage(playerid, "Você removeu a callsign do veículo %d", vehicleid);
@@ -864,7 +865,7 @@ CMD:aremovercallsign(playerid, params[]) {
 CMD:checarveiculos(playerid, params[]) {
 	new userid;
 	if (GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
-	if (sscanf(params, "d", userid)) return SendSyntaxMessage(playerid, "/respawnarveiculo [veículo]");
+	if (sscanf(params, "d", userid)) return SendSyntaxMessage(playerid, "/checarveiculo [veículo]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
 	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", pInfo[userid][pID]);

@@ -926,3 +926,96 @@ public OnVehicleDeath(vehicleid, killerid) {
 
     return true;
 }
+
+SellVehicleToDealer(playerid)
+{
+    if(IsPlayerInRangeOfPoint(playerid, 5.0, 542.0506, -1292.9080, 17.2422) || IsPlayerInRangeOfPoint(playerid, 5.0, 2131.8108, -1150.8969, 24.1069))
+    {
+        static 
+            vehicle_id,
+            vehicle_price;
+
+        vehicle_id = VehicleGetID(GetPlayerVehicleID(playerid));
+        
+        if(!IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Você não está em um veículo!");
+        if(vInfo[vehicle_id][vOwner] != pInfo[playerid][pID]) return SendErrorMessage(playerid, "Você não é proprietario deste veículo!");
+
+        vehicle_price = ((GetVehiclePrice(GetVehicleModel(GetPlayerVehicleID(playerid))) * 60) / 100);
+
+        Dialog_Show(playerid, DialogSellVehicle, DIALOG_STYLE_MSGBOX, "Vender veículo", "Você deseja vender seu veículo por $%s?", "Vender", "Cancelar", FormatNumber(vehicle_price));
+    }
+    else
+    {
+        SendErrorMessage(playerid, "Você não está em uma concessionaria!");
+    }
+    return 1;
+}
+
+GetVehiclePrice(model)
+{
+    static 
+        Cache:result,
+        price;
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_dealer` WHERE `model_id` = %d;", model);
+    result = mysql_query(DBConn, query, true);
+
+    if(cache_is_valid(result))
+    {
+        cache_set_active(result);
+
+        if(cache_num_rows() > 0)
+        {
+            cache_get_value_name_int(0, "price", price);
+        }   
+        else price = -1 ;
+
+        cache_unset_active();
+        cache_delete(result);
+    }
+    return price;
+}
+
+Dialog:DialogSellVehicle(playerid, response, listitem, inputtext[])
+{
+    if(response)
+    {
+        static 
+            vehicle_id,
+            vehicle_price;
+
+        vehicle_id = VehicleGetID(GetPlayerVehicleID(playerid));
+        vehicle_price = ((GetVehiclePrice(GetVehicleModel(GetPlayerVehicleID(playerid))) * 60) / 100);
+
+        GiveMoney(playerid, vehicle_price);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles` WHERE `ID` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_caravan` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_damages` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_objects` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_stats` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_tunings` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM `vehicles_weapons` WHERE `vehicle_id` = %d;", vInfo[vehicle_id][vID]);
+        mysql_query(DBConn, query, false);
+
+        DestroyVehicle(GetPlayerVehicleID(playerid));
+
+        new reset[E_VEHICLE_DATA];
+        vInfo[vehicle_id] = reset;
+
+        SendInfoMessage(playerid, "Você vendeu seu veículo!");
+    }
+    return 1;
+}

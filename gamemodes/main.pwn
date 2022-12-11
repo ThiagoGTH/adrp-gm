@@ -72,4 +72,4 @@
 
 #include "modules\core\player\main\main.pwn"
 
-main() { }
+main() {}

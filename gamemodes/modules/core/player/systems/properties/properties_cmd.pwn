@@ -264,7 +264,6 @@ CMD:trancar(playerid, params[]) {
 CMD:criarinterior(playerid, params[]) {
     new 
         type,
-        price,
         name[256];
 
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);

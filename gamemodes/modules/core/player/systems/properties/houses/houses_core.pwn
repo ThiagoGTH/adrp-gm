@@ -51,6 +51,7 @@ hook OnGamemodeExit() {
 }
 
 // ============================================================================================================================================
+//Carrega todas ás casas.
 LoadHouses() {
     new loadedHouses;
 
@@ -87,6 +88,7 @@ LoadHouses() {
     return 1;
 }
 
+//Carrega casa espefica.
 LoadHouse(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -116,6 +118,7 @@ LoadHouse(id) {
     return 1;
 }
 
+//Salva todas ás casas.
 SaveHouses() {
     new savedHouses;
 
@@ -138,6 +141,7 @@ SaveHouses() {
     return 1;
 }
 
+//Sava casa especifica.
 SaveHouse(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -155,6 +159,7 @@ SaveHouse(id) {
     return 1;
 }
 
+//Verifica a existencia da casa (caso não existe é false)
 IsValidHouse(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -165,6 +170,7 @@ IsValidHouse(id) {
     return 1;
 }
 
+// Verifica o dono da casa.
 HouseHasOwner(id) {
     return IsValidHouse(id) && (hInfo[id][hOwner]);
 }
@@ -206,6 +212,7 @@ GetNearestHouseExit(playerid, Float:distance = 1.0) {
 }
 
 // ============================================================================================================================================
+//Carrega ás entradas (segundarias) das casas.
 LoadEntries() {
     new loadedEntries;
 
@@ -239,6 +246,7 @@ LoadEntries() {
     return 1;
 }
 
+//Carrega entrada (segundaria) de uma casa em espécifico 
 LoadEntry(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -266,6 +274,7 @@ LoadEntry(id) {
     return 1;
 }
 
+//Carrega ás entradas (segundarias) das casas.
 SaveEntries() {
     new savedEntries;
 
@@ -288,6 +297,7 @@ SaveEntries() {
     return 1;
 }
 
+//Salva entrada (segundaria) de uma casa em espécifico 
 SaveEntry(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -305,6 +315,115 @@ SaveEntry(id) {
     return 1;
 }
 
+//Criar casa
+CreateHouse(playerid, price, address[256]) {
+    new Float:pos[4];
+
+    if(price < 1000)
+        return SendErrorMessage(playerid, "O preço da casa deve ser maior do que $1000.");
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses` WHERE `address` = '%e';", address);
+    mysql_query(DBConn, query);
+
+    if(cache_num_rows())
+        return SendErrorMessage(playerid, "Este endereço já está registrado em outra casa!");
+
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `houses` (`address`, `price`, `entry_x`, `entry_y`, `entry_z`, `entry_a`, `vw_entry`, `interior_entry`) \
+        VALUES ('%s', %d, %f, %f, %f, %f, %d, %d);", address, price, pos[0], pos[1], pos[2], pos[3], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
+    mysql_query(DBConn, query);
+
+    new id = cache_insert_id();
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `houses` SET `vw_exit` = %d WHERE `id` = %d;", id + 10000, id);
+    mysql_query(DBConn, query);
+
+    LoadHouse(id);
+
+    SendServerMessage(playerid, "Você criou a casa de ID %d no endereço: '%s'. ($%s)", id, address, FormatNumber(price));
+    format(logString, sizeof(logString), "%s (%s) criou a casa de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
+	logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Cria entrada segundaria para determinada casa
+CreateHouseSecondEntry(playerid, houseID) {
+    new Float:pos[4];
+
+    if(!IsValidHouse(houseID))
+        return SendErrorMessage(playerid, "Este ID de casa não existe.");
+
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `houses_other_entries` (`house_id`, `entry_x`, `entry_y`, `entry_z`, `entry_a`, `vw_entry`, `interior_entry`) \
+        VALUES (%d, %f, %f, %f, %f, %d, %d);", houseID, pos[0], pos[1], pos[2], pos[3], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
+    mysql_query(DBConn, query);
+
+    new id = cache_insert_id();
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `houses_other_entries` SET `exit_x` = %f, `exit_y` = %f, `exit_z` = %f, `exit_a` = %f, `vw_exit` = %d, `interior_exit` = %d WHERE `id` = %d;",
+        hInfo[houseID][hExitPos][0], hInfo[houseID][hExitPos][1], hInfo[houseID][hExitPos][2], hInfo[houseID][hExitPos][3], hInfo[houseID][vwExit], hInfo[houseID][interiorExit], id);
+    mysql_query(DBConn, query);
+
+    LoadEntry(id);
+
+    SendServerMessage(playerid, "Você criou a entrada secundária de ID %d para a casa de ID %d.", id, houseID);
+
+    format(logString, sizeof(logString), "%s (%s) criou a entrada secundária de ID %d para a casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
+	logCreate(playerid, logString, 14);
+    return 1;
+}
+
+//Excluir casa
+DeleteHouse(playerid, id) {
+    if(!IsValidHouse(id))
+        return SendErrorMessage(playerid, "Esse ID de casa não existe.");
+
+    mysql_format(DBConn, query, sizeof query, "DELETE FROM `houses` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    SendServerMessage(playerid, "Você deletou a casa de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) deletou a casa de ID %d. (%s)", pNome(playerid), GetPlayerUserEx(playerid), id, hInfo[id][hAddress]);
+	logCreate(playerid, logString, 13);
+
+    new dummyReset[E_HOUSE_DATA];
+    hInfo[id] = dummyReset;
+    return 1;
+}
+
+//Teleporta o player para determinada casa (via o ID > Onde está localizada a entrada)
+TeleportHouse(playerid, id) {
+    if(!hInfo[id][hID])
+        return SendErrorMessage(playerid, "Esse ID de casa não existe.");
+
+    SetPlayerVirtualWorld(playerid, hInfo[id][vwEntry]);
+    SetPlayerInterior(playerid, hInfo[id][interiorEntry]);
+    SetPlayerPos(playerid, hInfo[id][hEntryPos][0], hInfo[id][hEntryPos][1], hInfo[id][hEntryPos][2]);
+    SetPlayerFacingAngle(playerid, hInfo[id][hEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a casa de ID %d.", id);
+    return 1;
+}
+
+//Teleporta o player para determinada entrad (segundaria) (via o ID > Onde está localizada a entrada)
+TeleportSecondEntry(playerid, id) {
+    if(!IsValidEntry(id))
+        return SendErrorMessage(playerid, "Esse ID de entrada não existe.");
+
+    SetPlayerVirtualWorld(playerid, sInfo[id][sEntryVW]);
+    SetPlayerInterior(playerid, sInfo[id][sEntryInterior]);
+    SetPlayerPos(playerid, sInfo[id][sEntryPos][0], sInfo[id][sEntryPos][1], sInfo[id][sEntryPos][2]);
+    SetPlayerFacingAngle(playerid, sInfo[id][sEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a entrada de ID %d.", id);
+    return 1;
+}
+
+//Verifica a existencia da entrada (retorna false caso não exista.)
 IsValidEntry(id) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `houses_other_entries` WHERE `id` = %d;", id);
     mysql_query(DBConn, query);
@@ -351,6 +470,7 @@ GetNearestHouseSecondExit(playerid, Float:distance = 1.0) {
     return 0;
 }
 
+//Verifica se a casa é válida + o endereço da casa.
 GetHouseAddress(id) {
     IsValidHouse(id);
 
@@ -360,6 +480,8 @@ GetHouseAddress(id) {
     return address;
 }
 
+// ============================================================================================================================================
+//Seta se a casa está "alugando" ou não.
 RentableHouse(id, playerid, rentable) {
     if(rentable != 1)
         rentable = 0;
@@ -374,6 +496,7 @@ RentableHouse(id, playerid, rentable) {
     return 1;
 }
 
+//Seta o preço do aluguel da casa.
 SetRentPrice(id, playerid, value) {
     hInfo[id][hRent] = value;
     SaveHouse(id);
@@ -381,5 +504,155 @@ SetRentPrice(id, playerid, value) {
     format(logString, sizeof(logString), "%s (%s) alterou o preço de aluguel da sua casa ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(value));
 	logCreate(playerid, logString, 13);
 
+    return 1;
+}
+
+//Seta nova entrada da casa
+SetEntryHouse(playerid, id) {
+    new Float:pos[4];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    hInfo[id][hEntryPos][0] = pos[0];
+    hInfo[id][hEntryPos][1] = pos[1];
+    hInfo[id][hEntryPos][2] = pos[2];
+    hInfo[id][hEntryPos][3] = pos[3];
+    hInfo[id][vwEntry] = GetPlayerVirtualWorld(playerid);
+    hInfo[id][interiorEntry] = GetPlayerInterior(playerid);
+
+    SaveHouse(id);
+
+    SendServerMessage(playerid, "Você editou a entrada da casa de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) editou a entrada da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
+    logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Seta novo interior da casa
+SetInteriorHouse(playerid, id) {
+    new Float:pos[4];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    hInfo[id][hExitPos][0] = pos[0];
+    hInfo[id][hExitPos][1] = pos[1];
+    hInfo[id][hExitPos][2] = pos[2];
+    hInfo[id][hExitPos][3] = pos[3];
+    hInfo[id][interiorExit] = GetPlayerInterior(playerid);
+
+    SaveHouse(id);
+
+    SendServerMessage(playerid, "Você editou o interior da casa de ID %d.", id);
+
+    format(logString, sizeof(logString), "%s (%s) editou o interior da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
+    logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Seta preço da casa
+SetPriceHouse(playerid, id, houseValue) {
+    if(!houseValue || houseValue < 0)
+        return SendErrorMessage(playerid, "Você precisa especificar um valor que seja maior do que zero para ser o preço da casa.");
+
+    hInfo[id][hPrice] = houseValue;
+    SaveHouse(id);
+
+    SendServerMessage(playerid, "Você editou o preço da casa de ID %d para $%s.", id, FormatNumber(houseValue));
+
+    format(logString, sizeof(logString), "%s (%s) editou o preço da casa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(houseValue));
+    logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Seta novo endereço da casa.
+SetAddressHouse(playerid, id, value[64]) {
+    if(!strlen(value))
+        return SendErrorMessage(playerid, "Você precisa especificar um endereço para setar.");
+
+    format(hInfo[id][hAddress], 256, "%s", value);
+    SaveHouse(id);
+
+    SendServerMessage(playerid, "Você setou o endereço da casa de ID %d como '%s'.", id, value);
+
+    format(logString, sizeof(logString), "%s (%s) setou o endereço da casa de ID %d como '%s'.", pNome(playerid), GetPlayerUserEx(playerid), id, value);
+    logCreate(playerid, logString, 13);
+    return 1;
+}
+
+//Setar local da entrada
+SetSecondEntry(playerid, id) {
+    new Float:pos[4];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    sInfo[id][sEntryPos][0] = pos[0];
+    sInfo[id][sEntryPos][1] = pos[1];
+    sInfo[id][sEntryPos][2] = pos[2];
+    sInfo[id][sEntryPos][3] = pos[3];
+    sInfo[id][sEntryVW] = GetPlayerVirtualWorld(playerid);
+    sInfo[id][sEntryVW] = GetPlayerInterior(playerid);
+
+    SaveEntry(id);
+
+    SendServerMessage(playerid, "Você editou a entrada secundária de ID %d da casa de ID %d.", id, sInfo[id][sHouseID]);
+
+    format(logString, sizeof(logString), "%s (%s) editou a entrada secundária de ID %d da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
+    logCreate(playerid, logString, 14);
+    return 1;
+}
+
+//Setar interior de determinada entrada.
+SetInteriorSecondEntry(playerid, id) {
+    new Float:pos[4];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, pos[3]);
+
+    sInfo[id][sExitPos][0] = pos[0];
+    sInfo[id][sExitPos][1] = pos[1];
+    sInfo[id][sExitPos][2] = pos[2];
+    sInfo[id][sExitPos][3] = pos[3];
+    sInfo[id][sExitInterior] = GetPlayerInterior(playerid);
+
+    SaveEntry(id);
+
+    SendServerMessage(playerid, "Você editou o interior da entrada secundária de ID %d (casa de ID %d).", id, sInfo[id][sHouseID]);
+
+    format(logString, sizeof(logString), "%s (%s) editou o interior da entrada secundária de ID %d (casa de ID %d).", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
+    logCreate(playerid, logString, 14);
+    return 1;
+}
+
+//Linkar entrada em outra casa.
+SetEntryNewHouse(playerid, id, houseID) {
+    if(!IsValidHouse(houseID))
+        return SendErrorMessage(playerid, "Este ID de casa não existe.");
+
+    sInfo[id][sHouseID] = houseID;
+    sInfo[id][sExitVW] = hInfo[houseID][vwExit];
+    SaveEntry(id);
+
+    SendServerMessage(playerid, "Você vinculou a entrada de ID %d à casa de ID %d.", id, houseID);
+
+    format(logString, sizeof(logString), "%s (%s) vinculou a entrada de ID %d à casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
+    logCreate(playerid, logString, 14);
+    return 1;
+}
+
+
+SetRentableHouse(playerid, houseID) {
+    if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
+        return SendErrorMessage(playerid, "Essa casa não é sua.");
+    
+    switch(hInfo[houseID][hRentable]) {
+        case 0: {
+            RentableHouse(houseID, playerid, 1);
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Sua casa agora está alugável.");
+        }
+        default: {
+            RentableHouse(houseID, playerid, 0);
+            va_SendClientMessage(playerid, COLOR_YELLOW, "Sua casa não está mais alugável.");
+        }
+    }
     return 1;
 }

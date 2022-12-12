@@ -243,13 +243,6 @@ GetNearestAtm(playerid, Float:distance = 2.0) {
     return 0;
 }
 
-/*
-(Comentado para impedir o warming (de não estar sendo ultilizada)) 
-// (em teste) - muda o resultado da atm (se está ou não sendo ultilizada)
-OnUsingAtm(playerid, atmID) {
-    return atmInfo[atmID][atmActive] = !atmInfo[atmID][atmActive];
-}  */
-
 //Mostra a dialog (principal) ao chamar está função.
 ShowDialogATM(playerid) {
     Dialog_Show(playerid, atmAccount, DIALOG_STYLE_LIST, "ATM > Acessando conta", "Minha Conta \nConta Compartilhada", "Selecionar", "Cancelar");

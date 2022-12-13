@@ -763,6 +763,20 @@ void:CheckVehiclesTable(){
     print("[DATABASE] Tabela vehicles_weapons checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_weapons checada com sucesso");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn,
+    "CREATE TABLE IF NOT EXISTS `vehicles_trunks`(\
+    `ID` INT AUTO_INCREMENT,\
+    `vehicle_id` INT NOT NULL,\
+    `slot` INT DEFAULT 0,\
+    `item` INT DEFAULT 0,\
+    PRIMARY KEY(`ID`),\
+    FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`ID`) ON UPDATE CASCADE ON DELETE CASCADE);", 
+    false);
+
+    print("[DATABASE] Tabela vehicles_trunks checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela vehicles_trunks checada com sucesso");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckPoolTable() {

@@ -370,6 +370,9 @@ LoadVehicles() {
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicle_id` = '%d'", id);
 		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", id);
 
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_trunks` WHERE `vehicle_id` = %d;", id);
+        mysql_tquery(DBConn, query, "LoadVehicleTrunk", "d", id);
+
         SpawnVehicle(id);
         loadedVehicles++;
     }
@@ -770,6 +773,26 @@ public LoadVehicleWeapons(vehicleid) {
         cache_get_value_name_int(0, query, vInfo[vehicleid][vAmmo][w]);
         format(query, sizeof(query), "weapon_type%d", w + 1);
         cache_get_value_name_int(0, query, vInfo[vehicleid][vWeaponsType][w]);
+    }
+    return true;
+}
+
+forward LoadVehicleTrunk(vehicleid);
+public LoadVehicleTrunk(vehicleid)
+{
+    static
+        rows;
+    
+    cache_get_row_count(rows);
+
+    if(rows)
+    {
+        for(new i; i < rows; i++)
+            cache_get_value_name_int(i, "item", vInfo[vehicleid][vTrunkSlots][i]);
+    }
+    else
+    {
+        GetVehicleTrunkSlots();
     }
     return true;
 }

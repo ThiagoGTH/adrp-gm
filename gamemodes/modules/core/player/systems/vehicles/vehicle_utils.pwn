@@ -78,6 +78,10 @@ enum E_VEHICLE_DATA {
 	Float:vObjectRotZ[5],
 	
 	vWindowsDown,
+
+	// 8 
+
+	vTrunkSlots[100], 		// armazena os itens do porta-malas
 };
 new vInfo[MAX_DYNAMIC_VEHICLES][E_VEHICLE_DATA];
 

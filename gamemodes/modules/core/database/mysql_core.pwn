@@ -69,6 +69,7 @@ void:CheckTables() {
     CheckBusinesssTable();
     CheckInteriorsTable();
     CheckATMsTable();
+    CheckPHONESTable();
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
@@ -896,6 +897,24 @@ void:CheckATMsTable() {
     
     print("[DATABASE] Tabela atm checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela atm checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckPHONESTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `payphone` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `object` int,\
+    `position_x` float DEFAULT '0',\
+    `position_y` float DEFAULT '0',\
+    `position_z` float DEFAULT '0',\
+    `position_a` float DEFAULT '0',\
+    `interior` int DEFAULT '0',\
+    `world` int DEFAULT '0',\
+    `status` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela payphone checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela payphone checada com sucesso");
     logCreate(99998, logString, 5);
 }
 

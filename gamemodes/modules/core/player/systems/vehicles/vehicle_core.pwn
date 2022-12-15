@@ -276,6 +276,12 @@ SaveVehicle(vehicleid) {
         result = mysql_query(DBConn, query);
 	}
     cache_delete(result);
+
+    for(new i; i < GetVehicleTrunkSlots(vInfo[vehicleid][vModel]); i++)
+    {
+        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_trunks` SET `item` = %d WHERE `vehicle_id` = %d AND `slot` = %d;", vInfo[vehicleid][vTrunkSlots][i], vehicleid, i);
+        mysql_query(DBConn, query, false);
+    }
     return true;
 }
 
@@ -435,6 +441,9 @@ LoadVehicle(vehicleid) {
 
     mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicle_id` = '%d'", vehicleid);
 	mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", vehicleid);
+
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles_trunks` WHERE `vehicle_id` = %d;", vehicleid);
+    mysql_tquery(DBConn, query, "LoadVehicleTrunk", "d", vehicleid);
 
     SpawnVehicle(vehicleid);
     //SetVehicleObject(vehicleid);
@@ -792,7 +801,11 @@ public LoadVehicleTrunk(vehicleid)
     }
     else
     {
-        GetVehicleTrunkSlots();
+        for(new i; i < GetVehicleTrunkSlots(vInfo[vehicleid][vModel]); i++)
+        {
+            mysql_format(DBConn, query, sizeof query, "INSERT INTO `vehicles_trunks` (`vehicle_id`, `slot`) VALUES (%d, %d);", vInfo[vehicleid][vID], i);
+            mysql_query(DBConn, query, false);
+        }
     }
     return true;
 }
@@ -1042,3 +1055,37 @@ Dialog:DialogSellVehicle(playerid, response, listitem, inputtext[])
     }
     return 1;
 }
+
+OpenCarTrunk(playerid)
+{
+    static
+        vehicle_id, Float:x, Float:y, Float:z, string[64];
+    
+    vehicle_id = GetNearestVehicle(playerid);
+
+    GetVehiclePos(vehicle_id, x, y, z);
+
+    if(!IsPlayerInRangeOfPoint(playerid, 5.0, x, y, z)) return SendErrorMessage(playerid, "Voc no est prximo de nenhum veculo!");
+    if(vInfo[VehicleGetID(vehicle_id)][vLocked]) return SendErrorMessage(playerid, "Este veculo est trancado!");
+    if(IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Voc no pode abrir um porta-malas dentro do veculo.");
+    if(GetVehicleTrunkSlots(GetVehicleModel(vehicle_id)) == -1) return SendErrorMessage(playerid, "Este veículo não tem porta-malas.");
+
+    if(vInfo[VehicleGetID(vehicle_id)][vTrunkOpened])
+    {
+        SetTrunkStatus(vehicle_id, 0);
+        vInfo[VehicleGetID(vehicle_id)][vTrunkOpened] = false;
+
+        format(string, sizeof(string), "~r~PORTA-MALAS FECHADO");
+	    GameTextForPlayer(playerid, string, 2500, 4);
+    }
+    else
+    {
+        SetTrunkStatus(vehicle_id, 1);
+        vInfo[VehicleGetID(vehicle_id)][vTrunkOpened] = true;
+
+		format(string, sizeof(string), "~g~PORTA-MALAS ABERTO");
+		GameTextForPlayer(playerid, string, 2400, 4);        
+    }
+    return 1;
+}
+

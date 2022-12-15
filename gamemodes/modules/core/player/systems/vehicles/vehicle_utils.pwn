@@ -81,6 +81,7 @@ enum E_VEHICLE_DATA {
 
 	// 8 
 
+	bool:vTrunkOpened,		// Se o porta-malas está aberto
 	vTrunkSlots[100], 		// armazena os itens do porta-malas
 };
 new vInfo[MAX_DYNAMIC_VEHICLES][E_VEHICLE_DATA];
@@ -996,4 +997,39 @@ SendVehicleMessage(vehicleid, color, const str[], {Float,_}:...) {
 		}
 	}
 	return true;
+}
+
+SetTrunkStatus(vehicleid, status) {
+	static
+	    engine,
+	    lights,
+	    alarm,
+	    doors,
+	    bonnet,
+	    boot,
+	    objective;
+
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, status, objective);
+}
+
+GetVehicleTrunkSlots(model)
+{
+	switch(model)
+	{
+		// vehicles
+
+		case 400..402, 404, 405, 409..412, 415, 419..422, 426, 429, 436, 438, 439, 442, 445, 451, 458, 466, 467, 474, 475, 477, 479, 480, 483, 489..492, 494..496, 500, 502, 507, 516..518, 526..529, 233..236, 540..543, 545..547, 549..551, 554..562, 565..567, 575, 576, 579, 580, 585, 587, 589, 596..600, 602..605: return 20; 
+
+		// trucks
+		
+		case 413, 414, 416, 418, 423, 427, 428, 433, 440, 455, 456, 459, 482, 498, 499, 508, 578, 609: return 30;
+
+		// trailers 
+
+		case 450, 591, 606, 607: return 40;
+
+		default: return -1;
+	}
+	return 1;
 }

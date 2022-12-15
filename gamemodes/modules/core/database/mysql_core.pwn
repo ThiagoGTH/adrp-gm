@@ -29,7 +29,6 @@ hook OnGameModeInit() {
     }
 
     DBConn = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    mysql_log(ALL);
     new MySQLOpt: options = mysql_init_options();
     mysql_set_option(options, AUTO_RECONNECT, true);
     mysql_set_option(options, MULTI_STATEMENTS, true);

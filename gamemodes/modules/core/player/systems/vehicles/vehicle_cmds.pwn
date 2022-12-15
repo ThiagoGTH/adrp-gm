@@ -18,6 +18,7 @@ CMD:v(playerid, params[]) {
 	else if (!strcmp(type, "stats", true)) return CheckVehicleStats(playerid);
 	else if (!strcmp(type, "trancar", true)) return SetVehicleLock(playerid);
 	else if (!strcmp(type, "venderconce")) return SellVehicleToDealer(playerid);
+	else if (!strcmp(type, "portamalas")) return OpenCarTrunk(playerid);
 
 	return true;
 }

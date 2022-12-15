@@ -20,7 +20,7 @@ CMD:pagar(playerid, params[])
 		return SendErrorMessage(playerid, "Você não tem essa quantidade de dinheiro.");
 
     if (!strcmp(GetPlayerIP(playerid), GetPlayerIP(userid)))
-		return SendAdminWarning(1, "%s (ID: %i) tentou pagar %s (ID: %i) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid);
+		return SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) tentou pagar %s (%d) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid), format(logString, sizeof(logString), "%s (%d) tentou pagar %s (%d) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid), logCreate(playerid, logString, 1);
 		
     PayPlayer(playerid, userid, amount);
 	return 1;

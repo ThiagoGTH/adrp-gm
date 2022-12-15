@@ -1,6 +1,6 @@
 /*
  
-Esse m√≥dulo √© dedicado integralmente a lidar com conex√µes e integra√ß√µes com o MySQL. Mas isso n√£o implica que outros m√≥dulos n√£o possam extrair, salvar ou inserir informa√ß√µes no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
+Esse mÛdulo È dedicado integralmente a lidar com conexıes e integraÁıes com o MySQL. Mas isso n„o implica que outros mÛdulos n„o possam extrair, salvar ou inserir informaÁıes no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
 
 */
 
@@ -36,17 +36,17 @@ hook OnGameModeInit() {
     mysql_set_option(options, POOL_SIZE, 2);
 
     if(mysql_errno(DBConn)) {
-        print("\n[DATABASE] Houve um erro na tentativa de conex√£o com o MySQL.");
+        print("\n[DATABASE] Houve um erro na tentativa de conex„o com o MySQL.");
         print("[DATABASE] Para obter mais detalhes, acesse a pasta de logging do plug-in.");
         print("[DATABASE] Desligando o servidor...\n");
 
-        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex√£o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser√° desligado.");
+        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex„o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser√° desligado.");
         logCreate(99998, logString, 5);
         
         SendRconCommand("exit");
     } else {
-        print("\n[DATABASE] A conex√£o com o MySQL foi feita com sucesso");
-        print("[DATABASE] Verificando cria√ß√£o de tabelas...");
+        print("\n[DATABASE] A conex„o com o MySQL foi feita com sucesso");
+        print("[DATABASE] Verificando criaÁ„o de tabelas...");
         mysql_set_charset("latin1");
         CheckTables();
     }
@@ -76,7 +76,7 @@ void:CheckTables() {
     CheckBankAccountsTable();
     CheckGaragesTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
-    print("* Note que se alguma tabela faltar, fun√ß√µes n√£o funcionar√£o de modo correto.\n");
+    print("* Note que se alguma tabela faltar, funÁıes n„o funcionar„o de modo correto.\n");
 }
 
 void:CheckUserTable() {
@@ -838,7 +838,7 @@ void:CheckBusinesssTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'Endere√ßo desconhecido',\
+    `address` varchar(256) DEFAULT 'EndereÁo desconhecido',\
     `locked` int DEFAULT '0',\
     `name` varchar(256) DEFAULT 'Empresa desconhecida',\
     `type` int DEFAULT '0',\

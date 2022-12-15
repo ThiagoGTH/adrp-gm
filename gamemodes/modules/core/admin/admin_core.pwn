@@ -47,22 +47,6 @@ GetUserTeam(playerid, team) {
 	return false;
 }
 
-stock SendAdminWarning(level, const string[], va_args<>)
-{
-	static str[145];
-	va_format(str, sizeof(str), string, va_start<2>);
-	
-    foreach(new i : Player) if (GetPlayerAdmin(i) >= level) {
-				if(strlen(str) > 116)
-				{
-						SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}%.116s ...", level, str);
-						SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}... %s", level, str[116]);
-				}
-				else SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}%s", level, str);
-    }
-    return 1;
-}
-
 CMD:aa(playerid, params[]) {	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);
@@ -154,7 +138,6 @@ CMD:tapa(playerid, params[]) {
 	new
 		userid;
 
-	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);

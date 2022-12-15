@@ -1,6 +1,6 @@
 /*
 
-Modulo destinado ao sistema de barreiras para facÃ§Ãµes governamentais.
+Modulo destinado ao sistema de barreiras para facções governamentais.
 
 */
 #include <YSI_Coding\y_hooks>
@@ -30,12 +30,12 @@ ShowBarricadeModelMenu(playerid)
 
     // add skin IDs 0, 1, 29 and 60 with "cool people only" text above skin ID 29.
     AddModelMenuItem(barreiras, 1238, "Cone 1");
-    AddModelMenuItem(barreiras, 997, "CorrimÃ£o 1");
+    AddModelMenuItem(barreiras, 997, "Corrimão 1");
     AddModelMenuItem(barreiras, 1237, "Cone 2");
     AddModelMenuItem(barreiras, 1282, "Placa 1");
     AddModelMenuItem(barreiras, 1422, "Barreira 1");
-    AddModelMenuItem(barreiras, 973, "CorrimÃ£o 2");
-    AddModelMenuItem(barreiras, 978, "CorrimÃ£o 3");
+    AddModelMenuItem(barreiras, 973, "Corrimão 2");
+    AddModelMenuItem(barreiras, 978, "Corrimão 3");
     AddModelMenuItem(barreiras, 3091, "Placa 2");
     AddModelMenuItem(barreiras, 19834, "Fixa 1");
     AddModelMenuItem(barreiras, 19972, "Placa 3");
@@ -61,8 +61,8 @@ ShowBarricadeModelMenu(playerid)
 CMD:barreira(playerid, params[])
 {
 	if (isnull(params)){
-	 	SendUsageMessage(playerid, "/barreira <opÃ§Ã£o>");
-	    SendClientMessage(playerid, VERDE, "(OpÃ§Ãµes):{FFFFFF} colocar, editar, retirar, retirarall");
+	 	SendUsageMessage(playerid, "/barreira <opção>");
+	    SendClientMessage(playerid, VERDE, "(Opções):{FFFFFF} colocar, editar, retirar, retirarall");
 		return true;
 	}
     
@@ -76,7 +76,7 @@ CMD:barreira(playerid, params[])
     GetPlayerFacingAngle(playerid, fA);
 
 	if (IsPlayerInAnyVehicle(playerid))
-	    return SendErrorMessage(playerid, "VocÃª nÃ£o pode usar esse comando de dentro de um veÃ­culo.");
+	    return SendErrorMessage(playerid, "VocÃª não pode usar esse comando de dentro de um veÃ­culo.");
 
 	if (!strcmp(params, "colocar", true))
 	{
@@ -95,7 +95,7 @@ CMD:barreira(playerid, params[])
             SendClientMessage(playerid, VERDE, "(Barreira):{FFFFFF} VocÃª removeu uma barreira do servidor.");
 			return true;
 		}
-		SendErrorMessage(playerid, "vocÃª nÃ£o estÃ¡ prÃ³ximo a nenhuma barreira.");
+		SendErrorMessage(playerid, "vocÃª não estÃ¡ próximo a nenhuma barreira.");
 	}
 	else if (!strcmp(params, "retirarall", true))
 	{
@@ -193,7 +193,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
 
             br_info[id][beditando] = false;
 
-            SendErrorMessage(playerid,"(Barreira):{FFFFFF} EdiÃ§Ã£o da barreira foi cancelada.");
+            SendErrorMessage(playerid,"(Barreira):{FFFFFF} Edição da barreira foi cancelada.");
         }
         return true;
     }
@@ -218,7 +218,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
                     DestroyDynamicObject(br_info[id][cadeObject]);
 
                 br_info[id][beditando] = false;
-                SendErrorMessage(playerid,"(Barreira):{FFFFFF} VocÃª nÃ£o pode por a barreira tÃ£o distante de vocÃª.");
+                SendErrorMessage(playerid,"(Barreira):{FFFFFF} VocÃª não pode por a barreira tão distante de vocÃª.");
             }
 		}            
     }

@@ -269,8 +269,7 @@ CMD:criarinterior(playerid, params[]) {
 
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
-	if (sscanf(params, "ds[256]", type, name))
-    {
+	if (sscanf(params, "ds[256]", type, name)) {
         SendSyntaxMessage(playerid, "/criarinterior [tipo] [nome único]");
         SendSyntaxMessage(playerid, "[TIPOS] 1: Casa | 2: Empresa | 3: Outros");
         return 1;

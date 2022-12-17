@@ -279,7 +279,7 @@ SaveVehicle(vehicleid) {
 
     for(new i; i < GetVehicleTrunkSlots(vInfo[vehicleid][vModel]); i++)
     {
-        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_trunks` SET `item` = %d WHERE `vehicle_id` = %d AND `slot` = %d;", vInfo[vehicleid][vTrunkSlots][i], vehicleid, i);
+        mysql_format(DBConn, query, sizeof query, "UPDATE `vehicles_trunks` SET `item` = %d, `amount` = %d WHERE `vehicle_id` = %d AND `slot` = %d;", vInfo[vehicleid][vTrunkSlots][i], vInfo[vehicleid][vTrunkAmount][i], vehicleid, i);
         mysql_query(DBConn, query, false);
     }
     return true;
@@ -797,7 +797,10 @@ public LoadVehicleTrunk(vehicleid)
     if(rows)
     {
         for(new i; i < rows; i++)
+        {
             cache_get_value_name_int(i, "item", vInfo[vehicleid][vTrunkSlots][i]);
+            cache_get_value_name_int(i, "amount", vInfo[vehicleid][vTrunkAmount][i]);
+        }
     }
     else
     {
@@ -1084,8 +1087,31 @@ OpenCarTrunk(playerid)
         vInfo[VehicleGetID(vehicle_id)][vTrunkOpened] = true;
 
 		format(string, sizeof(string), "~g~PORTA-MALAS ABERTO");
-		GameTextForPlayer(playerid, string, 2400, 4);        
+		GameTextForPlayer(playerid, string, 2400, 4);
+
+        ShowTrunkDialog(playerid, vehicle_id);
     }
     return 1;
 }
 
+ShowTrunkDialog(playerid, vehicleid)
+{
+    new
+        string[2048],
+        dynamic_vehicleid;
+
+    dynamic_vehicleid = VehicleGetID(vehicleid);
+
+    for(new i; i < GetVehicleTrunkSlots(GetVehicleModel(vehicleid)); i++)
+    {
+        
+        if(vInfo[dynamic_vehicleid][vTrunkSlots][i] != 0)
+            format(string, sizeof(string), "%s%d\t%s~n~~n~~n~~n~~n~~y~(%d)~n~~w~%d\n", string, diInfo[vInfo[dynamic_vehicleid][vTrunkSlots][i]][diModel], diInfo[vInfo[dynamic_vehicleid][vTrunkSlots][i]][diName], vInfo[dynamic_vehicleid][vTrunkAmount][i], i);
+        else
+            format(string, sizeof(string), "%s%d\t%s~n~~n~~n~~n~~n~~y~(%d)~n~~w~%d\n", string, -1, "Vazio", 0, i);
+    }       
+    
+
+    Dialog_Show(playerid, DialogTrunk, DIALOG_STYLE_PREVIEW_MODEL, "Porta-malas", string, "Selecionar", "Fechar");
+    return 1;
+}

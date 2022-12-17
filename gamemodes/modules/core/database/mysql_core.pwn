@@ -769,6 +769,7 @@ void:CheckVehiclesTable(){
     `vehicle_id` INT NOT NULL,\
     `slot` INT DEFAULT 0,\
     `item` INT DEFAULT 0,\
+    `amount` INT DEFAULT 0,\
     PRIMARY KEY(`ID`),\
     FOREIGN KEY(`vehicle_id`) REFERENCES `vehicles`(`ID`) ON UPDATE CASCADE ON DELETE CASCADE);", 
     false);

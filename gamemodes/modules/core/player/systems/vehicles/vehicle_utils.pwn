@@ -82,7 +82,8 @@ enum E_VEHICLE_DATA {
 	// 8 
 
 	bool:vTrunkOpened,		// Se o porta-malas está aberto
-	vTrunkSlots[100], 		// armazena os itens do porta-malas
+	vTrunkSlots[50], 		// armazena os itens do porta-malas
+	vTrunkAmount[50], 		// armazena a quantidade do item
 };
 new vInfo[MAX_DYNAMIC_VEHICLES][E_VEHICLE_DATA];
 

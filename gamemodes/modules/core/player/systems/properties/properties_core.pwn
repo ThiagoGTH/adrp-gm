@@ -442,3 +442,16 @@ LockProperty(playerid, propertyId, propertyType) {
 
     return 1;
 }
+
+NearbyProperty(playerid) {
+    static 
+        id = -1;
+
+    if ((id = GetNearestHouseEntry(playerid)) != -1)
+        return SendServerMessage(playerid, "[House Near] a mais próxima é ID: %d.", id);
+    if ((id = GetNearestBusinessEntry(playerid)) != -1)
+        return SendServerMessage(playerid, "[Business Near] a mais próxima é ID: %d.", id);
+    if ((id = GetNearestGarageEntry(playerid)) != -1)
+        return SendServerMessage(playerid, "[Garage Near] a mais próxima é ID: %d.", id);
+    return 1;
+}

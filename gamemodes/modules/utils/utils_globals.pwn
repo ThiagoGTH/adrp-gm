@@ -97,9 +97,6 @@ enum Player_Data {
     pBuild,
     pDescription[128],
 
-    pPhoneNumber,
-    pPhoneType,
-
     pEditandoBareira,
 
     pFreeze,
@@ -241,6 +238,18 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+
+    // Phone (system)
+    pPhoneNumber, // pPnumber, Trocar
+    pPhoneType,
+    pPhoneModel,
+	pContractTime,
+    pCallConnect,
+	pCallLine,
+	pCellTime,
+	pCallCost,
+	pCallNumb,
 
     // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))
     //oEditType, // Tipo de edição.

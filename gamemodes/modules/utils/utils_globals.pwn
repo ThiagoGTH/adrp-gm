@@ -241,6 +241,7 @@ enum Player_Data {
 
 
     // Phone (system)
+    pIncomingCall,
     pPhoneNumber, // pPnumber, Trocar
     pPhoneType,
     pPhoneModel,
@@ -251,6 +252,8 @@ enum Player_Data {
 	pCallCost,
 	pCallNumb,
 
+    //Localizações
+    pLocal,
     // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))
     //oEditType, // Tipo de edição.
     oEditATM, // Guarda o (ID) da ATM que está sendo editado.

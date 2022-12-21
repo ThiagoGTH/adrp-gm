@@ -88,3 +88,59 @@ public SyncUp() {
 		SetWeather(14);
 	}
 }
+
+ConvertTime(&cts, &ctm=-1,&cth=-1,&ctd=-1,&ctw=-1,&ctmo=-1,&cty=-1)
+{
+    #define PLUR(%0,%1,%2) (%0),((%0) == 1)?((#%1)):((#%2))
+
+    #define CTM_cty 31536000
+    #define CTM_ctmo 2628000
+    #define CTM_ctw 604800
+    #define CTM_ctd 86400
+    #define CTM_cth 3600
+    #define CTM_ctm 60
+
+    #define CT(%0) %0 = cts / CTM_%0; cts %= CTM_%0
+
+    new strii[128];
+
+    if(cty != -1 && (cts/CTM_cty))
+    {
+        CT(cty); CT(ctmo); CT(ctw); CT(ctd); CT(cth); CT(ctm);
+        format(strii, sizeof(strii), "%d %s, %d %s, %d %s, %d %s, %d %s, %d %s, and %d %s",PLUR(cty,"year","years"),PLUR(ctmo,"month","months"),PLUR(ctw,"week","weeks"),PLUR(ctd,"day","days"),PLUR(cth,"hour","hours"),PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    if(ctmo != -1 && (cts/CTM_ctmo))
+    {
+        cty = 0; CT(ctmo); CT(ctw); CT(ctd); CT(cth); CT(ctm);
+        format(strii, sizeof(strii), "%d %s, %d %s, %d %s, %d %s, %d %s, and %d %s",PLUR(ctmo,"month","months"),PLUR(ctw,"week","weeks"),PLUR(ctd,"day","days"),PLUR(cth,"hour","hours"),PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    if(ctw != -1 && (cts/CTM_ctw))
+    {
+        cty = 0; ctmo = 0; CT(ctw); CT(ctd); CT(cth); CT(ctm);
+        format(strii, sizeof(strii), "%d %s, %d %s, %d %s, %d %s, and %d %s",PLUR(ctw,"week","weeks"),PLUR(ctd,"day","days"),PLUR(cth,"hour","hours"),PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    if(ctd != -1 && (cts/CTM_ctd))
+    {
+        cty = 0; ctmo = 0; ctw = 0; CT(ctd); CT(cth); CT(ctm);
+        format(strii, sizeof(strii), "%d %s, %d %s, %d %s, and %d %s",PLUR(ctd,"day","days"),PLUR(cth,"hour","hours"),PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    if(cth != -1 && (cts/CTM_cth))
+    {
+        cty = 0; ctmo = 0; ctw = 0; ctd = 0; CT(cth); CT(ctm);
+        format(strii, sizeof(strii), "%d %s, %d %s, and %d %s",PLUR(cth,"hour","hours"),PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    if(ctm != -1 && (cts/CTM_ctm))
+    {
+        cty = 0; ctmo = 0; ctw = 0; ctd = 0; cth = 0; CT(ctm);
+        format(strii, sizeof(strii), "%d %s, and %d %s",PLUR(ctm,"minute","minutes"),PLUR(cts,"second","seconds"));
+        return strii;
+    }
+    cty = 0; ctmo = 0; ctw = 0; ctd = 0; cth = 0; ctm = 0;
+    format(strii, sizeof(strii), "%d %s", PLUR(cts,"second","seconds"));
+    return strii;
+}

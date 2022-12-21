@@ -25,6 +25,7 @@
 #include <colandreas>
 #include <mapandreas>
 #include <env>
+#include <Pawn.Regex>
 
 #pragma warning disable 214
 #pragma warning disable 239

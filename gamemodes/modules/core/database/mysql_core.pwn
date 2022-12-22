@@ -75,6 +75,9 @@ void:CheckTables() {
     CheckGraffitisTable();
     CheckBankAccountsTable();
     CheckGaragesTable();
+    CheckSignalTower();
+    CheckPhoneSms();
+    CheckPhoneContacts();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -1318,4 +1321,53 @@ void:CheckBankAccountsTable() {
     print("[DATABASE] Tabela player_bankaccounts checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
     logCreate(99998, logString, 5);
+}
+
+void:CheckSignalTower() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `object` int DEFAULT '0',\
+  `position_x` DEFAULT '0',\
+  `position_y` DEFAULT '0',\
+  `position_z` DEFAULT '0',\
+  `position_a` DEFAULT '0',\
+  `radius` DEFAULT '0',\
+  `name` varchar(64) NOT NULL,\
+  `interior` int DEFAULT '0',\
+  `world` int DEFAULT '0',\
+   PRIMARY KEY (`id`));");
+
+   print("[DATABASE] Tabela signal_tower checada com sucesso");
+   format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela signal_tower checada com sucesso");
+   logCreate(99998, logString, 5);
+}
+
+void:CheckPhoneSms() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `phone_sms` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `PhoneOwner` int(11) NOT NULL,\
+  `PhoneReceive` int(11) NOT NULL,\
+  `PhoneSMS` varchar(128) NOT NULL,\
+  `ReadSMS` int(11) NOT NULL DEFAULT 0,\
+  `Archive` int(11) NOT NULL DEFAULT 0,\
+  `Date` varchar(36) NOT NULL,\
+   PRIMARY KEY (`id`));");
+
+   print("[DATABASE] Tabela phone_sms checada com sucesso");
+   format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela phone_sms checada com sucesso");
+   logCreate(99998, logString, 5);
+}
+
+void:CheckPhoneContacts() {
+  mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `phone_contacts` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `contactID` int(11) NOT NULL,\
+  `contactAdded` int(11) NOT NULL,\
+  `contactAddee` int(11) NOT NULL,\
+  `contactName` varchar(24) NOT NULL,\
+  PRIMARY KEY (`id`));"); 
+
+  print("[DATABASE] Tabela phone_contacts checada com sucesso");
+  format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela phone_contacts checada com sucesso");
+  logCreate(99998, logString, 5);
 }

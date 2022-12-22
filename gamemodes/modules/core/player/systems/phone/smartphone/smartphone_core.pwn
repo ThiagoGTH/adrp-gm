@@ -1,7 +1,6 @@
 //Definição
 #define MAX_SMS 30
 #define MAX_CALLHISTORY 50
-#define MAX_SIGNALTOWER 60
 
 //Valores
 #define PH_LBUTTON		0
@@ -54,7 +53,6 @@ new ph_CallTone[MAX_PLAYERS];
 new calltimer[MAX_PLAYERS];
 new smstimer[MAX_PLAYERS];
 
-//Selfie
 // Selfie
 new Float:Degree[MAX_PLAYERS];
 new Float:SelAngle[MAX_PLAYERS];
@@ -69,6 +67,7 @@ new selfie_timer[MAX_PLAYERS];
 //Compatibilidade LSRP (new desconhecida)
 new LastAnnotation[MAX_PLAYERS];
 
+//Falta sistema de Load contact e sms.
 //Data
 enum contactData
 {
@@ -101,24 +100,10 @@ enum chdata
 	chType // - Outgoing call to %s (%d), - Incoming call from %s (%d), - Missed call from %s (%d)
 };
 
-//Torre de sinal
-enum signalData
-{
-	signalID,
-	signalExists,
-	Float:signalX,
-	Float:signalY,
-	Float:signalZ,
-	Float:signalRange,
-	signalName[64]
-	//signalObject
-};
-
 new 
 	ContactData[MAX_PLAYERS][40][contactData],
     SmsData[MAX_PLAYERS][MAX_SMS][smsData],
-	CallHistory[MAX_PLAYERS][MAX_CALLHISTORY][chdata],
-	SignalData[MAX_SIGNALTOWER][signalData];
+	CallHistory[MAX_PLAYERS][MAX_CALLHISTORY][chdata];
 
 hook OnPlayerConnect(playerid) {
 	CreatePlayerPhoneTextDraws(playerid);
@@ -175,7 +160,7 @@ hook SendPlayerSMS(playerid, numberid, number) {
 		}
 	}
 
-	if(targetid != INVALID_PLAYER_ID && GetPhoneSignal(targetid) && !ph_airmode[targetid] && ph_menuid[targetid] != 6 &&  !pInfo[targetid][pInjured] && !pInfo[targetid][pJailed]) {
+	if(targetid != INVALID_PLAYER_ID && !ph_airmode[targetid] && ph_menuid[targetid] != 6 &&  !pInfo[targetid][pInjured] && !pInfo[targetid][pJailed]) {
 		for(new x = 0; x < MAX_SMS; ++x) {
 			if(!SmsData[targetid][x][smsExist]) {
 				exist = x;
@@ -384,8 +369,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid) {
 hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 	if(PhoneOpen{playerid})
     {
-        if(ph_menuid[playerid] == 6)
-        {
+        if(ph_menuid[playerid] == 6) {
 	 		if(ph_sub_menuid[playerid] == 1 && playertextid == TDPhone_Model[playerid][4]) // PHONE ON
 			{
 	            RenderPlayerPhone(playerid, 6, 2);
@@ -425,10 +409,9 @@ hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 			else if(playertextid == TDPhone_Model[playerid][4]) // PHONE OFF
 			{
 				if(ph_menuid[playerid] != 6)
-					Dialog_Show(playerid, AskTurnOff, DIALOG_STYLE_MSGBOX, "Are you sure?", "Are you sure you want to turn your phone OFF?", "Yes", "No");
+					Dialog_Show(playerid, AskTurnOff, DIALOG_STYLE_MSGBOX, "Tem certeza?", "Tem certeza de que deseja desligar o telefone?", "Sim", "Nao");
 			}
-			else if(playertextid == TDPhone_NotifyText[playerid])
-			{
+			else if(playertextid == TDPhone_NotifyText[playerid]) {
 			    new missed_msg = CountMissedCall(playerid);
 
 			    if(missed_msg)
@@ -442,12 +425,9 @@ hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 			}
 			else
 			{
-		        for(new i = 0; i != 4; ++i)
-				{
-					if(playertextid == TDPhone_Choice[playerid][i])
-			    	{
-						if(ph_selected[playerid] == i)
-						{
+		        for(new i = 0; i != 4; ++i) {
+					if(playertextid == TDPhone_Choice[playerid][i]) {
+						if(ph_selected[playerid] == i) {
 							OnPhoneEvent(playerid, ph_menuid[playerid], ph_sub_menuid[playerid], PH_CLICKOPEN);
 						    return true;
 						}
@@ -498,8 +478,7 @@ hook OnCheckSMS(playerid) {
 
 			pInfo[playerid][pCellTime]++;
 
-			if(pInfo[calling][pIncomingCall] && pInfo[playerid][pCellTime] % 10 == 1 && !ph_silentmode[calling])
-			{
+			if(pInfo[calling][pIncomingCall] && pInfo[playerid][pCellTime] % 10 == 1 && !ph_silentmode[calling]) {
 				PlayPlayerCallTone(calling);
 
 				if(pInfo[playerid][pCellTime] == 10) AnnounceMyAction(calling, "phone begins to ring.");
@@ -508,17 +487,17 @@ hook OnCheckSMS(playerid) {
 	} return 1;
 }
 
-hook SendPlayerCall(playerid, signal, number, numberid) {
+hook SendPlayerCall(playerid, number, numberid) {
 	calltimer[playerid] = 0;
 
-	if(!signal) {
+	/*if(!signal) {
 		ph_menuid[playerid] = 5;
 		ph_sub_menuid[playerid] = 7;
 
 		RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 	    return 1;
-	}
+	} */
 
 	new targetid = INVALID_PLAYER_ID;
 
@@ -530,7 +509,7 @@ hook SendPlayerCall(playerid, signal, number, numberid) {
 		}
 	}
 
-	if(targetid != INVALID_PLAYER_ID && pInfo[targetid][pSpectating] == INVALID_PLAYER_ID && GetPhoneSignal(targetid) && !ph_airmode[targetid] && ph_menuid[targetid] != 6 &&  !pInfo[targetid][pInjured] && !pInfo[targetid][pJailed]) {
+	if(targetid != INVALID_PLAYER_ID && pInfo[targetid][pSpectating] == INVALID_PLAYER_ID && !ph_airmode[targetid] && ph_menuid[targetid] != 6 &&  !pInfo[targetid][pInjured] && !pInfo[targetid][pJailed]) {
 	    if(pInfo[targetid][pCallLine] != INVALID_PLAYER_ID) {
 		 	ph_menuid[playerid] = 5;
 			ph_sub_menuid[playerid] = 2;
@@ -540,7 +519,7 @@ hook SendPlayerCall(playerid, signal, number, numberid) {
 	    }
 
 		if(!PhoneOpen{targetid}) {
-			SendClientMessage(targetid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+			SendClientMessage(targetid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 			ShowPlayerPhone(targetid);
 		}
 
@@ -1172,15 +1151,14 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Menu");
 					PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 				}
 				case 1: // List Main menu
 				{
 					new choice[4][16] = { "Phonebook", "SMS", "Calls", "Settings" };
 
-				    for(new i = 0; i != 4; ++i)
-					{
+				    for(new i = 0; i != 4; ++i) {
 						PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][i], choice[i]);
 						PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x989898FF : 0x000000FF);
 						PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x222222FF : 0xAAAAAAFF);
@@ -1195,7 +1173,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			{
 				case 0:
 				{
-					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Add a contact");
+					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Adicionar um contato");
 					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
 					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
@@ -1208,7 +1186,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 					PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 
 					ph_page[playerid] = 0;
@@ -1246,20 +1224,18 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 						}
 					}
 
-					if(!count)
-					{
+					if(!count) {
 						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Your contact list ~n~is currently empty");
 						PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
-					else if(count < 4)
-					{
+					else if(count < 4) {
 						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 						PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 				}
@@ -1274,10 +1250,10 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
 
-					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Options");
+					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Opções");
 					PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 				}
 				case 3: // List contacts --> Details --> Actions
@@ -1297,7 +1273,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 				}
 			}
@@ -1363,29 +1339,27 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 						}
 					}
 
-					if(!count)
-					{
-						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Your contact list ~n~is currently empty");
+					if(!count) {
+						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Sua lista de contatos ~n~está vazio no momento");
 						PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
-					else if(count < 4)
-					{
-						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
+					else if(count < 4) {
+						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Selecione");
 						PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 				}
 				/*case 2: // SMS a number
 				{
-				    Dialog_Show(playerid, SMSNumber, DIALOG_STYLE_INPUT, "Insert number", "send SMS to Phone Number\n\n\t\tEnter contact number:", "Proceed", "Back");
-				}*/
+				    Dialog_Show(playerid, SMSNumber, DIALOG_STYLE_INPUT, "Inserir número", "send SMS to Phone Number\n\n\t\tDigite o número de contato:", "Continuar", "Volte");
+				}*/ 
 
-				case 3, 4: // 3- INBOX   4- Archive
+			    case 3, 4: // 3- INBOX   4- Archive
  				{
 					new count = 0, next = ph_page[playerid] * 4;
 
@@ -1422,14 +1396,14 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "No messages in this~n~directory");
 						PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 					else if(count < 4) {
 						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 						PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 				}
@@ -1455,7 +1429,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 
 					ph_page[playerid] = 0;
@@ -1486,20 +1460,19 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 						}
 					}
 
-					if(!count)
-					{
+					if(!count) {
 						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Your contact list ~n~is currently empty");
 						PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 					else if(count < 4)
-					{
-						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
+					 {
+						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Selecionar");
 						PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 				}
@@ -1530,20 +1503,18 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 						}
 					}
 
-					if(!count)
-					{
+					if(!count) {
 						PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Your call history is~n~empty");
 						PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
-					else if(count < 4)
-					{
+					else if(count < 4) {
 						PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 						PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+						PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 						PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 					}
 				}
@@ -1594,56 +1565,56 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Contact is full");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 1: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Error!~n~Invalid number");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 2: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Notice!~n~The line is busy");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 3: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Call failed");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 4: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Sending ...");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 5: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Message delivered!");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 6: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Delivery failed");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
   			    case 7: {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "No signal");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
 			}
@@ -1703,7 +1674,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 					PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
 			    case 2: { // Ringtone - Call
@@ -1725,7 +1696,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
 					PlayerTextDrawShow(playerid, TDPhone_TFButton[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Back");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 			    }
 			    case 3: { // Ringtone - Text
@@ -1753,7 +1724,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Framework: v1");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 
-					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Close");
+					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Fechar");
 					PlayerTextDrawShow(playerid, TDPhone_TSButton[playerid]);
 				}
 			}
@@ -1765,7 +1736,6 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 	ph_selected[playerid] = select;
 }
 
-
 //Funcionalidades
 //Retorna o numero ordinal.
 /* returnOrdinal(number) {
@@ -1776,7 +1746,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 	number = number < 0 ? -number : number;
 
 	return (((10 < (number % 100) < 14)) ? ordinal[3] : (0 < (number % 10) < 4) ? ordinal[((number % 10) - 1)] : ordinal[3]);
- } */
+ } */ 
 
 //Conta a quantidade de chamadas (creio eu - testar)
 CountMissedCall(playerid) {
@@ -1979,90 +1949,6 @@ ForceSwitchPhone(playerid, bool:hide = false) {
 	if(hide) ClosePlayerPhone(playerid, true);
 }
 
-//Sonal da torre (verifica qual é o sinal do torre(mais próxima))
-GetPhoneSignal(playerid) {
-	new tower = GetClosestSignal(playerid), signal, Float:dis, Float:cal;
-	
-	if(tower == -1) return 0;
-
-	if(pInfo[playerid][pLocal] != 255) {
-		if(pInfo[playerid][pLocal] == 101) dis = GetDistance(1554.4711,-1675.6097,16.1953, SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-        else if(pInfo[playerid][pLocal] == 102) dis = GetDistance(1481.0662,-1771.3069,18.7958,  SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-        else if(pInfo[playerid][pLocal] == 103) dis = GetDistance(1173.1841,-1323.3143,15.3952,  SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-        else if(pInfo[playerid][pLocal] == 104) dis = GetDistance(533.4344,-1812.9364,6.5781,  SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-		else
-		{
-	 		/*foreach (new x : Business) {
-			 	if(pInfo[playerid][pLocal] - LOCAL_BIZZ == x && GetPlayerInterior(playerid) == BusinessData[x][bInterior])
-			 	{
-					dis = GetDistance(BusinessData[x][bEntranceX], BusinessData[x][bEntranceY], BusinessData[x][bEntranceZ], SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-				}
-			} */
-		}
-	}
-	else dis = GetPlayerDistanceFromPoint(playerid, SignalData[tower][signalX], SignalData[tower][signalY], SignalData[tower][signalZ]);
-	cal = SignalData[tower][signalRange] / 5;
-	if(dis > cal * 4 ) signal = 1;
- 	else if(dis > cal * 3 ) signal = 2;
-	else if(dis > cal * 2 ) signal = 3;
-	else if(dis > cal * 1 ) signal = 4;
-	else signal = 5;
-
-	return signal;
-}
-
-GetClosestSignal(playerid) {
-	new
-	    Float:fDistance[2] = {99999.0, 0.0},
-	    iIndex = -1
-	;
-
-	for(new i = 0; i < sizeof(SignalData); ++i) {
-		if(SignalData[i][signalExists]) {
-		    if(pInfo[playerid][pLocal] != 255) {
-				if(pInfo[playerid][pLocal] == 101) fDistance[1] = GetDistance(1554.4711,-1675.6097,16.1953, SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-				else if(pInfo[playerid][pLocal] == 102) fDistance[1] = GetDistance(1481.0662,-1771.3069,18.7958, SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-				else if(pInfo[playerid][pLocal] == 103) fDistance[1] = GetDistance(1173.1841,-1323.3143,15.3952, SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-				else if(pInfo[playerid][pLocal] == 103) fDistance[1] = GetDistance(533.4344,-1812.9364,6.5781, SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-				else
-				{
-		 		    /*for(new x = 0; x != MAX_BUSINESS; ++x) if(pInfo[playerid][pLocal]-LOCAL_BIZZ == x && GetPlayerInterior(playerid) == BusinessData[x][bInterior]) {
-						fDistance[1] = GetDistance(BusinessData[x][bEntranceX],BusinessData[x][bEntranceY],BusinessData[x][bEntranceZ], SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-					}
-
-					new x;
-
-					if(InBusiness[playerid] != -1)
-					{
-		   				x = InBusiness[playerid];
-
-						fDistance[1] = GetDistance(BusinessData[x][bEntranceX],BusinessData[x][bEntranceY],BusinessData[x][bEntranceZ], SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-					}
-					else if(InProperty[playerid] != -1)
-					{
-					    x = InProperty[playerid];
-
-						fDistance[1] = GetDistance(PropertyData[x][hEntranceX],PropertyData[x][hEntranceY],PropertyData[x][hEntranceZ], SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-					}
-					else if(InApartment[playerid] != -1)
-					{
-					    x = InApartment[playerid];
-
-						fDistance[1] = GetDistance(ComplexData[x][aEntranceX],ComplexData[x][aEntranceY],ComplexData[x][aEntranceZ], SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-					} */
-				}
-			}
-			else fDistance[1] = GetPlayerDistanceFromPoint(playerid, SignalData[i][signalX], SignalData[i][signalY], SignalData[i][signalZ]);
-
-			if(fDistance[1] < fDistance[0] && SignalData[i][signalRange] >= fDistance[1]) {
-			    fDistance[0] = fDistance[1];
-			    iIndex = i;
-			}
-		}
-	}
-	return iIndex;
-}
-
 IsUnreadSMS(playerid) {
 	new count = false;
 
@@ -2075,7 +1961,6 @@ IsUnreadSMS(playerid) {
 
 	return count;
 }
-	
 
 CheckPhoneStatus(playerid) {
 	if(ph_menuid[playerid] == 6 && ph_sub_menuid[playerid] >= 0)
@@ -2150,7 +2035,7 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 		case 1: // PHONEBOOK
 		{
 			switch(subid) {
-				case 0: // Main Phonebook { Add a contact, List contacts }
+				case 0: // Main Phonebook { Adicionar um contato, List contacts }
 				{
 				  	switch(eventid)
 				    {
@@ -2183,7 +2068,7 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 				        {
                     		if(ph_selected[playerid] == 0)
                     		{
-                    			Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter the contact name:", "Proceed", "Back");
+                    			Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter the contact name:", "Continuar", "Volte");
                     		}
                     		else
                     		{
@@ -2262,8 +2147,8 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 				        }
 					}
 				}
- 				case 2: // Details NAME (NUMBER)
-				{
+ 				case 2: // Details NAME (NUMBER) {
+					{
 				  	switch(eventid)
 				    {
 				        case PH_LBUTTON:
@@ -2320,9 +2205,9 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 									new nstring[24];
 			   						Int32(nstring, ContactData[playerid][ph_select_data[playerid]][contactNumber]);
 							        SetPVarString(playerid,"SMSPhoneNumber", nstring);
-									Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Short Message Service", "Fill out the text:", "Send", "Back");
+									Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Serviço de mensagens curtas", "Fill out the text:", "Enviar", "Volte");
                        			}
-								case 2: Dialog_Show(playerid, DeleteContact, DIALOG_STYLE_MSGBOX, "Are you sure?", "Are you sure you want to delete it? %s (%d) Out of contact list?", "Yes", "No", ContactData[playerid][ph_select_data[playerid]][contactName], ContactData[playerid][ph_select_data[playerid]][contactNumber]);
+								case 2: Dialog_Show(playerid, DeleteContact, DIALOG_STYLE_MSGBOX, "Tem certeza?", "Are you sure you want to delete it? %s (%d) Out of contact list?", "Sim", "Nao", ContactData[playerid][ph_select_data[playerid]][contactName], ContactData[playerid][ph_select_data[playerid]][contactNumber]);
 							}
 				        }
 				        case PH_RBUTTON:
@@ -2347,7 +2232,7 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 					}
 				}*/
 			}
-		}
+		} 
 		case 2: // SMS
 		{
 			switch(subid) {
@@ -2365,7 +2250,7 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 
 							    RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid], 1);
 
-								Dialog_Show(playerid, SMSNumber, DIALOG_STYLE_INPUT, "Insert number", "Send SMS via phone number\n\n\t\tEnter contact number:", "Proceed", "Back");
+								Dialog_Show(playerid, SMSNumber, DIALOG_STYLE_INPUT, "Inserir número", "Send SMS via phone number\n\n\t\tDigite o número de contato:", "Continuar", "Volte");
 							}
 							else
 							{
@@ -2464,7 +2349,7 @@ OnPhoneEvent(playerid, menuid, subid, eventid) {
 			   				Int32(nstring, ContactData[playerid][ph_select_data[playerid]][contactNumber]);
 							SetPVarString(playerid, "SMSPhoneNumber", nstring);
 
-							Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Short Message Service", "Fill in:", "Send", "Back");
+							Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Serviço de mensagens curtas", "Preencha:", "Enviar", "Volte");
 				        }
 					}
 				}
@@ -3104,7 +2989,7 @@ CallNumber(playerid, const params[]) {
 	new phonenumb[24];
 
 	if(strlen(params) < 24 && sscanf(params, "s[24]", phonenumb)) {
-		SendClientMessage(playerid, COLOR_GREY, "[ Common numbers ]");
+	/*	SendClientMessage(playerid, COLOR_GREY, "[ Common numbers ]");
 		SendClientMessage(playerid, COLOR_WHITE, "Emergency (police/paramedic): 911");
 		SendClientMessage(playerid, COLOR_WHITE, "Police Non-Emergency landline: 991");
 		SendClientMessage(playerid, COLOR_WHITE, "Taxi dispatch: 544");
@@ -3119,7 +3004,7 @@ CallNumber(playerid, const params[]) {
 		SendClientMessage(playerid, COLOR_WHITE, "The Government: 1-800-GOV");
 		SendClientMessage(playerid, COLOR_WHITE, "Courts: 1-800-COURTS");
 		SendClientMessage(playerid, COLOR_WHITE, "Federal Bureau of Investigation: 1-800-FBI");
-		SendClientMessage(playerid, COLOR_LIGHTRED, "Usage: /call [number/contact]");
+		SendClientMessage(playerid, COLOR_LIGHTRED, "Usage: /call [numero/contato]"); */
 		return true;
 	}
 
@@ -3132,7 +3017,7 @@ CallNumber(playerid, const params[]) {
 			Annotation(playerid, "dials a number on their phone.");
 
 			if(!PhoneOpen{playerid}) {
-				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 				ShowPlayerPhone(playerid);
 			}
 
@@ -3141,7 +3026,7 @@ CallNumber(playerid, const params[]) {
 
 			RenderPlayerPhone(playerid, 7, 1);
 
-			SendClientMessage(playerid, COLOR_YELLOW, "Emergency Dispatch says (phone): Here is the 911 Emergency Dispatch. What service do you need?");
+			SendClientMessage(playerid, COLOR_YELLOW, "O Despacho de Emergência diz (telefone): Aqui está o Despacho de Emergência 911. Qual serviço você precisa?");
 
 			pInfo[playerid][pCallLine] = 911;
 			pInfo[playerid][pIncomingCall] = 0;
@@ -3153,7 +3038,7 @@ CallNumber(playerid, const params[]) {
 			Annotation(playerid, "dials a number on their phone.");
 
 			if(!PhoneOpen{playerid}) {
-				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 				ShowPlayerPhone(playerid);
 			}
 
@@ -3162,8 +3047,8 @@ CallNumber(playerid, const params[]) {
 
 			RenderPlayerPhone(playerid, 7, 1);
 
-			SendClientMessage(playerid, COLOR_YELLOW, "Police Dispatch says (phone): Non-Emergency landline for Law Enforcement services, what is yo ...");
-			SendClientMessage(playerid, COLOR_YELLOW, "Police Dispatch says (phone): ... ur current location?");
+			SendClientMessage(playerid, COLOR_YELLOW, "O Despacho da Polícia diz (telefone): Telefone fixo não emergencial para serviços de aplicação da lei, o que você ...");
+			SendClientMessage(playerid, COLOR_YELLOW, "O Despacho da Polícia diz (telefone): ... sua localização atual?");
 
 			pInfo[playerid][pCallLine] = 991;
 			pInfo[playerid][pIncomingCall] = 0;
@@ -3175,7 +3060,7 @@ CallNumber(playerid, const params[]) {
 			Annotation(playerid, "dials a number on their phone.");
 
 			if(!PhoneOpen{playerid}) {
-				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 				ShowPlayerPhone(playerid);
 			}
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
@@ -3183,7 +3068,7 @@ CallNumber(playerid, const params[]) {
 
             RenderPlayerPhone(playerid, 7, 1);
 
-			SendClientMessage(playerid, COLOR_YELLOW, "Mechanic Dispatch say (phone): Los Santos Mechanical Services, how can we help?");
+			SendClientMessage(playerid, COLOR_YELLOW, "O Despacho Mecânico diz (telefone): Los Santos Mechanical Services, como podemos ajudar?");
 
 			pInfo[playerid][pCallLine] = 555;
 			pInfo[playerid][pIncomingCall] = 0;
@@ -3195,7 +3080,7 @@ CallNumber(playerid, const params[]) {
 			Annotation(playerid, "dials a number on their phone.");
 
 			if(!PhoneOpen{playerid}) {
-				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 				ShowPlayerPhone(playerid);
 			}
 
@@ -3204,7 +3089,7 @@ CallNumber(playerid, const params[]) {
 
 			RenderPlayerPhone(playerid, 7, 1);
 
-			SendClientMessage(playerid, COLOR_YELLOW, "Taxi Dispatch say (phone): Hello, where do you want to go?");
+			SendClientMessage(playerid, COLOR_YELLOW, "Taxi Dispatch diz (telefone): Alô, onde você quer ir?");
 
 			pInfo[playerid][pCallLine] = 544;
 			pInfo[playerid][pIncomingCall] = 0;
@@ -3215,8 +3100,7 @@ CallNumber(playerid, const params[]) {
 			new nid = -1;
 
 			for(new i = 0; i != 40; ++i) {
-				if(ContactData[playerid][i][contactNumber] > 0 && (!strcmp(ContactData[playerid][i][contactName], phonenumb, true) || ContactData[playerid][i][contactNumber] == pnumber))
-				{
+				if(ContactData[playerid][i][contactNumber] > 0 && (!strcmp(ContactData[playerid][i][contactName], phonenumb, true) || ContactData[playerid][i][contactNumber] == pnumber)) {
 					nid = i;
 				 	break;
 				}
@@ -3234,7 +3118,7 @@ CallNumber(playerid, const params[]) {
 			Annotation(playerid, "dials a number on their phone.");
 
 			if(!PhoneOpen{playerid}) {
-				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Note: To toggle the phone, use /phone. To bring up the mouse, use /pc.");
+				SendClientMessage(playerid, COLOR_WHITE, "[ ! ] Observação: para alternar o telefone, use /phone. Para ativar o mouse, use /pc.");
 				ShowPlayerPhone(playerid);
 			}
 
@@ -3252,13 +3136,14 @@ CallNumber(playerid, const params[]) {
 
 			RenderPlayerPhone(playerid, 7, 0);
 
-			new signal = GetPhoneSignal(playerid);
+			/*new signal = GetPhoneSignal(playerid);
 
 			if(signal > 4) calltimer[playerid] = SetTimerEx("SendPlayerCall", 2000, false, "dddd", playerid, signal, pnumber, nid);
 			else if(signal > 3) calltimer[playerid] = SetTimerEx("SendPlayerCall", 2500, false, "dddd", playerid, signal, pnumber, nid);
 			else if(signal > 2) calltimer[playerid] = SetTimerEx("SendPlayerCall", 3000, false, "dddd", playerid, signal, pnumber, nid);
 			else if(signal > 1) calltimer[playerid] = SetTimerEx("SendPlayerCall", 3500, false, "dddd", playerid, signal, pnumber, nid);
-			else calltimer[playerid] = SetTimerEx("SendPlayerCall", 4000, false, "dddd", playerid, signal, pnumber, nid);
+			else */
+			calltimer[playerid] = SetTimerEx("SendPlayerCall", 4000, false, "ddd", playerid, pnumber, nid);
 		}
 	}
 	else SendClientMessage(playerid, COLOR_GRAD1, "You don't have a mobile phone.");
@@ -3268,24 +3153,24 @@ CallNumber(playerid, const params[]) {
 
 SendSMS(playerid, const params[]) {
 	if(pInfo[playerid][pJailed])
-	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Error: Your phone was confiscated by the cops.");
+	    return SendClientMessage(playerid, COLOR_LIGHTRED, "Erro: Seu telefone foi confiscado pela polícia.");
 
     if(pInfo[playerid][pInjured])
-		return SendErrorMessage(playerid, "You can't do this right now.");
+		return SendErrorMessage(playerid, "Você não pode fazer isso agora.");
 
 	if(ph_menuid[playerid] == 6)
-	    return SendErrorMessage(playerid, "You can't do this now (phone off).");
+	    return SendErrorMessage(playerid, "Você não pode fazer isso agora (telefone desligado).");
 
 	if(ph_airmode[playerid])
-		return SendErrorMessage(playerid, "You can't do this now (airplane mode on).");
+		return SendErrorMessage(playerid, "Você não pode fazer isso agora (modo avião ativado).");
 
   	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) > 0 || pInfo[playerid][pMoney] < 1)
-	  	return SendErrorMessage(playerid, "You can't do this right now.");
+	  	return SendErrorMessage(playerid, "Você não pode fazer isso agora.");
 
 	new phonenumb[24], sms_text[128];
 
 	if(sscanf(params, "s[24]s[128]", phonenumb, sms_text))
-		return SendClientMessage(playerid, COLOR_LIGHTRED, "Usage: /sms [number/contact] [text]");
+		return SendClientMessage(playerid, COLOR_LIGHTRED, "Usage: /sms [numero/contato] [text]");
 
     if(pInfo[playerid][pPhoneNumber]) {
 	    new phonenumber = strval(phonenumb);
@@ -3300,7 +3185,7 @@ SendSMS(playerid, const params[]) {
    			}
   		}
 
-  		Annotation(playerid, "types something on their phone.");
+  		Annotation(playerid, "digita algo em seu telefone.");
 
 		if(!PhoneOpen{playerid}) ShowPlayerPhone(playerid);
 
@@ -3312,13 +3197,13 @@ SendSMS(playerid, const params[]) {
 
         SetPVarString(playerid,"SMSPhoneText", sms_text);
 
-		new signal = GetPhoneSignal(playerid);
+		/*new signal = GetPhoneSignal(playerid);
 		
 		if(signal > 4) smstimer[playerid] = SetTimerEx("SendPlayerSMS", 3000, false, "ddd", playerid, nid, phonenumber);
 		else if(signal > 3) smstimer[playerid] = SetTimerEx("SendPlayerSMS", 4000, false, "ddd", playerid, nid, phonenumber);
 		else if(signal > 2) smstimer[playerid] = SetTimerEx("SendPlayerSMS", 5000, false, "ddd", playerid, nid, phonenumber);
-		else if(signal > 1) smstimer[playerid] = SetTimerEx("SendPlayerSMS", 6000, false, "ddd", playerid, nid, phonenumber);
-		else smstimer[playerid] = SetTimerEx("SendPlayerSMS", 7000, false, "ddd", playerid, nid, phonenumber);
+		else if(signal > 1) smstimer[playerid] = SetTimerEx("SendPlayerSMS", 6000, false, "ddd", playerid, nid, phonenumber); */
+		smstimer[playerid] = SetTimerEx("SendPlayerSMS", 7000, false, "ddd", playerid, nid, phonenumber); 
 	}
 	else SendClientMessage(playerid, COLOR_GRAD1, "   You don't have a phone.");
 
@@ -3355,7 +3240,7 @@ Dialog:CallHistoryDialog(playerid, response, listitem, inputtext[]) {
 
 				SetPVarString(playerid, "SMSPhoneNumber", nstring);
 
-				Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Short Message Service", "Fill in:", "Send", "Back");
+				Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Serviço de mensagens curtas", "Preencha:", "Enviar", "Volte");
 		    }
 		    case 4:
 			{
@@ -3372,7 +3257,7 @@ Dialog:CallHistoryDialog(playerid, response, listitem, inputtext[]) {
 				}
 				else
 				{
-				    Dialog_Show(playerid, AddHistoryContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tInsert contact name:", "Proceed", "Back");
+				    Dialog_Show(playerid, AddHistoryContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tInsert contact name:", "Continuar", "Volte");
 				}
 		    }
 		}
@@ -3392,17 +3277,17 @@ Dialog:CallRingtone(playerid, response, listitem, inputtext[]) {
 Dialog:AddContact(playerid, response, listitem, inputtext[]) {
 	if(response) {
 		if(strlen(inputtext) < 2 || strlen(inputtext) > 20)
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Continuar", "Volte");
 
 		new Regex:r = Regex_New("^[A-Za-z0-9 ]+$"), RegexMatch:m;
 
 		if(!Regex_Match(inputtext, r, m))
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Invalid symbol detected.", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Invalid symbol detected.", "Continuar", "Volte");
 
 		//[a-zA-Z0-9]+
 		SetPVarString(playerid, "ContactName", inputtext);
 
-        Dialog_Show(playerid, AddContactNum, DIALOG_STYLE_INPUT, "Insert number", "Add a contact\n\n\t\tEnter contact number:", "Proceed", "Back");
+        Dialog_Show(playerid, AddContactNum, DIALOG_STYLE_INPUT, "Inserir número", "Adicionar um contato\n\n\t\tDigite o número de contato:", "Continuar", "Volte");
 	}
 	return true;
 }
@@ -3414,7 +3299,7 @@ Dialog:AddContactNum(playerid, response, listitem, inputtext[]) {
 		GetPVarString(playerid, "ContactName", name, sizeof(name));
 
 		if(!IsNumeric(inputtext) || strlen(inputtext) > 10 || strlen(inputtext) <= 0)
-			return Dialog_Show(playerid, AddContactNum, DIALOG_STYLE_INPUT, "Insert number", "Add a contact\n\n\t\tEnter contact number:\t\tErro: The specified number is invalid.", "Proceed", "Back");
+			return Dialog_Show(playerid, AddContactNum, DIALOG_STYLE_INPUT, "Inserir número", "Adicionar um contato\n\n\t\tDigite o número de contato:\t\tErro: The specified number is invalid.", "Continuar", "Volte");
 
 		new count, con_max = 16, exist = -1;
 
@@ -3431,8 +3316,7 @@ Dialog:AddContactNum(playerid, response, listitem, inputtext[]) {
 		    }
 		    else
 		    {
-		        if(exist == -1)
-				{
+		        if(exist == -1) {
 				    exist = i;
 				}
 		    }
@@ -3466,7 +3350,7 @@ Dialog:AddContactNum(playerid, response, listitem, inputtext[]) {
 	else
 	{
 	    DeletePVar(playerid, "ContactName");
-	    Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:", "Proceed", "Back");
+	    Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:", "Continuar", "Volte");
 	}
 	return true;
 }
@@ -3493,7 +3377,7 @@ Dialog:DeleteContact(playerid, response, listitem, inputtext[]) {
 Dialog:SMSNumber(playerid, response, listitem, inputtext[]) {
 	if(response) {
 	    SetPVarString(playerid,"SMSPhoneNumber",inputtext);
-		Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Short Message Service", "Fill in:", "Send", "Back");
+		Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Serviço de mensagens curtas", "Preencha:", "Enviar", "Volte");
 	}
 	return true;
 }
@@ -3513,7 +3397,7 @@ Dialog:SMSText(playerid, response, listitem, inputtext[]) {
 Dialog:SMSRead(playerid, response, listitem, inputtext[]) {
 	if(response) {
 	    new id = ph_select_data[playerid];
-		Dialog_Show(playerid, SMSOption, DIALOG_STYLE_LIST, "Options", "Reply\nCall\n%s\nForward\nDelete\n%s", "Proceed", "Back", (!SmsData[playerid][id][smsArchive]) ? ("Archive") : ("Remove form archive"), (GetContactID(playerid,SmsData[playerid][id][smsOwner]) == -1) ? ("Save number") : ("View contact"));
+		Dialog_Show(playerid, SMSOption, DIALOG_STYLE_LIST, "Opções", "Reply\nCall\n%s\nForward\nDelete\n%s", "Continuar", "Volte", (!SmsData[playerid][id][smsArchive]) ? ("Archive") : ("Remove form archive"), (GetContactID(playerid,SmsData[playerid][id][smsOwner]) == -1) ? ("Save number") : ("View contact"));
 	}
 	return true;
 }
@@ -3527,7 +3411,7 @@ Dialog:SMSOption(playerid, response, listitem, inputtext[]) {
 		    {
 			 	Int32(nstring, SmsData[playerid][id][smsOwner]);
 				SetPVarString(playerid,"SMSPhoneNumber", nstring);
-				Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Short Message Service", "Fill in:", "Send", "Back");
+				Dialog_Show(playerid, SMSText, DIALOG_STYLE_INPUT, "Serviço de mensagens curtas", "Preencha:", "Enviar", "Volte");
 			}
 		    case 1:
 			{
@@ -3541,24 +3425,23 @@ Dialog:SMSOption(playerid, response, listitem, inputtext[]) {
 				if(SmsData[playerid][id][smsArchive]) SmsData[playerid][id][smsArchive] = 0;
 				else SmsData[playerid][id][smsArchive] = 1;
 
-				Dialog_Show(playerid, ShowOnly, DIALOG_STYLE_INPUT, "Done", "%s", "OK", "", (SmsData[playerid][id][smsArchive]) ? ("Message archived") : ("Message removed from the archive"));
+				Dialog_Show(playerid, ShowOnly, DIALOG_STYLE_INPUT, "Fechar", "%s", "OK", "", (SmsData[playerid][id][smsArchive]) ? ("Message archived") : ("Message removed from the archive"));
 
 				RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 			}
 		    case 3:
 			{
-				Dialog_Show(playerid, ForwardSMS, DIALOG_STYLE_INPUT, "Forward SMS", "Enter phone number:", "Send", "Back");
+				Dialog_Show(playerid, ForwardSMS, DIALOG_STYLE_INPUT, "Encaminhar SMS", "Digite o número de telefone:", "Enviar", "Volte");
 			}
 		    case 4:
 			{
-				Dialog_Show(playerid, DeleteSMS, DIALOG_STYLE_MSGBOX, "Are you sure?", "Are you sure you want to delete this message?", "Yes", "No");
+				Dialog_Show(playerid, DeleteSMS, DIALOG_STYLE_MSGBOX, "Tem certeza?", "Are you sure you want to delete this message?", "Sim", "Nao");
 			}
 		    case 5:
 			{
                 new exist = -1;
 
-				if((exist = GetContactID(playerid, SmsData[playerid][id][smsOwner])) != -1)
-				{
+				if((exist = GetContactID(playerid, SmsData[playerid][id][smsOwner])) != -1) {
 		           	ph_menuid[playerid] = 1;
 		       		ph_sub_menuid[playerid]=2;
 		       		ph_page[playerid] = 0;
@@ -3566,7 +3449,7 @@ Dialog:SMSOption(playerid, response, listitem, inputtext[]) {
 
 		       		RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 				}
-				else Dialog_Show(playerid, AddSMSContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:", "Proceed", "Back");
+				else Dialog_Show(playerid, AddSMSContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:", "Continuar", "Volte");
 			}
 		}
 	}
@@ -3591,12 +3474,12 @@ Dialog:AddSMSContact(playerid, response, listitem, inputtext[]) {
 		new id = ph_select_data[playerid];
 
 		if(strlen(inputtext) < 2 || strlen(inputtext) > 20)
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Continuar", "Volte");
 
 		new Regex:r = Regex_New("^[A-Za-z0-9 ]+$"), RegexMatch:m;
 
 		if(!Regex_Match(inputtext, r, m))
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Invalid symbol found.", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Invalid symbol found.", "Continuar", "Volte");
 
 		new count, con_max = 16, exist = -1;
 
@@ -3613,8 +3496,7 @@ Dialog:AddSMSContact(playerid, response, listitem, inputtext[]) {
 		    }
 		    else
 		    {
-		        if(exist == -1)
-				{
+		        if(exist == -1) {
 				    exist = i;
 				}
 		    }
@@ -3674,12 +3556,12 @@ Dialog:AddHistoryContact(playerid, response, listitem, inputtext[]) {
 		new id = ph_select_data[playerid];
 
 		if(strlen(inputtext) < 2 || strlen(inputtext) > 20)
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Contact must be long. 2-20 caracters", "Continuar", "Volte");
 
 		new Regex:r = Regex_New("^[A-Za-z0-9 ]+$"), RegexMatch:m;
 
 		if(!Regex_Match(inputtext, r, m))
-		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Insert name", "Add a contact\n\n\t\tEnter contact name:\t\tErro: Invalid symbol found.", "Proceed", "Back");
+		    return Dialog_Show(playerid, AddContact, DIALOG_STYLE_INPUT, "Inseri o nome", "Adicionar um contato\n\n\t\tEnter contact name:\t\tErro: Invalid symbol found.", "Continuar", "Volte");
 
 		new count, con_max = 16, exist = -1;
 
@@ -3696,8 +3578,7 @@ Dialog:AddHistoryContact(playerid, response, listitem, inputtext[]) {
 		    }
 		    else
 		    {
-		        if(exist == -1)
-				{
+		        if(exist == -1) {
 				    exist = i;
 				}
 		    }
@@ -3740,7 +3621,6 @@ Dialog:AskTurnOff(playerid, response, listitem, inputtext[]) {
 			}
 
 			PhoneSelfie_Stop(playerid);
-
 			RenderPlayerPhone(playerid, 6, 0);
 
 			SetTimerEx("PhoneTurnOff", 2000, false, "d", playerid);
@@ -3778,15 +3658,12 @@ AnnounceMyAction(playerid, const text[]) {
 	format(playerName, sizeof(playerName), "%s", pNome(playerid));
 	idx = strlen(playerName);
 
-	if(playerName[idx-1] == 's' || playerName[idx-1] == 's')
-	{
+	if(playerName[idx-1] == 's' || playerName[idx-1] == 's') {
 		hasEnding = true;
 	}
 
-	if(hasEnding == true)
-	{
-		if(strlen(text) > 80)
-		{
+	if(hasEnding == true) {
+		if(strlen(text) > 80) {
 			SendNearbyMessage(playerid, 20.0, COLOR_PURPLE, "* %s' %.80s", pNome(playerid), text);
 			SendNearbyMessage(playerid, 20.0, COLOR_PURPLE, "* %s' ...%s", pNome(playerid), text[80]);
 		}
@@ -3794,8 +3671,7 @@ AnnounceMyAction(playerid, const text[]) {
 	}
 	else
 	{
-		if(strlen(text) > 80)
-		{
+		if(strlen(text) > 80) {
 			SendNearbyMessage(playerid, 20.0, COLOR_PURPLE, "* %s's %.80s", pNome(playerid), text);
 			SendNearbyMessage(playerid, 20.0, COLOR_PURPLE, "* %s's ...%s", pNome(playerid), text[80]);
 		}

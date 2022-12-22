@@ -71,6 +71,7 @@ new LastAnnotation[MAX_PLAYERS];
 //Data
 enum contactData
 {
+	cID,
 	contactID,
 	contactName[24],
 	contactNumber,
@@ -111,6 +112,7 @@ hook OnPlayerConnect(playerid) {
 }
 
 hook OnGameModeInit() {
+	LoadContacts();
 	SetTimer("CheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
 	return 1;
@@ -564,6 +566,31 @@ hook SendPlayerCall(playerid, number, numberid) {
 	RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 	return true;
+}
+
+//Carrega todas empresas (MySQL).
+LoadContacts() {
+    new     
+		exist,
+        loadedContacts;
+
+    mysql_query(DBConn, "SELECT * FROM `phone_contacts`;");
+
+    for(new i; i < cache_num_rows(); i++) {
+        new id;
+        cache_get_value_name_int(i, "id", id);
+        ContactData[id][exist][cID] = id;
+
+        cache_get_value_name_int(i, "contactID", ContactData[id][exist][contactID]);
+        cache_get_value_name_int(i, "contactAdded", pInfo[id][pPhoneNumber]);
+        cache_get_value_name_int(i, "contactAddee", ContactData[id][exist][contactNumber]);
+        cache_get_value_name(i, "contactName", ContactData[id][exist][contactName]);
+        loadedContacts++;
+    }
+
+    printf("[Contatos]: %d contatos carregadas com sucesso.", loadedContacts);
+
+    return 1;
 }
 
 CreatePhoneTextDraws() {

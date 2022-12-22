@@ -112,6 +112,7 @@ hook OnPlayerConnect(playerid) {
 }
 
 hook OnGameModeInit() {
+	LoadSms();
 	LoadContacts();
 	SetTimer("CheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
@@ -528,9 +529,9 @@ hook SendPlayerCall(playerid, number, numberid) {
 		if(!ph_silentmode[targetid]) {
 			PlayPlayerCallTone(targetid);
 
-			AnnounceMyAction(targetid, "phone begins to ring.");
+			AnnounceMyAction(targetid, "telefone começa a tocar.");
 
-			SendClientMessage(targetid, COLOR_GREY, "[ ! ] To pick up the call, use /pickup");
+			SendClientMessage(targetid, COLOR_GREY, "[ ! ] Para atender a chamada, use /atender");
 		}
 
 		new tar_contact = -1;
@@ -568,7 +569,7 @@ hook SendPlayerCall(playerid, number, numberid) {
 	return true;
 }
 
-//Carrega todas empresas (MySQL).
+//Carrega todos os contatos (MySQL).
 LoadContacts() {
     new     
 		exist,
@@ -589,6 +590,33 @@ LoadContacts() {
     }
 
     printf("[Contatos]: %d contatos carregadas com sucesso.", loadedContacts);
+
+    return 1;
+}
+
+//Carrega todos SMS (MySQL).
+LoadSms() {
+    new     
+		exist,
+        loadedSms;
+
+    mysql_query(DBConn, "SELECT * FROM `phone_contacts`;");
+
+    for(new i; i < cache_num_rows(); i++) {
+        new id;
+        cache_get_value_name_int(i, "id", id);
+        SmsData[id][exist][smsID] = id;
+
+        cache_get_value_name_int(i, "PhoneOwner", SmsData[id][exist][smsOwner]);
+        cache_get_value_name_int(i, "PhoneReceive", SmsData[id][exist][smsReceive]);
+        cache_get_value_name(i, "PhoneSMS", SmsData[id][exist][smsText]);
+		cache_get_value_name_int(i, "ReadSMS", SmsData[id][exist][smsRead]);
+		cache_get_value_name_int(i, "Archive", SmsData[id][exist][smsArchive]);
+		cache_get_value_name(i, "Date", SmsData[id][exist][smsDate]);
+        loadedSms++;
+    }
+
+    printf("[SMS]: %d sms carregadas com sucesso.", loadedSms);
 
     return 1;
 }

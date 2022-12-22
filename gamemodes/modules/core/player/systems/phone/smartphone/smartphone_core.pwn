@@ -3684,6 +3684,16 @@ Dialog:AskTurnOff(playerid, response, listitem, inputtext[]) {
 	return true;
 }
 
+//Gerar o numero de celular
+GeneratorNumber(playerid) {
+	pInfo[playerid][pPhoneNumber] = random(900000) + 100000;
+	return 1;
+}
+
+DestroyNumber(playerid) {
+	pInfo[playerid][pPhoneNumber] = 0;
+	return 1;
+}
 //=========================================================================================
 //Funções complementares
 Annotation(playerid, const message[]) {

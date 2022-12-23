@@ -12,26 +12,6 @@ enum E_INTERIORS_DATA {
 
 new intInfo[MAX_INTERIORS][E_INTERIORS_DATA];
 
-/* (Não esqueça de adicionar isto em mysql_core.pwn)
-void:CheckInteriorsTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `name` varchar(256) DEFAULT 'Indefinido',\
-    `status` int DEFAULT '0',\
-    `type` int DEFAULT '0',\
-    `interior` int DEFAULT '0',\
-    `int_x` float DEFAULT '0',\
-    `int_y` float DEFAULT '0',\
-    `int_z` float DEFAULT '0',\
-    `int_a` float DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela interiors checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
-    logCreate(99998, logString, 5);
-}
-*/
-
 // ============================================================================================================================================
 hook OnGameModeInit() {
     LoadInteriors(); //Carrega todos interiores.
@@ -190,7 +170,94 @@ IsValidInterior(id) {
 
     return 1;
 }
+// ============================================================================================================================================
+ShowInteriors(playerid) {
+    Dialog_Show(playerid, InteriorsType, DIALOG_STYLE_LIST, "Interiores", "Casa\nEmpresa\nOutros", "Selecionar", "Voltar");
+    return 1;
+}
+Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
+	if(response){
+		if(listitem == 0){
+		    ShowInteriorsHouse(playerid);
+		}
+		else if(listitem == 1){
+		    ShowInteriorsBusiness(playerid);
+        }
+        else if(listitem == 2){
+		    ShowInteriorsOthers(playerid);
+        }
+	} 
+	return true;
+}
 
+ShowInteriorsHouse(playerid) {
+    new
+        string[640];
+
+    for (new i = 0; i != MAX_INTERIORS; i ++) {
+        if(intInfo[i][iType]  == 1) {
+            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
+            //intInfo[i][count++] = i;
+        }    
+    }
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    return 1;
+}
+
+ShowInteriorsBusiness(playerid) {
+    new
+        string[640];
+
+    for (new i = 0; i != MAX_INTERIORS; i ++) {
+        if(intInfo[i][iType]  == 2) {
+            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
+            //intInfo[i][count++] = i;
+        }    
+    }
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    return 1;
+}
+
+ShowInteriorsOthers(playerid) {
+    new
+        string[640];
+
+    for (new i = 0; i != MAX_INTERIORS; i ++) {
+        if(intInfo[i][iType]  == 3) {
+            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
+            //intInfo[i][count++] = i;
+        }    
+    }
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    return 1;
+}
+
+Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
+	if(response){
+		new Float:pos[4], vw, int;
+		format(pInfo[playerid][tempChar], 64, "%s", inputtext);
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `name` = '%s'", pInfo[playerid][tempChar]);
+        new Cache:result = mysql_query(DBConn, query);
+
+        cache_get_value_name_float(0, "int_x", pos[0]);
+		cache_get_value_name_float(0, "int_y", pos[1]);
+		cache_get_value_name_float(0, "int_a", pos[2]);
+		cache_get_value_name_float(0, "positionA", pos[3]);
+		cache_get_value_name_int(0, "interior", int);
+    	cache_get_value_name_int(0, "world", vw);
+        cache_delete(result);
+
+		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+		SetPlayerFacingAngle(playerid, pos[3]);
+		SetPlayerInterior(playerid, int);
+		SetPlayerVirtualWorld(playerid, vw);
+
+		SendServerMessage(playerid, "Você se teleportou para o interior '%s'.", pInfo[playerid][tempChar]);
+		pInfo[playerid][tempChar][0] =  EOS;
+		return true;
+	}
+	return true;
+}
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
     if(IsPlayerInAnyVehicle(playerid) && isGarage) {

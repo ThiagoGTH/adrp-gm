@@ -871,6 +871,7 @@ void:CheckInteriorsTable() {
     `status` int DEFAULT '0',\
     `type` int DEFAULT '0',\
     `interior` int DEFAULT '0',\
+    `world` int DEFAULT '0',\
     `int_x` float DEFAULT '0',\
     `int_y` float DEFAULT '0',\
     `int_z` float DEFAULT '0',\

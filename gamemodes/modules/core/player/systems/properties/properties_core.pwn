@@ -5,7 +5,8 @@ enum E_INTERIORS_DATA {
     iName[256],           // Nome do interior
     bool:iStatus,         // Se está ativo ou desativado (tal interior) - true/false
     iType,                // Tipo do interior (casa [1], empresa [2] e outros [3]))
-    iNumber,         // Numero do interior do interior
+    iInterior,         // Numero do interior do interior
+    iWorld,
     Float:iPosition[4],    // Posições (X, Y, Z, A) do interior.
 };
 
@@ -59,7 +60,8 @@ LoadInteriors() {
         cache_get_value_name(i, "name", intInfo[id][iName]);
         cache_get_value_name_int(i, "status", intInfo[id][iStatus]);
         cache_get_value_name_int(i, "type", intInfo[id][iType]);
-        cache_get_value_name_int(i, "interior", intInfo[id][iNumber]);
+        cache_get_value_name_int(i, "interior", intInfo[id][iInterior]);
+        cache_get_value_name_int(i, "world", intInfo[id][iWorld]);
         cache_get_value_name_float(i, "int_x", intInfo[id][iPosition][0]);
         cache_get_value_name_float(i, "int_y", intInfo[id][iPosition][1]);
         cache_get_value_name_float(i, "int_z", intInfo[id][iPosition][2]);
@@ -84,7 +86,8 @@ LoadInterior(id) {
     cache_get_value_name(0, "name", intInfo[id][iName]);
     cache_get_value_name_int(0, "status", intInfo[id][iStatus]);
     cache_get_value_name_int(0, "type", intInfo[id][iType]);
-    cache_get_value_name_int(0, "interior", intInfo[id][iNumber]);
+    cache_get_value_name_int(0, "interior", intInfo[id][iInterior]);
+    cache_get_value_name_int(0, "world", intInfo[id][iWorld]);
     cache_get_value_name_float(0, "int_x", intInfo[id][iPosition][0]);
     cache_get_value_name_float(0, "int_y", intInfo[id][iPosition][1]);
     cache_get_value_name_float(0, "int_z", intInfo[id][iPosition][2]);
@@ -101,8 +104,8 @@ SaveInteriors() {
             continue;
 
         mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `name` = '%e', `type` = '%d', `status` = '%d', \
-                `interior` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[i][iName], intInfo[i][iType], intInfo[i][iStatus], 
-                intInfo[i][iNumber], intInfo[i][iPosition][0], intInfo[i][iPosition][1], intInfo[i][iPosition][2], intInfo[i][iPosition][3], i);
+                `interior` = '%d', `world` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[i][iName], intInfo[i][iType], intInfo[i][iStatus], 
+                intInfo[i][iInterior], intInfo[i][iWorld], intInfo[i][iPosition][0], intInfo[i][iPosition][1], intInfo[i][iPosition][2], intInfo[i][iPosition][3], i);
         mysql_query(DBConn, query);
 
         savedInteriors++;
@@ -122,8 +125,8 @@ SaveInteriors() {
         return 0;
 
     mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `name` = '%e', `type` = '%d', `status` = '%d', \
-            `interior` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[id][iName], intInfo[id][iType], intInfo[id][iStatus], 
-            intInfo[id][iNumber], intInfo[id][iPosition][0], intInfo[id][iPosition][1], intInfo[id][iPosition][2], intInfo[id][iPosition][3], id);
+            `interior` = '%d', `world` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[id][iName], intInfo[id][iType], intInfo[id][iStatus], 
+            intInfo[id][iInterior], intInfo[id][iWorld], intInfo[id][iPosition][0], intInfo[id][iPosition][1], intInfo[id][iPosition][2], intInfo[id][iPosition][3], id);
     mysql_query(DBConn, query);
 
     return 1;
@@ -137,8 +140,8 @@ CreateInterior(playerid, type, name[256]) {
     GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
     GetPlayerFacingAngle(playerid, pos[3]);
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO `interiors` (`name`, `type`, `int_x`, `int_y`, `int_z`, `int_a`, `interior`) \
-        VALUES ('%s', %d, %f, %f, %f, %f, %d);", name, type, pos[0], pos[1], pos[2], pos[3], GetPlayerInterior(playerid));
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `interiors` (`name`, `type`, `int_x`, `int_y`, `int_z`, `int_a`, `interior`, `world`) \
+        VALUES ('%s', %d, %f, %f, %f, %f, %d, %d);", name, type, pos[0], pos[1], pos[2], pos[3], GetPlayerInterior(playerid), GetPlayerVirtualWorld(playerid));
     mysql_query(DBConn, query);
 
     new id = cache_insert_id();

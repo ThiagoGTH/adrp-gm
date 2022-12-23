@@ -194,13 +194,17 @@ ShowInteriorsHouse(playerid) {
     new
         string[640];
 
-    for (new i = 0; i != MAX_INTERIORS; i ++) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+    new Cache:result = mysql_query(DBConn, query);
+
+    for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 1) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            //intInfo[i][count++] = i;
+            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
         }    
     }
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    cache_delete(result);
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
     return 1;
 }
 
@@ -208,13 +212,17 @@ ShowInteriorsBusiness(playerid) {
     new
         string[640];
 
-    for (new i = 0; i != MAX_INTERIORS; i ++) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+    new Cache:result = mysql_query(DBConn, query);
+
+    for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 2) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            //intInfo[i][count++] = i;
+            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
         }    
     }
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    cache_delete(result);
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
     return 1;
 }
 
@@ -222,27 +230,30 @@ ShowInteriorsOthers(playerid) {
     new
         string[640];
 
-    for (new i = 0; i != MAX_INTERIORS; i ++) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+    new Cache:result = mysql_query(DBConn, query);
+
+    for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 3) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            //intInfo[i][count++] = i;
+            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
         }    
     }
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores", string, "Selecionar", "Voltar");
+    cache_delete(result);
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
     return 1;
 }
 
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 	if(response){
 		new Float:pos[4], vw, int;
-		format(pInfo[playerid][tempChar], 64, "%s", inputtext);
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `name` = '%s'", pInfo[playerid][tempChar]);
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%d'", pInfo[playerid][tempChar]);
         new Cache:result = mysql_query(DBConn, query);
 
         cache_get_value_name_float(0, "int_x", pos[0]);
 		cache_get_value_name_float(0, "int_y", pos[1]);
-		cache_get_value_name_float(0, "int_a", pos[2]);
-		cache_get_value_name_float(0, "positionA", pos[3]);
+		cache_get_value_name_float(0, "int_z", pos[2]);
+		cache_get_value_name_float(0, "int_a", pos[3]);
 		cache_get_value_name_int(0, "interior", int);
     	cache_get_value_name_int(0, "world", vw);
         cache_delete(result);
@@ -252,7 +263,7 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 		SetPlayerInterior(playerid, int);
 		SetPlayerVirtualWorld(playerid, vw);
 
-		SendServerMessage(playerid, "Você se teleportou para o interior '%s'.", pInfo[playerid][tempChar]);
+		SendServerMessage(playerid, "Você se teleportou para o interior ID: '%d'.", pInfo[playerid][tempChar]);
 		pInfo[playerid][tempChar][0] =  EOS;
 		return true;
 	}

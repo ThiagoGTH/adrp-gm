@@ -192,11 +192,12 @@ Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 
 ShowInteriorsHouse(playerid) {
     new
-        string[640];
+        string[1024];
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
+    string = "";
     for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 1) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
@@ -210,11 +211,12 @@ ShowInteriorsHouse(playerid) {
 
 ShowInteriorsBusiness(playerid) {
     new
-        string[640];
+        string[1024];
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
+    string = "";
     for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 2) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
@@ -228,11 +230,12 @@ ShowInteriorsBusiness(playerid) {
 
 ShowInteriorsOthers(playerid) {
     new
-        string[640];
+        string[1024];
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
+    string = "";
     for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 3) {
             format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);

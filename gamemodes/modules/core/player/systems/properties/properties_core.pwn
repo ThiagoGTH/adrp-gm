@@ -192,65 +192,67 @@ Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 
 ShowInteriorsHouse(playerid) {
     new
-        string[1024];
+        string[1024], int_name[64], int_id;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
-    string = "";
     for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 1) {
-            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
+            cache_get_value_name_int(i, "id", int_id);
+            cache_get_value_name(i, "name", int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
         }    
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
     return 1;
 }
 
 ShowInteriorsBusiness(playerid) {
     new
-        string[1024];
+        string[1024], int_name[64], int_id;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
-    string = "";
     for (new i; i < cache_num_rows(); i ++) {
         if(intInfo[i][iType]  == 2) {
-            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
+            cache_get_value_name_int(i, "id", int_id);
+            cache_get_value_name(i, "name", int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
         }    
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
     return 1;
 }
 
 ShowInteriorsOthers(playerid) {
     new
-        string[1024];
+        string[1024], int_name[64], int_id;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
 
-    string = "";
     for (new i; i < cache_num_rows(); i ++) {
-        if(intInfo[i][iType]  == 3) {
-            format(string, sizeof(string), "%s%s\n", string, intInfo[i][iName]);
-            cache_get_value_name_int(i, "id", pInfo[playerid][tempChar]);
+        if(intInfo[i][iType]  == 2) {
+            cache_get_value_name_int(i, "id", int_id);
+            cache_get_value_name(i, "name", int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
         }    
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizadosx", string, "Selecionar", "Voltar");
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
     return 1;
 }
+
 
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 	if(response){
 		new Float:pos[4], vw, int;
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%d'", pInfo[playerid][tempChar]);
+        format(pInfo[playerid][tempChar], 64, "%s", inputtext);
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `name` = '%s'", pInfo[playerid][tempChar]);
         new Cache:result = mysql_query(DBConn, query);
 
         cache_get_value_name_float(0, "int_x", pos[0]);
@@ -267,7 +269,8 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 		SetPlayerVirtualWorld(playerid, vw);
 
 		SendServerMessage(playerid, "Você se teleportou para o interior ID: '%d'.", pInfo[playerid][tempChar]);
-		pInfo[playerid][tempChar][0] =  EOS;
+		pInfo[playerid][tempChar] =  EOS;
+        pInfo[playerid][tempChar][0] =  EOS;
 		return true;
 	}
 	return true;

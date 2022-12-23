@@ -25,6 +25,7 @@
 #include <colandreas>
 #include <mapandreas>
 #include <env>
+#include <Pawn.Regex>
 
 #pragma warning disable 214
 #pragma warning disable 239
@@ -65,9 +66,11 @@
 #include "modules\core\player\systems\properties\properties.pwn"
 #include "modules\core\player\systems\financials\financial.pwn"
 #include "modules\core\player\systems\financials\atm\atm.pwn"
+
+// Phone System more Towers System
+//#include "modules\core\player\systems\phone\towers\towers.pwn" (in beta - desativado)
 #include "modules\core\player\systems\phone\smartphone\smartphone.pwn"
 #include "modules\core\player\systems\phone\payphone\payphone.pwn"
-#include "modules\core\player\systems\phone\phones.pwn"
 
 // OUTROS
 #include "modules\core\discord\discord_core.pwn"

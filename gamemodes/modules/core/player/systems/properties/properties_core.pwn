@@ -1,3 +1,13 @@
+#define GetPlayerUseListitem(%0) 		g_player_listitem_use[%0]
+#define SetPlayerUseListitem(%0,%1) 	g_player_listitem_use[%0] = %1
+
+new g_player_listitem_use[MAX_PLAYERS] = {-1, ...};
+
+#define SetPlayerListitemValue(%0,%1,%2) 	g_player_listitem[%0][%1] = %2
+#define GetPlayerListitemValue(%0,%1) 		g_player_listitem[%0][%1]
+
+new g_player_listitem[MAX_PLAYERS][96];
+
 #define MAX_INTERIORS          1000
 
 enum E_INTERIORS_DATA {
@@ -192,7 +202,7 @@ Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 
 ShowInteriorsHouse(playerid) {
     new
-        string[1024], int_name[64], int_id;
+        string[64], int_name[64], int_id, count = 0;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
@@ -201,7 +211,8 @@ ShowInteriorsHouse(playerid) {
         if(intInfo[i][iType]  == 1) {
             cache_get_value_name_int(i, "id", int_id);
             cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_name);
+            SetPlayerListitemValue(playerid, count++, int_id);
         }    
     }
     cache_delete(result);
@@ -211,7 +222,7 @@ ShowInteriorsHouse(playerid) {
 
 ShowInteriorsBusiness(playerid) {
     new
-        string[1024], int_name[64], int_id;
+        string[64], int_name[64], int_id, count = 0;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
@@ -220,7 +231,8 @@ ShowInteriorsBusiness(playerid) {
         if(intInfo[i][iType]  == 2) {
             cache_get_value_name_int(i, "id", int_id);
             cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_name);
+            SetPlayerListitemValue(playerid, count++, int_id);
         }    
     }
     cache_delete(result);
@@ -230,7 +242,7 @@ ShowInteriorsBusiness(playerid) {
 
 ShowInteriorsOthers(playerid) {
     new
-        string[1024], int_name[64], int_id;
+        string[64], int_name[64], int_id, count = 0;
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
     new Cache:result = mysql_query(DBConn, query);
@@ -239,7 +251,8 @@ ShowInteriorsOthers(playerid) {
         if(intInfo[i][iType]  == 2) {
             cache_get_value_name_int(i, "id", int_id);
             cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_id, int_name);
+            format(string, sizeof(string), "%s%s\n", string, int_name);
+            SetPlayerListitemValue(playerid, count++, int_id);
         }    
     }
     cache_delete(result);
@@ -251,8 +264,8 @@ ShowInteriorsOthers(playerid) {
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 	if(response){
 		new Float:pos[4], vw, int;
-        format(pInfo[playerid][tempChar], 64, "%s", inputtext);
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `name` = '%s'", pInfo[playerid][tempChar]);
+        new int_id = GetPlayerUseListitem(playerid);
+		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", int_id);
         new Cache:result = mysql_query(DBConn, query);
 
         cache_get_value_name_float(0, "int_x", pos[0]);

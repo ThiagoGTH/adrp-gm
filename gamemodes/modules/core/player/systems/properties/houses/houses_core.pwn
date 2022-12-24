@@ -655,7 +655,6 @@ SetEntryNewHouse(playerid, id, houseID) {
     return 1;
 }
 
-
 SetRentableHouse(playerid, houseID) {
     if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
         return SendErrorMessage(playerid, "Essa casa não é sua.");
@@ -671,4 +670,13 @@ SetRentableHouse(playerid, houseID) {
         }
     }
     return 1;
+}
+
+//Verifica se (playerid) está dentro de uma casa.
+IsHouseInside(playerid)
+{
+    for (new i = 0; i != MAX_HOUSES; i ++) if (GetPlayerInterior(playerid) == hInfo[i][interiorExit] && GetPlayerVirtualWorld(playerid) == hInfo[i][vwExit]) {
+	        return i;
+	} 
+    return -1;
 }

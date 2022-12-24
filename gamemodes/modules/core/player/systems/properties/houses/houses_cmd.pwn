@@ -269,3 +269,20 @@ CMD:precoaluguel(playerid, params[]) {
 
     return 1;
 }
+
+//Comando de campainha
+CMD:campainha(playerid, params[]) {
+    new 
+        houseID = GetNearestHouseEntry(playerid);
+
+	if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    foreach (new i : Player) if (IsHouseInside(i) == houseID) {
+            SendClientMessage(i, COLOR_PURPLE, "** Você pode ouvir a campainha tocar.");
+            PlayerPlaySound(i, 20801, 0, 0, 0);
+    }
+	PlayerPlaySound(playerid, 20801, 0, 0, 0);
+    SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s toca a campainha da casa.", pNome(playerid));
+    return 1;
+}

@@ -314,3 +314,9 @@ CMD:deletarinterior(playerid, params[]) {
     }
     return 1;
 }
+
+//Comando para verificar propiedade próxima
+CMD:near(playerid, params[]) {
+    NearbyProperty(playerid);
+    return 1;
+}

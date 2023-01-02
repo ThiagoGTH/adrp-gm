@@ -85,7 +85,10 @@ CMD:comprar(playerid) {
     new businessInsideID = IsBusinessInside(playerid);
 
     if(!houseID && !businessID && !businessInsideID)
-        return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade ou dentro de uma empresa.");
+
+    if(businessID)
+        return BuyInTheBusiness(playerid);
 
     if(HouseHasOwner(houseID) || BusinessHasOwner(businessID))
         return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");

@@ -412,10 +412,14 @@ EditTypeBusiness(businessID, newType) {
 }
 
 //Verifica se (playerid) está dentro de uma empresa (retorna o ID da empresa que ele está.).
-IsBusinessInside(playerid)
-{
+IsBusinessInside(playerid) {
     for (new i = 0; i != MAX_BUSINESS; i ++) if (GetPlayerInterior(playerid) == bInfo[i][interiorExit] && GetPlayerVirtualWorld(playerid) == bInfo[i][vwExit]) {
 	        return i;
 	} 
     return -1;
+}
+
+//cmd:comprar (dentro da empresa - dialog de compra).
+BuyInTheBusiness(playerid) {
+    return 1;
 }

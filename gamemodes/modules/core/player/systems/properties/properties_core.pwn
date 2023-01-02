@@ -246,7 +246,6 @@ ShowInteriorsOthers(playerid) {
     
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
     if(response) {
-        printf("Retorna ID %s", inputtext);
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", inputtext);
         new Cache:result = mysql_query(DBConn, query);
 

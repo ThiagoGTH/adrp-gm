@@ -1,13 +1,3 @@
-#define GetPlayerUseListitem(%0) 		g_player_listitem_use[%0]
-#define SetPlayerUseListitem(%0,%1) 	g_player_listitem_use[%0] = %1
-
-new g_player_listitem_use[MAX_PLAYERS] = {-1, ...};
-
-#define SetPlayerListitemValue(%0,%1,%2) 	g_player_listitem[%0][%1] = %2
-#define GetPlayerListitemValue(%0,%1) 		g_player_listitem[%0][%1]
-
-new g_player_listitem[MAX_PLAYERS][96];
-
 #define MAX_INTERIORS          1000
 
 enum E_INTERIORS_DATA {
@@ -190,79 +180,101 @@ Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 		if(listitem == 0){
 		    ShowInteriorsHouse(playerid);
 		}
-		else if(listitem == 1){
-		    ShowInteriorsBusiness(playerid);
-        }
+        else if(listitem == 1){
+		    ShowInteriorsBussines(playerid);
+		}
         else if(listitem == 2){
 		    ShowInteriorsOthers(playerid);
-        }
+		}
 	} 
 	return true;
 }
 
 ShowInteriorsHouse(playerid) {
-    new
-        string[64], int_name[64], int_id, count = 0;
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 1");
     new Cache:result = mysql_query(DBConn, query);
 
-    for (new i; i < cache_num_rows(); i ++) {
-        if(intInfo[i][iType]  == 1) {
-            cache_get_value_name_int(i, "id", int_id);
-            cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_name);
-            SetPlayerListitemValue(playerid, count++, int_id);
-        }    
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
-    return 1;
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Casa", string, "Selecionar", "<<");
+    return true;
 }
 
-ShowInteriorsBusiness(playerid) {
-    new
-        string[64], int_name[64], int_id, count = 0;
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+ShowInteriorsBussines(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 2");
     new Cache:result = mysql_query(DBConn, query);
 
-    for (new i; i < cache_num_rows(); i ++) {
-        if(intInfo[i][iType]  == 2) {
-            cache_get_value_name_int(i, "id", int_id);
-            cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_name);
-            SetPlayerListitemValue(playerid, count++, int_id);
-        }    
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
-    return 1;
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Empresa", string, "Selecionar", "<<");
+    return true;
 }
 
 ShowInteriorsOthers(playerid) {
-    new
-        string[64], int_name[64], int_id, count = 0;
-
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` >= 0");
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 3");
     new Cache:result = mysql_query(DBConn, query);
 
-    for (new i; i < cache_num_rows(); i ++) {
-        if(intInfo[i][iType]  == 2) {
-            cache_get_value_name_int(i, "id", int_id);
-            cache_get_value_name(i, "name", int_name);
-            format(string, sizeof(string), "%s%s\n", string, int_name);
-            SetPlayerListitemValue(playerid, count++, int_id);
-        }    
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
     }
     cache_delete(result);
-    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_LIST, "Interiores Personalizados", string, "Selecionar", "Voltar");
-    return 1;
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Outros", string, "Selecionar", "<<");
+    return true;
 }
-
-
+    
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
+    if(response) {
+        printf("Retorna ID %s", inputtext);
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+
+        new Float:pos[4], vw, int;
+        cache_get_value_name_float(0, "int_x", pos[0]);
+		cache_get_value_name_float(0, "int_y", pos[1]);
+		cache_get_value_name_float(0, "int_z", pos[2]);
+		cache_get_value_name_float(0, "int_a", pos[3]);
+		cache_get_value_name_int(0, "interior", int);
+    	cache_get_value_name_int(0, "world", vw);
+        cache_delete(result);
+
+		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+		SetPlayerFacingAngle(playerid, pos[3]);
+		SetPlayerInterior(playerid, int);
+		SetPlayerVirtualWorld(playerid, vw);
+
+        SendServerMessage(playerid, "Você se teleportou para o interior ID: '%s'.", inputtext);
+    }
+    if(!response) {
+        ShowInteriors(playerid);
+    }
+    return 1;
+} 
+//Telesportar (para customizados)
+/*Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 	if(response){
+        new interior_id_listitem = InteriorListArray[playerid][listitem]; // ESSE É O ID DO INTERIOR DE ACORDO COM LISTITEM CLICADO (USA ELE NO LUGAR DE int_id) vexy
 		new Float:pos[4], vw, int;
         new int_id = GetPlayerUseListitem(playerid);
 		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", int_id);
@@ -287,7 +299,7 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
 		return true;
 	}
 	return true;
-}
+} */
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
     if(IsPlayerInAnyVehicle(playerid) && isGarage) {

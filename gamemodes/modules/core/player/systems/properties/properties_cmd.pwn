@@ -82,8 +82,9 @@ CMD:comprar(playerid) {
     new propertyType;
     new houseID = GetNearestHouseEntry(playerid);
     new businessID = GetNearestBusinessEntry(playerid);
+    new businessInsideID = IsBusinessInside(playerid);
 
-    if(!houseID && !businessID)
+    if(!houseID && !businessID && !businessInsideID)
         return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
 
     if(HouseHasOwner(houseID) || BusinessHasOwner(businessID))

@@ -22,43 +22,24 @@ enum E_BUSINESS_DATA {
 
 new bInfo[MAX_BUSINESS][E_BUSINESS_DATA];
 
-// ============================================================================================================================================
-// Lembre-se em colocar este código em mysql_core.pwn e também chamar a função CheckBusinesssTable(); (em CheckTables).
+#define B_MAX_STORAGE          1000
 
-/* void:CheckBusinesssTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
-    `locked` int DEFAULT '0',\
-    `name` varchar(256) DEFAULT 'Empresa desconhecida',\
-    `type` int DEFAULT '0',\
-    `inventory` int DEFAULT '0',\
-    `storage_money` int DEFAULT '0',\
-    `price` int DEFAULT '0',\
-    `entry_x` float DEFAULT '0',\
-    `entry_y` float DEFAULT '0',\
-    `entry_z` float DEFAULT '0',\
-    `entry_a` float DEFAULT '0',\
-    `vw_entry` int DEFAULT '0',\
-    `interior_entry` int DEFAULT '0',\
-    `exit_x` float DEFAULT '0',\
-    `exit_y` float DEFAULT '0',\
-    `exit_z` float DEFAULT '0',\
-    `exit_a` float DEFAULT '0',\
-    `vw_exit` int DEFAULT '0',\
-    `interior_exit` int DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela business checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business checada com sucesso");
-    logCreate(99998, logString, 5);
-} */
+enum B_STORAGE_DATA  {
+    sbID,                 // ID do Item MySQL (vamor usar com cód barras)
+    sbName[64],           // Nome do Item (tem que ser customizados)
+    sbModel,              // ID do Modelo 
+    sbPrice,              // Valor do item (valor que deixará a venda)
+    sbOwner,              // Empresa dona (em que estoque está)
+    sbQuantity,           // Quantidade de item
+    sbCategory,           // Categoria
+};
 
+new sbInfo[B_MAX_STORAGE][B_STORAGE_DATA];
 // ============================================================================================================================================
 
 hook OnGameModeInit() {
     LoadBusinesss();
+    LoadStoragesBusiness();
     return 1;
 }
 
@@ -227,6 +208,49 @@ DeleteBusiness(playerid, id)  {
     return 1;
 } 
 
+// ============================================================================================================================================
+//Carrega todas empresas (MySQL).
+LoadStoragesBusiness() {
+    new     
+        loadedStorage;
+
+    mysql_query(DBConn, "SELECT * FROM `business_storage`;");
+
+    for(new i; i < cache_num_rows(); i++) {
+        new id;
+        cache_get_value_name_int(i, "id", id);
+        sbInfo[id][sbID] = id;
+
+        cache_get_value_name(i, "name", sbInfo[id][sbName]); 
+        cache_get_value_name_int(i, "model", sbInfo[id][sbModel]);
+        cache_get_value_name_int(i, "price", sbInfo[id][sbPrice]);
+        cache_get_value_name_int(i, "owner", sbInfo[id][sbOwner]);
+        cache_get_value_name_int(i, "quantity", sbInfo[id][sbQuantity]);
+        cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
+        loadedStorage++;
+    }
+
+    printf("[ARMAZEM]: %d items foram carregados com sucesso.", loadedStorage);
+    return 1;
+}
+
+//Carrega estoque especifico específica (MySQL).
+/*LoadStorageBusiness(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `business_storage` WHERE `owner` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    sbInfo[id][sbID] = id;
+    cache_get_value_name(i, "name", sbInfo[id][sbName]); 
+    cache_get_value_name_int(i, "model", sbInfo[id][sbModel]);
+    cache_get_value_name_int(i, "price", sbInfo[id][sbPrice]);
+    cache_get_value_name_int(i, "owner", sbInfo[id][sbOwner]);
+    cache_get_value_name_int(i, "quantity", sbInfo[id][sbQuantity]);
+    cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
+    return 1;
+} */
 // ============================================================================================================================================
 //Verifica se o ID existe empresa (MySQL) - ele retorna false (se o ID não existir).
 IsValidBusiness(id) {
@@ -421,5 +445,5 @@ IsBusinessInside(playerid) {
 
 //cmd:comprar (dentro da empresa - dialog de compra).
 BuyInTheBusiness(playerid) {
-    return 1;
+    return playerid;
 }

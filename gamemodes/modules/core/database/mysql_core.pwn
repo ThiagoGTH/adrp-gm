@@ -1218,3 +1218,18 @@ void:CheckBankAccountsTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
     logCreate(99998, logString, 5);
 }
+
+void:CheckStorageBusinessTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business_storage` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `model` int DEFAULT '0',\
+    `price` int DEFAULT '120',\
+    `owner` int,\
+    `quantity` int DEFAULT '0',\
+    `category` int,\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela business_storage checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business_storage checada com sucesso");
+    logCreate(99998, logString, 5);
+}

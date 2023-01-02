@@ -45,6 +45,7 @@ hook OnGameModeInit() {
 
 hook OnGamemodeExit() {
     SaveBusinesss();
+    SaveStoragesBusiness();
     return 1;
 }
 
@@ -229,7 +230,6 @@ LoadStoragesBusiness() {
         cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
         loadedStorage++;
     }
-
     printf("[ARMAZEM]: %d items foram carregados com sucesso.", loadedStorage);
     return 1;
 }
@@ -251,6 +251,24 @@ LoadStoragesBusiness() {
     cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
     return 1;
 } */
+
+//Salva todas empresas (MySQL).
+SaveStoragesBusiness() {
+    new savedStorage;
+
+    for(new i; i < B_MAX_STORAGE; i++) {
+        if(!sbInfo[i][sbID])
+            continue;
+
+        mysql_format(DBConn, query, sizeof query, "UPDATE `business_storage` SET `name` = '%e', `model` = '%d', `price` = '%d', `owner` = '%d', `quantity` = '%d', \
+            `category` = = %d WHERE `id` = %d;", sbInfo[i][sbName], sbInfo[i][sbModel], sbInfo[i][sbPrice], sbInfo[i][sbOwner], sbInfo[i][sbQuantity],
+            sbInfo[i][sbCategory], i);
+        mysql_query(DBConn, query);
+        savedStorage++;
+    }
+    printf("[ARMAZEM]: %d items salvos com sucesso.", savedStorage);
+    return 1;
+}
 // ============================================================================================================================================
 //Verifica se o ID existe empresa (MySQL) - ele retorna false (se o ID não existir).
 IsValidBusiness(id) {

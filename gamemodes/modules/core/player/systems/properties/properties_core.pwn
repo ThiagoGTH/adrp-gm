@@ -271,34 +271,6 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
     return 1;
 } 
 //Telesportar (para customizados)
-/*Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
-	if(response){
-        new interior_id_listitem = InteriorListArray[playerid][listitem]; // ESSE É O ID DO INTERIOR DE ACORDO COM LISTITEM CLICADO (USA ELE NO LUGAR DE int_id) vexy
-		new Float:pos[4], vw, int;
-        new int_id = GetPlayerUseListitem(playerid);
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", int_id);
-        new Cache:result = mysql_query(DBConn, query);
-
-        cache_get_value_name_float(0, "int_x", pos[0]);
-		cache_get_value_name_float(0, "int_y", pos[1]);
-		cache_get_value_name_float(0, "int_z", pos[2]);
-		cache_get_value_name_float(0, "int_a", pos[3]);
-		cache_get_value_name_int(0, "interior", int);
-    	cache_get_value_name_int(0, "world", vw);
-        cache_delete(result);
-
-		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
-		SetPlayerFacingAngle(playerid, pos[3]);
-		SetPlayerInterior(playerid, int);
-		SetPlayerVirtualWorld(playerid, vw);
-
-		SendServerMessage(playerid, "Você se teleportou para o interior ID: '%d'.", pInfo[playerid][tempChar]);
-		pInfo[playerid][tempChar] =  EOS;
-        pInfo[playerid][tempChar][0] =  EOS;
-		return true;
-	}
-	return true;
-} */
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
     if(IsPlayerInAnyVehicle(playerid) && isGarage) {

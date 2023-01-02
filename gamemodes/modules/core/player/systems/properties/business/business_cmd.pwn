@@ -145,6 +145,9 @@ CMD:editarempresa(playerid, params[]) {
 }
 // ============================================================================================================================================
 
+CMD:empresa(playerid, params[]) {
+    return 1;
+}
 CMD:compraritem(playerid, params[]) {
     new i = IsBusinessInside(playerid);
     return i;

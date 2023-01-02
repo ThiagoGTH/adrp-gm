@@ -71,6 +71,7 @@ void:CheckTables() {
     CheckFactionsTable();
     CheckGraffitisTable();
     CheckBankAccountsTable();
+    CheckStorageBusinessTable();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }

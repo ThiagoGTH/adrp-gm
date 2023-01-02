@@ -270,7 +270,6 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
     }
     return 1;
 } 
-//Telesportar (para customizados)
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
     if(IsPlayerInAnyVehicle(playerid) && isGarage) {

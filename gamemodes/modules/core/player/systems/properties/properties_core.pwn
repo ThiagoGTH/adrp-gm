@@ -171,10 +171,13 @@ IsValidInterior(id) {
     return 1;
 }
 // ============================================================================================================================================
+//Função (mostra a dialog de inteiores "custom").
 ShowInteriors(playerid) {
     Dialog_Show(playerid, InteriorsType, DIALOG_STYLE_LIST, "Interiores", "Casa\nEmpresa\nOutros", "Selecionar", "Voltar");
     return 1;
 }
+
+//Resposta do dialog da função ShowInteriors.
 Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 	if(response){
 		if(listitem == 0){
@@ -190,6 +193,7 @@ Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
 	return true;
 }
 
+//Função de interiores (house)
 ShowInteriorsHouse(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 1");
     new Cache:result = mysql_query(DBConn, query);
@@ -208,6 +212,7 @@ ShowInteriorsHouse(playerid) {
     return true;
 }
 
+//Função de interiores (Bussines)
 ShowInteriorsBussines(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 2");
     new Cache:result = mysql_query(DBConn, query);
@@ -226,6 +231,7 @@ ShowInteriorsBussines(playerid) {
     return true;
 }
 
+//Função de interiores (Others)
 ShowInteriorsOthers(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 3");
     new Cache:result = mysql_query(DBConn, query);
@@ -243,7 +249,8 @@ ShowInteriorsOthers(playerid) {
     Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Outros", string, "Selecionar", "<<");
     return true;
 }
-    
+
+//Função para se telesportar (a um interior personalizado).   
 Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
     if(response) {
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", inputtext);

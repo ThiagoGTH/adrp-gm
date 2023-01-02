@@ -314,8 +314,3 @@ CMD:deletarinterior(playerid, params[]) {
     }
     return 1;
 }
-
-CMD:interiores(playerid, params[]) {
-    ShowInteriors(playerid);
-    return 1;
-}

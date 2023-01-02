@@ -410,3 +410,12 @@ EditTypeBusiness(businessID, newType) {
     SetIntDefaultBusiness(businessID); // Seta o interior da empresa + salva os dados.
     return 1;
 }
+
+//Verifica se (playerid) está dentro de uma empresa (retorna o ID da empresa que ele está.).
+IsBusinessInside(playerid)
+{
+    for (new i = 0; i != MAX_BUSINESS; i ++) if (GetPlayerInterior(playerid) == bInfo[i][interiorExit] && GetPlayerVirtualWorld(playerid) == bInfo[i][vwExit]) {
+	        return i;
+	} 
+    return -1;
+}

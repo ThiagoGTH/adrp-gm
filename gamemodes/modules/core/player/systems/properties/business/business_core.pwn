@@ -27,11 +27,12 @@ new bInfo[MAX_BUSINESS][E_BUSINESS_DATA];
 enum B_STORAGE_DATA  {
     sbID,                 // ID do Item MySQL (vamor usar com cód barras)
     sbName[64],           // Nome do Item (tem que ser customizados)
-    sbModel,              // ID do Modelo 
+    sbModel,              // ID do Modelo
     sbPrice,              // Valor do item (valor que deixará a venda)
     sbOwner,              // Empresa dona (em que estoque está)
     sbQuantity,           // Quantidade de item
     sbCategory,           // Categoria
+    bool:sbStatus,        // Se está a venda ou não.
 };
 
 new sbInfo[B_MAX_STORAGE][B_STORAGE_DATA];
@@ -228,6 +229,7 @@ LoadStoragesBusiness() {
         cache_get_value_name_int(i, "owner", sbInfo[id][sbOwner]);
         cache_get_value_name_int(i, "quantity", sbInfo[id][sbQuantity]);
         cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
+        cache_get_value_name_int(i, "status", sbInfo[id][sbStatus]);
         loadedStorage++;
     }
     printf("[ARMAZEM]: %d items foram carregados com sucesso.", loadedStorage);
@@ -252,7 +254,7 @@ LoadStoragesBusiness() {
     return 1;
 } */
 
-//Salva todas empresas (MySQL).
+//Salva todos os estoques das empresas (MySQL).
 SaveStoragesBusiness() {
     new savedStorage;
 
@@ -269,6 +271,22 @@ SaveStoragesBusiness() {
     printf("[ARMAZEM]: %d items salvos com sucesso.", savedStorage);
     return 1;
 }
+
+//Salva estoque específico (MySQL).
+/*SaveStorageBusiness(id) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM `business_storage` WHERE `id` = %d;", id);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return 0;
+
+    mysql_format(DBConn, query, sizeof query, "UPDATE `business_storage` SET `name` = '%e', `model` = '%d', `price` = '%d', `owner` = '%d', `quantity` = '%d', \
+        `category` = = %d WHERE `id` = %d;", sbInfo[id][sbName], sbInfo[id][sbModel], sbInfo[id][sbPrice], sbInfo[id][sbOwner], sbInfo[id][sbQuantity],
+        sbInfo[id][sbCategory], id);
+    mysql_query(DBConn, query);
+
+    return 1;
+} */
 // ============================================================================================================================================
 //Verifica se o ID existe empresa (MySQL) - ele retorna false (se o ID não existir).
 IsValidBusiness(id) {

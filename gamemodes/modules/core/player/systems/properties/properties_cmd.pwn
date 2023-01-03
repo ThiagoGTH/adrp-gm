@@ -6,11 +6,11 @@ CMD:entrar(playerid) {
     new garageID = GetNearestGarageEntry(playerid);
 
     if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade.");
     
     if(houseID > 0) {
         if(hInfo[houseID][hLocked])
-            return SendErrorMessage(playerid, "Essa casa est· trancada.");
+            return SendErrorMessage(playerid, "Essa casa est√° trancada.");
         
         vw = hInfo[houseID][vwExit];
         interior = hInfo[houseID][interiorExit];
@@ -28,7 +28,7 @@ CMD:entrar(playerid) {
 
     if (businessID > 0) {
         if(bInfo[businessID][bLocked])
-            return SendErrorMessage(playerid, "Essa empresa est· trancada.");
+            return SendErrorMessage(playerid, "Essa empresa est√° trancada.");
         
         vw = bInfo[businessID][vwExit];
         interior = bInfo[businessID][interiorExit];
@@ -46,7 +46,7 @@ CMD:entrar(playerid) {
 
     if (garageID > 0) {
         if(gInfo[garageID][gLocked])
-            return SendErrorMessage(playerid, "Essa garagem est· trancada.");
+            return SendErrorMessage(playerid, "Essa garagem est√° trancada.");
 
         isGarage = true;
 
@@ -65,11 +65,11 @@ CMD:sair(playerid) {
     new garageID = GetNearestGarageExit(playerid);
 
     if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade.");
     
     if(houseID > 0) {
         if(hInfo[houseID][hLocked])
-            return SendErrorMessage(playerid, "Essa casa est· trancada.");
+            return SendErrorMessage(playerid, "Essa casa est√° trancada.");
         
         vw = hInfo[houseID][vwEntry];
         interior = hInfo[houseID][interiorEntry];
@@ -87,7 +87,7 @@ CMD:sair(playerid) {
 
     if (businessID > 0) {
         if(bInfo[businessID][bLocked])
-            return SendErrorMessage(playerid, "Essa empresa est· trancada.");
+            return SendErrorMessage(playerid, "Essa empresa est√° trancada.");
         
         vw = bInfo[businessID][vwEntry];
         interior = bInfo[businessID][interiorEntry];
@@ -105,7 +105,7 @@ CMD:sair(playerid) {
 
     if (garageID > 0) {
         if(gInfo[garageID][gLocked])
-            return SendErrorMessage(playerid, "Essa garage est· trancada.");
+            return SendErrorMessage(playerid, "Essa garage est√° trancada.");
 
         isGarage = true;
 
@@ -123,16 +123,24 @@ CMD:comprar(playerid) {
 
     new houseID = GetNearestHouseEntry(playerid);
     new businessID = GetNearestBusinessEntry(playerid);
+    new businessInsideID = IsBusinessInside(playerid);
     new garageID = GetNearestGarageEntry(playerid);
 
+
+    if(!houseID && !businessID && !businessInsideID && !garageID)
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade ou dentro de uma empresa.");
+
+    if(businessInsideID)
+        return BuyInTheBusiness(playerid);
+
     if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade.");
 
     if(HouseHasOwner(houseID) || BusinessHasOwner(businessID) || GarageHasOwner(garageID))
-        return SendErrorMessage(playerid, "Esta propriedade j· possui um dono.");
+        return SendErrorMessage(playerid, "Esta propriedade j√° possui um dono.");
 
     if(GetMoney(playerid) < hInfo[houseID][hPrice] || GetMoney(playerid) < bInfo[businessID][bPrice] || GetMoney(playerid) < gInfo[garageID][gPrice])
-        return SendErrorMessage(playerid, "VocÍ n„o possui dinheiro o suficiente para comprar esta propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o possui dinheiro o suficiente para comprar esta propriedade.");
 
     if(houseID != -1) {
         propertyType = 1;
@@ -159,7 +167,7 @@ CMD:comprar(playerid) {
         gHouseid = gInfo[garageID][gHouse];
 
         if(gHouseid > 0)
-            return SendErrorMessage(playerid, "VocÍ n„o pode comprar essa garagem, pois ela pertence ‡ casa ao lado, compre ela e ter· a garagem.");
+            return SendErrorMessage(playerid, "Voc√™ n√£o pode comprar essa garagem, pois ela pertence √† casa ao lado, compre ela e ter√° a garagem.");
 
         GiveMoney(playerid, -gInfo[garageID][gPrice]);
         BuyProperty(playerid, garageID, propertyType);
@@ -167,7 +175,7 @@ CMD:comprar(playerid) {
         return 1;
     }
 
-    return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade");
+    return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade");
 }
 
 CMD:avender(playerid) {
@@ -180,7 +188,7 @@ CMD:avender(playerid) {
     new garageID = GetNearestGarageEntry(playerid);
 
     if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade.");
 
     if(houseID != -1) {
         propertyType = 1;
@@ -206,7 +214,7 @@ CMD:avender(playerid) {
         return 1;
     }
 
-    return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade");
+    return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade");
 }
 
 CMD:trancar(playerid, params[]) {
@@ -225,11 +233,11 @@ CMD:trancar(playerid, params[]) {
         garageID = GetNearestGarageExit(playerid);
 
     if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "VocÍ n„o est· prÛximo de nenhuma propriedade.");
+        return SendErrorMessage(playerid, "Voc√™ n√£o est√° pr√≥ximo de nenhuma propriedade.");
     
     if(houseID != -1) {
         if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
-            return SendErrorMessage(playerid, "Essa propriedade n„o È sua.");
+            return SendErrorMessage(playerid, "Essa propriedade n√£o √© sua.");
         
         propertyType = 1;
         LockProperty(playerid, houseID, propertyType);
@@ -239,7 +247,7 @@ CMD:trancar(playerid, params[]) {
 
     if(businessID != -1) {
         if(bInfo[businessID][bOwner] != pInfo[playerid][pID])
-            return SendErrorMessage(playerid, "Essa propriedade n„o È sua.");
+            return SendErrorMessage(playerid, "Essa propriedade n√£o √© sua.");
         
         propertyType = 2;
         LockProperty(playerid, businessID, propertyType);
@@ -249,7 +257,7 @@ CMD:trancar(playerid, params[]) {
 
     if(garageID != -1) {
         if(gInfo[garageID][gOwner] != pInfo[playerid][pID])
-            return SendErrorMessage(playerid, "Essa propriedade n„o È sua.");
+            return SendErrorMessage(playerid, "Essa propriedade n√£o √© sua.");
         
         propertyType = 3;
         LockProperty(playerid, garageID, propertyType);
@@ -269,23 +277,23 @@ CMD:criarinterior(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "ds[256]", type, name)) {
-        SendSyntaxMessage(playerid, "/criarinterior [tipo] [nome ˙nico]");
+        SendSyntaxMessage(playerid, "/criarinterior [tipo] [nome √∫nico]");
         SendSyntaxMessage(playerid, "[TIPOS] 1: Casa | 2: Empresa | 3: Outros");
         return 1;
     }
     
     if (type < 1 || type > 3)
-        return SendErrorMessage(playerid, "Tipo inv·lido. Tipos de 1 · 3.");
+        return SendErrorMessage(playerid, "Tipo inv√°lido. Tipos de 1 √° 3.");
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `name` = '%e';", name);
     mysql_query(DBConn, query);
 
     if(cache_num_rows())
-        return SendErrorMessage(playerid, "Este nome j· est· registrado em outro interior!");
+        return SendErrorMessage(playerid, "Este nome j√° est√° registrado em outro interior!");
 
     if(!CreateInterior(playerid, type, name))
     {
-        SendErrorMessage(playerid, "Ix001 - Encaminhe este cÛdigo para um desenvolvedor.");
+        SendErrorMessage(playerid, "Ix001 - Encaminhe este c√≥digo para um desenvolvedor.");
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao criar o interior (cod: Ix001)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
@@ -303,18 +311,18 @@ CMD:deletarinterior(playerid, params[]) {
         return SendSyntaxMessage(playerid, "/deletarinterior [id]");
 
     if(!IsValidInterior(id))
-        return SendErrorMessage(playerid, "Esse ID de interior n„o existe.");
+        return SendErrorMessage(playerid, "Esse ID de interior n√£o existe.");
 
     if(!DeleteInterior(playerid, id))
     {
-        SendErrorMessage(playerid, "ix010 - Encaminhe este cÛdigo para um desenvolvedor.");
+        SendErrorMessage(playerid, "ix010 - Encaminhe este c√≥digo para um desenvolvedor.");
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: ix010)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
     return 1;
 }
 
-//Comando para verificar propiedade prÛxima
+//Comando para verificar propiedade pr√≥xima
 CMD:near(playerid, params[]) {
     NearbyProperty(playerid);
     return 1;

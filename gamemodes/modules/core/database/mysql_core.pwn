@@ -1,6 +1,6 @@
 /*
  
-Esse mÛdulo È dedicado integralmente a lidar com conexıes e integraÁıes com o MySQL. Mas isso n„o implica que outros mÛdulos n„o possam extrair, salvar ou inserir informaÁıes no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
+Esse m√≥dulo √© dedicado integralmente a lidar com conex√µes e integra√ß√µes com o MySQL. Mas isso n√£o implica que outros m√≥dulos n√£o possam extrair, salvar ou inserir informa√ß√µes no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
 
 */
 
@@ -36,17 +36,17 @@ hook OnGameModeInit() {
     mysql_set_option(options, POOL_SIZE, 2);
 
     if(mysql_errno(DBConn)) {
-        print("\n[DATABASE] Houve um erro na tentativa de conex„o com o MySQL.");
+        print("\n[DATABASE] Houve um erro na tentativa de conex√£o com o MySQL.");
         print("[DATABASE] Para obter mais detalhes, acesse a pasta de logging do plug-in.");
         print("[DATABASE] Desligando o servidor...\n");
 
-        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex„o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser√° desligado.");
+        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex√£o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser√É¬° desligado.");
         logCreate(99998, logString, 5);
         
         SendRconCommand("exit");
     } else {
-        print("\n[DATABASE] A conex„o com o MySQL foi feita com sucesso");
-        print("[DATABASE] Verificando criaÁ„o de tabelas...");
+        print("\n[DATABASE] A conex√£o com o MySQL foi feita com sucesso");
+        print("[DATABASE] Verificando cria√ß√£o de tabelas...");
         mysql_set_charset("latin1");
         CheckTables();
     }
@@ -73,12 +73,13 @@ void:CheckTables() {
     CheckFactionsTable();
     CheckGraffitisTable();
     CheckBankAccountsTable();
+    CheckStorageBusinessTable();
     CheckGaragesTable();
     CheckSignalTower();
     CheckPhoneSms();
     CheckPhoneContacts();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
-    print("* Note que se alguma tabela faltar, funÁıes n„o funcionar„o de modo correto.\n");
+    print("* Note que se alguma tabela faltar, fun√ß√µes n√£o funcionar√£o de modo correto.\n");
 }
 
 void:CheckUserTable() {
@@ -403,6 +404,7 @@ void:CheckItemsTable() {
     `item_legality` int NOT NULL DEFAULT '0',\
     `item_model` int NOT NULL DEFAULT '0',\
     `item_category` int NOT NULL DEFAULT '0',\
+    `item_price` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela items checada com sucesso");
@@ -772,7 +774,7 @@ void:CheckHousesTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `houses` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'EndereÁo desconhecido',\
+    `address` varchar(256) DEFAULT 'Endere√ßo desconhecido',\
     `garage_id` int DEFAULT '0',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
@@ -823,7 +825,7 @@ void:CheckBusinesssTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'EndereÁo desconhecido',\
+    `address` varchar(256) DEFAULT 'Endere√ßo desconhecido',\
     `locked` int DEFAULT '0',\
     `name` varchar(256) DEFAULT 'Empresa desconhecida',\
     `type` int DEFAULT '0',\
@@ -1251,7 +1253,7 @@ void:CheckGaragesTable() {
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
     `house_id` int DEFAULT '0',\
-    `address` varchar(256) DEFAULT 'EndereÁo desconhecido',\
+    `address` varchar(256) DEFAULT 'Endere√ßo desconhecido',\
     `locked` int DEFAULT '0',\
     `garage_inv` int DEFAULT '0',\
     `price` int DEFAULT '0',\
@@ -1303,6 +1305,21 @@ void:CheckBankAccountsTable() {
     
     print("[DATABASE] Tabela player_bankaccounts checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckStorageBusinessTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business_storage` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `model` int DEFAULT '0',\
+    `price` int DEFAULT '120',\
+    `owner` int,\
+    `quantity` int DEFAULT '0',\
+    `category` int,\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela business_storage checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business_storage checada com sucesso");
     logCreate(99998, logString, 5);
 }
 

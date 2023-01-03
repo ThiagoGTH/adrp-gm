@@ -1,4 +1,4 @@
-ItemCreate(model) {
+ItemCreate(model, price) {
     for (new i = 0; i != MAX_DYNAMIC_ITEMS; i ++) {
         if (!diInfo[i][diExists]) {
             new Cache:result;
@@ -10,7 +10,7 @@ ItemCreate(model) {
             diInfo[i][diUseful] = false;
             diInfo[i][diLegality] = true;
 
-            mysql_format(DBConn, query, sizeof query, "INSERT INTO `items` (`item_name`, `item_desc`, `item_model`, `item_category`, `item_useful`, `item_legality`) VALUES ('Inválido', 'N/A', '%d', '0', '0', '1');", model);
+            mysql_format(DBConn, query, sizeof query, "INSERT INTO `items` (`item_name`, `item_desc`, `item_model`, `item_category`, `item_useful`, `item_legality`, `item_price`) VALUES ('Inválido', 'N/A', '%d', '0', '0', '1', '%d')", model, price);
             result = mysql_query(DBConn, query);
             diInfo[i][diID] = cache_insert_id();
             cache_delete(result);
@@ -38,6 +38,7 @@ LoadItems() {
         cache_get_value_name_int(i, "item_legality", diInfo[id][diLegality]);
         cache_get_value_name_int(i, "item_model", diInfo[id][diModel]);
         cache_get_value_name_int(i, "item_category", diInfo[id][diCategory]);
+        cache_get_value_name_int(i, "item_price", diInfo[id][diPrice]);
 
         loadeditems++;
     }

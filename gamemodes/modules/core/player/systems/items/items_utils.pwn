@@ -14,6 +14,7 @@ enum DI_ITEMS_DATA {
 	bool:diLegality,
     diModel,
     diCategory,
+	diPrice,
 };
 
 new diInfo[MAX_DYNAMIC_ITEMS][DI_ITEMS_DATA];

@@ -170,7 +170,7 @@ CMD:comprar(playerid) {
         gHouseid = gInfo[garageID][gHouse];
 
         if(gHouseid > 0)
-            return SendErrorMessage(playerid, "Você não pode comprar essa garagem, pois ela pertence Ã  casa ao lado, compre ela e terÃ¡ a garagem.");
+            return SendErrorMessage(playerid, "Você não pode comprar essa garagem, pois ela pertence á casa ao lado, compre ela e terÃ¡ a garagem.");
 
         GiveMoney(playerid, -gInfo[garageID][gPrice]);
         BuyProperty(playerid, garageID, propertyType);

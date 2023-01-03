@@ -156,4 +156,17 @@ CMD:empresa(playerid, params[]) {
     return 1;
 }
 
+CMD:irempresa(playerid, params[]) {
+    new id;
+
+    if(GetPlayerAdmin(playerid) < 2)
+        return SendPermissionMessage(playerid);
+
+    if(sscanf(params, "d", id))
+        return SendSyntaxMessage(playerid, "/irempresa [id]");
+
+    TeleportBusiness(playerid, id);
+
+    return 1;
+}
 // ============================================================================================================================================

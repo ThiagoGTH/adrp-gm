@@ -308,7 +308,7 @@ BusinessHasOwner(id) {
 
 //Criar Pickup de entrada
 CreateObjectEntry(id)  {
-    bInfo[id][bVariable] = CreateDynamicObject(19198, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2], 0.0, 0.0, bInfo[id][bEntryPos][3], bInfo[id][vwEntry], bInfo[id][interiorEntry], -1, 3.5);
+    bInfo[id][bVariable] = CreateDynamicObject(19198, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2], 0.0, 0.0, bInfo[id][bEntryPos][3], bInfo[id][vwEntry], bInfo[id][interiorEntry], -1, 10.0);
 
     return 1;
 }
@@ -456,7 +456,7 @@ SetIntDefaultBusiness(businessID) {
 
 //Seta o interior da empresa de forma automatizada (sem repetir numeros)
 SetWorldBusiness(businessID) {
-    bInfo[businessID][vwEntry] = businessID + 1;
+    bInfo[businessID][vwExit] = businessID + 1;
     SaveBusiness(businessID);
 }
 
@@ -467,6 +467,7 @@ EditEntryBusiness(playerid, businessID) {
     GetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
     bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
     bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
+    TeleportBusiness(playerid, businessID);
     SaveBusiness(businessID);
     return 1;
 }
@@ -509,6 +510,21 @@ IsBusinessInside(playerid) {
     return -1;
 }
 
+//Teleporta o player para determinada empresa (via o ID > Onde está localizada a entrada)
+TeleportBusiness(playerid, id) {
+    if(!bInfo[id][bID])
+        return SendErrorMessage(playerid, "Esse ID de empresa não existe.");
+
+    SetPlayerVirtualWorld(playerid, bInfo[id][vwEntry]);
+    SetPlayerInterior(playerid, bInfo[id][interiorEntry]);
+    SetPlayerPos(playerid, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2]);
+    SetPlayerFacingAngle(playerid, bInfo[id][bEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a empresa de ID %d.", id);
+    return 1;
+}
+
+// ============================================================================================================================================
 ManagerBusiness(playerid) {
     new businessID = IsBusinessInside(playerid);
     new string[1024];
@@ -527,31 +543,30 @@ ManagerBusiness(playerid) {
 
 Dialog:ManagerPageHome(playerid, response, listitem, inputtext[]) {
     if(response) {
-        new selection = strval(inputtext);
-        switch(selection) {
+        switch(listitem) {
+            case 0: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
             case 1: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
             case 2: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
-            case 3: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
-            case 4: ManagerPageStorage(playerid);
-        }
+            case 3: ManagerStorage(playerid);
+        } 
     }
     return 1;
 }
 
-ManagerPageStorage(playerid) {
+ManagerStorage(playerid) {
     new businessID = IsBusinessInside(playerid);
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM business_storage WHERE `owner` = '%d'", businessID);
     new Cache:result = mysql_query(DBConn, query);
 
-    new string[1024], cod_id, cod_name[24], price;
-    format(string, sizeof(string), "Cod ID\tNome\n");
-    format(string, sizeof(string), "Solicitar Produto\n");
+    new string[1024], cod_id, cod_name[24], price, quantity;
+    format(string, sizeof(string), "Cod ID\tNome\tQuantidade\tPreço\n");
+    format(string, sizeof(string), "%sSolicitar Produto\n", string);
     for(new i; i < cache_num_rows(); i++) {
         cache_get_value_name_int(i, "id", cod_id);
         cache_get_value_name(i, "name", cod_name);
         cache_get_value_name_int(i, "price", price);
 
-        format(string, sizeof(string), "%s%d\t%s\t%d$\n", string, cod_id, cod_name, price);
+        format(string, sizeof(string), "%s%d\t%s\t%d\t%d$\n", string, cod_id, cod_name, quantity, price);
     }
     cache_delete(result);
 
@@ -568,7 +583,7 @@ Dialog:ManagerPageStorage(playerid, response, listitem, inputtext[]) {
             printf("%d solicita produto.", playerid);
         }
         else {
-            printf("%d solciita edição de produto.", playerid);   
+            printf("%d solciita edição de produto do produto %s", playerid, inputtext);   
         }
     }
     return 1;

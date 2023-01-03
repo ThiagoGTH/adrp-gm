@@ -1311,6 +1311,7 @@ void:CheckBankAccountsTable() {
 void:CheckStorageBusinessTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business_storage` (\
     `id` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(64) DEFAULT 'Produto sem nome.' ,\
     `model` int DEFAULT '0',\
     `price` int DEFAULT '120',\
     `owner` int,\

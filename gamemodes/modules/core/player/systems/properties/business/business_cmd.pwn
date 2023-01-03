@@ -146,9 +146,7 @@ CMD:editarempresa(playerid, params[]) {
 // ============================================================================================================================================
 
 CMD:empresa(playerid, params[]) {
+    new businessID = IsBusinessInside(playerid);
+    ManagerBusiness(playerid, businessID);
     return 1;
-}
-CMD:compraritem(playerid, params[]) {
-    new i = IsBusinessInside(playerid);
-    return i;
 }

@@ -479,6 +479,10 @@ IsBusinessInside(playerid) {
     return -1;
 }
 
+ManagerBusiness(playerid, businessID) {
+    return playerid + businessID;
+}
+
 //cmd:comprar (dentro da empresa - dialog de compra).
 BuyInTheBusiness(playerid) {
     return playerid;

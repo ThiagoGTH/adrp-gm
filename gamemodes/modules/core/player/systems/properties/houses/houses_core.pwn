@@ -199,7 +199,7 @@ GetNearestHouseEntry(playerid, Float:distance = 1.0) {
     if(secondEntry)
         return secondEntry;
 
-    return 0;
+    return -1;
 }
 
 // Procura por alguma saída de casa

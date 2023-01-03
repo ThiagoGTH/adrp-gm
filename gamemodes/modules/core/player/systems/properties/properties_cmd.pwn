@@ -130,19 +130,12 @@ CMD:comprar(playerid) {
     if(!houseID && !businessID && !businessInsideID && !garageID)
         return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade ou dentro de uma empresa.");
 
-    if(businessInsideID)
-        return BuyInTheBusiness(playerid);
-
-    if(!houseID && !businessID && !garageID)
-        return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade.");
-
-    if(HouseHasOwner(houseID) || BusinessHasOwner(businessID) || GarageHasOwner(garageID))
-        return SendErrorMessage(playerid, "Esta propriedade jÃ¡ possui um dono.");
-
-    if(GetMoney(playerid) < hInfo[houseID][hPrice] || GetMoney(playerid) < bInfo[businessID][bPrice] || GetMoney(playerid) < gInfo[garageID][gPrice])
-        return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.");
-
     if(houseID != -1) {
+        if(HouseHasOwner(houseID))
+            return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
+        if(GetMoney(playerid) < hInfo[houseID][hPrice])
+            return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.");
+        
         propertyType = 1;
 
         GiveMoney(playerid, -hInfo[houseID][hPrice]);
@@ -152,6 +145,11 @@ CMD:comprar(playerid) {
     }
 
     if(businessID != -1) {
+        if(BusinessHasOwner(businessID))
+            return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
+        if(GetMoney(playerid) < bInfo[businessID][bPrice])
+            return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.") ;
+        
         propertyType = 2;
 
         GiveMoney(playerid, -bInfo[businessID][bPrice]);
@@ -161,6 +159,11 @@ CMD:comprar(playerid) {
     }
 
     if(garageID != -1) {
+        if(GarageHasOwner(garageID))
+            return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
+        if(GetMoney(playerid) < gInfo[garageID][gPrice])
+            return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.");
+
         new gHouseid;
         propertyType = 3;
 
@@ -173,6 +176,10 @@ CMD:comprar(playerid) {
         BuyProperty(playerid, garageID, propertyType);
 
         return 1;
+    }
+
+    if(businessInsideID != -1) {
+        BuyInTheBusiness(playerid);
     }
 
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade");
@@ -289,7 +296,7 @@ CMD:criarinterior(playerid, params[]) {
     mysql_query(DBConn, query);
 
     if(cache_num_rows())
-        return SendErrorMessage(playerid, "Este nome jÃ¡ está registrado em outro interior!");
+        return SendErrorMessage(playerid, "Este nome já está registrado em outro interior!");
 
     if(!CreateInterior(playerid, type, name))
     {

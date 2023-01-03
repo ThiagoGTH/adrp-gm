@@ -398,6 +398,7 @@ void:CheckItemsTable() {
     `item_legality` int NOT NULL DEFAULT '0',\
     `item_model` int NOT NULL DEFAULT '0',\
     `item_category` int NOT NULL DEFAULT '0',\
+    `item_price` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela items checada com sucesso");

@@ -61,7 +61,6 @@ void:CheckTables() {
     CheckItemsTable();
     CheckBanTable();
     CheckFurnitureInfoTable();
-    CheckInteriorsInfoTable();
     CheckAdsTable();
     CheckVehiclesTable();
     CheckPoolTable();
@@ -482,23 +481,6 @@ void:CheckFurnitureInfoTable(){
     logCreate(99998, logString, 5);
 }
 
-void:CheckInteriorsInfoTable(){
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors_info` (\
-    `ID` int NOT NULL AUTO_INCREMENT,\
-    `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
-    `virtual_world` int NOT NULL DEFAULT '0',\
-    `interior` int NOT NULL DEFAULT '0',\
-    `positionX` float NOT NULL DEFAULT '0',\
-    `positionY` float NOT NULL DEFAULT '0',\
-    `positionZ` float NOT NULL DEFAULT '0',\
-    `positionA` float NOT NULL DEFAULT '0',\
-    PRIMARY KEY (`ID`));");
-
-    print("[DATABASE] Tabela interiors checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
-    logCreate(99998, logString, 5);
-}
-
 void:CheckAdsTable(){
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `advertisement` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -874,6 +856,7 @@ void:CheckInteriorsTable() {
     `status` int DEFAULT '0',\
     `type` int DEFAULT '0',\
     `interior` int DEFAULT '0',\
+    `world` int DEFAULT '0',\
     `int_x` float DEFAULT '0',\
     `int_y` float DEFAULT '0',\
     `int_z` float DEFAULT '0',\

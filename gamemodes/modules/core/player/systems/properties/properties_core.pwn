@@ -5,31 +5,12 @@ enum E_INTERIORS_DATA {
     iName[256],           // Nome do interior
     bool:iStatus,         // Se está ativo ou desativado (tal interior) - true/false
     iType,                // Tipo do interior (casa [1], empresa [2] e outros [3]))
-    iNumber,         // Numero do interior do interior
+    iInterior,         // Numero do interior do interior
+    iWorld,
     Float:iPosition[4],    // Posições (X, Y, Z, A) do interior.
 };
 
 new intInfo[MAX_INTERIORS][E_INTERIORS_DATA];
-
-/* (Não esqueça de adicionar isto em mysql_core.pwn)
-void:CheckInteriorsTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `name` varchar(256) DEFAULT 'Indefinido',\
-    `status` int DEFAULT '0',\
-    `type` int DEFAULT '0',\
-    `interior` int DEFAULT '0',\
-    `int_x` float DEFAULT '0',\
-    `int_y` float DEFAULT '0',\
-    `int_z` float DEFAULT '0',\
-    `int_a` float DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela interiors checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
-    logCreate(99998, logString, 5);
-}
-*/
 
 // ============================================================================================================================================
 hook OnGameModeInit() {
@@ -59,7 +40,8 @@ LoadInteriors() {
         cache_get_value_name(i, "name", intInfo[id][iName]);
         cache_get_value_name_int(i, "status", intInfo[id][iStatus]);
         cache_get_value_name_int(i, "type", intInfo[id][iType]);
-        cache_get_value_name_int(i, "interior", intInfo[id][iNumber]);
+        cache_get_value_name_int(i, "interior", intInfo[id][iInterior]);
+        cache_get_value_name_int(i, "world", intInfo[id][iWorld]);
         cache_get_value_name_float(i, "int_x", intInfo[id][iPosition][0]);
         cache_get_value_name_float(i, "int_y", intInfo[id][iPosition][1]);
         cache_get_value_name_float(i, "int_z", intInfo[id][iPosition][2]);
@@ -84,7 +66,8 @@ LoadInterior(id) {
     cache_get_value_name(0, "name", intInfo[id][iName]);
     cache_get_value_name_int(0, "status", intInfo[id][iStatus]);
     cache_get_value_name_int(0, "type", intInfo[id][iType]);
-    cache_get_value_name_int(0, "interior", intInfo[id][iNumber]);
+    cache_get_value_name_int(0, "interior", intInfo[id][iInterior]);
+    cache_get_value_name_int(0, "world", intInfo[id][iWorld]);
     cache_get_value_name_float(0, "int_x", intInfo[id][iPosition][0]);
     cache_get_value_name_float(0, "int_y", intInfo[id][iPosition][1]);
     cache_get_value_name_float(0, "int_z", intInfo[id][iPosition][2]);
@@ -101,8 +84,8 @@ SaveInteriors() {
             continue;
 
         mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `name` = '%e', `type` = '%d', `status` = '%d', \
-                `interior` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[i][iName], intInfo[i][iType], intInfo[i][iStatus], 
-                intInfo[i][iNumber], intInfo[i][iPosition][0], intInfo[i][iPosition][1], intInfo[i][iPosition][2], intInfo[i][iPosition][3], i);
+                `interior` = '%d', `world` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[i][iName], intInfo[i][iType], intInfo[i][iStatus], 
+                intInfo[i][iInterior], intInfo[i][iWorld], intInfo[i][iPosition][0], intInfo[i][iPosition][1], intInfo[i][iPosition][2], intInfo[i][iPosition][3], i);
         mysql_query(DBConn, query);
 
         savedInteriors++;
@@ -122,8 +105,8 @@ SaveInteriors() {
         return 0;
 
     mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `name` = '%e', `type` = '%d', `status` = '%d', \
-            `interior` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[id][iName], intInfo[id][iType], intInfo[id][iStatus], 
-            intInfo[id][iNumber], intInfo[id][iPosition][0], intInfo[id][iPosition][1], intInfo[id][iPosition][2], intInfo[id][iPosition][3], id);
+            `interior` = '%d', `world` = '%d', `int_x` = '%f', `int_y` = '%f', `int_z` = '%f', `int_a` = '%f' WHERE `id` = %d;",  intInfo[id][iName], intInfo[id][iType], intInfo[id][iStatus], 
+            intInfo[id][iInterior], intInfo[id][iWorld], intInfo[id][iPosition][0], intInfo[id][iPosition][1], intInfo[id][iPosition][2], intInfo[id][iPosition][3], id);
     mysql_query(DBConn, query);
 
     return 1;
@@ -137,8 +120,8 @@ CreateInterior(playerid, type, name[256]) {
     GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
     GetPlayerFacingAngle(playerid, pos[3]);
 
-    mysql_format(DBConn, query, sizeof query, "INSERT INTO `interiors` (`name`, `type`, `int_x`, `int_y`, `int_z`, `int_a`, `interior`) \
-        VALUES ('%s', %d, %f, %f, %f, %f, %d);", name, type, pos[0], pos[1], pos[2], pos[3], GetPlayerInterior(playerid));
+    mysql_format(DBConn, query, sizeof query, "INSERT INTO `interiors` (`name`, `type`, `int_x`, `int_y`, `int_z`, `int_a`, `interior`, `world`) \
+        VALUES ('%s', %d, %f, %f, %f, %f, %d, %d);", name, type, pos[0], pos[1], pos[2], pos[3], GetPlayerInterior(playerid), GetPlayerVirtualWorld(playerid));
     mysql_query(DBConn, query);
 
     new id = cache_insert_id();
@@ -187,7 +170,113 @@ IsValidInterior(id) {
 
     return 1;
 }
+// ============================================================================================================================================
+//Função (mostra a dialog de inteiores "custom").
+ShowInteriors(playerid) {
+    Dialog_Show(playerid, InteriorsType, DIALOG_STYLE_LIST, "Interiores", "Casa\nEmpresa\nOutros", "Selecionar", "Voltar");
+    return 1;
+}
 
+//Resposta do dialog da função ShowInteriors.
+Dialog:InteriorsType(playerid, response, listitem, inputtext[]){
+	if(response){
+		if(listitem == 0){
+		    ShowInteriorsHouse(playerid);
+		}
+        else if(listitem == 1){
+		    ShowInteriorsBussines(playerid);
+		}
+        else if(listitem == 2){
+		    ShowInteriorsOthers(playerid);
+		}
+	} 
+	return true;
+}
+
+//Função de interiores (house)
+ShowInteriorsHouse(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 1");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
+    }
+    cache_delete(result);
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Casa", string, "Selecionar", "<<");
+    return true;
+}
+
+//Função de interiores (Bussines)
+ShowInteriorsBussines(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 2");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
+    }
+    cache_delete(result);
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Empresa", string, "Selecionar", "<<");
+    return true;
+}
+
+//Função de interiores (Others)
+ShowInteriorsOthers(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `type` = 3");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], int_id, int_name[24];
+    format(string, sizeof(string), "ID\tNome\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", int_id);
+        cache_get_value_name(i, "name", int_name);
+
+        format(string, sizeof(string), "%s%d\t%s\n", string, int_id, int_name);
+    }
+    cache_delete(result);
+
+    Dialog_Show(playerid, TeleportCustom, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interiores Personlizados > Outros", string, "Selecionar", "<<");
+    return true;
+}
+
+//Função para se telesportar (a um interior personalizado).   
+Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
+    if(response) {
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors WHERE `id` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+
+        new Float:pos[4], vw, int;
+        cache_get_value_name_float(0, "int_x", pos[0]);
+		cache_get_value_name_float(0, "int_y", pos[1]);
+		cache_get_value_name_float(0, "int_z", pos[2]);
+		cache_get_value_name_float(0, "int_a", pos[3]);
+		cache_get_value_name_int(0, "interior", int);
+    	cache_get_value_name_int(0, "world", vw);
+        cache_delete(result);
+
+		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+		SetPlayerFacingAngle(playerid, pos[3]);
+		SetPlayerInterior(playerid, int);
+		SetPlayerVirtualWorld(playerid, vw);
+
+        SendServerMessage(playerid, "Você se teleportou para o interior ID: '%s'.", inputtext);
+    }
+    if(!response) {
+        ShowInteriors(playerid);
+    }
+    return 1;
+} 
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
     if(IsPlayerInAnyVehicle(playerid) && isGarage) {

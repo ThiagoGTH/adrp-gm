@@ -97,9 +97,6 @@ enum Player_Data {
     pBuild,
     pDescription[128],
 
-    pPhoneNumber,
-    pPhoneType,
-
     pEditandoBareira,
 
     pFreeze,
@@ -241,6 +238,27 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+
+    // Phone (system)
+    pIncomingCall,
+    pPhoneNumber, // pPnumber, Trocar
+    pPhoneType,
+    pPhoneModel,
+	pContractTime,
+    pCallConnect,
+	pCallLine,
+	pCellTime,
+	pCallCost,
+	pCallNumb,
+
+    //Localizações
+    pLocal,
+    // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))
+    //oEditType, // Tipo de edição.
+    oEditATM, // Guarda o (ID) da ATM que está sendo editado.
+    oEditTower,// Guarda o (ID) da TORRE que está sendo editado.
+    oEditPhone, // Guarda o (ID) do telefone que está sendo editado.
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 

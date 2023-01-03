@@ -25,7 +25,8 @@
 		"Awsomedude/easyDialog",
 		"philip1337/samp-plugin-mapandreas:v1.2.1",
 		"katursis/Pawn.CMD:3.3.6",
-		"dakyskye/pawn-env:1.1.1"
+		"dakyskye/pawn-env:1.1.1",
+		"katursis/Pawn.Regex:1.2.3"
 	],
 	"local": true,
 	"runtime": {

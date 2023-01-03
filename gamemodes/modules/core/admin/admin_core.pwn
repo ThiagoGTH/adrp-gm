@@ -47,22 +47,6 @@ GetUserTeam(playerid, team) {
 	return false;
 }
 
-stock SendAdminWarning(level, const string[], va_args<>)
-{
-	static str[145];
-	va_format(str, sizeof(str), string, va_start<2>);
-	
-    foreach(new i : Player) if (GetPlayerAdmin(i) >= level) {
-				if(strlen(str) > 116)
-				{
-						SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}%.116s ...", level, str);
-						SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}... %s", level, str[116]);
-				}
-				else SendClientMessage(i, COLOR_LIGHTRED, "[ADMIN]: {FFFF00}%s", level, str);
-    }
-    return 1;
-}
-
 CMD:aa(playerid, params[]) {	
   	if(GetPlayerAdmin(playerid) < 1) return SendPermissionMessage(playerid);
 	ShowAdminCmds(playerid);
@@ -154,7 +138,6 @@ CMD:tapa(playerid, params[]) {
 	new
 		userid;
 
-	
   	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/tapa [playerid/nome]");
   	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
@@ -629,51 +612,12 @@ Dialog:goToInt(playerid, response, listitem, inputtext[]){
 		    Dialog_Show(playerid, TeleportInterior, DIALOG_STYLE_LIST, "Ir > Interior > Nativos", str, "Selecionar", "Cancelar");
 		}
 		else if(listitem == 1){
-			mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `ID` >= 0");
-            new Cache:result = mysql_query(DBConn, query);
-
-            new string[1024], intName[64], intID;
-            format(string, sizeof(string), "Nome\tID\n");
-			for(new i; i < cache_num_rows(); i++){
-				cache_get_value_name_int(i, "ID", intID);
-				cache_get_value_name(i, "name", intName);
-
-				format(string, sizeof(string), "%s%s\t%d\n", string, intName, intID);
-            }
-            cache_delete(result);
-
-            Dialog_Show(playerid, goToPerInt, DIALOG_STYLE_TABLIST_HEADERS, "Ir > Interior > Personalizados", string, "Selecionar", "Voltar");
+			ShowInteriors(playerid);
 		}
 	} 
 	return true;
 }
 
-Dialog:goToPerInt(playerid, response, listitem, inputtext[]){
-	if(response){
-		new Float:pos[4], vw, int;
-		format(pInfo[playerid][tempChar], 64, "%s", inputtext);
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `name` = '%s'", pInfo[playerid][tempChar]);
-        new Cache:result = mysql_query(DBConn, query);
-
-        cache_get_value_name_float(0, "positionX", pos[0]);
-		cache_get_value_name_float(0, "positionY", pos[1]);
-		cache_get_value_name_float(0, "positionZ", pos[2]);
-		cache_get_value_name_float(0, "positionA", pos[3]);
-		cache_get_value_name_int(0, "interior", int);
-    	cache_get_value_name_int(0, "virtual_world", vw);
-        cache_delete(result);
-
-		SetPlayerPos(playerid, pos[0], pos[1], pos[2]);
-		SetPlayerFacingAngle(playerid, pos[3]);
-		SetPlayerInterior(playerid, int);
-		SetPlayerVirtualWorld(playerid, vw);
-
-		SendServerMessage(playerid, "Você se teleportou para o interior '%s'.", pInfo[playerid][tempChar]);
-		pInfo[playerid][tempChar][0] =  EOS;
-		return true;
-	}
-	return true;
-}
 
 CMD:x(playerid, params[]){
 	

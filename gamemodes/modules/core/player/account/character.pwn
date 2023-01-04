@@ -201,16 +201,6 @@ LoadPlayerFaction(playerid){
     return true;
 }
 
-/*PlayerLoadObjects(playerid) {
-    TogglePlayerControllable(playerid, 0);
-    pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "d", playerid);
-}
-
-hook PlayerLoadedObjects(playerid) {
-    TogglePlayerControllable(playerid, 1);
-    KillTimer(pInfo[playerid][LoadTemp]);
-} */
-
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -275,7 +265,7 @@ SpawnSelectedCharacter(playerid) {
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
-    //PlayerLoadObjects(playerid);
+    SpawnPlayerDesbug(playerid);
     return true;
 }
 

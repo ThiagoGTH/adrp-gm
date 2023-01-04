@@ -169,4 +169,9 @@ CMD:irempresa(playerid, params[]) {
 
     return 1;
 }
+
+CMD:mundo(playerid, params[]) {
+    new worldID = GetPlayerVirtualWorld(playerid);
+    SendClientMessage(playerid, COLOR_RED, "Mundo atual %d.", worldID);
+}
 // ============================================================================================================================================

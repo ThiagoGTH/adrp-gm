@@ -185,7 +185,7 @@ CreateBusiness(playerid, type, price, address[256]) {
 
     new id = cache_insert_id();
 
-    mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `vw_exit` = %d WHERE `id` = %d;", id + 10, id);
+    mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `vw_exit` = '%d' WHERE `id` = '%d';", id, id);
     mysql_query(DBConn, query);
 
     SetIntDefaultBusiness(id);
@@ -397,7 +397,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1003.5573;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 4;
-            SetWorldBusiness(businessID);
         }
         case 2: {
         	bInfo[businessID][bExitPos][0] = 316.3963;
@@ -405,7 +404,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 999.6010;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		case 3: {
         	bInfo[businessID][bExitPos][0] = 161.4801;
@@ -413,7 +411,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1001.8047;
             bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 18;
-            SetWorldBusiness(businessID);
 		}
 		case 4: {
         	bInfo[businessID][bExitPos][0] = 363.3402;
@@ -421,7 +418,7 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1001.5078;
         	bInfo[businessID][bExitPos][3] = 315.0000;
 			bInfo[businessID][interiorEntry] = 10;
-            SetWorldBusiness(businessID);
+
 		}
 		case 5: {
         	bInfo[businessID][bExitPos][0] = 1494.5612;
@@ -429,7 +426,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1093.2891;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 3;
-            SetWorldBusiness(businessID);
 		}
 		case 6: {
 			bInfo[businessID][bExitPos][0] = -27.3383;
@@ -437,7 +433,6 @@ SetIntDefaultBusiness(businessID) {
 		   	bInfo[businessID][bExitPos][2] = 1003.5469;
       		bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		case 7: {
 			bInfo[businessID][bExitPos][0] = -2240.4954;
@@ -445,7 +440,6 @@ SetIntDefaultBusiness(businessID) {
 		   	bInfo[businessID][bExitPos][2] = 1035.4210;
       		bInfo[businessID][bExitPos][3] = 270.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		default: {
             format(bint, sizeof(bint), "Inválido");
@@ -453,13 +447,6 @@ SetIntDefaultBusiness(businessID) {
 	}
 	return bint;
 }
-
-//Seta o interior da empresa de forma automatizada (sem repetir numeros)
-SetWorldBusiness(businessID) {
-    bInfo[businessID][vwExit] = businessID + 1;
-    SaveBusiness(businessID);
-}
-
 // ============================================================================================================================================
 
 EditEntryBusiness(playerid, businessID) {
@@ -467,7 +454,6 @@ EditEntryBusiness(playerid, businessID) {
     GetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
     bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
     bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
-    TeleportBusiness(playerid, businessID);
     SaveBusiness(businessID);
     return 1;
 }
@@ -475,8 +461,8 @@ EditEntryBusiness(playerid, businessID) {
 EditExitBusiness(playerid, businessID) {
     GetPlayerPos(playerid, bInfo[businessID][bExitPos][0], bInfo[businessID][bExitPos][1], bInfo[businessID][bExitPos][2]);
     GetPlayerFacingAngle(playerid, bInfo[businessID][bExitPos][3]);
-    bInfo[businessID][vwExit] =  SetWorldBusiness(businessID);
     bInfo[businessID][interiorExit] = GetPlayerInterior(playerid);
+    TeleportBusiness(playerid, businessID);
     SaveBusiness(businessID);
     return 1;
 }

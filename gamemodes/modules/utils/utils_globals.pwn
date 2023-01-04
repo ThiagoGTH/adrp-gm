@@ -253,6 +253,7 @@ enum Player_Data {
 	pCallNumb,
 
     // Variável temporária
+    LoadTemp,
     sTempItem, 
     sTempPrice,
     sTempTotal,

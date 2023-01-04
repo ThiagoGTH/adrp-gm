@@ -222,7 +222,6 @@ SaveUserInfo(playerid) {
     SaveUserPremium(playerid);
     SaveUserTeams(playerid);
     printf("Usuário '%s' salvo com sucesso.", GetPlayerUserEx(playerid));
-    printf("Mundo '%d' salvo com sucesso.", pInfo[playerid][pVirtualWorld]);
     return true;
 }
 

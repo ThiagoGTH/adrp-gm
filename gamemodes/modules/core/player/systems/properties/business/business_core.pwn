@@ -566,7 +566,7 @@ ManagerStorage(playerid) {
         cache_get_value_name(i, "name", cod_name);
         cache_get_value_name_int(i, "price", price);
 
-        format(string, sizeof(string), "%s%d\t%s\t%d\t%d$\n", string, cod_id, cod_name, quantity, price);
+        format(string, sizeof(string), "%s%d\t%s\t%d\t$%d\n", string, cod_id, cod_name, quantity, price);
     }
     cache_delete(result);
 
@@ -580,12 +580,101 @@ Dialog:ManagerPageStorage(playerid, response, listitem, inputtext[]) {
 
     if(response) {    
         if(!strcmp(inputtext, "Solicitar Produto", true)) {
-            printf("%d solicita produto.", playerid);
+            BusinessProductList(playerid);
         }
         else {
             printf("%d solciita edição de produto do produto %s", playerid, inputtext);   
         }
     }
+    return 1;
+}
+
+BusinessProductList(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` > 0");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], cod_id, cod_name[64], price;
+    format(string, sizeof(string), "Cod ID\tNome\tPreço\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "ID", cod_id);
+        cache_get_value_name(i, "item_name", cod_name);
+        cache_get_value_name_int(i, "item_price", price);
+        printf("Carregando produto ID: %d", cod_id);
+        format(string, sizeof(string), "%s%d\t%s\t$%d\n", string, cod_id, cod_name, price);
+    }
+    cache_delete(result);
+
+    pInfo[playerid][sTempPrice] = price;
+    Dialog_Show(playerid, PageProductList, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciamento de Empresa > Produtos > Solicitação de Produto", string, "Selecionar", "<<");
+    return true;
+}
+
+Dialog:PageProductList(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        new itemName[64];
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+        cache_get_value_name(0, "item_name", itemName);
+        cache_delete(result);
+
+        new string[512];
+        format(string, sizeof(string), "Cada %s custa $%d. Quantos necessita?", itemName, pInfo[playerid][sTempPrice]);
+
+        //Colocando dados dentro da váriavel (temp)
+        pInfo[playerid][sTempItem] = strval(inputtext);
+
+        Dialog_Show(playerid, PageProductBuy, DIALOG_STYLE_INPUT, "{FFFFFF}Solicitar Produto (compra)", string, "Continuar", "<<");
+        return 1;
+        }
+    return -1;
+}
+
+Dialog:PageProductBuy(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        new itemName[64];
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+        cache_get_value_name(0, "item_name", itemName);
+        cache_delete(result);
+
+        new quantity = strval(inputtext);
+        new total = quantity * pInfo[playerid][sTempPrice];
+
+        pInfo[playerid][sTempQuantity] = quantity;
+        pInfo[playerid][sTempTotal] = total;
+
+        new string[512];
+        format(string, sizeof(string), "Produto: %s\nValor Unitário: $%d\nQuantidade solicitada: %d\nValor total: $%d", itemName, pInfo[playerid][sTempPrice], quantity, total);
+        Dialog_Show(playerid, ProductBuy, DIALOG_STYLE_MSGBOX, "{FFFFFF}Solicitação de Produto (compra)", string, "Confirmar", "Cancelar");
+        return 1;
+        }
+    return -1;
+}
+
+Dialog:ProductBuy(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        IsProductBuy(playerid, pInfo[playerid][sTempItem], pInfo[playerid][sTempTotal], pInfo[playerid][sTempQuantity]);
+
+        pInfo[playerid][sTempItem] = -1;
+        pInfo[playerid][sTempPrice] = -1;
+        pInfo[playerid][sTempTotal] = -1;
+        pInfo[playerid][sTempQuantity] = -1;
+        return 1;
+        }
+    return -1;
+}
+
+IsProductBuy(playerid, productID, total, quantity) {
+    printf("Playerid: %d - Produto ID: %d - Total: $%d - Quantidade: %d", playerid, productID, total, quantity);
     return 1;
 }
 

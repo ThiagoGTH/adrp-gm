@@ -201,6 +201,27 @@ LoadPlayerFaction(playerid){
     return true;
 }
 
+//Congela (por determinado tempo) - dando chance do interior carregar.
+PlayerLoadObjects(playerid) {
+        TogglePlayerControllable(playerid, 0);
+        pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "i", playerid);
+}
+
+//Responde o player Load
+hook PlayerLoadedObjects(playerid) {
+    DesbugInteriorAndWorld(playerid);
+    TogglePlayerControllable(playerid, 1);
+    KillTimer(pInfo[playerid][LoadTemp]);
+    printf("Playerid: %d - Interior: %d", playerid, pInfo[playerid][pInterior]);
+} 
+
+//Seta no interior (desbuga - sem if se não dá erro.)
+DesbugInteriorAndWorld(playerid) {
+    SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+    SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+    return 1;
+}
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -209,20 +230,19 @@ SpawnSelectedCharacter(playerid) {
     SetPlayerHealth(playerid, pInfo[playerid][pHealth]);
     SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
     SetPlayerScore(playerid, pInfo[playerid][pScore]);
-    SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-    SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 
     SetPlayerName(playerid, pInfo[playerid][pName]);
-
+    //Setar o mundo, interior do player aqui (não funciona) - ele buga.
     SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
 
     if (GetPlayerSkin(playerid) < 1)
         SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
-    
+        
     SpawnPlayer(playerid);
     PreloadAnimations(playerid);
+    PlayerLoadObjects(playerid);
     SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
     pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
@@ -265,7 +285,6 @@ SpawnSelectedCharacter(playerid) {
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
     SetPlayerArmedWeapon(playerid, 0);
-    SpawnPlayerDesbug(playerid);
     return true;
 }
 

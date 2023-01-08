@@ -1127,7 +1127,7 @@ void:CheckUCPTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams_permissions checada com sucesso");
     logCreate(99998, logString, 5);
     
-    mysql_query(DBConn, "CREATE TABLE `ucp_request_premium` (\
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_request_premium` (\
     `id` int NOT NULL AUTO_INCREMENT,\
     `user_id` int NOT NULL DEFAULT '0',\
     `old_ucp` varchar(255) NOT NULL DEFAULT 'Nenhum',\
@@ -1145,7 +1145,7 @@ void:CheckUCPTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_request_premium checada com sucesso");
     logCreate(99998, logString, 5); 
 
-    mysql_query(DBConn, "CREATE TABLE `custom_skins` (\
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `custom_skins` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `user_id` int NOT NULL DEFAULT '0',\
     `character_id` int NOT NULL DEFAULT '0',\

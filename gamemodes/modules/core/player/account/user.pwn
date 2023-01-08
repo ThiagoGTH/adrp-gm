@@ -81,6 +81,7 @@ public OnPasswordChecked(playerid) {
         SendServerMessage(playerid, "Você está autenticado!");
         LoadUserInfo(playerid); 
         CheckUserBan(playerid);
+        CheckCharactersExist(playerid);
         SetPlayerInterface(playerid, 2);
 	} else return SetPlayerInterface(playerid, 1);
 	return true;
@@ -302,6 +303,15 @@ CheckCharactersName(playerid) {
     SetPlayerName(playerid, realUserName);
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", realUserName);
+    return true;
+}
+
+CheckCharactersExist(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+
+    if(!cache_num_rows())
+        return va_SendClientMessage(playerid, COLOR_GREY, " Este usuário não tem nenhum personagem ainda.");
     return true;
 }
 

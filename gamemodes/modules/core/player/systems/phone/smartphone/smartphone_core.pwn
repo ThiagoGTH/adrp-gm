@@ -114,7 +114,7 @@ hook OnPlayerConnect(playerid) {
 hook OnGameModeInit() {
 	LoadSms();
 	LoadContacts();
-	SetTimer("CheckSMS", 60000, true); 
+	SetTimer("OnCheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
 	return 1;
 }

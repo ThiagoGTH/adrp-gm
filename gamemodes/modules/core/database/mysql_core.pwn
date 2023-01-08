@@ -74,7 +74,7 @@ void:CheckTables() {
     CheckBankAccountsTable();
     CheckStorageBusinessTable();
     CheckGaragesTable();
-    CheckSignalTower();
+    //CheckSignalTower();
     CheckPhoneSms();
     CheckPhoneContacts();
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
@@ -1457,7 +1457,7 @@ void:CheckStorageBusinessTable() {
 }
 
 void:CheckSignalTower() {
-   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
+   /*mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
   `id` int NOT NULL AUTO_INCREMENT,\
   `object` int DEFAULT '0',\
   `position_x` DEFAULT '0',\
@@ -1473,7 +1473,7 @@ void:CheckSignalTower() {
    print("[DATABASE] Tabela signal_tower checada com sucesso");
    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela signal_tower checada com sucesso");
    logCreate(99998, logString, 5);
-}
+}*/
 
 void:CheckPhoneSms() {
    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `phone_sms` (\

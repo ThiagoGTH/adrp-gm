@@ -135,6 +135,7 @@ void:CheckUserTable() {
     `log_team` int NOT NULL DEFAULT 0,\
     `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
     `ucp_posts` int NOT NULL DEFAULT 0,\
+    `ad_points ` int NOT NULL DEFAULT 0,\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela users_teams checada com sucesso");
@@ -1141,6 +1142,18 @@ void:CheckUCPTable() {
 
     print("[DATABASE] Tabela ucp_request_premium checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_request_premium checada com sucesso");
+    logCreate(99998, logString, 5); 
+
+    mysql_query(DBConn, "CREATE TABLE `custom_skins` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `skin_id` int NOT NULL DEFAULT '0',\
+    `skin_time` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));"); 
+
+    print("[DATABASE] Tabela custom_skins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela custom_skins checada com sucesso");
     logCreate(99998, logString, 5); 
 }
 

@@ -946,7 +946,7 @@ void:CheckUCPTable() {
     `user_id` int NOT NULL,\
     `fullname` varchar(128) NOT NULL,\
     `origin` varchar(128) NOT NULL,\
-    `birthdate` varchar(11) NOT NULL,\
+    `birthdate` int NOT NULL DEFAULT '0',\
     `gender` int NOT NULL DEFAULT '0',\
     `ethnicity` int NOT NULL DEFAULT '0',\
     `build` int NOT NULL DEFAULT '0',\
@@ -954,16 +954,18 @@ void:CheckUCPTable() {
     `color_hair` int NOT NULL DEFAULT '0',\
     `height` int NOT NULL DEFAULT '0',\
     `weigth` float NOT NULL DEFAULT '0',\
+    `default_skin` int NOT NULL DEFAULT '2',\
     `description_apparence` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `history` text,\
     `question1` text,\
     `question2` text,\
     `answer1` text,\
     `answer2` text,\
-    `ip` varchar(128) NOT NULL,\
-    `send_date` int NOT NULL,\
+    `ip` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `send_date` int NOT NULL DEFAULT '0',\
     `status` varchar(128) NOT NULL DEFAULT '0',\
     `admin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `correction_admin` int NOT NULL DEFAULT '0',\
     `reason` text,\
     `valuation_date` int(11) NOT NULL DEFAULT '0',\
     PRIMARY KEY (`id`));");
@@ -1022,6 +1024,106 @@ void:CheckUCPTable() {
     print("[DATABASE] Tabela ucp_questions checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_questions checada com sucesso");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_announcements` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `title` text,\
+    `body` text,\
+    `type` int NOT NULL DEFAULT '0',\
+    `target` int NOT NULL DEFAULT '0',\
+    `showing` int NOT NULL DEFAULT '0',\
+    `send_date` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_announcements checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_announcements checada com sucesso");
+    logCreate(99998, logString, 5);    
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_apps_customskins` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `default_ped_id` int NOT NULL DEFAULT '0',\
+    `custom_ped_id` int NOT NULL DEFAULT '0',\
+    `dff_archive` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `txd_archive` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `img_preview_skin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `ip_send` varchar(120) NOT NULL DEFAULT 'Nenhum',\
+    `send_date` int(11) NOT NULL DEFAULT '0',\
+    `status` int(11) NOT NULL DEFAULT '0',\
+    `admin` varchar(120) NOT NULL DEFAULT 'Nenhum',\
+    `reason` text,\
+    `valuation_date` int(11) NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela ucp_apps_customskins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_apps_customskins checada com sucesso");
+    logCreate(99998, logString, 5);    
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_events` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `event_title` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `event_desc` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `event_img` text,\
+    `event_postat` int NOT NULL DEFAULT '0',\
+    `event_startat` int NOT NULL DEFAULT '0',\
+    `event_endat` int NOT NULL DEFAULT '0',\
+    `event_location` text,\
+    `event_status` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_events checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_events checada com sucesso");
+    logCreate(99998, logString, 5);     
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_logs` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `user` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `ip` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `timestamp` int NOT NULL DEFAULT '0',\
+    `log` text,\
+    `type` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela ucp_logs checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_logs checada com sucesso");
+    logCreate(99998, logString, 5);       
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_transactions` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `product` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `price` int NOT NULL DEFAULT '0',\
+    `external_reference` bigint NOT NULL DEFAULT '0',\
+    `payment_id` int NOT NULL DEFAULT '0',\
+    `purchase_date` int NOT NULL DEFAULT '0',\
+    `update_date` int NOT NULL DEFAULT '0',\
+    `status` int NOT NULL DEFAULT '0',\
+    `payment_type` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_transactions checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_transactions checada com sucesso");
+    logCreate(99998, logString, 5);     
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_teams_permissions` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `team` text,\
+    `head_team` int NOT NULL DEFAULT '0',\
+    `allow_create` int NOT NULL DEFAULT '0',\
+    `allow_edit` int NOT NULL DEFAULT '0',\
+    `allow_delete` int NOT NULL DEFAULT '0',\
+    `allow_manage` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela users_teams_permissions checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams_permissions checada com sucesso");
+    logCreate(99998, logString, 5);        
 }
 
 void:CheckFactionsTable() {

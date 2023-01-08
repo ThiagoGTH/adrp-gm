@@ -9,6 +9,7 @@
 
 # Vendor directory for dependencies
 dependencies/
+models/
 
 # Dependency versions lockfile
 pawn.lock

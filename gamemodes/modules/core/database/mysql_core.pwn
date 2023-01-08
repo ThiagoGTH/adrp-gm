@@ -136,7 +136,7 @@ void:CheckUserTable() {
     `log_team` int NOT NULL DEFAULT 0,\
     `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
     `ucp_posts` int NOT NULL DEFAULT 0,\
-    `ad_points ` int NOT NULL DEFAULT 0,\
+    `ad_points` int NOT NULL DEFAULT 0,\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela users_teams checada com sucesso");

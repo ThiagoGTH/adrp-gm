@@ -1123,7 +1123,25 @@ void:CheckUCPTable() {
 
     print("[DATABASE] Tabela users_teams_permissions checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams_permissions checada com sucesso");
-    logCreate(99998, logString, 5);        
+    logCreate(99998, logString, 5);
+    
+    mysql_query(DBConn, "CREATE TABLE `ucp_request_premium` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `old_ucp` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `old_premium` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `evidences` text,\
+    `ip` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `status` int NOT NULL DEFAULT '0',\
+    `admin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `reason` text,\
+    `sendat` int NOT NULL DEFAULT '0',\
+    `updatedat` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));"); 
+
+    print("[DATABASE] Tabela ucp_request_premium checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_request_premium checada com sucesso");
+    logCreate(99998, logString, 5); 
 }
 
 void:CheckFactionsTable() {

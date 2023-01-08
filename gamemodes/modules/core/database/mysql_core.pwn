@@ -1456,8 +1456,8 @@ void:CheckStorageBusinessTable() {
     logCreate(99998, logString, 5);
 }
 
-void:CheckSignalTower() {
-   /*mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
+/*void:CheckSignalTower() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
   `id` int NOT NULL AUTO_INCREMENT,\
   `object` int DEFAULT '0',\
   `position_x` DEFAULT '0',\

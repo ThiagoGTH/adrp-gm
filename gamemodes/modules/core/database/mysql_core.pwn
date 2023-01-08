@@ -109,18 +109,23 @@ void:CheckUserTable() {
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_premium` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
-    `user_id` int NOT NULL DEFAULT 0,\
-    `points` int NOT NULL DEFAULT 0,\
-    `name_changes` int NOT NULL DEFAULT 0,\
-    `number_changes` int NOT NULL DEFAULT 0,\
-    `fight_changes` int NOT NULL DEFAULT 0,\
-    `plate_changes` int NOT NULL DEFAULT 0,\
-    `chars_slots` int NOT NULL DEFAULT 5,\
-    PRIMARY KEY (ID));");
+    `user_id` int NOT NULL DEFAULT '0',\
+    `points` int NOT NULL DEFAULT '0',\
+    `name_changes` int NOT NULL DEFAULT '0',\
+    `number_changes` int NOT NULL DEFAULT '0',\
+    `fight_changes` int NOT NULL DEFAULT '0',\
+    `plate_changes` int NOT NULL DEFAULT '0',\
+    `chars_slots` int NOT NULL DEFAULT '5',\
+    `custom_walks` int NOT NULL DEFAULT '0',\
+    `vehicle_namechanges` int NOT NULL DEFAULT '0',\
+    `custom_skins` int NOT NULL DEFAULT '0',\
+    `pets` int NOT NULL DEFAULT '0',\
+    `character_permanent_slots` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));"); 
 
     print("[DATABASE] Tabela users_premium checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_premium checada com sucesso");
-    logCreate(99998, logString, 5);
+    logCreate(99998, logString, 5); 
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_teams` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -1457,8 +1462,8 @@ void:CheckStorageBusinessTable() {
     logCreate(99998, logString, 5);
 }
 
-void:CheckSignalTower() {
-   /*mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
+/*void:CheckSignalTower() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
   `id` int NOT NULL AUTO_INCREMENT,\
   `object` int DEFAULT '0',\
   `position_x` DEFAULT '0',\

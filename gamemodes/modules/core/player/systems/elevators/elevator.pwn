@@ -99,7 +99,7 @@ forward Elevator_Destroy();
 
 forward Elevator_OpenDoors();
 forward Elevator_CloseDoors();
-forward Floor_OpenDoors(floorid);
+//forward Floor_OpenDoors(floorid);
 forward Floor_CloseDoors(floorid);
 
 forward Elevator_MoveToFloor(floorid);

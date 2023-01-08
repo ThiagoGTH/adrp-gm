@@ -207,14 +207,14 @@ Dialog:PET_MENU_FOLLOW(playerid, response, listitem, inputtext[]) {
     return true;
 }
 
-GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2) {
+/*GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2) {
 	return floatround(floatsqroot(
         ((x1 - x2) * (x1 - x2)) + 
         ((y1 - y2) * (y1 - y2)) + 
         ((z1 - z2) * (z1 - z2))
         )
     );
-}
+} */
 
 Float:GetDistance2D(Float:x1, Float:y1, Float:x2, Float:y2) {
 	return floatsqroot(

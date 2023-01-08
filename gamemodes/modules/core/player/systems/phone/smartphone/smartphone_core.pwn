@@ -114,7 +114,7 @@ hook OnPlayerConnect(playerid) {
 hook OnGameModeInit() {
 	LoadSms();
 	LoadContacts();
-	SetTimer("CheckSMS", 60000, true); 
+	SetTimer("OnCheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
 	return 1;
 }
@@ -3685,7 +3685,7 @@ Dialog:AskTurnOff(playerid, response, listitem, inputtext[]) {
 }
 
 //Gerar o numero de celular
-GeneratorNumber(playerid) {
+/*GeneratorNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = random(900000) + 100000;
 	return 1;
 }
@@ -3693,7 +3693,7 @@ GeneratorNumber(playerid) {
 DestroyNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = 0;
 	return 1;
-}
+} */
 //=========================================================================================
 //Funções complementares
 Annotation(playerid, const message[]) {

@@ -5,6 +5,7 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
+#include <crashdetect>
 #include <streamer>
 
 #include <a_mysql>

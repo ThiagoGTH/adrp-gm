@@ -91,6 +91,7 @@ void:CheckUserTable() {
     `discord_id` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `forum_username` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
+    `registration_fingerprint` varchar(200) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
     `admin` int NOT NULL DEFAULT 0,\

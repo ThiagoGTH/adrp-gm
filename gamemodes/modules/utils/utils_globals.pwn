@@ -252,6 +252,13 @@ enum Player_Data {
 	pCallCost,
 	pCallNumb,
 
+    // Variável temporária
+    LoadTemp,
+    sTempItem, 
+    sTempPrice,
+    sTempTotal,
+    sTempQuantity,
+
     //Localizações
     pLocal,
     // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))

@@ -18,6 +18,7 @@ enum E_BUSINESS_DATA {
     Float:bEntryPos[4], // Posições (X, Y, Z, A) do exterior
     vwEntry,            // VW do exterior
     interiorEntry,      // Interior do exterior
+    bVariable,          // Salvamento da Varíavel de criação
 };
 
 new bInfo[MAX_BUSINESS][E_BUSINESS_DATA];
@@ -83,7 +84,7 @@ LoadBusinesss() {
         cache_get_value_name_float(i, "exit_a", bInfo[id][bExitPos][3]);
         cache_get_value_name_int(i, "vw_exit", bInfo[id][vwExit]);
         cache_get_value_name_int(i, "interior_exit", bInfo[id][interiorExit]);
-
+        CreateObjectEntry(id);
         loadedBusiness++;
     }
 
@@ -121,6 +122,7 @@ LoadBusiness(id) {
     cache_get_value_name_float(0, "exit_a", bInfo[id][bExitPos][3]);
     cache_get_value_name_int(0, "vw_exit", bInfo[id][vwExit]);
     cache_get_value_name_int(0, "interior_exit", bInfo[id][interiorExit]);
+    CreateObjectEntry(id);
     return 1;
 }
 
@@ -165,7 +167,7 @@ SaveBusiness(id) {
             bInfo[id][bExitPos][0], bInfo[id][bExitPos][1], bInfo[id][bExitPos][2], bInfo[id][bExitPos][3], bInfo[id][vwExit], 
             bInfo[id][interiorExit], id);
     mysql_query(DBConn, query);
-
+    RefreshObjectEntry(id);
     return 1;
 }
 
@@ -183,7 +185,7 @@ CreateBusiness(playerid, type, price, address[256]) {
 
     new id = cache_insert_id();
 
-    mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `vw_exit` = %d WHERE `id` = %d;", id + 10000, id);
+    mysql_format(DBConn, query, sizeof query, "UPDATE `business` SET `vw_exit` = '%d' WHERE `id` = '%d';", id, id);
     mysql_query(DBConn, query);
 
     SetIntDefaultBusiness(id);
@@ -304,8 +306,27 @@ BusinessHasOwner(id) {
     return IsValidBusiness(id) && (bInfo[id][bOwner]);
 }
 
+//Criar Pickup de entrada
+CreateObjectEntry(id)  {
+    bInfo[id][bVariable] = CreateDynamicObject(19198, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2], 0.0, 0.0, bInfo[id][bEntryPos][3], bInfo[id][vwEntry], bInfo[id][interiorEntry], -1, 10.0);
+
+    return 1;
+}
+
+// Recarrega ás ATMs (+ destroy todos os objetos existentes dela e create (novamente))
+RefreshObjectEntry(id) {
+	if (IsValidBusiness(id))
+	{
+		if (IsValidObject(bInfo[id][bVariable]))
+		    DestroyDynamicObject(bInfo[id][bVariable]);
+
+        CreateObjectEntry(id);
+	}
+	return 1;
+}
+
 // Procura por alguma entrada da empresa
-GetNearestBusinessEntry(playerid, Float:distance = 1.0) {
+GetNearestBusinessEntry(playerid, Float:distance = 2.0) {
     for(new i; i < MAX_BUSINESS; i++) {
         if(!bInfo[i][bID])
             continue;
@@ -319,11 +340,11 @@ GetNearestBusinessEntry(playerid, Float:distance = 1.0) {
         return i;
     }
 
-    return 0;
+    return -1;
 }
 
 // Procura por alguma saída da empresa
-GetNearestBusinessExit(playerid, Float:distance = 1.0) {
+GetNearestBusinessExit(playerid, Float:distance = 2.0) {
     for(new i; i < MAX_BUSINESS; i++) {
         if(!bInfo[i][bID])
             continue;
@@ -376,7 +397,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1003.5573;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 4;
-            SetWorldBusiness(businessID);
         }
         case 2: {
         	bInfo[businessID][bExitPos][0] = 316.3963;
@@ -384,7 +404,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 999.6010;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		case 3: {
         	bInfo[businessID][bExitPos][0] = 161.4801;
@@ -392,7 +411,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1001.8047;
             bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 18;
-            SetWorldBusiness(businessID);
 		}
 		case 4: {
         	bInfo[businessID][bExitPos][0] = 363.3402;
@@ -400,7 +418,7 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1001.5078;
         	bInfo[businessID][bExitPos][3] = 315.0000;
 			bInfo[businessID][interiorEntry] = 10;
-            SetWorldBusiness(businessID);
+
 		}
 		case 5: {
         	bInfo[businessID][bExitPos][0] = 1494.5612;
@@ -408,7 +426,6 @@ SetIntDefaultBusiness(businessID) {
         	bInfo[businessID][bExitPos][2] = 1093.2891;
         	bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 3;
-            SetWorldBusiness(businessID);
 		}
 		case 6: {
 			bInfo[businessID][bExitPos][0] = -27.3383;
@@ -416,7 +433,6 @@ SetIntDefaultBusiness(businessID) {
 		   	bInfo[businessID][bExitPos][2] = 1003.5469;
       		bInfo[businessID][bExitPos][3] = 0.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		case 7: {
 			bInfo[businessID][bExitPos][0] = -2240.4954;
@@ -424,7 +440,6 @@ SetIntDefaultBusiness(businessID) {
 		   	bInfo[businessID][bExitPos][2] = 1035.4210;
       		bInfo[businessID][bExitPos][3] = 270.0000;
 			bInfo[businessID][interiorEntry] = 6;
-            SetWorldBusiness(businessID);
 		}
 		default: {
             format(bint, sizeof(bint), "Inválido");
@@ -432,13 +447,6 @@ SetIntDefaultBusiness(businessID) {
 	}
 	return bint;
 }
-
-//Seta o interior da empresa de forma automatizada (sem repetir numeros)
-SetWorldBusiness(businessID) {
-    bInfo[businessID][vwEntry] = businessID + 10;
-    SaveBusiness(businessID);
-}
-
 // ============================================================================================================================================
 
 EditEntryBusiness(playerid, businessID) {
@@ -446,6 +454,15 @@ EditEntryBusiness(playerid, businessID) {
     GetPlayerFacingAngle(playerid, bInfo[businessID][bEntryPos][3]);
     bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
     bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
+    SaveBusiness(businessID);
+    return 1;
+}
+
+EditExitBusiness(playerid, businessID) {
+    GetPlayerPos(playerid, bInfo[businessID][bExitPos][0], bInfo[businessID][bExitPos][1], bInfo[businessID][bExitPos][2]);
+    GetPlayerFacingAngle(playerid, bInfo[businessID][bExitPos][3]);
+    bInfo[businessID][interiorExit] = GetPlayerInterior(playerid);
+    TeleportBusiness(playerid, businessID);
     SaveBusiness(businessID);
     return 1;
 }
@@ -477,6 +494,174 @@ IsBusinessInside(playerid) {
 	        return i;
 	} 
     return -1;
+}
+
+//Teleporta o player para determinada empresa (via o ID > Onde está localizada a entrada)
+TeleportBusiness(playerid, id) {
+    if(!bInfo[id][bID])
+        return SendErrorMessage(playerid, "Esse ID de empresa não existe.");
+
+    SetPlayerVirtualWorld(playerid, bInfo[id][vwEntry]);
+    SetPlayerInterior(playerid, bInfo[id][interiorEntry]);
+    SetPlayerPos(playerid, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2]);
+    SetPlayerFacingAngle(playerid, bInfo[id][bEntryPos][3]);
+
+    SendServerMessage(playerid, "Você teleportou até a empresa de ID %d.", id);
+    return 1;
+}
+
+// ============================================================================================================================================
+ManagerBusiness(playerid) {
+    new businessID = IsBusinessInside(playerid);
+    new string[1024];
+    
+    if(businessID == -1)
+        return -1;
+
+    if(bInfo[businessID][bOwner] != pInfo[playerid][pID])
+        //return SendErrorMessage(playerid, "Essa propriedade não é sua.");
+        return printf("IsBusinessInside %d", businessID);
+
+    format(string, sizeof(string), "Gerenciamento Geral\nGerenciamento de Equipe\nGerenciamento de Publicidade\nGerenciamento de Produtos\n");
+    Dialog_Show(playerid, ManagerPageHome, DIALOG_STYLE_LIST, "Gerenciamento de Empresa", string, "Selecionar", "Fechar");
+    return true;
+}
+
+Dialog:ManagerPageHome(playerid, response, listitem, inputtext[]) {
+    if(response) {
+        switch(listitem) {
+            case 0: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
+            case 1: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
+            case 2: SendErrorMessage(playerid, "Está opção está em desenvolvimento.");
+            case 3: ManagerStorage(playerid);
+        } 
+    }
+    return 1;
+}
+
+ManagerStorage(playerid) {
+    new businessID = IsBusinessInside(playerid);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM business_storage WHERE `owner` = '%d'", businessID);
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], cod_id, cod_name[24], price, quantity;
+    format(string, sizeof(string), "Cod ID\tNome\tQuantidade\tPreço\n");
+    format(string, sizeof(string), "%sSolicitar Produto\n", string);
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "id", cod_id);
+        cache_get_value_name(i, "name", cod_name);
+        cache_get_value_name_int(i, "price", price);
+
+        format(string, sizeof(string), "%s%d\t%s\t%d\t$%d\n", string, cod_id, cod_name, quantity, price);
+    }
+    cache_delete(result);
+
+    Dialog_Show(playerid, ManagerPageStorage, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciamento de Empresa > Produtos", string, "Selecionar", "<<");
+    return true;
+}
+
+Dialog:ManagerPageStorage(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerBusiness(playerid);
+
+    if(response) {    
+        if(!strcmp(inputtext, "Solicitar Produto", true)) {
+            BusinessProductList(playerid);
+        }
+        else {
+            printf("%d solciita edição de produto do produto %s", playerid, inputtext);   
+        }
+    }
+    return 1;
+}
+
+BusinessProductList(playerid) {
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` > 0");
+    new Cache:result = mysql_query(DBConn, query);
+
+    new string[1024], cod_id, cod_name[64], price;
+    format(string, sizeof(string), "Cod ID\tNome\tPreço\n");
+    for(new i; i < cache_num_rows(); i++) {
+        cache_get_value_name_int(i, "ID", cod_id);
+        cache_get_value_name(i, "item_name", cod_name);
+        cache_get_value_name_int(i, "item_price", price);
+        printf("Carregando produto ID: %d", cod_id);
+        format(string, sizeof(string), "%s%d\t%s\t$%d\n", string, cod_id, cod_name, price);
+    }
+    cache_delete(result);
+
+    pInfo[playerid][sTempPrice] = price;
+    Dialog_Show(playerid, PageProductList, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciamento de Empresa > Produtos > Solicitação de Produto", string, "Selecionar", "<<");
+    return true;
+}
+
+Dialog:PageProductList(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        new itemName[64];
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+        cache_get_value_name(0, "item_name", itemName);
+        cache_delete(result);
+
+        new string[512];
+        format(string, sizeof(string), "Cada %s custa $%d. Quantos necessita?", itemName, pInfo[playerid][sTempPrice]);
+
+        //Colocando dados dentro da váriavel (temp)
+        pInfo[playerid][sTempItem] = strval(inputtext);
+
+        Dialog_Show(playerid, PageProductBuy, DIALOG_STYLE_INPUT, "{FFFFFF}Solicitar Produto (compra)", string, "Continuar", "<<");
+        return 1;
+        }
+    return -1;
+}
+
+Dialog:PageProductBuy(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        new itemName[64];
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM items WHERE `ID` = '%s'", inputtext);
+        new Cache:result = mysql_query(DBConn, query);
+        cache_get_value_name(0, "item_name", itemName);
+        cache_delete(result);
+
+        new quantity = strval(inputtext);
+        new total = quantity * pInfo[playerid][sTempPrice];
+
+        pInfo[playerid][sTempQuantity] = quantity;
+        pInfo[playerid][sTempTotal] = total;
+
+        new string[512];
+        format(string, sizeof(string), "Produto: %s\nValor Unitário: $%d\nQuantidade solicitada: %d\nValor total: $%d", itemName, pInfo[playerid][sTempPrice], quantity, total);
+        Dialog_Show(playerid, ProductBuy, DIALOG_STYLE_MSGBOX, "{FFFFFF}Solicitação de Produto (compra)", string, "Confirmar", "Cancelar");
+        return 1;
+        }
+    return -1;
+}
+
+Dialog:ProductBuy(playerid, response, listitem, inputtext[]) {
+    if(!response)
+        return ManagerStorage(playerid);
+
+    if(response) {    
+        IsProductBuy(playerid, pInfo[playerid][sTempItem], pInfo[playerid][sTempTotal], pInfo[playerid][sTempQuantity]);
+
+        pInfo[playerid][sTempItem] = -1;
+        pInfo[playerid][sTempPrice] = -1;
+        pInfo[playerid][sTempTotal] = -1;
+        pInfo[playerid][sTempQuantity] = -1;
+        return 1;
+        }
+    return -1;
+}
+
+IsProductBuy(playerid, productID, total, quantity) {
+    printf("Playerid: %d - Produto ID: %d - Total: $%d - Quantidade: %d", playerid, productID, total, quantity);
+    return 1;
 }
 
 //cmd:comprar (dentro da empresa - dialog de compra).

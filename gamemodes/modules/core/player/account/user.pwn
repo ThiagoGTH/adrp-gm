@@ -222,7 +222,7 @@ SaveUserInfo(playerid) {
     mysql_query(DBConn, query);
     SaveUserPremium(playerid);
     SaveUserTeams(playerid);
-    printf("Usuário '%s' salvo com sucesso.", GetPlayerUserEx(playerid)); 
+    printf("Usuário '%s' salvo com sucesso.", GetPlayerUserEx(playerid));
     return true;
 }
 

@@ -71,7 +71,7 @@ CMD:editarempresa(playerid, params[]) {
 
 	if(sscanf(params, "ds[64]S()[64]", businessID, option, value)) {
         SendSyntaxMessage(playerid, "/editarempresa [id] [opção]");
-        return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, entrada, preço, tipo");
+        return SendClientMessage(playerid, COLOR_BEGE, "[Opções]: nome, entrada, interior, preço, tipo");
     }
     
     if(!IsValidBusiness(businessID))
@@ -95,20 +95,24 @@ CMD:editarempresa(playerid, params[]) {
 
     //Edita a entrada da empresa
     if(!strcmp(option, "entrada", true) || !strcmp(option, "entrada", true)) {
-        new newEntry = strval(value);
-
-        if(!newEntry)
-            return SendErrorMessage(playerid, "Você precisa especificar um nome. (/editarempresa [id] [opção] [novo nome])");
-
         //Função para editar o nome da empresa.
         EditEntryBusiness(playerid, businessID);
 
-        SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d para $%s.", businessID, newEntry);
-        format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newEntry);
+        SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d.", businessID);
+        format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), businessID);
 	    logCreate(playerid, logString, 13);
         return 1;
     }   
+    //Edita a entrada da empresa
+    if(!strcmp(option, "interior", true) || !strcmp(option, "interior", true)) {
+        //Função para editar o nome da empresa.
+        EditExitBusiness(playerid, businessID);
 
+        SendServerMessage(playerid, "Você editou o interior da empresa de ID %d.", businessID);
+        format(logString, sizeof(logString), "%s (%s) editou o interior da empresa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), businessID);
+	    logCreate(playerid, logString, 13);
+        return 1;
+    }   
      // Editar o preço da empresa
     if(!strcmp(option, "preço", true) || !strcmp(option, "preço", true)) {
         new newPrice = strval(value);
@@ -146,9 +150,28 @@ CMD:editarempresa(playerid, params[]) {
 // ============================================================================================================================================
 
 CMD:empresa(playerid, params[]) {
+    if(!ManagerBusiness(playerid))
+        return SendErrorMessage(playerid, "Você não está dentro de uma empresa.");
+
     return 1;
 }
-CMD:compraritem(playerid, params[]) {
-    new i = IsBusinessInside(playerid);
-    return i;
+
+CMD:irempresa(playerid, params[]) {
+    new id;
+
+    if(GetPlayerAdmin(playerid) < 2)
+        return SendPermissionMessage(playerid);
+
+    if(sscanf(params, "d", id))
+        return SendSyntaxMessage(playerid, "/irempresa [id]");
+
+    TeleportBusiness(playerid, id);
+
+    return 1;
 }
+
+CMD:mundo(playerid, params[]) {
+    new worldID = GetPlayerVirtualWorld(playerid);
+    SendClientMessage(playerid, COLOR_RED, "Mundo atual %d.", worldID);
+}
+// ============================================================================================================================================

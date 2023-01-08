@@ -208,7 +208,7 @@ GetNearestGarageEntry(playerid, Float:distance = 7.0) {
         return i;
     }
 
-    return 0;
+    return -1;
 }
 
 GetNearestGarageExit(playerid, Float:distance = 1.0) {

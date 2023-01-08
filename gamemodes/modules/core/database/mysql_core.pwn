@@ -107,7 +107,7 @@ void:CheckUserTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users checada com sucesso");
     logCreate(99998, logString, 5);
 
-    mysql_query(DBConn, "CREATE TABLE `users_premium` (\
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_premium` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
     `user_id` int NOT NULL DEFAULT '0',\
     `points` int NOT NULL DEFAULT '0',\

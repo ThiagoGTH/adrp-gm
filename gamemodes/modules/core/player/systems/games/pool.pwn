@@ -131,8 +131,7 @@ hook OnScriptInit() {
 }
 
 hook OnGameModeInit() {
-	mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `pool_tables` WHERE (`ID` >= '0')");
-	mysql_tquery(DBConn, query, "Pool_Load");
+	LoadPools();
 	printf("[MESAS DE SINUCA]: %d mesas de sinuca foram criadas.", Iter_Count(pooltables));
 	return true;
 }
@@ -959,10 +958,9 @@ GetPoolBallIndexFromModel(modelid) {
 	return -1;
 }
 
-forward Pool_Load();
-public Pool_Load() {
+LoadPools() {
 	new Float:X, Float:Y, Float:Z, Float:A, skin, interior, world;
-
+	mysql_query(DBConn, "SELECT * FROM `pool_tables`;");
 	for (new i = 0; i < cache_num_rows(); i ++) {
 		if (!g_poolTableData[i][E_EXISTS]) {
 			g_poolTableData[i][E_EXISTS] = true;

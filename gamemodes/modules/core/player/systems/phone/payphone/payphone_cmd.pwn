@@ -47,13 +47,13 @@ CMD:editartelefone(playerid, params[]) {
         return SendErrorMessage(playerid, "Esse ID de telefone (publico - pago) não existe.");
 
     // Editar o preço
-    if(!strcmp(option, "posicao", true) || !strcmp(option, "posicao", true)) {
+    if(!strcmp(option, "posicao", true)) {
         EditDynamicObject(playerid, phoneInfo[id][phoneVariable]);
         return 1;
     }
 
     //Editar o Status (ativo/desativada)
-    if(!strcmp(option, "status", true) || !strcmp(option, "status", true)) {
+    if(!strcmp(option, "status", true)) {
         SendErrorMessage(playerid, "Função desativada no momento.");
         return 1;
     }
@@ -64,9 +64,12 @@ CMD:editartelefone(playerid, params[]) {
 
 // ============================================================================================================================================
 //Comando para abrir ás funções do telefone (publico - pago)
-CMD:telefonepago(playerid, params[]) {
-    new 
-        id = GetNearestPhone(playerid);
+CMD:telefonepublico(playerid, params[]) {
+    new id = GetNearestPhone(playerid);
+    new number;
+
+    if (sscanf(params, "d", number))
+        return SendSyntaxMessage(playerid, "/tp número ou /telefonepublico número");
 
     if(!GetNearestPhone(playerid))
         return SendErrorMessage(playerid, "Não está perto de um telefone publico.");
@@ -74,6 +77,7 @@ CMD:telefonepago(playerid, params[]) {
     if(phoneInfo[id][phoneStatus]) 
         return SendErrorMessage(playerid, "Está desativado ou em manutenção este telefone publico.");
 
-    ShowDialogPhone(playerid);
+    CallNumber(number);
     return 1;
 }
+alias:telefonepublic("tp");

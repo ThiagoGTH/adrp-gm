@@ -23,8 +23,7 @@
 		"Pottus/ColAndreas",
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
-		"philip1337/samp-plugin-mapandreas:v1.2.1",
-		"katursis/Pawn.CMD:3.3.6",
+		"katursis/Pawn.CMD:3.3.6-omp-beta9",
 		"dakyskye/pawn-env:1.1.1",
 		"katursis/Pawn.Regex:1.2.3"
 	],

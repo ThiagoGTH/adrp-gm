@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 #define     LASTEST_RELEASE     "06/08/2022"
-#define     VERSIONING          "0.0.1a - Alpha"
+#define     VERSIONING          "0.0.8b - Beta"
 #define     SERVERIP            "198.27.95.178:7777"
 #define     SERVERUCP           "https://ucp.advanced-roleplay.com.br"
 #define     SERVERFORUM         "https://forum.advanced-roleplay.com.br"

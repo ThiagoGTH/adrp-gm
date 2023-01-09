@@ -188,12 +188,12 @@ public SendInfoClosedAlpha(){
     channel = DCC_FindChannelById("1000930434747740271");
     
     // DISCORD
-    format(title, 32, "Informações — Closed Alpha");
+    format(title, 32, "Informações — Closed Beta");
     utf8encode(title, title);
     new DCC_Embed:embed = DCC_CreateEmbed(title);
     DCC_SetEmbedColor(embed, 0x5964F4);
         
-    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
+    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Beta:**\n\n\
     > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
     > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
     > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
@@ -205,7 +205,7 @@ public SendInfoClosedAlpha(){
     utf8encode(text, text);
     DCC_SetEmbedDescription(embed, text);
 
-    format(footer, 128, "© 2022 Advanced Roleplay — Closed Alpha");
+    format(footer, 128, "© 2023 Advanced Roleplay — Closed Beta");
     utf8encode(footer, footer);
 
     DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");

@@ -20,9 +20,23 @@ public OnGamemodeLoad() {
     else if(SERVER_TYPE == 1){
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
 		else{
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Beta | Open.MP");
+		    SendRconCommand(rcon);
+            format(rcon, sizeof(rcon), "password closedbeta023");
+            SendRconCommand(rcon);
+            ServerStatus(1);
+
+            print("O servidor iniciou em modo Closed Beta.");
+            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Beta.");
+            logCreate(99998, logString, 5);
+        } 
+	}
+    else if(SERVER_TYPE == 2){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
+		else{
             format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
 		    SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password closedalpha2022");
+            format(rcon, sizeof(rcon), "password closedalpha2023");
             SendRconCommand(rcon);
             ServerStatus(1);
 
@@ -32,7 +46,7 @@ public OnGamemodeLoad() {
         } 
 	}
 
-	else if(SERVER_TYPE == 2) {
+	else if(SERVER_TYPE == 3) {
 		format(rcon, sizeof(rcon), "hostname Advanced Sandbox | Open.MP");
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password sandbox333");
@@ -42,7 +56,7 @@ public OnGamemodeLoad() {
         logCreate(99998, logString, 5);
 	}
 
-	else if(SERVER_TYPE == 3) {
+	else if(SERVER_TYPE == 4) {
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
 		else format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Open.MP");
 		SendRconCommand(rcon);

@@ -1451,9 +1451,10 @@ void:CheckStorageBusinessTable() {
     `id` int NOT NULL AUTO_INCREMENT,\
     `model` int DEFAULT '0',\
     `price` int DEFAULT '120',\
-    `owner` int,\
+    `owner` int DEFAULT '0',\
     `quantity` int DEFAULT '0',\
-    `category` int,\
+    `category` int DEFAULT '0',\
+    `status` int DEFAULT '0',\
     PRIMARY KEY (`id`));");
     
     print("[DATABASE] Tabela business_storage checada com sucesso");

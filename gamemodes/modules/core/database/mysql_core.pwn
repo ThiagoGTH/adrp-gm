@@ -1136,6 +1136,7 @@ void:CheckUCPTable() {
     `id` int NOT NULL AUTO_INCREMENT,\
     `user_id` int NOT NULL DEFAULT '0',\
     `old_ucp` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `old_character` varchar(255) NOT NULL DEFAULT 'Nenhum',\
     `old_premium` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `evidences` text,\
     `ip` varchar(128) NOT NULL DEFAULT 'Nenhum',\

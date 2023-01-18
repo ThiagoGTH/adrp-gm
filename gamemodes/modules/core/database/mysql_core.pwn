@@ -91,6 +91,7 @@ void:CheckUserTable() {
     `discord_id` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `forum_username` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
+    `registration_ip2` varchar(200) NOT NULL DEFAULT 'Nenhum',\
     `registration_fingerprint` varchar(200) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
@@ -139,8 +140,8 @@ void:CheckUserTable() {
     `event_team` int NOT NULL DEFAULT 0,\
     `ck_team` int NOT NULL DEFAULT 0,\
     `log_team` int NOT NULL DEFAULT 0,\
-    `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
-    `ucp_posts` int NOT NULL DEFAULT 0,\
+    `announcement_team` int NOT NULL DEFAULT 0,\
+    `post_team` int NOT NULL DEFAULT 0,\
     `ad_points` int NOT NULL DEFAULT 0,\
     PRIMARY KEY (ID));");
 

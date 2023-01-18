@@ -5,7 +5,7 @@ hook OnGameModeInit() {
     return true;
 }
 
-hook OnGameModeExit(){
+hook OnGameModeExit() {
     for (new i = 0; i != MAX_FACTIONS; i ++) if (FactionData[i][factionExists]) SaveFaction(i);
     return true;
 }

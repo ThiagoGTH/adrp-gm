@@ -5,7 +5,6 @@
 	"output": "gamemodes/main.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
-		"pawn-lang/sa-mp-fixes",
 		"NexiusTailer/Nex-AC",
 		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",
@@ -24,7 +23,7 @@
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
 		"philip1337/samp-plugin-mapandreas:v1.2.1",
-		"katursis/Pawn.CMD:3.3.6",
+		"katursis/Pawn.CMD",
 		"dakyskye/pawn-env:1.1.1",
 		"katursis/Pawn.Regex:1.2.3"
 	],

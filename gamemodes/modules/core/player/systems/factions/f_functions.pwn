@@ -315,7 +315,7 @@ SetFactionColor(playerid) {
 
 RemoveAlpha(color) {
     return (color & ~0xFF);
-}
+}  
 
 stock SendFactionMessageEx(type, color, const str[], {Float,_}:...) {
 	static

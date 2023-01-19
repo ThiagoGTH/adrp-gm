@@ -4,7 +4,9 @@
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [
-		"sampctl/samp-stdlib",
+		"openmultiplayer/omp-stdlib",
+		"pawn-lang/samp-stdlib@open.mp",
+		"pawn-lang/pawn-stdlib@open.mp",
 		"NexiusTailer/Nex-AC",
 		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",

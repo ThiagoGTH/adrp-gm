@@ -1,9 +1,14 @@
-#include <a_samp>
+#include <open.mp>
 #include <a_http>
-#include <omp>
 
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
+
+#define YSI_NO_CACHE_MESSAGE
+#define YSI_NO_OPTIMISATION_MESSAGE
+#define YSI_NO_VERSION_CHECK
+
+#define CGEN_MEMORY 6942069420
 
 #include <crashdetect>
 #include <streamer>
@@ -28,12 +33,12 @@
 #include <env>
 #include <Pawn.Regex>
 
-#pragma warning disable 214
+/*#pragma warning disable 214
 #pragma warning disable 239
 //#include <nex-ac_pt.lang>
 #include <nex-ac>
 #pragma warning enable 214
-#pragma warning enable 239
+#pragma warning enable 239*/
 
 #define YSI_NO_HEAP_MALLOC
 
@@ -41,7 +46,7 @@
 #include <YSI_Coding\y_timers>
 
 #include "modules\utils\utils.pwn"
-#include "modules\core\anticheat\nex-ac.pwn"
+//#include "modules\core\anticheat\nex-ac.pwn"
 #include "modules\core\anticheat\money-ac.pwn"
 #include "modules\core\maps\maps.pwn"
 #include "modules\core\database\mysql_core.pwn"

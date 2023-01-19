@@ -240,7 +240,7 @@ Or names that are spelt correctly:
 
 ```pawn
 #pragma deprecated Use `TextDrawColour`
-native bool:TextDrawColor(Text:textid, textColour);
+native bool:TextDrawColour(Text:textid, textColour);
 ```
 
 Or less terse names thanks to the increased symbol limit:

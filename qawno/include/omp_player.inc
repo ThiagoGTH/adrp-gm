@@ -1531,7 +1531,7 @@ native GetPlayerScore(playerid);
  * <param name="colour">The colour to set.  Supports alpha values (<b>RGBA</b>)</param>
  * <seealso name="SetPlayerMarkerForPlayer" />
  * <seealso name="GetPlayerColor" />
- * <seealso name="ChangeVehicleColor" />
+ * <seealso name="ChangeVehicleColours" />
  * <remarks>This function will change player's colour for everyone, even if player's colour was changed
  * with <a href="#SetPlayerMarkerForPlayer">SetPlayerMarkerForPlayer</a> for any other player. </remarks>
  * <remarks>If used under <a href="#OnPlayerConnect">OnPlayerConnect</a>, the affecting player will
@@ -1544,7 +1544,7 @@ native bool:SetPlayerColor(playerid, colour);
  * <summary>Gets the colour of the player's name and radar marker.  Only works after <a href="#SetPlayerColor">SetPlayerColor</a>.</summary>
  * <param name="playerid">The ID of the player to get the colour of</param>
  * <seealso name="SetPlayerColor" />
- * <seealso name="ChangeVehicleColor" />
+ * <seealso name="ChangeVehicleColours" />
  * <remarks>GetPlayerColor will return <b><c>0</c></b> unless <a href="#SetPlayerColor">SetPlayerColor</a>
  * has been used first.</remarks>
  * <returns>The player's colour. <b><c>0</c></b> if no colour set or player not connected.</returns>

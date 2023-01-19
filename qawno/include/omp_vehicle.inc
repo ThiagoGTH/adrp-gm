@@ -751,11 +751,11 @@ native bool:RemoveVehicleComponent(vehicleid, component);
  *   <b><c>0</c></b>: The function failed to execute.  The vehicle does not exist.
  * </returns>
  */
-native bool:ChangeVehicleColours(vehicleid, colour1, colour2) = ChangeVehicleColor;
+native bool:ChangeVehicleColours(vehicleid, colour1, colour2) = ChangeVehicleColours;
 
 /**
  * <library>omp_vehicle</library>
- * <summary>Change a vehicle's paintjob (for plain colours see <a href="#ChangeVehicleColor">ChangeVehicleColor</a>).</summary>
+ * <summary>Change a vehicle's paintjob (for plain colours see <a href="#ChangeVehicleColours">ChangeVehicleColours</a>).</summary>
  * <param name="vehicleid">The ID of the vehicle to change the paintjob of</param>
  * <param name="paintjob">The ID of the Paintjob to apply.  Use <b><c>3</c></b> to remove a paintjob</param>
  * <seealso name="ChangeVehicleColours" />
@@ -1480,7 +1480,7 @@ native #Deprecated();
  * </returns>
  */
 #pragma deprecated Use `ChangeVehicleColours`
-native bool:ChangeVehicleColor(vehicleid, colour1, colour2);
+native bool:ChangeVehicleColours(vehicleid, colour1, colour2);
 
 /**
  * <library>omp_vehicle</library>
@@ -1746,7 +1746,7 @@ forward OnVehiclePaintjob(playerid, vehicleid, paintjob);
  * <seealso name="OnVehicleMod" />
  * <seealso name="OnEnterExitModShop" />
  * <remarks>Previewing a component inside a mod shop might call this callback.</remarks>
- * <remarks>This callback is not called by <a href="#ChangeVehicleColor">ChangeVehicleColor</a>.</remarks>
+ * <remarks>This callback is not called by <a href="#ChangeVehicleColours">ChangeVehicleColours</a>.</remarks>
  * <returns>
  *   Returning <b><c>0</c></b> in this callback will deny the colour change.  Returning <b><c>1</c></b>
  * will allow it.  This can be used to prevent hackers from changing vehicle colours using cheats.<br

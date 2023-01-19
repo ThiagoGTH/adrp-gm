@@ -21,7 +21,7 @@ public OnFilterScriptInit()
 
 public OnFilterScriptExit()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -34,48 +34,48 @@ public OnFilterScriptExit()
 
 public OnPlayerConnect(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerDisconnect(playerid, reason)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerSpawn(playerid)
 {
 	SetPlayerInterior(playerid, 0);
-	return 1;
+	return true;
 }
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerExitVehicle(playerid, vehicleid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleSpawn(vehicleid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleDeath(vehicleid, killerid)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -88,17 +88,17 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnGameModeInit()
 {
-	return 1;
+	return true;
 }
 
 public OnGameModeExit()
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerRequestSpawn(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerCommandText(playerid, cmdtext[])
@@ -108,122 +108,122 @@ public OnPlayerCommandText(playerid, cmdtext[])
 
 public OnPlayerText(playerid, text[])
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerUpdate(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEnterCheckpoint(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerLeaveCheckpoint(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEnterRaceCheckpoint(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerLeaveRaceCheckpoint(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid, bodypart)
 {
-	return 1;
+	return true;
 }
 
 public OnActorStreamIn(actorid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnActorStreamOut(actorid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEnterGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerLeaveGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEnterPlayerGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerLeavePlayerGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickPlayerGangZone(playerid, zoneid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerSelectedMenuRow(playerid, row)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerExitedMenu(playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnClientCheckResponse(playerid, actionid, memaddr, retndata)
 {
-	return 1;
+	return true;
 }
 
 public OnRconLoginAttempt(ip[], password[], success)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerFinishedDownloading(playerid, virtualworld)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerRequestDownload(playerid, DOWNLOAD_REQUEST:type, crc)
 {
-	return 1;
+	return true;
 }
 
 public OnRconCommand(cmd[])
@@ -233,166 +233,166 @@ public OnRconCommand(cmd[])
 
 public OnPlayerSelectObject(playerid, SELECT_OBJECT:type, objectid, modelid, Float:fX, Float:fY, Float:fZ)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEditObject(playerid, playerobject, objectid, EDIT_RESPONSE:response, Float:fX, Float:fY, Float:fZ, Float:rotationX, Float:rotationY, Float:rotationZ)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerEditAttachedObject(playerid, EDIT_RESPONSE:response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:rotationX, Float:rotationY, Float:rotationZ, Float:scaleX, Float:scaleY, Float:scaleZ)
 {
-	return 1;
+	return true;
 }
 
 public OnObjectMoved(objectid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerObjectMoved(playerid, objectid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerPickUpPickup(playerid, pickupid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerPickUpPlayerPickup(playerid, pickupid)
 {
-	return 1;
+	return true;
 }
 
 public OnPickupStreamIn(pickupid, playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPickupStreamOut(pickupid, playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerPickupStreamIn(pickupid, playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerPickupStreamOut(pickupid, playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerStreamIn(playerid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerStreamOut(playerid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickPlayer(playerid, clickedplayerid, CLICK_SOURCE:source)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerWeaponShot(playerid, weaponid, BULLET_HIT_TYPE:hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-	return 1;
+	return true;
 }
 
 public OnScriptCash(playerid, amount, source)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
-	return 1;
+	return true;
 }
 
 public OnIncomingConnection(playerid, ip_address[], port)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	return 1;
+	return true;
 }
 
 public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 {
-	return 1;
+	return true;
 }
 
 public OnTrailerUpdate(playerid, vehicleid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleSirenStateChange(playerid, vehicleid, newstate)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleStreamIn(vehicleid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleStreamOut(vehicleid, forplayerid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleMod(playerid, vehicleid, component)
 {
-	return 1;
+	return true;
 }
 
 public OnEnterExitModShop(playerid, enterexit, interiorid)
 {
-	return 1;
+	return true;
 }
 
 public OnVehiclePaintjob(playerid, vehicleid, paintjob)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleRespray(playerid, vehicleid, colour1, colour2)
 {
-	return 1;
+	return true;
 }
 
 public OnVehicleDamageStatusUpdate(vehicleid, playerid)
 {
-	return 1;
+	return true;
 }
 
 public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z)
 {
-	return 1;
+	return true;
 }
 

@@ -791,7 +791,7 @@ static Prev_FetchListitemData(const listitem[], &modelid, text[], &Float:rx, &Fl
 	pos = strfind(modelstr, "(");
 	if (pos == -1) {
 	    modelid = strval(modelstr);
-		return 1;
+		return true;
 	}
 
 	if (strfind(modelstr, ")", false, (pos + 1)) == -1) {
@@ -820,7 +820,7 @@ static Prev_FetchListitemData(const listitem[], &modelid, text[], &Float:rx, &Fl
 
 	} while (pos != -1 && count != 6);
 
-	return 1;
+	return true;
 }
 
 // hooked methods
@@ -830,7 +830,7 @@ public OnGameModeInit() {
 	#if defined PDialog_OnGameModeInit
 		return PDialog_OnGameModeInit();
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnGameModeInit
@@ -849,7 +849,7 @@ public OnGameModeExit() {
 	#if defined PDialog_OnGameModeExit
 		return PDialog_OnGameModeExit();
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnGameModeExit
@@ -868,7 +868,7 @@ public OnFilterScriptInit() {
 	#if defined PDialog_OnFilterScriptInit
 		return PDialog_OnFilterScriptInit();
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnFilterScriptInit
@@ -887,7 +887,7 @@ public OnFilterScriptExit() {
 	#if defined PDialog_OnFilterScriptExit
 		return PDialog_OnFilterScriptExit();
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnFilterScriptExit
@@ -908,7 +908,7 @@ public OnPlayerConnect(playerid) {
 	#if defined PDialog_OnPlayerConnect
 		return PDialog_OnPlayerConnect(playerid);
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnPlayerConnect
@@ -929,7 +929,7 @@ public OnPlayerDisconnect(playerid, reason) {
 	#if defined PDialog_OnPlayerDisconnect
 		return PDialog_OnPlayerDisconnect(playerid, reason);
 	#else
-		return 1;
+		return true;
 	#endif
 }
 #if defined _ALS_OnPlayerDisconnect
@@ -949,7 +949,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
         #if defined PDialog_OnPlayerClickTextDraw
 	       	return PDialog_OnPlayerClickTextDraw(playerid, Text:clickedid);
 		#else
-		   	return 1;
+		   	return true;
 		#endif
 	}
 
@@ -1149,7 +1149,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 	#if defined PDialog_OnPlayerClickTextDraw
        	return PDialog_OnPlayerClickTextDraw(playerid, Text:clickedid);
 	#else
-	   	return 1;
+	   	return true;
 	#endif
 }
 #if defined _ALS_OnPlayerClickTextDraw
@@ -1177,7 +1177,7 @@ stock Prev_ShowPlayerDialog(playerid, dialogid, style, const caption[], const in
 
 	if (dialogid < 0) {
 	    if (style == DIALOG_STYLE_PREVIEW_MODEL) {
-	        return 1;
+	        return true;
 	    }
 
 	    return ShowPlayerDialog(playerid, dialogid, style, caption, info, button1, button2);

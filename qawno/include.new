@@ -27,11 +27,11 @@ static stock
 
 @hook() OnPlayerConnect(playerid)
 {
-	return 1;
+	return true;
 }
 
 @hook() OnPlayerDisconnect(playerid, reason)
 {
-	return 1;
+	return true;
 }
 

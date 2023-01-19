@@ -233,7 +233,7 @@ SpawnSelectedCharacter(playerid) {
 
     SetPlayerName(playerid, pInfo[playerid][pName]);
     //Setar o mundo, interior do player aqui (não funciona) - ele buga.
-    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+    SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
         0, 0, 0, 0, 0, 0);
 

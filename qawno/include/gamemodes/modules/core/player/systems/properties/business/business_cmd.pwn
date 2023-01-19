@@ -15,7 +15,7 @@ CMD:criarempresa(playerid, params[]) {
     {
         SendSyntaxMessage(playerid, "/criarempresa [tipo] [preço] [endereço único]");
         SendSyntaxMessage(playerid, "[TIPOS] 1: 24/7 | 2: Ammunation | 3: Loja de roupas | 4: Fast Food | 5: Concessionária | 6: Posto de gasolina | 7: Firma");
-        return 1;
+        return true;
     }
     
     if (type < 1 || type > 7)
@@ -37,7 +37,7 @@ CMD:criarempresa(playerid, params[]) {
 	    logCreate(playerid, logString, 13);
     }
 
-    return 1;
+    return true;
 }
 
 //Comanda para deletar empresa.
@@ -58,7 +58,7 @@ CMD:deletarempresa(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: Bx010)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 } 
 
 CMD:editarempresa(playerid, params[]) {
@@ -90,7 +90,7 @@ CMD:editarempresa(playerid, params[]) {
         SendServerMessage(playerid, "Você editou o nome da empresa de ID %d para $%s.", businessID, newName);
         format(logString, sizeof(logString), "%s (%s) editou o nome da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newName);
 	    logCreate(playerid, logString, 13);
-        return 1;
+        return true;
     }      
 
     //Edita a entrada da empresa
@@ -101,7 +101,7 @@ CMD:editarempresa(playerid, params[]) {
         SendServerMessage(playerid, "Você editou a entrada da empresa de ID %d.", businessID);
         format(logString, sizeof(logString), "%s (%s) editou a entrada da empresa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), businessID);
 	    logCreate(playerid, logString, 13);
-        return 1;
+        return true;
     }   
     //Edita a entrada da empresa
     if(!strcmp(option, "interior", true) || !strcmp(option, "interior", true)) {
@@ -111,7 +111,7 @@ CMD:editarempresa(playerid, params[]) {
         SendServerMessage(playerid, "Você editou o interior da empresa de ID %d.", businessID);
         format(logString, sizeof(logString), "%s (%s) editou o interior da empresa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), businessID);
 	    logCreate(playerid, logString, 13);
-        return 1;
+        return true;
     }   
      // Editar o preço da empresa
     if(!strcmp(option, "preço", true) || !strcmp(option, "preço", true)) {
@@ -125,7 +125,7 @@ CMD:editarempresa(playerid, params[]) {
         SendServerMessage(playerid, "Você editou o preço da empresa de ID %d para $%s.", businessID, newPrice);
         format(logString, sizeof(logString), "%s (%s) editou o preço da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newPrice);
 	    logCreate(playerid, logString, 13);
-        return 1;
+        return true;
     }  
 
      // Editar o tipo da empresa
@@ -135,7 +135,7 @@ CMD:editarempresa(playerid, params[]) {
         if (newType < 1 || newType > 7) {
             SendErrorMessage(playerid, "Tipo inválido. Tipos de 1 á 7. (/editarempresa [id] [opção] [tipo]).");
             SendErrorMessage(playerid, "[TIPOS] 1: 24/7 | 2: Ammunation | 3: Loja de roupas | 4: Fast Food | 5: Concessionária | 6: Posto de gasolina | 7: Firma");
-            return 1;
+            return true;
         }
         //Função para editar o tipo da empresa.
         EditTypeBusiness(businessID, newType);
@@ -143,9 +143,9 @@ CMD:editarempresa(playerid, params[]) {
         SendServerMessage(playerid, "Você editou o tipo da empresa de ID %d para $%s.", businessID, newType);
         format(logString, sizeof(logString), "%s (%s) editou o tipo da empresa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), businessID, newType);
 	    logCreate(playerid, logString, 13);
-        return 1;
+        return true;
     }
-    return 1;
+    return true;
 }
 // ============================================================================================================================================
 
@@ -153,7 +153,7 @@ CMD:empresa(playerid, params[]) {
     if(!ManagerBusiness(playerid))
         return SendErrorMessage(playerid, "Você não está dentro de uma empresa.");
 
-    return 1;
+    return true;
 }
 
 CMD:irempresa(playerid, params[]) {
@@ -167,7 +167,7 @@ CMD:irempresa(playerid, params[]) {
 
     TeleportBusiness(playerid, id);
 
-    return 1;
+    return true;
 }
 
 CMD:mundo(playerid, params[]) {

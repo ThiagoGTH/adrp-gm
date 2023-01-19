@@ -99,7 +99,7 @@ CMD:editarfaccao(playerid, params[]) {
 		 	SendClientMessage(playerid, COLOR_BEGE, "USE: /editarfaccao [id] [tipo] [tipo da facção]");
             SendClientMessage(playerid, COLOR_BEGE, "TIPOS: 1: Policial | 2: Midiática | 3: Médica | 4: Prefeitura | 5: Governamental | 6: Civil | 7: Criminal");
             SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
-            return 1;
+            return true;
 		}
 		if (typeint < 1 || typeint > 7) return SendErrorMessage(playerid, "O tipo especificado é inválido. Os tipos vão de 1 até 7.");
 

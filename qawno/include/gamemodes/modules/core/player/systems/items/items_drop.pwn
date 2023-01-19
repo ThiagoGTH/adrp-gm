@@ -36,7 +36,7 @@ Dialog:DropItem(playerid, response, listitem, inputtext[]) {
             DropPlayerItem(playerid, slotid, strval(inputtext));
         }
 	}
-	return 1;
+	return true;
 }
 
 DropPlayerItem(playerid, slotid, quantity = 1) {
@@ -90,7 +90,7 @@ PlayerDropItemWithEdit(playerid, slotid) {
         Dialog_Show(playerid, DropItemWithEdit, DIALOG_STYLE_INPUT, "Dropar Dinheiro", "Dinheiro em mãos: US$ %s\n\nPor favor, especifique quantos dólares você deseja dropar:", "Dropar", "Cancelar", FormatNumber(money));
     } else if (pInfo[playerid][iAmount][slotid] == 1) DropPlayerItemWithEdit(playerid, slotid);
 	else Dialog_Show(playerid, DropItemWithEdit, DIALOG_STYLE_INPUT, "Dropar Item", "Item: %s - Quantidade: %d\n\nPor favor, especifique a quantidade que você deseja dropar deste item:", "Dropar", "Cancelar", diInfo[pInfo[playerid][iItem][slotid]][diName], pInfo[playerid][iAmount][slotid]);	
-	return 1;
+	return true;
 }
 
 Dialog:DropItemWithEdit(playerid, response, listitem, inputtext[]) {
@@ -116,7 +116,7 @@ Dialog:DropItemWithEdit(playerid, response, listitem, inputtext[]) {
             DropPlayerItemWithEdit(playerid, slotid, strval(inputtext));
         }
 	}
-	return 1;
+	return true;
 }
 
 DropPlayerItemWithEdit(playerid, slotid, quantity = 1) {

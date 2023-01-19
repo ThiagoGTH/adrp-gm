@@ -1,32 +1,32 @@
 CMD:stopanim(playerid)
 {
-	if (IsPlayerInAnyVehicle(playerid)) return 1;
+	if (IsPlayerInAnyVehicle(playerid)) return true;
 	ClearAnimations(playerid, 1);
-	return 1;
+	return true;
 }
 
 CMD:renderse(playerid)
 {
 	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_HANDSUP);
-	return 1;
+	return true;
 }
 
 CMD:mijar(playerid)
 {
 	SetPlayerSpecialAction(playerid, 68);
-	return 1;
+	return true;
 }
 
 CMD:tapinha(playerid)
 {
 	ApplyAnimation(playerid, "BASEBALL", "Bat_M", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }
 
 CMD:bomba(playerid)
 {
 	ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }
 
 CMD:carry(playerid, params[])
@@ -44,7 +44,7 @@ CMD:carry(playerid, params[])
 	    case 5: ApplyAnimation(playerid, "CARRY", "putdwn05", 4.1, false, false, false, false, 0);
 	    case 6: ApplyAnimation(playerid, "CARRY", "putdwn105", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:comer(playerid, params[])
@@ -62,7 +62,7 @@ CMD:comer(playerid, params[])
 	    case 2: ApplyAnimation(playerid, "FOOD", "EAT_Chicken", 4.1, false, false, false, false, 0);
 	    case 3: ApplyAnimation(playerid, "FOOD", "EAT_Pizza", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:chat(playerid, params[])
@@ -80,25 +80,25 @@ CMD:chat(playerid, params[])
 		case 5: ApplyAnimation(playerid, "GANGS", "prtial_gngtlkG", 4.1, false, false, false, false, 0);
 		case 6: ApplyAnimation(playerid, "GANGS", "prtial_gngtlkH", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:goggles(playerid)
 {
 	ApplyAnimation(playerid, "goggles", "goggles_put_on", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }
 
 CMD:jogar(playerid)
 {
 	ApplyAnimation(playerid, "GRENADE", "WEAPON_throw", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }
 
 CMD:swipe(playerid)
 {
 	ApplyAnimation(playerid, "HEIST9", "Use_SwipeCard", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }
 
 CMD:beijo(playerid, params[])
@@ -116,7 +116,7 @@ CMD:beijo(playerid, params[])
 		case 5: ApplyAnimation(playerid, "KISSING", "Playa_Kiss_02", 4.1, false, false, false, false, 0);
 		case 6: ApplyAnimation(playerid, "KISSING", "Playa_Kiss_03", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:dj(playerid, params[])
@@ -135,17 +135,17 @@ CMD:dj(playerid, params[])
 		case 3: ApplyAnimationEx(playerid, "SCRATCHING", "scdrdlp", 4.1, false, false, false, false, 0);
 		case 4: ApplyAnimationEx(playerid, "SCRATCHING", "scdrulp", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:bebado(playerid)
 {
 	ApplyAnimation(playerid, "PED", "WALK_drunk", 4.1, true, true, true, true, 1);
-	return 1;
+	return true;
 }
 
 CMD:chorar(playerid)
 {
 	ApplyAnimation(playerid, "GRAVEYARD", "mrnF_loop", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }

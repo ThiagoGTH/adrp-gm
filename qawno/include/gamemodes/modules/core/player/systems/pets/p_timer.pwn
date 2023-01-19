@@ -8,7 +8,7 @@ timer Pet_Update[100](playerid, targetid) {
             PetData[playerid][petStatus] = PET_STAY;
             stop PetData[playerid][petTimer];
             ClearActorAnimations(PetData[playerid][petModel]);
-            return 1;
+            return true;
         }
 
         new 

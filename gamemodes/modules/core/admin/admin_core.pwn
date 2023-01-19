@@ -904,7 +904,7 @@ CMD:vw(playerid, params[]) {
 	SendServerMessage(id, "O seu VW foi alterado por um administrador.");
 	SendServerMessage(playerid, "Você alterou o VW de %s para o VW %d.", pNome(id), vw);
 
-	return 1;
+	return true;
 }
 
 CMD:setarinterior(playerid, params[]) {
@@ -923,5 +923,5 @@ CMD:setarinterior(playerid, params[]) {
 	SendServerMessage(id, "O seu interior foi alterado por um administrador.");
 	SendServerMessage(playerid, "Você alterou o interior de %s para o interior %d.", pNome(id), interior);
 
-	return 1;
+	return true;
 }

@@ -5,5 +5,5 @@ CMD:animlist(playerid, params[])
 	SendClientMessage(playerid, COLOR_CLIENT, "ANIMAÇÃO:{FFFFFF} /goggles, /jogar, /swipe, /escritorio, /beijo, /dj, /bracojanela.");
 	SendClientMessage(playerid, COLOR_CLIENT, "ANIMAÇÃO:{FFFFFF} /wave, /acenar, /strip, /fumar, /taichi, /punheta, /abaixar, /bebado.");
 	SendClientMessage(playerid, COLOR_CLIENT, "ANIMAÇÃO:{FFFFFF} /chorar, /cansado, /sentar, /crossarms, /fucku, /andar, /mijar, /stopanim.");
-	return 1;
+	return true;
 }

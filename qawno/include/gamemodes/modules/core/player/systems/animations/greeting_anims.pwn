@@ -12,7 +12,7 @@ CMD:cumprimentar(playerid, params[])
 
 	SendServerMessage(userid, "%s lhe ofereceu um aperto de mão (Use \"/aceitarcumprimento\").", pNome(playerid));
 	SendServerMessage(playerid, "Você ofereceu um aperto de mão para %s.", pNome(userid));
-	return 1;
+	return true;
 }
 
 CMD:aceitarcumprimento(playerid)
@@ -61,7 +61,7 @@ CMD:aceitarcumprimento(playerid)
 
 	SendServerMessage(playerid, "Você aceitou o cumprimento de %s.", pNome(userid));
 	SendServerMessage(userid, "%s aceitou seu cumprimento.", pNome(playerid));
-  	return 1;
+  	return true;
 }
 
 CMD:acenar(playerid, params[])
@@ -76,5 +76,5 @@ CMD:acenar(playerid, params[])
 		case 2: ApplyAnimation(playerid, "KISSING", "gfwave2", 4.1, false, false, false, false, 0);
 		case 3: ApplyAnimation(playerid, "ON_LOOKERS", "wave_loop", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

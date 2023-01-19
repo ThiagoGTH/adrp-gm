@@ -11,14 +11,14 @@ CMD:sentar(playerid, params[])
 		case 3: ApplyAnimation(playerid, "BEACH", "ParkSit_M_loop", 4.1, false, false, false, false, 0);
 		case 4: ApplyAnimation(playerid, "BEACH", "ParkSit_W_loop", 4.1, false, false, false, false, 0);
 		case 5: ApplyAnimation(playerid, "BEACH", "SitnWait_loop_W", 4.1, false, false, false, false, 0);
-		case 6: ApplyAnimationEx(playerid, "CRIB", "PED_Console_Loop", 4.1, 1, 0, 0, 0, 0);
-		case 7: ApplyAnimationEx(playerid, "INT_HOUSE", "LOU_In", 4.1, 0, 0, 0, 1, 0);
-		case 8: ApplyAnimationEx(playerid, "MISC", "SEAT_LR", 4.1, 1, 0, 0, 0, 0);
-		case 9: ApplyAnimationEx(playerid, "MISC", "Seat_talk_01", 4.1, 1, 0, 0, 0, 0);
-		case 10: ApplyAnimationEx(playerid, "MISC", "Seat_talk_02", 4.1, 1, 0, 0, 0, 0);
-		case 11: ApplyAnimationEx(playerid, "ped", "SEAT_down", 4.1, 0, 0, 0, 1, 0);
+		case 6: ApplyAnimationEx(playerid, "CRIB", "PED_Console_Loop", 4.1, true, false, false, false, 0);
+		case 7: ApplyAnimationEx(playerid, "INT_HOUSE", "LOU_In", 4.1, false, false, false, true, 0);
+		case 8: ApplyAnimationEx(playerid, "MISC", "SEAT_LR", 4.1, true, false, false, false, 0);
+		case 9: ApplyAnimationEx(playerid, "MISC", "Seat_talk_01", 4.1, true, false, false, false, 0);
+		case 10: ApplyAnimationEx(playerid, "MISC", "Seat_talk_02", 4.1, true, false, false, false, 0);
+		case 11: ApplyAnimationEx(playerid, "ped", "SEAT_down", 4.1, false, false, false, true, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:crack(playerid, params[])
@@ -36,7 +36,7 @@ CMD:crack(playerid, params[])
 	    case 5: ApplyAnimationEx(playerid, "CRACK", "crckidle2", 4.1, false, false, false, true, 0);
 	    case 6: ApplyAnimationEx(playerid, "CRACK", "crckidle3", 4.1, false, false, false, true, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:dormir(playerid, params[])
@@ -50,7 +50,7 @@ CMD:dormir(playerid, params[])
 	    case 1: ApplyAnimation(playerid, "CRACK", "crckdeth4", 4.1, false, false, false, true, 0);
 	    case 2: ApplyAnimation(playerid, "CRACK", "crckidle4", 4.1, false, false, false, true, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:escritorio(playerid, params[])
@@ -68,13 +68,13 @@ CMD:escritorio(playerid, params[])
 		case 5: ApplyAnimationEx(playerid, "INT_OFFICE", "OFF_Sit_Type_Loop", 4.1, false, false, false, false, 0);
 		case 6: ApplyAnimationEx(playerid, "INT_OFFICE", "OFF_Sit_Watch", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:abaixar(playerid)
 {
 	ApplyAnimationEx(playerid, "PED", "cower", 4.1, false, false, false, true, 0);
-	return 1;
+	return true;
 }
 
 CMD:crossarms(playerid, params[])
@@ -90,5 +90,5 @@ CMD:crossarms(playerid, params[])
 	    case 3: ApplyAnimationEx(playerid, "GRAVEYARD", "mrnM_loop", 4.1, false, false, false, false, 0);
 	    case 4: ApplyAnimationEx(playerid, "DEALER", "DEALER_IDLE", 4.1, 0, 1, 1, 1, 0, 1);
 	}
-	return 1;
+	return true;
 }

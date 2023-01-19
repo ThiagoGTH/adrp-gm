@@ -173,7 +173,7 @@ stock DestroyProjectile(projid)
         projectileTimer = 0;
 	}
 
-	return 1;
+	return true;
 }
 
 stock GetProjectilePoolSize()
@@ -190,7 +190,7 @@ stock GetProjectilePos(projid, &Float:x, &Float:y, &Float:z)
     y = projectileData[projid][PROJECTILE_Y];
     z = projectileData[projid][PROJECTILE_Z];
 
-	return 1;
+	return true;
 }
 
 stock GetProjectileRot(projid, &Float:rx, &Float:ry, &Float:rz)
@@ -202,7 +202,7 @@ stock GetProjectileRot(projid, &Float:rx, &Float:ry, &Float:rz)
     ry = projectileData[projid][PROJECTILE_RY];
     rz = projectileData[projid][PROJECTILE_RZ];
 
-	return 1;
+	return true;
 }
 
 stock GetProjectileVel(projid, &Float:vx, &Float:vy, &Float:vz)
@@ -214,7 +214,7 @@ stock GetProjectileVel(projid, &Float:vx, &Float:vy, &Float:vz)
     vy = projectileData[projid][PROJECTILE_VY];
     vz = projectileData[projid][PROJECTILE_VZ];
 
-	return 1;
+	return true;
 }
 
 stock UpdateProjectileVel(projid, Float:vx, Float:vy, Float:vz)
@@ -226,7 +226,7 @@ stock UpdateProjectileVel(projid, Float:vx, Float:vy, Float:vz)
     projectileData[projid][PROJECTILE_VY] = vy;
     projectileData[projid][PROJECTILE_VZ] = vz;
 
-	return 1;
+	return true;
 }
 
 forward Internal_OnProjectilesUpdate();
@@ -505,5 +505,5 @@ public Internal_OnProjectilesUpdate()
 		}
 	}
 
-	return 1;
+	return true;
 }

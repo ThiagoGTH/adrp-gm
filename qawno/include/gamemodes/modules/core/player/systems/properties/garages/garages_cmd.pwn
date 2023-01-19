@@ -13,7 +13,7 @@ CMD:criargaragem(playerid, params[]) {
     
     CreateGarage(playerid, price, address, pos);
 
-    return 1;
+    return true;
 }
 
 CMD:editargaragem(playerid, params[]) {
@@ -39,7 +39,7 @@ CMD:editargaragem(playerid, params[]) {
         ChangeGarageInterior(playerid, id);
     }
 
-    return 1;
+    return true;
 }
 
 CMD:setargaragemcasa(playerid, params[]) {
@@ -59,7 +59,7 @@ CMD:setargaragemcasa(playerid, params[]) {
     
     AttachGarageToHouse(playerid, houseId, garageId);
 
-    return 1;
+    return true;
 }
 
 CMD:irgaragem(playerid, params[]) {
@@ -73,5 +73,5 @@ CMD:irgaragem(playerid, params[]) {
 
     SendPlayerGarage(playerid, id);
 
-    return 1;
+    return true;
 }

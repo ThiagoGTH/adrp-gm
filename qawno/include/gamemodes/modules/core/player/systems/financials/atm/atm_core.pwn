@@ -22,12 +22,12 @@ new atmInfo[MAX_ATM][E_ATM_DATA];
 
 hook OnGameModeInit() {
     LoadATMS();
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveATMS();
-    return 1;
+    return true;
 }
 
 hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
@@ -54,7 +54,7 @@ hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:
             
 		pInfo[playerid][oEditATM] = -1;
 	}
-	return 1;
+	return true;
 }
 
 //Carrega todas ATMs (MySQL).
@@ -83,7 +83,7 @@ LoadATMS() {
 
     printf("[ATMs]: %d ATMs carregadas com sucesso.", loadedATMS);
 
-    return 1;
+    return true;
 }
 
 //Carrega atm específica (MySQL).
@@ -104,7 +104,7 @@ LoadATM(id) {
     cache_get_value_name_int(0, "world", atmInfo[id][atmWorld]);
 
     CreateObjectAtm(id);
-    return 1;
+    return true;
 }
 
 //Salva todas atms (MySQL).
@@ -132,7 +132,7 @@ SaveATMS() {
 
     printf("[ATMs]: %d ATMs salvas com sucesso.", savedATMS);
 
-    return 1;
+    return true;
 }
 
 //Salvar ATM especifica.
@@ -148,7 +148,7 @@ SaveATM(id) {
             atmInfo[id][atmInterior], atmInfo[id][atmWorld], atmInfo[id][atmObject], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 }
 
 //Criar ATM
@@ -175,13 +175,13 @@ CreateATM(playerid) {
     SendServerMessage(playerid, "Você criou a ATM de ID %d.", id);
     format(logString, sizeof(logString), "%s (%s) criou a ATM de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Criar objeto da ATM
 CreateObjectAtm(id) {
     atmInfo[id][atmVariable] = CreateDynamicObject(atmInfo[id][atmObject], atmInfo[id][Position][0], atmInfo[id][Position][1], atmInfo[id][Position][2], 0.0, 0.0, atmInfo[id][Position][3], atmInfo[id][atmWorld], atmInfo[id][atmInterior]);
-    return 1;
+    return true;
 }
 
 //Deletar/excluir empresa (MySQL)
@@ -198,7 +198,7 @@ DeleteAtm(playerid, id)
 
     new dummyReset[E_ATM_DATA];
     atmInfo[id] = dummyReset;
-    return 1;
+    return true;
 } 
 
 // Recarrega ás ATMs (+ destroy todos os objetos existentes dela e create (novamente))
@@ -210,7 +210,7 @@ RefreshATM(id) {
 
         CreateObjectAtm(id);
 	}
-	return 1;
+	return true;
 }
 
 // ============================================================================================================================================
@@ -222,7 +222,7 @@ IsValidAtm(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 // Verifica a ATM (se possui alguma próxima ou não)
@@ -246,7 +246,7 @@ GetNearestAtm(playerid, Float:distance = 2.0) {
 //Mostra a dialog (principal) ao chamar está função.
 ShowDialogATM(playerid) {
     Dialog_Show(playerid, atmAccount, DIALOG_STYLE_LIST, "ATM > Acessando conta", "Minha Conta \nConta Compartilhada", "Selecionar", "Cancelar");
-    return 1;
+    return true;
 }
 
 //Responde a dialog

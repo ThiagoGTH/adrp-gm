@@ -24,7 +24,7 @@ RefreshChargeButton(playerid)
 	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][42], -1802201857);
 	PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][42], 1);
 	PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][40], 1);
-	return 1;
+	return true;
 }
 
 MDC_AddCharge(playerid, charge)
@@ -43,7 +43,7 @@ MDC_AddCharge(playerid, charge)
 
 	SendFactionMessage(pInfo[playerid][pFaction], COLOR_RADIO, sprintf("** HQ Duyurusu: %s %s, %s adlù kiùi ùzerinde %d dakikalùk suùlamada bulundu. **", Faction_GetRank(playerid), pNome(playerid), MDC_PlayerLastSearched[playerid], CalculateChargeTime(playerid, charge)));
 	RefreshChargeButton(playerid);
-	return 1;
+	return true;
 }
 
 CalculateChargeTime(playerid, charge)
@@ -107,7 +107,7 @@ ShowVehicleBoloDetails(playerid, i)
 	for(new is = 0; is < 6; is++) {
 		PlayerTextDrawShow(playerid, MDC_VehicleBolo_Details[playerid][is]);
 	}
-	return 1;
+	return true;
 }
 
 GetBoloReport(id) {
@@ -182,14 +182,14 @@ CreateArrestRecord(playerid) {
 
 	mysql_format(DBConn, query, sizeof(query), "INSERT INTO player_arrest (by_id, player_id, reason, time, active) VALUES (%d, %d, '%e', %i, %i)", pInfo[playerid][pID], MDC_PlastLastSearched_SQLID[playerid], str_entry, gettime(), 1);
 	mysql_tquery(DBConn, query);
-	return 1;
+	return true;
 }
 
 SaveBolo(author[], plate[], model[], crimes[], report[]) {
 	
 	mysql_format(DBConn, query, sizeof(query), "INSERT INTO vehicle_bolos (author, plate, model, crimes, report, time) VALUES ('%e', '%e', '%e', '%e', '%e', %i)", author, plate, model, crimes, report, gettime());
 	mysql_tquery(DBConn, query);
-	return 1;
+	return true;
 }
 
 ShowMDCPage(playerid, page) {
@@ -265,7 +265,7 @@ ShowMDCPage(playerid, page) {
 				}
     }
 
-    return 1;
+    return true;
 }
 
 Show_CriminalData(playerid, page = 0)
@@ -274,7 +274,7 @@ Show_CriminalData(playerid, page = 0)
 
 	mysql_format(DBConn, query, sizeof(query), "SELECT id, type, time, charge_name, gov, aaf, att, sol, cac FROM player_charges WHERE player_dbid = %i ORDER BY time DESC LIMIT %i, 21", MDC_PlastLastSearched_SQLID[playerid], page*MAX_CRIMINALDATA_SHOW);
 	mysql_tquery(DBConn, query, "SQL_ListCriminal", "ii", playerid, page);
-	return 1;
+	return true;
 }
 
 SQL_ListCriminal(playerid, page)
@@ -285,11 +285,11 @@ SQL_ListCriminal(playerid, page)
 	{
 			MDC_ReturnLastSearch(playerid);
 			SendErrorMessage(playerid, "Bu kiùinin sabùka kaydùnda hiùbir ùey yok.");
-			return 1;
+			return true;
 	}
 
 	if(page < 0)
-		return 1;
+		return true;
 
 	PlayerTextDrawShow(playerid, MDC_CrimeHistory[playerid][23]);
 
@@ -319,7 +319,7 @@ SQL_ListCriminal(playerid, page)
 		}
 
 		if(strtext > 20)
-			return 1;
+			return true;
 
 
 		cache_get_value_name_int(i, "id", MDC_CriminalDataID[playerid][countdown]);
@@ -391,7 +391,7 @@ SQL_ListCriminal(playerid, page)
 		countdown+=1;
 	}
 
-	return 1;
+	return true;
 }
 
 Show_CriminalDataDetail(playerid, criminal)
@@ -489,7 +489,7 @@ Show_CriminalDataDetail(playerid, criminal)
 		PlayerTextDrawShow(playerid, MDC_SelectedCrimeDetails[playerid][5]);
 	}
 	cache_delete(cache);
-	return 1;
+	return true;
 }
 
 /*Show_Roster(playerid, page = 0)
@@ -540,7 +540,7 @@ Show_CriminalDataDetail(playerid, criminal)
 	
 	mysql_format(DBConn, query, sizeof(query), "SELECT unit, unit_players FROM roster_list LIMIT %i, 20", page*MAX_ROSTER_SHOW);
 	mysql_tquery(DBConn, query, "SQL_RosterList", "ii", playerid, page);
-	return 1;
+	return true;
 }
 
 SQL_RosterList(playerid, page) // 38 geri, 39 ileri
@@ -592,14 +592,14 @@ SQL_RosterList(playerid, page) // 38 geri, 39 ileri
 		PlayerTextDrawSetString(playerid, MDC_Roster[playerid][0], AdjustTextDrawString("Liste boù."));
 		PlayerTextDrawShow(playerid, MDC_Roster[playerid][strtext]);
 	}
-	return 1;
+	return true;
 }
 */
 
 Show_VehicleBolos(playerid, page = 0)
 {
 	if(page < 0)
-		return 1;
+		return true;
 
 	SetPVarInt(playerid, "vbololist_idx", page);
 	MDC_HideAfterPage(playerid);
@@ -609,7 +609,7 @@ Show_VehicleBolos(playerid, page = 0)
 	
 	mysql_format(DBConn, query, sizeof(query), "SELECT id, author, plate, model, crimes, report, time FROM vehicle_bolos ORDER BY time DESC LIMIT %i, 21", page*MAX_BOLO_SHOW);
 	mysql_tquery(DBConn, query, "SQL_VehicleBolos", "ii", playerid, page);
-	return 1;
+	return true;
 }
 
 SQL_VehicleBolos(playerid, page)
@@ -640,14 +640,14 @@ SQL_VehicleBolos(playerid, page)
 				}
 
 			if(countdown > 20)
-				return 1;
+				return true;
 
 			cache_get_value_name_int(i, "id", MDC_BolosID[playerid][countdown]);
 			cache_get_value_name(i, "plate", plate, 24);
 			cache_get_value_name(i, "model", model, 64);
 
 			if(strtext == 20)
-				return 1;
+				return true;
 
 			format(bolo_string, sizeof(bolo_string), "%s, %s", plate, model);
 			AdjustTextDrawString(bolo_string);
@@ -658,7 +658,7 @@ SQL_VehicleBolos(playerid, page)
 			strtext+=1;
 	}
 
-	return 1;
+	return true;
 }
 
 /*ShowCCTV_List(playerid)
@@ -675,7 +675,7 @@ SQL_VehicleBolos(playerid, page)
 		{
 			PlayerTextDrawShow(playerid, MDC_CCTV[playerid][14]);
 			PlayerTextDrawShow(playerid, MDC_CCTV[playerid][15]);
-			return 1;
+			return true;
 		}
 
 		format(sub, sizeof(sub), "%s_-[%s]~n~", CameraData[i][CameraName], GetStreet(CameraData[i][CameraLocation][0], CameraData[i][CameraLocation][1], CameraData[i][CameraLocation][2]));
@@ -684,7 +684,7 @@ SQL_VehicleBolos(playerid, page)
 		Player_CCTVPage[playerid] = 1;
 		countdown++;
 	}
-	return 1;
+	return true;
 }*/
 
 /*GetNinerCaller(id)
@@ -772,7 +772,7 @@ HandleEmergency(playerid, PlayerText:tid)
 
 	MDC_HideAfterPage(playerid);
 	ShowEmergencyCalls(playerid, GetPVarInt(playerid, "emergencylist_idx"));
-	return 1;
+	return true;
 }
 
 /*ShowEmergencyCallDetail(playerid, PlayerText:tid)
@@ -805,7 +805,7 @@ HandleEmergency(playerid, PlayerText:tid)
 		PlayerTextDrawShow(playerid, MDC_EmergencyDetails[playerid][is]);
 	}
 
-	return 1;
+	return true;
 }*/
 
 ShowEmergencyCallDetail(playerid, PlayerText:tid)
@@ -832,7 +832,7 @@ ShowEmergencyCallDetail(playerid, PlayerText:tid)
     
 	SetPVarInt(playerid, "lastEmergencyID", e_id);
     Dialog_Show(playerid, MDCCall2, DIALOG_STYLE_MSGBOX, "{8D8DFF}MDC - ùAùRI BùLGùSù", mes, "Seùenekler", "Geri");
-	return 1;
+	return true;
 }
 
 
@@ -840,7 +840,7 @@ ShowEmergencyCallDetail(playerid, PlayerText:tid)
 ShowEmergencyCalls(playerid, page = 0)
 {
 	if(page < 0)
-		return 1;
+		return true;
 
 	MDC_HideAfterPage(playerid);
 
@@ -849,7 +849,7 @@ ShowEmergencyCalls(playerid, page = 0)
 	
 	mysql_format(DBConn, query, sizeof(query), "SELECT id, niner_by, niner_number, niner_location, niner_text, niner_status, niner_time FROM niner ORDER BY niner_time DESC LIMIT %i, 5", page*MAX_EMERGENCY_SHOW);
 	mysql_tquery(DBConn, query, "SQL_EmergencyCalls", "ii", playerid, page);
-	return 1;
+	return true;
 }
 
 SQL_EmergencyCalls(playerid, page)
@@ -885,7 +885,7 @@ SQL_EmergencyCalls(playerid, page)
 				}
 
 			if(countdown == 4)
-				return 1;
+				return true;
 
 			cache_get_value_name_int(i, "id", MDC_CallsID[playerid][countdown]);
 			cache_get_value_name_int(i, "niner_number", n_number);
@@ -915,7 +915,7 @@ SQL_EmergencyCalls(playerid, page)
 	}
 
 	// 21 geri tuùu
-	return 1;
+	return true;
 }
 
 MDC_LOOKUP_SelectOption(playerid, option)
@@ -961,7 +961,7 @@ MDC_LOOKUP_SelectOption(playerid, option)
 			SetPVarInt(playerid, "MDC_SearchMode", 3);
 		}
 	}
-	return 1;
+	return true;
 }
 
 MDC_SideMenuColours(playerid, page)
@@ -1011,7 +1011,7 @@ MDC_SideMenuColours(playerid, page)
 				}
     }
 
-    return 1;
+    return true;
 }
 
 MDC_GetPageName(playerid, page)
@@ -1079,7 +1079,7 @@ GetCrimeName(chargeid)
 MDC_ShowAddress(playerid, playerdbid, page = 0)
 {
 	if(page < 0)
-		return 1;
+		return true;
 
 	MDC_HideAfterPage(playerid);
 
@@ -1088,7 +1088,7 @@ MDC_ShowAddress(playerid, playerdbid, page = 0)
 	
 	mysql_format(DBConn, query, sizeof(query), "SELECT * FROM properties WHERE OwnerSQL = %d LIMIT %i, 4", playerdbid, page*MAX_ADRESSLIST_SHOW);
 	mysql_tquery(DBConn, query, "SQL_ShowAddress", "iii", playerid, playerdbid, page);
-	return 1;
+	return true;
 }
 
 SQL_ShowAddress(playerid, playerdbid, page)
@@ -1103,7 +1103,7 @@ SQL_ShowAddress(playerid, playerdbid, page)
 		countdown = countdown + 1;
 
 		if(textdrawstr > 7)
-			return 1;
+			return true;
 
 		cache_get_value_name_int(i, "id", id);
 		cache_get_value_name_float(i, "ExteriorX", houseX);
@@ -1144,7 +1144,7 @@ SQL_ShowAddress(playerid, playerdbid, page)
 	PlayerTextDrawShow(playerid, MDC_AdressDetails[playerid][0]);
 	PlayerTextDrawShow(playerid, MDC_AdressDetails[playerid][1]);
 	PlayerTextDrawShow(playerid, MDC_AdressDetails[playerid][2]);
-	return 1;
+	return true;
 }
 
 MDC_SelectCharges(playerid, chargeid)
@@ -1161,7 +1161,7 @@ MDC_SelectCharges(playerid, chargeid)
 
 	SetPVarInt(playerid, "chargeTime", ReturnChargeTime(chargeid));
 	EditChargeDescription(playerid, chargeid);
-	return 1;
+	return true;
 }
 
 EditChargeDescription(playerid, chargeid)
@@ -1219,7 +1219,7 @@ EditChargeDescription(playerid, chargeid)
 
 	PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][45], FixChargeDescription(charge_desc));
 	PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][45]);
-	return 1;
+	return true;
 }
 
 ReturnChargeFine(id)
@@ -1269,7 +1269,7 @@ ReturnChargeDescription(id)
 MDC_ShowPenalCode(playerid, page = 0)
 {
 	if(page < 0)
-		return 1;
+		return true;
 
 	MDC_HideAfterPage(playerid);
 
@@ -1278,7 +1278,7 @@ MDC_ShowPenalCode(playerid, page = 0)
 	
 	mysql_format(DBConn, query, sizeof(query), "SELECT id, penal, color, bgcolor, selectable FROM penalcode_list LIMIT %i, 20", page*MAX_PENAL_SHOW);
 	mysql_tquery(DBConn, query, "SQL_PenalCode", "ii", playerid, page);
-	return 1;
+	return true;
 }
 
 SQL_PenalCode(playerid, page)
@@ -1310,7 +1310,7 @@ SQL_PenalCode(playerid, page)
 		}
 
 		if(strtext > 35)
-			return 1;
+			return true;
 
 		cache_get_value_name_int(i, "id", id);
 		cache_get_value_name_int(i, "color", color);
@@ -1333,7 +1333,7 @@ SQL_PenalCode(playerid, page)
 		PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][strtext]);
 		strtext+=1;
 	}
-	return 1;
+	return true;
 }
 
 MDC_ShowManageLicense(playerdbid, playerid)
@@ -1352,7 +1352,7 @@ MDC_ShowManageLicense(playerdbid, playerid)
 			{
 				PlayerTextDrawShow(playerid, MDC_ManageLicense[playerid][is]);
 			}
-			return 1;
+			return true;
 		}
 	}
 
@@ -1379,7 +1379,7 @@ MDC_ShowManageLicense(playerdbid, playerid)
 	{
 		PlayerTextDrawShow(playerid, MDC_ManageLicense[playerid][is]);
 	}
-	return 1;
+	return true;
 }
 
 
@@ -1392,19 +1392,19 @@ forward MDC_SearchVehicleWithID(playerid, text[]); public MDC_SearchVehicleWithI
 	if(!IsValidVehicle(vehid))
 	{
 		Dialog_Show(playerid, MDC_LookUp_EnterBox, DIALOG_STYLE_INPUT, "Veri Girin", "HATA: Bu ID'ye ait bir araù bulunamadù.\n\nKimi arùyorsunuz?\nPlaka aramasùysa direkt olarak plakayù gir.\nAraù ID ùzerindense, 'id:ARAùID' ùeklinde girmelisin (ùrn: id:120)", "Ara", "Vazgeù");
-		return 1;
+		return true;
 	}
 
 	for(new i = 0; i < sizeof dmv_vehicles; i++) if(vehid == dmv_vehicles[i])
 	{
 		Dialog_Show(playerid, MDC_LookUp_EnterBox, DIALOG_STYLE_INPUT, "Veri Girin", "HATA: Bu ID'ye ait bir araù bulunamadù.\n\nKimi arùyorsunuz?\nPlaka aramasùysa direkt olarak plakayù gir.\nAraù ID ùzerindense, 'id:ARAùID' ùeklinde girmelisin (ùrn: id:120)", "Ara", "Vazgeù");
-		return 1;
+		return true;
 	}
 
 	if(vehid < 12)
 	{
 		Dialog_Show(playerid, MDC_LookUp_EnterBox, DIALOG_STYLE_INPUT, "Veri Girin", "HATA: Bu ID'ye ait bir araù bulunamadù.\n\nKimi arùyorsunuz?\nPlaka aramasùysa direkt olarak plakayù gir.\nAraù ID ùzerindense, 'id:ARAùID' ùeklinde girmelisin (ùrn: id:120)", "Ara", "Vazgeù");
-		return 1;
+		return true;
 	}
 
 	for(new is = 4; is < 18; is++)
@@ -1427,7 +1427,7 @@ forward MDC_SearchVehicleWithID(playerid, text[]); public MDC_SearchVehicleWithI
 	format(vehicle_details, sizeof(vehicle_details), "%s~n~%s~n~%s~n~~r~Level_%d~n~%s", ReturnVehicleModelName(GetVehicleModel(vehid)), CarData[vehid][carPlates], SQLName(CarData[vehid][carOwnerID]), CarData[vehid][carInsurance], CarData[vehid][carImpounded] != 1 ? ("~l~Hayir") : ("~r~Evet"));
 	PlayerTextDrawSetString(playerid, MDC_LookUp_Vehicle[playerid][10], vehicle_details);
 	PlayerTextDrawShow(playerid, MDC_LookUp_Vehicle[playerid][10]);
-	return 1;
+	return true;
 }
 
 forward KisiSorgula(text[], playerid, secenek); public KisiSorgula(text[], playerid, secenek)
@@ -1589,7 +1589,7 @@ forward KisiSorgula(text[], playerid, secenek); public KisiSorgula(text[], playe
 			PlayerTextDrawShow(playerid, MDC_LookUp_Vehicle[playerid][10]);
 		}
 	}
-	return 1;
+	return true;
 }
 
 SQL_CriminalPreview(playerid)
@@ -1726,7 +1726,7 @@ MDC_LookUp_Refresh(playerid)
 	{
 		PlayerTextDrawHide(playerid, MDC_ManageLicense[playerid][is]);
 	}
-	return 1;
+	return true;
 }
 
 MDC_Hide(playerid)
@@ -1815,7 +1815,7 @@ MDC_Hide(playerid)
 
 	SetPVarInt(playerid, "MDC_SearchMode", 0);
 	CancelSelectTextDraw(playerid);
-	return 1;
+	return true;
 }
 
 MDC_ReturnLastSearch(playerid)
@@ -1828,7 +1828,7 @@ MDC_ReturnLastSearch(playerid)
 	new sorgu[256];
 	format(sorgu, sizeof(sorgu), "SELECT * FROM `players` WHERE `Name` = '%s'", MDC_PlayerLastSearched[playerid]);
 	mysql_tquery(DBConn, sorgu, "KisiSorgula", "sdd", MDC_PlayerLastSearched[playerid], playerid, 0);
-	return 1;
+	return true;
 }
 
 MDC_HideAfterPage(playerid)
@@ -1968,7 +1968,7 @@ SetAddresMapPosition(playerid, Float:X, Float:Y)
 	PlayerTextDrawFont(playerid, MDC_AdressDetails[playerid][13], 4);
 
 	PlayerTextDrawShow(playerid, MDC_AdressDetails[playerid][13]);
-	return 1;
+	return true;
 }
 
 Hide_PageAttachement(playerid)
@@ -2002,5 +2002,5 @@ Hide_PageAttachement(playerid)
 	{
 		PlayerTextDrawHide(playerid, MDC_VehicleBolo_Details[playerid][is]);
 	}
-	return 1;
+	return true;
 }

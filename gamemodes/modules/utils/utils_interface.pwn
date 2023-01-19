@@ -211,7 +211,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, CharTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD[playerid][0], false);
 
     CharTD[playerid][1] = CreatePlayerTextDraw(playerid, 489.681152, 59.816619, "mdl-9000:title_characters");
     PlayerTextDrawTextSize(playerid, CharTD[playerid][1], 175.000000, 14.000000);
@@ -220,7 +220,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, CharTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD[playerid][1], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD[playerid][1], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD[playerid][1], false);
 
     CreateCharacterTextdraws1(playerid);
     CreateCharacterTextdraws2(playerid);
@@ -240,7 +240,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_BUTTON[playerid][0], true);
 
     CharTD_BUTTON[playerid][1] = CreatePlayerTextDraw(playerid, 134.176513, 349.833282, "mdl-9000:button_effect");
@@ -250,7 +250,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][1], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][1], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][1], false);
 
     CharTD_BUTTON[playerid][2] = CreatePlayerTextDraw(playerid, 177.499969, 352.349975, "JOGAR");
     PlayerTextDrawLetterSize(playerid, CharTD_BUTTON[playerid][2], 0.400000, 1.600000);
@@ -259,7 +259,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][2], 2);
-    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][2], true);
     return true;
 }
 
@@ -271,7 +271,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_1[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_1[playerid][0], true);
 
     CharTD_1[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 78.000022, "John_Doe");
@@ -282,7 +282,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_1[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][1], true);
 
     CharTD_1[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_1[playerid][2], 0.200000, 0.800000);
@@ -291,7 +291,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_1[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][2], true);
 
     CharTD_1[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_1[playerid][3], 14.000000, 17.000000);
@@ -300,7 +300,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_1[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][3], false);
 
     CharTD_1[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_1[playerid][4], 10.000000, 11.000000);
@@ -309,7 +309,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_1[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][4], false);
     return true;
 }
 
@@ -332,7 +332,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_2[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][1], true);
 
     CharTD_2[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 118.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_2[playerid][2], 0.200000, 0.800000);
@@ -341,7 +341,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_2[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][2], true);
 
     CharTD_2[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 110.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_2[playerid][3], 14.000000, 17.000000);
@@ -350,7 +350,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_2[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][3], false);
 
     CharTD_2[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 113.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_2[playerid][4], 10.000000, 11.000000);
@@ -359,7 +359,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_2[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][4], false);
     return true;
 }
 
@@ -371,7 +371,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_3[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_3[playerid][0], true);
 
     CharTD_3[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 138.000022, "John_Doe");
@@ -382,7 +382,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_3[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][1], true);
 
     CharTD_3[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 148.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_3[playerid][2], 0.200000, 0.800000);
@@ -391,7 +391,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_3[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][2], true);
 
     CharTD_3[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 140.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_3[playerid][3], 14.000000, 17.000000);
@@ -400,7 +400,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_3[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][3], false);
 
     CharTD_3[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 143.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_3[playerid][4], 10.000000, 11.000000);
@@ -409,7 +409,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_3[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][4], false);
     return true;
 }
 
@@ -421,7 +421,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_4[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_4[playerid][0], true);
 
     CharTD_4[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 168.000022, "John_Doe");
@@ -432,7 +432,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_4[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][1], true);
 
     CharTD_4[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 178.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_4[playerid][2], 0.200000, 0.800000);
@@ -441,7 +441,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_4[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][2], true);
 
     CharTD_4[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 170.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_4[playerid][3], 14.000000, 17.000000);
@@ -450,7 +450,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_4[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][3], false);
 
     CharTD_4[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 173.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_4[playerid][4], 10.000000, 11.000000);
@@ -459,7 +459,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_4[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][4], false);
     return true;
 }
 
@@ -471,7 +471,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_5[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_5[playerid][0], true);
 
     CharTD_5[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 198.000022, "John_Doe");
@@ -482,7 +482,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_5[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][1], true);
 
     CharTD_5[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 208.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_5[playerid][2], 0.200000, 0.800000);
@@ -491,7 +491,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_5[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][2], true);
 
     CharTD_5[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 200.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_5[playerid][3], 14.000000, 17.000000);
@@ -500,7 +500,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_5[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][3], false);
 
     CharTD_5[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 203.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_5[playerid][4], 10.000000, 11.000000);
@@ -509,7 +509,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_5[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][4], false);
     return true;
 }
 
@@ -532,7 +532,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_6[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][1], true);
 
     CharTD_6[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 238.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_6[playerid][2], 0.200000, 0.800000);
@@ -541,7 +541,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_6[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][2], true);
 
     CharTD_6[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 230.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_6[playerid][3], 14.000000, 17.000000);
@@ -550,7 +550,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_6[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][3], false);
 
     CharTD_6[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 233.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_6[playerid][4], 10.000000, 11.000000);
@@ -559,7 +559,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_6[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][4], false);
     return true;
 }
 
@@ -571,7 +571,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_7[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_7[playerid][0], true);
 
     CharTD_7[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 288.000022, "John_Doe");
@@ -582,7 +582,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_7[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][1], true);
 
     CharTD_7[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 298.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_7[playerid][2], 0.200000, 0.800000);
@@ -591,7 +591,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_7[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][2], true);
 
     CharTD_7[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 290.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][3], 14.000000, 17.000000);
@@ -600,7 +600,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_7[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][3], false);
 
     CharTD_7[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 293.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_7[playerid][4], 10.000000, 11.000000);
@@ -609,7 +609,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_7[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][4], false);
     return true;
 }
 
@@ -621,7 +621,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_8[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_8[playerid][0], true);
 
     CharTD_8[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 318.000022, "John_Doe");
@@ -632,7 +632,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_8[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][1], true);
 
     CharTD_8[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 328.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_8[playerid][2], 0.200000, 0.800000);
@@ -641,7 +641,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_8[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][2], true);
 
     CharTD_8[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 320.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][3], 14.000000, 17.000000);
@@ -650,7 +650,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_8[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][3], false);
 
     CharTD_8[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 323.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_8[playerid][4], 10.000000, 11.000000);
@@ -659,7 +659,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_8[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][4], false);
     return true;
 }
 
@@ -671,7 +671,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_9[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_9[playerid][0], true);
 
     CharTD_9[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 348.000022, "John_Doe");
@@ -682,7 +682,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_9[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][1], true);
 
     CharTD_9[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 358.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_9[playerid][2], 0.200000, 0.800000);
@@ -691,7 +691,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_9[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][2], true);
 
     CharTD_9[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 350.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][3], 14.000000, 17.000000);
@@ -700,7 +700,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_9[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][3], false);
 
     CharTD_9[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 353.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_9[playerid][4], 10.000000, 11.000000);
@@ -709,7 +709,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_9[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][4], false);
     return true;
 }
 
@@ -721,7 +721,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_10[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_10[playerid][0], true);
 
     CharTD_10[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 308.000022, "John_Doe");
@@ -732,7 +732,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][1], 255);
     PlayerTextDrawFont(playerid, CharTD_10[playerid][1], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][1], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][1], true);
 
     CharTD_10[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 318.833305, "#1");
     PlayerTextDrawLetterSize(playerid, CharTD_10[playerid][2], 0.200000, 0.800000);
@@ -741,7 +741,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][2], 255);
     PlayerTextDrawFont(playerid, CharTD_10[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][2], true);
 
     CharTD_10[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 310.116683, "mdl-9000:circle_character_hover");
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][3], 14.000000, 17.000000);
@@ -750,7 +750,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][3], 255);
     PlayerTextDrawFont(playerid, CharTD_10[playerid][3], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][3], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][3], false);
 
     CharTD_10[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 313.216636, "mdl-9000:icon_user");
     PlayerTextDrawTextSize(playerid, CharTD_10[playerid][4], 10.000000, 11.000000);
@@ -759,7 +759,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][4], 255);
     PlayerTextDrawFont(playerid, CharTD_10[playerid][4], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][4], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][4], false);
     return true;
 }
 
@@ -1198,7 +1198,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][0], 255);
     PlayerTextDrawFont(playerid, NotifyTD[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][0], false);
 
     NotifyTD[playerid][1] = CreatePlayerTextDraw(playerid, 236.969787, 370.250061, "mdl-9001:notify_error");
     PlayerTextDrawTextSize(playerid, NotifyTD[playerid][1], 16.000000, 16.000000);
@@ -1207,7 +1207,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][1], 255);
     PlayerTextDrawFont(playerid, NotifyTD[playerid][1], 4);
-    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][1], 0);
+    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][1], false);
 
     NotifyTD[playerid][2] = CreatePlayerTextDraw(playerid, 316.659057, 370.750000, "TEXTO_FOOTER");
     PlayerTextDrawLetterSize(playerid, NotifyTD[playerid][2], 0.400000, 1.500000);
@@ -1216,7 +1216,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][2], 255);
     PlayerTextDrawFont(playerid, NotifyTD[playerid][2], 1);
-    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][2], 1);
+    PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][2], true);
     return true;
 }
 

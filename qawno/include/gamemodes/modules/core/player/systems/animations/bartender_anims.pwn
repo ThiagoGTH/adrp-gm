@@ -14,5 +14,5 @@ CMD:bar(playerid, params[])
 		case 7: ApplyAnimationEx(playerid, "BAR", "dnk_stndM_loop", 4.1, false, false, false, false, 0);
 		case 8: ApplyAnimationEx(playerid, "BAR", "dnk_stndF_loop", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

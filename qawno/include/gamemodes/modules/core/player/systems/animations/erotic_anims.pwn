@@ -15,5 +15,5 @@ CMD:strip(playerid, params[])
 		case 6: ApplyAnimation(playerid, "STRIP", "strip_F", 4.1, false, false, false, false, 0);
 		case 7: ApplyAnimation(playerid, "STRIP", "strip_G", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

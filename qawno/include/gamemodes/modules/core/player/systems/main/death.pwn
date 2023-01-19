@@ -668,7 +668,7 @@ CMD:deletecorpse(playerid, params[])
     if (actorsito[id] == -1) return SendClientMessage(playerid, -1, "* Player is not corpse.");
     DestroyActor(actorsito[id]);
     actorsito[id] = -1;
-    return 1;
+    return true;
 }*/
 
 CMD:investida(playerid, params[]){

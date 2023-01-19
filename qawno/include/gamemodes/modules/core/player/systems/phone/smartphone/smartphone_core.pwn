@@ -108,7 +108,7 @@ new
 
 hook OnPlayerConnect(playerid) {
 	CreatePlayerPhoneTextDraws(playerid);
-	return 1;
+	return true;
 }
 
 hook OnGameModeInit() {
@@ -116,7 +116,7 @@ hook OnGameModeInit() {
 	LoadContacts();
 	SetTimer("OnCheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
-	return 1;
+	return true;
 }
 
 hook PhoneTurnOff(playerid) {
@@ -366,7 +366,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid) {
 			PCoverOpening{playerid} = false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
@@ -446,7 +446,7 @@ hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 	    	}
     	}
     }
-	return 1;
+	return true;
 }
 
 hook OnCheckSMS(playerid) {
@@ -487,7 +487,7 @@ hook OnCheckSMS(playerid) {
 				if(pInfo[playerid][pCellTime] == 10) AnnounceMyAction(calling, "phone begins to ring.");
 			}
 		}
-	} return 1;
+	} return true;
 }
 
 hook SendPlayerCall(playerid, number, numberid) {
@@ -499,7 +499,7 @@ hook SendPlayerCall(playerid, number, numberid) {
 
 		RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-	    return 1;
+	    return true;
 	} */
 
 	new targetid = INVALID_PLAYER_ID;
@@ -591,7 +591,7 @@ LoadContacts() {
 
     printf("[Contatos]: %d contatos carregadas com sucesso.", loadedContacts);
 
-    return 1;
+    return true;
 }
 
 //Carrega todos SMS (MySQL).
@@ -618,7 +618,7 @@ LoadSms() {
 
     printf("[SMS]: %d sms carregadas com sucesso.", loadedSms);
 
-    return 1;
+    return true;
 }
 
 CreatePhoneTextDraws() {
@@ -3687,12 +3687,12 @@ Dialog:AskTurnOff(playerid, response, listitem, inputtext[]) {
 //Gerar o numero de celular
 /*GeneratorNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = random(900000) + 100000;
-	return 1;
+	return true;
 }
 
 DestroyNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = 0;
-	return 1;
+	return true;
 } */
 //=========================================================================================
 //Funções complementares

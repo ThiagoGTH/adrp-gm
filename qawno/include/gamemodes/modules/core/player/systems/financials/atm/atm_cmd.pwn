@@ -8,7 +8,7 @@ CMD:criaratm(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao criar a ATM (cod: Ox010)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 }
 
 //Excluir ATM
@@ -29,7 +29,7 @@ CMD:deletaratm(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a ATM (cod: Ox011)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 }
 
 //Editar ATM
@@ -49,13 +49,13 @@ CMD:editaratm(playerid, params[]) {
     // Editar o preço
     if(!strcmp(option, "posicao", true) || !strcmp(option, "posicao", true)) {
         EditDynamicObject(playerid, atmInfo[id][atmVariable]);
-        return 1;
+        return true;
     }
 
     //Editar o Status (ativo/desativada)
     if(!strcmp(option, "status", true) || !strcmp(option, "status", true)) {
         SendErrorMessage(playerid, "Função desativada no momento.");
-        return 1;
+        return true;
     }
 
     SendSyntaxMessage(playerid, "/editaratm [id] [opção]");
@@ -75,5 +75,5 @@ CMD:atm(playerid, params[]) {
         return SendErrorMessage(playerid, "Está desativada ou em manutenção está ATM.");
 
     ShowDialogATM(playerid);
-    return 1;
+    return true;
 }

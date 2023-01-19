@@ -144,7 +144,7 @@ CMD:janela(playerid, params[]) {
         backright;
 
     if(sscanf(params, "S(mine)[20]", windowOption)){
-        return 1;
+        return true;
     }
 
     GetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, backright);

@@ -19,7 +19,7 @@ new SignalData[MAX_SIGNALTOWER][signalData];
 
 hook OnGameModeInit() {
     LoadTOWERS();
-    return 1;
+    return true;
 }
 
 hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
@@ -46,7 +46,7 @@ hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:
             
 		pInfo[playerid][oEditTower] = -1;
 	}
-	return 1;
+	return true;
 }
 
 //Carrega todas tores de sinal (MySQL).
@@ -74,7 +74,7 @@ LoadTOWERS() {
         loadedTOWERS++;
     }
     printf("[Torres]: %d Torres de Sinal carregadas com sucesso.", loadedTOWERS);
-    return 1;
+    return true;
 }
 
 //Carrega atm específica (MySQL).
@@ -95,7 +95,7 @@ LoadTOWER(id) {
     cache_get_value_name_int(0, "interior", SignalData[id][Interior]);
     cache_get_value_name_int(0, "world", SignalData[id][World]);
     CreateObjectTower(id);
-    return 1;
+    return true;
 }
 
 //Salva todas towers (MySQL).
@@ -116,7 +116,7 @@ SaveTOWERS() {
     }
 
     printf("[TOWERs]: %d TOWERs salvas com sucesso.", savedTOWERS);
-    return 1;
+    return true;
 }
 
 //Salvar TORRE especifica.
@@ -132,7 +132,7 @@ SaveTOWER(id) {
         SignalData[id][towerRadius], SignalData[id][Interior], SignalData[id][World], SignalData[id][signalObject], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 }
 
 // Recarrega ás torre (+ destroy todos os objetos existentes dela e create (novamente))
@@ -144,13 +144,13 @@ RefreshTOWER(id) {
 
         CreateObjectTower(id);
 	}
-	return 1;
+	return true;
 }
 
 //Criar objeto da toore
 CreateObjectTower(id) {
     SignalData[id][signalVariable] = CreateDynamicObject(SignalData[id][signalObject], SignalData[id][Position][0], SignalData[id][Position][1], SignalData[id][Position][2], 0.0, 0.0, SignalData[id][Position][3], SignalData[id][World], SignalData[id][Interior]);
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -162,7 +162,7 @@ IsValidTower(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 //Sinal da torre (verifica qual é o sinal do torre(mais próxima))

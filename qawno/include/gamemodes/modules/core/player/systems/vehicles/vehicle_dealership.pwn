@@ -674,7 +674,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             ResetDealershipVars(playerid);
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
             pInfo[playerid][pPositionX], 
             pInfo[playerid][pPositionY], 
             pInfo[playerid][pPositionZ],
@@ -714,7 +714,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             TogglePlayerControllable(playerid, false);
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
             pInfo[playerid][pPositionX], 
             pInfo[playerid][pPositionY], 
             pInfo[playerid][pPositionZ],
@@ -737,7 +737,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         TogglePlayerControllable(playerid, false);
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
         SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-        SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+        SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], 
         pInfo[playerid][pPositionY], 
         pInfo[playerid][pPositionZ],
@@ -751,7 +751,7 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         ResetDealershipVars(playerid);
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-	    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+	    SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], 
         pInfo[playerid][pPositionY], 
         pInfo[playerid][pPositionZ],

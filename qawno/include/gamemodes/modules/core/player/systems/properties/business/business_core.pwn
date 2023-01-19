@@ -42,13 +42,13 @@ new sbInfo[B_MAX_STORAGE][B_STORAGE_DATA];
 hook OnGameModeInit() {
     LoadBusinesss();
     LoadStoragesBusiness();
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveBusinesss();
     SaveStoragesBusiness();
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -90,7 +90,7 @@ LoadBusinesss() {
 
     printf("[EMPRESAS]: %d empresas carregadas com sucesso.", loadedBusiness);
 
-    return 1;
+    return true;
 }
 
 //Carrega empresa específica (MySQL).
@@ -123,7 +123,7 @@ LoadBusiness(id) {
     cache_get_value_name_int(0, "vw_exit", bInfo[id][vwExit]);
     cache_get_value_name_int(0, "interior_exit", bInfo[id][interiorExit]);
     CreateObjectEntry(id);
-    return 1;
+    return true;
 }
 
 //Salva todas empresas (MySQL).
@@ -148,7 +148,7 @@ SaveBusinesss() {
 
     printf("[EMPRESAS]: %d empresas salvas com sucesso.", savedBusinesss);
 
-    return 1;
+    return true;
 }
 
 //Salva empresa específica (MySQL).
@@ -168,7 +168,7 @@ SaveBusiness(id) {
             bInfo[id][interiorExit], id);
     mysql_query(DBConn, query);
     RefreshObjectEntry(id);
-    return 1;
+    return true;
 }
 
 // Criar empresa (MySQL)
@@ -194,7 +194,7 @@ CreateBusiness(playerid, type, price, address[256]) {
     SendServerMessage(playerid, "Você criou a empresa de ID %d no endereço: '%s' ($%s) (Tipo: %s)", id, bInfo[id][bAddress], FormatNumber(price), BusinessType(id));
     format(logString, sizeof(logString), "%s (%s) criou a empresa de ID %d no endereço: '%s'. ($%s) (tipo: %s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price), BusinessType(id));
 	logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Deletar/excluir empresa (MySQL)
@@ -209,7 +209,7 @@ DeleteBusiness(playerid, id)  {
 
     new dummyReset[E_BUSINESS_DATA];
     bInfo[id] = dummyReset;
-    return 1;
+    return true;
 } 
 
 // ============================================================================================================================================
@@ -235,7 +235,7 @@ LoadStoragesBusiness() {
         loadedStorage++;
     }
     printf("[ARMAZEM]: %d items foram carregados com sucesso.", loadedStorage);
-    return 1;
+    return true;
 }
 
 //Carrega estoque especifico específica (MySQL).
@@ -253,7 +253,7 @@ LoadStoragesBusiness() {
     cache_get_value_name_int(i, "owner", sbInfo[id][sbOwner]);
     cache_get_value_name_int(i, "quantity", sbInfo[id][sbQuantity]);
     cache_get_value_name_int(i, "category", sbInfo[id][sbCategory]);
-    return 1;
+    return true;
 } */
 
 //Salva todos os estoques das empresas (MySQL).
@@ -271,7 +271,7 @@ SaveStoragesBusiness() {
         savedStorage++;
     }
     printf("[ARMAZEM]: %d items salvos com sucesso.", savedStorage);
-    return 1;
+    return true;
 }
 
 //Salva estoque específico (MySQL).
@@ -287,7 +287,7 @@ SaveStoragesBusiness() {
         sbInfo[id][sbCategory], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 } */
 // ============================================================================================================================================
 //Verifica se o ID existe empresa (MySQL) - ele retorna false (se o ID não existir).
@@ -298,7 +298,7 @@ IsValidBusiness(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 // Efetua a validação e/ou verifca o dono.
@@ -310,7 +310,7 @@ BusinessHasOwner(id) {
 CreateObjectEntry(id)  {
     bInfo[id][bVariable] = CreateDynamicObject(19198, bInfo[id][bEntryPos][0], bInfo[id][bEntryPos][1], bInfo[id][bEntryPos][2], 0.0, 0.0, bInfo[id][bEntryPos][3], bInfo[id][vwEntry], bInfo[id][interiorEntry], -1, 10.0);
 
-    return 1;
+    return true;
 }
 
 // Recarrega ás ATMs (+ destroy todos os objetos existentes dela e create (novamente))
@@ -322,7 +322,7 @@ RefreshObjectEntry(id) {
 
         CreateObjectEntry(id);
 	}
-	return 1;
+	return true;
 }
 
 // Procura por alguma entrada da empresa
@@ -455,7 +455,7 @@ EditEntryBusiness(playerid, businessID) {
     bInfo[businessID][vwEntry] =  GetPlayerVirtualWorld(playerid);
     bInfo[businessID][interiorEntry] = GetPlayerInterior(playerid);
     SaveBusiness(businessID);
-    return 1;
+    return true;
 }
 
 EditExitBusiness(playerid, businessID) {
@@ -464,28 +464,28 @@ EditExitBusiness(playerid, businessID) {
     bInfo[businessID][interiorExit] = GetPlayerInterior(playerid);
     TeleportBusiness(playerid, businessID);
     SaveBusiness(businessID);
-    return 1;
+    return true;
 }
 
 //Função que edita nome da empresa
 EditNameBusiness(businessID, newName) {
     bInfo[businessID][bName] = newName;
     SaveBusiness(businessID);
-    return 1;
+    return true;
 }
 
 //Função que edita o preço
 EditPriceBusiness(businessID, newName) {
     bInfo[businessID][bPrice] = newName;
     SaveBusiness(businessID);
-    return 1;
+    return true;
 }
 
 //Função que edita o tipo da empresa
 EditTypeBusiness(businessID, newType) {
     bInfo[businessID][bType] = newType;
     SetIntDefaultBusiness(businessID); // Seta o interior da empresa + salva os dados.
-    return 1;
+    return true;
 }
 
 //Verifica se (playerid) está dentro de uma empresa (retorna o ID da empresa que ele está.).
@@ -507,7 +507,7 @@ TeleportBusiness(playerid, id) {
     SetPlayerFacingAngle(playerid, bInfo[id][bEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a empresa de ID %d.", id);
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -536,7 +536,7 @@ Dialog:ManagerPageHome(playerid, response, listitem, inputtext[]) {
             case 3: ManagerStorage(playerid);
         } 
     }
-    return 1;
+    return true;
 }
 
 ManagerStorage(playerid) {
@@ -572,7 +572,7 @@ Dialog:ManagerPageStorage(playerid, response, listitem, inputtext[]) {
             printf("%d solciita edição de produto do produto %s", playerid, inputtext);   
         }
     }
-    return 1;
+    return true;
 }
 
 BusinessProductList(playerid) {
@@ -613,7 +613,7 @@ Dialog:PageProductList(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][sTempItem] = strval(inputtext);
 
         Dialog_Show(playerid, PageProductBuy, DIALOG_STYLE_INPUT, "{FFFFFF}Solicitar Produto (compra)", string, "Continuar", "<<");
-        return 1;
+        return true;
         }
     return -1;
 }
@@ -638,7 +638,7 @@ Dialog:PageProductBuy(playerid, response, listitem, inputtext[]) {
         new string[512];
         format(string, sizeof(string), "Produto: %s\nValor Unitário: $%d\nQuantidade solicitada: %d\nValor total: $%d", itemName, pInfo[playerid][sTempPrice], quantity, total);
         Dialog_Show(playerid, ProductBuy, DIALOG_STYLE_MSGBOX, "{FFFFFF}Solicitação de Produto (compra)", string, "Confirmar", "Cancelar");
-        return 1;
+        return true;
         }
     return -1;
 }
@@ -654,14 +654,14 @@ Dialog:ProductBuy(playerid, response, listitem, inputtext[]) {
         pInfo[playerid][sTempPrice] = -1;
         pInfo[playerid][sTempTotal] = -1;
         pInfo[playerid][sTempQuantity] = -1;
-        return 1;
+        return true;
         }
     return -1;
 }
 
 IsProductBuy(playerid, productID, total, quantity) {
     printf("Playerid: %d - Produto ID: %d - Total: $%d - Quantidade: %d", playerid, productID, total, quantity);
-    return 1;
+    return true;
 }
 
 //cmd:comprar (dentro da empresa - dialog de compra).

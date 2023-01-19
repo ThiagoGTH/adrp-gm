@@ -13,7 +13,7 @@ CMD:radio(playerid, params[]) {
         SendClientMessage(playerid, COLOR_BEGE, "[Renomear] Altera o nome do canal sintonizado no slot escolhido.");
         SendClientMessage(playerid, COLOR_BEGE, "[Info] Verifica o tipo do aparelho e todos os canais sintonizados.");
         SendClientMessage(playerid, COLOR_BEGE, "_______________________________________________________________________");
-        return 1;
+        return true;
     } else if(!strcmp(type, "status", true)) {
         if(pInfo[playerid][rRadioState])
         {
@@ -92,7 +92,7 @@ CMD:radio(playerid, params[]) {
                     pInfo[playerid][rRadioSlot][6] = 0;
                 }
             }
-            return 1;
+            return true;
         }
 
         if(pInfo[playerid][pRadioNvl] == 0) return SendErrorMessage(playerid, "Você não possui um rádio.");
@@ -268,10 +268,10 @@ CMD:radio(playerid, params[]) {
                     va_SendClientMessage(playerid, COLOR_GREEN2, "O seu slot %d foi renomeado para \"%s\".", slot2, name);
                 }
             }
-            return 1;
+            return true;
         }
     }
-    return 1;
+    return true;
 }
 
 CMD:r1(playerid, params[])
@@ -467,7 +467,7 @@ CMD:r7(playerid, params[])
     va_SendClientMessage(playerid, -1, "{877D49}[CH: %s - S: 7] %s: %s", TransmissionName(playerid, 7), pNome(playerid), params);
     format(text, sizeof(text), "(no rádio) %s: %s", pNome(playerid), params);
     ProxDetector(15.0, playerid, text, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2, COLOR_FADE2);
-    return 1;
+    return true;
 }
 
 CMD:darradio(playerid, params[])
@@ -505,7 +505,7 @@ CMD:darradio(playerid, params[])
         SendClientMessage(targetid, -1, "{228B22}Você recebeu um rádio nível 3.");
         va_SendClientMessage(playerid, -1, "{228B22}Você deu um rádio nível 3 ao jogador %s.", pNome(targetid));
     }
-    return 1;
+    return true;
 }
 
 // Verificação se está ou não renomeado

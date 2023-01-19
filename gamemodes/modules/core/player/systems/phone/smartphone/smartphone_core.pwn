@@ -108,7 +108,7 @@ new
 
 hook OnPlayerConnect(playerid) {
 	CreatePlayerPhoneTextDraws(playerid);
-	return 1;
+	return true;
 }
 
 hook OnGameModeInit() {
@@ -116,7 +116,7 @@ hook OnGameModeInit() {
 	LoadContacts();
 	SetTimer("OnCheckSMS", 60000, true); 
 	CreatePhoneTextDraws();
-	return 1;
+	return true;
 }
 
 hook PhoneTurnOff(playerid) {
@@ -366,7 +366,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid) {
 			PCoverOpening{playerid} = false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
@@ -446,7 +446,7 @@ hook OP_ClickPlayerTextDraw(playerid, PlayerText:playertextid) {
 	    	}
     	}
     }
-	return 1;
+	return true;
 }
 
 hook OnCheckSMS(playerid) {
@@ -487,7 +487,7 @@ hook OnCheckSMS(playerid) {
 				if(pInfo[playerid][pCellTime] == 10) AnnounceMyAction(calling, "phone begins to ring.");
 			}
 		}
-	} return 1;
+	} return true;
 }
 
 hook SendPlayerCall(playerid, number, numberid) {
@@ -499,7 +499,7 @@ hook SendPlayerCall(playerid, number, numberid) {
 
 		RenderPlayerPhone(playerid, ph_menuid[playerid], ph_sub_menuid[playerid]);
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-	    return 1;
+	    return true;
 	} */
 
 	new targetid = INVALID_PLAYER_ID;
@@ -591,7 +591,7 @@ LoadContacts() {
 
     printf("[Contatos]: %d contatos carregadas com sucesso.", loadedContacts);
 
-    return 1;
+    return true;
 }
 
 //Carrega todos SMS (MySQL).
@@ -618,7 +618,7 @@ LoadSms() {
 
     printf("[SMS]: %d sms carregadas com sucesso.", loadedSms);
 
-    return 1;
+    return true;
 }
 
 CreatePhoneTextDraws() {
@@ -629,24 +629,24 @@ CreatePhoneTextDraws() {
 	TextDrawColour(TD_PhoneCover[0], -1);
 	TextDrawUseBox(TD_PhoneCover[0], 1);
 	TextDrawBoxColour(TD_PhoneCover[0], 80);
-	TextDrawSetShadow(TD_PhoneCover[0], 0);
-	TextDrawSetOutline(TD_PhoneCover[0], 0);
+	TextDrawSetShadow(TD_PhoneCover[0], false);
+	TextDrawSetOutline(TD_PhoneCover[0], false);
 	TextDrawBackgroundColour(TD_PhoneCover[0], 255);
 	TextDrawFont(TD_PhoneCover[0], 2);
 	TextDrawSetProportional(TD_PhoneCover[0], 1);
-	TextDrawSetShadow(TD_PhoneCover[0], 0);
+	TextDrawSetShadow(TD_PhoneCover[0], false);
 
 	TD_PhoneCover[1] = TextDrawCreate(269.399841, 146.537796, "LD_SPAC:white");
 	TextDrawLetterSize(TD_PhoneCover[1], 0.000000, 0.000000);
 	TextDrawTextSize(TD_PhoneCover[1], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[1], 1);
 	TextDrawColour(TD_PhoneCover[1], 286331391);
-	TextDrawSetShadow(TD_PhoneCover[1], 0);
-	TextDrawSetOutline(TD_PhoneCover[1], 0);
+	TextDrawSetShadow(TD_PhoneCover[1], false);
+	TextDrawSetOutline(TD_PhoneCover[1], false);
 	TextDrawBackgroundColour(TD_PhoneCover[1], 255);
 	TextDrawFont(TD_PhoneCover[1], 4);
-	TextDrawSetProportional(TD_PhoneCover[1], 0);
-	TextDrawSetShadow(TD_PhoneCover[1], 0);
+	TextDrawSetProportional(TD_PhoneCover[1], false);
+	TextDrawSetShadow(TD_PhoneCover[1], false);
 	TextDrawSetSelectable(TD_PhoneCover[1], true);
 
 	TD_PhoneCover[2] = TextDrawCreate(302.999847, 146.537841, "LD_SPAC:white");
@@ -654,12 +654,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[2], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[2], 1);
 	TextDrawColour(TD_PhoneCover[2], 1628113919);
-	TextDrawSetShadow(TD_PhoneCover[2], 0);
-	TextDrawSetOutline(TD_PhoneCover[2], 0);
+	TextDrawSetShadow(TD_PhoneCover[2], false);
+	TextDrawSetOutline(TD_PhoneCover[2], false);
 	TextDrawBackgroundColour(TD_PhoneCover[2], 255);
 	TextDrawFont(TD_PhoneCover[2], 4);
-	TextDrawSetProportional(TD_PhoneCover[2], 0);
-	TextDrawSetShadow(TD_PhoneCover[2], 0);
+	TextDrawSetProportional(TD_PhoneCover[2], false);
+	TextDrawSetShadow(TD_PhoneCover[2], false);
 	TextDrawSetSelectable(TD_PhoneCover[2], true);
 
 	TD_PhoneCover[3] = TextDrawCreate(268.999877, 181.880020, "LD_SPAC:white");
@@ -667,12 +667,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[3], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[3], 1);
 	TextDrawColour(TD_PhoneCover[3], 2104099071);
-	TextDrawSetShadow(TD_PhoneCover[3], 0);
-	TextDrawSetOutline(TD_PhoneCover[3], 0);
+	TextDrawSetShadow(TD_PhoneCover[3], false);
+	TextDrawSetOutline(TD_PhoneCover[3], false);
 	TextDrawBackgroundColour(TD_PhoneCover[3], 255);
 	TextDrawFont(TD_PhoneCover[3], 4);
-	TextDrawSetProportional(TD_PhoneCover[3], 0);
-	TextDrawSetShadow(TD_PhoneCover[3], 0);
+	TextDrawSetProportional(TD_PhoneCover[3], false);
+	TextDrawSetShadow(TD_PhoneCover[3], false);
 	TextDrawSetSelectable(TD_PhoneCover[3], true);
 
 	TD_PhoneCover[4] = TextDrawCreate(302.599945, 181.880142, "LD_SPAC:white");
@@ -680,12 +680,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[4], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[4], 1);
 	TextDrawColour(TD_PhoneCover[4], 405561855);
-	TextDrawSetShadow(TD_PhoneCover[4], 0);
-	TextDrawSetOutline(TD_PhoneCover[4], 0);
+	TextDrawSetShadow(TD_PhoneCover[4], false);
+	TextDrawSetOutline(TD_PhoneCover[4], false);
 	TextDrawBackgroundColour(TD_PhoneCover[4], 255);
 	TextDrawFont(TD_PhoneCover[4], 4);
-	TextDrawSetProportional(TD_PhoneCover[4], 0);
-	TextDrawSetShadow(TD_PhoneCover[4], 0);
+	TextDrawSetProportional(TD_PhoneCover[4], false);
+	TextDrawSetShadow(TD_PhoneCover[4], false);
 	TextDrawSetSelectable(TD_PhoneCover[4], true);
 
 	TD_PhoneCover[5] = TextDrawCreate(269.399963, 217.222259, "LD_SPAC:white");
@@ -693,12 +693,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[5], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[5], 1);
 	TextDrawColour(TD_PhoneCover[5], 388831231);
-	TextDrawSetShadow(TD_PhoneCover[5], 0);
-	TextDrawSetOutline(TD_PhoneCover[5], 0);
+	TextDrawSetShadow(TD_PhoneCover[5], false);
+	TextDrawSetOutline(TD_PhoneCover[5], false);
 	TextDrawBackgroundColour(TD_PhoneCover[5], 255);
 	TextDrawFont(TD_PhoneCover[5], 4);
-	TextDrawSetProportional(TD_PhoneCover[5], 0);
-	TextDrawSetShadow(TD_PhoneCover[5], 0);
+	TextDrawSetProportional(TD_PhoneCover[5], false);
+	TextDrawSetShadow(TD_PhoneCover[5], false);
 	TextDrawSetSelectable(TD_PhoneCover[5], true);
 
 	TD_PhoneCover[6] = TextDrawCreate(303.000061, 216.724502, "LD_SPAC:white");
@@ -706,12 +706,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[6], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[6], 1);
 	TextDrawColour(TD_PhoneCover[6], 0xce9100ff);
-	TextDrawSetShadow(TD_PhoneCover[6], 0);
-	TextDrawSetOutline(TD_PhoneCover[6], 0);
+	TextDrawSetShadow(TD_PhoneCover[6], false);
+	TextDrawSetOutline(TD_PhoneCover[6], false);
 	TextDrawBackgroundColour(TD_PhoneCover[6], 255);
 	TextDrawFont(TD_PhoneCover[6], 4);
-	TextDrawSetProportional(TD_PhoneCover[6], 0);
-	TextDrawSetShadow(TD_PhoneCover[6], 0);
+	TextDrawSetProportional(TD_PhoneCover[6], false);
+	TextDrawSetShadow(TD_PhoneCover[6], false);
 	TextDrawSetSelectable(TD_PhoneCover[6], true);
 
 	TD_PhoneCover[7] = TextDrawCreate(269.400024, 253.560089, "LD_SPAC:white");
@@ -719,12 +719,12 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[7], 29.000000, 30.000000);
 	TextDrawAlignment(TD_PhoneCover[7], 1);
 	TextDrawColour(TD_PhoneCover[7], -2063576577);
-	TextDrawSetShadow(TD_PhoneCover[7], 0);
-	TextDrawSetOutline(TD_PhoneCover[7], 0);
+	TextDrawSetShadow(TD_PhoneCover[7], false);
+	TextDrawSetOutline(TD_PhoneCover[7], false);
 	TextDrawBackgroundColour(TD_PhoneCover[7], 255);
 	TextDrawFont(TD_PhoneCover[7], 4);
-	TextDrawSetProportional(TD_PhoneCover[7], 0);
-	TextDrawSetShadow(TD_PhoneCover[7], 0);
+	TextDrawSetProportional(TD_PhoneCover[7], false);
+	TextDrawSetShadow(TD_PhoneCover[7], false);
 	TextDrawSetSelectable(TD_PhoneCover[7], true);
 
 	TD_PhoneCover[8] = TextDrawCreate(364.400238, 262.177764, "Purchase");
@@ -734,12 +734,12 @@ CreatePhoneTextDraws() {
 	TextDrawColour(TD_PhoneCover[8], -1);
 	TextDrawUseBox(TD_PhoneCover[8], 1);
 	TextDrawBoxColour(TD_PhoneCover[8], 80);
-	TextDrawSetShadow(TD_PhoneCover[8], 0);
-	TextDrawSetOutline(TD_PhoneCover[8], 0);
+	TextDrawSetShadow(TD_PhoneCover[8], false);
+	TextDrawSetOutline(TD_PhoneCover[8], false);
 	TextDrawBackgroundColour(TD_PhoneCover[8], 255);
 	TextDrawFont(TD_PhoneCover[8], 2);
 	TextDrawSetProportional(TD_PhoneCover[8], 1);
-	TextDrawSetShadow(TD_PhoneCover[8], 0);
+	TextDrawSetShadow(TD_PhoneCover[8], false);
 	TextDrawSetSelectable(TD_PhoneCover[8], true);
 }
 
@@ -762,14 +762,14 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][0], 0.000000, 15.181289);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][0], 498.333343, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][0], 1);
-	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][0], 0);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][0], false);
 	PlayerTextDrawUseBox(playerid, TDPhone_Model[playerid][0], true);
 	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 269619711);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][0], 0);
-	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][0], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][0], false);
+	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][0], false);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][0], 1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], false);
 
 	TDPhone_Model[playerid][1] = CreatePlayerTextDraw(playerid, 496.199707, 314.288909, "ld_spac:tvcorn");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][1], 0.000000, 0.000000);
@@ -778,33 +778,33 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -858993409);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][1], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][1], 4);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][1], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][1], 0);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][1], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][1], false);
 
 	TDPhone_Model[playerid][2] = CreatePlayerTextDraw(playerid, 601.802307, 314.288909, "ld_spac:tvcorn");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][2], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][2], -55.000000, 135.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][2], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -858993409);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][2], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][2], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][2], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][2], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][2], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][2], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][2], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][2], false);
 
 	TDPhone_Model[playerid][3] = CreatePlayerTextDraw(playerid, 572.000122, 323.970397, "LD_BEAT:chit");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][3], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][3], 9.000018, 9.540739);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][3], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][3], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][3], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][3], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][3], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][3], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][3], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][3], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][3], true);
 
 	TDPhone_Model[playerid][4] = CreatePlayerTextDraw(playerid, 579.667358, 319.822174, "ld_beat:circle");
@@ -812,12 +812,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][4], 15.999990, 15.762954);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][4], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][4], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][4], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][4], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][4], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][4], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][4], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][4], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][4], true);
 
 	TDPhone_Model[playerid][5] = CreatePlayerTextDraw(playerid, 550.333374, 329.377868, "LS Telefonica");
@@ -825,7 +825,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][5], 0.000000, 2016.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][5], 2);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][5], -522133249);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][5], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][5], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][5], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][5], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][5], 1);
@@ -834,23 +834,23 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][6], 0.000000, 5.982919);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][6], 506.999633, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][6], 1);
-	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][6], 0);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][6], false);
 	PlayerTextDrawUseBox(playerid, TDPhone_Model[playerid][6], true);
 	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][6], -572662273);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][6], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][6], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][6], 255);
-	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][6], 0);
+	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][6], false);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][6], 1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], false);
 
 	TDPhone_Model[playerid][7] = CreatePlayerTextDraw(playerid, 507.333282, 407.763031, "ld_dual:white"); // Left Button
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][7], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][7], 22.333309, 7.881487);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][7], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][7], -1717986817);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][7], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][7], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][7], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][7], false);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][7], 4);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][7], true);
 
@@ -860,12 +860,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][8], 12.000005, 12.444459);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][8], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][8], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][8], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][8], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][8], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][8], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][8], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][8], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][8], true);
 
 	TDPhone_Model[playerid][9] = CreatePlayerTextDraw(playerid, 544.666809, 425.600006, "ld_beat:down");
@@ -873,12 +873,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][9], 11.666647, 12.029617);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][9], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][9], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][9], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][9], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][9], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][9], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][9], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][9], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][9], true);
 
 	TDPhone_Model[playerid][10] = CreatePlayerTextDraw(playerid, 534.666931, 417.718536, "ld_beat:left");
@@ -886,12 +886,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][10], 12.000015, 12.029621);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][10], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][10], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][10], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][10], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][10], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][10], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][10], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][10], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][10], true);
 
 	TDPhone_Model[playerid][11] = CreatePlayerTextDraw(playerid, 554.333679, 417.718414, "ld_beat:right");
@@ -899,12 +899,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][11], 12.333327, 12.029634);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][11], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][11], -1);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][11], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][11], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][11], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][11], 4);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][11], 0);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], 0);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][11], false);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][11], true);
 	////
 
@@ -922,8 +922,8 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][13], 22.333290, 7.881502);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][13], 1);
 	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][13], -1717986817);
-	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][13], 0);
-	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][13], 0);
+	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][13], false);
+	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][13], false);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][13], 4);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][13], true);
 
@@ -996,7 +996,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetOutline(playerid, TDPhone_NotifyText[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_NotifyText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_NotifyText[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_NotifyText[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_NotifyText[playerid], true);
 	PlayerTextDrawSetShadow(playerid, TDPhone_NotifyText[playerid], false);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_NotifyText[playerid], true);
 
@@ -1008,10 +1008,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 		PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][i], -1);
 		PlayerTextDrawUseBox(playerid, TDPhone_Choice[playerid][i], 1);
 		PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][i], 255);
-		PlayerTextDrawSetShadow(playerid, TDPhone_Choice[playerid][i], 0);
+		PlayerTextDrawSetShadow(playerid, TDPhone_Choice[playerid][i], false);
 		PlayerTextDrawBackgroundColour(playerid, TDPhone_Choice[playerid][i], 255);
 		PlayerTextDrawFont(playerid, TDPhone_Choice[playerid][i], 1);
-		PlayerTextDrawSetProportional(playerid, TDPhone_Choice[playerid][i], 1);
+		PlayerTextDrawSetProportional(playerid, TDPhone_Choice[playerid][i], true);
 		PlayerTextDrawSetSelectable(playerid, TDPhone_Choice[playerid][i], true);
 
 		y += 13.274079;
@@ -3687,12 +3687,12 @@ Dialog:AskTurnOff(playerid, response, listitem, inputtext[]) {
 //Gerar o numero de celular
 /*GeneratorNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = random(900000) + 100000;
-	return 1;
+	return true;
 }
 
 DestroyNumber(playerid) {
 	pInfo[playerid][pPhoneNumber] = 0;
-	return 1;
+	return true;
 } */
 //=========================================================================================
 //Funções complementares

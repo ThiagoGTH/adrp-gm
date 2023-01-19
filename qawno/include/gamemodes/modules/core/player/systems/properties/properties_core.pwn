@@ -15,12 +15,12 @@ new intInfo[MAX_INTERIORS][E_INTERIORS_DATA];
 // ============================================================================================================================================
 hook OnGameModeInit() {
     LoadInteriors(); //Carrega todos interiores.
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveInteriors(); //Salva todos interiores.
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -51,7 +51,7 @@ LoadInteriors() {
 
     printf("[INTERIORES]: %d interiores carregados com sucesso.", loadedInteriors);
 
-    return 1;
+    return true;
 }
 
 //Carrega empresa específica (MySQL).
@@ -72,7 +72,7 @@ LoadInterior(id) {
     cache_get_value_name_float(0, "int_y", intInfo[id][iPosition][1]);
     cache_get_value_name_float(0, "int_z", intInfo[id][iPosition][2]);
     cache_get_value_name_float(0, "int_a", intInfo[id][iPosition][3]);
-    return 1;
+    return true;
 }
 
 //Salva todos interiores (MySQL).
@@ -93,7 +93,7 @@ SaveInteriors() {
 
     printf("[INTERIORES]: %d interiores salvos com sucesso.", savedInteriors);
 
-    return 1;
+    return true;
 }
 
 //Salva interior específica (MySQL).
@@ -109,7 +109,7 @@ SaveInteriors() {
             intInfo[id][iInterior], intInfo[id][iWorld], intInfo[id][iPosition][0], intInfo[id][iPosition][1], intInfo[id][iPosition][2], intInfo[id][iPosition][3], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 } */
 
 //Criar interior (MySQL)
@@ -131,7 +131,7 @@ CreateInterior(playerid, type, name[256]) {
     SendServerMessage(playerid, "Você criou o interior de ID %d de nome: '%s' (Tipo: %s)", id, intInfo[id][iName], InteriorType(id));
     format(logString, sizeof(logString), "%s (%s) criou o interior de ID %d no nome: '%s'. (tipo: %s)", pNome(playerid), GetPlayerUserEx(playerid), id, name, InteriorType(id));
 	logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 //Deletar/excluir inteior (MySQL)
 DeleteInterior(playerid, id)  {
@@ -145,7 +145,7 @@ DeleteInterior(playerid, id)  {
 
     new dummyReset[E_INTERIORS_DATA];
     intInfo[id] = dummyReset;
-    return 1;
+    return true;
 } 
 
 //Tipos de interiores
@@ -168,13 +168,13 @@ IsValidInterior(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 // ============================================================================================================================================
 //Função (mostra a dialog de inteiores "custom").
 ShowInteriors(playerid) {
     Dialog_Show(playerid, InteriorsType, DIALOG_STYLE_LIST, "Interiores", "Casa\nEmpresa\nOutros", "Selecionar", "Voltar");
-    return 1;
+    return true;
 }
 
 //Resposta do dialog da função ShowInteriors.
@@ -275,7 +275,7 @@ Dialog:TeleportCustom(playerid, response, listitem, inputtext[]){
     if(!response) {
         ShowInteriors(playerid);
     }
-    return 1;
+    return true;
 } 
 // ============================================================================================================================================
 EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3, bool:isGarage) {
@@ -304,7 +304,7 @@ EnterProperty(playerid, vwExitProperty, interiorExitProperty, Float:exitPos0, Fl
     SetPlayerInterior(playerid, interiorExitProperty);
     SetCameraBehindPlayer(playerid);
 
-    return 1;
+    return true;
 }
 
 ExitProperty(playerid, vwEntryProperty, interiorEntryProperty, Float:entryPos0, Float:entryPos1, Float:entryPos2, Float:entryPos3, bool:isGarage) {
@@ -333,7 +333,7 @@ ExitProperty(playerid, vwEntryProperty, interiorEntryProperty, Float:entryPos0, 
     SetPlayerInterior(playerid, interiorEntryProperty);
     SetCameraBehindPlayer(playerid);
 
-    return 1;
+    return true;
 }
 
 BuyProperty(playerid, propertyId, propertyType) {
@@ -352,7 +352,7 @@ BuyProperty(playerid, propertyId, propertyType) {
                 format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(hInfo[propertyId][hPrice]));
                 logCreate(playerid, logString, 13);
 
-                return 1;
+                return true;
             }
             hInfo[propertyId][hOwner] = pInfo[playerid][pID];
             SaveHouse(propertyId);
@@ -369,7 +369,7 @@ BuyProperty(playerid, propertyId, propertyType) {
             va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a casa no endereço %s.", GetHouseAddress(propertyId));
             va_SendClientMessage(playerid, COLOR_YELLOW, "Junto da sua casa nova, no mesmo endereço, você também adquiriu a garagem dela.");
 
-            return 1;
+            return true;
         } else {
             hInfo[propertyId][hOwner] = pInfo[playerid][pID];
             SaveHouse(propertyId);
@@ -378,7 +378,7 @@ BuyProperty(playerid, propertyId, propertyType) {
             format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(hInfo[propertyId][hPrice]));
             logCreate(playerid, logString, 13);
 
-            return 1;
+            return true;
 
         }
     }
@@ -391,7 +391,7 @@ BuyProperty(playerid, propertyId, propertyType) {
         format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
         logCreate(playerid, logString, 24);
 
-        return 1;
+        return true;
     }
 
     if(propertyType == 3) {
@@ -403,10 +403,10 @@ BuyProperty(playerid, propertyId, propertyType) {
         format(logString, sizeof(logString), "%s (%s) comprou a gargem ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
         logCreate(playerid, logString, 25);
 
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 }
 
 
@@ -429,7 +429,7 @@ AdminSellProperty(playerid, propertyId, propertyType) {
                 format(logString, sizeof(logString), "%s (%s) colocou a casa ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(hInfo[propertyId][hPrice]));
                 logCreate(playerid, logString, 13);
 
-                return 1;
+                return true;
             }
             hInfo[propertyId][hOwner] = 0;
             SaveHouse(propertyId);
@@ -449,7 +449,7 @@ AdminSellProperty(playerid, propertyId, propertyType) {
 
             va_SendClientMessage(playerid, COLOR_YELLOW, "Você colocou a casa e garagem no endereço %s a venda.", GetHouseAddress(propertyId));
 
-            return 1;
+            return true;
         } else {
             hInfo[propertyId][hOwner] = 0;
             SaveHouse(propertyId);
@@ -458,7 +458,7 @@ AdminSellProperty(playerid, propertyId, propertyType) {
             format(logString, sizeof(logString), "%s (%s) colocou a casa ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(hInfo[propertyId][hPrice]));
             logCreate(playerid, logString, 13);
 
-            return 1;
+            return true;
 
         }
     }
@@ -474,7 +474,7 @@ AdminSellProperty(playerid, propertyId, propertyType) {
         format(logString, sizeof(logString), "%s (%s) colocou a empresa ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
         logCreate(playerid, logString, 24);
 
-        return 1;
+        return true;
     }
 
     if(propertyType == 3) {
@@ -488,10 +488,10 @@ AdminSellProperty(playerid, propertyId, propertyType) {
         format(logString, sizeof(logString), "%s (%s) colocou a garagem ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
         logCreate(playerid, logString, 25);
 
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 }
 
 LockProperty(playerid, propertyId, propertyType) {
@@ -504,7 +504,7 @@ LockProperty(playerid, propertyId, propertyType) {
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, hInfo[propertyId][hLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
-        return 1;
+        return true;
     }
 
     // business
@@ -515,7 +515,7 @@ LockProperty(playerid, propertyId, propertyType) {
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, bInfo[propertyId][bLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
-        return 1;
+        return true;
     }
 
     // garage
@@ -526,10 +526,10 @@ LockProperty(playerid, propertyId, propertyType) {
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, gInfo[propertyId][gLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 }
 
 NearbyProperty(playerid) {
@@ -542,5 +542,5 @@ NearbyProperty(playerid) {
         return SendServerMessage(playerid, "[Business Near] a mais próxima é ID: %d.", id);
     if ((id = GetNearestGarageEntry(playerid)) != -1)
         return SendServerMessage(playerid, "[Garage Near] a mais próxima é ID: %d.", id);
-    return 1;
+    return true;
 }

@@ -13,5 +13,5 @@ CMD:fumar(playerid, params[])
 		case 2: ApplyAnimationEx(playerid, "SMOKING", "M_smklean_loop", 4.1, false, false, false, false, 0);
 		case 3: ApplyAnimation(playerid, "SMOKING", "M_smkstnd_loop", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

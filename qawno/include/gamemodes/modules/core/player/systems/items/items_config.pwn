@@ -82,7 +82,7 @@ Dialog:ItemsAdd(playerid, response, listitem, inputtext[]) {
 
         Dialog_Show(playerid, ItemsAdd1, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Digite preço do item a ser criado:", "Adicionar", "<<");
     } else { return ItemsConfigMain(playerid); }
-    return 1;
+    return true;
 }
 
 Dialog:ItemsAdd1(playerid, response, listitem, inputtext[]) {
@@ -94,7 +94,7 @@ Dialog:ItemsAdd1(playerid, response, listitem, inputtext[]) {
         new model_id = pInfo[playerid][iEditingModel];
         ItemsAdd2(playerid, model_id, price);
     }
-    return 1;
+    return true;
 }
 
 ItemsAdd2(playerid, model, price){
@@ -107,7 +107,7 @@ ItemsAdd2(playerid, model, price){
 
     ItemsConfigMain(playerid);
     pInfo[playerid][iEditingModel] = 0;
-    return 1;
+    return true;
 } 
 
 Dialog:ItemsEdit(playerid, response, listitem, inputtext[]){

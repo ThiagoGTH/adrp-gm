@@ -5,7 +5,7 @@ Dialog:MDC_AskDeleteRecord(playerid, response, listitem, inputtext[])
 		mysql_format(DBConn, query, sizeof(query), "DELETE FROM player_arrest WHERE id = %d", id);
 		mysql_tquery(DBConn, query);
 	}
-	return 1;
+	return true;
 }
 
 Dialog:MDC_ArrestRecord(playerid, response, listitem, inputtext[])
@@ -27,9 +27,9 @@ Dialog:MDC_ArrestRecord(playerid, response, listitem, inputtext[])
 					strcat(str_dialog, MDC_ArrestRecord[playerid][is]);
 			}
 			Dialog_Show(playerid, MDC_ArrestRecord_Add, DIALOG_STYLE_INPUT, sprintf("Tutuklama Kaydù (5 satùrdan %d)", MDC_ArrestRecordCount[playerid]), str_dialog, "ùleri", "Geri Al");
-			return 1;
+			return true;
 	}
-	return 1;
+	return true;
 }
 
 Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
@@ -44,14 +44,14 @@ Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
 				}
 
 				MDC_ArrestRecordCount[playerid] = 0;
-				return 1;
+				return true;
 			}
 
 
 			if(strfind(inputtext, "bitir", true) != -1)
 			{
 				CreateArrestRecord(playerid);
-				return 1;
+				return true;
 			}
 
 			new str_dialog[512];
@@ -67,7 +67,7 @@ Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
 					strcat(str_dialog, "\n");
 				}
 				Dialog_Show(playerid, MDC_ArrestRecord_Add, DIALOG_STYLE_INPUT, sprintf("Tutuklama Kaydù (5 satùrdan %d)", MDC_ArrestRecordCount[playerid]), str_dialog, "ùleri", "Geri Al");
-				return 1;
+				return true;
 			}
 
 			strcat(MDC_ArrestRecord[playerid][MDC_ArrestRecordCount[playerid]], inputtext);
@@ -81,7 +81,7 @@ Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
 				strcat(str_dialog, MDC_ArrestRecord[playerid][is]);
 			}
 			Dialog_Show(playerid, MDC_ArrestRecord_Add, DIALOG_STYLE_INPUT, sprintf("Tutuklama Kaydù (5 satùrdan %d)", MDC_ArrestRecordCount[playerid]), str_dialog, "ùleri", "Geri Al");
-			return 1;
+			return true;
 	}
 	else
 	{
@@ -100,7 +100,7 @@ Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
 			}
 
 			Dialog_Show(playerid, MDC_ArrestRecord_Add, DIALOG_STYLE_INPUT, sprintf("Tutuklama Kaydù (5 satùrdan %d)", MDC_ArrestRecordCount[playerid]), str_dialog, "ùleri", "Geri Al");
-			return 1;
+			return true;
 		}
 
 		for(new is; is < 6; is++)
@@ -108,17 +108,17 @@ Dialog:MDC_ArrestRecord_Add(playerid, response, listitem, inputtext[])
 				format(MDC_ArrestRecord[playerid][is], 128, "");
 		}
 	}
-	return 1;
+	return true;
 }
 
 Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 {
-	if(!response) return 1;
+	if(!response) return true;
 
 	if(strlen(inputtext) < 3)
 	{
 		Dialog_Show(playerid, MDC_PenalCode_Filter, DIALOG_STYLE_INPUT, "Filtre Uygula", "Bulmak istediùiniz ùeyi 3 kelime ile bulamazsùnùz.\nFiltrelemek istediùiniz suùlamanùn bir kùsmùnù girin veya filtreyi sùfùrlamak iùin boù bùrakùn.", "Ara", "Vazgeù");
-		return 1;
+		return true;
 	}
 
 	
@@ -148,7 +148,7 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 	for(new i = 0, j = cache_num_rows(); i < j; i++)
 	{
 		if(countdown > 12)
-			return 1;
+			return true;
 
 		new id, penal[128], category;
 
@@ -163,7 +163,7 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 				if(category != lastcategory)
 				{
 					if (countdown + 2 > 15)
-						return 1;
+						return true;
 
 					new category_name[128];
 					cache_get_value_name(i, "category_name", category_name, 128);
@@ -211,11 +211,11 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 			PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][37], 0x9E1729FF);
 			PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][37], 0xFFFFFFFF);
 			PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][37]);
-			return 1;
+			return true;
 	}
 
 	cache_delete(cache);
-	return 1;
+	return true;
 }
 
 
@@ -239,7 +239,7 @@ Dialog:MDC_AddVehicleBolo_Model(playerid, response, listitem, inputtext[])
 	strcat(dialog, str);
 
 	Dialog_Show(playerid, MDC_AddVehicleBolo_Plate, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-	return 1;
+	return true;
 }
 
 Dialog:MDC_AddVehicleBolo_Plate(playerid, response, listitem, inputtext[])
@@ -265,7 +265,7 @@ Dialog:MDC_AddVehicleBolo_Plate(playerid, response, listitem, inputtext[])
 	strcat(dialog, str);
 
 	Dialog_Show(playerid, MDC_ABolo_Charges, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-	return 1;
+	return true;
 }
 
 Dialog:MDC_ABolo_Charges(playerid, response, listitem, inputtext[])
@@ -294,7 +294,7 @@ Dialog:MDC_ABolo_Charges(playerid, response, listitem, inputtext[])
 		strcat(dialog, str);
 
 		Dialog_Show(playerid, MDC_ABolo_Charges, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-		return 1;
+		return true;
 	}
 
 	format(lastBoloCrimes[playerid], 128, "%s", inputtext);
@@ -319,7 +319,7 @@ Dialog:MDC_ABolo_Charges(playerid, response, listitem, inputtext[])
 	strcat(dialog, str);
 
 	Dialog_Show(playerid, MDC_AddBolo_Report, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-	return 1;
+	return true;
 }
 
 Dialog:MDC_AddBolo_Report(playerid, response, listitem, inputtext[])
@@ -353,7 +353,7 @@ Dialog:MDC_AddBolo_Report(playerid, response, listitem, inputtext[])
 		strcat(dialog, str);
 
 		Dialog_Show(playerid, MDC_AddBolo_Report, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-		return 1;
+		return true;
 	}
 
 	strcat(lastBoloReportShow[playerid], inputtext);
@@ -385,7 +385,7 @@ Dialog:MDC_AddBolo_Report(playerid, response, listitem, inputtext[])
 	strcat(dialog, str);
 
 	Dialog_Show(playerid, MDC_AddBolo_ReportOrDone, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-	return 1;
+	return true;
 }
 
 Dialog:MDC_AddBolo_ReportOrDone(playerid, response, listitem, inputtext[])
@@ -423,7 +423,7 @@ Dialog:MDC_AddBolo_ReportOrDone(playerid, response, listitem, inputtext[])
 		strcat(dialog, str);
 
 		Dialog_Show(playerid, MDC_AddBolo_ReportOrDone, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-		return 1;
+		return true;
 	}
 
 	if(strmatch(inputtext, "bitti"))
@@ -436,7 +436,7 @@ Dialog:MDC_AddBolo_ReportOrDone(playerid, response, listitem, inputtext[])
 		format(lastBoloCrimes[playerid], 512, "");
 		format(lastBoloReport[playerid], 512, "");
 		format(lastBoloReportShow[playerid], 512, "");
-		return 1;
+		return true;
 	}
 
 	strcat(lastBoloReportShow[playerid], "\n");
@@ -471,7 +471,7 @@ Dialog:MDC_AddBolo_ReportOrDone(playerid, response, listitem, inputtext[])
 	strcat(dialog, str);
 
 	Dialog_Show(playerid, MDC_AddBolo_ReportOrDone, DIALOG_STYLE_INPUT, "BOLO KAYDI", dialog, "Devam", "ùptal Et");
-	return 1;
+	return true;
 }
 
 Dialog:MDCCall2(playerid, response, listitem, inputtext[])
@@ -479,11 +479,11 @@ Dialog:MDCCall2(playerid, response, listitem, inputtext[])
 	if (!response)
 	{
 		SetPVarInt(playerid, "lastEmergencyID", 0);
-		return 1;
+		return true;
 	}
 
     Dialog_Show(playerid, MDCCallRespond, DIALOG_STYLE_LIST, "{8D8DFF}MDC - ùAùRI BùLGùSù", "- ùaùrùyù ùstlen\n- ùaùrùyù Sil", "Seù", "Geri");
-	return 1;
+	return true;
 }
 
 Dialog:MDCCallRespond(playerid, response, listitem, inputtext[])
@@ -491,7 +491,7 @@ Dialog:MDCCallRespond(playerid, response, listitem, inputtext[])
 	if (!response)
 	{
 		SetPVarInt(playerid, "lastEmergencyID", 0);
-		return 1;
+		return true;
 	}
 	
 	if(!listitem)
@@ -501,7 +501,7 @@ Dialog:MDCCallRespond(playerid, response, listitem, inputtext[])
 		if(strlen(GetEmergencyStatusName(e_id, "niner_status")) != strlen("Kontrol edilmemiù"))
 		{
 			SendErrorMessage(playerid, "Bu ùaùrùyù bir baùkasù ùstlenmiù.");
-			return 1;
+			return true;
 		}
 	
 		new handle_text[64];
@@ -536,12 +536,12 @@ Dialog:MDCCallRespond(playerid, response, listitem, inputtext[])
 		MDC_HideAfterPage(playerid);
 		ShowEmergencyCalls(playerid, GetPVarInt(playerid, "emergencylist_idx"));
 	}
-	return 1;
+	return true;
 }
 
 Dialog:MDC_LookUp_EnterBox(playerid, response, listitem, inputtext[])
 {
-	if(!response) return 1;
+	if(!response) return true;
 
 	 if(response)
 	{
@@ -557,13 +557,13 @@ Dialog:MDC_LookUp_EnterBox(playerid, response, listitem, inputtext[])
 				if(strfind(inputtext, "id", true) != -1)
 				{
 					MDC_SearchVehicleWithID(playerid, inputtext);
-					return 1;
+					return true;
 				}
 			format(sorgu, sizeof(sorgu), "SELECT * FROM `vehicles` WHERE `Plate` = '%s'", inputtext);
 			mysql_tquery(DBConn, sorgu, "KisiSorgula", "sdd", inputtext, playerid, 1);
 			}
 	}
-  return 1;
+  return true;
 }
 
 /*Dialog:DIALOG_ALPRLOG(playerid, response, listitem, inputtext[])
@@ -581,5 +581,5 @@ Dialog:MDC_LookUp_EnterBox(playerid, response, listitem, inputtext[])
 		format(sorgu, sizeof(sorgu), "SELECT * FROM `vehicles` WHERE `Plate` = '%s'", 0);
 		mysql_tquery(DBConn, sorgu, "KisiSorgula", "sdd", VehicleBolo[id][vBoloPlate], playerid, 1);
 	}
-	return 1;
+	return true;
 }*/

@@ -21,7 +21,7 @@ CMD:gsign(playerid, params[])
 		case 14: ApplyAnimation(playerid, "GANGS", "prtial_gngtlkD", 4.1, false, false, false, false, 0);
 		case 15: ApplyAnimation(playerid, "GANGS", "smkcig_prtl", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:wave(playerid, params[])
@@ -41,5 +41,5 @@ CMD:wave(playerid, params[])
 		case 7: ApplyAnimation(playerid, "STRIP", "PUN_HOLLER", 4.1, false, false, false, false, 0);
 		case 8: ApplyAnimation(playerid, "OTB", "wtchrace_win", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

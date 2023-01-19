@@ -11,12 +11,12 @@ CMD:sentar(playerid, params[])
 		case 3: ApplyAnimation(playerid, "BEACH", "ParkSit_M_loop", 4.1, false, false, false, false, 0);
 		case 4: ApplyAnimation(playerid, "BEACH", "ParkSit_W_loop", 4.1, false, false, false, false, 0);
 		case 5: ApplyAnimation(playerid, "BEACH", "SitnWait_loop_W", 4.1, false, false, false, false, 0);
-		case 6: ApplyAnimationEx(playerid, "CRIB", "PED_Console_Loop", 4.1, 1, 0, 0, 0, 0);
-		case 7: ApplyAnimationEx(playerid, "INT_HOUSE", "LOU_In", 4.1, 0, 0, 0, 1, 0);
-		case 8: ApplyAnimationEx(playerid, "MISC", "SEAT_LR", 4.1, 1, 0, 0, 0, 0);
-		case 9: ApplyAnimationEx(playerid, "MISC", "Seat_talk_01", 4.1, 1, 0, 0, 0, 0);
-		case 10: ApplyAnimationEx(playerid, "MISC", "Seat_talk_02", 4.1, 1, 0, 0, 0, 0);
-		case 11: ApplyAnimationEx(playerid, "ped", "SEAT_down", 4.1, 0, 0, 0, 1, 0);
+		case 6: ApplyAnimationEx(playerid, "CRIB", "PED_Console_Loop", 4.1, true, false, false, false, 0);
+		case 7: ApplyAnimationEx(playerid, "INT_HOUSE", "LOU_In", 4.1, false, false, false, true, 0);
+		case 8: ApplyAnimationEx(playerid, "MISC", "SEAT_LR", 4.1, true, false, false, false, 0);
+		case 9: ApplyAnimationEx(playerid, "MISC", "Seat_talk_01", 4.1, true, false, false, false, 0);
+		case 10: ApplyAnimationEx(playerid, "MISC", "Seat_talk_02", 4.1, true, false, false, false, 0);
+		case 11: ApplyAnimationEx(playerid, "ped", "SEAT_down", 4.1, false, false, false, true, 0);
 	}
 	return 1;
 }

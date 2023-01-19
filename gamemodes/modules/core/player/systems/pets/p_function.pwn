@@ -65,7 +65,7 @@ PetSit(playerid) {
         PetData[playerid][petStatus] = PET_SIT;
         stop PetData[playerid][petTimer];
         ClearActorAnimations(PetData[playerid][petModel]);
-        ApplyActorAnimation(PetData[playerid][petModel], "ped", "SEAT_down", 4.1, 0, 0, 0, 1, 0);
+        ApplyActorAnimation(PetData[playerid][petModel], "ped", "SEAT_down", 4.1, false, false, false, true, 0);
         
         SendServerMessage(playerid, "Seu animal de estimação agora está sentado.");
     }
@@ -81,7 +81,7 @@ PetLay(playerid) {
         PetData[playerid][petStatus] = PET_LAY;
         stop PetData[playerid][petTimer];
         ClearActorAnimations(PetData[playerid][petModel]);
-        ApplyActorAnimation(PetData[playerid][petModel], "CRACK", "crckidle2", 4.1, 0, 0, 0, 1, 0);
+        ApplyActorAnimation(PetData[playerid][petModel], "CRACK", "crckidle2", 4.1, false, false, false, true, 0);
         SendServerMessage(playerid, "Seu animal de estimação agora está deitado.");
     }
     return true;
@@ -96,7 +96,7 @@ PetJump(playerid) {
         PetData[playerid][petStatus] = PET_LAY;
         stop PetData[playerid][petTimer];
         ClearActorAnimations(PetData[playerid][petModel]);
-        ApplyActorAnimation(PetData[playerid][petModel], "BSKTBALL", "BBALL_DEF_JUMP_SHOT", 4.1, 1, 0, 0, 0, 0);
+        ApplyActorAnimation(PetData[playerid][petModel], "BSKTBALL", "BBALL_DEF_JUMP_SHOT", 4.1, true, false, false, false, 0);
         SendServerMessage(playerid, "Seu animal de estimação agora está pulando.");
     }
     return true;

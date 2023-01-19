@@ -8,7 +8,7 @@ CMD:criartelefone(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao criar o telefone publico (cod: Px010)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 }
 
 //Excluir telefone (pago/publico)
@@ -29,7 +29,7 @@ CMD:deletartelefone(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir um telefone publico (cod: Px011)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 }
 
 //Editar telefone (publico - pago)
@@ -49,13 +49,13 @@ CMD:editartelefone(playerid, params[]) {
     // Editar o preço
     if(!strcmp(option, "posicao", true) || !strcmp(option, "posicao", true)) {
         EditDynamicObject(playerid, phoneInfo[id][phoneVariable]);
-        return 1;
+        return true;
     }
 
     //Editar o Status (ativo/desativada)
     if(!strcmp(option, "status", true) || !strcmp(option, "status", true)) {
         SendErrorMessage(playerid, "Função desativada no momento.");
-        return 1;
+        return true;
     }
 
     SendSyntaxMessage(playerid, "/editartelefone [id] [opção]");
@@ -75,5 +75,5 @@ CMD:telefonepago(playerid, params[]) {
         return SendErrorMessage(playerid, "Está desativado ou em manutenção este telefone publico.");
 
     ShowDialogPhone(playerid);
-    return 1;
+    return true;
 }

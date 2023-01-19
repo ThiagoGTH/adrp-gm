@@ -18,12 +18,12 @@ new phoneInfo[MAX_PAYPHONE][E_PHONE_DATA];
 
 hook OnGameModeInit() {
     LoadPHONES();
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SavePHONES();
-    return 1;
+    return true;
 }
 
 hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
@@ -50,7 +50,7 @@ hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:
             
 		pInfo[playerid][oEditPhone] = -1;
 	}
-	return 1;
+	return true;
 }
 
 //Carrega todos os telefones publicos (MySQL).
@@ -79,7 +79,7 @@ LoadPHONES() {
 
     printf("[PHONES]: %d Pay Phones carregadas com sucesso.", loadedPHONES);
 
-    return 1;
+    return true;
 }
 
 //Carrega telefone publico específica (MySQL).
@@ -100,7 +100,7 @@ LoadPHONE(id) {
     cache_get_value_name_int(0, "world", phoneInfo[id][phoneWorld]);
 
     CreateObjectPhone(id);
-    return 1;
+    return true;
 }
 
 //Salva todos os telefones publicos (MySQL).
@@ -122,7 +122,7 @@ SavePHONES() {
 
     printf("[PHONES]: %d Pay Phones salvas com sucesso.", savedPHONES);
 
-    return 1;
+    return true;
 }
 
 //Salvar Telefone publico especifica.
@@ -138,7 +138,7 @@ SavePHONE(id) {
             phoneInfo[id][phoneInterior], phoneInfo[id][phoneWorld], phoneInfo[id][phoneObject], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 }
 
 //Criar Telefone publico
@@ -165,13 +165,13 @@ CreatePayPhone(playerid) {
     SendServerMessage(playerid, "Você criou um telefone publico de ID %d.", id);
     format(logString, sizeof(logString), "%s (%s) criou um telefone publico de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Criar objeto da Telefone publico
 CreateObjectPhone(id) {
     phoneInfo[id][phoneVariable] = CreateDynamicObject(phoneInfo[id][phoneObject], phoneInfo[id][Position][0], phoneInfo[id][Position][1], phoneInfo[id][Position][2], 0.0, 0.0, phoneInfo[id][Position][3], phoneInfo[id][phoneWorld], phoneInfo[id][phoneInterior]);
-    return 1;
+    return true;
 }
 
 //Deleta/exclui telefone (MySQL)
@@ -188,7 +188,7 @@ DeletePayPhone(playerid, id)
 
     new dummyReset[E_PHONE_DATA];
     phoneInfo[id] = dummyReset;
-    return 1;
+    return true;
 } 
 
 // Recarrega ás telefones publicos (+ destroy todos os objetos existentes dela e create (novamente))
@@ -200,7 +200,7 @@ RefreshPHONE(id) {
 
         CreateObjectPhone(id);
 	}
-	return 1;
+	return true;
 }
 
 // ============================================================================================================================================
@@ -212,7 +212,7 @@ IsValidPhone(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 // Verifica a Telefone publico (se possui alguma próxima ou não)
@@ -236,7 +236,7 @@ GetNearestPhone(playerid, Float:distance = 2.0) {
 //Mostra a dialog (principal) ao chamar está função.
 ShowDialogPhone(playerid) {
     Dialog_Show(playerid, phoneAccount, DIALOG_STYLE_LIST, "Telefone publico > Acessando", "Usar (min)", "Selecionar", "Cancelar");
-    return 1;
+    return true;
 }
 
 //Responde a dialog

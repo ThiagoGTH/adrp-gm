@@ -23,7 +23,7 @@ CMD:entrar(playerid) {
 
         EnterProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3, isGarage);
 
-        return 1;
+        return true;
     }
 
     if (businessID > 0) {
@@ -41,7 +41,7 @@ CMD:entrar(playerid) {
 
         EnterProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3, isGarage);
 
-        return 1;
+        return true;
     }
 
     if (garageID > 0) {
@@ -53,7 +53,7 @@ CMD:entrar(playerid) {
         EnterProperty(playerid, gInfo[garageID][gVwExit], gInfo[garageID][gInteriorExit], gInfo[garageID][gExitPos][0], gInfo[garageID][gExitPos][1], gInfo[garageID][gExitPos][2], gInfo[garageID][gExitPos][3], isGarage);
     }
 
-    return 1;
+    return true;
 
 }
 
@@ -82,7 +82,7 @@ CMD:sair(playerid) {
 
         ExitProperty(playerid, vw, interior, entryPos0, entryPos1, entryPos2, entryPos3, isGarage);
 
-        return 1;
+        return true;
     }
 
     if (businessID > 0) {
@@ -100,7 +100,7 @@ CMD:sair(playerid) {
 
         ExitProperty(playerid, vw, interior, entryPos0, entryPos1, entryPos2, entryPos3, isGarage);
 
-        return 1;
+        return true;
     }
 
     if (garageID > 0) {
@@ -111,10 +111,10 @@ CMD:sair(playerid) {
 
         ExitProperty(playerid, gInfo[garageID][gVwEntry], gInfo[garageID][gInteriorEntry], gInfo[garageID][gEntryPos][0], gInfo[garageID][gEntryPos][1], gInfo[garageID][gEntryPos][2], gInfo[garageID][gEntryPos][3], isGarage);
 
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 
 }
 
@@ -141,7 +141,7 @@ CMD:comprar(playerid) {
         GiveMoney(playerid, -hInfo[houseID][hPrice]);
         BuyProperty(playerid, houseID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(businessID != -1) {
@@ -155,7 +155,7 @@ CMD:comprar(playerid) {
         GiveMoney(playerid, -bInfo[businessID][bPrice]);
         BuyProperty(playerid, businessID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(garageID != -1) {
@@ -175,7 +175,7 @@ CMD:comprar(playerid) {
         GiveMoney(playerid, -gInfo[garageID][gPrice]);
         BuyProperty(playerid, garageID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(businessInsideID != -1) {
@@ -202,7 +202,7 @@ CMD:avender(playerid) {
 
         AdminSellProperty(playerid, houseID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(businessID != -1) {
@@ -210,7 +210,7 @@ CMD:avender(playerid) {
 
         AdminSellProperty(playerid, businessID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(garageID != -1) {
@@ -218,7 +218,7 @@ CMD:avender(playerid) {
 
         AdminSellProperty(playerid, garageID, propertyType);
 
-        return 1;
+        return true;
     }
 
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade");
@@ -249,7 +249,7 @@ CMD:trancar(playerid, params[]) {
         propertyType = 1;
         LockProperty(playerid, houseID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(businessID != -1) {
@@ -259,7 +259,7 @@ CMD:trancar(playerid, params[]) {
         propertyType = 2;
         LockProperty(playerid, businessID, propertyType);
 
-        return 1;
+        return true;
     }
 
     if(garageID != -1) {
@@ -269,10 +269,10 @@ CMD:trancar(playerid, params[]) {
         propertyType = 3;
         LockProperty(playerid, garageID, propertyType);
 
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 }
 
 //Comando para criar um interir
@@ -286,7 +286,7 @@ CMD:criarinterior(playerid, params[]) {
 	if (sscanf(params, "ds[256]", type, name)) {
         SendSyntaxMessage(playerid, "/criarinterior [tipo] [nome único]");
         SendSyntaxMessage(playerid, "[TIPOS] 1: Casa | 2: Empresa | 3: Outros");
-        return 1;
+        return true;
     }
     
     if (type < 1 || type > 3)
@@ -305,7 +305,7 @@ CMD:criarinterior(playerid, params[]) {
 	    logCreate(playerid, logString, 13);
     }
 
-    return 1;
+    return true;
 }
 
 //Comanda para deletar um interior.
@@ -326,11 +326,11 @@ CMD:deletarinterior(playerid, params[]) {
         format(logString, sizeof(logString), "%s (%s) teve um erro no MySQL ao excluir a empresa (cod: ix010)", pNome(playerid), GetPlayerUserEx(playerid));
 	    logCreate(playerid, logString, 13);
     }
-    return 1;
+    return true;
 }
 
 //Comando para verificar propiedade prÃ³xima
 CMD:near(playerid, params[]) {
     NearbyProperty(playerid);
-    return 1;
+    return true;
 }

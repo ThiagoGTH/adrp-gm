@@ -10,7 +10,7 @@ CMD:criarcasa(playerid, params[]) {
     
     CreateHouse(playerid, price, address);
 
-    return 1;
+    return true;
 }
 
 CMD:deletarcasa(playerid, params[]) {
@@ -23,7 +23,7 @@ CMD:deletarcasa(playerid, params[]) {
 
     DeleteHouse(playerid, id);
 
-    return 1;
+    return true;
 }
 
 CMD:editarcasa(playerid, params[]) {
@@ -42,26 +42,26 @@ CMD:editarcasa(playerid, params[]) {
     // Editar a entrada (localização)
     if(!strcmp(option, "entrada", true)) {
         SetEntryHouse(playerid, id);
-        return 1;
+        return true;
     }
 
     // Editar o interior (lado de dentro)
     if(!strcmp(option, "interior", true)) {
         SetInteriorHouse(playerid, id);
-        return 1;
+        return true;
     }
 
     // Editar o preço
     if(!strcmp(option, "preco", true) || !strcmp(option, "preço", true)) {
         new houseValue = strval(value);
         SetPriceHouse(playerid, id, houseValue);        
-        return 1;
+        return true;
     }
 
     //Editar o endereço
     if(!strcmp(option, "endereco", true) || !strcmp(option, "endereço", true)) {
         SetAddressHouse(playerid, id, value);
-        return 1;
+        return true;
     }
 
     SendSyntaxMessage(playerid, "/editarcasa [id] [opção]");
@@ -79,7 +79,7 @@ CMD:ircasa(playerid, params[]) {
 
     TeleportHouse(playerid, id);
 
-    return 1;
+    return true;
 }
 
 CMD:criarcasaentrada(playerid, params[]) {
@@ -92,7 +92,7 @@ CMD:criarcasaentrada(playerid, params[]) {
 
     CreateHouseSecondEntry(playerid, houseID);
 
-    return 1;
+    return true;
 }
 
 CMD:editarcasaentrada(playerid, params[]) {
@@ -111,13 +111,13 @@ CMD:editarcasaentrada(playerid, params[]) {
     // Editar a entrada (localização)
     if(!strcmp(option, "entrada", true)) {
         SetSecondEntry(playerid, id);
-        return 1;
+        return true;
     }
 
     // Editar o interior (lado de dentro)
     if(!strcmp(option, "interior", true)) {
         SetInteriorSecondEntry(playerid, id);
-        return 1;
+        return true;
     }
 
     // Edita a casa que é dona da entrada
@@ -128,7 +128,7 @@ CMD:editarcasaentrada(playerid, params[]) {
             return SendSyntaxMessage(playerid, "/editarentrada [id da entrada] [casa] [novo id da casa]");
 
         SetEntryNewHouse(playerid, id, houseID);
-        return 1;
+        return true;
     }
 
     SendSyntaxMessage(playerid, "/editarentrada [id] [opção]");
@@ -156,7 +156,7 @@ CMD:deletarcasaentrada(playerid, params[]) {
 
     new dummyReset[E_SECOND_ENTRIES_DATA];
     sInfo[id] = dummyReset;
-    return 1;
+    return true;
 }
 
 CMD:ircasaentrada(playerid, params[]) {
@@ -169,7 +169,7 @@ CMD:ircasaentrada(playerid, params[]) {
 
     TeleportSecondEntry(playerid, id);
 
-    return 1;
+    return true;
 }
 
 CMD:listacasaentradas(playerid, params[]) {
@@ -200,7 +200,7 @@ CMD:listacasaentradas(playerid, params[]) {
 
     SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 
-    return 1;
+    return true;
 }
 
 CMD:atrancar(playerid, params[]) {
@@ -217,7 +217,7 @@ CMD:atrancar(playerid, params[]) {
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
         GameTextForPlayer(playerid, hInfo[houseID][hLocked] ? "~r~CASA TRANCADA" : "~g~~h~CASA DESTRANCADA", 2500, 4);
     
-        return 1;
+        return true;
     }
 
     if(!entryID) {
@@ -229,10 +229,10 @@ CMD:atrancar(playerid, params[]) {
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
     
         GameTextForPlayer(playerid, sInfo[entryID][sLocked] ? "~r~ENTRADA TRANCADA" : "~g~~h~ENTRADA DESTRANCADA", 2500, 4);
-        return 1;
+        return true;
     }
 
-    return 1;
+    return true;
 }
 
 CMD:alugavel(playerid) {
@@ -242,7 +242,7 @@ CMD:alugavel(playerid) {
         return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
     
     SetRentableHouse(playerid, houseID);
-    return 1;
+    return true;
 }
 
 CMD:precoaluguel(playerid, params[]) {
@@ -267,7 +267,7 @@ CMD:precoaluguel(playerid, params[]) {
     SetRentPrice(houseID, playerid, price);
     va_SendClientMessage(playerid, COLOR_YELLOW, "Você alterou o preço do aluguel da sua casa para $%s", FormatNumber(price));
 
-    return 1;
+    return true;
 }
 
 //Comando de campainha
@@ -284,5 +284,5 @@ CMD:campainha(playerid, params[]) {
     }
 	PlayerPlaySound(playerid, 20801, 0, 0, 0);
     SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s toca a campainha da casa.", pNome(playerid));
-    return 1;
+    return true;
 }

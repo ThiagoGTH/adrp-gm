@@ -24,11 +24,11 @@ CMD:dancar(playerid, params[])
 		case 13: ApplyAnimation(playerid, "DANCING", "dnce_M_b", 4.1, false, false, false, false, 0);
 		case 14: ApplyAnimation(playerid, "DANCING", "dnce_M_c", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }
 
 CMD:taichi(playerid)
 {
 	ApplyAnimationEx(playerid, "PARK", "Tai_Chi_Loop", 4.1, false, false, false, false, 0);
-	return 1;
+	return true;
 }

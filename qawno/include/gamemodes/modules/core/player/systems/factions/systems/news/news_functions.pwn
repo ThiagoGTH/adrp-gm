@@ -45,7 +45,7 @@ StopPlayerWatchingCamera(playerid){
 	PlayerSpectateVehicle(playerid, INVALID_VEHICLE_ID);
 	SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 	SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-	SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
+	SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
         pInfo[playerid][pPositionX], 
         pInfo[playerid][pPositionY], 
         pInfo[playerid][pPositionZ],

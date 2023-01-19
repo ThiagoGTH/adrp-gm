@@ -42,13 +42,13 @@ new sInfo[MAX_SECOND_ENTRIES][E_SECOND_ENTRIES_DATA];
 hook OnGameModeInit() {
     LoadHouses();
     LoadEntries();
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveHouses();
     SaveEntries();
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -87,7 +87,7 @@ LoadHouses() {
 
     printf("[CASAS]: %d casas carregadas com sucesso.", loadedHouses);
 
-    return 1;
+    return true;
 }
 
 //Carrega casa espefica.
@@ -118,7 +118,7 @@ LoadHouse(id) {
     cache_get_value_name_int(0, "vw_exit", hInfo[id][vwExit]);
     cache_get_value_name_int(0, "interior_exit", hInfo[id][interiorExit]);
 
-    return 1;
+    return true;
 }
 
 //Salva todas ás casas.
@@ -141,7 +141,7 @@ SaveHouses() {
 
     printf("[CASAS]: %d casas salvas com sucesso.", savedHouses);
 
-    return 1;
+    return true;
 }
 
 //Sava casa especifica.
@@ -159,7 +159,7 @@ SaveHouse(id) {
         hInfo[id][hExitPos][0], hInfo[id][hExitPos][1], hInfo[id][hExitPos][2], hInfo[id][hExitPos][3], hInfo[id][vwExit], hInfo[id][interiorExit], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 }
 
 //Verifica a existencia da casa (caso não existe é false)
@@ -170,7 +170,7 @@ IsValidHouse(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 // Verifica o dono da casa.
@@ -259,7 +259,7 @@ LoadEntries() {
 
     printf("[CASAS]: %d entradas secundárias carregadas com sucesso.", loadedEntries);
 
-    return 1;
+    return true;
 }
 
 //Carrega entrada (segundaria) de uma casa em espécifico 
@@ -287,7 +287,7 @@ LoadEntry(id) {
     cache_get_value_name_int(0, "vw_exit", sInfo[id][sExitVW]);
     cache_get_value_name_int(0, "interior_exit", sInfo[id][sExitInterior]);
 
-    return 1;
+    return true;
 }
 
 //Carrega ás entradas (segundarias) das casas.
@@ -310,7 +310,7 @@ SaveEntries() {
 
     printf("[CASAS]: %d entradas secundárias salvas com sucesso.", savedEntries);
 
-    return 1;
+    return true;
 }
 
 //Salva entrada (segundaria) de uma casa em espécifico 
@@ -328,7 +328,7 @@ SaveEntry(id) {
         sInfo[id][sExitPos][0], sInfo[id][sExitPos][1], sInfo[id][sExitPos][2], sInfo[id][sExitPos][3], sInfo[id][sExitVW], sInfo[id][sExitInterior], id);
     mysql_query(DBConn, query);
 
-    return 1;
+    return true;
 }
 
 //Criar casa
@@ -361,7 +361,7 @@ CreateHouse(playerid, price, address[256]) {
     SendServerMessage(playerid, "Você criou a casa de ID %d no endereço: '%s'. ($%s)", id, address, FormatNumber(price));
     format(logString, sizeof(logString), "%s (%s) criou a casa de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
 	logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Cria entrada segundaria para determinada casa
@@ -390,7 +390,7 @@ CreateHouseSecondEntry(playerid, houseID) {
 
     format(logString, sizeof(logString), "%s (%s) criou a entrada secundária de ID %d para a casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
 	logCreate(playerid, logString, 14);
-    return 1;
+    return true;
 }
 
 //Excluir casa
@@ -408,7 +408,7 @@ DeleteHouse(playerid, id) {
 
     new dummyReset[E_HOUSE_DATA];
     hInfo[id] = dummyReset;
-    return 1;
+    return true;
 }
 
 //Teleporta o player para determinada casa (via o ID > Onde está localizada a entrada)
@@ -422,7 +422,7 @@ TeleportHouse(playerid, id) {
     SetPlayerFacingAngle(playerid, hInfo[id][hEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a casa de ID %d.", id);
-    return 1;
+    return true;
 }
 
 //Teleporta o player para determinada entrad (segundaria) (via o ID > Onde está localizada a entrada)
@@ -436,7 +436,7 @@ TeleportSecondEntry(playerid, id) {
     SetPlayerFacingAngle(playerid, sInfo[id][sEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a entrada de ID %d.", id);
-    return 1;
+    return true;
 }
 
 //Verifica a existencia da entrada (retorna false caso não exista.)
@@ -447,7 +447,7 @@ IsValidEntry(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 // Procura por alguma entrada secundária de casa
@@ -509,7 +509,7 @@ RentableHouse(id, playerid, rentable) {
     format(logString, sizeof(logString), "%s (%s) deixou a casa ID %d %s.", pNome(playerid), GetPlayerUserEx(playerid), id, (rentable ? "alugável" : "não alugável"));
 	logCreate(playerid, logString, 13);
 
-    return 1;
+    return true;
 }
 
 //Seta o preço do aluguel da casa.
@@ -520,7 +520,7 @@ SetRentPrice(id, playerid, value) {
     format(logString, sizeof(logString), "%s (%s) alterou o preço de aluguel da sua casa ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(value));
 	logCreate(playerid, logString, 13);
 
-    return 1;
+    return true;
 }
 
 //Seta nova entrada da casa
@@ -542,7 +542,7 @@ SetEntryHouse(playerid, id) {
 
     format(logString, sizeof(logString), "%s (%s) editou a entrada da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Seta novo interior da casa
@@ -563,7 +563,7 @@ SetInteriorHouse(playerid, id) {
 
     format(logString, sizeof(logString), "%s (%s) editou o interior da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Seta preço da casa
@@ -578,7 +578,7 @@ SetPriceHouse(playerid, id, houseValue) {
 
     format(logString, sizeof(logString), "%s (%s) editou o preço da casa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(houseValue));
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Seta novo endereço da casa.
@@ -593,7 +593,7 @@ SetAddressHouse(playerid, id, value[64]) {
 
     format(logString, sizeof(logString), "%s (%s) setou o endereço da casa de ID %d como '%s'.", pNome(playerid), GetPlayerUserEx(playerid), id, value);
     logCreate(playerid, logString, 13);
-    return 1;
+    return true;
 }
 
 //Setar local da entrada
@@ -615,7 +615,7 @@ SetSecondEntry(playerid, id) {
 
     format(logString, sizeof(logString), "%s (%s) editou a entrada secundária de ID %d da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
     logCreate(playerid, logString, 14);
-    return 1;
+    return true;
 }
 
 //Setar interior de determinada entrada.
@@ -636,7 +636,7 @@ SetInteriorSecondEntry(playerid, id) {
 
     format(logString, sizeof(logString), "%s (%s) editou o interior da entrada secundária de ID %d (casa de ID %d).", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
     logCreate(playerid, logString, 14);
-    return 1;
+    return true;
 }
 
 //Linkar entrada em outra casa.
@@ -652,7 +652,7 @@ SetEntryNewHouse(playerid, id, houseID) {
 
     format(logString, sizeof(logString), "%s (%s) vinculou a entrada de ID %d à casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
     logCreate(playerid, logString, 14);
-    return 1;
+    return true;
 }
 
 SetRentableHouse(playerid, houseID) {
@@ -669,7 +669,7 @@ SetRentableHouse(playerid, houseID) {
             va_SendClientMessage(playerid, COLOR_YELLOW, "Sua casa não está mais alugável.");
         }
     }
-    return 1;
+    return true;
 }
 
 //Verifica se (playerid) está dentro de uma casa.

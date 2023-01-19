@@ -417,7 +417,7 @@ PkrSys_SetPlayerCamera(const playerid, const objectid) {
 	_offset[1] += (0.1 * floatcos(-_pos[3], degrees));
 	SetPlayerCameraPos(playerid, _offset[0], _offset[1], _pos[2] + POKER_CAMERA_HEIGHT);
 	SetPlayerCameraLookAt(playerid, _pos[0], _pos[1], _pos[2]);
-	return 1;
+	return true;
 }
 
 new g_rgCardDeck[MAX_POKER_DECK_CARDS];
@@ -2627,7 +2627,7 @@ stock PkrSys_ReturnRandomUnusedCard(const gameId)
 Pkr_IsNumeric(const string[])
 {
     for(new i = 0, j = strlen(string); i < j; i++) if (string[i] > '9' || string[i] < '0') return 0;
-    return 1;
+    return true;
 }
 
 stock Pkr_HandRank(const value)
@@ -2708,11 +2708,11 @@ Pkr_SendFormattedGameMessage(const gameId, const color, str[], {Float, _}:...)
 		#emit SCTRL 4
 
 		Pkr_SendGameMessage(gameId, color, string);
-		return 1;
+		return true;
 	}
 
 	Pkr_SendGameMessage(gameId, color, str);
-	return 1;
+	return true;
 }
 
 enum SIT_DIALOG_ERROR
@@ -2745,7 +2745,7 @@ Pkr_PlayerShowDialog(const playerid, const gameId, const SIT_DIALOG_ERROR: error
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: SIT);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Otur", _format, "Otur", "Ayrl");
     Pkr_HideCursorForPlayerId(playerid);
-    return 1;
+    return true;
 }
 
 Pkr_PlayerShowConfirmDialog(const playerid)
@@ -2757,7 +2757,7 @@ Pkr_PlayerShowConfirmDialog(const playerid)
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker", _format, "Onayla", "Geri");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: SIT_CONFIRM);
     Pkr_HideCursorForPlayerId(playerid);
-    return 1;
+    return true;
 }
 
 PkrCMD_Join(const playerid) {
@@ -2807,16 +2807,16 @@ PkrCMD_Leave(const playerid)
     new _game = Pkr_GetPlayerGame(playerid);
     if(_game == -1) {
         SendClientMessage(playerid, COLOR_RED, "Poker oynamyorsun.");
-        return 1;
+        return true;
     }
 
     if(Pkr_UnassignPlayerFromGame(playerid, _game)) {
         SendClientMessage(playerid, COLOR_RED, "Poker masasndan ayrldn.");
-        return 1;
+        return true;
     }
 
     SendClientMessage(playerid, COLOR_RED, "Oyundan karlamadn.");
-    return 1;
+    return true;
 }
 
 PkrCMD_Mouse(const playerid)
@@ -4386,7 +4386,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
     	if(strlen(command) == 0) {
     		SendClientMessage(playerid, COLOR_GREY, "KULLANIM: /pkr [komut]");
     		SendClientMessage(playerid, COLOR_GREY, "pucu: '/pkr yardim' yazarak tm listeyi grebilirsin.");
-    		return 1;
+    		return true;
     	}
 
         if(strcmp("katil", command) == 0) PkrCMD_Join(playerid);
@@ -4413,19 +4413,19 @@ Pkr_RouteCommands(playerid, cmdtext[])
     	else if(strcmp("timer", command) == 0) PkrCMD_SetTimer(playerid, parameters);
     	else if(strcmp("yardim", command) == 0) PkrCMD_Help(playerid);
     }
-	return 1;
+	return true;
 }
 
 CMD:pkr(playerid, cmdtext[])
 {
 	Pkr_RouteCommands(playerid, cmdtext);
-	return 1;
+	return true;
 }
 
 CMD:poker(playerid, cmdtext[])
 {
 	Pkr_RouteCommands(playerid, cmdtext);
-	return 1;
+	return true;
 }
 
 #if defined POKER_DEBUG
@@ -4580,7 +4580,7 @@ public Pkr_OnOneSecond()
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 Pkr_PlaySoundForPlayers(const gameId, const soundId) {

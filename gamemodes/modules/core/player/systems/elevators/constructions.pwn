@@ -420,7 +420,7 @@ hook OnGameModeInit()
 	addOnObjects[67] = CreateDynamicObject(5644, 4.078737, 1537.149536, 105.219467, 0, 0, 0);
 	addOnObjects[68] = CreateDynamicObject(5644, 4.078737, 1537.149536, 130.519638, 0, 0, 0);
 	addOnObjects[69] = CreateDynamicObject(5644, 4.078737, 1537.149536, 155.819687, 0, 0, 0);
-	return 1;
+	return true;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -455,13 +455,13 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 							elevatorData[e][E_ELEVATOR_CONTROLLABLE] = false;
 							elevatorData[e][E_ELEVATOR_MOVING_REQUESTED] = true;
 						}
-						return 1;
+						return true;
 					}
 				}
 			}
 		}		
 	}
-	return 1;
+	return true;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
@@ -502,7 +502,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 					}
 				}
-				return 1;
+				return true;
 			}
 		}
 		return 0;
@@ -526,7 +526,7 @@ hook OnDynamicObjectMoved(objectid)
 			break;
 		}
 	}
-	return 1;
+	return true;
 }
 
 hook OnPlayerEnterDynamicArea(playerid, areaid)
@@ -538,11 +538,11 @@ hook OnPlayerEnterDynamicArea(playerid, areaid)
 			if (elevatorData[e][E_ELEVATOR_CONTROLLABLE] && !elevatorData[e][E_ELEVATOR_MOVING])
 			{
 				SetTimerEx("Elevator_ShowMenuForPlayer", 500, 0, "dd", e, playerid);
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 hook OnPlayerLeaveDynamicArea(playerid, areaid)
@@ -555,11 +555,11 @@ hook OnPlayerLeaveDynamicArea(playerid, areaid)
 			{
 				PlayerPlaySound(playerid, 1019, elevatorCoordinates[e][0], elevatorCoordinates[e][1], elevatorLevels[e][elevatorData[e][E_ELEVATOR_CURRENT_LEVEL] - 1]);
 				PlayerPlaySound(playerid, 1022, elevatorCoordinates[e][0], elevatorCoordinates[e][1], elevatorLevels[e][elevatorData[e][E_ELEVATOR_CURRENT_LEVEL] - 1]);
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 Elevator_AdjustDoors(elevatorid, operation)
@@ -601,7 +601,7 @@ Elevator_AdjustDoors(elevatorid, operation)
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 public Elevator_CheckForNearbyPlayers()
@@ -644,7 +644,7 @@ public Elevator_CheckForNearbyPlayers()
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 public Elevator_SetControllableStatus(elevatorid)
@@ -727,7 +727,7 @@ public Elevator_SetLevel(elevatorid, level)
 	}
 	elevatorData[elevatorid][E_ELEVATOR_MOVING] = true;
 	elevatorData[elevatorid][E_ELEVATOR_MOVING_REQUESTED] = false;
-	return 1;
+	return true;
 }
 
 public Elevator_ShowMenuForPlayer(elevatorid, playerid)
@@ -789,5 +789,5 @@ Elevator_SwapLights(elevatorid, type)
 			}
 		}
 	}
-	return 1;
+	return true;
 }

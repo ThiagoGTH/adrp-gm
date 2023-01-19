@@ -13,5 +13,5 @@ CMD:deal(playerid, params[])
 		case 5: ApplyAnimation(playerid, "DEALER", "DEALER_IDLE_02", 4.1, false, false, false, false, 0);
 		case 6: ApplyAnimation(playerid, "DEALER", "DEALER_IDLE_03", 4.1, false, false, false, false, 0);
 	}
-	return 1;
+	return true;
 }

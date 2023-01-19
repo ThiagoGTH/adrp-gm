@@ -27,13 +27,13 @@ new gInfo[MAX_GARAGES][E_GARAGE_DATA];
 hook OnGameModeInit() {
     LoadGarages();
     LoadEntries();
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveGarages();
     SaveEntries();
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================
@@ -83,7 +83,7 @@ LoadGarages() {
 
     printf("[CASAS]: %d casas carregadas com sucesso.", loadedGarages);
 
-    return 1;
+    return true;
 }
 
 LoadGarage(id) {
@@ -125,7 +125,7 @@ LoadGarage(id) {
     cache_get_value_name_int(0, "vw_exit", gInfo[id][gVwExit]);
     cache_get_value_name_int(0, "interior_exit", gInfo[id][gInteriorExit]);
 
-    return 1;
+    return true;
 }
 
 SaveGarages() {
@@ -147,7 +147,7 @@ SaveGarages() {
 
     printf("[CASAS]: %d casas salvas com sucesso.", savedGarages);
 
-    return 1;
+    return true;
 }
 
 SaveGarage(id) {
@@ -168,7 +168,7 @@ SaveGarage(id) {
 
     printf("Saved garage ID %d", id);
 
-    return 1;
+    return true;
 }
 
 IsValidGarage(id) {
@@ -178,7 +178,7 @@ IsValidGarage(id) {
     if(!cache_num_rows())
         return 0;
 
-    return 1;
+    return true;
 }
 
 GarageHasOwner(id) {
@@ -254,7 +254,7 @@ CreateGarage(playerid, price, address[256], Float:pos[4]){
     format(logString, sizeof(logString), "%s (%s) criou a garagem de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
 	logCreate(playerid, logString, 13);
 
-    return 1;
+    return true;
 }
 
 ChangeGarageInterior(playerid, id) {
@@ -275,7 +275,7 @@ ChangeGarageInterior(playerid, id) {
     format(logString, sizeof(logString), "%s (%s) mudou o interior da garagem de ID %d para (Pos: %d, %d, %d, %d, VW: %d, Int: %d).", pNome(playerid), GetPlayerUserEx(playerid), id, gInfo[id][gExitPos][0], gInfo[id][gExitPos][1], gInfo[id][gExitPos][2], gInfo[id][gExitPos][3], gInfo[id][gVwExit], gInfo[id][gInteriorExit]);
     logCreate(playerid, logString, 25);
 
-    return 1;
+    return true;
 }
 
 ChangeGarageEntry(playerid, id) {
@@ -298,7 +298,7 @@ ChangeGarageEntry(playerid, id) {
     format(logString, sizeof(logString), "%s (%s) editou a entrada da garagem de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
     logCreate(playerid, logString, 25);
 
-    return 1;
+    return true;
 }
 
 AttachGarageToHouse(playerid, houseid, garageid) {
@@ -314,7 +314,7 @@ AttachGarageToHouse(playerid, houseid, garageid) {
     format(logString, sizeof(logString), "%s (%s) atrelou a garagem ID %d na casa ID %d.", pNome(playerid), GetPlayerUserEx(playerid), garageid, houseid);
 	logCreate(playerid, logString, 13);
 
-    return 1;
+    return true;
 }
 
 SendPlayerGarage(playerid, garageid) {
@@ -328,5 +328,5 @@ SendPlayerGarage(playerid, garageid) {
 
     SendServerMessage(playerid, "Você teleportou até a garagem de ID %d.", garageid);
 
-    return 1;
+    return true;
 }

@@ -151,15 +151,15 @@ hook OnPlayerConnect(playerid) {
 	RemoveBuildingForPlayer(playerid, 2964, 510.1016, -84.8359, 997.9375, 9999.9);
 
 	p_HelpBoxTD[playerid] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
-	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, p_HelpBoxTD[playerid], 255);
 	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], 1);
 	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[playerid], 0.219999, 1.200000);
-	PlayerTextDrawColor(playerid, p_HelpBoxTD[playerid], -1);
+	PlayerTextDrawColour(playerid, p_HelpBoxTD[playerid], -1);
 	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], 0);
 	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], 1);
 	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[playerid], 1);
 	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], 1);
-	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[playerid], 117);
+	PlayerTextDrawBoxColour(playerid, p_HelpBoxTD[playerid], 117);
 	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[playerid], 170.000000, 0.000000);
 	return true;
 }

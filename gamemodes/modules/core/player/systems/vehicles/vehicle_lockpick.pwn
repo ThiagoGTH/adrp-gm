@@ -31,15 +31,15 @@ hook OnPlayerConnect(playerid) {
 	PlayerTextDrawFont(playerid, LockText[0], 1);
 	PlayerTextDrawSetProportional(playerid, LockText[0], 1);
 	PlayerTextDrawAlignment(playerid, LockText[0], 2);
-	PlayerTextDrawBackgroundColor(playerid, LockText[0], -65281);
-	PlayerTextDrawBoxColor(playerid, LockText[0], 150);
+	PlayerTextDrawBackgroundColour(playerid, LockText[0], -65281);
+	PlayerTextDrawBoxColour(playerid, LockText[0], 150);
 
 	new text[128];
 	format(text, 128, "QUANTIDADE_NECESSÁRIA:_5");
 	AdjustTextDrawString(text);
 	LockText[1] = CreatePlayerTextDraw(playerid, 205.0, 365.0, text);
 	PlayerTextDrawSetShadow(playerid, LockText[1], 0);
-	PlayerTextDrawBackgroundColor(playerid, LockText[1], 255);
+	PlayerTextDrawBackgroundColour(playerid, LockText[1], 255);
 	PlayerTextDrawLetterSize(playerid, LockText[1], 0.2, 1.2);
 	PlayerTextDrawFont(playerid, LockText[1], 2);
 	PlayerTextDrawSetProportional(playerid, LockText[1], 1);
@@ -86,8 +86,8 @@ hook OnPlayerConnect(playerid) {
 	PlayerTextDrawFont(playerid, LockText[7], 1);
 	PlayerTextDrawSetProportional(playerid, LockText[7], 1);
 	PlayerTextDrawAlignment(playerid, LockText[7], 2);
-	PlayerTextDrawBackgroundColor(playerid, LockText[7], 255);
-	PlayerTextDrawBoxColor(playerid, LockText[7], 1768516095);
+	PlayerTextDrawBackgroundColour(playerid, LockText[7], 255);
+	PlayerTextDrawBoxColour(playerid, LockText[7], 1768516095);
 
 	LockText[11] = CreatePlayerTextDraw(playerid, 320.0, 414.0, "_");
 	PlayerTextDrawUseBox(playerid, LockText[11], 1);
@@ -96,8 +96,8 @@ hook OnPlayerConnect(playerid) {
 	PlayerTextDrawFont(playerid, LockText[11], 1);
 	PlayerTextDrawSetProportional(playerid, LockText[11], 1);
 	PlayerTextDrawAlignment(playerid, LockText[11], 2);
-	PlayerTextDrawBackgroundColor(playerid, LockText[11], -65281);
-	PlayerTextDrawBoxColor(playerid, LockText[11], -5963521);
+	PlayerTextDrawBackgroundColour(playerid, LockText[11], -65281);
+	PlayerTextDrawBoxColour(playerid, LockText[11], -5963521);
 	return true;
 }
 
@@ -108,7 +108,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
         {
             if(LockProgress < LockLocation[playerid]-(LockSize[playerid]+1) || LockProgress > LockLocation[playerid]+(LockSize[playerid]+2))
 			{
-			    PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
+			    PlayerTextDrawColour(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
 				if(LockCount[playerid] < 4) return DestroyLockPick(playerid), KillTimer(LockTimer[playerid]), LockCount[playerid]++, LockProgress = 207.0, CreateLocPick(playerid);
                 if(LockCount[playerid] == 4) {
 					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
@@ -117,7 +117,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e destrancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 				}
 			} else {
-				PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0x00FF00AA), Correct[playerid]++;
+				PlayerTextDrawColour(playerid, LockText[LockCount[playerid]+2], 0x00FF00AA), Correct[playerid]++;
                 if(LockCount[playerid] < 4) return DestroyLockPick(playerid), KillTimer(LockTimer[playerid]), LockCount[playerid]++, LockProgress = 207.0, CreateLocPick(playerid);
                 if(LockCount[playerid] == 4)
 				{
@@ -147,8 +147,8 @@ CreateLocPick(playerid) {
 	PlayerTextDrawTextSize(playerid, LockText[8], LockLocation[playerid]+LockSize[playerid], 71.0);
 	PlayerTextDrawFont(playerid, LockText[8], 1);
 	PlayerTextDrawSetProportional(playerid, LockText[8], 1);
-	PlayerTextDrawBackgroundColor(playerid, LockText[8], 255);
-	PlayerTextDrawBoxColor(playerid, LockText[8], -1094795521);
+	PlayerTextDrawBackgroundColour(playerid, LockText[8], 255);
+	PlayerTextDrawBoxColour(playerid, LockText[8], -1094795521);
 	
 	LockText[9] = CreatePlayerTextDraw(playerid, 207.0, 385.0, "_");
 	PlayerTextDrawUseBox(playerid, LockText[9], 1);
@@ -156,21 +156,21 @@ CreateLocPick(playerid) {
 	PlayerTextDrawTextSize(playerid, LockText[9], 207.0, 71.0);
 	PlayerTextDrawFont(playerid, LockText[9], 1);
 	PlayerTextDrawSetProportional(playerid, LockText[9], 1);
-	PlayerTextDrawBackgroundColor(playerid, LockText[9], 255);
-	PlayerTextDrawBoxColor(playerid, LockText[9], -5963521);
+	PlayerTextDrawBackgroundColour(playerid, LockText[9], 255);
+	PlayerTextDrawBoxColour(playerid, LockText[9], -5963521);
 
 	new text[128];
 	format(text, 128, "PRESSIONE O ESPAÇO NO MOMENTO PARA PROSSEGUIR");
 	AdjustTextDrawString(text);
 	LockText[10] = CreatePlayerTextDraw(playerid, 315.0, 386.0, text);
 	PlayerTextDrawSetShadow(playerid, LockText[10], 0);
-	PlayerTextDrawBackgroundColor(playerid, LockText[10], 255);
+	PlayerTextDrawBackgroundColour(playerid, LockText[10], 255);
 	PlayerTextDrawLetterSize(playerid, LockText[10], 0.18, 1.0);
 	PlayerTextDrawFont(playerid, LockText[10], 2);
 	PlayerTextDrawSetProportional(playerid, LockText[10], 1);
 	PlayerTextDrawAlignment(playerid, LockText[10], 2);
 	PlayerTextDrawSetShadow(playerid, LockText[10], 0);
-	PlayerTextDrawColor(playerid, LockText[10], -56);
+	PlayerTextDrawColour(playerid, LockText[10], -56);
 	return true;
 }
 
@@ -179,7 +179,7 @@ forward LockpickTimer(playerid); public LockpickTimer(playerid) {
 	PlayerTextDrawTextSize(playerid, LockText[9], LockProgress, 71.0);
 	for(new i; i < 12; i++) { PlayerTextDrawShow(playerid, LockText[i]); }
 	if(LockCount[playerid] < 4 && LockProgress > 428.9) {
-		PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
+		PlayerTextDrawColour(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
 		DestroyLockPick(playerid);
 		KillTimer(LockTimer[playerid]);
 		LockCount[playerid]++;
@@ -188,7 +188,7 @@ forward LockpickTimer(playerid); public LockpickTimer(playerid) {
 		return true;
 	}
 	if(LockCount[playerid] == 4 && LockProgress > 428.9) {
-		PlayerTextDrawColor(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
+		PlayerTextDrawColour(playerid, LockText[LockCount[playerid]+2], 0xFF0000AA);
 		PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]);
 		SetTimerEx("DestroyLockPick", 2000, false, "i", playerid);
 		KillTimer(LockTimer[playerid]);
@@ -213,11 +213,11 @@ forward LockpickTimer(playerid); public LockpickTimer(playerid) {
 forward DestroyLockPick(playerid); public DestroyLockPick(playerid) {
     PlayerTextDrawDestroy(playerid, LockText[8]), PlayerTextDrawDestroy(playerid, LockText[9]), PlayerTextDrawDestroy(playerid, LockText[10]);
     if(LockCount[playerid] == 4) {
-		PlayerTextDrawColor(playerid, LockText[2], 1768516095);
-		PlayerTextDrawColor(playerid, LockText[3], 1768516095);
-		PlayerTextDrawColor(playerid, LockText[4], 1768516095);
-		PlayerTextDrawColor(playerid, LockText[5], 1768516095);
-		PlayerTextDrawColor(playerid, LockText[6], 1768516095);
+		PlayerTextDrawColour(playerid, LockText[2], 1768516095);
+		PlayerTextDrawColour(playerid, LockText[3], 1768516095);
+		PlayerTextDrawColour(playerid, LockText[4], 1768516095);
+		PlayerTextDrawColour(playerid, LockText[5], 1768516095);
+		PlayerTextDrawColour(playerid, LockText[6], 1768516095);
 		LockUse[playerid] = false;
 		LockProgress = 207.0;
 		Correct[playerid] = 0;

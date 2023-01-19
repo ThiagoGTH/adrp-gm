@@ -17,11 +17,11 @@ RefreshChargeButton(playerid)
 	SetPVarInt(playerid, "chargeSOL", 0);
 	SetPVarInt(playerid, "chargeATT", 0);
 	SetPVarInt(playerid, "chargeCAC", 0);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][38], -1802201857);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][39], -1802201857);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][40], -1802201857);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][41], -1802201857);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][42], -1802201857);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][38], -1802201857);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][39], -1802201857);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][40], -1802201857);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][41], -1802201857);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][42], -1802201857);
 	PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][42], 1);
 	PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][40], 1);
 	return 1;
@@ -369,15 +369,15 @@ SQL_ListCriminal(playerid, page)
 
 		if(type == 1)
 		{
-			PlayerTextDrawBoxColor(playerid, MDC_CrimeHistory[playerid][strtext], 0xFFFFFFFF);
-			PlayerTextDrawColor(playerid, MDC_CrimeHistory[playerid][strtext], 0x656565FF);
+			PlayerTextDrawBoxColour(playerid, MDC_CrimeHistory[playerid][strtext], 0xFFFFFFFF);
+			PlayerTextDrawColour(playerid, MDC_CrimeHistory[playerid][strtext], 0x656565FF);
 		}
 
 		if(type == 2)
 		{
 			format(charge_name, sizeof(charge_name), "%s__Hapis");
-			PlayerTextDrawBoxColor(playerid, MDC_CrimeHistory[playerid][strtext], 0xAA2124FF);
-			PlayerTextDrawColor(playerid, MDC_CrimeHistory[playerid][strtext], 0xBAC1CAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_CrimeHistory[playerid][strtext], 0xAA2124FF);
+			PlayerTextDrawColour(playerid, MDC_CrimeHistory[playerid][strtext], 0xBAC1CAFF);
 		}
 
 		if(strlen(charge_name) > 80)
@@ -922,10 +922,10 @@ MDC_LOOKUP_SelectOption(playerid, option)
 {
 	for(new i = 0; i < 2; i++)
 	{
-			PlayerTextDrawBoxColor(playerid, MDC_LookUp_Name[playerid][i], 0xAAAAAAFF);
-			PlayerTextDrawColor(playerid, MDC_LookUp_Name[playerid][i], 0x333333FF);
-			PlayerTextDrawBoxColor(playerid, MDC_LookUp_Name[playerid][17], 0xAAAAAAFF);
-			PlayerTextDrawColor(playerid, MDC_LookUp_Name[playerid][17], 0x333333FF);
+			PlayerTextDrawBoxColour(playerid, MDC_LookUp_Name[playerid][i], 0xAAAAAAFF);
+			PlayerTextDrawColour(playerid, MDC_LookUp_Name[playerid][i], 0x333333FF);
+			PlayerTextDrawBoxColour(playerid, MDC_LookUp_Name[playerid][17], 0xAAAAAAFF);
+			PlayerTextDrawColour(playerid, MDC_LookUp_Name[playerid][17], 0x333333FF);
 	}
 
 	switch(option)
@@ -933,8 +933,8 @@ MDC_LOOKUP_SelectOption(playerid, option)
 		case MDC_PAGE_LOOKUP_NAME:
 		{
 			PlayerTextDrawHide(playerid, MDC_LookUp_Name[playerid][0]);
-			PlayerTextDrawBoxColor(playerid, MDC_LookUp_Name[playerid][0], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_LookUp_Name[playerid][0], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_LookUp_Name[playerid][0], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_LookUp_Name[playerid][0], 0xAAAAAAFF);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][0]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][1]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][17]);
@@ -943,8 +943,8 @@ MDC_LOOKUP_SelectOption(playerid, option)
 		case MDC_PAGE_LOOKUP_PLATE:
 		{
 			PlayerTextDrawHide(playerid, MDC_LookUp_Name[playerid][1]);
-			PlayerTextDrawBoxColor(playerid, MDC_LookUp_Name[playerid][1], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_LookUp_Name[playerid][1], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_LookUp_Name[playerid][1], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_LookUp_Name[playerid][1], 0xAAAAAAFF);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][1]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][0]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][17]);
@@ -953,8 +953,8 @@ MDC_LOOKUP_SelectOption(playerid, option)
 		case MDC_PAGE_LOOKUP_BUILDING:
 		{
 			PlayerTextDrawHide(playerid, MDC_LookUp_Name[playerid][17]);
-			PlayerTextDrawBoxColor(playerid, MDC_LookUp_Name[playerid][17], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_LookUp_Name[playerid][17], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_LookUp_Name[playerid][17], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_LookUp_Name[playerid][17], 0xAAAAAAFF);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][1]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][0]);
 			PlayerTextDrawShow(playerid, MDC_LookUp_Name[playerid][17]);
@@ -968,46 +968,46 @@ MDC_SideMenuColours(playerid, page)
 {
     for(new i = 10; i < 18; i++)
     {
-        PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][i], 0xAAAAAAFF);
-		PlayerTextDrawColor(playerid, MDC_Main[playerid][i], 0x333333FF);
+        PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][i], 0xAAAAAAFF);
+		PlayerTextDrawColour(playerid, MDC_Main[playerid][i], 0x333333FF);
     }
 
     switch(page)
     {
         case MDC_PAGE_MAIN:
 		{
-			PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][10], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_Main[playerid][10], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][10], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_Main[playerid][10], 0xAAAAAAFF);
 		}
         case MDC_PAGE_LOOKUP:
 		{
-			PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][11], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_Main[playerid][11], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][11], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_Main[playerid][11], 0xAAAAAAFF);
 		}
 		/*case MDC_PAGE_WARRANTS:
 		{
-			PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][12], 0x333333FF);
-			PlayerTextDrawColor(playerid, MDC_Main[playerid][12], 0xAAAAAAFF);
+			PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][12], 0x333333FF);
+			PlayerTextDrawColour(playerid, MDC_Main[playerid][12], 0xAAAAAAFF);
 		}*/
 				case MDC_PAGE_EMERGENCY:
 				{
-				PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][13], 0x333333FF);
-				PlayerTextDrawColor(playerid, MDC_Main[playerid][13], 0xAAAAAAFF);
+				PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][13], 0x333333FF);
+				PlayerTextDrawColour(playerid, MDC_Main[playerid][13], 0xAAAAAAFF);
 				}
 				case MDC_PAGE_ROSTER:
 				{
-				PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][14], 0x333333FF);
-				PlayerTextDrawColor(playerid, MDC_Main[playerid][14], 0xAAAAAAFF);
+				PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][14], 0x333333FF);
+				PlayerTextDrawColour(playerid, MDC_Main[playerid][14], 0xAAAAAAFF);
 				}
 				case MDC_PAGE_CCTV:
 				{
-				PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][15], 0x333333FF);
-				PlayerTextDrawColor(playerid, MDC_Main[playerid][15], 0xAAAAAAFF);
+				PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][15], 0x333333FF);
+				PlayerTextDrawColour(playerid, MDC_Main[playerid][15], 0xAAAAAAFF);
 				}
 				case MDC_PAGE_VEHICLEBOLO:
 				{
-				PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][16], 0x333333FF);
-				PlayerTextDrawColor(playerid, MDC_Main[playerid][16], 0xAAAAAAFF);
+				PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][16], 0x333333FF);
+				PlayerTextDrawColour(playerid, MDC_Main[playerid][16], 0xAAAAAAFF);
 				}
     }
 
@@ -1022,12 +1022,12 @@ MDC_GetPageName(playerid, page)
 	if(strfind(FactionData[factionid][FactionName], "Los Santos Sheriff Department", true) != -1)
 	{
 		factionstats = 2;
-		PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][1], 324608767);
+		PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][1], 324608767);
 	}
 	else
 	{
 		factionstats = 1;
-		PlayerTextDrawBoxColor(playerid, MDC_Main[playerid][1], 203444479);
+		PlayerTextDrawBoxColour(playerid, MDC_Main[playerid][1], 203444479);
 	}
 
 	new pagename[128];
@@ -1326,8 +1326,8 @@ SQL_PenalCode(playerid, page)
 		}
 
 		PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][strtext], selectable);
-		PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][strtext], color);
-		PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][strtext], bgcolor);
+		PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][strtext], color);
+		PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][strtext], bgcolor);
 		AdjustTextDrawString(penal);
 		PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][strtext], penal);
 		PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][strtext]);

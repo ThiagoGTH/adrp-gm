@@ -1,6 +1,7 @@
-#include <a_samp>
+#include <open.mp>
+/*#include <a_samp>
 #include <a_http>
-#include <omp>
+#include <omp> */
 
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)

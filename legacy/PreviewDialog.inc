@@ -399,13 +399,13 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
     Prev@HeaderPTD[playerid] = CreatePlayerTextDraw(playerid, 144.0000, 143.0000, header);
 	PlayerTextDrawFont(playerid, Prev@HeaderPTD[playerid], 2);
 	PlayerTextDrawLetterSize(playerid, Prev@HeaderPTD[playerid], 0.1399, 0.8999);
-	PlayerTextDrawColor(playerid, Prev@HeaderPTD[playerid], -1);
+	PlayerTextDrawColour(playerid, Prev@HeaderPTD[playerid], -1);
 	PlayerTextDrawSetShadow(playerid, Prev@HeaderPTD[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, Prev@HeaderPTD[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, Prev@HeaderPTD[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, Prev@HeaderPTD[playerid], 255);
 	PlayerTextDrawSetProportional(playerid, Prev@HeaderPTD[playerid], 1);
 	PlayerTextDrawUseBox(playerid, Prev@HeaderPTD[playerid], 1);
-	PlayerTextDrawBoxColor(playerid, Prev@HeaderPTD[playerid], 255);
+	PlayerTextDrawBoxColour(playerid, Prev@HeaderPTD[playerid], 255);
 	PlayerTextDrawTextSize(playerid, Prev@HeaderPTD[playerid], 501.0000, 0.0000);
 
 	/*
@@ -416,10 +416,10 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 		PlayerTextDrawFont(playerid, Prev@LeftButtonPTD[playerid], 2);
 		PlayerTextDrawLetterSize(playerid, Prev@LeftButtonPTD[playerid], 0.1399, 0.8999);
 		PlayerTextDrawAlignment(playerid, Prev@LeftButtonPTD[playerid], 2);
-		PlayerTextDrawColor(playerid, Prev@LeftButtonPTD[playerid], -1);
+		PlayerTextDrawColour(playerid, Prev@LeftButtonPTD[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, Prev@LeftButtonPTD[playerid], 0);
 		PlayerTextDrawSetOutline(playerid, Prev@LeftButtonPTD[playerid], 0);
-		PlayerTextDrawBackgroundColor(playerid, Prev@LeftButtonPTD[playerid], 255);
+		PlayerTextDrawBackgroundColour(playerid, Prev@LeftButtonPTD[playerid], 255);
 		PlayerTextDrawSetProportional(playerid, Prev@LeftButtonPTD[playerid], 1);
 		PlayerTextDrawTextSize(playerid, Prev@LeftButtonPTD[playerid], 0.0000, 480.0000);
 	} else {
@@ -434,10 +434,10 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 		PlayerTextDrawFont(playerid, Prev@RightButtonPTD[playerid], 2);
 		PlayerTextDrawLetterSize(playerid, Prev@RightButtonPTD[playerid], 0.1399, 0.8999);
 		PlayerTextDrawAlignment(playerid, Prev@RightButtonPTD[playerid], 2);
-		PlayerTextDrawColor(playerid, Prev@RightButtonPTD[playerid], -1);
+		PlayerTextDrawColour(playerid, Prev@RightButtonPTD[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, Prev@RightButtonPTD[playerid], 0);
 		PlayerTextDrawSetOutline(playerid, Prev@RightButtonPTD[playerid], 0);
-		PlayerTextDrawBackgroundColor(playerid, Prev@RightButtonPTD[playerid], 255);
+		PlayerTextDrawBackgroundColour(playerid, Prev@RightButtonPTD[playerid], 255);
 		PlayerTextDrawSetProportional(playerid, Prev@RightButtonPTD[playerid], 1);
 		PlayerTextDrawTextSize(playerid, Prev@RightButtonPTD[playerid], 0.0000, 480.0000);
     } else {
@@ -452,10 +452,10 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 		PlayerTextDrawFont(playerid, Prev@CenterButtonPTD[playerid], 2);
 		PlayerTextDrawLetterSize(playerid, Prev@CenterButtonPTD[playerid], 0.1399, 0.8999);
 		PlayerTextDrawAlignment(playerid, Prev@CenterButtonPTD[playerid], 2);
-		PlayerTextDrawColor(playerid, Prev@CenterButtonPTD[playerid], -1);
+		PlayerTextDrawColour(playerid, Prev@CenterButtonPTD[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, Prev@CenterButtonPTD[playerid], 0);
 		PlayerTextDrawSetOutline(playerid, Prev@CenterButtonPTD[playerid], 0);
-		PlayerTextDrawBackgroundColor(playerid, Prev@CenterButtonPTD[playerid], 255);
+		PlayerTextDrawBackgroundColour(playerid, Prev@CenterButtonPTD[playerid], 255);
 		PlayerTextDrawSetProportional(playerid, Prev@CenterButtonPTD[playerid], 1);
 		PlayerTextDrawTextSize(playerid, Prev@CenterButtonPTD[playerid], 0.0000, 480.0000);
     } else {
@@ -470,10 +470,10 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 		PlayerTextDrawFont(playerid, Prev@PageNumberPTD[playerid], 2);
 		PlayerTextDrawLetterSize(playerid, Prev@PageNumberPTD[playerid], 0.1399, 0.8999);
 		PlayerTextDrawAlignment(playerid, Prev@PageNumberPTD[playerid], 3);
-		PlayerTextDrawColor(playerid, Prev@PageNumberPTD[playerid], -1);
+		PlayerTextDrawColour(playerid, Prev@PageNumberPTD[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, Prev@PageNumberPTD[playerid], 0);
 		PlayerTextDrawSetOutline(playerid, Prev@PageNumberPTD[playerid], 0);
-		PlayerTextDrawBackgroundColor(playerid, Prev@PageNumberPTD[playerid], 255);
+		PlayerTextDrawBackgroundColour(playerid, Prev@PageNumberPTD[playerid], 255);
 		PlayerTextDrawSetProportional(playerid, Prev@PageNumberPTD[playerid], 1);
 		PlayerTextDrawTextSize(playerid, Prev@PageNumberPTD[playerid], 501.0000, 0.0000);
 	} else {
@@ -499,23 +499,23 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 			Prev@ModelTextPTD[playerid][textdrawid][0] = CreatePlayerTextDraw(playerid, (153.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (161.5000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "");
 			PlayerTextDrawFont(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 2);
 			PlayerTextDrawLetterSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0.1399, 0.8999);
-			PlayerTextDrawColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], -1);
+			PlayerTextDrawColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], -1);
 			PlayerTextDrawSetShadow(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
 			PlayerTextDrawSetOutline(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
-			PlayerTextDrawBackgroundColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 255);
+			PlayerTextDrawBackgroundColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 255);
 			PlayerTextDrawSetProportional(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 1);
 			PlayerTextDrawUseBox(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 1);
-			PlayerTextDrawBoxColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
+			PlayerTextDrawBoxColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
 			PlayerTextDrawTextSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], (201.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), 0.0000);
 
 			Prev@ModelTextPTD[playerid][textdrawid][1] = CreatePlayerTextDraw(playerid, (176.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (204.5000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "0.0");
 			PlayerTextDrawFont(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 2);
 			PlayerTextDrawLetterSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 0.1399, 0.8999);
 			PlayerTextDrawAlignment(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 2);
-			PlayerTextDrawColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], -156);
+			PlayerTextDrawColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], -156);
 			PlayerTextDrawSetShadow(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 0);
 			PlayerTextDrawSetOutline(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 0);
-			PlayerTextDrawBackgroundColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 255);
+			PlayerTextDrawBackgroundColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 255);
 			PlayerTextDrawSetProportional(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 1);
 			PlayerTextDrawTextSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], 640.0000, 480.0000);
 
@@ -523,10 +523,10 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 			PlayerTextDrawFont(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 2);
 			PlayerTextDrawLetterSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 0.1399, 0.8999);
 			PlayerTextDrawAlignment(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 2);
-			PlayerTextDrawColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], -156);
+			PlayerTextDrawColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], -156);
 			PlayerTextDrawSetShadow(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 0);
 			PlayerTextDrawSetOutline(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 0);
-			PlayerTextDrawBackgroundColor(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 255);
+			PlayerTextDrawBackgroundColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 255);
 			PlayerTextDrawSetProportional(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 1);
 			PlayerTextDrawTextSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], 640.0000, 480.0000);
 		}
@@ -590,13 +590,13 @@ static Prev_UpdateScrollBar(playerid, page, totalPages) {
     Prev@ScrollBarPTD[playerid] = CreatePlayerTextDraw(playerid, 489.0000, y, "LD_SPAC:WHITE");
 	PlayerTextDrawFont(playerid, Prev@ScrollBarPTD[playerid], 4);
 	PlayerTextDrawLetterSize(playerid, Prev@ScrollBarPTD[playerid], 0.0000, 18.2000);
-	PlayerTextDrawColor(playerid, Prev@ScrollBarPTD[playerid], -16776961);
+	PlayerTextDrawColour(playerid, Prev@ScrollBarPTD[playerid], -16776961);
 	PlayerTextDrawSetShadow(playerid, Prev@ScrollBarPTD[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, Prev@ScrollBarPTD[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, Prev@ScrollBarPTD[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, Prev@ScrollBarPTD[playerid], 255);
 	PlayerTextDrawSetProportional(playerid, Prev@ScrollBarPTD[playerid], 1);
 	PlayerTextDrawUseBox(playerid, Prev@ScrollBarPTD[playerid], 1);
-	PlayerTextDrawBoxColor(playerid, Prev@ScrollBarPTD[playerid], 150);
+	PlayerTextDrawBoxColour(playerid, Prev@ScrollBarPTD[playerid], 150);
 	PlayerTextDrawTextSize(playerid, Prev@ScrollBarPTD[playerid], 7.5000, height);
 
 	PlayerTextDrawShow(playerid, Prev@ScrollBarPTD[playerid]);

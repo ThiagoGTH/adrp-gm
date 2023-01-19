@@ -128,7 +128,7 @@ hook PhoneTurnOff(playerid) {
 hook PhoneTurnOn(playerid) {
 	if(IsPlayerConnected(playerid)) {
 		if(!pInfo[playerid][pJailed]) {
-			PlayerTextDrawColor(playerid, TDPhone_ScreenText[playerid], 488447487);
+			PlayerTextDrawColour(playerid, TDPhone_ScreenText[playerid], 488447487);
 			RenderPlayerPhone(playerid, 0, 0);
 		}
 	}
@@ -748,10 +748,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TD_PhoneCoverModel[playerid], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TD_PhoneCoverModel[playerid], 90.000000, 119.000000);
 	PlayerTextDrawAlignment(playerid, TD_PhoneCoverModel[playerid], 1);
-	PlayerTextDrawColor(playerid, TD_PhoneCoverModel[playerid], -1);
+	PlayerTextDrawColour(playerid, TD_PhoneCoverModel[playerid], -1);
 	PlayerTextDrawSetShadow(playerid, TD_PhoneCoverModel[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, TD_PhoneCoverModel[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TD_PhoneCoverModel[playerid], 0);
+	PlayerTextDrawBackgroundColour(playerid, TD_PhoneCoverModel[playerid], 0);
 	PlayerTextDrawFont(playerid, TD_PhoneCoverModel[playerid], 5);
 	PlayerTextDrawSetProportional(playerid, TD_PhoneCoverModel[playerid], 0);
 	PlayerTextDrawSetShadow(playerid, TD_PhoneCoverModel[playerid], 0);
@@ -762,9 +762,9 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][0], 0.000000, 15.181289);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][0], 498.333343, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][0], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][0], 0);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][0], 0);
 	PlayerTextDrawUseBox(playerid, TDPhone_Model[playerid][0], true);
-	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 269619711);
+	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 269619711);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][0], 0);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][0], 0);
@@ -775,8 +775,8 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][1], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][1], 55.000000, 135.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][1], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], -858993409);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][1], 255);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -858993409);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][1], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][1], 4);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][1], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][1], 0);
@@ -785,10 +785,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][2], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][2], -55.000000, 135.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][2], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], -858993409);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -858993409);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][2], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][2], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][2], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][2], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][2], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][2], 0);
@@ -798,10 +798,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][3], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][3], 9.000018, 9.540739);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][3], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][3], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][3], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][3], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][3], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][3], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][3], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][3], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][3], 0);
@@ -811,10 +811,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][4], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][4], 15.999990, 15.762954);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][4], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][4], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][4], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][4], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][4], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][4], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][4], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][4], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][4], 0);
@@ -824,9 +824,9 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][5], 0.199333, 0.865777);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][5], 0.000000, 2016.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][5], 2);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][5], -522133249);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][5], -522133249);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][5], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][5], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][5], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][5], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][5], 1);
 
@@ -834,12 +834,12 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][6], 0.000000, 5.982919);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][6], 506.999633, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][6], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][6], 0);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][6], 0);
 	PlayerTextDrawUseBox(playerid, TDPhone_Model[playerid][6], true);
-	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][6], -572662273);
+	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][6], -572662273);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][6], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][6], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][6], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][6], 0);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][6], 1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], 0);
@@ -848,7 +848,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][7], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][7], 22.333309, 7.881487);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][7], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][7], -1717986817);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][7], -1717986817);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][7], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][7], 0);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][7], 4);
@@ -859,10 +859,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][8], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][8], 12.000005, 12.444459);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][8], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][8], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][8], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][8], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][8], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][8], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][8], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][8], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][8], 0);
@@ -872,10 +872,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][9], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][9], 11.666647, 12.029617);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][9], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][9], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][9], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][9], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][9], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][9], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][9], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][9], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][9], 0);
@@ -885,10 +885,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][10], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][10], 12.000015, 12.029621);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][10], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][10], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][10], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][10], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][10], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][10], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][10], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][10], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][10], 0);
@@ -898,10 +898,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][11], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][11], 12.333327, 12.029634);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][11], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][11], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][11], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][11], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][11], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][11], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][11], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][11], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][11], 0);
@@ -912,8 +912,8 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][12], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][12], 5.000000, 18.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][12], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][12], 1145324799);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Model[playerid][12], 255);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][12], 1145324799);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][12], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][12], 4);
 	PlayerTextDrawSetSelectable(playerid, TDPhone_Model[playerid][12], true);
 
@@ -921,7 +921,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][13], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Model[playerid][13], 22.333290, 7.881502);
 	PlayerTextDrawAlignment(playerid, TDPhone_Model[playerid][13], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][13], -1717986817);
+	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][13], -1717986817);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][13], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][13], 0);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][13], 4);
@@ -931,9 +931,9 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_TFButton[playerid], 0.197000, 0.778666);
 	PlayerTextDrawTextSize(playerid, TDPhone_TFButton[playerid], 518.000000, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_TFButton[playerid], 1);
-	PlayerTextDrawColor(playerid, TDPhone_TFButton[playerid], 488447487);
+	PlayerTextDrawColour(playerid, TDPhone_TFButton[playerid], 488447487);
 	PlayerTextDrawSetShadow(playerid, TDPhone_TFButton[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_TFButton[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_TFButton[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_TFButton[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_TFButton[playerid], 1);
 
@@ -941,18 +941,18 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_TSButton[playerid], 0.197000, 0.778666);
 	PlayerTextDrawTextSize(playerid, TDPhone_TSButton[playerid], 518.000000, 0.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_TSButton[playerid], 3);
-	PlayerTextDrawColor(playerid, TDPhone_TSButton[playerid], 488447487);
+	PlayerTextDrawColour(playerid, TDPhone_TSButton[playerid], 488447487);
 	PlayerTextDrawSetShadow(playerid, TDPhone_TSButton[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_TSButton[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_TSButton[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_TSButton[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_TSButton[playerid], 1);
 
 	TDPhone_BigText[playerid] = CreatePlayerTextDraw(playerid, 549.666748, 354.681549, "_");
 	PlayerTextDrawLetterSize(playerid, TDPhone_BigText[playerid], 0.298332, 1.114665);
 	PlayerTextDrawAlignment(playerid, TDPhone_BigText[playerid], 2);
-	PlayerTextDrawColor(playerid, TDPhone_BigText[playerid], 488447487);
+	PlayerTextDrawColour(playerid, TDPhone_BigText[playerid], 488447487);
 	PlayerTextDrawSetShadow(playerid, TDPhone_BigText[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_BigText[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_BigText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_BigText[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_BigText[playerid], 1);
 
@@ -960,18 +960,18 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_ScreenText[playerid], 0.200332, 0.757924);
 	PlayerTextDrawTextSize(playerid, TDPhone_ScreenText[playerid], 0.000000, 2181.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_ScreenText[playerid], 2);
-	PlayerTextDrawColor(playerid, TDPhone_ScreenText[playerid], 488447487);
+	PlayerTextDrawColour(playerid, TDPhone_ScreenText[playerid], 488447487);
 	PlayerTextDrawSetShadow(playerid, TDPhone_ScreenText[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_ScreenText[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_ScreenText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_ScreenText[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_ScreenText[playerid], 1);
 
 	TDPhone_Signal[playerid] = CreatePlayerTextDraw(playerid, 589.666809, 348.874023, "IIIII");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Signal[playerid], 0.141333, 0.683259);
 	PlayerTextDrawAlignment(playerid, TDPhone_Signal[playerid], 3);
-	PlayerTextDrawColor(playerid, TDPhone_Signal[playerid], 488447487);
+	PlayerTextDrawColour(playerid, TDPhone_Signal[playerid], 488447487);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Signal[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Signal[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Signal[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Signal[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Signal[playerid], 1);
 
@@ -979,10 +979,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_Picture[playerid], 0.000000, 0.000000);
 	PlayerTextDrawTextSize(playerid, TDPhone_Picture[playerid], -50.000000, 50.000000);
 	PlayerTextDrawAlignment(playerid, TDPhone_Picture[playerid], 1);
-	PlayerTextDrawColor(playerid, TDPhone_Picture[playerid], -1);
+	PlayerTextDrawColour(playerid, TDPhone_Picture[playerid], -1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Picture[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Picture[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_Picture[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_Picture[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Picture[playerid], 4);
 	PlayerTextDrawSetProportional(playerid, TDPhone_Picture[playerid], 0);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Picture[playerid], 0);
@@ -991,10 +991,10 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawLetterSize(playerid, TDPhone_NotifyText[playerid], 0.139199, 0.659200);
 	PlayerTextDrawTextSize(playerid, TDPhone_NotifyText[playerid], 598.799987, 15.0);
 	PlayerTextDrawAlignment(playerid, TDPhone_NotifyText[playerid], 3);
-	PlayerTextDrawColor(playerid, TDPhone_NotifyText[playerid], -16776961);
+	PlayerTextDrawColour(playerid, TDPhone_NotifyText[playerid], -16776961);
 	PlayerTextDrawSetShadow(playerid, TDPhone_NotifyText[playerid], 0);
 	PlayerTextDrawSetOutline(playerid, TDPhone_NotifyText[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, TDPhone_NotifyText[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, TDPhone_NotifyText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_NotifyText[playerid], 1);
 	PlayerTextDrawSetProportional(playerid, TDPhone_NotifyText[playerid], 1);
 	PlayerTextDrawSetShadow(playerid, TDPhone_NotifyText[playerid], 0);
@@ -1005,11 +1005,11 @@ CreatePlayerPhoneTextDraws(playerid) {
 		PlayerTextDrawLetterSize(playerid, TDPhone_Choice[playerid][i], 0.199666, 0.820148);
 		PlayerTextDrawTextSize(playerid, TDPhone_Choice[playerid][i], 587.000000, 7.000000);
 		PlayerTextDrawAlignment(playerid, TDPhone_Choice[playerid][i], 1);
-		PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][i], -1);
+		PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][i], -1);
 		PlayerTextDrawUseBox(playerid, TDPhone_Choice[playerid][i], 1);
-		PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][i], 255);
+		PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][i], 255);
 		PlayerTextDrawSetShadow(playerid, TDPhone_Choice[playerid][i], 0);
-		PlayerTextDrawBackgroundColor(playerid, TDPhone_Choice[playerid][i], 255);
+		PlayerTextDrawBackgroundColour(playerid, TDPhone_Choice[playerid][i], 255);
 		PlayerTextDrawFont(playerid, TDPhone_Choice[playerid][i], 1);
 		PlayerTextDrawSetProportional(playerid, TDPhone_Choice[playerid][i], 1);
 		PlayerTextDrawSetSelectable(playerid, TDPhone_Choice[playerid][i], true);
@@ -1027,59 +1027,59 @@ ShowPlayerPhone(playerid) {
     {
         case 0: // dark grey
         {
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 286331391); // the machine
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], -858993409); // Left border
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], -858993409); // Right edge
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], -1717986902); // Side button
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 286331391); // the machine
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -858993409); // Left border
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -858993409); // Right edge
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], -1717986902); // Side button
         	SetPlayerAttachedObject(playerid, 9, 18868, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 1: // Red
 		{
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 1628113919);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], -16776961);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], -16776961);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 1124534271);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 1628113919);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -16776961);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -16776961);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 1124534271);
         	SetPlayerAttachedObject(playerid, 9, 18870, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 2: // blue
 		{
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 405561855);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], 65535);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], 65535);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 270418943);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 405561855);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], 65535);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], 65535);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 270418943);
         	SetPlayerAttachedObject(playerid, 9, 18872, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 3: // green
 		{
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 388831231);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], 8388863);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], 8388863);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 270471423);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 388831231);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], 8388863);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], 8388863);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 270471423);
             SetPlayerAttachedObject(playerid, 9, 18871, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 4: // yellow
 		{
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 2104099071);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], -65281);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], -65281);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 1464467711);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 2104099071);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -65281);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -65281);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 1464467711);
         	SetPlayerAttachedObject(playerid, 9, 18873, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 5: // orange
 		{
 			//ce9100ff ba7407ff ba7407ff
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], 0xce9100ff);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], 0xba7407ff);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], 0xba7407ff);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 0xba7407ff);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], 0xce9100ff);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], 0xba7407ff);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], 0xba7407ff);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 0xba7407ff);
         	SetPlayerAttachedObject(playerid, 9, 18865, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
         }
         case 6: // pink
 		{
-        	PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][0], -2063576577);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][1], -16711681);
-        	PlayerTextDrawColor(playerid, TDPhone_Model[playerid][2], -16711681);
-        	PlayerTextDrawColor(playerid,TDPhone_Model[playerid][12], 1560295679);
+        	PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][0], -2063576577);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][1], -16711681);
+        	PlayerTextDrawColour(playerid, TDPhone_Model[playerid][2], -16711681);
+        	PlayerTextDrawColour(playerid,TDPhone_Model[playerid][12], 1560295679);
         	SetPlayerAttachedObject(playerid, 9, 18869, 6, 0.0789, 0.0050, -0.0049, 84.9999, -179.2999, -1.6999, 1.0000, 1.0000, 1.0000);
 		}
     }
@@ -1133,9 +1133,9 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 	if(Dialog_Opened(playerid)) Dialog_Close(playerid);
 
 	if(ph_menuid[playerid] == 6 && ph_sub_menuid[playerid] >= 1)
-		PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][6], 0x1C1C1CFF);
+		PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][6], 0x1C1C1CFF);
 	else
-		PlayerTextDrawBoxColor(playerid, TDPhone_Model[playerid][6], -572662273);
+		PlayerTextDrawBoxColour(playerid, TDPhone_Model[playerid][6], -572662273);
 
     PlayerTextDrawShow(playerid, TDPhone_Model[playerid][6]);
 
@@ -1144,12 +1144,12 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 	new str[64];
 
 	if(!IsUnreadSMS(playerid) || (menuid == 6 && subid > 0)) {
-		PlayerTextDrawColor(playerid, TDPhone_Model[playerid][3], -1);
+		PlayerTextDrawColour(playerid, TDPhone_Model[playerid][3], -1);
 		PlayerTextDrawShow(playerid, TDPhone_Model[playerid][3]);
 	}
 	else
 	{
-		PlayerTextDrawColor(playerid, TDPhone_Model[playerid][3], 0x298A08FF);
+		PlayerTextDrawColour(playerid, TDPhone_Model[playerid][3], 0x298A08FF);
 		PlayerTextDrawShow(playerid, TDPhone_Model[playerid][3]);
 	} 
 
@@ -1215,8 +1215,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 
 				    for(new i = 0; i != 4; ++i) {
 						PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][i], choice[i]);
-						PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x989898FF : 0x000000FF);
-						PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x222222FF : 0xAAAAAAFF);
+						PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x989898FF : 0x000000FF);
+						PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][i], (select == i) ? 0x222222FF : 0xAAAAAAFF);
 						PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][i]);
 				    }
 				}
@@ -1229,13 +1229,13 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 				case 0:
 				{
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Adicionar um contato");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "List contacts");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
@@ -1269,8 +1269,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 							}
 
 							PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][count], ContactData[playerid][i][contactName]);
-							PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
-							PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
+							PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
+							PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
 							PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][count]);
 
 							ph_data[playerid][count] = i + 1;
@@ -1314,18 +1314,18 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 				case 3: // List contacts --> Details --> Actions
 				{
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Call");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "Text");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], "Delete");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
@@ -1340,23 +1340,23 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 				case 0:
 				{
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "SMS a contact");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "SMS a number");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], "Inbox");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][3], "Archive");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][3]);
 
 					ph_page[playerid] = 0;
@@ -1385,8 +1385,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 							}
 
 							PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][count], ContactData[playerid][i][contactName]);
-							PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
-							PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
+							PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
+							PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
 							PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][count]);
 							ph_data[playerid][count] = i + 1;
 
@@ -1438,8 +1438,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 							format(str, sizeof(str), "%s%s", (!SmsData[playerid][i][smsRead]) ? ("~>~ ") : (""), GetContactName(playerid, SmsData[playerid][i][smsOwner]));
                             //printf(str);
 							PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][count], str);
-							PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
-							PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
+							PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
+							PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
 							PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][count]);
 							ph_data[playerid][count] = i + 1;
 
@@ -1470,18 +1470,18 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			{
 				case 0: {
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Dial a contact");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "Dial a number");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], "View call history");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_TSButton[playerid], "Volte");
@@ -1507,8 +1507,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 							}
 
 							PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][count], ContactData[playerid][i][contactName]);
-							PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
-							PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
+							PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
+							PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
 							PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][count]);
 							ph_data[playerid][count] = i + 1;
 							count++;
@@ -1549,8 +1549,8 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 							}
 							format(str, sizeof(str), "%s%s", (!CallHistory[playerid][i][chType]) ? ("~u~") : (CallHistory[playerid][i][chType] == 2) ? ("~d~~r~") : ("~d~"), GetContactName(playerid, CallHistory[playerid][i][chNumber]));
 							PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][count], str);
-							PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
-							PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
+							PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x989898FF : 0x000000FF);
+							PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][count], (select == count) ? 0x222222FF : 0xAAAAAAFF);
 							PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][count]);
 							ph_data[playerid][count] = i + 1;
 
@@ -1681,7 +1681,7 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 			    }
 			    case 2: {
-					PlayerTextDrawColor(playerid, TDPhone_ScreenText[playerid], 0x111111FF);
+					PlayerTextDrawColour(playerid, TDPhone_ScreenText[playerid], 0x111111FF);
 					PlayerTextDrawSetString(playerid, TDPhone_ScreenText[playerid], "Loading...");
 					PlayerTextDrawShow(playerid, TDPhone_ScreenText[playerid]);
 			    }			
@@ -1693,23 +1693,23 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			{
 			    case 0: {
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Change Ringtone");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], (ph_airmode[playerid]) ? ("Disable airplane mode") : ("Enable airplane mode"));
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], (ph_silentmode[playerid]) ? ("Disable silent mode") : ("Enable silent mode"));
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][3], "Phone Info");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][3]);
 
 					ph_page[playerid] = 0;
@@ -1717,13 +1717,13 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			    }
 			    case 1: { // Ringtone
 			    	PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Call ringtone");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "Text ringtone");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
@@ -1734,18 +1734,18 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			    }
 			    case 2: { // Ringtone - Call
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Ringtone 1");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "Ringtone 2");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], "Ringtone 3");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_TFButton[playerid], "Select");
@@ -1756,23 +1756,23 @@ RenderPlayerPhone(playerid, menuid, subid, select = 0) {
 			    }
 			    case 3: { // Ringtone - Text
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][0], "Ringtone 1");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][0], (select == 0) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][0]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][1], "Ringtone 2");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][1], (select == 1) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][1]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][2], "Ringtone 3");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][2], (select == 2) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][2]);
 
 					PlayerTextDrawSetString(playerid, TDPhone_Choice[playerid][3], "Ringtone 4");
-					PlayerTextDrawColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
-					PlayerTextDrawBoxColor(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
+					PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x989898FF : 0x000000FF);
+					PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][3], (select == 3) ? 0x222222FF : 0xAAAAAAFF);
 					PlayerTextDrawShow(playerid, TDPhone_Choice[playerid][3]);
 			    }
 				case 4: { // Phone Info

@@ -63,9 +63,9 @@ PlayerText:CreatePlayerGamblingSprite(playerid, Float:x, Float:y, const td_name[
 	new PlayerText:RetSprite = CreatePlayerTextDraw(playerid, x, y, td_name);
 	PlayerTextDrawTextSize(playerid, RetSprite, 48.000000, 129.000000);
 	PlayerTextDrawAlignment(playerid, RetSprite, 1);
-	PlayerTextDrawColor(playerid, RetSprite, 0xFFFFFFFF);
+	PlayerTextDrawColour(playerid, RetSprite, 0xFFFFFFFF);
 	PlayerTextDrawSetShadow(playerid, RetSprite, 0);
-	PlayerTextDrawBackgroundColor(playerid, RetSprite, 255);
+	PlayerTextDrawBackgroundColour(playerid, RetSprite, 255);
 	PlayerTextDrawFont(playerid, RetSprite, 4);
 	PlayerTextDrawSetProportional(playerid, RetSprite, 0);
 
@@ -138,27 +138,27 @@ hook OnPlayerConnect(playerid) {
 	slot_Machine[playerid] = CreatePlayerTextDraw(playerid, 202.411804, 124.666641, "mdl-9003:machine");
 	PlayerTextDrawTextSize(playerid, slot_Machine[playerid], 236.000000, 210.000000);
 	PlayerTextDrawAlignment(playerid, slot_Machine[playerid], 1);
-	PlayerTextDrawColor(playerid, slot_Machine[playerid], -1);
+	PlayerTextDrawColour(playerid, slot_Machine[playerid], -1);
 	PlayerTextDrawSetShadow(playerid, slot_Machine[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_Machine[playerid], 255);
+	PlayerTextDrawBackgroundColour(playerid, slot_Machine[playerid], 255);
 	PlayerTextDrawFont(playerid, slot_Machine[playerid], 4);
 	PlayerTextDrawSetProportional(playerid, slot_Machine[playerid], 0);
 
 	slot_BetTD[playerid][0] = CreatePlayerTextDraw(playerid, 361.129486, 281.583404, "200");
 	PlayerTextDrawLetterSize(playerid, slot_BetTD[playerid][0], 0.200000, 1.500000);
 	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][0], 2);
-	PlayerTextDrawColor(playerid, slot_BetTD[playerid][0], -16776961);
+	PlayerTextDrawColour(playerid, slot_BetTD[playerid][0], -16776961);
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][0], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_BetTD[playerid][0], 255);
+	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][0], 255);
 	PlayerTextDrawFont(playerid, slot_BetTD[playerid][0], 2);
 	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][0], 1);
 
 	slot_BetTD[playerid][1] = CreatePlayerTextDraw(playerid, 307.426208, 281.583404, "US$ 1.000.000");
 	PlayerTextDrawLetterSize(playerid, slot_BetTD[playerid][1], 0.200000, 1.500000);
 	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][1], 3);
-	PlayerTextDrawColor(playerid, slot_BetTD[playerid][1], -16776961);
+	PlayerTextDrawColour(playerid, slot_BetTD[playerid][1], -16776961);
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][1], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_BetTD[playerid][1], 255);
+	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][1], 255);
 	PlayerTextDrawFont(playerid, slot_BetTD[playerid][1], 2);
 	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][1], 1);
 }

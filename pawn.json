@@ -4,8 +4,10 @@
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [
+		"openmultiplayer/omp-stdlib",
+		"pawn-lang/samp-stdlib@open.mp",
+		"pawn-lang/pawn-stdlib@open.mp",
 		"sampctl/samp-stdlib",
-		"pawn-lang/sa-mp-fixes",
 		"NexiusTailer/Nex-AC",
 		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",
@@ -16,17 +18,17 @@
 		"Y-Less/indirection",
 		"samp-incognito/samp-streamer-plugin",
 		"Awsomedude/easyDialog",
-		"maddinat0r/samp-discord-connector",
+		"maddinat0r/samp-discord-connector:v0.3.5",
 		"oscar-broman/strlib",
 		"lassir/bcrypt-samp",
-		"samp-incognito/samp-streamer-plugin",
 		"Pottus/ColAndreas",
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
 		"philip1337/samp-plugin-mapandreas:v1.2.1",
-		"katursis/Pawn.CMD:3.3.6",
+		"katursis/Pawn.CMD",
 		"dakyskye/pawn-env:1.1.1",
-		"katursis/Pawn.Regex:1.2.3"
+		"katursis/Pawn.Regex:1.2.3",
+		"pawn-lang/YSI-Includes@5.x:v5.06.1932"
 	],
 	"local": true,
 	"runtime": {

@@ -1,6 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
-public OnPlayerRequestDownload(playerid, type, crc) {
+#if !defined DOWNLOAD_REQUEST
+	#define DOWNLOAD_REQUEST: _:
+#endif
+
+public OnPlayerRequestDownload(playerid, DOWNLOAD_REQUEST:type, crc) {
 	if(!IsPlayerConnected(playerid))
 		return false;
 

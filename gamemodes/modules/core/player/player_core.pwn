@@ -161,7 +161,7 @@ GetInitials(const string[])
 	return ret;
 }*/
 
-ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 0) {
+ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, bool:loop, bool:lockx, bool:locky, bool:freeze, time, forcesync = 0) {
 	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
 	return true;
 }
@@ -233,10 +233,10 @@ UpdateWeapons(playerid)
 	    KillTimer(pInfo[playerid][pFreezeTimer]);
 
 	    pInfo[playerid][pFreeze] = 0;
-	    TogglePlayerControllable(playerid, 1);
+	    TogglePlayerControllable(playerid, true);
 	}
 	SetPlayerPos(playerid, x, y, z + 0.5);
-	TogglePlayerControllable(playerid, 0);
+	TogglePlayerControllable(playerid, false);
 
 	pInfo[playerid][pFreeze] = 1;
 	pInfo[playerid][pFreezeTimer] = SetTimerEx("SetPlayerToUnfreeze", time, false, "dfff", playerid, x, y, z);

@@ -203,14 +203,14 @@ LoadPlayerFaction(playerid){
 
 //Congela (por determinado tempo) - dando chance do interior carregar.
 PlayerLoadObjects(playerid) {
-        TogglePlayerControllable(playerid, 0);
+        TogglePlayerControllable(playerid, false);
         pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "i", playerid);
 }
 
 //Responde o player Load
 hook PlayerLoadedObjects(playerid) {
     DesbugInteriorAndWorld(playerid);
-    TogglePlayerControllable(playerid, 1);
+    TogglePlayerControllable(playerid, true);
     KillTimer(pInfo[playerid][LoadTemp]);
     printf("Playerid: %d - Interior: %d", playerid, pInfo[playerid][pInterior]);
 } 

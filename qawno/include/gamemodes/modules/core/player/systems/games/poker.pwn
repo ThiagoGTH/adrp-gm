@@ -2872,14 +2872,14 @@ PkrCMD_Spectate(const playerid) {
 		SetPVarInt(playerid, POKER_SPECTATE_VAR_NAME, gameId);
 		Pkr_ShowPlayerTextDraws(playerid, gameId);
 		SendClientMessage(playerid, COLOR_DARKGREEN, "Poker oyununu seyretmeye baùladùn.");
-        TogglePlayerControllable(playerid, 0);
+        TogglePlayerControllable(playerid, false);
 		return;
 	}
 
 	DeletePVar(playerid, POKER_SPECTATE_VAR_NAME);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
 	SendClientMessage(playerid, COLOR_DARKGREEN, "Poker oyununu seyretmeyi bùraktùn.");
-    TogglePlayerControllable(playerid, 1);
+    TogglePlayerControllable(playerid, true);
 	return;
 }
 
@@ -2909,7 +2909,7 @@ PkrCMD_Sit(const playerid) {
 	PkrSys_SetPlayerCamera(playerid, objectId);
 	Pkr_ShowPlayerTextDraws(playerid, gameId);
 	Pkr_ShowCursorForPlayerId(playerid);
-	TogglePlayerControllable(playerid, 0);
+	TogglePlayerControllable(playerid, false);
 	SetPVarInt(playerid, POKER_SIT_VAR_NAME, 1);
 	return;
 }
@@ -2929,7 +2929,7 @@ PkrCMD_Stand(const playerid) {
 	SetCameraBehindPlayer(playerid);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
 	Pkr_HideCursorForPlayerId(playerid);
-	TogglePlayerControllable(playerid, 1);
+	TogglePlayerControllable(playerid, true);
 	DeletePVar(playerid, POKER_SIT_VAR_NAME);
 	return;
 }
@@ -4117,7 +4117,7 @@ Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
 			SetPVarInt(playerid, POKER_CAMERA_VAR_NAME, 1);
 		}
 
-		TogglePlayerControllable(playerid, 0);
+		TogglePlayerControllable(playerid, false);
 		GiveMoney(playerid, -chips);
 		SetPVarInt(playerid, POKER_SIT_VAR_NAME, 1);
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s poker masasùna katùldù. (Oyun ID: %d)", pNome(playerid), gameId);
@@ -4185,7 +4185,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
         Pkr_DestroyGame(gameId);
 
 	Pkr_HideCursorForPlayerId(playerid);
-	TogglePlayerControllable(playerid, 1);
+	TogglePlayerControllable(playerid, true);
     return true;
 }
 

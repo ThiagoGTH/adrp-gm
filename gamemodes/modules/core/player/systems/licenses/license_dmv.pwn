@@ -116,8 +116,16 @@ DMVUpdate(playerid) {
 DMV_StateChange(playerid, newstate, oldstate) {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
   		if(!InDMV[playerid]) return true;
-  		new new bool:engine, bool:lights, bool:alarm, bool:doors, bool:bonnet, bool:boot, bool:objective,
-  			vehicleid = GetPlayerVehicleID(playerid);
+  		static 
+			bool:engine, 
+			bool:lights, 
+			bool:alarm, 
+			bool:doors, 
+			bool:bonnet, 
+			bool:boot, 
+			bool:objective;
+			
+  		new vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 		if(!(vehicleid == vehicleDMV[playerid])) return va_SendClientMessage(playerid, COLOR_GREEN, "Você precisa entrar no veículo.");
 		SendServerMessage(playerid, "Você iniciou o exame. Siga os checkpoints e não danifique o veículo.");

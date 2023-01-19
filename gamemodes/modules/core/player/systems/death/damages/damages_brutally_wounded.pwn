@@ -280,7 +280,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
     return true;
 }
 
-public OnPlayerStateChange(playerid, newstate, oldstate) {
+#if !defined PLAYER_STATE
+	#define PLAYER_STATE: _:
+#endif
+
+public OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
 	if (newstate == PLAYER_STATE_WASTED)
 	{
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 

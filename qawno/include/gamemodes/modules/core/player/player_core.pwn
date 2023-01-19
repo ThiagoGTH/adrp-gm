@@ -233,10 +233,10 @@ UpdateWeapons(playerid)
 	    KillTimer(pInfo[playerid][pFreezeTimer]);
 
 	    pInfo[playerid][pFreeze] = 0;
-	    TogglePlayerControllable(playerid, 1);
+	    TogglePlayerControllable(playerid, true);
 	}
 	SetPlayerPos(playerid, x, y, z + 0.5);
-	TogglePlayerControllable(playerid, 0);
+	TogglePlayerControllable(playerid, false);
 
 	pInfo[playerid][pFreeze] = 1;
 	pInfo[playerid][pFreezeTimer] = SetTimerEx("SetPlayerToUnfreeze", time, false, "dfff", playerid, x, y, z);

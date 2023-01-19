@@ -928,7 +928,7 @@ public OnPoolUpdate(poolid) {
 public RestoreCamera(playerid) {
 	TextDrawHideForPlayer(playerid, g_PoolTextdraw);
 	HidePlayerProgressBar(playerid, g_PoolPowerBar[playerid]);
-	TogglePlayerControllable(playerid, 1);
+	TogglePlayerControllable(playerid, true);
 	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
 	return SetCameraBehindPlayer(playerid);
 }

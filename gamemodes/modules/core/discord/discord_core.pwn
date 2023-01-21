@@ -565,7 +565,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("989306578199003197")){
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1066434521395892315")){
         DCC_SendChannelMessage(DCC_FindChannelById("989305002952622110"), string);
         return true;
     }

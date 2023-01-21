@@ -4,12 +4,6 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#define YSI_NO_CACHE_MESSAGE
-#define YSI_NO_OPTIMISATION_MESSAGE
-#define YSI_NO_VERSION_CHECK
-
-#define CGEN_MEMORY 6942069420
-
 #include <crashdetect>
 #include <streamer>
 
@@ -33,14 +27,17 @@
 #include <env>
 #include <Pawn.Regex>
 
+#define YSI_NO_CACHE_MESSAGE
+#define YSI_NO_OPTIMISATION_MESSAGE
+#define YSI_NO_VERSION_CHECK
+#define YSI_NO_HEAP_MALLOC
+
 /*#pragma warning disable 214
 #pragma warning disable 239
 //#include <nex-ac_pt.lang>
 #include <nex-ac>
 #pragma warning enable 214
 #pragma warning enable 239*/
-
-#define YSI_NO_HEAP_MALLOC
 
 /* ==============================[modules]============================== */
 #include <YSI_Coding\y_timers>
@@ -84,4 +81,6 @@
 
 #include "modules\core\player\main\main.pwn"
 
-main() { }
+main() {
+    DisableCrashDetectLongCall();
+ }

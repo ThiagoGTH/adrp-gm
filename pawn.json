@@ -17,7 +17,7 @@
 		"Y-Less/indirection",
 		"samp-incognito/samp-streamer-plugin",
 		"Awsomedude/easyDialog",
-		"maddinat0r/samp-discord-connector",
+		"maddinat0r/samp-discord-connector:v0.3.5",
 		"oscar-broman/strlib",
 		"lassir/bcrypt-samp",
 		"samp-incognito/samp-streamer-plugin",
@@ -68,7 +68,7 @@
 		"cookielogging": false,
 		"output": true,
 		"extra": {
-			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ"
+			"discord_bot_token": ""
 		}
 	},
 	"builds": [

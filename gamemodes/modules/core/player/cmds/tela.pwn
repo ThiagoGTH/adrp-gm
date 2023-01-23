@@ -4,25 +4,25 @@ new Text:Blind, Text:Blind2, Text:Blind3, Text:Blind4;
 hook OnGameModeInit() {
 	Blind = TextDrawCreate(641.199951, 1.500000, "anything");
 	TextDrawLetterSize(Blind, 0.000000, 49.378147);
-	TextDrawAlignment(Blind, 3);
+	TextDrawAlignment(Blind, TextDrawAlignment_Center);
 	TextDrawUseBox(Blind, true);
 	TextDrawBoxColour(Blind, 255);
 	
 	Blind2 = TextDrawCreate(641.199951, 1.500000, "anything");
 	TextDrawLetterSize(Blind2, 0.000000, 49.378147);
-	TextDrawAlignment(Blind2, 3);
+	TextDrawAlignment(Blind2, TextDrawAlignment_Center);
 	TextDrawUseBox(Blind2, true);
 	TextDrawBoxColour(Blind2, 0x2F221AFF);
 
     Blind3 = TextDrawCreate(641.199951, 1.500000, "anything");
 	TextDrawLetterSize(Blind3, 0.000000, 49.378147);
-	TextDrawAlignment(Blind3, 3);
+	TextDrawAlignment(Blind3, TextDrawAlignment_Center);
 	TextDrawUseBox(Blind3, true);
 	TextDrawBoxColour(Blind3, 0x808080FF);
 
     Blind4 = TextDrawCreate(641.199951, 1.500000, "anything");
 	TextDrawLetterSize(Blind4, 0.000000, 49.378147);
-	TextDrawAlignment(Blind4, 3);
+	TextDrawAlignment(Blind4, TextDrawAlignment_Center);
 	TextDrawUseBox(Blind4, true);
 	TextDrawBoxColour(Blind4, 0xFFA500FF);
 	return true;

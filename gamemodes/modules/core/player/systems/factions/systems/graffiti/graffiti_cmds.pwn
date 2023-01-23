@@ -3,7 +3,7 @@ CMD:grafitar(playerid, params[]) {
 
     if (GetPVarInt(playerid, "Graffiti:Creating") > 0)
         return SendErrorMessage(playerid, "Você já está criando um grafite.");
-    if (GetPlayerWeapon(playerid) != 41)
+    if (GetPlayerWeapon(playerid) != WEAPON_SPRAYCAN)
         return SendErrorMessage(playerid, "Você não está com um spray can em mãos.");
     if (GetPlayerInterior(playerid) != 0)
         return SendErrorMessage(playerid, "Você não pode criar um grafite em um interior.");

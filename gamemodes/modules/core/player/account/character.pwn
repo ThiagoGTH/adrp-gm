@@ -203,8 +203,8 @@ LoadPlayerFaction(playerid){
 
 //Congela (por determinado tempo) - dando chance do interior carregar.
 PlayerLoadObjects(playerid) {
-        TogglePlayerControllable(playerid, false);
-        pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "i", playerid);
+    TogglePlayerControllable(playerid, false);
+    pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "i", playerid);
 }
 
 //Responde o player Load

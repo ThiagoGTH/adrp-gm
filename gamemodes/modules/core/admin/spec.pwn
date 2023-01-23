@@ -128,14 +128,14 @@ CMD:checarspecs(playerid, params[]) {
 
 hook OnPlayerStateChange(playerid, newstate, oldstate) {
     if(gIsPlayerBeingSpectated[playerid]) {
-        if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
+        if(oldstate == 4 && newstate == 5) {
             foreach(new i : Player) {
                 if(gPlayerIsSpectating[i] && gSpectatingPlayer[i] == playerid) {
                     PlayerSpectateVehicle(i, GetPlayerVehicleID(playerid));
                     SyncSpectate(playerid, i);
                 }
             }
-        } else if(oldstate == PLAYER_STATE_DRIVER && newstate == PLAYER_STATE_ONFOOT) {
+        } else if(oldstate == 5 && newstate == 4) {
             foreach(new i : Player)  {
                 if(gPlayerIsSpectating[i] && gSpectatingPlayer[i] == playerid) {
                     PlayerSpectatePlayer(i, playerid);

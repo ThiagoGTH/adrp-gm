@@ -44,8 +44,8 @@ bool:StartFly(playerid) {
 public Fly(playerid) {
 	if(!IsPlayerConnected(playerid))
 		return true;
-	new k, ud,lr;
-	GetPlayerKeys(playerid,k,ud,lr);
+	new k, ud, lr;
+	GetPlayerKeys(playerid, k, ud, lr);
 	new Float:v_x,Float:v_y,Float:v_z,
 		Float:x,Float:y,Float:z;
 	if(ud < 0)	// forward

@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 new PlayerText:LockText[12], bool:LockUse[MAX_PLAYERS], Float:LockProgress = 207.0, Float:LockLocation[MAX_PLAYERS], Float:LockSize[MAX_PLAYERS], LockCount[MAX_PLAYERS], LockTimer[MAX_PLAYERS], Correct[MAX_PLAYERS], VehicleLockedID[MAX_PLAYERS];
-new Engine[MAX_PLAYERS], Lights[MAX_PLAYERS], Alarm[MAX_PLAYERS], DoorsLockPick[MAX_PLAYERS], Bonnet[MAX_PLAYERS], Boot[MAX_PLAYERS], Objective[MAX_PLAYERS];
+new bool:Engine[MAX_PLAYERS], bool:Lights[MAX_PLAYERS], bool:Alarm[MAX_PLAYERS], bool:DoorsLockPick[MAX_PLAYERS], bool:Bonnet[MAX_PLAYERS], bool:Boot[MAX_PLAYERS], bool:Objective[MAX_PLAYERS];
 
 CMD:quebrartrava(playerid) {
     new Float:VehX, Float:VehY, Float:VehZ, Count;

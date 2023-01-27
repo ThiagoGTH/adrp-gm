@@ -2,7 +2,7 @@
     "announce": true,
     "artwork": {
         "cdn": "http://127.0.0.1/models/",
-        "enable": false, 
+        "enable": true, 
         "models_path": "models"
     },
     "chat_input_filter": true,
@@ -75,7 +75,7 @@
     },
     "password": "",
     "discord": {
-        "bot_token": ""
+        "bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.GyOe3n.hDJrNCXAdPGtg63Q4dj8HyyoHKQ9YDKHNn2PjI"
     },
     "pawn": {
         "legacy_plugins": [],

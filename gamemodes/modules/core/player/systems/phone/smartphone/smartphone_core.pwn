@@ -3038,7 +3038,7 @@ CallNumber(playerid, const params[]) {
 	if(ph_airmode[playerid])
 		return SendErrorMessage(playerid, "You can't do this now (airplane mode on).");
 
-  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) > 0 || pInfo[playerid][pMoney] < 10)
+  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 10)
 	  	return SendErrorMessage(playerid, "You can't do this right now.");
 
 	new phonenumb[24];
@@ -3219,7 +3219,7 @@ SendSMS(playerid, const params[]) {
 	if(ph_airmode[playerid])
 		return SendErrorMessage(playerid, "Você não pode fazer isso agora (modo avião ativado).");
 
-  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) > 0 || pInfo[playerid][pMoney] < 1)
+  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 1)
 	  	return SendErrorMessage(playerid, "Você não pode fazer isso agora.");
 
 	new phonenumb[24], sms_text[128];

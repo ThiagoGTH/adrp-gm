@@ -340,7 +340,14 @@ public SetPlayerSpawn(playerid)
 			if(pInfo[playerid][pArmour]) SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
 
 			
-            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA], -1, -1, -1, -1, -1, -1);
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             SendClientMessageToAll(-1, "[9] SET SPAWN");

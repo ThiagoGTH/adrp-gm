@@ -50,7 +50,9 @@ StopPlayerWatchingCamera(playerid){
         pInfo[playerid][pPositionY], 
         pInfo[playerid][pPositionZ],
         pInfo[playerid][pPositionA],
-         WEAPON_FIST, 0, WEAPON_FIST, 0, WEAPON_FIST, 0);
+        WEAPON_FIST, 0, 
+        WEAPON_FIST, 0, 
+        WEAPON_FIST, 0);
 	TogglePlayerSpectating(playerid, false);
 	SetCameraBehindPlayer(playerid);
 	SetWeapons(playerid);

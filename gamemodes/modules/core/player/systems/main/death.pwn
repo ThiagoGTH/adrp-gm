@@ -166,8 +166,13 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			GetPlayerFacingAngle(damagedid, pInfo[damagedid][pPositionA]);
         
 			SetSpawnInfo(damagedid, NO_TEAM, pInfo[damagedid][pSkin], 
-			pInfo[damagedid][pPositionX], pInfo[damagedid][pPositionY], pInfo[damagedid][pPositionZ], pInfo[damagedid][pPositionA],
-			0, 0, 0, 0, 0, 0);
+				pInfo[damagedid][pPositionX], 
+				pInfo[damagedid][pPositionY], 
+				pInfo[damagedid][pPositionZ], 
+				pInfo[damagedid][pPositionA],
+				WEAPON_FIST, 0, 
+				WEAPON_FIST, 0, 
+				WEAPON_FIST, 0);
 
 			SetPlayerSkin(damagedid, GetPlayerSkin(damagedid) > 0 ? (pInfo[damagedid][pSkin]) : (23));
 			SpawnPlayer(damagedid);

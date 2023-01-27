@@ -675,11 +675,13 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
             SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
-            pInfo[playerid][pPositionX], 
-            pInfo[playerid][pPositionY], 
-            pInfo[playerid][pPositionZ],
-            pInfo[playerid][pPositionA],
-            0, 0, 0, 0, 0, 0);
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             return true;
@@ -715,11 +717,13 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
             SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
-            pInfo[playerid][pPositionX], 
-            pInfo[playerid][pPositionY], 
-            pInfo[playerid][pPositionZ],
-            pInfo[playerid][pPositionA],
-            0, 0, 0, 0, 0, 0);
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             ResetDealershipVars(playerid);
@@ -738,11 +742,13 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
         SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
         SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], 
-        pInfo[playerid][pPositionY], 
-        pInfo[playerid][pPositionZ],
-        pInfo[playerid][pPositionA],
-        0, 0, 0, 0, 0, 0);
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0);
         SpawnPlayer(playerid);
         SetWeapons(playerid);
         ResetDealershipVars(playerid);
@@ -752,11 +758,13 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
 	    SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], 
-        pInfo[playerid][pPositionY], 
-        pInfo[playerid][pPositionZ],
-        pInfo[playerid][pPositionA],
-        0, 0, 0, 0, 0, 0);
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0);
         SpawnPlayer(playerid);
         SetWeapons(playerid);
     }

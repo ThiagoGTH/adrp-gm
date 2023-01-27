@@ -28,7 +28,7 @@ hook OnGamemodeExit() {
 
 hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	if (response == EDIT_RESPONSE_FINAL)
+	if (response == 1)
 	{
 	    if (IsValidPhone(pInfo[playerid][oEditPhone]))
 	    {
@@ -43,7 +43,7 @@ hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:
             SendServerMessage(playerid, "Você editou o telefone de ID %d.", pInfo[playerid][oEditPhone]);
 	    }
     }
-	if (response == EDIT_RESPONSE_FINAL || response == EDIT_RESPONSE_CANCEL)
+	if (response == 1 || response == 0)
 	{
 	    if (pInfo[playerid][oEditPhone] != -1)
             return RefreshPHONE(pInfo[playerid][oEditPhone]);

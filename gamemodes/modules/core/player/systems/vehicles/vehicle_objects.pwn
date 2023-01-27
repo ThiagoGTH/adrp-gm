@@ -167,7 +167,7 @@ CMD:avobjeto(playerid, params[]) {
 
 hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz) {
     
-    if(response == EDIT_RESPONSE_CANCEL) { // FUN플O DE CANCELAR
+    if(response == 0) { // FUN플O DE CANCELAR
         if(pInfo[playerid][pEditingVeh] != 0 && pInfo[playerid][pOjectVeh] != 0) {
             new vehicleid = pInfo[playerid][pEditingVeh];
             new slot = pInfo[playerid][pSlotEdVeh];
@@ -183,7 +183,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
             vInfo[vehicleid][vObject][slot] = 0;
             return true;
         }
-    } else if(response == EDIT_RESPONSE_FINAL) { // FUN플O DE VALIDAR
+    } else if(response == 1) { // FUN플O DE VALIDAR
         if(pInfo[playerid][pEditingVeh] != 0 && pInfo[playerid][pOjectVeh] != 0) {
             new vehicleid = pInfo[playerid][pEditingVeh];
             new slot = pInfo[playerid][pSlotEdVeh];

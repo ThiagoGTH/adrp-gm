@@ -7,7 +7,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	GetDynamicObjectPos(objectid, oldX, oldY, oldZ);
 	GetDynamicObjectRot(objectid, oldRotX, oldRotY, oldRotZ);
 
-    if(response == EDIT_RESPONSE_CANCEL) {
+    if(response == 0) {
         if (pInfo[playerid][pEditDropped] != -1 && DroppedItems[pInfo[playerid][pEditDropped]][droppedObject] == objectid) {
 			SetDynamicObjectPos(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], oldX, oldY, oldZ);
 			SetDynamicObjectRot(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], oldRotX, oldRotY, oldRotZ);
@@ -20,7 +20,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 			DroppedItems[pInfo[playerid][pEditDropped]][droppedPos][5] = oldRotZ;
 			pInfo[playerid][pEditDropped] = 0;
 		}
-    } else if(response == EDIT_RESPONSE_FINAL) {
+    } else if(response == 1) {
         if (pInfo[playerid][pEditDropped] != -1 && DroppedItems[pInfo[playerid][pEditDropped]][droppedObject] == objectid) {
 			SetDynamicObjectPos(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], x, y, z);
 			SetDynamicObjectRot(DroppedItems[pInfo[playerid][pEditDropped]][droppedObject], rx, ry, rz);

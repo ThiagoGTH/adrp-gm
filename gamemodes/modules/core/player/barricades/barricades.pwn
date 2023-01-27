@@ -185,7 +185,7 @@ public OnModelSelectionResponse(playerid, extraid, index, modelid, response)
 
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-    if(response == EDIT_RESPONSE_CANCEL) {
+    if(response == 0) {
         if(pInfo[playerid][pEditandoBareira] != -1){
             new id = pInfo[playerid][pEditandoBareira];
             if(IsValidDynamicObject(br_info[id][cadeObject]))
@@ -197,7 +197,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
         }
         return true;
     }
-   	if (response == EDIT_RESPONSE_FINAL){
+   	if (response == 1){
         if(pInfo[playerid][pEditandoBareira] != -1)
         {
             new id = pInfo[playerid][pEditandoBareira];

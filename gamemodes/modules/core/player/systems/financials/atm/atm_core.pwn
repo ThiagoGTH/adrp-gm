@@ -32,7 +32,7 @@ hook OnGamemodeExit() {
 
 hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-	if (response == EDIT_RESPONSE_FINAL)
+	if (response == 1)
 	{
 	    if (IsValidAtm(pInfo[playerid][oEditATM]))
 	    {
@@ -47,7 +47,7 @@ hook OP_EditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:
             SendServerMessage(playerid, "Você editou a ATM de ID %d.", pInfo[playerid][oEditATM]);
 	    }
     }
-	if (response == EDIT_RESPONSE_FINAL || response == EDIT_RESPONSE_CANCEL)
+	if (response == 1 || response == 0)
 	{
 	    if (pInfo[playerid][oEditATM] != -1)
             return RefreshATM(pInfo[playerid][oEditATM]);

@@ -85,10 +85,10 @@ CMD:crossarms(playerid, params[])
 	if (type < 1 || type > 4) return SendErrorMessage(playerid, "Essa é uma animação invalida.");
 
 	switch (type) {
-	    case 1: ApplyAnimationEx(playerid, "COP_AMBIENT", "Coplook_loop", 4.1, 0, 1, 1, 1, 0, 1);
+	    case 1: ApplyAnimationEx(playerid, "COP_AMBIENT", "Coplook_loop", 4.1, false, true, true, true, 0);
 	    case 2: ApplyAnimationEx(playerid, "GRAVEYARD", "prst_loopa", 4.1, false, false, false, false, 0);
 	    case 3: ApplyAnimationEx(playerid, "GRAVEYARD", "mrnM_loop", 4.1, false, false, false, false, 0);
-	    case 4: ApplyAnimationEx(playerid, "DEALER", "DEALER_IDLE", 4.1, 0, 1, 1, 1, 0, 1);
+	    case 4: ApplyAnimationEx(playerid, "DEALER", "DEALER_IDLE", 4.1, false, true, true, true, 0);
 	}
 	return 1;
 }

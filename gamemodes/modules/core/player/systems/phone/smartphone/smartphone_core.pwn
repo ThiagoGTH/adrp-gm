@@ -973,7 +973,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_Signal[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Signal[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Signal[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Signal[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Signal[playerid], true);
 
 	TDPhone_Picture[playerid] = CreatePlayerTextDraw(playerid, 488.199890, 296.000000, "_"); // Emo
 	PlayerTextDrawLetterSize(playerid, TDPhone_Picture[playerid], 0.000000, 0.000000);
@@ -1006,7 +1006,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 		PlayerTextDrawTextSize(playerid, TDPhone_Choice[playerid][i], 587.000000, 7.000000);
 		PlayerTextDrawAlignment(playerid, TDPhone_Choice[playerid][i], 1);
 		PlayerTextDrawColour(playerid, TDPhone_Choice[playerid][i], -1);
-		PlayerTextDrawUseBox(playerid, TDPhone_Choice[playerid][i], 1);
+		PlayerTextDrawUseBox(playerid, TDPhone_Choice[playerid][i], true);
 		PlayerTextDrawBoxColour(playerid, TDPhone_Choice[playerid][i], 255);
 		PlayerTextDrawSetShadow(playerid, TDPhone_Choice[playerid][i], false);
 		PlayerTextDrawBackgroundColour(playerid, TDPhone_Choice[playerid][i], 255);

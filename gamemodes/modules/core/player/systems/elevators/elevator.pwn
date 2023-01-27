@@ -162,7 +162,7 @@ public OnObjectMoved(objectid) {
 		PlaySoundForPlayersInRange(6401, 10.0, x, y, z);
 
 	    ElevatorState 	= ELEVATOR_STATE_WAITING;
-	    SetTimer("Elevator_TurnToIdle", ELEVATOR_WAIT_TIME, 0);
+	    SetTimer("Elevator_TurnToIdle", ELEVATOR_WAIT_TIME, false);
 	}
 
 	return true;
@@ -184,7 +184,7 @@ Dialog:DIALOG_ELEVATOR(playerid, response, listitem, inputtext[]) {
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(!IsPlayerInAnyVehicle(playerid) && newkeys & KEY_SECONDARY_ATTACK)
+	if(!IsPlayerInAnyVehicle(playerid) && newkeys & 128)
 	{
 	    new Float:pos[3];
 	    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
@@ -331,7 +331,7 @@ Elevator_MoveToFloor(floorid)
     MoveObject(Obj_ElevatorDoors[1], X_DOOR_CLOSED, -1303.459472, GetDoorsZCoordForFloor(floorid), 0.5);
     Delete3DTextLabel(Label_Elevator);
 
-	ElevatorBoostTimer = SetTimerEx("Elevator_Boost", 2000, 0, "i", floorid);
+	ElevatorBoostTimer = SetTimerEx("Elevator_Boost", 2000, false, "i", floorid);
 
 	return true;
 }

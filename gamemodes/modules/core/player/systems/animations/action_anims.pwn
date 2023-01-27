@@ -1,7 +1,7 @@
 CMD:stopanim(playerid)
 {
 	if (IsPlayerInAnyVehicle(playerid)) return 1;
-	ClearAnimations(playerid, 1);
+	ClearAnimations(playerid);
 	return 1;
 }
 
@@ -13,7 +13,7 @@ CMD:renderse(playerid)
 
 CMD:mijar(playerid)
 {
-	SetPlayerSpecialAction(playerid, 68);
+	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_PISSING);
 	return 1;
 }
 

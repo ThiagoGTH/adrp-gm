@@ -248,8 +248,8 @@ hook OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
                         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
                         
                         ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, 0, 1, 1, 1, 0, 1);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, 0, 1, 1, 1, 0, 1);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, 0, 1, 1, 1, 0, 1);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
 
                         pInfo[playerid][pTackleTimer] = gettime() + 10;
 

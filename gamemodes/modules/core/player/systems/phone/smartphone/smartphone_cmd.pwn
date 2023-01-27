@@ -47,7 +47,7 @@ CMD:selfie(playerid, params[])
 
 CMD:atender(playerid, params[])
 {
-    if(pInfo[playerid][pInjured] || GetPlayerSpecialAction(playerid) > 0)
+    if(pInfo[playerid][pInjured] || GetPlayerSpecialAction(playerid) != SPECIAL_ACTION_NONE)
 		return SendClientMessage(playerid, COLOR_LIGHTRED, "Você não pode usar o telefone neste momento.");
 
 	if(ph_menuid[playerid] == 7 && ph_sub_menuid[playerid] == 2)

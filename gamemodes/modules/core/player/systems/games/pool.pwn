@@ -1,9 +1,17 @@
 #include <YSI_Coding\y_hooks>
 
 /* ================================ DEFINIÇÕES ================================ */
-#define HOLDING(%0)             	((newkeys & (%0)) == (%0))
-#define PRESSED(%0)					(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
-#define RELEASED(%0) 				(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
+#define HOLDING(%0) \
+    ((newkeys & (%0)) == (%0))
+
+#define PRESSED(%0) \
+    (((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
+
+#define PRESSING(%0,%1) \
+    (%0 & (%1))
+	
+#define RELEASED(%0) \
+    (((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
@@ -120,12 +128,12 @@ hook OnScriptInit() {
 
 	g_PoolTextdraw = TextDrawCreate(529.000000, 218.000000, powerStr);
 	TextDrawBackgroundColour(g_PoolTextdraw, 255);
-	TextDrawFont(g_PoolTextdraw, 1);
+	TextDrawFont(g_PoolTextdraw, TEXT_DRAW_FONT_2);
 	TextDrawLetterSize(g_PoolTextdraw, 0.300000, 1.299998);
 	TextDrawColour(g_PoolTextdraw, -1);
 	TextDrawSetOutline(g_PoolTextdraw, 1);
-	TextDrawSetProportional(g_PoolTextdraw, 1);
-	TextDrawSetSelectable(g_PoolTextdraw, 0);
+	TextDrawSetProportional(g_PoolTextdraw, true);
+	TextDrawSetSelectable(g_PoolTextdraw, false);
 
 	return true;
 }
@@ -152,13 +160,13 @@ hook OnPlayerConnect(playerid) {
 
 	p_HelpBoxTD[playerid] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
 	PlayerTextDrawBackgroundColour(playerid, p_HelpBoxTD[playerid], 255);
-	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], TEXT_DRAW_FONT_2);
 	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[playerid], 0.219999, 1.200000);
 	PlayerTextDrawColour(playerid, p_HelpBoxTD[playerid], -1);
 	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], false);
-	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], true);
 	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[playerid], 1);
-	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], true);
 	PlayerTextDrawBoxColour(playerid, p_HelpBoxTD[playerid], 117);
 	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[playerid], 170.000000, 0.000000);
 	return true;
@@ -201,7 +209,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if (poolid != -1 && pooltable_distance < 2.5) {
 		if (g_poolTableData[poolid][E_STARTED]) {
 			// quit table
-			if (HOLDING(KEY_SECONDARY_ATTACK) && IsPlayerPlayingPool(playerid)) {
+			if (HOLDING(16) && IsPlayerPlayingPool(playerid)) {
 				HidePlayerHelpDialog(playerid);
 				Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
 				return Pool_RemovePlayer(playerid);
@@ -227,14 +235,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 			// begin gameplay stuff
 			if (IsPlayerPlayingPool(playerid) && p_PoolID[playerid] == poolid) {
-				if (RELEASED(KEY_JUMP)) {
+				if (RELEASED(32)) {
 					if (g_poolTableData[poolid][E_AIMER] == playerid) {
 						p_PoolCameraBirdsEye[playerid] = ! p_PoolCameraBirdsEye[playerid];
 						Pool_UpdatePlayerCamera(playerid, poolid);
 					}
 				}
 
-				if (RELEASED(KEY_HANDBRAKE)) {
+				if (RELEASED(128)) {
 					if (Pool_AreBallsStopped(poolid)) {
 						if (g_poolTableData[poolid][E_AIMER] != playerid) {
 							if (g_poolTableData[poolid][E_NEXT_SHOOTER] != playerid) return SendErrorMessage(playerid, "Não é a sua vez. Por favor, espere.");
@@ -265,7 +273,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	                            	p_PoolAngle[playerid][0] = poolrot;
 	                            	p_PoolAngle[playerid][1] = poolrot;
 
-									SetPlayerArmedWeapon(playerid, 0);
+									SetPlayerArmedWeapon(playerid, WEAPON_FIST);
 									Pool_GetXYInFrontOfPos(Xa, Ya, poolrot + 180, x, y, 0.085);
 									g_poolTableData[poolid][E_AIMER_OBJECT] = CreateDynamicObject(3004, x, y, Za, 7.0, 0, poolrot + 180, .worldid = g_poolTableData[poolid][E_WORLD]);
 
@@ -296,11 +304,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 							}
 						} else {
 							TogglePlayerControllable(playerid, true);
-							GivePlayerWeapon(playerid, 7, 1);
+							GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 
 							ClearAnimations(playerid);
 	            			SetCameraBehindPlayer(playerid);
-							ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+							ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 
 							TextDrawHideForPlayer(playerid, g_PoolTextdraw);
 							HidePlayerProgressBar(playerid, g_PoolPowerBar[playerid]);
@@ -312,7 +320,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					}
 				}
 
-				if (RELEASED(KEY_FIRE)) {
+				if (RELEASED(4)) {
 					if (g_poolTableData[poolid][E_AIMER] == playerid) {
 						new Float: ball_x, Float: ball_y, Float: ball_z;
 
@@ -340,13 +348,13 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 						DestroyDynamicObject(g_poolTableData[poolid][E_AIMER_OBJECT]);
 						g_poolTableData[poolid][E_AIMER_OBJECT] = -1;
 
-						GivePlayerWeapon(playerid, 7, 1);
+						GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 					}
 					else ClearAnimations(playerid);
 				}
 			}
 		} else {
-			if (PRESSED(KEY_SECONDARY_ATTACK))
+			if (PRESSED(16))
 			{
 				if (IsPlayerPlayingPool(playerid) && Iter_Contains(poolplayers<poolid>, playerid)) {
 					HidePlayerHelpDialog(playerid);
@@ -380,7 +388,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					    foreach (new i : poolplayers< poolid >) {
 							p_PoolScore[i] = 0;
 							PlayerPlaySound(i, 1085, 0.0, 0.0, 0.0);
-							GivePlayerWeapon(i, 7, 1);
+							GivePlayerWeapon(i, WEAPON_POOLSTICK, 1);
 					   }
 
 						g_poolTableData[poolid][E_STARTED] = true;
@@ -589,7 +597,7 @@ Pool_GetClosestTable(playerid, &Float: dis = 35.00) {
 Pool_RespawnBalls(poolid) {
 	if (g_poolTableData[poolid][E_AIMER] != -1)
 	{
-		TogglePlayerControllable(g_poolTableData[poolid][E_AIMER], 1);
+		TogglePlayerControllable(g_poolTableData[poolid][E_AIMER], true);
 		//ClearAnimations(g_poolTableData[poolid][E_AIMER]);
 
 		//ApplyAnimation(g_poolTableData[poolid][E_AIMER], "CARRY", "crry_prtial", 1.0, 0, 0, 0, 0, 0);
@@ -796,7 +804,7 @@ public OnPoolUpdate(poolid) {
 
 	new Float: Xa, Float: Ya, Float: Za;
 	new Float: X, Float: Y, Float: Z;
-	new keys, ud, lr;
+	new KEY:keys, KEY:ud, KEY:lr;
 
 	if (g_poolTableData[poolid][E_CUE_POCKETED]) {
 		new playerid = g_poolTableData[poolid][E_NEXT_SHOOTER];
@@ -849,7 +857,7 @@ public OnPoolUpdate(poolid) {
 				SetCameraBehindPlayer(playerid);
 				TogglePlayerControllable(playerid, true);
 				g_poolTableData[poolid][E_CUE_POCKETED] = false;
-				ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+				ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s colocou a bola branca no lugar.", pNome(playerid));
 			}
 		}
@@ -920,7 +928,7 @@ public OnPoolUpdate(poolid) {
 
 	if ((!g_poolTableData[poolid][E_SHOTS_LEFT] || g_poolTableData[poolid][E_FOULS] || g_poolTableData[poolid][E_EXTRA_SHOT]) && Pool_AreBallsStopped(poolid)) {
 		Pool_QueueNextPlayer(poolid, current_player);
-		SetTimerEx("RestoreCamera", 800, 0, "d", current_player);
+		SetTimerEx("RestoreCamera", 800, false, "d", current_player);
 	}
 	return true;
 }
@@ -929,7 +937,7 @@ public RestoreCamera(playerid) {
 	TextDrawHideForPlayer(playerid, g_PoolTextdraw);
 	HidePlayerProgressBar(playerid, g_PoolPowerBar[playerid]);
 	TogglePlayerControllable(playerid, true);
-	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 	return SetCameraBehindPlayer(playerid);
 }
 
@@ -946,7 +954,7 @@ public deleteBall(poolid, ballid) {
 public RestoreWeapon(playerid) {
 	RemovePlayerAttachedObject(playerid, 0);
 	p_PoolChalking[playerid] = false;
-	GivePlayerWeapon(playerid, 7, 1);
+	GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 	ClearAnimations(playerid);
 	return true;
 }

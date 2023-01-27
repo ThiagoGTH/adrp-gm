@@ -639,7 +639,7 @@ GetEngineStatus(vehicleid) {
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-	if (engine != 1)
+	if (engine != true)
 		return false;
  
 	return true;
@@ -671,7 +671,7 @@ GetLightStatus(vehicleid) {
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-	if (lights != 1)
+	if (lights != true)
 		return false;
 
 	return true;
@@ -689,7 +689,7 @@ GetHoodStatus(vehicleid) {
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-	if (bonnet != 1)
+	if (bonnet != true)
 		return false;
 
 	return true;
@@ -707,13 +707,13 @@ GetDoorsStatus(vehicleid) {
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-	if (doors != 1)
+	if (doors != true)
 		return false;
 
 	return true;
 }
 
-SetEngineStatus(vehicleid, status) {
+SetEngineStatus(vehicleid, bool:status) {
 	static
 	    bool:engine,
 	    bool:lights,
@@ -727,7 +727,7 @@ SetEngineStatus(vehicleid, status) {
 	return SetVehicleParamsEx(vehicleid, status, lights, alarm, doors, bonnet, boot, objective);
 }
 
-SetLightStatus(vehicleid, status) {
+SetLightStatus(vehicleid, bool:status) {
 	static
 	    bool:engine,
 	    bool:lights,
@@ -741,7 +741,7 @@ SetLightStatus(vehicleid, status) {
 	return SetVehicleParamsEx(vehicleid, engine, status, alarm, doors, bonnet, boot, objective);
 }
 
-SetHoodStatus(vehicleid, status) {
+SetHoodStatus(vehicleid, bool:status) {
 	static
 	    bool:engine,
 	    bool:lights,
@@ -755,7 +755,7 @@ SetHoodStatus(vehicleid, status) {
 	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, status, boot, objective);
 }
 
-SetDoorsStatus(vehicleid, status) {
+SetDoorsStatus(vehicleid, bool:status) {
 	static
 	    bool:engine,
 	    bool:lights,

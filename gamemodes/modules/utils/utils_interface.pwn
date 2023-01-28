@@ -252,7 +252,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawColour(playerid, CharTD_BUTTON[playerid][2], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][2], 2);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][2], TEXT_DRAW_FONT_2);
     PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][2], true);
     return true;
 }
@@ -275,7 +275,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawColour(playerid, CharTD_1[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_1[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_1[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][1], true);
 
     CharTD_1[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 88.833305, "#1");
@@ -284,7 +284,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawColour(playerid, CharTD_1[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_1[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_1[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][2], true);
 
     CharTD_1[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 80.116683, "mdl-9000:circle_character_hover");
@@ -325,7 +325,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawColour(playerid, CharTD_2[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_2[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_2[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][1], true);
 
     CharTD_2[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 118.833305, "#1");
@@ -334,7 +334,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawColour(playerid, CharTD_2[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_2[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_2[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][2], true);
 
     CharTD_2[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 110.116683, "mdl-9000:circle_character_hover");
@@ -375,7 +375,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawColour(playerid, CharTD_3[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_3[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_3[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][1], true);
 
     CharTD_3[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 148.833305, "#1");
@@ -384,7 +384,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawColour(playerid, CharTD_3[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_3[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_3[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][2], true);
 
     CharTD_3[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 140.116683, "mdl-9000:circle_character_hover");
@@ -425,7 +425,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawColour(playerid, CharTD_4[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_4[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_4[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][1], true);
 
     CharTD_4[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 178.833305, "#1");
@@ -434,7 +434,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawColour(playerid, CharTD_4[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_4[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_4[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][2], true);
 
     CharTD_4[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 170.116683, "mdl-9000:circle_character_hover");
@@ -475,7 +475,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawColour(playerid, CharTD_5[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_5[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_5[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][1], true);
 
     CharTD_5[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 208.833305, "#1");
@@ -484,7 +484,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawColour(playerid, CharTD_5[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_5[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_5[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][2], true);
 
     CharTD_5[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 200.116683, "mdl-9000:circle_character_hover");
@@ -525,7 +525,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawColour(playerid, CharTD_6[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_6[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_6[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][1], true);
 
     CharTD_6[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 238.833305, "#1");
@@ -534,7 +534,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawColour(playerid, CharTD_6[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_6[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_6[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][2], true);
 
     CharTD_6[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 230.116683, "mdl-9000:circle_character_hover");
@@ -575,7 +575,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawColour(playerid, CharTD_7[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_7[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_7[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][1], true);
 
     CharTD_7[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 298.833305, "#1");
@@ -584,7 +584,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawColour(playerid, CharTD_7[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_7[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_7[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][2], true);
 
     CharTD_7[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 290.116683, "mdl-9000:circle_character_hover");
@@ -625,7 +625,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawColour(playerid, CharTD_8[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_8[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_8[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][1], true);
 
     CharTD_8[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 328.833305, "#1");
@@ -634,7 +634,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawColour(playerid, CharTD_8[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_8[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_8[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][2], true);
 
     CharTD_8[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 320.116683, "mdl-9000:circle_character_hover");
@@ -675,7 +675,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawColour(playerid, CharTD_9[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_9[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_9[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][1], true);
 
     CharTD_9[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 358.833305, "#1");
@@ -684,7 +684,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawColour(playerid, CharTD_9[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_9[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_9[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][2], true);
 
     CharTD_9[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 350.116683, "mdl-9000:circle_character_hover");
@@ -725,7 +725,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawColour(playerid, CharTD_10[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_10[playerid][1], 1);
+    PlayerTextDrawFont(playerid, CharTD_10[playerid][1], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][1], true);
 
     CharTD_10[playerid][2] = CreatePlayerTextDraw(playerid, 491.711791, 318.833305, "#1");
@@ -734,7 +734,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawColour(playerid, CharTD_10[playerid][2], -1061109505);
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][2], 255);
-    PlayerTextDrawFont(playerid, CharTD_10[playerid][2], 1);
+    PlayerTextDrawFont(playerid, CharTD_10[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][2], true);
 
     CharTD_10[playerid][3] = CreatePlayerTextDraw(playerid, 575.117309, 310.116683, "mdl-9000:circle_character_hover");
@@ -1203,7 +1203,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NotifyTD[playerid][2], -1);
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][2], 255);
-    PlayerTextDrawFont(playerid, NotifyTD[playerid][2], 1);
+    PlayerTextDrawFont(playerid, NotifyTD[playerid][2], TEXT_DRAW_FONT_1);
     PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][2], true);
     return true;
 }

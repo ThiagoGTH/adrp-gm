@@ -15,7 +15,7 @@ hook OnGameModeInit() {
 
 LoadLSFDModels() {
     AddSimpleModelEx(1523, -1075, "maps/factions/LSFD/FD1.dff", "maps/factions/LSFD/FD1.txd");
-    AddSimpleModelEx(3281, -1076, "maps/factions/LSFD/FD2.dff", "maps/factions/LSFD/FD.txd");
+    //AddSimpleModelEx(3281, -1076, "maps/factions/LSFD/FD2.dff", "maps/factions/LSFD/FD.txd");
     AddSimpleModelEx(19466, -1077, "maps/factions/LSFD/FD3.dff", "maps/factions/LSFD/FD.txd");
     AddSimpleModelEx(14846, -1078, "maps/factions/LSFD/FD4.dff", "maps/factions/LSFD/FD.txd");
     AddSimpleModelEx(19466, -1079, "maps/factions/LSFD/FD5.dff", "maps/factions/LSFD/FD.txd");
@@ -36,7 +36,7 @@ LSFDExterior() {
     CreateModelObject(MODEL_TYPE_BUILDINGS, -1090, 1824.990966, -1432.687988, 18.076000, 0.000000, 0.000000, 0.000000);
     CreateModelObject(MODEL_TYPE_BUILDINGS, -1081, 1824.151977, -1429.401000, 24.601999, 0.000000, 0.000000, 0.000000);
 
-    CreateModelObject(MODEL_TYPE_OBJECTS, -1076, 1836.844970, -1428.946044, 20.486000, 0.000000, 0.000000, 450.000000);
+    //CreateModelObject(MODEL_TYPE_OBJECTS, -1076, 1836.844970, -1428.946044, 20.486000, 0.000000, 0.000000, 450.000000);
     CreateModelObject(MODEL_TYPE_OBJECTS, -1083, 1834.204956, -1439.524047, 16.124000, 0.000000, 0.000000, 0.000000);
     CreateModelObject(MODEL_TYPE_OBJECTS, -1084, 1830.238037, -1431.192993, 16.086999, 0.000000, 0.000000, 0.000000);
     CreateModelObject(MODEL_TYPE_OBJECTS, -1078, 1828.043945, -1435.412963, 20.263999, 0.000000, 0.000000, 0.000000);

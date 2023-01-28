@@ -97,7 +97,7 @@ public OnGameModeInit() {
     //Streamer_ToggleChunkStream(0);
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
-    ShowPlayerMarkers(false);
+    ShowPlayerMarkers(PLAYER_MARKERS_MODE_OFF);
 	ManualVehicleEngineAndLights();
 	EnableVehicleFriendlyFire();
     DisableCrashDetectLongCall();

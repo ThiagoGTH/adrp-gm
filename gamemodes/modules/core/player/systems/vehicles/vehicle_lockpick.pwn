@@ -113,7 +113,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
                 if(LockCount[playerid] == 4) {
 					PlayerTextDrawShow(playerid, LockText[LockCount[playerid]+2]), SetTimerEx("DestroyLockPick", 2000, false, "i", playerid), KillTimer(LockTimer[playerid]);
 					if(Correct[playerid] != 5) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], 1, DoorsLockPick[playerid], Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você não conseguiu destravar o veículo e o alarme foi acionado."), format(logString, sizeof(logString), "%s (%s) falhou em usar o lockpick no veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
-					if(DoorsLockPick[playerid] == 0) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
+					if(DoorsLockPick[playerid] == false) return SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 1, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você trancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e trancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 					SetVehicleParamsEx(VehicleLockedID[playerid], Engine[playerid], Lights[playerid], Alarm[playerid], 0, Bonnet[playerid], Boot[playerid], Objective[playerid]), SendServerMessage(playerid, "Você destrancou o veículo."), format(logString, sizeof(logString), "%s (%s) usou o lockpick e destrancou o veículo %d/%d", pNome(playerid), GetPlayerUserEx(playerid), VehicleLockedID[playerid], vInfo[VehicleLockedID[playerid]][vID]), logCreate(playerid, logString, 17);
 				}
 			} else {
@@ -142,20 +142,20 @@ CreateLocPick(playerid) {
 	LockTimer[playerid] = SetTimerEx("LockpickTimer", 30, true, "i", playerid);
 
 	LockText[8] = CreatePlayerTextDraw(playerid, LockLocation[playerid], 385.0, "_");
-	PlayerTextDrawUseBox(playerid, LockText[8], 1);
+	PlayerTextDrawUseBox(playerid, LockText[8], true);
 	PlayerTextDrawLetterSize(playerid, LockText[8], 0.5, 1.4);
 	PlayerTextDrawTextSize(playerid, LockText[8], LockLocation[playerid]+LockSize[playerid], 71.0);
 	PlayerTextDrawFont(playerid, LockText[8], 1);
-	PlayerTextDrawSetProportional(playerid, LockText[8], 1);
+	PlayerTextDrawSetProportional(playerid, LockText[8], true);
 	PlayerTextDrawBackgroundColour(playerid, LockText[8], 255);
 	PlayerTextDrawBoxColour(playerid, LockText[8], -1094795521);
 	
 	LockText[9] = CreatePlayerTextDraw(playerid, 207.0, 385.0, "_");
-	PlayerTextDrawUseBox(playerid, LockText[9], 1);
+	PlayerTextDrawUseBox(playerid, LockText[9], true);
 	PlayerTextDrawLetterSize(playerid, LockText[9], 0.5, 1.4);
 	PlayerTextDrawTextSize(playerid, LockText[9], 207.0, 71.0);
 	PlayerTextDrawFont(playerid, LockText[9], 1);
-	PlayerTextDrawSetProportional(playerid, LockText[9], 1);
+	PlayerTextDrawSetProportional(playerid, LockText[9], true);
 	PlayerTextDrawBackgroundColour(playerid, LockText[9], 255);
 	PlayerTextDrawBoxColour(playerid, LockText[9], -5963521);
 
@@ -167,7 +167,7 @@ CreateLocPick(playerid) {
 	PlayerTextDrawBackgroundColour(playerid, LockText[10], 255);
 	PlayerTextDrawLetterSize(playerid, LockText[10], 0.18, 1.0);
 	PlayerTextDrawFont(playerid, LockText[10], 2);
-	PlayerTextDrawSetProportional(playerid, LockText[10], 1);
+	PlayerTextDrawSetProportional(playerid, LockText[10], true);
 	PlayerTextDrawAlignment(playerid, LockText[10], 2);
 	PlayerTextDrawSetShadow(playerid, LockText[10], 0);
 	PlayerTextDrawColour(playerid, LockText[10], -56);

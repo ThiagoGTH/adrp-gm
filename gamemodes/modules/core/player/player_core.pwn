@@ -92,14 +92,14 @@ GiveWeaponToPlayer(playerid, weaponid, ammo){
 	pInfo[playerid][pGuns][g_aWeaponSlots[weaponid]] = weaponid;
 	pInfo[playerid][pAmmo][g_aWeaponSlots[weaponid]] += ammo;
 
-	return GivePlayerWeapon(playerid, weaponid, ammo);
+	return GivePlayerWeapon(playerid, WEAPON:weaponid, ammo);
 }
 
 SetWeapons(playerid){
 	ResetPlayerWeapons(playerid);
 
 	for (new i = 0; i < 13; i ++) if (pInfo[playerid][pGuns][i] > 0 && pInfo[playerid][pAmmo][i] > 0) {
-		GivePlayerWeapon(playerid, pInfo[playerid][pGuns][i], pInfo[playerid][pAmmo][i]);
+		GivePlayerWeapon(playerid, WEAPON:pInfo[playerid][pGuns][i], pInfo[playerid][pAmmo][i]);
 	}
 	return true;
 }
@@ -162,7 +162,7 @@ GetInitials(const string[])
 }*/
 
 ApplyAnimationEx(playerid, const animlib[], const animname[], Float:fDelta, bool:loop, bool:lockx, bool:locky, bool:freeze, time, forcesync = 0) {
-	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
+	ApplyAnimation(playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, t_FORCE_SYNC:forcesync);
 	return true;
 }
 

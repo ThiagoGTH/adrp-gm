@@ -1769,7 +1769,7 @@ ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, bool:loop, bool:x, b
 
     if (GetAnimationName(_:animId, animLib, sizeof(animLib), animName, sizeof(animName)) == 1) 
 	{
-        return ApplyAnimation(playerid, animLib, animName, fDelta, loop, x, y, freeze, time, forceSync);
+        return ApplyAnimation(playerid, animLib, animName, fDelta, loop, x, y, freeze, time, t_FORCE_SYNC:forceSync);
     }
     return false;
 }

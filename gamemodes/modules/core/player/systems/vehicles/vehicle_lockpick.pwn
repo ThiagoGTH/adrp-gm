@@ -136,7 +136,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 }
 
 CreateLocPick(playerid) {
-	ApplyAnimation(playerid, "INT_HOUSE", "WASH_UP", 4.1, 1, 0, 0, 0, 2000, 1);
+	ApplyAnimation(playerid, "INT_HOUSE", "WASH_UP", 4.1, true, false, false, false, 2000, t_FORCE_SYNC:1);
 	LockLocation[playerid] = randomEx(243, 423);
 	LockSize[playerid] = randomEx(2, 10);
 	LockTimer[playerid] = SetTimerEx("LockpickTimer", 30, true, "i", playerid);

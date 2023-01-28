@@ -315,7 +315,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_2[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_2[playerid][0], true);
 
     CharTD_2[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 108.000022, "John_Doe");
@@ -515,7 +515,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][0], 255);
     PlayerTextDrawFont(playerid, CharTD_6[playerid][0], 4);
-    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][0], 0);
+    PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_6[playerid][0], true);
 
     CharTD_6[playerid][1] = CreatePlayerTextDraw(playerid, 491.882537, 228.000022, "John_Doe");
@@ -1027,7 +1027,7 @@ CreateBannedTextdraws() {
     TextDrawSetShadow(BannedTD[0], 0);
     TextDrawBackgroundColour(BannedTD[0], 255);
     TextDrawFont(BannedTD[0], 4);
-    TextDrawSetProportional(BannedTD[0], 0);
+    TextDrawSetProportional(BannedTD[0], false);
 
     BannedTD[1] = TextDrawCreate(285.999755, 32.299999, "mdl-9000:ban");
     TextDrawTextSize(BannedTD[1], 79.000000, 74.000000);
@@ -1036,7 +1036,7 @@ CreateBannedTextdraws() {
     TextDrawSetShadow(BannedTD[1], 0);
     TextDrawBackgroundColour(BannedTD[1], 255);
     TextDrawFont(BannedTD[1], 4);
-    TextDrawSetProportional(BannedTD[1], 0);
+    TextDrawSetProportional(BannedTD[1], false);
 
     BannedTD[2] = TextDrawCreate(277.294189, 324.550537, "mdl-9000:logo");
     TextDrawTextSize(BannedTD[2], 91.000000, 41.000000);
@@ -1045,7 +1045,7 @@ CreateBannedTextdraws() {
     TextDrawSetShadow(BannedTD[2], 0);
     TextDrawBackgroundColour(BannedTD[2], 255);
     TextDrawFont(BannedTD[2], 4);
-    TextDrawSetProportional(BannedTD[2], 0);
+    TextDrawSetProportional(BannedTD[2], false);
     return true;
 }
 

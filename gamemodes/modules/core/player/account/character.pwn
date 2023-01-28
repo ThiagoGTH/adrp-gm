@@ -204,7 +204,7 @@ LoadPlayerFaction(playerid){
 //Congela (por determinado tempo) - dando chance do interior carregar.
 PlayerLoadObjects(playerid) {
     TogglePlayerControllable(playerid, false);
-    pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, 0, "i", playerid);
+    pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, false, "i", playerid);
 }
 
 //Responde o player Load
@@ -289,7 +289,7 @@ SpawnSelectedCharacter(playerid) {
     TogglePlayerSpectating(playerid, false);
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
-    SetPlayerArmedWeapon(playerid, 0);
+    SetPlayerArmedWeapon(playerid, WEAPON:0);
     return true;
 }
 

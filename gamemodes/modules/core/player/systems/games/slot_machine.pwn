@@ -67,7 +67,7 @@ PlayerText:CreatePlayerGamblingSprite(playerid, Float:x, Float:y, const td_name[
 	PlayerTextDrawSetShadow(playerid, RetSprite, 0);
 	PlayerTextDrawBackgroundColour(playerid, RetSprite, 255);
 	PlayerTextDrawFont(playerid, RetSprite, 4);
-	PlayerTextDrawSetProportional(playerid, RetSprite, 0);
+	PlayerTextDrawSetProportional(playerid, RetSprite, false);
 
 	return RetSprite;
 }
@@ -151,7 +151,7 @@ hook OnPlayerConnect(playerid) {
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][0], 0);
 	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][0], 255);
 	PlayerTextDrawFont(playerid, slot_BetTD[playerid][0], 2);
-	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][0], 1);
+	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][0], true);
 
 	slot_BetTD[playerid][1] = CreatePlayerTextDraw(playerid, 307.426208, 281.583404, "US$ 1.000.000");
 	PlayerTextDrawLetterSize(playerid, slot_BetTD[playerid][1], 0.200000, 1.500000);
@@ -160,7 +160,7 @@ hook OnPlayerConnect(playerid) {
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][1], 0);
 	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][1], 255);
 	PlayerTextDrawFont(playerid, slot_BetTD[playerid][1], 2);
-	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][1], 1);
+	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][1], true);
 }
 
 hook OnPlayerDisconnect(playerid, reason) {

@@ -58,11 +58,9 @@ enum E_VEHICLE_DATA {
 	vWeaponsType[30],       // Tipo das armas
 	vAmmo[30],              // Munição das armas
 
-	// 5°
-    vPanelsStatus,			// Status da lataria 
-	vDoorsStatus,			// Status das portas
-    vLightsStatus,			// Status das luzes
-    vTiresStatus,			// Status dos pneus
+	t_VEHICLE_PANEL_STATUS:vPanelsStatus,
+	t_VEHICLE_DOOR_STATUS:vDoorsStatus,
+	t_VEHICLE_LIGHT_STATUS:vLightsStatus, t_VEHICLE_TYRE_STATUS:vTiresStatus,
 
     // 6°
     vDamage[23],            // 9 calibres + 14 partes veiculares que podem danificar

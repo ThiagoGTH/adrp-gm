@@ -124,21 +124,21 @@ ReturnWeaponName(weaponid) {
 SetPlayerWeaponSkill(playerid, skill) {
 	switch(skill) {
 	    case MINIMUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 200);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 0);
 	    }
 	    case MEDIUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 500);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 0);
 	    }
 	    case FULL_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 999);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);

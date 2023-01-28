@@ -804,7 +804,7 @@ public OnPoolUpdate(poolid) {
 
 	new Float: Xa, Float: Ya, Float: Za;
 	new Float: X, Float: Y, Float: Z;
-	new KEY:keys, KEY:ud, KEY:lr;
+	new KEY:keys, ud, lr;
 
 	if (g_poolTableData[poolid][E_CUE_POCKETED]) {
 		new playerid = g_poolTableData[poolid][E_NEXT_SHOOTER];

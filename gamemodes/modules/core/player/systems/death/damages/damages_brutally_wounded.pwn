@@ -158,7 +158,7 @@ OnPlayerGetBrutallyWounded(playerid, issuerid, weaponid) {
 		ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
 	} else {
 		TogglePlayerControllable(playerid, true);
-        ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, 0, 1, 1, 1, 0);
+        ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, false, true, true, true, 0);
 		//ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
 	}
 
@@ -271,7 +271,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
 	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
 			if(newkeys & KEY_SPRINT) {
 				ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, false, false, false, false, 0);
-				ClearAnimations(playerid, 1);
+				ClearAnimations(playerid);
 
 				ApplyAnimation(playerid, "Ped", "FALL_collapse", 3.0, false, true, true, false, 0);
 			}

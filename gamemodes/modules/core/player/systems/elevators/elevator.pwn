@@ -184,7 +184,7 @@ Dialog:DIALOG_ELEVATOR(playerid, response, listitem, inputtext[]) {
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(!IsPlayerInAnyVehicle(playerid) && newkeys & 128)
+	if(!IsPlayerInAnyVehicle(playerid) && newkeys & KEY_YES)
 	{
 	    new Float:pos[3];
 	    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);

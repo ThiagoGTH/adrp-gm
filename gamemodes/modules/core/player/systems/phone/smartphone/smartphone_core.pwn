@@ -627,13 +627,13 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[0], -0.149999, 139.000000);
 	TextDrawAlignment(TD_PhoneCover[0], 2);
 	TextDrawColour(TD_PhoneCover[0], -1);
-	TextDrawUseBox(TD_PhoneCover[0], 1);
+	TextDrawUseBox(TD_PhoneCover[0], true);
 	TextDrawBoxColour(TD_PhoneCover[0], 80);
 	TextDrawSetShadow(TD_PhoneCover[0], false);
 	TextDrawSetOutline(TD_PhoneCover[0], false);
 	TextDrawBackgroundColour(TD_PhoneCover[0], 255);
 	TextDrawFont(TD_PhoneCover[0], 2);
-	TextDrawSetProportional(TD_PhoneCover[0], 1);
+	TextDrawSetProportional(TD_PhoneCover[0], true);
 	TextDrawSetShadow(TD_PhoneCover[0], false);
 
 	TD_PhoneCover[1] = TextDrawCreate(269.399841, 146.537796, "LD_SPAC:white");
@@ -732,13 +732,13 @@ CreatePhoneTextDraws() {
 	TextDrawTextSize(TD_PhoneCover[8], 10.0, 77.000000);
 	TextDrawAlignment(TD_PhoneCover[8], 2);
 	TextDrawColour(TD_PhoneCover[8], -1);
-	TextDrawUseBox(TD_PhoneCover[8], 1);
+	TextDrawUseBox(TD_PhoneCover[8], true);
 	TextDrawBoxColour(TD_PhoneCover[8], 80);
 	TextDrawSetShadow(TD_PhoneCover[8], false);
 	TextDrawSetOutline(TD_PhoneCover[8], false);
 	TextDrawBackgroundColour(TD_PhoneCover[8], 255);
 	TextDrawFont(TD_PhoneCover[8], 2);
-	TextDrawSetProportional(TD_PhoneCover[8], 1);
+	TextDrawSetProportional(TD_PhoneCover[8], true);
 	TextDrawSetShadow(TD_PhoneCover[8], false);
 	TextDrawSetSelectable(TD_PhoneCover[8], true);
 }
@@ -768,7 +768,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], false);
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][0], false);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][0], false);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][0], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][0], true);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][0], false);
 
 	TDPhone_Model[playerid][1] = CreatePlayerTextDraw(playerid, 496.199707, 314.288909, "ld_spac:tvcorn");
@@ -828,7 +828,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][5], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][5], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][5], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][5], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][5], true);
 
 	TDPhone_Model[playerid][6] = CreatePlayerTextDraw(playerid, 592.000427, 349.944366, "box");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Model[playerid][6], 0.000000, 5.982919);
@@ -841,7 +841,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetOutline(playerid, TDPhone_Model[playerid][6], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_Model[playerid][6], 255);
 	PlayerTextDrawFont(playerid, TDPhone_Model[playerid][6], false);
-	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][6], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_Model[playerid][6], true);
 	PlayerTextDrawSetShadow(playerid, TDPhone_Model[playerid][6], false);
 
 	TDPhone_Model[playerid][7] = CreatePlayerTextDraw(playerid, 507.333282, 407.763031, "ld_dual:white"); // Left Button
@@ -935,7 +935,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_TFButton[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_TFButton[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_TFButton[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_TFButton[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_TFButton[playerid], true);
 
 	TDPhone_TSButton[playerid] = CreatePlayerTextDraw(playerid, 589.333190, 394.918701, "_");
 	PlayerTextDrawLetterSize(playerid, TDPhone_TSButton[playerid], 0.197000, 0.778666);
@@ -945,7 +945,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_TSButton[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_TSButton[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_TSButton[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_TSButton[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_TSButton[playerid], true);
 
 	TDPhone_BigText[playerid] = CreatePlayerTextDraw(playerid, 549.666748, 354.681549, "_");
 	PlayerTextDrawLetterSize(playerid, TDPhone_BigText[playerid], 0.298332, 1.114665);
@@ -954,7 +954,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_BigText[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_BigText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_BigText[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_BigText[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_BigText[playerid], true);
 
 	TDPhone_ScreenText[playerid] = CreatePlayerTextDraw(playerid, 549.666870, 365.051666, "_");
 	PlayerTextDrawLetterSize(playerid, TDPhone_ScreenText[playerid], 0.200332, 0.757924);
@@ -964,7 +964,7 @@ CreatePlayerPhoneTextDraws(playerid) {
 	PlayerTextDrawSetShadow(playerid, TDPhone_ScreenText[playerid], false);
 	PlayerTextDrawBackgroundColour(playerid, TDPhone_ScreenText[playerid], 255);
 	PlayerTextDrawFont(playerid, TDPhone_ScreenText[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, TDPhone_ScreenText[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, TDPhone_ScreenText[playerid], true);
 
 	TDPhone_Signal[playerid] = CreatePlayerTextDraw(playerid, 589.666809, 348.874023, "IIIII");
 	PlayerTextDrawLetterSize(playerid, TDPhone_Signal[playerid], 0.141333, 0.683259);
@@ -1960,7 +1960,7 @@ OnPhoneClick_Selfie(playerid) {
 	if(pInfo[playerid][pCallConnect] == INVALID_PLAYER_ID && ph_menuid[playerid] != 6) {
 	    CancelSelectTextDraw(playerid);
 
-	    SetPlayerArmedWeapon(playerid, 0);
+	    SetPlayerArmedWeapon(playerid, WEAPON:0);
 
 	    TogglePlayerControllable(playerid, false);
 
@@ -3038,7 +3038,7 @@ CallNumber(playerid, const params[]) {
 	if(ph_airmode[playerid])
 		return SendErrorMessage(playerid, "You can't do this now (airplane mode on).");
 
-  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 10)
+  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != t_SPECIAL_ACTION:PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 10)
 	  	return SendErrorMessage(playerid, "You can't do this right now.");
 
 	new phonenumb[24];
@@ -3219,7 +3219,7 @@ SendSMS(playerid, const params[]) {
 	if(ph_airmode[playerid])
 		return SendErrorMessage(playerid, "Você não pode fazer isso agora (modo avião ativado).");
 
-  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 1)
+  	if(calltimer[playerid] || smstimer[playerid] || GetPlayerSpecialAction(playerid) != t_SPECIAL_ACTION:PLAYER_STATE_NONE || pInfo[playerid][pMoney] < 1)
 	  	return SendErrorMessage(playerid, "Você não pode fazer isso agora.");
 
 	new phonenumb[24], sms_text[128];

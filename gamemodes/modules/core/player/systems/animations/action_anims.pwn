@@ -2,6 +2,7 @@ CMD:stopanim(playerid)
 {
 	if (IsPlayerInAnyVehicle(playerid)) return 1;
 	ClearAnimations(playerid);
+	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 	return 1;
 }
 

@@ -114,7 +114,7 @@ DMVUpdate(playerid) {
 }
 
 DMV_StateChange(playerid, newstate, oldstate) {
-	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
+	if(oldstate == t_PLAYER_STATE:PLAYER_STATE_ONFOOT && newstate == t_PLAYER_STATE:PLAYER_STATE_DRIVER) {
   		if(!InDMV[playerid]) return true;
   		static 
 			bool:engine, 

@@ -97,7 +97,7 @@ static Prev_CreateTextDraws() {
 	TextDrawTextSize(Prev@FrameTD[0], 501.0000, 0.0000);
 
 	Prev@FrameTD[1] = TextDrawCreate(146.5000, 155.5000, "LD_SPAC:WHITE");
-	TextDrawFont(Prev@FrameTD[1], 4);
+	TextDrawFont(Prev@FrameTD[1], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[1], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[1], -1);
 	TextDrawSetShadow(Prev@FrameTD[1], 0);
@@ -109,7 +109,7 @@ static Prev_CreateTextDraws() {
 	TextDrawTextSize(Prev@FrameTD[1], 351.5000, 130.0000);
 
 	Prev@FrameTD[2] = TextDrawCreate(147.0000, 156.0000, "LD_SPAC:BLACK");
-	TextDrawFont(Prev@FrameTD[2], 4);
+	TextDrawFont(Prev@FrameTD[2], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[2], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[2], -1);
 	TextDrawSetShadow(Prev@FrameTD[2], 0);
@@ -121,7 +121,7 @@ static Prev_CreateTextDraws() {
 	TextDrawTextSize(Prev@FrameTD[2], 340.5000, 129.0000);
 
 	Prev@FrameTD[3] = TextDrawCreate(488.0000, 156.0000, "LD_SPAC:BLACK");
-	TextDrawFont(Prev@FrameTD[3], 4);
+	TextDrawFont(Prev@FrameTD[3], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[3], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[3], -1);
 	TextDrawSetShadow(Prev@FrameTD[3], 0);
@@ -134,7 +134,7 @@ static Prev_CreateTextDraws() {
 
 	// button for scrolling up
 	Prev@FrameTD[4] = TextDrawCreate(488.0000, 156.0000, "LD_POOL:BALL");
-	TextDrawFont(Prev@FrameTD[4], 4);
+	TextDrawFont(Prev@FrameTD[4], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[4], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[4], -1);
 	TextDrawSetShadow(Prev@FrameTD[4], 0);
@@ -148,7 +148,7 @@ static Prev_CreateTextDraws() {
 	//
 
 	Prev@FrameTD[5] = TextDrawCreate(489.0000, 156.5000, "LD_BEAT:UP");
-	TextDrawFont(Prev@FrameTD[5], 4);
+	TextDrawFont(Prev@FrameTD[5], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[5], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[5], 255);
 	TextDrawSetShadow(Prev@FrameTD[5], 0);
@@ -161,7 +161,7 @@ static Prev_CreateTextDraws() {
 
 	// button for scrolling down
 	Prev@FrameTD[6] = TextDrawCreate(488.0000, 275.5000, "LD_POOL:BALL");
-	TextDrawFont(Prev@FrameTD[6], 4);
+	TextDrawFont(Prev@FrameTD[6], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[6], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[6], -1);
 	TextDrawSetShadow(Prev@FrameTD[6], 0);
@@ -175,7 +175,7 @@ static Prev_CreateTextDraws() {
 	//
 
 	Prev@FrameTD[7] = TextDrawCreate(489.0000, 277.0000, "LD_BEAT:DOWN");
-	TextDrawFont(Prev@FrameTD[7], 4);
+	TextDrawFont(Prev@FrameTD[7], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@FrameTD[7], 0.0000, 18.2000);
 	TextDrawColour(Prev@FrameTD[7], 255);
 	TextDrawSetShadow(Prev@FrameTD[7], 0);
@@ -191,7 +191,7 @@ static Prev_CreateTextDraws() {
 	*/
 	// left button for response type "1"
 	Prev@LeftButtonTD[0] = TextDrawCreate(260.0000, 293.0000, "LD_SPAC:WHITE");
-	TextDrawFont(Prev@LeftButtonTD[0], 4);
+	TextDrawFont(Prev@LeftButtonTD[0], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@LeftButtonTD[0], 0.5000, 1.0000);
 	TextDrawColour(Prev@LeftButtonTD[0], -1);
 	TextDrawSetShadow(Prev@LeftButtonTD[0], 0);
@@ -203,7 +203,7 @@ static Prev_CreateTextDraws() {
 	//
 
 	Prev@LeftButtonTD[1] = TextDrawCreate(260.5000, 293.5000, "LD_SPAC:BLACK");
-	TextDrawFont(Prev@LeftButtonTD[1], 4);
+	TextDrawFont(Prev@LeftButtonTD[1], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@LeftButtonTD[1], 0.5000, 1.0000);
 	TextDrawColour(Prev@LeftButtonTD[1], -1);
 	TextDrawSetShadow(Prev@LeftButtonTD[1], 0);
@@ -217,7 +217,7 @@ static Prev_CreateTextDraws() {
 	*/
 	// right button for response type "0"
 	Prev@RightButtonTD[0] = TextDrawCreate(325.0000, 293.0000, "LD_SPAC:WHITE");
-	TextDrawFont(Prev@RightButtonTD[0], 4);
+	TextDrawFont(Prev@RightButtonTD[0], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@RightButtonTD[0], 0.5000, 1.0000);
 	TextDrawColour(Prev@RightButtonTD[0], -1);
 	TextDrawSetShadow(Prev@RightButtonTD[0], 0);
@@ -229,7 +229,7 @@ static Prev_CreateTextDraws() {
 	//
 
 	Prev@RightButtonTD[1] = TextDrawCreate(325.5000, 293.5000, "LD_SPAC:BLACK");
-	TextDrawFont(Prev@RightButtonTD[1], 4);
+	TextDrawFont(Prev@RightButtonTD[1], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@RightButtonTD[1], 0.5000, 1.0000);
 	TextDrawColour(Prev@RightButtonTD[1], -1);
 	TextDrawSetShadow(Prev@RightButtonTD[1], 0);
@@ -243,7 +243,7 @@ static Prev_CreateTextDraws() {
 	*/
 	// right button for response type "0"
 	Prev@CenterButtonTD[0] = TextDrawCreate(290.5000, 293.0000, "LD_SPAC:WHITE");
-	TextDrawFont(Prev@CenterButtonTD[0], 4);
+	TextDrawFont(Prev@CenterButtonTD[0], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@CenterButtonTD[0], 0.5000, 1.0000);
 	TextDrawColour(Prev@CenterButtonTD[0], -1);
 	TextDrawSetShadow(Prev@CenterButtonTD[0], 0);
@@ -255,7 +255,7 @@ static Prev_CreateTextDraws() {
 	//
 
 	Prev@CenterButtonTD[1] = TextDrawCreate(291.0000, 293.5000, "LD_SPAC:BLACK");
-	TextDrawFont(Prev@CenterButtonTD[1], 4);
+	TextDrawFont(Prev@CenterButtonTD[1], TEXT_DRAW_FONT_SPRITE_DRAW);
 	TextDrawLetterSize(Prev@CenterButtonTD[1], 0.5000, 1.0000);
 	TextDrawColour(Prev@CenterButtonTD[1], -1);
 	TextDrawSetShadow(Prev@CenterButtonTD[1], 0);
@@ -275,7 +275,7 @@ static Prev_CreateTextDraws() {
 
 		    // listitem border button to select item
 			Prev@ModelTD[textdrawid][0] = TextDrawCreate((148.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (157.5000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "LD_SPAC:WHITE");
-			TextDrawFont(Prev@ModelTD[textdrawid][0], 4);
+			TextDrawFont(Prev@ModelTD[textdrawid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][0], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][0], -16776961);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][0], 0);
@@ -287,7 +287,7 @@ static Prev_CreateTextDraws() {
 			//
 
 			Prev@ModelTD[textdrawid][1] = TextDrawCreate((149.0000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (158.0000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "MODEL");
-			TextDrawFont(Prev@ModelTD[textdrawid][1], 5);
+			TextDrawFont(Prev@ModelTD[textdrawid][1], TEXT_DRAW_FONT_MODEL_PREVIEW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][1], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][1], -1);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][1], 0);
@@ -300,7 +300,7 @@ static Prev_CreateTextDraws() {
 
 		    // listitem rotation button (left)
 			Prev@ModelTD[textdrawid][2] = TextDrawCreate((157.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (204.0000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "LD_BEAT:LEFT");
-			TextDrawFont(Prev@ModelTD[textdrawid][2], 4);
+			TextDrawFont(Prev@ModelTD[textdrawid][2], TEXT_DRAW_FONT_SPRITE_DRAW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][2], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][2], -156);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][2], 0);
@@ -313,7 +313,7 @@ static Prev_CreateTextDraws() {
 
 		    // listitem rotation button (right)
 			Prev@ModelTD[textdrawid][3] = TextDrawCreate((185.0000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (204.0000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "LD_BEAT:RIGHT");
-			TextDrawFont(Prev@ModelTD[textdrawid][3], 4);
+			TextDrawFont(Prev@ModelTD[textdrawid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][3], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][3], -156);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][3], 0);
@@ -326,7 +326,7 @@ static Prev_CreateTextDraws() {
 
 		    // listitem zoom-in button
 			Prev@ModelTD[textdrawid][4] = TextDrawCreate((191.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (171.0000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "LD_BEAT:UP");
-			TextDrawFont(Prev@ModelTD[textdrawid][4], 4);
+			TextDrawFont(Prev@ModelTD[textdrawid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][4], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][4], -156);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][4], 0);
@@ -339,7 +339,7 @@ static Prev_CreateTextDraws() {
 
 		    // listitem zoom-out button
 			Prev@ModelTD[textdrawid][5] = TextDrawCreate((191.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), (193.0000 + (a * DIALOG_PREVIEW_VERTICAL_GAP)), "LD_BEAT:DOWN");
-			TextDrawFont(Prev@ModelTD[textdrawid][5], 4);
+			TextDrawFont(Prev@ModelTD[textdrawid][5], TEXT_DRAW_FONT_SPRITE_DRAW);
 			TextDrawLetterSize(Prev@ModelTD[textdrawid][5], 0.5000, 1.0000);
 			TextDrawColour(Prev@ModelTD[textdrawid][5], -156);
 			TextDrawSetShadow(Prev@ModelTD[textdrawid][5], 0);
@@ -588,7 +588,7 @@ static Prev_UpdateScrollBar(playerid, page, totalPages) {
 	y += (height * page);
 
     Prev@ScrollBarPTD[playerid] = CreatePlayerTextDraw(playerid, 489.0000, y, "LD_SPAC:WHITE");
-	PlayerTextDrawFont(playerid, Prev@ScrollBarPTD[playerid], 4);
+	PlayerTextDrawFont(playerid, Prev@ScrollBarPTD[playerid], TEXT_DRAW_FONT_SPRITE_DRAW);
 	PlayerTextDrawLetterSize(playerid, Prev@ScrollBarPTD[playerid], 0.0000, 18.2000);
 	PlayerTextDrawColour(playerid, Prev@ScrollBarPTD[playerid], -16776961);
 	PlayerTextDrawSetShadow(playerid, Prev@ScrollBarPTD[playerid], 0);

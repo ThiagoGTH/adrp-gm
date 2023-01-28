@@ -106,7 +106,7 @@ CreateLoginTextdraws(playerid) {
     PlayerTextDrawColour(playerid, LoginTD[playerid][0], -1);
     PlayerTextDrawSetShadow(playerid, LoginTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, LoginTD[playerid][0], 255);
-    PlayerTextDrawFont(playerid, LoginTD[playerid][0], 4);
+    PlayerTextDrawFont(playerid, LoginTD[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, LoginTD[playerid][0], false);
 
     LoginTD[playerid][1] = CreatePlayerTextDraw(playerid, 265.000000, 32.299999, "mdl-9000:logo");
@@ -115,7 +115,7 @@ CreateLoginTextdraws(playerid) {
     PlayerTextDrawColour(playerid, LoginTD[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, LoginTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, LoginTD[playerid][1], 255);
-    PlayerTextDrawFont(playerid, LoginTD[playerid][1], 4);
+    PlayerTextDrawFont(playerid, LoginTD[playerid][1], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, LoginTD[playerid][1], false);
 
     return true;
@@ -204,7 +204,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawColour(playerid, CharTD[playerid][0], -1);
     PlayerTextDrawSetShadow(playerid, CharTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD[playerid][0], false);
 
     CharTD[playerid][1] = CreatePlayerTextDraw(playerid, 489.681152, 59.816619, "mdl-9000:title_characters");
@@ -213,7 +213,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawColour(playerid, CharTD[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD[playerid][1], 4);
+    PlayerTextDrawFont(playerid, CharTD[playerid][1], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD[playerid][1], false);
 
     CreateCharacterTextdraws1(playerid);
@@ -233,7 +233,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawColour(playerid, CharTD_BUTTON[playerid][0], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_BUTTON[playerid][0], true);
 
@@ -243,7 +243,7 @@ CreateCharacterTextdraws(playerid) {
     PlayerTextDrawColour(playerid, CharTD_BUTTON[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_BUTTON[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_BUTTON[playerid][1], 255);
-    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][1], 4);
+    PlayerTextDrawFont(playerid, CharTD_BUTTON[playerid][1], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_BUTTON[playerid][1], false);
 
     CharTD_BUTTON[playerid][2] = CreatePlayerTextDraw(playerid, 177.499969, 352.349975, "JOGAR");
@@ -264,7 +264,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawColour(playerid, CharTD_1[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_1[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_1[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_1[playerid][0], true);
 
@@ -293,7 +293,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawColour(playerid, CharTD_1[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_1[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_1[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][3], false);
 
     CharTD_1[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 83.216636, "mdl-9000:icon_user");
@@ -302,7 +302,7 @@ CreateCharacterTextdraws1(playerid){
     PlayerTextDrawColour(playerid, CharTD_1[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_1[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_1[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_1[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_1[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_1[playerid][4], false);
     return true;
 }
@@ -314,7 +314,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawColour(playerid, CharTD_2[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_2[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_2[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_2[playerid][0], true);
 
@@ -343,7 +343,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawColour(playerid, CharTD_2[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_2[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_2[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][3], false);
 
     CharTD_2[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 113.216636, "mdl-9000:icon_user");
@@ -352,7 +352,7 @@ CreateCharacterTextdraws2(playerid){
     PlayerTextDrawColour(playerid, CharTD_2[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_2[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_2[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_2[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_2[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_2[playerid][4], false);
     return true;
 }
@@ -364,7 +364,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawColour(playerid, CharTD_3[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_3[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_3[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_3[playerid][0], true);
 
@@ -393,7 +393,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawColour(playerid, CharTD_3[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_3[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_3[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][3], false);
 
     CharTD_3[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 143.216636, "mdl-9000:icon_user");
@@ -402,7 +402,7 @@ CreateCharacterTextdraws3(playerid){
     PlayerTextDrawColour(playerid, CharTD_3[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_3[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_3[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_3[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_3[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_3[playerid][4], false);
     return true;
 }
@@ -414,7 +414,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawColour(playerid, CharTD_4[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_4[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_4[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_4[playerid][0], true);
 
@@ -443,7 +443,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawColour(playerid, CharTD_4[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_4[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_4[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][3], false);
 
     CharTD_4[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 173.216636, "mdl-9000:icon_user");
@@ -452,7 +452,7 @@ CreateCharacterTextdraws4(playerid){
     PlayerTextDrawColour(playerid, CharTD_4[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_4[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_4[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_4[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_4[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_4[playerid][4], false);
     return true;
 }
@@ -464,7 +464,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawColour(playerid, CharTD_5[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_5[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_5[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_5[playerid][0], true);
 
@@ -493,7 +493,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawColour(playerid, CharTD_5[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_5[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_5[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][3], false);
 
     CharTD_5[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 203.216636, "mdl-9000:icon_user");
@@ -502,7 +502,7 @@ CreateCharacterTextdraws5(playerid){
     PlayerTextDrawColour(playerid, CharTD_5[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_5[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_5[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_5[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_5[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_5[playerid][4], false);
     return true;
 }
@@ -514,7 +514,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawColour(playerid, CharTD_6[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_6[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_6[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_6[playerid][0], true);
 
@@ -543,7 +543,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawColour(playerid, CharTD_6[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_6[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_6[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][3], false);
 
     CharTD_6[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 233.216636, "mdl-9000:icon_user");
@@ -552,7 +552,7 @@ CreateCharacterTextdraws6(playerid){
     PlayerTextDrawColour(playerid, CharTD_6[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_6[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_6[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_6[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_6[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_6[playerid][4], false);
     return true;
 }
@@ -564,7 +564,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawColour(playerid, CharTD_7[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_7[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_7[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_7[playerid][0], true);
 
@@ -593,7 +593,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawColour(playerid, CharTD_7[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_7[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_7[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][3], false);
 
     CharTD_7[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 293.216636, "mdl-9000:icon_user");
@@ -602,7 +602,7 @@ CreateCharacterTextdraws7(playerid){
     PlayerTextDrawColour(playerid, CharTD_7[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_7[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_7[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_7[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_7[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_7[playerid][4], false);
     return true;
 }
@@ -614,7 +614,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawColour(playerid, CharTD_8[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_8[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_8[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_8[playerid][0], true);
 
@@ -643,7 +643,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawColour(playerid, CharTD_8[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_8[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_8[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][3], false);
 
     CharTD_8[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 323.216636, "mdl-9000:icon_user");
@@ -652,7 +652,7 @@ CreateCharacterTextdraws8(playerid){
     PlayerTextDrawColour(playerid, CharTD_8[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_8[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_8[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_8[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_8[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_8[playerid][4], false);
     return true;
 }
@@ -664,7 +664,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawColour(playerid, CharTD_9[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_9[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_9[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_9[playerid][0], true);
 
@@ -693,7 +693,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawColour(playerid, CharTD_9[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_9[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_9[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][3], false);
 
     CharTD_9[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 353.216636, "mdl-9000:icon_user");
@@ -702,7 +702,7 @@ CreateCharacterTextdraws9(playerid){
     PlayerTextDrawColour(playerid, CharTD_9[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_9[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_9[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_9[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_9[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_9[playerid][4], false);
     return true;
 }
@@ -714,7 +714,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawColour(playerid, CharTD_10[playerid][0], 50529124);
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][0], 255);
-    PlayerTextDrawFont(playerid, CharTD_10[playerid][0], 4);
+    PlayerTextDrawFont(playerid, CharTD_10[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][0], false);
     PlayerTextDrawSetSelectable(playerid, CharTD_10[playerid][0], true);
 
@@ -743,7 +743,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawColour(playerid, CharTD_10[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][3], 255);
-    PlayerTextDrawFont(playerid, CharTD_10[playerid][3], 4);
+    PlayerTextDrawFont(playerid, CharTD_10[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][3], false);
 
     CharTD_10[playerid][4] = CreatePlayerTextDraw(playerid, 577.416748, 313.216636, "mdl-9000:icon_user");
@@ -752,7 +752,7 @@ CreateCharacterTextdraws10(playerid){
     PlayerTextDrawColour(playerid, CharTD_10[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, CharTD_10[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, CharTD_10[playerid][4], 255);
-    PlayerTextDrawFont(playerid, CharTD_10[playerid][4], 4);
+    PlayerTextDrawFont(playerid, CharTD_10[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, CharTD_10[playerid][4], false);
     return true;
 }
@@ -1026,7 +1026,7 @@ CreateBannedTextdraws() {
     TextDrawColour(BannedTD[0], -1);
     TextDrawSetShadow(BannedTD[0], 0);
     TextDrawBackgroundColour(BannedTD[0], 255);
-    TextDrawFont(BannedTD[0], 4);
+    TextDrawFont(BannedTD[0], TEXT_DRAW_FONT_SPRITE_DRAW);
     TextDrawSetProportional(BannedTD[0], false);
 
     BannedTD[1] = TextDrawCreate(285.999755, 32.299999, "mdl-9000:ban");
@@ -1035,7 +1035,7 @@ CreateBannedTextdraws() {
     TextDrawColour(BannedTD[1], -1);
     TextDrawSetShadow(BannedTD[1], 0);
     TextDrawBackgroundColour(BannedTD[1], 255);
-    TextDrawFont(BannedTD[1], 4);
+    TextDrawFont(BannedTD[1], TEXT_DRAW_FONT_SPRITE_DRAW);
     TextDrawSetProportional(BannedTD[1], false);
 
     BannedTD[2] = TextDrawCreate(277.294189, 324.550537, "mdl-9000:logo");
@@ -1044,7 +1044,7 @@ CreateBannedTextdraws() {
     TextDrawColour(BannedTD[2], -1);
     TextDrawSetShadow(BannedTD[2], 0);
     TextDrawBackgroundColour(BannedTD[2], 255);
-    TextDrawFont(BannedTD[2], 4);
+    TextDrawFont(BannedTD[2], TEXT_DRAW_FONT_SPRITE_DRAW);
     TextDrawSetProportional(BannedTD[2], false);
     return true;
 }
@@ -1077,7 +1077,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][0], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][0], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][0], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][0], false);
 
     NewsTD[playerid][1] = CreatePlayerTextDraw(playerid, 512.200561, 50.116756, "mdl-9002:ABC7-LIVE");
@@ -1086,7 +1086,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][1], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][1], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][1], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][1], false);
 
     NewsTD[playerid][2] = CreatePlayerTextDraw(playerid, -0.411781, -0.166666, "mdl-9002:tv-screen");
@@ -1095,7 +1095,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][2], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][2], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][2], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][2], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][2], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][2], false);
 
     NewsTD[playerid][3] = CreatePlayerTextDraw(playerid, 640.529296, -1.149999, "LD_PLAN:tvcorn");
@@ -1104,7 +1104,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][3], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][3], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][3], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][3], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][3], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][3], false);
 
     NewsTD[playerid][4] = CreatePlayerTextDraw(playerid, 141.705871, -2.500007, "LD_PLAN:tvbase");
@@ -1113,7 +1113,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][4], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][4], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][4], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][4], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][4], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][4], false);
 
     NewsTD[playerid][5] = CreatePlayerTextDraw(playerid, 640.058044, 448.600219, "LD_PLAN:tvcorn");
@@ -1122,7 +1122,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][5], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][5], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][5], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][5], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][5], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][5], false);
 
     NewsTD[playerid][6] = CreatePlayerTextDraw(playerid, -1.823829, 449.583496, "LD_PLAN:tvcorn");
@@ -1131,7 +1131,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][6], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][6], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][6], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][6], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][6], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][6], false);
 
     NewsTD[playerid][7] = CreatePlayerTextDraw(playerid, 142.647033, 436.749969, "LD_PLAN:tvbase");
@@ -1140,7 +1140,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][7], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][7], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][7], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][7], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][7], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][7], false);
 
     NewsTD[playerid][8] = CreatePlayerTextDraw(playerid, -0.411824, 152.666641, "LD_PLAN:tvbase");
@@ -1149,7 +1149,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][8], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][8], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][8], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][8], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][8], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][8], false);
 
     NewsTD[playerid][9] = CreatePlayerTextDraw(playerid, 629.705505, 154.999908, "LD_PLAN:tvbase");
@@ -1158,7 +1158,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][9], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][9], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][9], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][9], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][9], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][9], false);
 
     NewsTD[playerid][10] = CreatePlayerTextDraw(playerid, -0.882364, -0.749989, "LD_PLAN:tvcorn");
@@ -1167,7 +1167,7 @@ CreateNewsTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NewsTD[playerid][10], -1);
     PlayerTextDrawSetShadow(playerid, NewsTD[playerid][10], 0);
     PlayerTextDrawBackgroundColour(playerid, NewsTD[playerid][10], 255);
-    PlayerTextDrawFont(playerid, NewsTD[playerid][10], 4);
+    PlayerTextDrawFont(playerid, NewsTD[playerid][10], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NewsTD[playerid][10], false);
 
     return true;
@@ -1185,7 +1185,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NotifyTD[playerid][0], 842150600);
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][0], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][0], 255);
-    PlayerTextDrawFont(playerid, NotifyTD[playerid][0], 4);
+    PlayerTextDrawFont(playerid, NotifyTD[playerid][0], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][0], false);
 
     NotifyTD[playerid][1] = CreatePlayerTextDraw(playerid, 236.969787, 370.250061, "mdl-9001:notify_error");
@@ -1194,7 +1194,7 @@ CreateNotifyTextdraws(playerid) {
     PlayerTextDrawColour(playerid, NotifyTD[playerid][1], -1);
     PlayerTextDrawSetShadow(playerid, NotifyTD[playerid][1], 0);
     PlayerTextDrawBackgroundColour(playerid, NotifyTD[playerid][1], 255);
-    PlayerTextDrawFont(playerid, NotifyTD[playerid][1], 4);
+    PlayerTextDrawFont(playerid, NotifyTD[playerid][1], TEXT_DRAW_FONT_SPRITE_DRAW);
     PlayerTextDrawSetProportional(playerid, NotifyTD[playerid][1], false);
 
     NotifyTD[playerid][2] = CreatePlayerTextDraw(playerid, 316.659057, 370.750000, "TEXTO_FOOTER");

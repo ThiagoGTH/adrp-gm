@@ -48,7 +48,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
-	if (newkeys & t_KEY:KEY_NO && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
+	if (newkeys & KEY_NO && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
 		if (GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_DUCK) {
 			static string[512];
 		    new count = 0, id = Item_Nearest(playerid);

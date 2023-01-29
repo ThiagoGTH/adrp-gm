@@ -15,8 +15,8 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 	return true;
 }
 
-hook OnPlayerStateChange(playerid, newstate, oldstate) {
-	DMV_StateChange(playerid, newstate, oldstate);
+hook OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
+	DMV_StateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate);
 	return true;
 }
 
@@ -113,8 +113,8 @@ DMVUpdate(playerid) {
 	return true;
 }
 
-DMV_StateChange(playerid, newstate, oldstate) {
-	if(oldstate == t_PLAYER_STATE:PLAYER_STATE_ONFOOT && newstate == t_PLAYER_STATE:PLAYER_STATE_DRIVER) {
+DMV_StateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
+	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
   		if(!InDMV[playerid]) return true;
   		static 
 			bool:engine, 

@@ -804,7 +804,7 @@ public OnPoolUpdate(poolid) {
 
 	new Float: Xa, Float: Ya, Float: Za;
 	new Float: X, Float: Y, Float: Z;
-	new KEY:keys, ud, lr;
+	new KEY:keys, KEY:ud, KEY:lr;
 
 	if (g_poolTableData[poolid][E_CUE_POCKETED]) {
 		new playerid = g_poolTableData[poolid][E_NEXT_SHOOTER];
@@ -877,7 +877,7 @@ public OnPoolUpdate(poolid) {
 
 				GetPlayerPos(playerid, X, Y ,Z);
 				GetDynamicObjectPos(PHY_GetHandleObject(g_poolBallData[poolid][E_BALL_PHY_HANDLE][0]), Xa, Ya, Za);
-				newrot = p_PoolAngle[playerid][0] + (lr > 0 ? 0.9 : -0.9);
+				newrot = p_PoolAngle[playerid][0] + (lr > KEY:0 ? 0.9 : -0.9);
 				dist = GetDistanceBetweenPoints(X, Y, 0.0, Xa, Ya, 0.0);
 
 				// keep the head out of the point of view

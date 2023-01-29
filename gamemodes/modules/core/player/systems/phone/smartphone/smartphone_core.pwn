@@ -215,7 +215,7 @@ hook OnPhoneInsertSMS(targetid, exist) {
 }
 
 hook SelfieTimer(playerid) {
-	new Keys, ud, lr;
+	new KEY:Keys, KEY:ud, KEY:lr;
 
 	if(ph_menuid[playerid] == 0 && ph_sub_menuid[playerid] == 2) {
 		GetPlayerKeys(playerid, Keys, ud, lr);

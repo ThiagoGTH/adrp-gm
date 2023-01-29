@@ -182,7 +182,7 @@ Dialog:DIALOG_ELEVATOR(playerid, response, listitem, inputtext[]) {
 	return true;
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
 {
 	if(!IsPlayerInAnyVehicle(playerid) && newkeys & KEY_YES)
 	{

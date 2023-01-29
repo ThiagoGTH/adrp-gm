@@ -47,7 +47,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
     return true;
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys) {
 	if (newkeys & KEY_NO && GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
 		if (GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_DUCK) {
 			static string[512];

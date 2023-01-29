@@ -259,7 +259,7 @@ forward DeathTimer(); public DeathTimer() {
     return true;
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys){
 	if(pInfo[playerid][pDead]) return false;
 
     if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){

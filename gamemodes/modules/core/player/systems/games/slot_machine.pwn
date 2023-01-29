@@ -255,8 +255,8 @@ SlotMachine_Exit(playerid) {
 timer PlayerPlaySlotAgain[DISPLAY_TIME](playerid) {
 	PlayerGamblingState[playerid] = G_STATE_READY;
 
-	new keys,lr,ud;
-	GetPlayerKeys(playerid,keys,ud,lr);
+	new KEY:keys, KEY:lr, KEY:ud;
+	GetPlayerKeys(playerid, keys, ud, lr);
 	if(keys & KEY_SPRINT) {
 		CallLocalFunction("OnPlayerKeyStateChange", "ii", KEY_SPRINT, 0);
 	}
@@ -367,7 +367,7 @@ Updateslot_BetTD(playerid) {
 	PlayerTextDrawSetString(playerid, slot_BetTD[playerid][1], str);
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys) {
 	if(PRESSED(KEY_YES)) {
 		new
 			bool:isNearSlot = false;

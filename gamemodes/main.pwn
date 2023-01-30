@@ -10,6 +10,7 @@
 #include <a_mysql>
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
+#include <YSI_Data\y_iterate>
 #include <Pawn.CMD>
 #include <memory>
 #include <sscanf2>

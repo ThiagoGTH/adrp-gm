@@ -193,7 +193,7 @@ Bank_ShowLogs(playerid) {
 
 			case TYPE_DEPOSIT: {
 				format(list, sizeof(list), "Por\tValor\tData\n");
-				format(title, sizeof(title), "{F1C40F}Banco: {FFFFFF}Histórico de depóstios (página %d)", LogListPage[playerid] + 1);
+				format(title, sizeof(title), "{F1C40F}Banco: {FFFFFF}Histórico de depósitos (página %d)", LogListPage[playerid] + 1);
 			}
 
 			case TYPE_WITHDRAW: {
@@ -254,3 +254,4 @@ Bank_ShowLogs(playerid) {
 	cache_delete(bank_logs);
 	return true;
 }
+

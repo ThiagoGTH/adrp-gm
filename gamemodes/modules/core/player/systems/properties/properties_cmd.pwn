@@ -290,7 +290,7 @@ CMD:criarinterior(playerid, params[]) {
     }
     
     if (type < 1 || type > 3)
-        return SendErrorMessage(playerid, "Tipo inv√°lido. Tipos de 1 √° 3.");
+        return SendErrorMessage(playerid, "Tipo inv·lido. Tipos de 1 ‡ 3.");
 
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `interiors` WHERE `name` = '%e';", name);
     mysql_query(DBConn, query);

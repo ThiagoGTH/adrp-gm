@@ -1,0 +1,76 @@
+#define     MAX_BANKERS     (20)
+#define     MAX_ATMS        (100)
+
+#define     ACCOUNT_PRICE   (100)      	// valor para criar uma conta (default: 100)
+#define     ACCOUNT_CLIMIT  (5)         // quantidade máxima de contas que um personagem pode ter
+#define     ACCOUNT_LIMIT   (500000000) // valor máximo que uma conta pode ter (default: 500.000.000)
+
+enum    _:E_BANK_DIALOG
+{
+    DIALOG_BANK_MENU_NOLOGIN = 12450,
+    DIALOG_BANK_MENU,
+    DIALOG_BANK_CREATE_ACCOUNT,
+    DIALOG_BANK_ACCOUNTS,
+    DIALOG_BANK_LOGIN_ID,
+	DIALOG_BANK_LOGIN_PASS,
+	DIALOG_BANK_DEPOSIT,
+	DIALOG_BANK_WITHDRAW,
+	DIALOG_BANK_TRANSFER_1,
+	DIALOG_BANK_TRANSFER_2,
+	DIALOG_BANK_PASSWORD,
+	DIALOG_BANK_REMOVE,
+	DIALOG_BANK_LOGS,
+	DIALOG_BANK_LOG_PAGE
+}
+
+enum    _:E_BANK_LOGTYPE
+{
+	TYPE_NONE,
+	TYPE_LOGIN,
+	TYPE_DEPOSIT,
+	TYPE_WITHDRAW,
+	TYPE_TRANSFER,
+	TYPE_PASSCHANGE
+}
+
+enum    E_BANKER
+{
+	// saved
+	Skin,
+	Float: bankerX,
+	Float: bankerY,
+	Float: bankerZ,
+	Float: bankerA,
+	// temp
+	bankerActorID,
+	Text3D: bankerLabel
+}
+
+enum    E_ATM
+{
+	// saved
+	Float: atmX,
+	Float: atmY,
+	Float: atmZ,
+	Float: atmRX,
+	Float: atmRY,
+	Float: atmRZ,
+	// temp
+	atmObjID,
+	
+	Text3D: atmLabel
+}
+
+new
+	BankerData[MAX_BANKERS][E_BANKER],
+	ATMData[MAX_ATMS][E_ATM];
+
+new
+	Iterator: Bankers<MAX_BANKERS>,
+	Iterator: ATMs<MAX_ATMS>;
+
+new
+	CurrentAccountID[MAX_PLAYERS] = {-1, ...},
+	LogListType[MAX_PLAYERS] = {TYPE_NONE, ...},
+	LogListPage[MAX_PLAYERS],
+	EditingATMID[MAX_PLAYERS] = {-1, ...};

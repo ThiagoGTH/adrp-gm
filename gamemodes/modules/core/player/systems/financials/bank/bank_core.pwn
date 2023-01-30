@@ -1,8 +1,4 @@
 formatInt(intVariable, iThousandSeparator = ',', iCurrencyChar = '$') {
-    /*
-		By Kar
-		https://gist.github.com/Kar2k/bfb0eafb2caf71a1237b349684e091b9/8849dad7baa863afb1048f40badd103567c005a5#file-formatint-function
-	*/
 	static
 		s_szReturn[ 32 ],
 		s_szThousandSeparator[ 2 ] = { ' ', EOS },
@@ -73,9 +69,9 @@ Bank_SaveLog(playerid, type, accid, toaccid, amount) {
 	new query[256];
 
 	switch(type) {
-	    case TYPE_LOGIN, TYPE_PASSCHANGE: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, Type=%d, Player='%e', Date=UNIX_TIMESTAMP()", accid, type, Player_GetName(playerid));
-	    case TYPE_DEPOSIT, TYPE_WITHDRAW: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, Type=%d, Player='%e', Amount=%d, Date=UNIX_TIMESTAMP()", accid, type, Player_GetName(playerid), amount);
-		case TYPE_TRANSFER: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, ToAccountID=%d, Type=%d, Player='%e', Amount=%d, Date=UNIX_TIMESTAMP()", accid, toaccid, type, Player_GetName(playerid), amount);
+	    case TYPE_LOGIN, TYPE_PASSCHANGE: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, Type=%d, Player='%e', Date=UNIX_TIMESTAMP()", accid, type, pNome(playerid));
+	    case TYPE_DEPOSIT, TYPE_WITHDRAW: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, Type=%d, Player='%e', Amount=%d, Date=UNIX_TIMESTAMP()", accid, type, pNome(playerid), amount);
+		case TYPE_TRANSFER: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, ToAccountID=%d, Type=%d, Player='%e', Amount=%d, Date=UNIX_TIMESTAMP()", accid, toaccid, type, pNome(playerid), amount);
 	}
 
 	mysql_tquery(DBConn, query);
@@ -111,5 +107,12 @@ Bank_ShowMenu(playerid) {
 
 	DeletePVar(playerid, "bankLoginAccount");
 	DeletePVar(playerid, "bankTransferAccount");
+	return true;
+}
+
+Bank_ShowLogMenu(playerid) {
+	LogListType[playerid] = TYPE_NONE;
+	LogListPage[playerid] = 0;
+	ShowPlayerDialog(playerid, DIALOG_BANK_LOGS, DIALOG_STYLE_LIST, "{F1C40F}Banco: {FFFFFF}Extrato", "Dinheiro depositado\nDinheiro sacado\nTransferências\nAcessos\nMudanças de senha", "Visualizar", "Voltar");
 	return true;
 }

@@ -39,7 +39,7 @@ hook OnGameModeInit() {
         print("[DATABASE] Para obter mais detalhes, acesse a pasta de logging do plug-in.");
         print("[DATABASE] Desligando o servidor...\n");
 
-        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex„o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser√° desligado.");
+        format(logString, sizeof(logString), "SYSTEM: Houve um erro na tentativa de conex„o com o MySQL. Para obter mais detalhes, acesse a pasta de logging do plug-in. O servidor ser· desligado.");
         logCreate(99998, logString, 5);
         
         SendRconCommand("exit");
@@ -1473,8 +1473,8 @@ void:CheckBankTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_accounts checada com sucesso");
     logCreate(99998, logString, 5);
 
-	new query[512];
-	mysql_format(DBConn, query, sizeof(query), "CREATE TABLE IF NOT EXISTS `bank_logs` (\
+	new query2[512];
+	mysql_format(DBConn, query2, sizeof(query2), "CREATE TABLE IF NOT EXISTS `bank_logs` (\
 	  	`ID` int(11) NOT NULL auto_increment,\
 	  	`AccountID` int(11) NOT NULL,\
 	  	`ToAccountID` int(11) NOT NULL default '-1',\
@@ -1487,13 +1487,13 @@ void:CheckBankTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
     logCreate(99998, logString, 5);
 
-	mysql_format(DBConn, query, sizeof(query), "%s\
+	mysql_format(DBConn, query2, sizeof(query2), "%s\
  		PRIMARY KEY  (`ID`),\
  		KEY `bank_logs_ibfk_1` (`AccountID`),\
  		CONSTRAINT `bank_logs_ibfk_1` FOREIGN KEY (`AccountID`) REFERENCES `bank_accounts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE\
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8;", query);
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;", query2);
 
-	mysql_tquery(DBConn, query);
+	mysql_tquery(DBConn, query2);
 }
 
 void:CheckStorageBusinessTable() {

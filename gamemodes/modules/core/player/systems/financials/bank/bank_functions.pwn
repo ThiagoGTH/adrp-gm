@@ -258,4 +258,3 @@ Bank_ShowLogs(playerid) {
 	cache_delete(bank_logs);
 	return true;
 }
-

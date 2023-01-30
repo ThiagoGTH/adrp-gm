@@ -1,4 +1,4 @@
-CMD:bank(playerid, params[]) {
+CMD:banco(playerid, params[]) {
 	if(!IsPlayerNearBanker(playerid)) return SendErrorMessage(playerid, "Você não está perto de um atendente do banco.");
 
 	SetPVarInt(playerid, "usingATM", 0);

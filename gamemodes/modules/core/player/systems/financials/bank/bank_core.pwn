@@ -1,4 +1,8 @@
-formatInt(intVariable, iThousandSeparator = ',', iCurrencyChar = 'US$') {
+formatInt(intVariable, iThousandSeparator = ',', iCurrencyChar = '$') {
+    /*
+		By Kar
+		https://gist.github.com/Kar2k/bfb0eafb2caf71a1237b349684e091b9/8849dad7baa863afb1048f40badd103567c005a5#file-formatint-function
+	*/
 	static
 		s_szReturn[ 32 ],
 		s_szThousandSeparator[ 2 ] = { ' ', EOS },

@@ -1473,8 +1473,7 @@ void:CheckBankTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_accounts checada com sucesso");
     logCreate(99998, logString, 5);
 
-	new query2[512];
-	mysql_format(DBConn, query2, sizeof(query2), "CREATE TABLE IF NOT EXISTS `bank_logs` (\
+	mysql_format(DBConn, query, sizeof(query), "CREATE TABLE IF NOT EXISTS `bank_logs` (\
 	  	`ID` int(11) NOT NULL auto_increment,\
 	  	`AccountID` int(11) NOT NULL,\
 	  	`ToAccountID` int(11) NOT NULL default '-1',\
@@ -1487,13 +1486,13 @@ void:CheckBankTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
     logCreate(99998, logString, 5);
 
-	mysql_format(DBConn, query2, sizeof(query2), "%s\
+	mysql_format(DBConn, query, sizeof(query), "%s\
  		PRIMARY KEY  (`ID`),\
  		KEY `bank_logs_ibfk_1` (`AccountID`),\
  		CONSTRAINT `bank_logs_ibfk_1` FOREIGN KEY (`AccountID`) REFERENCES `bank_accounts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE\
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8;", query2);
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;", query);
 
-	mysql_tquery(DBConn, query2);
+	mysql_tquery(DBConn, query);
 }
 
 void:CheckStorageBusinessTable() {

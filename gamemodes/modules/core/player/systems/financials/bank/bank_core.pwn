@@ -184,7 +184,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	    }
 	    case DIALOG_BANK_DEPOSIT: {
 			if(!response) return Bank_ShowMenu(playerid);
-			if(CurrentAccountID[playerid] == -1) return 1;
+			if(CurrentAccountID[playerid] == -1) return true;
      		if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_DEPOSIT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Depositar", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Digite o valor que você deseja depositar:", "Depositar", "<<<");
 
 			new amount = strval(inputtext);
@@ -202,7 +202,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
         case DIALOG_BANK_WITHDRAW: {
 			if(!response) return Bank_ShowMenu(playerid);
-			if(CurrentAccountID[playerid] == -1) return 1;
+			if(CurrentAccountID[playerid] == -1) return true;
      		if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_WITHDRAW, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Sacar", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Digite o valor que você deseja sacar:", "Sacar", "<<<");
 
 			new amount = strval(inputtext);
@@ -215,7 +215,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
         case DIALOG_BANK_TRANSFER_1: {
 			if(!response) return Bank_ShowMenu(playerid);
-			if(CurrentAccountID[playerid] == -1) return 1;
+			if(CurrentAccountID[playerid] == -1) return true;
      		if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_1, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Especifique o ID de uma conta bancária:", "Avançar", "<<<");
 
             if(strval(inputtext) == CurrentAccountID[playerid]) return ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_1, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "{E74C3C}Você não pode transferir dinheiro para a sua própria conta.\n\n{FFFFFF}Especifique o ID de uma conta bancária:", "Avançar", "<<<");
@@ -225,7 +225,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
         case DIALOG_BANK_TRANSFER_2: {
             if(!response) return ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_1, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "Especifique o ID de uma conta bancária:", "Avançar", "<<<");
-            if(CurrentAccountID[playerid] == -1) return 1;
+            if(CurrentAccountID[playerid] == -1) return true;
 			if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_2, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Especifique o valor que deseja transferir:", "Transferir", "<<<");
 
             new amount = strval(inputtext);
@@ -241,7 +241,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			mysql_tquery(DBConn, query, "OnBankAccountTransferir", "iii", playerid, id, amount);
             return true;
         }
-        /* ---------------------------------------------------------------------- */
         case DIALOG_BANK_PASSWORD: {
         	if(!response) return Bank_ShowMenu(playerid);
         	if(CurrentAccountID[playerid] == -1) return true;
@@ -254,7 +253,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	    }
         case DIALOG_BANK_REMOVE: {
             if(!response) return Bank_ShowMenu(playerid);
-            if(CurrentAccountID[playerid] == -1) return 1;
+            if(CurrentAccountID[playerid] == -1) return true;
 
             new amount = Bank_GetBalance(CurrentAccountID[playerid]);
 			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Disabled=1 WHERE ID=%d", CurrentAccountID[playerid]);
@@ -285,4 +284,39 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 	}
 	return false;
+}
+
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz) {
+	if(Iter_Contains(ATMs, EditingATMID[playerid])) {
+	    if(response == 1) {
+	        new id = EditingATMID[playerid];
+	        ATMData[id][atmX] = x;
+	        ATMData[id][atmY] = y;
+	        ATMData[id][atmZ] = z;
+	        ATMData[id][atmRX] = rx;
+	        ATMData[id][atmRY] = ry;
+	        ATMData[id][atmRZ] = rz;
+
+	        SetDynamicObjectPos(objectid, ATMData[id][atmX], ATMData[id][atmY], ATMData[id][atmZ]);
+	        SetDynamicObjectRot(objectid, ATMData[id][atmRX], ATMData[id][atmRY], ATMData[id][atmRZ]);
+            
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ATMData[id][atmLabel], E_STREAMER_X, ATMData[id][atmX]);
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ATMData[id][atmLabel], E_STREAMER_Y, ATMData[id][atmY]);
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, ATMData[id][atmLabel], E_STREAMER_Z, ATMData[id][atmZ] + 0.85);
+
+			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_atms SET PosX='%f', PosY='%f', PosZ='%f', RotX='%f', RotY='%f', RotZ='%f' WHERE ID=%d", x, y, z, rx, ry, rz, id);
+			mysql_tquery(DBConn, query);
+
+	        EditingATMID[playerid] = -1;
+	    }
+
+	    if(response == 0) {
+	        new id = EditingATMID[playerid];
+	        SetDynamicObjectPos(objectid, ATMData[id][atmX], ATMData[id][atmY], ATMData[id][atmZ]);
+	        SetDynamicObjectRot(objectid, ATMData[id][atmRX], ATMData[id][atmRY], ATMData[id][atmRZ]);
+	        EditingATMID[playerid] = -1;
+	    }
+	}
+
+	return 1;
 }

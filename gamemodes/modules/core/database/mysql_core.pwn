@@ -71,7 +71,7 @@ void:CheckTables() {
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
-    CheckBankAccountsTable();
+    CheckBankTable();
     CheckStorageBusinessTable();
     CheckGaragesTable();
     //CheckSignalTower();
@@ -1430,22 +1430,70 @@ void:CheckGaragesTable() {
 
 }
 
-void:CheckBankAccountsTable() {
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `player_bankaccounts` (\
-    `id` int NOT NULL AUTO_INCREMENT,\
-    `character_id` int DEFAULT '0',\
-    `sec_character_id` int DEFAULT '0',\
-    `account_number` varchar(16) NOT NULL DEFAULT '0',\
-    `account_pass` varchar(16) NOT NULL DEFAULT '0',\
-    `blocked` boolean NOT NULL DEFAULT '0',\
-    `account_ammount` int NOT NULL DEFAULT '0',\
-    `account_savings` int NOT NULL DEFAULT '0',\
-    `shared` boolean NOT NULL DEFAULT '0',\
-    PRIMARY KEY (`id`));");
-    
-    print("[DATABASE] Tabela player_bankaccounts checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_bankaccounts checada com sucesso");
+void:CheckBankTable() {
+	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bankers` (\
+	  `ID` int(11) NOT NULL,\
+	  `Skin` smallint(3) NOT NULL,\
+	  `PosX` float NOT NULL,\
+	  `PosY` float NOT NULL,\
+	  `PosZ` float NOT NULL,\
+	  `PosA` float NOT NULL\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bankers checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bankers checada com sucesso");
     logCreate(99998, logString, 5);
+
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_atms` (\
+	  `ID` int(11) NOT NULL,\
+	  `PosX` float NOT NULL,\
+	  `PosY` float NOT NULL,\
+	  `PosZ` float NOT NULL,\
+	  `RotX` float NOT NULL,\
+	  `RotY` float NOT NULL,\
+	  `RotZ` float NOT NULL\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bank_atms checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_atms checada com sucesso");
+    logCreate(99998, logString, 5);
+
+	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_accounts` (\
+	  `ID` int(11) NOT NULL auto_increment,\
+	  `Character_ID` int(11) NOT NULL,\
+	  `Password` varchar(32) NOT NULL,\
+	  `Balance` int(11) NOT NULL,\
+	  `CreatedOn` int(11) NOT NULL,\
+	  `LastAccess` int(11) NOT NULL,\
+	  `Disabled` smallint(1) NOT NULL,\
+	  PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bank_accounts checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_accounts checada com sucesso");
+    logCreate(99998, logString, 5);
+
+	new query[512];
+	mysql_format(DBConn, query, sizeof(query), "CREATE TABLE IF NOT EXISTS `bank_logs` (\
+	  	`ID` int(11) NOT NULL auto_increment,\
+	  	`AccountID` int(11) NOT NULL,\
+	  	`ToAccountID` int(11) NOT NULL default '-1',\
+	  	`Type` smallint(1) NOT NULL,\
+	  	`Player` varchar(24) NOT NULL,\
+	  	`Amount` int(11) NOT NULL,\
+	  	`Date` int(11) NOT NULL,");
+
+    print("[DATABASE] Tabela bank_logs checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
+    logCreate(99998, logString, 5);
+
+	mysql_format(DBConn, query, sizeof(query), "%s\
+ 		PRIMARY KEY  (`ID`),\
+ 		KEY `bank_logs_ibfk_1` (`AccountID`),\
+ 		CONSTRAINT `bank_logs_ibfk_1` FOREIGN KEY (`AccountID`) REFERENCES `bank_accounts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE\
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;", query);
+
+	mysql_tquery(DBConn, query);
 }
 
 void:CheckStorageBusinessTable() {

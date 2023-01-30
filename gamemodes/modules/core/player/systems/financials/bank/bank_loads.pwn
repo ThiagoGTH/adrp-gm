@@ -18,7 +18,7 @@ public LoadBankers() {
 				printf("BANK SYSTEM: Não foi possível criar o ator do bancário ID %d.", id);
 			} else {
 			    SetActorInvulnerable(BankerData[id][bankerActorID], true); 
-                SetActorVirtualWorld(BankerData[id][bankerVW]);
+                SetActorVirtualWorld(BankerData[id][bankerActorID], BankerData[id][bankerVW]);
 			}
 
 			format(label_string, sizeof(label_string), "Bancário (%d)\n\n{FFFFFF}Use {F1C40F}/banco", id);

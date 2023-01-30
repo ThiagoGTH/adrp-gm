@@ -1437,7 +1437,9 @@ void:CheckBankTable() {
 	  `PosX` float NOT NULL,\
 	  `PosY` float NOT NULL,\
 	  `PosZ` float NOT NULL,\
-	  `PosA` float NOT NULL\
+	  `PosA` float NOT NULL,\
+      `Interior` int(11) NOT NULL,\
+      `VirtualWorld` int(11) NOT NULL\
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
     print("[DATABASE] Tabela bankers checada com sucesso");

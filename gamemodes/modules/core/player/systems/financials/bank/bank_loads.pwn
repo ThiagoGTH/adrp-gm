@@ -10,12 +10,15 @@ public LoadBankers() {
 		    cache_get_value_name_float(i, "PosY", BankerData[id][bankerY]);
 		    cache_get_value_name_float(i, "PosZ", BankerData[id][bankerZ]);
 		    cache_get_value_name_float(i, "PosA", BankerData[id][bankerA]);
+            cache_get_value_name_int(i, "Interior", BankerData[id][bankerInterior]);
+            cache_get_value_name_int(i, "VirtualWorld", BankerData[id][bankerVW]);
 
 		    BankerData[id][bankerActorID] = CreateActor(BankerData[id][Skin], BankerData[id][bankerX], BankerData[id][bankerY], BankerData[id][bankerZ], BankerData[id][bankerA]);
 		    if(!IsValidActor(BankerData[id][bankerActorID])) {
 				printf("BANK SYSTEM: Não foi possível criar o ator do bancário ID %d.", id);
 			} else {
 			    SetActorInvulnerable(BankerData[id][bankerActorID], true); 
+                SetActorVirtualWorld(BankerData[id][bankerVW]);
 			}
 
 			format(label_string, sizeof(label_string), "Bancário (%d)\n\n{FFFFFF}Use {F1C40F}/banco", id);

@@ -41,6 +41,8 @@ enum    E_BANKER
 	Float: bankerY,
 	Float: bankerZ,
 	Float: bankerA,
+	bankerInterior,
+	bankerVW,
 	// temp
 	bankerActorID,
 	Text3D: bankerLabel

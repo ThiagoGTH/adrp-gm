@@ -66,7 +66,6 @@ GetClosestATM(playerid, Float: range = 3.0) {
 
 Bank_SaveLog(playerid, type, accid, toaccid, amount) {
 	if(type == TYPE_NONE) return true;
-	new query[256];
 
 	switch(type) {
 	    case TYPE_LOGIN, TYPE_PASSCHANGE: mysql_format(DBConn, query, sizeof(query), "INSERT INTO bank_logs SET AccountID=%d, Type=%d, Player='%e', Date=UNIX_TIMESTAMP()", accid, type, pNome(playerid));
@@ -90,7 +89,7 @@ Bank_ShowMenu(playerid) {
 	    format(
 			string,
 			sizeof(string),
-			"{%06x}Criar conta bancária\t{2ECC71}%s\nMinhas contas\t{F1C40F}%d\nDepositar\t{2ECC71}%s\nSacar\t{2ECC71}%s\nTransferir\t{2ECC71}%s\n{%06x}Extrato\n{%06x}Mudar senha\n{%06x}Deletar conta\nSair",
+			"{%06x}Criar conta bancária\t{2ECC71}%s\nMinhas contas\t{F1C40F}%d\nDepositar\t{2ECC71}%s\nSacar\t{2ECC71}%s\nTransferir\t{2ECC71}%s\n{%06x}Extrato\n{%06x}Alterar senha\n{%06x}Deletar conta\nSair",
 			(using_atm ? 0xE74C3CFF >>> 8 : 0xFFFFFFFF >>> 8),
 			(using_atm ? ("") : formatInt(ACCOUNT_PRICE)),
 			Bank_AccountCount(playerid),
@@ -118,9 +117,9 @@ Bank_ShowLogMenu(playerid) {
 }
 
 Bank_AccountCount(playerid) { // ATENÇÃO
-	new query2[128], Cache: find_accounts;
-	mysql_format(DBConn, query2, sizeof(query2), "SELECT null FROM bank_accounts WHERE Owner='%e' && Disabled=0", pNome(playerid));
-	find_accounts = mysql_query(DBConn, query2);
+	new Cache: find_accounts;
+	mysql_format(DBConn, query, sizeof(query), "SELECT null FROM bank_accounts WHERE Character_ID='%d' && Disabled=0", GetPlayerSQLID(playerid));
+	find_accounts = mysql_query(DBConn, query);
 
 	new count = cache_num_rows();
 	cache_delete(find_accounts);
@@ -128,7 +127,7 @@ Bank_AccountCount(playerid) { // ATENÇÃO
 }
 
 Bank_GetBalance(accountid) {
-	new query[144], Cache: get_balance;
+	new Cache: get_balance;
 	mysql_format(DBConn, query, sizeof(query), "SELECT Balance FROM bank_accounts WHERE ID=%d && Disabled=0", accountid);
 	get_balance = mysql_query(DBConn, query);
 
@@ -139,18 +138,23 @@ Bank_GetBalance(accountid) {
 }
 
 Bank_GetOwner(accountid) { // ATENÇÃO
-	new query[144], owner[MAX_PLAYER_NAME], Cache: get_owner;
-	mysql_format(DBConn, query, sizeof(query), "SELECT Owner FROM bank_accounts WHERE ID=%d && Disabled=0", accountid);
-	get_owner = mysql_query(DBConn, query);
+	new characterID, characterName[32], Cache: get_owner;
 
-	cache_get_value_name(0, "Owner", owner);
+	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d' && Disabled=0", accountid);
+	get_owner = mysql_query(DBConn, query);
+	cache_get_value_int(0, "Character_ID", characterID);
+
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d';", characterID);
+    get_owner = mysql_query(DBConn, query);
+    cache_get_value_name(0, "name", characterName);
+
 	cache_delete(get_owner);
-	return owner;
+	return characterName;
 }
 
 Bank_ListAccounts(playerid) { // ATENÇÃO
-    new query[256], Cache: get_accounts;
-    mysql_format(DBConn, query, sizeof(query), "SELECT ID, Balance, LastAccess, FROM_UNIXTIME(CreatedOn, '%%d/%%m/%%Y %%H:%%i:%%s') AS Created, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE Owner='%e' && Disabled=0 ORDER BY CreatedOn DESC", pNome(playerid));
+    new Cache: get_accounts;
+    mysql_format(DBConn, query, sizeof(query), "SELECT ID, Balance, LastAccess, FROM_UNIXTIME(CreatedOn, '%%d/%%m/%%Y %%H:%%i:%%s') AS Created, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE Character_ID='%d' && Disabled=0 ORDER BY CreatedOn DESC", GetPlayerSQLID(playerid));
 	get_accounts = mysql_query(DBConn, query);
     new rows = cache_num_rows();
 
@@ -178,7 +182,7 @@ Bank_ListAccounts(playerid) { // ATENÇÃO
 }
 
 Bank_ShowLogs(playerid) {
-	new query[196], type = LogListType[playerid], Cache: bank_logs;
+	new type = LogListType[playerid], Cache: bank_logs;
 	mysql_format(DBConn, query, sizeof(query), "SELECT *, FROM_UNIXTIME(Date, '%%d/%%m/%%Y %%H:%%i:%%s') as ActionDate FROM bank_logs WHERE AccountID=%d && Type=%d ORDER BY Date DESC LIMIT %d, 15", CurrentAccountID[playerid], type, LogListPage[playerid] * 15);
 	bank_logs = mysql_query(DBConn, query);
 
@@ -247,7 +251,7 @@ Bank_ShowLogs(playerid) {
 
 		ShowPlayerDialog(playerid, DIALOG_BANK_LOG_PAGE, DIALOG_STYLE_TABLIST_HEADERS, title, list, "Próximo", "Anterior");
 	} else {
-		SendErrorMessage(playerid, "Não foi possível encontrar mais dados.")
+		SendErrorMessage(playerid, "Não foi possível encontrar mais dados.");
 		Bank_ShowLogMenu(playerid);
 	}
 

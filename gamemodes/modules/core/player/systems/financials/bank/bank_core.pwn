@@ -61,7 +61,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	            }
 				#endif
 
-				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar contra", "Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
+				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar conta", "Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
 	        }
 
 	        if(listitem == 1) Bank_ListAccounts(playerid);
@@ -178,7 +178,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{E74C3C}Você deve digitar uma senha para prosseguir.\n\n{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
 
 			new id = GetPVarInt(playerid, "bankLoginAccount");
-			mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d && Password=md5('%e') && Disabled=0 LIMIT 1", id, inputtext);
+			mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d && Password=md5('%e') LIMIT 1", id, inputtext);
 			mysql_tquery(DBConn, query, "OnBankAccountLogin", "ii", playerid, id);
 			return true;
 	    }
@@ -196,7 +196,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			    return Bank_ShowMenu(playerid);
 			}
 
-			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance+%d WHERE ID=%d && Disabled=0", amount, CurrentAccountID[playerid]);
+			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance+%d WHERE ID=%d", amount, CurrentAccountID[playerid]);
 			mysql_tquery(DBConn, query, "OnBankAccountDeposit", "ii", playerid, amount);
 			return true;
 		}
@@ -209,7 +209,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			if(!(1 <= amount <= (GetPVarInt(playerid, "usingATM") ? 5000 : 5000000))) return ShowPlayerDialog(playerid, DIALOG_BANK_WITHDRAW, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Sacar", "{E74C3C}Você não pode sacar menos que $1 ou mais que $5,000,000 por vez. ($5,000 por vez nos ATMs)\n\n{FFFFFF}Digite o valor que você deseja sacar:", "Sacar", "<<<");
 			if(amount > Bank_GetBalance(CurrentAccountID[playerid])) return ShowPlayerDialog(playerid, DIALOG_BANK_WITHDRAW, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Withdraw", "{E74C3C}Essa conta não possui todo esse dinheiro.\n\n{FFFFFF}Digite o valor que você deseja sacar:", "Sacar", "<<<");
 
-			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance-%d WHERE ID=%d && Disabled=0", amount, CurrentAccountID[playerid]);
+			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance-%d WHERE ID=%d", amount, CurrentAccountID[playerid]);
 			mysql_tquery(DBConn, query, "OnBankAccountWithdraw", "ii", playerid, amount);
 			return true;
 		}
@@ -237,7 +237,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				return Bank_ShowMenu(playerid);
 			}
 
-			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance+%d WHERE ID=%d && Disabled=0", amount, id);
+			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance+%d WHERE ID=%d", amount, id);
 			mysql_tquery(DBConn, query, "OnBankAccountTransferir", "iii", playerid, id, amount);
             return true;
         }
@@ -249,7 +249,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
 			if(strlen(inputtext) > 16) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Sua nova senha não pode possuir mais de 16 caracteres.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
 			printf("BANK-DEBUG: [1]");
-			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Password=md5('%e') WHERE ID=%d && Disabled=0", inputtext, CurrentAccountID[playerid]);
+			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Password=md5('%e') WHERE ID=%d", inputtext, CurrentAccountID[playerid]);
 			mysql_tquery(DBConn, query, "OnBankAccountPassChange", "is", playerid, inputtext);
 			printf("BANK-DEBUG: [2]");
 	        return true;

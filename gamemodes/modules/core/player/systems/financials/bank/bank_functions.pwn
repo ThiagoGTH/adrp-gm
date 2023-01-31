@@ -118,7 +118,7 @@ Bank_ShowLogMenu(playerid) {
 
 Bank_AccountCount(playerid) { // ATEN플O
 	new Cache: find_accounts;
-	mysql_format(DBConn, query, sizeof(query), "SELECT null FROM bank_accounts WHERE Character_ID='%d' && Disabled=0", GetPlayerSQLID(playerid));
+	mysql_format(DBConn, query, sizeof(query), "SELECT null FROM bank_accounts WHERE Character_ID='%d'", GetPlayerSQLID(playerid));
 	find_accounts = mysql_query(DBConn, query);
 
 	new count = cache_num_rows();
@@ -128,7 +128,7 @@ Bank_AccountCount(playerid) { // ATEN플O
 
 Bank_GetBalance(accountid) {
 	new Cache: get_balance;
-	mysql_format(DBConn, query, sizeof(query), "SELECT Balance FROM bank_accounts WHERE ID=%d && Disabled=0", accountid);
+	mysql_format(DBConn, query, sizeof(query), "SELECT Balance FROM bank_accounts WHERE ID=%d", accountid);
 	get_balance = mysql_query(DBConn, query);
 
 	new balance;
@@ -140,7 +140,7 @@ Bank_GetBalance(accountid) {
 Bank_GetOwner(accountid) { // ATEN플O
 	new characterID, characterName[32], Cache: get_owner;
 
-	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d' && Disabled=0", accountid);
+	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d'", accountid);
 	get_owner = mysql_query(DBConn, query);
 	cache_get_value_int(0, "Character_ID", characterID);
 
@@ -154,7 +154,7 @@ Bank_GetOwner(accountid) { // ATEN플O
 
 Bank_ListAccounts(playerid) { // ATEN플O
     new Cache: get_accounts;
-    mysql_format(DBConn, query, sizeof(query), "SELECT ID, Balance, LastAccess, FROM_UNIXTIME(CreatedOn, '%%d/%%m/%%Y %%H:%%i:%%s') AS Created, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE Character_ID='%d' && Disabled=0 ORDER BY CreatedOn DESC", GetPlayerSQLID(playerid));
+    mysql_format(DBConn, query, sizeof(query), "SELECT ID, Balance, LastAccess, FROM_UNIXTIME(CreatedOn, '%%d/%%m/%%Y %%H:%%i:%%s') AS Created, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE Character_ID='%d' ORDER BY CreatedOn DESC", GetPlayerSQLID(playerid));
 	get_accounts = mysql_query(DBConn, query);
     new rows = cache_num_rows();
 

@@ -21,7 +21,7 @@ public OnBankAccountLogin(playerid, id) {
         cache_get_value_name_int(0, "LastAccess", last_access);
 	    cache_get_value_name(0, "Last", ldate);
 
-        mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d' && Disabled=0", id);
+        mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d'", id);
         get_owner = mysql_query(DBConn, query);
         cache_get_value_int(0, "Character_ID", characterID);
         mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d';", characterID);
@@ -38,7 +38,7 @@ public OnBankAccountLogin(playerid, id) {
 	    CurrentAccountID[playerid] = id;
 	    Bank_ShowMenu(playerid);
 
-	    mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET LastAccess=UNIX_TIMESTAMP() WHERE ID=%d && Disabled=0", id);
+	    mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET LastAccess=UNIX_TIMESTAMP() WHERE ID=%d", id);
 	    mysql_tquery(DBConn, query);
 
         format(logString, sizeof(logString), "%s (%s) acessou a conta bancária de %s com ID %d", pNome(playerid), GetPlayerUserEx(playerid), characterName, id);
@@ -89,7 +89,7 @@ public OnBankAccountWithdraw(playerid, amount) {
 forward OnBankAccountTransfer(playerid, id, amount);
 public OnBankAccountTransfer(playerid, id, amount) {
 	if(cache_affected_rows() > 0) {
-		mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance-%d WHERE ID=%d && Disabled=0", amount, CurrentAccountID[playerid]);
+		mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Balance=Balance-%d WHERE ID=%d", amount, CurrentAccountID[playerid]);
 		mysql_tquery(DBConn, query, "OnBankAccountTransferDone", "iii", playerid, id, amount);
 	} else {
 	    SendErrorMessage(playerid, "A sua transação bancária falhou.");

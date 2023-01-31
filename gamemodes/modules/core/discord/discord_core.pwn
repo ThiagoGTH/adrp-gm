@@ -1159,8 +1159,8 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     }
     ////////////////////////////////////////////////////////////////////////
     // DISCORD PÚBLICO
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013952540393619557")){
-        DCC_SendChannelMessage(DCC_FindChannelById("277264357824528397"), string);
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1070070693724700763")){
+        DCC_SendChannelMessage(DCC_FindChannelById("1065815145151995966"), string);
         return true;
     }
     return true;

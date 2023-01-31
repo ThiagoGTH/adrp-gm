@@ -18,8 +18,8 @@ hook OnGameModeInit(){
         ATMData[i][atmLabel] = Text3D: -1;
     }
 
-    mysql_tquery(DBConn, "SELECT * FROM bankers", "LoadBankers");
-	mysql_tquery(DBConn, "SELECT * FROM bank_atms", "LoadATMs");
+    mysql_tquery(DBConn, "SELECT * FROM bankers WHERE (`ID` != '0');", "LoadBankers");
+	mysql_tquery(DBConn, "SELECT * FROM bank_atms WHERE (`ID` != '0');", "LoadATMs");
     return true;
 }
 
@@ -109,7 +109,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					return Bank_ShowMenu(playerid);
 				}
 
-				if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), pNome(playerid))) {
+				if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), GetPlayerNameEx(playerid))) {
                     SendErrorMessage(playerid, "Apenas o titular da conta pode realizar essa ação.");
 				    return Bank_ShowMenu(playerid);
 				}
@@ -123,7 +123,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					return Bank_ShowMenu(playerid);
 				}
 
-			    if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), pNome(playerid))) {
+			    if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), GetPlayerNameEx(playerid))) {
 				    SendErrorMessage(playerid, "Apenas o titular da conta pode realizar essa ação.");
 				    return Bank_ShowMenu(playerid);
 				}
@@ -243,12 +243,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
         }
         case DIALOG_BANK_PASSWORD: {
         	if(!response) return Bank_ShowMenu(playerid);
+
         	if(CurrentAccountID[playerid] == -1) return true;
+			
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
 			if(strlen(inputtext) > 16) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Sua nova senha não pode possuir mais de 16 caracteres.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
-
+			printf("BANK-DEBUG: [1]");
 			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Password=md5('%e') WHERE ID=%d && Disabled=0", inputtext, CurrentAccountID[playerid]);
 			mysql_tquery(DBConn, query, "OnBankAccountPassChange", "is", playerid, inputtext);
+			printf("BANK-DEBUG: [2]");
 	        return true;
 	    }
         case DIALOG_BANK_REMOVE: {

@@ -1,5 +1,8 @@
+#include <YSI_Coding\y_hooks>
+
 forward LoadBankers();
 public LoadBankers() {
+	
 	new rows = cache_num_rows();
 	if(rows) {
 	    new id, label_string[64];

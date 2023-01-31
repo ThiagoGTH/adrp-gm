@@ -11,6 +11,7 @@ public OnGamemodeLoad() {
             format(rcon, sizeof(rcon), "password 0");
             SendRconCommand(rcon);
 
+            printf("\n\n\n\n\n");
             print("O servidor iniciou no local host.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou mo local host.");
             logCreate(99998, logString, 5);
@@ -26,6 +27,7 @@ public OnGamemodeLoad() {
             SendRconCommand(rcon);
             ServerStatus(1);
 
+            printf("\n\n\n\n\n");
             print("O servidor iniciou em modo Closed Beta.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Beta.");
             logCreate(99998, logString, 5);
@@ -40,6 +42,7 @@ public OnGamemodeLoad() {
             SendRconCommand(rcon);
             ServerStatus(1);
 
+            printf("\n\n\n\n\n");
             print("O servidor iniciou em modo Closed Alpha.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Alpha.");
             logCreate(99998, logString, 5);
@@ -52,6 +55,8 @@ public OnGamemodeLoad() {
         format(rcon, sizeof(rcon), "password sandbox333");
         SendRconCommand(rcon);
 
+        printf("\n\n\n\n\n");
+        print("O servidor iniciou em modo Sandbox.");
         format(logString, sizeof(logString), "SYSTEM: O servidor iniciou no modo Sandbox.");
         logCreate(99998, logString, 5);
 	}
@@ -63,6 +68,7 @@ public OnGamemodeLoad() {
         format(rcon, sizeof(rcon), "password adrpthiagao");
         SendRconCommand(rcon);
 
+        printf("\n\n\n\n\n");
         format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo normal.");
         logCreate(99998, logString, 5);
 	}
@@ -71,14 +77,8 @@ public OnGamemodeLoad() {
 }
 
 public OnGameModeInit() {
-    CA_Init();
+    print("\n\n\n\nIniciando os serviços...");
 
-    MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
-    new Float:pos;
-    if (MapAndreas_FindAverageZ(20.001, 25.006, pos)) {
-        // Found position - position saved in 'pos'
-    }
-    
     new gmText[128];
     format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
 
@@ -102,8 +102,14 @@ public OnGameModeInit() {
 	EnableVehicleFriendlyFire();
     DisableCrashDetectLongCall();
 
-    print("Iniciando os serviços...");
-    OnGamemodeLoad();
+    CA_Init();
+    MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
+    new Float:pos;
+    if (MapAndreas_FindAverageZ(20.001, 25.006, pos)) {
+        // Found position - position saved in 'pos'
+    }
+    
+    SetTimer("OnGamemodeLoad", 60000, false); 
     return true;
 }
 

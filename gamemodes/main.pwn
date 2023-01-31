@@ -4,6 +4,8 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
+#define CGEN_MEMORY 30000
+
 #include <crashdetect>
 #include <streamer>
 
@@ -53,6 +55,7 @@
 #include "modules\core\player\cmds\cmds.pwn"
 
 // SISTEMAS
+#include "modules\core\player\systems\financials\financial.pwn"
 #include "modules\core\player\systems\licenses\licenses.pwn"
 #include "modules\core\player\systems\main\systems.pwn"
 #include "modules\core\player\systems\death\damages.pwn"
@@ -68,7 +71,6 @@
 #include "modules\core\player\systems\properties\houses\houses.pwn"
 #include "modules\core\player\systems\properties\garages\garages.pwn"
 #include "modules\core\player\systems\properties\properties.pwn"
-#include "modules\core\player\systems\financials\financial.pwn"
 
 // Phone System more Towers System
 //#include "modules\core\player\systems\phone\towers\towers.pwn" (in beta - desativado)

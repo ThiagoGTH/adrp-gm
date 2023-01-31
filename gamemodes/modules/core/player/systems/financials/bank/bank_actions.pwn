@@ -28,6 +28,10 @@ public OnBankAccountLogin(playerid, id) {
         get_owner = mysql_query(DBConn, query);
         cache_get_value_name(0, "name", characterName);
 
+		for (new i = 0, len = strlen(characterName); i < len; i ++){
+			if(characterName[i] == '_') characterName[i] = ' ';
+		}
+
         va_SendClientMessage(playerid, COLOR_YELLOW, "BANCO: {FFFFFF}Olá, %s.", characterName);
         va_SendClientMessage(playerid, COLOR_YELLOW, "BANCO: {FFFFFF}Seu último acesso a conta foi em: %s.", (last_access == 0) ? ("nunca") : ldate);
 
@@ -113,12 +117,14 @@ public OnBankAccountTransferDone(playerid, id, amount) {
 forward OnBankAccountPassChange(playerid, newpass[]);
 public OnBankAccountPassChange(playerid, newpass[]) {
 	if(cache_affected_rows() > 0) {
+		printf("BANK-DEBUG: [4]");
 	    va_SendClientMessage(playerid, COLOR_YELLOW, "BANCO: {FFFFFF}Você alterou a senha da conta para %s.", newpass);
 
         format(logString, sizeof(logString), "%s (%s) alterou a senha da conta bancária %d ", pNome(playerid), GetPlayerUserEx(playerid), CurrentAccountID[playerid]);
 	    logCreate(playerid, logString, 26);
-
+		printf("BANK-DEBUG: [5]");
         Bank_SaveLog(playerid, TYPE_PASSCHANGE, CurrentAccountID[playerid], -1, 0);
+		printf("BANK-DEBUG: [6]");
 	} else SendErrorMessage(playerid, "A sua alteração de senha falhou.");
 
     Bank_ShowMenu(playerid);

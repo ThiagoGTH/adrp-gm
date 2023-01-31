@@ -84,7 +84,7 @@ Bank_ShowMenu(playerid) {
 		ShowPlayerDialog(playerid, DIALOG_BANK_MENU_NOLOGIN, DIALOG_STYLE_TABLIST, "{F1C40F}Banco: {FFFFFF}Menu", string, "Selecionar", "Fechar");
 	}else{
 	    new balance = Bank_GetBalance(CurrentAccountID[playerid]), menu_title[64];
-		format(menu_title, sizeof(menu_title), "{F1C40F}Banco: {FFFFFF}Menu (CONTA ID: {F1C40F}%d{FFFFFF})", CurrentAccountID[playerid]);
+		format(menu_title, sizeof(menu_title), "{F1C40F}Banco: {FFFFFF}Menu (ID: {F1C40F}%d{FFFFFF})", CurrentAccountID[playerid]);
 
 	    format(
 			string,

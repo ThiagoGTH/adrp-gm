@@ -138,18 +138,23 @@ Bank_GetBalance(accountid) {
 }
 
 Bank_GetOwner(accountid) { // ATENÇÃO
-	new characterID, characterName[32], Cache: get_owner;
+	new characterID, Cache: get_owner;
 
-	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID='%d'", accountid);
+	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID=%d", accountid);
 	get_owner = mysql_query(DBConn, query);
-	cache_get_value_int(0, "Character_ID", characterID);
 
-	mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d';", characterID);
+	cache_get_value_name_int(0, "Character_ID", characterID);
+	cache_delete(get_owner);
+	printf("Character_ID: %d/accontid %d", characterID, accountid);
+
+	/*mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d';", characterID);
     get_owner = mysql_query(DBConn, query);
     cache_get_value_name(0, "name", characterName);
+	printf("CharacterName: %s", characterName);*/
 
-	cache_delete(get_owner);
-	return characterName;
+	
+
+	return characterID;
 }
 
 Bank_ListAccounts(playerid) { // ATENÇÃO

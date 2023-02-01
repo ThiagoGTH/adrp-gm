@@ -61,11 +61,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	            }
 				#endif
 
-				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar conta", "Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
+				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar conta", "{FFFFFF}Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
 	        }
 
 	        if(listitem == 1) Bank_ListAccounts(playerid);
-	        if(listitem == 2) ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_ID, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Entrar", "ID da conta:", "Continuar", "Cancelar");
+	        if(listitem == 2) ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_ID, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Entrar", "{FFFFFF}ID da conta:", "Continuar", "Cancelar");
 	        return true;
 	    }
      	case DIALOG_BANK_MENU: {
@@ -88,13 +88,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	            }
 				#endif
 
-				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar conta bancária", "Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
+				ShowPlayerDialog(playerid, DIALOG_BANK_CREATE_ACCOUNT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Criar conta bancária", "{FFFFFF}Escolha uma senha para a sua nova conta bancária:", "Criar", "<<<");
 	        }
 
 	        if(listitem == 1) Bank_ListAccounts(playerid);
-	        if(listitem == 2) ShowPlayerDialog(playerid, DIALOG_BANK_DEPOSIT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Depositar", "Digite o valor que você deseja depositar:", "Depositar", "<<<");
-            if(listitem == 3) ShowPlayerDialog(playerid, DIALOG_BANK_WITHDRAW, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Sacar", "Digite o valor que você deseja sacar:", "Sacar", "<<<");
-			if(listitem == 4) ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_1, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "Especifique o ID de uma conta bancária:", "Avançar", "<<<");
+	        if(listitem == 2) ShowPlayerDialog(playerid, DIALOG_BANK_DEPOSIT, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Depositar", "{FFFFFF}Digite o valor que você deseja depositar:", "Depositar", "<<<");
+            if(listitem == 3) ShowPlayerDialog(playerid, DIALOG_BANK_WITHDRAW, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Sacar", "{FFFFFF}Digite o valor que você deseja sacar:", "Sacar", "<<<");
+			if(listitem == 4) ShowPlayerDialog(playerid, DIALOG_BANK_TRANSFER_1, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Transferir", "{FFFFFF}Especifique o ID de uma conta bancária:", "Avançar", "<<<");
             if(listitem == 5) {
 			    if(GetPVarInt(playerid, "usingATM")) {
 				    SendErrorMessage(playerid, "Você não pode fazer isso utilizando um ATM, visite um banco.");
@@ -109,12 +109,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					return Bank_ShowMenu(playerid);
 				}
 
-				if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), GetPlayerNameEx(playerid))) {
+				if(Bank_GetOwner(CurrentAccountID[playerid]) != pInfo[playerid][pID]) {
                     SendErrorMessage(playerid, "Apenas o titular da conta pode realizar essa ação.");
 				    return Bank_ShowMenu(playerid);
 				}
 
-				ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "Digite a nova senha:", "Alterar", "<<<");
+				ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{FFFFFF}Digite a nova senha:", "Alterar", "<<<");
 			}
 
 			if(listitem == 7) {
@@ -123,7 +123,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					return Bank_ShowMenu(playerid);
 				}
 
-			    if(strcmp(Bank_GetOwner(CurrentAccountID[playerid]), GetPlayerNameEx(playerid))) {
+				if(Bank_GetOwner(CurrentAccountID[playerid]) != pInfo[playerid][pID]) {
 				    SendErrorMessage(playerid, "Apenas o titular da conta pode realizar essa ação.");
 				    return Bank_ShowMenu(playerid);
 				}
@@ -160,9 +160,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	    }
 	    case DIALOG_BANK_ACCOUNTS: {
             if(!response) return Bank_ShowMenu(playerid);
-
+			
             SetPVarInt(playerid, "bankLoginAccount", strval(inputtext));
-			ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "Senha da conta:", "Acessar", "Cancelar");
+			if(Bank_GetOwner(strval(inputtext)) != pInfo[playerid][pID]) {
+				ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
+				printf("Não é dono!");
+			} else {
+				new id = GetPVarInt(playerid, "bankLoginAccount");
+				mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d LIMIT 1", id);
+
+				mysql_tquery(DBConn, query, "OnBankAccountLogin", "ii", playerid, id);
+				printf("É dono!");
+			}
+
 	        return true;
 	    }
 	    case DIALOG_BANK_LOGIN_ID: {
@@ -170,7 +180,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_ID, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Entrar", "{E74C3C}Você deve digitar o ID de uma conta para prosseguir.\n\n{FFFFFF}ID da conta:", "Continuar", "Cancelar");
 
 			SetPVarInt(playerid, "bankLoginAccount", strval(inputtext));
-			ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "Senha da conta:", "Acessar", "Cancelar");
+			if(Bank_GetOwner(strval(inputtext)) != pInfo[playerid][pID]) {
+				ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
+				printf("Não é dono!");
+			} else {
+				new id = GetPVarInt(playerid, "bankLoginAccount");
+				mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d LIMIT 1", id);
+
+				mysql_tquery(DBConn, query, "OnBankAccountLogin", "ii", playerid, id);
+				printf("É dono!");
+			}
 			return true;
 	    }
 	    case DIALOG_BANK_LOGIN_PASS: {
@@ -248,10 +267,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Você não pode deixar esse valor em branco.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
 			if(strlen(inputtext) > 16) return ShowPlayerDialog(playerid, DIALOG_BANK_PASSWORD, DIALOG_STYLE_INPUT, "{F1C40F}Banco: {FFFFFF}Alterar senha", "{E74C3C}Sua nova senha não pode possuir mais de 16 caracteres.\n\n{FFFFFF}Digite uma nova senha:", "Alterar", "<<<");
-			printf("BANK-DEBUG: [1]");
 			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Password=md5('%e') WHERE ID=%d", inputtext, CurrentAccountID[playerid]);
 			mysql_tquery(DBConn, query, "OnBankAccountPassChange", "is", playerid, inputtext);
-			printf("BANK-DEBUG: [2]");
 	        return true;
 	    }
         case DIALOG_BANK_REMOVE: {
@@ -259,8 +276,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             if(CurrentAccountID[playerid] == -1) return true;
 
             new amount = Bank_GetBalance(CurrentAccountID[playerid]);
-			mysql_format(DBConn, query, sizeof(query), "UPDATE bank_accounts SET Disabled=1 WHERE ID=%d", CurrentAccountID[playerid]);
+			
+			new Cache:result;
+			mysql_format(DBConn, query, sizeof query, "DELETE FROM `bank_accounts` WHERE `ID` = '%d';", CurrentAccountID[playerid]);
+			result = mysql_query(DBConn, query);
+
 			mysql_tquery(DBConn, query, "OnBankAccountDeleted", "iii", playerid, CurrentAccountID[playerid], amount);
+
+			cache_delete(result);
             return true;
         }
         case DIALOG_BANK_LOGS: {

@@ -1,5 +1,4 @@
 /******************************** [ATM] ********************************/
-
 CMD:criaratm(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 3 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
@@ -76,7 +75,6 @@ CMD:removeratm(playerid, params[]) {
 }
 
 /******************************** [BANCÁRIOS] ********************************/
-
 CMD:criarbancario(playerid, params[]) {
 	if(GetPlayerAdmin(playerid) < 3 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 

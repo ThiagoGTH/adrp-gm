@@ -1,7 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
 hook OnGameModeInit(){
-
     for(new i; i < MAX_BANKERS; i++) {
         BankerData[i][bankerActorID] = -1;
 
@@ -23,7 +22,7 @@ hook OnGameModeInit(){
     return true;
 }
 
-hook OnFilterScriptExit() {
+hook OnGameModeExit() {
 	foreach(new i : Bankers) {
 	    if(IsValidActor(BankerData[i][bankerActorID])) DestroyActor(BankerData[i][bankerActorID]);
 	}
@@ -164,15 +163,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
             SetPVarInt(playerid, "bankLoginAccount", strval(inputtext));
 			if(Bank_GetOwner(strval(inputtext)) != pInfo[playerid][pID]) {
 				ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
-				printf("Não é dono!");
 			} else {
 				new id = GetPVarInt(playerid, "bankLoginAccount");
 				mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d LIMIT 1", id);
 
 				mysql_tquery(DBConn, query, "OnBankAccountLogin", "ii", playerid, id);
-				printf("É dono!");
 			}
-
 	        return true;
 	    }
 	    case DIALOG_BANK_LOGIN_ID: {
@@ -182,18 +178,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			SetPVarInt(playerid, "bankLoginAccount", strval(inputtext));
 			if(Bank_GetOwner(strval(inputtext)) != pInfo[playerid][pID]) {
 				ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
-				printf("Não é dono!");
 			} else {
 				new id = GetPVarInt(playerid, "bankLoginAccount");
 				mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID, LastAccess, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE ID=%d LIMIT 1", id);
 
 				mysql_tquery(DBConn, query, "OnBankAccountLogin", "ii", playerid, id);
-				printf("É dono!");
 			}
 			return true;
 	    }
 	    case DIALOG_BANK_LOGIN_PASS: {
 	        if(!response) return Bank_ShowMenu(playerid);
+
 	        if(isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BANK_LOGIN_PASS, DIALOG_STYLE_PASSWORD, "{F1C40F}Banco: {FFFFFF}Entrar", "{E74C3C}Você deve digitar uma senha para prosseguir.\n\n{FFFFFF}Senha da conta:", "Acessar", "Cancelar");
 
 			new id = GetPVarInt(playerid, "bankLoginAccount");
@@ -344,5 +339,5 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 	    }
 	}
 
-	return 1;
+	return true;
 }

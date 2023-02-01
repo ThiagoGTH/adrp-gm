@@ -116,7 +116,7 @@ Bank_ShowLogMenu(playerid) {
 	return true;
 }
 
-Bank_AccountCount(playerid) { // ATEN플O
+Bank_AccountCount(playerid) {
 	new Cache: find_accounts;
 	mysql_format(DBConn, query, sizeof(query), "SELECT null FROM bank_accounts WHERE Character_ID='%d'", GetPlayerSQLID(playerid));
 	find_accounts = mysql_query(DBConn, query);
@@ -137,7 +137,7 @@ Bank_GetBalance(accountid) {
 	return balance;
 }
 
-Bank_GetOwner(accountid) { // ATEN플O
+Bank_GetOwner(accountid) {
 	new characterID, Cache: get_owner;
 
 	mysql_format(DBConn, query, sizeof(query), "SELECT Character_ID FROM bank_accounts WHERE ID=%d", accountid);
@@ -146,18 +146,10 @@ Bank_GetOwner(accountid) { // ATEN플O
 	cache_get_value_name_int(0, "Character_ID", characterID);
 	cache_delete(get_owner);
 	printf("Character_ID: %d/accontid %d", characterID, accountid);
-
-	/*mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `ID` = '%d';", characterID);
-    get_owner = mysql_query(DBConn, query);
-    cache_get_value_name(0, "name", characterName);
-	printf("CharacterName: %s", characterName);*/
-
-	
-
 	return characterID;
 }
 
-Bank_ListAccounts(playerid) { // ATEN플O
+Bank_ListAccounts(playerid) {
     new Cache: get_accounts;
     mysql_format(DBConn, query, sizeof(query), "SELECT ID, Balance, LastAccess, FROM_UNIXTIME(CreatedOn, '%%d/%%m/%%Y %%H:%%i:%%s') AS Created, FROM_UNIXTIME(LastAccess, '%%d/%%m/%%Y %%H:%%i:%%s') AS Last FROM bank_accounts WHERE Character_ID='%d' ORDER BY CreatedOn DESC", GetPlayerSQLID(playerid));
 	get_accounts = mysql_query(DBConn, query);

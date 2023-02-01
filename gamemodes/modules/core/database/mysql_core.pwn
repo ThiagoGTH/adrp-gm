@@ -1413,7 +1413,7 @@ void:CheckGaragesTable() {
 
 void:CheckBankTable() {
 	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bankers` (\
-	  `ID` int(11) NOT NULL AUTO_INCREMENT,\
+	  `ID` int(11) NOT NULL,\
 	  `Skin` smallint(3) NOT NULL,\
 	  `PosX` float NOT NULL,\
 	  `PosY` float NOT NULL,\
@@ -1429,7 +1429,7 @@ void:CheckBankTable() {
     logCreate(99998, logString, 5);
 
     mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_atms` (\
-	  `ID` int(11) NOT NULL AUTO_INCREMENT,\
+	  `ID` int(11) NOT NULL,\
 	  `PosX` float NOT NULL,\
 	  `PosY` float NOT NULL,\
 	  `PosZ` float NOT NULL,\
@@ -1450,7 +1450,6 @@ void:CheckBankTable() {
 	  `Balance` int(11) NOT NULL,\
 	  `CreatedOn` int(11) NOT NULL,\
 	  `LastAccess` int(11) NOT NULL,\
-	  `Disabled` smallint(1) NOT NULL,\
 	  PRIMARY KEY  (`ID`)\
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 

@@ -363,8 +363,8 @@ public DCC_OnMessageCreate(DCC_Message:message) {
 
                 bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]s[128]", authorid, parameters);
                 DCC_CreatePrivateChannel(author, "PrivateMessageRegister", "ss", parameters, password);
-                new DCC_Role:role1 = DCC_FindRoleById("1013523617985867776");
-                new DCC_Role:role2 = DCC_FindRoleById("1014711599325511880");
+                new DCC_Role:role1 = DCC_FindRoleById("1070220594479640586");
+                new DCC_Role:role2 = DCC_FindRoleById("1070390636060098692");
                 DCC_AddGuildMemberRole(guildCA, author, role1);
                 DCC_AddGuildMemberRole(guild, author, role2);
 
@@ -462,7 +462,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 DCC_SendChannelEmbedMessage(channel, embed);
                 cache_delete(result);       
                 return true;
-            } else if(!strcmp(command, "!deletarconta", true)){
+            } else if(!strcmp(command, "!deletarconta", true)) {
                 new text[256], footer[128], title[64], user_id, username[24], Cache:result;
 
                 cache_delete(result);

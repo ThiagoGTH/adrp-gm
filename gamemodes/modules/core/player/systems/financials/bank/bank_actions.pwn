@@ -117,14 +117,11 @@ public OnBankAccountTransferDone(playerid, id, amount) {
 forward OnBankAccountPassChange(playerid, newpass[]);
 public OnBankAccountPassChange(playerid, newpass[]) {
 	if(cache_affected_rows() > 0) {
-		printf("BANK-DEBUG: [4]");
 	    va_SendClientMessage(playerid, COLOR_YELLOW, "BANCO: {FFFFFF}Você alterou a senha da conta para %s.", newpass);
 
         format(logString, sizeof(logString), "%s (%s) alterou a senha da conta bancária %d ", pNome(playerid), GetPlayerUserEx(playerid), CurrentAccountID[playerid]);
 	    logCreate(playerid, logString, 26);
-		printf("BANK-DEBUG: [5]");
         Bank_SaveLog(playerid, TYPE_PASSCHANGE, CurrentAccountID[playerid], -1, 0);
-		printf("BANK-DEBUG: [6]");
 	} else SendErrorMessage(playerid, "A sua alteração de senha falhou.");
 
     Bank_ShowMenu(playerid);

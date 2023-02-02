@@ -20,14 +20,6 @@ GetMoney(playerid) {
 	return (pInfo[playerid][pMoney]);
 }
 
-GiveBankMoney(playerid, amount) {
-	pInfo[playerid][pBank] += amount;
-	return true;
-}
-
-GetBankMoney(playerid) {
-	return (pInfo[playerid][pBank]);
-}
 /*
 hook native GivePlayerMoney(playerid, money) {
     pInfo[playerid][pMoney] += money;

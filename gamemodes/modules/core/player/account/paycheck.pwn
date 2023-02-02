@@ -64,14 +64,12 @@ CMD:doublepd(playerid, params[]){
 
 CMD:pegarpaycheck(playerid, params[]){
     if(SERVER_TYPE == 2) {
-        
         if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
         pInfo[playerid][pPlayingMinutes] = 60;
         Payday(playerid);
         format(logString, sizeof(logString), "%s (%s) pegou um paycheck antecipado.", pNome(playerid), GetPlayerUserEx(playerid));
         logCreate(playerid, logString, 1);
     } else {
-        
         if(GetPlayerAdmin(playerid) < 1335) return SendClientMessage(playerid, COLOR_WHITE, "ERRO: Desculpe, este comando não existe. Digite {89B9D9}/ajuda{FFFFFF} ou {89B9D9}/sos{FFFFFF} se você precisar de ajuda.");
         pInfo[playerid][pPlayingMinutes] = 60;
         Payday(playerid);
@@ -82,7 +80,6 @@ CMD:pegarpaycheck(playerid, params[]){
 }
 
 CMD:setarhoras(playerid, params[]){
-	
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     pInfo[playerid][pPlayingMinutes] = 59;
@@ -94,7 +91,7 @@ forward MinuteCheck();
 public MinuteCheck(){
 	foreach (new i : Player){
 		if (IsPlayerMinimized(i)) pInfo[i][pAFKCount] ++;
-        if (pInfo[i][pAFKCount] < 31) pInfo[i][pPlayingMinutes] ++;
+        if (pInfo[i][pAFKCount] < 121) pInfo[i][pPlayingMinutes] ++;
         if (GetPlayerAdmin(i) > 0) {
             if (pInfo[i][pAFKCount] < 10 && pInfo[i][pAdminDuty]) uInfo[i][uDutyTime] ++;
             else if (pInfo[i][pAFKCount] > 9) {
@@ -116,6 +113,7 @@ Payday(i) {
     if (pInfo[i][pPlayingMinutes] < 60) return true;
     pInfo[i][pPlayingMinutes] = 0;
     pInfo[i][pPlayingHours] ++;
+    uInfo[i][uHours] ++;
 
     new 
         pTotal = 0, 
@@ -125,74 +123,58 @@ Payday(i) {
         pVehTaxes = 0,
         pBizTaxes = 0,
         pHouseTaxes = 0,
-        pTaxes = 0,
-        pFinalPayment = 0;
+        pTaxesFinal = 0;
 
     new 
-        pBankBefore = pInfo[i][pBank], 
-        pSavingsBefore = pInfo[i][pSavings],
-        pSavingsAfter = 0,
-        pSavings2 = 0;
+        pPaymentBefore = pInfo[i][pPayment], 
+        pTaxesBefore = pInfo[i][pTaxes];
 
     // Jogador irá receber NEWBIE_PAYMENT até a 30° hora jogada, após isso receberá o NORMAL_PAYMENT
-    if (pInfo[i][pPlayingHours] < 30) {
+    if (uInfo[i][uHours] < 30) {
         pBasePayment = NEWBIE_PAYMENT;
         SendServerMessage(i, "Você recebeu a ajuda incial de $%s.", FormatNumber(NEWBIE_PAYMENT));
-    } else if (pInfo[i][pPlayingHours] == 30) {
+    } else if (uInfo[i][uHours] == 30) {
         pBasePayment = NEWBIE_PAYMENT;
         SendServerMessage(i, "Você terminou o período de ajuda inicial, agora seu salário base será de $%s.", FormatNumber(NORMAL_PAYMENT));
     } else pBasePayment = NORMAL_PAYMENT;
 
     //pVehTaxes = Car_GetCount(i)*25;
 
-    // Juros da poupança dependendo do status premium do jogador
-    if (pInfo[i][pDonator] == 2) pSavings2 = takeFees(pSavingsBefore, 3);
-    else if (pInfo[i][pDonator] == 3) pSavings2 = takeFees(pSavingsBefore, 4);
-    else pSavings2 = takeFees(pSavingsBefore, 2);
-    pSavingsAfter = pSavingsBefore + pSavings2;
-
     pTotal = pBasePayment + pBizPayment + pFacPayment;
-    pTaxes = pVehTaxes + pBizTaxes + pHouseTaxes;
-    pFinalPayment = pTotal - pTaxes;
+    pTaxesFinal = pVehTaxes + pBizTaxes + pHouseTaxes;
 
     // FUNÇÃO PARA DEFINIR OS GANHOS
-    if (pInfo[i][pSavings] <= MAX_SAVINGS){
+    if (pInfo[i][pTaxes] <= MAX_SAVINGS){
         if (DoublePaycheck == 0){
-            pInfo[i][pBank] += pFinalPayment;
-            pInfo[i][pSavings] += pSavingsAfter;
+            pInfo[i][pPayment] += pTotal;
+            pInfo[i][pTaxes] += pTaxesFinal;
         } else {
-            pInfo[i][pBank] += pFinalPayment*2;
-            pInfo[i][pSavings] += pSavingsAfter*2;
+            pInfo[i][pPayment] += pTotal*2;
+            pInfo[i][pTaxes] += pTaxesFinal;
         }
     }
 
-    va_SendClientMessage(i, -1, "|__________ PAYCHECK __________|");
-    va_SendClientMessage(i, COLOR_GREY, "Saldo anterior: $%s", FormatNumber(pBankBefore));
-    va_SendClientMessage(i, COLOR_GREY, "Salário bruto: $%s", FormatNumber(pTotal));
+    va_SendClientMessage(i, -1, "|_____________ PAYCHECK _____________|");
+
+    // TAXAS
     if (pVehTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa veicular: $%s", FormatNumber(pVehTaxes));
     if (pBizTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa empresarial: $%s", FormatNumber(pBizTaxes));
     if (pHouseTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa residencial: $%s", FormatNumber(pHouseTaxes));
-    if (pTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Total de taxas: $%s", FormatNumber(pTaxes));
-    va_SendClientMessage(i, COLOR_GREY, "Salário líquido: $%s", FormatNumber(pFinalPayment));
-    va_SendClientMessage(i, COLOR_GREY, "Saldo atual: $%s", FormatNumber(pInfo[i][pBank]));
-    if (pInfo[i][pSavings] > 0){
-        if (pInfo[i][pSavings] >= MAX_SAVINGS){
-            va_SendClientMessage(i, COLOR_GREY, "Saldo da poupança: $%s", FormatNumber(pSavingsBefore));
-            va_SendClientMessage(i, COLOR_GREY, "* Sua poupança atingiu o limite permitido pelo banco.");
-        } else {
-            va_SendClientMessage(i, COLOR_GREY, "Saldo anterior da poupança: $%s", FormatNumber(pSavingsBefore));
-            va_SendClientMessage(i, COLOR_GREY, "Juros da poupança: $%s", FormatNumber(pSavings2));
-            va_SendClientMessage(i, COLOR_GREY, "Saldo atual da poupança: $%s", FormatNumber(pInfo[i][pSavings]));
-        }
-    }
+    if(pTaxesFinal > 0) va_SendClientMessage(i, COLOR_GREY, "Total de taxas cobradas: $%s", FormatNumber(pTaxesFinal));
+    if(pTaxesBefore > 0) va_SendClientMessage(i, COLOR_GREY, "Você tem um total de taxas acumuladas em: $%s", FormatNumber(pInfo[i][pTaxes]));
+
+    // SALÁRIO
+    va_SendClientMessage(i, COLOR_GREY, "Salário recebido: $%s", FormatNumber(pTotal));
+    if(pPaymentBefore > 0) va_SendClientMessage(i, COLOR_GREY, "Você tem um pagamento acumulado de: $%s", FormatNumber(pInfo[i][pPayment]));
+    
     if (DoublePaycheck != 0) SendServerMessage(i, "Pagamento duplo ativado.");
     return true;
 }
 
-takeFees(value, fees){
+/*takeFees(value, fees){
     new number, number2, number3;
 	number = value/100;
 	number2 = number/10;
 	number3 = number2*fees;
     return number3;
-}
+}*/

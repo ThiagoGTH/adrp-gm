@@ -206,13 +206,15 @@ LoadUserTeams(playerid) {
 SaveUserInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "UPDATE users SET \
     `admin`     =   %d,           \
+    `hours`     =   %d,           \
     `redflag`   =   %d,           \
     `jailtime`  =   %d,           \
     `dutytime`  =   %d,           \
     `SOSAns`    =   %d,           \
-    `newbie`    =   %d             \
+    `newbie`    =   %d            \
     WHERE `ID`  =   %d", 
         uInfo[playerid][uAdmin], 
+        uInfo[playerid][uHours],
         uInfo[playerid][uRedFlag],
         uInfo[playerid][uJailed],
         uInfo[playerid][uDutyTime],

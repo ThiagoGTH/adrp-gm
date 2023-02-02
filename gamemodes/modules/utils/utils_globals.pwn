@@ -23,6 +23,7 @@ enum User_Data {
     uName[24],
     uPass[16],
     uAdmin,
+    uHours,
     // Teams
     uHeadFTeam, // Faction 
     uHeadPTeam, // Property
@@ -68,8 +69,8 @@ enum Player_Data {
 
     pMoney,
     pOldMoney,
-    pBank,
-    pSavings,
+    pPayment,
+    pTaxes,
     pSkin,
     pScore,
     pPlayingMinutes,
@@ -280,6 +281,7 @@ void:ResetUserData(playerid) {
 
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
+    uInfo        [playerid][uHours]       = 
     // Teams
     uInfo        [playerid][uHeadFTeam]   = 
     uInfo        [playerid][uHeadPTeam]   = 
@@ -328,8 +330,8 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pArmour]         = 0.00;
     pInfo   [playerid][pMoney]          =
     pInfo   [playerid][pOldMoney]       =
-    pInfo   [playerid][pBank]           =
-    pInfo   [playerid][pSavings]        =
+    pInfo   [playerid][pPayment]           =
+    pInfo   [playerid][pTaxes]        =
     pInfo   [playerid][pSkin]           =
     pInfo   [playerid][pScore]          = 0;
     pInfo   [playerid][pPositionX]      =

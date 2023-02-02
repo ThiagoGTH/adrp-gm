@@ -26,8 +26,8 @@ LoadCharacterInfoID(playerid, id) {
     cache_get_value_name_int(0, "hours", pInfo[playerid][pPlayingHours]);
 
     cache_get_value_name_int(0, "money", pInfo[playerid][pMoney]);
-    cache_get_value_name_int(0, "bank", pInfo[playerid][pBank]);
-    cache_get_value_name_int(0, "savings", pInfo[playerid][pSavings]);
+    cache_get_value_name_int(0, "payment", pInfo[playerid][pPayment]);
+    cache_get_value_name_int(0, "taxes", pInfo[playerid][pTaxes]);
 
     cache_get_value_name_int(0, "skin", pInfo[playerid][pSkin]);
     cache_get_value_name_int(0, "score", pInfo[playerid][pScore]);
@@ -314,8 +314,8 @@ SaveCharacterInfo(playerid) {
     `minutes` = '%d',\
     `hours` = '%d', \
     `money` = '%d', \
-    `bank` = '%d', \
-    `savings` = '%d', \
+    `payment` = '%d', \
+    `taxes` = '%d', \
     `skin` = '%d', \
     `health` = '%f', \
     `armour` = '%f',\
@@ -334,8 +334,8 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPlayingMinutes],
     pInfo[playerid][pPlayingHours],
     pInfo[playerid][pMoney], 
-    pInfo[playerid][pBank],
-    pInfo[playerid][pSavings],
+    pInfo[playerid][pPayment],
+    pInfo[playerid][pTaxes],
     pInfo[playerid][pSkin], 
     pInfo[playerid][pHealth], 
     pInfo[playerid][pArmour], 

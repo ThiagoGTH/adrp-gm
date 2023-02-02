@@ -224,7 +224,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     DCC_GetMessageAuthor(message, author);
     DCC_GetUserName(author, user_name);
     DCC_GetUserDiscriminator(author, discriminator);
-    new string[128];
+    new string[1024];
     DCC_GetMessageContent(message, string);
     new DCC_Guild:guild = DCC_FindGuildById("277264357824528397");
     new DCC_Guild:guildCA = DCC_FindGuildById("1000929204164112386");
@@ -529,7 +529,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     }
 
     if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")){
-        DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
+        DCC_SendChannelMessage(DCC_FindChannelById("1070218860202045442"), string);
         return true;
     }
 

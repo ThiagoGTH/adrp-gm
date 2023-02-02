@@ -95,6 +95,7 @@ void:CheckUserTable() {
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
     `admin` int NOT NULL DEFAULT 0,\
+    `hours` int NOT NULL DEFAULT 0,\
     `dutytime` int NOT NULL DEFAULT 0,\
     `SOSAns` int NOT NULL DEFAULT 0,\
     `APPAns` int NOT NULL DEFAULT 0,\
@@ -167,8 +168,8 @@ void:CheckPlayerTable() {
     `hours` int NOT NULL DEFAULT '0',\
     `origin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `money` int NOT NULL DEFAULT '0',\
-    `bank` int NOT NULL DEFAULT '0',\
-    `savings` int NOT NULL DEFAULT '0',\
+    `payment` int NOT NULL DEFAULT '0',\
+    `taxes` int NOT NULL DEFAULT '0',\
     `skin` int NOT NULL DEFAULT '23',\
     `health` float NOT NULL DEFAULT '100',\
     `armour` float NOT NULL DEFAULT '0',\

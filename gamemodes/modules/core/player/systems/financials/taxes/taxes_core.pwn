@@ -1,7 +1,7 @@
 Taxes_SaveLog(playerid, type, amount) {
 	if(type == TYPE_EMPTY) return true;
 
-    mysql_format(DBConn, query, sizeof(query), "INSERT INTO player_taxes SET character_id=%d, \
+    mysql_format(DBConn, query, sizeof(query), "INSERT INTO players_taxes SET character_id=%d, \
     type=%d, \
     amount=%d, \
     Date=UNIX_TIMESTAMP()", 
@@ -25,7 +25,7 @@ Taxes_ShowLogMenu(playerid) {
 
 Taxes_ShowLogs(playerid) {
 	new type = LogListType[playerid], Cache: taxes_logs;
-	mysql_format(DBConn, query, sizeof(query), "SELECT *, FROM_UNIXTIME(Date, '%%d/%%m/%%Y %%H:%%i:%%s') as ActionDate FROM player_taxes WHERE character_id=%d && type=%d ORDER BY Date DESC LIMIT %d, 15", GetPlayerSQLID(playerid), type, LogListPage[playerid] * 15);
+	mysql_format(DBConn, query, sizeof(query), "SELECT *, FROM_UNIXTIME(Date, '%%d/%%m/%%Y %%H:%%i:%%s') as ActionDate FROM players_taxes WHERE character_id=%d && type=%d ORDER BY Date DESC LIMIT %d, 15", GetPlayerSQLID(playerid), type, LogListPage[playerid] * 15);
 	taxes_logs = mysql_query(DBConn, query);
 
 	new rows = cache_num_rows();

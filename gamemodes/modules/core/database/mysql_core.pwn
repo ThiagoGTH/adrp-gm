@@ -401,6 +401,19 @@ void:CheckPlayerTable() {
     print("[DATABASE] Tabela players_config checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
     logCreate(99998, logString, 5);
+
+        mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `players_taxes` (\
+	  	`ID` int(11) NOT NULL auto_increment,\
+	  	`character_id` int(11) NOT NULL,\
+	  	`type` smallint(1) NOT NULL,\
+	  	`amount` int(11) NOT NULL,\
+	  	`date` int(11) NOT NULL,\
+	    PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela players_taxes checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_taxes checada com sucesso");
+    logCreate(99998, logString, 5);
 }
 
 void:CheckItemsTable() { 
@@ -1414,18 +1427,7 @@ void:CheckGaragesTable() {
 }
 
 void:CheckTaxesTable() {
-    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `player_taxes` (\
-	  	`ID` int(11) NOT NULL auto_increment,\
-	  	`character_id` int(11) NOT NULL,\
-	  	`type` smallint(1) NOT NULL,\
-	  	`amount` int(11) NOT NULL,\
-	  	`date` int(11) NOT NULL,\
-	    PRIMARY KEY  (`ID`)\
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-    print("[DATABASE] Tabela player_taxes checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_taxes checada com sucesso");
-    logCreate(99998, logString, 5);
 }
 
 void:CheckBankTable() {

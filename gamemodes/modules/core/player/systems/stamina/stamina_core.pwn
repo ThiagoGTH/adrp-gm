@@ -13,7 +13,7 @@ stock IsPlayerRunning(playerid) // Check if the player is running
     new keys, updown, leftright;
     GetPlayerKeys(playerid, keys, updown, leftright);
     if(keys & KEY_SPRINT && GetPlayerSpecialAction(playerid) != SPECIAL_ACTION_USEJETPACK) return true;
-    else return false;;
+    else return false;
 }
 
 
@@ -67,7 +67,7 @@ stock GivePlayerStamina(playerid, value) // Add / Subtract the player's current 
 		SetPVarInt(playerid, "Stamina", stamina);
 		return true;
 	}
-	else return false;;
+	else return false;
 }
 
 

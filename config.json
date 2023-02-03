@@ -75,7 +75,7 @@
     },
     "password": "",
     "discord": {
-        "bot_token": ""
+        "bot_token": "SAMP_DISCORD_BOT_TOKEN"
     },
     "pawn": {
         "legacy_plugins": [],

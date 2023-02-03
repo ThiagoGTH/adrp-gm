@@ -570,6 +570,11 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
+    if(!strcmp(channel_name, "bot-talk-staff", true) && channel == DCC_FindChannelById("1070712406470299648")){
+        DCC_SendChannelMessage(DCC_FindChannelById("992260559984672768"), string);
+        return true;
+    }
+
     if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("989305002952622110")){
         if(strfind(string, "!", true) == 0)//Comando identificado
         {

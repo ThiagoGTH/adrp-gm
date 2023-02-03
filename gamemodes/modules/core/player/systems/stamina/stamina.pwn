@@ -1,0 +1,1 @@
+#include "modules\core\player\systems\stamina\stamina_core.pwn"

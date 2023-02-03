@@ -156,7 +156,7 @@ LoadUserInfo(playerid) {
     cache_get_value_name(0, "username", uInfo[playerid][uName]);
     cache_get_value_name(0, "password", uInfo[playerid][uPass]);
     cache_get_value_name_int(0, "admin", uInfo[playerid][uAdmin]);
-    
+    cache_get_value_name_int(0, "hours", uInfo[playerid][uHours]);
     cache_get_value_name_int(0, "redflag", uInfo[playerid][uRedFlag]);
     cache_get_value_name_int(0, "newbie", uInfo[playerid][uNewbie]);
     cache_get_value_name_int(0, "SOSAns", uInfo[playerid][uSOSAns]);

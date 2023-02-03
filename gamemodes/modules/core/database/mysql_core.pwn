@@ -70,7 +70,6 @@ void:CheckTables() {
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
-    CheckTaxesTable();
     CheckBankTable();
     CheckStorageBusinessTable();
     CheckGaragesTable();
@@ -402,7 +401,7 @@ void:CheckPlayerTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
     logCreate(99998, logString, 5);
 
-        mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `players_taxes` (\
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `players_taxes` (\
 	  	`ID` int(11) NOT NULL auto_increment,\
 	  	`character_id` int(11) NOT NULL,\
 	  	`type` smallint(1) NOT NULL,\
@@ -1423,10 +1422,6 @@ void:CheckGaragesTable() {
     print("[DATABASE] Tabela garages checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela garages checada com sucesso");
     logCreate(99998, logString, 5);
-
-}
-
-void:CheckTaxesTable() {
 
 }
 

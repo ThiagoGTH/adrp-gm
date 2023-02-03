@@ -1412,6 +1412,21 @@ void:CheckGaragesTable() {
 
 }
 
+void:CheckTaxesTable() {
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `player_taxes` (\
+	  	`ID` int(11) NOT NULL auto_increment,\
+	  	`character_id` int(11) NOT NULL,\
+	  	`type` smallint(1) NOT NULL,\
+	  	`amount` int(11) NOT NULL,\
+	  	`date` int(11) NOT NULL,\
+	    PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela player_taxes checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
 void:CheckBankTable() {
 	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bankers` (\
 	  `ID` int(11) NOT NULL,\

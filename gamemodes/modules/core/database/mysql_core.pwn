@@ -70,6 +70,7 @@ void:CheckTables() {
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
+    CheckTaxesTable();
     CheckBankTable();
     CheckStorageBusinessTable();
     CheckGaragesTable();
@@ -1423,7 +1424,7 @@ void:CheckTaxesTable() {
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
     print("[DATABASE] Tabela player_taxes checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela player_taxes checada com sucesso");
     logCreate(99998, logString, 5);
 }
 

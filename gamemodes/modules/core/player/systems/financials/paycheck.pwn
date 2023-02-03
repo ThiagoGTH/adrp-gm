@@ -131,10 +131,8 @@ Payday(i) {
     // Jogador irá receber NEWBIE_PAYMENT até a 30° hora jogada, após isso receberá o NORMAL_PAYMENT
     if (uInfo[i][uHours] < 30) {
         pBasePayment = NEWBIE_PAYMENT;
-        SendServerMessage(i, "Você recebeu a ajuda incial de $%s.", FormatNumber(NEWBIE_PAYMENT));
     } else if (uInfo[i][uHours] == 30) {
         pBasePayment = NEWBIE_PAYMENT;
-        SendServerMessage(i, "Você terminou o período de ajuda inicial, agora seu salário base será de $%s.", FormatNumber(NORMAL_PAYMENT));
     } else pBasePayment = NORMAL_PAYMENT;
 
     pVehTaxes = Vehicle_GetCount(i)*25;
@@ -157,25 +155,28 @@ Payday(i) {
 
     // TAXAS
     if (pVehTaxes > 0) {
-        va_SendClientMessage(i, COLOR_GREY, "Taxa veicular: $%s", FormatNumber(pVehTaxes));
+        va_SendClientMessage(i, COLOR_GREY, "Taxa veicular: $%s.", FormatNumber(pVehTaxes));
         Taxes_SaveLog(i, TYPE_VEHICLE, pVehTaxes);
     }
     if (pHouseTaxes > 0) {
-        va_SendClientMessage(i, COLOR_GREY, "Taxa residencial: $%s", FormatNumber(pHouseTaxes));
+        va_SendClientMessage(i, COLOR_GREY, "Taxa residencial: $%s.", FormatNumber(pHouseTaxes));
         Taxes_SaveLog(i, TYPE_RESIDENTIAL, pHouseTaxes);
     } 
     if (pBizTaxes > 0) {
-        va_SendClientMessage(i, COLOR_GREY, "Taxa empresarial: $%s", FormatNumber(pBizTaxes));
+        va_SendClientMessage(i, COLOR_GREY, "Taxa empresarial: $%s.", FormatNumber(pBizTaxes));
         Taxes_SaveLog(i, TYPE_BUSINESS, pBizTaxes);
     }
 
-    if(pTaxesFinal > 0) va_SendClientMessage(i, COLOR_GREY, "Total de taxas cobradas: $%s", FormatNumber(pTaxesFinal));
-    if(pTaxesBefore > 0) va_SendClientMessage(i, COLOR_GREY, "Você tem um total de taxas acumuladas em: $%s", FormatNumber(pInfo[i][pTaxes]));
+    if(pTaxesFinal > 0) va_SendClientMessage(i, COLOR_GREY, "Total de taxas cobradas: $%s.", FormatNumber(pTaxesFinal));
+    if(pTaxesBefore > 0) va_SendClientMessage(i, COLOR_LIGHTRED, "Você tem um total de taxas acumuladas em: $%s.", FormatNumber(pInfo[i][pTaxes]));
 
     // SALÁRIO
-    va_SendClientMessage(i, COLOR_GREY, "Salário recebido: $%s", FormatNumber(pTotal));
-    if(pPaymentBefore > 0) va_SendClientMessage(i, COLOR_GREY, "Você tem um pagamento acumulado de: $%s", FormatNumber(pInfo[i][pPayment]));
+    va_SendClientMessage(i, COLOR_GREY, "Salário recebido: $%s.", FormatNumber(pTotal));
+    if(pPaymentBefore > 0) va_SendClientMessage(i, COLOR_LIGHTRED, "Você tem um pagamento acumulado de: $%s.", FormatNumber(pInfo[i][pPayment]));
     
+    if (uInfo[i][uHours] < 30) SendServerMessage(i, "Você recebeu a ajuda incial de $%s.", FormatNumber(NEWBIE_PAYMENT));
+    else if (uInfo[i][uHours] == 30) SendServerMessage(i, "Você terminou o período de ajuda inicial, agora seu salário base será de $%s.", FormatNumber(NORMAL_PAYMENT));
+
     if (DoublePaycheck != 0) SendServerMessage(i, "Pagamento duplo ativado.");
     return true;
 }

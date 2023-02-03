@@ -45,7 +45,6 @@ CMD:horas(playerid, params[]){
 }
 
 CMD:doublepd(playerid, params[]){
-	
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
 
     if (DoublePaycheck == 0){
@@ -138,7 +137,7 @@ Payday(i) {
         SendServerMessage(i, "Você terminou o período de ajuda inicial, agora seu salário base será de $%s.", FormatNumber(NORMAL_PAYMENT));
     } else pBasePayment = NORMAL_PAYMENT;
 
-    //pVehTaxes = Car_GetCount(i)*25;
+    pVehTaxes = Vehicle_GetCount(i)*25;
 
     pTotal = pBasePayment + pBizPayment + pFacPayment;
     pTaxesFinal = pVehTaxes + pBizTaxes + pHouseTaxes;

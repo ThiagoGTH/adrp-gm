@@ -926,3 +926,12 @@ public OnVehicleDeath(vehicleid, killerid) {
 
     return true;
 }
+
+Vehicle_GetCount(playerid) {
+    new count = 0;
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
+    new Cache:result = mysql_query(DBConn, query);
+    count = cache_num_rows();
+    cache_delete(result);
+	return count;
+}

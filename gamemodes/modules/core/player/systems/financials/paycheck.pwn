@@ -157,9 +157,19 @@ Payday(i) {
     va_SendClientMessage(i, -1, "|_____________ PAYCHECK _____________|");
 
     // TAXAS
-    if (pVehTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa veicular: $%s", FormatNumber(pVehTaxes));
-    if (pBizTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa empresarial: $%s", FormatNumber(pBizTaxes));
-    if (pHouseTaxes > 0) va_SendClientMessage(i, COLOR_GREY, "Taxa residencial: $%s", FormatNumber(pHouseTaxes));
+    if (pVehTaxes > 0) {
+        va_SendClientMessage(i, COLOR_GREY, "Taxa veicular: $%s", FormatNumber(pVehTaxes));
+        Taxes_SaveLog(i, TYPE_VEHICLE, pVehTaxes);
+    }
+    if (pHouseTaxes > 0) {
+        va_SendClientMessage(i, COLOR_GREY, "Taxa residencial: $%s", FormatNumber(pHouseTaxes));
+        Taxes_SaveLog(i, TYPE_RESIDENTIAL, pHouseTaxes);
+    } 
+    if (pBizTaxes > 0) {
+        va_SendClientMessage(i, COLOR_GREY, "Taxa empresarial: $%s", FormatNumber(pBizTaxes));
+        Taxes_SaveLog(i, TYPE_BUSINESS, pBizTaxes);
+    }
+
     if(pTaxesFinal > 0) va_SendClientMessage(i, COLOR_GREY, "Total de taxas cobradas: $%s", FormatNumber(pTaxesFinal));
     if(pTaxesBefore > 0) va_SendClientMessage(i, COLOR_GREY, "Você tem um total de taxas acumuladas em: $%s", FormatNumber(pInfo[i][pTaxes]));
 

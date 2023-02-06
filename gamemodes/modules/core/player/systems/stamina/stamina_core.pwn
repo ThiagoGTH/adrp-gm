@@ -1,23 +1,23 @@
 #include <YSI_Coding\y_hooks>
 
 hook OnPlayerConnect(playerid) {
-    SetPlayerMaxStamina(playerid, 20);
+    SetPlayerMaxStamina(playerid, 2000);
     //SetPlayerSetamina(playerid, GetPlayerMaxStamina(playerid));
 }
 
 hook OnPlayerSpawn(playerid) {
-    SetPlayerStamina(playerid, GetPlayerMaxStamina(playerid)); // but.. in this case just put it here. remember if you will change the player's maximum stamina.
+    SetPlayerStamina(playerid, GetPlayerMaxStamina(playerid));
 }
 
 
 hook OnPlayerUpdate(playerid) {
-	if(IsPlayerRunning(playerid)) GivePlayerStamina(playerid, -1); // if the player run, it subtracts the player's stamina
-	else if(GetPlayerStamina(playerid) < GetPlayerMaxStamina(playerid)) GivePlayerStamina(playerid, 1); // if the player is not running, he recovers the current stamina up to his MAX
+	if(IsPlayerRunning(playerid)) GivePlayerStamina(playerid, -1);
+	else if(GetPlayerStamina(playerid) < GetPlayerMaxStamina(playerid)) GivePlayerStamina(playerid, 1);
 	return true;
 }
 
 public OnPlayerStaminaOver(playerid) {
-	SetPlayerExhausted(playerid, true); // tired anim
+	SetPlayerExhausted(playerid, true);
 	return true;
 }
 
@@ -40,7 +40,7 @@ CMD:stamina(playerid, params[]) {
 
 	SetPlayerMaxStamina(playerid, amount);
 	SetPlayerStamina(playerid, GetPlayerMaxStamina(playerid));
-	SendServerMessage(playerid, "Você setou %s com %d de sprint.", pNome(playerid), amount);
+	SendServerMessage(playerid, "Você setou %s com %d de stamina.", pNome(playerid), amount);
 	return true;
 }
 

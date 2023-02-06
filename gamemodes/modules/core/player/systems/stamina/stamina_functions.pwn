@@ -1,13 +1,10 @@
 #if !defined STAMINA_DEFAULT_RECOVERYTIME
-	#define STAMINA_DEFAULT_RECOVERYTIME    (4000)
+	#define STAMINA_DEFAULT_RECOVERYTIME    (2000)
 #endif
 
-// [Callback]
 forward OnPlayerStaminaOver(playerid);
 
-// [Functions]
-stock IsPlayerRunning(playerid) // Check if the player is running
-{
+stock IsPlayerRunning(playerid) {
     if(!IsPlayerConnected(playerid) || IsPlayerInAnyVehicle(playerid) || IsPlayerExhausted(playerid)) return false;
 
     new KEY:keys, KEY:updown, KEY:leftright;
@@ -17,14 +14,13 @@ stock IsPlayerRunning(playerid) // Check if the player is running
 }
 
 
-stock IsPlayerExhausted(playerid) // Check if the player is exhausted
-{
+stock IsPlayerExhausted(playerid) {
 	if(GetPVarInt(playerid, "Exhausted") == 1) return true;
 	else return false;
 }
 
 forward SetPlayerExhausted(playerid, bool:Exhausted);
-public SetPlayerExhausted(playerid, bool:Exhausted) { // If true the player will do the recovery animation for the time set by #define STAMINA_DEFAULT_RECOVERYTIME
+public SetPlayerExhausted(playerid, bool:Exhausted) { 
 	if(Exhausted) {
 		TogglePlayerControllable(playerid, false);
 		TogglePlayerControllable(playerid, true);
@@ -39,24 +35,21 @@ public SetPlayerExhausted(playerid, bool:Exhausted) { // If true the player will
 }
 
 
-stock GetPlayerStamina(playerid) // Get the player's current stamina (integar)
-{
+stock GetPlayerStamina(playerid) {
 	if(!IsPlayerConnected(playerid) || GetPVarType(playerid, "MAX_Stamina") == PLAYER_VARTYPE_NONE) return -1;
 	new stamina = GetPVarInt(playerid, "Stamina");
 	return stamina;
 }
 
 
-stock GetPlayerMaxStamina(playerid) // Set the player's maximum stamina (integar)
-{
+stock GetPlayerMaxStamina(playerid) {
 	if(!IsPlayerConnected(playerid) || GetPVarType(playerid, "MAX_Stamina") == PLAYER_VARTYPE_NONE) return -1;
 	new maxstamina = GetPVarInt(playerid, "MAX_Stamina");
 	return maxstamina;
 }
 
 
-stock GivePlayerStamina(playerid, value) // Add / Subtract the player's current stamina (integar)
-{
+stock GivePlayerStamina(playerid, value) {
 	new stamina = GetPVarInt(playerid, "Stamina");
 
 	if(stamina == -1) return true;
@@ -71,8 +64,7 @@ stock GivePlayerStamina(playerid, value) // Add / Subtract the player's current 
 }
 
 
-stock GivePlayerMaxStamina(playerid, value) // Add / Subtract the player's MAX stamina (integar)
-{
+stock GivePlayerMaxStamina(playerid, value) {
 	new maxstamina = GetPVarInt(playerid, "MAX_Stamina"), stamina = GetPVarInt(playerid, "Stamina");
 
 	maxstamina = maxstamina + value;
@@ -84,8 +76,7 @@ stock GivePlayerMaxStamina(playerid, value) // Add / Subtract the player's MAX s
 }
 
 
-stock SetPlayerStamina(playerid, value) // Set the player's current stamina (the current stamina cannot be higher than MAX_STAMINA )
-{
+stock SetPlayerStamina(playerid, value) {
 	if(value > GetPVarInt(playerid, "MAX_Stamina")) return SetPVarInt(playerid, "Stamina", GetPVarInt(playerid, "MAX_Stamina")); //if the current stamina exceeds the MAX_STAMINA, set the player's MAX_STAMINA directly to avoid bugs
 	else if(value == 0) OnPlayerStaminaOver(playerid);
 	SetPVarInt(playerid, "Stamina", value);
@@ -93,8 +84,7 @@ stock SetPlayerStamina(playerid, value) // Set the player's current stamina (the
 }
 
 
-stock SetPlayerMaxStamina(playerid, value) //set the player's maximum stamina 
-{
+stock SetPlayerMaxStamina(playerid, value) {
 	new stamina = GetPlayerStamina(playerid), max_stamina = value;
 
 	if(stamina > max_stamina) stamina = max_stamina, SetPVarInt(playerid, "Stamina", stamina);
@@ -102,8 +92,7 @@ stock SetPlayerMaxStamina(playerid, value) //set the player's maximum stamina
 	return true;
 }
 
-stock GivePlayerSprintVelocity(playerid, Float:value) // multiply / divide the player's sprint speed (Recommended not to exceed 2.0 to avoid a bad result) (float)
-{
+stock GivePlayerSprintVelocity(playerid, Float:value) {
 	new Float:x, Float:y, Float:z;
 	if(value == 0.0) return true;
 	else if(value > 0.0) {
@@ -118,8 +107,7 @@ stock GivePlayerSprintVelocity(playerid, Float:value) // multiply / divide the p
 	return true;
 }
 
-stock GetPlayerSprintVelocity(playerid) // Get the player's sprint velocity (float)
-{
+stock GetPlayerSprintVelocity(playerid) {
 	if(!IsPlayerConnected(playerid)) return -1;
 	new Float:velocity = GetPVarFloat(playerid, "Sprint_Velocity");
 	return Float:velocity;

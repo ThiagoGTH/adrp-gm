@@ -73,6 +73,7 @@
 #include "modules\core\player\systems\properties\properties.pwn"
 
 #include "modules\core\player\systems\financials\financial.pwn"
+#include "modules\core\player\systems\drugs\drugs.pwn"
 
 // Phone System more Towers System
 //#include "modules\core\player\systems\phone\towers\towers.pwn" (in beta - desativado)

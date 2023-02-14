@@ -556,8 +556,20 @@ UpdatePlayerSpeedo(playerid) {
                     TextDrawShowForPlayer(playerid, TEXTDRAW_NOS_8);
             } 
         }*/             
-    } else ClosePlayerSpeedo(playerid);
+    } else if (pInfo[playerid][pHudSpeedo] == 2) {
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][0]);
+        format(str, sizeof(str), "~h~~g~%d ~b~MPH", fSpeed);
+        PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][0], str);
 
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][1]);
+        if(vInfo[carid][vFuel] > 5.0) {
+            format(str, sizeof(str), "~h~~g~%.0f ~b~GAL", vInfo[carid][vFuel]);
+            PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][1], str);
+        } else {
+            format(str, sizeof(str), "~h~~r~%.0f ~b~GAL", vInfo[carid][vFuel]);
+            PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][1], str);
+        }
+    } else ClosePlayerSpeedo(playerid);
     return true;
 }
 

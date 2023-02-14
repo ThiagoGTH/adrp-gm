@@ -55,8 +55,9 @@ Dialog:PLAYER_CONFIG(playerid, response, listitem, inputtext[]){
             case 4: { // Velocímetro
                 format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Velocímetro");
                 switch(pInfo[playerid][pHudSpeedo]){
-                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Desativado\nAtivado");
-                    case 1: format(string, sizeof(string), "Desativado\n{BBBBBB}>>> {FFFFFF}Ativado");
+                    case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Desativado\nModelo clássico\nModelo básico");
+                    case 1: format(string, sizeof(string), "Desativado\n{BBBBBB}>>> {FFFFFF}Modelo clássico\nModelo básico");
+                    case 2: format(string, sizeof(string), "Desativado\nModelo clássico\n{BBBBBB}>>> {FFFFFF}Modelo básico");
                 }
                 pInfo[playerid][pSetting] = 5;
                 Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
@@ -119,15 +120,16 @@ Dialog:PLAYER_CONFIG_OPTIONS(playerid, response, listitem, inputtext[]){
         else if (pInfo[playerid][pSetting] == 5) {
             format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Velocímetro");
             switch(listitem) {
-                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Desativado\nAtivado");
-                case 1: format(string, sizeof(string), "Desativado\n{BBBBBB}>>> {FFFFFF}Ativado");
+                case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Desativado\nModelo clássico\nModelo básico");
+                case 1: format(string, sizeof(string), "Desativado\n{BBBBBB}>>> {FFFFFF}Modelo clássico\nModelo básico");
+                case 2: format(string, sizeof(string), "Desativado\nModelo clássico\n{BBBBBB}>>> {FFFFFF}Modelo básico");
             }
 
             pInfo[playerid][pHudSpeedo] = listitem;
             Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
         }
     } else {
-        Dialog_Show(playerid, PLAYER_CONFIG, DIALOG_STYLE_LIST, "Gerenciamento do Usuário", "Help Center\nAvisos Administrativos\nNametag\nRenderização de Objetos\n", "Selecionar", "Fechar");
+        Dialog_Show(playerid, PLAYER_CONFIG, DIALOG_STYLE_LIST, "Gerenciamento do Usuário", "Help Center\nAvisos Administrativos\nNametag\nRenderização de Objetos\nVelocímetro", "Selecionar", "Fechar");
     }
     return true;
 }

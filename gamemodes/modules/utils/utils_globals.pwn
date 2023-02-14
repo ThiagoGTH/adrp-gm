@@ -84,7 +84,6 @@ enum Player_Data {
     pInterior,
 
     // OFFERS
-
     pGreetingOffer,
     pGreetingType,
 

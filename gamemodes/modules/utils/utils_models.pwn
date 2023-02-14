@@ -79,4 +79,5 @@ LoadInterfaces(){ // -9000 +
 	AddSimpleModelEx(0, -9001, "interface/interface.dff", "interface/notify.txd");
 	AddSimpleModelEx(0, -9002, "interface/interface.dff", "interface/news.txd");
 	AddSimpleModelEx(0, -9003, "interface/interface.dff", "interface/slot_machine.txd");
+	AddSimpleModelEx(0, -9004, "interface/interface.dff", "interface/speedo.txd");
 }

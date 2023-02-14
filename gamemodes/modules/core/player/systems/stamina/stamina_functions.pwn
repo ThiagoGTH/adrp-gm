@@ -91,24 +91,3 @@ stock SetPlayerMaxStamina(playerid, value) {
 	SetPVarInt(playerid, "MAX_Stamina", max_stamina);
 	return true;
 }
-
-stock GivePlayerSprintVelocity(playerid, Float:value) {
-	new Float:x, Float:y, Float:z;
-	if(value == 0.0) return true;
-	else if(value > 0.0) {
-		GetPlayerVelocity(playerid, x, y, z);
-		SetPlayerVelocity(playerid, x*value, y*value, z*value);
-	}
-	else if(value < 0.0) {
-		GetPlayerVelocity(playerid, x, y, z);
-		SetPlayerVelocity(playerid, x/value, y/value, z/value);
-	}
-	SetPVarFloat(playerid, "Sprint_Velocity", value);
-	return true;
-}
-
-stock GetPlayerSprintVelocity(playerid) {
-	if(!IsPlayerConnected(playerid)) return -1;
-	new Float:velocity = GetPVarFloat(playerid, "Sprint_Velocity");
-	return Float:velocity;
-}

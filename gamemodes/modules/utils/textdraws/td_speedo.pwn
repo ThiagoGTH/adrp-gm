@@ -557,16 +557,28 @@ UpdatePlayerSpeedo(playerid) {
             } 
         }*/             
     } else if (pInfo[playerid][pHudSpeedo] == 2) {
+        new 
+            vehicleid = GetPlayerVehicleID(playerid),
+            carid = VehicleGetID(vehicleid),
+            str[128];
+
+        static
+            Float:fSpeed;
+
+        fSpeed = GetVehicleSpeed(vehicleid);
+        new toconvert = floatround(fSpeed);
+        new Float:mph = toconvert*0.6;
+
         PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][0]);
-        format(str, sizeof(str), "~h~~g~%d ~b~MPH", fSpeed);
+        format(str, sizeof(str), "~h~~g~%0.0f ~b~MPH", mph);
         PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][0], str);
 
         PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][1]);
         if(vInfo[carid][vFuel] > 5.0) {
-            format(str, sizeof(str), "~h~~g~%.0f ~b~GAL", vInfo[carid][vFuel]);
+            format(str, sizeof(str), "~h~~g~%.0f ~b~%%", vInfo[carid][vFuel]);
             PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][1], str);
         } else {
-            format(str, sizeof(str), "~h~~r~%.0f ~b~GAL", vInfo[carid][vFuel]);
+            format(str, sizeof(str), "~h~~r~%.0f ~b~%%", vInfo[carid][vFuel]);
             PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][1], str);
         }
     } else ClosePlayerSpeedo(playerid);

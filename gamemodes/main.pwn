@@ -63,7 +63,7 @@
 #include "modules\core\player\systems\pets\pets.pwn"
 #include "modules\core\player\systems\investment\investment.pwn"
 #include "modules\core\player\systems\factions\factions.pwn"
-#include "modules\core\player\systems\stamina\stamina.pwn"
+#include "modules\core\player\systems\status\status.pwn"
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\animations\animations.pwn"
 #include "modules\core\player\systems\elevators\elevator.pwn"

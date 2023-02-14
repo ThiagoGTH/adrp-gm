@@ -90,6 +90,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerInventory(playerid);
     LoadPlayerPet(playerid);
     LoadPlayerConfig(playerid);
+    LoadPlayerStatus(playerid);
     LoadPlayerFaction(playerid);
     SpawnSelectedCharacter(playerid);
 }
@@ -192,6 +193,18 @@ LoadPlayerConfig(playerid){
     
     cache_delete(result);
     return true;
+}
+
+LoadPlayerStatus(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_status WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "hunger", pInfo[playerid][pHunger]);
+    cache_get_value_name_int(0, "thirst", pInfo[playerid][pThirst]);
+    cache_get_value_name_int(0, "stamina", pInfo[playerid][pStamina]);
+    cache_get_value_name_int(0, "max_stamina", pInfo[playerid][pMaxStamina]);
+    cache_get_value_name_int(0, "addiction", pInfo[playerid][pAddiction]);
+    
+    cache_delete(result);
 }
 
 LoadPlayerFaction(playerid){
@@ -361,6 +374,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerInventory(playerid);
     SavePlayerPet(playerid);
     SavePlayerConfig(playerid);
+    SavePlayerStatus(playerid);
     SavePlayerFaction(playerid);
     return true;
 }
@@ -545,6 +559,24 @@ SavePlayerConfig(playerid) {
     pInfo[playerid][pNametagType],
     pInfo[playerid][pRenderObjects],
     pInfo[playerid][pHudSpeedo],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerStatus(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_status SET \
+    `hunger` = '%d', \
+    `thirst` = '%d', \
+    `stamina` = '%d', \
+    `max_stamina` = '%d', \
+    `addiction` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pHunger],
+    pInfo[playerid][pThirst],
+    pInfo[playerid][pStamina],
+    pInfo[playerid][pMaxStamina],
+    pInfo[playerid][pAddiction],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
     return true;

@@ -402,6 +402,20 @@ void:CheckPlayerTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
     logCreate(99998, logString, 5);
 
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_status` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `hunger` int NOT NULL DEFAULT '100',\
+    `thirst` int NOT NULL DEFAULT '100',\
+    `stamina` int NOT NULL DEFAULT '1500',\
+    `max_stamina` int NOT NULL DEFAULT '1500',\
+    `addiction` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_config checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
+    logCreate(99998, logString, 5);
+
     mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `players_taxes` (\
 	  	`ID` int(11) NOT NULL auto_increment,\
 	  	`character_id` int(11) NOT NULL,\

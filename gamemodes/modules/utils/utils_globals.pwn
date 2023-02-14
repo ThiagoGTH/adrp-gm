@@ -129,6 +129,15 @@ enum Player_Data {
     pRenderObjects,
     pHudSpeedo,
     
+    // PLAYERS STATUS
+    pHunger,
+    pHungerTime,
+    pThirst,
+    pThirstTime,
+    pStamina,
+    pMaxStamina,
+    pAddiction,
+
     pAllowRespawn,
     pLastKnockout,
     pTotalDamages,
@@ -393,6 +402,14 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pNametagType] =
     pInfo[playerid][pRenderObjects] =
     pInfo[playerid][pHudSpeedo] = 0;
+
+    pInfo[playerid][pHunger] =
+    pInfo[playerid][pHungerTime] =
+    pInfo[playerid][pThirst] =
+    pInfo[playerid][pThirstTime] =
+    pInfo[playerid][pStamina] =
+    pInfo[playerid][pMaxStamina] =
+    pInfo[playerid][pAddiction] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;

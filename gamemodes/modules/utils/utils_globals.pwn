@@ -197,6 +197,8 @@ enum Player_Data {
     pCharacterActor,
     pCharacterFinalizing,
 
+    PlayerText:pTextdraws[10],
+
     pSpectating,
 
     pEditingVeh,

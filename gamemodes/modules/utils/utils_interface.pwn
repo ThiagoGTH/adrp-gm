@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks> 
 
 #include "modules\utils\textdraws\td_footer.pwn"
+#include "modules\utils\textdraws\td_ptextdraws.pwn"
 #include "modules\utils\textdraws\td_banned.pwn"
 #include "modules\utils\textdraws\td_news.pwn"
 #include "modules\utils\textdraws\td_characters.pwn"
@@ -10,6 +11,7 @@
 hook OnPlayerConnect(playerid) {
     CreateLoginTextdraws(playerid);
     CreateCharacterTextdraws(playerid);
+    CreatePlayerTextdraws(playerid);
     CreateNewsTextdraws(playerid);
     CreateNotifyTextdraws(playerid);
     return true;

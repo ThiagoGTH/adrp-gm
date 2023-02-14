@@ -338,3 +338,4 @@ DestroySpeedoTextdraws() {
     TextDrawDestroy(TEXTDRAW_LOCKED_ICON);
     return true;
 }
+

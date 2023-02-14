@@ -935,3 +935,8 @@ Vehicle_GetCount(playerid) {
     cache_delete(result);
 	return count;
 }
+
+hook OnGameModeInit(){
+    LoadVehicles();
+    return true;
+}

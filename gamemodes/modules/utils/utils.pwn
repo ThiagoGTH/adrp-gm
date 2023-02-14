@@ -8,6 +8,7 @@
 #include "modules\utils\utils_discord.pwn"
 #include "modules\utils\utils_logs.pwn"
 #include "modules\utils\utils_models.pwn"
+#include "modules\core\player\systems\vehicles\vehicle_utils.pwn"
 #include "modules\utils\utils_interface.pwn"
 #include "modules\utils\utils_init.pwn"
 #include "modules\utils\utils_anim.pwn"

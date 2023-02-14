@@ -29,6 +29,9 @@ hook OnPlayerDisconnect(playerid, reason) {
 hook OnGameModeInit() {
     CreateBannedTextdraws();
     CreateSpeedometerTextdraws();
+
+    // TIMERS
+    SetTimer("SpeedoCheck", 100, true);
     return true;
 }
 

@@ -128,6 +128,7 @@ enum Player_Data {
     pTogAdmin,
     pNametagType,
     pRenderObjects,
+    pHudSpeedo,
     
     pAllowRespawn,
     pLastKnockout,
@@ -391,7 +392,8 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pTogFaction] =
     pInfo[playerid][pTogAdmin] =
     pInfo[playerid][pNametagType] =
-    pInfo[playerid][pRenderObjects] = 0;
+    pInfo[playerid][pRenderObjects] =
+    pInfo[playerid][pHudSpeedo] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;

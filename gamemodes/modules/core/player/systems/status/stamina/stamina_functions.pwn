@@ -58,6 +58,7 @@ stock GivePlayerStamina(playerid, value) {
 	{
 		stamina = stamina+value;
 		SetPVarInt(playerid, "Stamina", stamina);
+		pInfo[playerid][pStamina] = stamina;
 		return true;
 	}
 	else return false;
@@ -69,6 +70,7 @@ stock GivePlayerMaxStamina(playerid, value) {
 
 	maxstamina = maxstamina + value;
 	SetPVarInt(playerid, "MAX_Stamina", maxstamina);
+	pInfo[playerid][pStamina] = maxstamina;
 
 	if(stamina > maxstamina)stamina = maxstamina, SetPVarInt(playerid, "Stamina", stamina);
 
@@ -80,6 +82,7 @@ stock SetPlayerStamina(playerid, value) {
 	if(value > GetPVarInt(playerid, "MAX_Stamina")) return SetPVarInt(playerid, "Stamina", GetPVarInt(playerid, "MAX_Stamina")); //if the current stamina exceeds the MAX_STAMINA, set the player's MAX_STAMINA directly to avoid bugs
 	else if(value == 0) OnPlayerStaminaOver(playerid);
 	SetPVarInt(playerid, "Stamina", value);
+	pInfo[playerid][pStamina] = value;
 	return true;
 }
 
@@ -89,5 +92,6 @@ stock SetPlayerMaxStamina(playerid, value) {
 
 	if(stamina > max_stamina) stamina = max_stamina, SetPVarInt(playerid, "Stamina", stamina);
 	SetPVarInt(playerid, "MAX_Stamina", max_stamina);
+	pInfo[playerid][pStamina] = max_stamina;
 	return true;
 }

@@ -74,6 +74,9 @@ LoadCharacterInfoID(playerid, id) {
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_config (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_status (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
     }
@@ -203,7 +206,9 @@ LoadPlayerStatus(playerid){
     cache_get_value_name_int(0, "stamina", pInfo[playerid][pStamina]);
     cache_get_value_name_int(0, "max_stamina", pInfo[playerid][pMaxStamina]);
     cache_get_value_name_int(0, "addiction", pInfo[playerid][pAddiction]);
-    
+
+    SetPlayerMaxStamina(playerid, pInfo[playerid][pMaxStamina]);
+    SetPlayerStamina(playerid, GetPlayerMaxStamina(playerid));
     cache_delete(result);
 }
 

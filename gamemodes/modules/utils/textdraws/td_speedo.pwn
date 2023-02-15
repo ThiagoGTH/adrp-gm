@@ -596,7 +596,7 @@ public SpeedoCheck() {
 
 		    }
             if (IsSpeedoVehicle(vehicleid)) UpdatePlayerSpeedo(i);
-        }
+        } else ClosePlayerSpeedo(i);
     }
 }
 

@@ -6,6 +6,7 @@
 #include "modules\utils\textdraws\td_news.pwn"
 #include "modules\utils\textdraws\td_characters.pwn"
 #include "modules\utils\textdraws\td_speedo.pwn"
+#include "modules\utils\textdraws\td_hud.pwn"
 #include "modules\utils\textdraws\td_interface.pwn"
 
 hook OnPlayerConnect(playerid) {
@@ -29,9 +30,11 @@ hook OnPlayerDisconnect(playerid, reason) {
 hook OnGameModeInit() {
     CreateBannedTextdraws();
     CreateSpeedometerTextdraws();
+    CreateHUDTextdraws();
 
     // TIMERS
     SetTimer("SpeedoCheck", 100, true);
+    SetTimer("HUDCheck", 1000, true);
     return true;
 }
 

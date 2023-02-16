@@ -1,8 +1,9 @@
-new Text:TEXTDRAW_FOOD, Text:TEXTDRAW_THIRST, Text:TEXTDRAW_TACKLE;
+new Text:TEXTDRAW_FOOD, Text:TEXTDRAW_THIRST, Text:TEXTDRAW_TACKLE, Text:TEXTDRAW_BREATH;
 
 #define FOOD    "mdl-9005:hunger"
 #define THIRST  "mdl-9005:thirst"
 #define TACKLE    "mdl-9005:tackle"
+#define BREATH    "mdl-9005:breath"
 
 CreateHUDTextdraws() {
     TEXTDRAW_FOOD = TextDrawCreate(565.0, 270.0, FOOD);
@@ -29,18 +30,17 @@ CreateHUDTextdraws() {
     TextDrawSetShadow(TEXTDRAW_THIRST, 0);
     TextDrawSetSelectable(TEXTDRAW_THIRST, false);
 
-    TEXTDRAW_TACKLE = TextDrawCreate(565.0, 273.0+50.0, TACKLE);
-    TextDrawLetterSize(TEXTDRAW_TACKLE, 0.401600, 0.526132);
-    TextDrawTextSize(TEXTDRAW_TACKLE, 120.000000, 120.000000);
-    TextDrawColour(TEXTDRAW_TACKLE, -1);
-    TextDrawFont(TEXTDRAW_TACKLE, TEXT_DRAW_FONT_SPRITE_DRAW);
-    TextDrawUseBox(TEXTDRAW_TACKLE, true);
-    TextDrawSetOutline(TEXTDRAW_TACKLE, 0);
-    TextDrawBackgroundColour(TEXTDRAW_TACKLE, -1);
-    TextDrawSetProportional(TEXTDRAW_TACKLE, false);
-    TextDrawSetShadow(TEXTDRAW_TACKLE, 0);
-    TextDrawSetSelectable(TEXTDRAW_TACKLE, false);
-    TextDrawShowForPlayer(0, TEXTDRAW_TACKLE);
+    TEXTDRAW_BREATH = TextDrawCreate(565.0, 273.0+50.0, BREATH);
+    TextDrawLetterSize(TEXTDRAW_BREATH, 0.401600, 0.526132);
+    TextDrawTextSize(TEXTDRAW_BREATH, 120.000000, 120.000000);
+    TextDrawColour(TEXTDRAW_BREATH, -1);
+    TextDrawFont(TEXTDRAW_BREATH, TEXT_DRAW_FONT_SPRITE_DRAW);
+    TextDrawUseBox(TEXTDRAW_BREATH, true);
+    TextDrawSetOutline(TEXTDRAW_BREATH, 0);
+    TextDrawBackgroundColour(TEXTDRAW_BREATH, -1);
+    TextDrawSetProportional(TEXTDRAW_BREATH, false);
+    TextDrawSetShadow(TEXTDRAW_BREATH, 0);
+    TextDrawSetSelectable(TEXTDRAW_BREATH, false);
 }
 
 ClosePlayerHUD(playerid) {
@@ -48,8 +48,8 @@ ClosePlayerHUD(playerid) {
     TextDrawHideForPlayer(playerid, TEXTDRAW_FOOD);
     PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][4]);
     TextDrawHideForPlayer(playerid, TEXTDRAW_THIRST);
-    //PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][5]);
-    TextDrawHideForPlayer(playerid, TEXTDRAW_TACKLE);
+    PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][5]);
+    TextDrawHideForPlayer(playerid, TEXTDRAW_BREATH);
     return true;
 }
 
@@ -66,11 +66,16 @@ HungerThristHUD(playerid) {
         PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][4]);
         PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][4], string);
         TextDrawShowForPlayer(playerid, TEXTDRAW_THIRST);
+        // ESTAMINA
+        new stamina = (GetPlayerStamina(playerid) * 100) / GetPlayerMaxStamina(playerid);
+        format(string, sizeof(string), "%d%%", stamina);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][5]);
+        PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][5], string);
+        TextDrawShowForPlayer(playerid, TEXTDRAW_BREATH);
         // TACKLE
-        if(pInfo[playerid][pTackleMode]) {
-            //PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][5]);
-            TextDrawShowForPlayer(playerid, TEXTDRAW_TACKLE);
-        }
+        /*if(pInfo[playerid][pTackleMode]) {
+            
+        }*/
     //} else ClosePlayerHUD(playerid);
 
     return true;

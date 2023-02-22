@@ -54,7 +54,7 @@ Logo após, você vai buildar o projeto, rodando `sampctl p build`. Agora, tenha
 
 E então, é só você rodar `sampctl p run` e o gamemode vai rodar.
 
-Qualquer outra dúvida, entrem em contato com o Thiago.
+Qualquer outra dúvida, entrem em contato com Philipe ou Thiago.
 
 ## Erros comuns & Possiveis Solucoes
 

@@ -83,13 +83,10 @@ enum Player_Data {
     pVirtualWorld,
     pInterior,
 
-<<<<<<< HEAD
     // OFFERS
     pGreetingOffer,
     pGreetingType,
 
-=======
->>>>>>> main
     // INFOS
     pGender,
     pEthnicity,

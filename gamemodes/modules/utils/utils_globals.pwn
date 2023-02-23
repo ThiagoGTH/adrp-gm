@@ -84,15 +84,12 @@ enum Player_Data {
     pInterior,
 
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
     // OFFERS
     pGreetingOffer,
     pGreetingType,
 
 =======
 >>>>>>> main
->>>>>>> development
     // INFOS
     pGender,
     pEthnicity,

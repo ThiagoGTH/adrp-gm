@@ -392,11 +392,11 @@ SetIntDefaultBusiness(businessID) {
     new bint[128];
 	switch(bInfo[businessID][bType]) {
         case 1: {
-        	bInfo[businessID][bExitPos][0] = -27.3074;
-        	bInfo[businessID][bExitPos][1] = -30.8741;
-        	bInfo[businessID][bExitPos][2] = 1003.5573;
-        	bInfo[businessID][bExitPos][3] = 0.0000;
-			bInfo[businessID][interiorEntry] = 4;
+        	bInfo[businessID][bExitPos][0] = -25.8473;
+        	bInfo[businessID][bExitPos][1] = -188.2483;
+        	bInfo[businessID][bExitPos][2] = 1003.5469;
+        	bInfo[businessID][bExitPos][3] = 1.1815;
+			bInfo[businessID][interiorEntry] = 17;
         }
         case 2: {
         	bInfo[businessID][bExitPos][0] = 316.3963;
@@ -428,11 +428,11 @@ SetIntDefaultBusiness(businessID) {
 			bInfo[businessID][interiorEntry] = 3;
 		}
 		case 6: {
-			bInfo[businessID][bExitPos][0] = -27.3383;
-   			bInfo[businessID][bExitPos][1] = -57.6909;
-		   	bInfo[businessID][bExitPos][2] = 1003.5469;
-      		bInfo[businessID][bExitPos][3] = 0.0000;
-			bInfo[businessID][interiorEntry] = 6;
+			bInfo[businessID][bExitPos][0] = 6.1172;
+   			bInfo[businessID][bExitPos][1] = -31.4720;
+		   	bInfo[businessID][bExitPos][2] = 1003.5494;
+      		bInfo[businessID][bExitPos][3] = 5.0982;
+			bInfo[businessID][interiorEntry] = 10;
 		}
 		case 7: {
 			bInfo[businessID][bExitPos][0] = -2240.4954;
@@ -569,7 +569,7 @@ Dialog:ManagerPageStorage(playerid, response, listitem, inputtext[]) {
             BusinessProductList(playerid);
         }
         else {
-            printf("%d solciita edição de produto do produto %s", playerid, inputtext);   
+            printf("%d solicita edição de produto do produto %s", playerid, inputtext);   
         }
     }
     return 1;

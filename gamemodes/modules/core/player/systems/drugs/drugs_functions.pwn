@@ -37,37 +37,6 @@ Player_PlantCount(playerid) {
 	return count;
 }
 
-ShowDrugStats(playerid)
-{
-	new dialog[350];
-	format(
-		dialog,
-		sizeof(dialog),
-		"Drugs\t%s grams\n\
-		Seeds\t%s\n\
-		Used Drugs\t%s grams\n\
-		Planted Drugs\t%s\n\
-		Harvested Plants\t%s (%s grams)\n\
-		Drugs Given\t%s grams\n\
-		Drugs Received\t%s grams\n\
-		Drugs Bought\t%s grams {2ECC71}(%s)\n\
-		Drugs Sold\t%s grams {2ECC71}(%s)\n\
-		{FF0000}Reset Stats",
-		formatInt(PlayerDrugData[playerid][Drugs], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][Seeds], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalUsed], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalPlanted], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalHarvestedPlants], .iCurrencyChar = '\0'), formatInt(PlayerDrugData[playerid][TotalHarvestedGrams], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalGiven], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalReceived], .iCurrencyChar = '\0'),
-		formatInt(PlayerDrugData[playerid][TotalBought], .iCurrencyChar = '\0'), formatInt(PlayerDrugData[playerid][TotalBoughtPrice]),
-		formatInt(PlayerDrugData[playerid][TotalSold], .iCurrencyChar = '\0'), formatInt(PlayerDrugData[playerid][TotalSoldPrice])
-	);
-	
-	ShowPlayerDialog(playerid, DIALOG_DRUG_STATS, DIALOG_STYLE_TABLIST, "Drug Stats", dialog, "Choose", "Close");
-	return 1;
-}
-
 Player_Init(playerid) {
 	new emptydata[E_PLAYER];
 	PlayerDrugData[playerid] = emptydata;

@@ -60,7 +60,6 @@
 #include "modules\core\player\systems\death\damages.pwn"
 #include "modules\core\player\systems\items\items.pwn"
 #include "modules\core\player\systems\vehicles\vehicles.pwn"
-#include "modules\core\player\systems\houses\houses.pwn"
 #include "modules\core\player\systems\pets\pets.pwn"
 #include "modules\core\player\systems\investment\investment.pwn"
 #include "modules\core\player\systems\factions\factions.pwn"

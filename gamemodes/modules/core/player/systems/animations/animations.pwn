@@ -1,4 +1,16 @@
 #include <YSI_Coding\y_hooks>
 
 #include "modules\core\player\systems\animations\a_test.pwn"
+#include "modules\core\player\systems\animations\a_header.pwn"
 #include "modules\core\player\systems\animations\shitpuke.pwn"
+#include "modules\core\player\systems\animations\action_anims.pwn"
+#include "modules\core\player\systems\animations\bartender_anims.pwn"
+#include "modules\core\player\systems\animations\dance_anims.pwn"
+#include "modules\core\player\systems\animations\drug_anims.pwn"
+#include "modules\core\player\systems\animations\erotic_anims.pwn"
+#include "modules\core\player\systems\animations\gang_anims.pwn"
+#include "modules\core\player\systems\animations\greeting_anims.pwn"
+#include "modules\core\player\systems\animations\offense_anims.pwn"
+#include "modules\core\player\systems\animations\position_anims.pwn"
+#include "modules\core\player\systems\animations\signaling_anims.pwn"
+#include "modules\core\player\systems\animations\vehicle_anims.pwn"

@@ -54,7 +54,7 @@ Logo após, vocÃª vai buildar o projeto, rodando `sampctl p build`. Agora, tenha 
 
 E então, Ã© só vocÃª rodar `sampctl p run` e o gamemode vai rodar.
 
-Qualquer outra dÃºvida, entrem em contato com Philipe ou Thiago.
+Qualquer outra dÃºvida, entrem em contato com o Philipe ou o Thiago.
 
 ## Erros comuns & Possiveis Solucoes
 
@@ -71,4 +71,4 @@ servidor rodando 0.3.7-R2
 Checa `pawn.json` na pasta raiz do gamemode se tÃ¡ a versão 0.3DL, e lembre-se de rodar `sampctl p ensure`.
 
 NOTA: 
-Lembre-se de que sempre que vocÃª passar por um erro no setup, venha atÃ© aqui e adicione ele com a sua soluÃ§Ã£o como **PossÃ­vel SoluÃ§Ã£o** para o prÃ³ximo desenvolvedor que lidar com ele.
+Lembre-se de que sempre que vocÃª passar por um erro no setup, venha atÃ© aqui e adicione ele com a sua solução como **PossÃ­vel Solução** para o próximo desenvolvedor que lidar com ele.

@@ -166,8 +166,13 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			GetPlayerFacingAngle(damagedid, pInfo[damagedid][pPositionA]);
         
 			SetSpawnInfo(damagedid, NO_TEAM, pInfo[damagedid][pSkin], 
-			pInfo[damagedid][pPositionX], pInfo[damagedid][pPositionY], pInfo[damagedid][pPositionZ], pInfo[damagedid][pPositionA],
-			0, 0, 0, 0, 0, 0);
+				pInfo[damagedid][pPositionX], 
+				pInfo[damagedid][pPositionY], 
+				pInfo[damagedid][pPositionZ], 
+				pInfo[damagedid][pPositionA],
+				WEAPON_FIST, 0, 
+				WEAPON_FIST, 0, 
+				WEAPON_FIST, 0);
 
 			SetPlayerSkin(damagedid, GetPlayerSkin(damagedid) > 0 ? (pInfo[damagedid][pSkin]) : (23));
 			SpawnPlayer(damagedid);
@@ -197,10 +202,10 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 			TogglePlayerControllable(damagedid, false);
 			if(IsPlayerInAnyVehicle(damagedid)){
 				TogglePlayerControllable(damagedid, false);
-				ApplyAnimation(damagedid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
+				ApplyAnimation(damagedid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
 			} else {
 				TogglePlayerControllable(damagedid, true);
-				ApplyAnimation(damagedid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(damagedid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
 			}
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
@@ -244,8 +249,8 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 				UpdateDynamic3DTextLabelText(pInfo[damagedid][pBrutallyTag], COLOR_LIGHTRED, textstring);
 			}
 
-			if(IsPlayerInAnyVehicle(damagedid)) ApplyAnimation(damagedid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0, true);
-			else ApplyAnimation(damagedid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0, true);
+			if(IsPlayerInAnyVehicle(damagedid)) ApplyAnimation(damagedid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0);
+			else ApplyAnimation(damagedid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0);
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s com o status de morto com um(a) %s.", pNome(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), pNome(damagedid), ReturnWeaponName(weaponid));
 			logCreate(damagedid, logString, 6);
@@ -362,10 +367,10 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 			TogglePlayerControllable(playerid, false);
 			if(IsPlayerInAnyVehicle(playerid)){
 				TogglePlayerControllable(playerid, false);
-				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
 			} else {
 				TogglePlayerControllable(playerid, true);
-				ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
 			}
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s brutalmente ferido com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
@@ -409,8 +414,8 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
 				UpdateDynamic3DTextLabelText(pInfo[playerid][pBrutallyTag], COLOR_LIGHTRED, textstring);
 			}
 
-			if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0, true);
-			else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0, true);
+			if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0);
+			else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0);
 			
 			format(logString, sizeof(logString), "%s (%s) [%s] deixou %s com o status de morto com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
 			logCreate(playerid, logString, 6);
@@ -431,7 +436,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
                     {
                         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s falhou em tentar derrubar %s.", pNome(playerid), pNome(damagedid));
 
-                        ApplyAnimation(playerid,"ped","EV_dive", 4.0, false, true, true, false, 0, true);
+                        ApplyAnimation(playerid,"ped","EV_dive", 4.0, false, true, true, false, 0);
                         pInfo[playerid][pTackleTimer] = gettime() + 10;
 
                         format(logString, sizeof(logString), "%s (%s) falhou em derrubar %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
@@ -441,9 +446,9 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
                     {
                         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
                         
-                        ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, false, true, true, true, 0, true);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
+                        ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, false, true, true, true, 0);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
 
                         pInfo[playerid][pTackleTimer] = gettime() + 10;
 
@@ -466,14 +471,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
     if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){
 	    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
 			if(newkeys & KEY_JUMP && !(oldkeys & KEY_JUMP)){
-				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
-				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0);
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.1, false, true, true, true, 0);
 			}
 		}
 	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
 			if(newkeys & KEY_SPRINT && !(oldkeys & KEY_SPRINT)){
-				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
-				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0, true);
+				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0);
+				ApplyAnimation(playerid, "ped", "FALL_collapse", 4.1, false, true, true, true, 0);
 			}
 		}
 	}
@@ -500,8 +505,8 @@ forward DeathTimer(); public DeathTimer(){
                         pInfo[i][pDead] = 1;
                         pInfo[i][pDeadTime] = 60;
 
-                        if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
-                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
+                        if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
+                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
                     }
                     else if(pInfo[i][pDead]){
                         if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;

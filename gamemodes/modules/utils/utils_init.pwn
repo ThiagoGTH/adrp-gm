@@ -11,6 +11,7 @@ public OnGamemodeLoad() {
             format(rcon, sizeof(rcon), "password 0");
             SendRconCommand(rcon);
 
+            printf("\n\n\n\n\n");
             print("O servidor iniciou no local host.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou mo local host.");
             logCreate(99998, logString, 5);
@@ -20,35 +21,54 @@ public OnGamemodeLoad() {
     else if(SERVER_TYPE == 1){
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
 		else{
-            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Beta | Open.MP");
 		    SendRconCommand(rcon);
-            format(rcon, sizeof(rcon), "password closedalpha2022");
+            format(rcon, sizeof(rcon), "password closedbeta023");
             SendRconCommand(rcon);
             ServerStatus(1);
 
+            printf("\n\n\n\n\n");
+            print("O servidor iniciou em modo Closed Beta.");
+            format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Beta.");
+            logCreate(99998, logString, 5);
+        } 
+	}
+    else if(SERVER_TYPE == 2){
+		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Manutenção | Open.MP");
+		else{
+            format(rcon, sizeof(rcon), "hostname Advanced Roleplay - Closed Alpha | Open.MP");
+		    SendRconCommand(rcon);
+            format(rcon, sizeof(rcon), "password closedalpha2023");
+            SendRconCommand(rcon);
+            ServerStatus(1);
+
+            printf("\n\n\n\n\n");
             print("O servidor iniciou em modo Closed Alpha.");
             format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo Closed Alpha.");
             logCreate(99998, logString, 5);
         } 
 	}
 
-	else if(SERVER_TYPE == 2) {
+	else if(SERVER_TYPE == 3) {
 		format(rcon, sizeof(rcon), "hostname Advanced Sandbox | Open.MP");
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password sandbox333");
         SendRconCommand(rcon);
 
+        printf("\n\n\n\n\n");
+        print("O servidor iniciou em modo Sandbox.");
         format(logString, sizeof(logString), "SYSTEM: O servidor iniciou no modo Sandbox.");
         logCreate(99998, logString, 5);
 	}
 
-	else if(SERVER_TYPE == 3) {
+	else if(SERVER_TYPE == 4) {
 		if(SERVER_MAINTENANCE) format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Manutenção");
 		else format(rcon, sizeof(rcon), "hostname Advanced Roleplay | Open.MP");
 		SendRconCommand(rcon);
         format(rcon, sizeof(rcon), "password adrpthiagao");
         SendRconCommand(rcon);
 
+        printf("\n\n\n\n\n");
         format(logString, sizeof(logString), "SYSTEM: O servidor iniciou em modo normal.");
         logCreate(99998, logString, 5);
 	}
@@ -57,14 +77,8 @@ public OnGamemodeLoad() {
 }
 
 public OnGameModeInit() {
-    CA_Init();
+    print("\n\n\n\nIniciando os serviços...");
 
-    MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
-    new Float:pos;
-    if (MapAndreas_FindAverageZ(20.001, 25.006, pos)) {
-        // Found position - position saved in 'pos'
-    }
-    
     new gmText[128];
     format(gmText, sizeof(gmText), "AD:RP v%s", VERSIONING);
 
@@ -83,13 +97,19 @@ public OnGameModeInit() {
     //Streamer_ToggleChunkStream(0);
     DisableInteriorEnterExits();
     EnableStuntBonusForAll(false);
-    ShowPlayerMarkers(0);
+    ShowPlayerMarkers(PLAYER_MARKERS_MODE_OFF);
 	ManualVehicleEngineAndLights();
 	EnableVehicleFriendlyFire();
     DisableCrashDetectLongCall();
 
-    print("Iniciando os serviços...");
-    OnGamemodeLoad();
+    CA_Init();
+    MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
+    new Float:pos;
+    if (MapAndreas_FindAverageZ(20.001, 25.006, pos)) {
+        // Found position - position saved in 'pos'
+    }
+    
+    SetTimer("OnGamemodeLoad", 60000, false); 
     return true;
 }
 

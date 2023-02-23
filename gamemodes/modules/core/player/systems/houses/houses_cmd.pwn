@@ -1,13 +1,18 @@
 #include <YSI_Coding\y_hooks>
 
 CMD:criarcasa(playerid, params[]) {
+<<<<<<< HEAD
     new price, address[256], Float:pos[4];
+=======
+    new price, address[256];
+>>>>>>> development
 
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if (sscanf(params, "ds[256]", price, address))
         return SendSyntaxMessage(playerid, "/criarcasa [preço] [endereço único]");
     
+<<<<<<< HEAD
     if(price < 1000)
         return SendErrorMessage(playerid, "O preço da casa deve ser maior do que $1000.");
 
@@ -34,6 +39,9 @@ CMD:criarcasa(playerid, params[]) {
     SendServerMessage(playerid, "Você criou a casa de ID %d no endereço: '%s'. ($%s)", id, address, FormatNumber(price));
     format(logString, sizeof(logString), "%s (%s) criou a casa de ID %d no endereço: '%s'. ($%s)", pNome(playerid), GetPlayerUserEx(playerid), id, address,  FormatNumber(price));
 	logCreate(playerid, logString, 13);
+=======
+    CreateHouse(playerid, price, address);
+>>>>>>> development
 
     return 1;
 }
@@ -46,6 +54,7 @@ CMD:deletarcasa(playerid, params[]) {
 	if (sscanf(params, "d", id))
         return SendSyntaxMessage(playerid, "/deletarcasa [id]");
 
+<<<<<<< HEAD
     if(!IsValidHouse(id))
         return SendErrorMessage(playerid, "Esse ID de casa não existe.");
 
@@ -60,6 +69,9 @@ CMD:deletarcasa(playerid, params[]) {
 
     new dummyReset[E_HOUSE_DATA];
     hInfo[id] = dummyReset;
+=======
+    DeleteHouse(playerid, id);
+>>>>>>> development
 
     return 1;
 }
@@ -79,6 +91,7 @@ CMD:editarcasa(playerid, params[]) {
 
     // Editar a entrada (localização)
     if(!strcmp(option, "entrada", true)) {
+<<<<<<< HEAD
         new Float:pos[4];
         GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
         GetPlayerFacingAngle(playerid, pos[3]);
@@ -96,11 +109,15 @@ CMD:editarcasa(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) editou a entrada da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
 	    logCreate(playerid, logString, 13);
+=======
+        SetEntryHouse(playerid, id);
+>>>>>>> development
         return 1;
     }
 
     // Editar o interior (lado de dentro)
     if(!strcmp(option, "interior", true)) {
+<<<<<<< HEAD
         new Float:pos[4];
         GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
         GetPlayerFacingAngle(playerid, pos[3]);
@@ -117,12 +134,16 @@ CMD:editarcasa(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) editou o interior da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id);
 	    logCreate(playerid, logString, 13);
+=======
+        SetInteriorHouse(playerid, id);
+>>>>>>> development
         return 1;
     }
 
     // Editar o preço
     if(!strcmp(option, "preco", true) || !strcmp(option, "preço", true)) {
         new houseValue = strval(value);
+<<<<<<< HEAD
         
         if(!houseValue || houseValue < 0)
             return SendErrorMessage(playerid, "Você precisa especificar um valor que seja maior do que zero para ser o preço da casa.");
@@ -134,11 +155,15 @@ CMD:editarcasa(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) editou o preço da casa de ID %d para $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(houseValue));
 	    logCreate(playerid, logString, 13);
+=======
+        SetPriceHouse(playerid, id, houseValue);        
+>>>>>>> development
         return 1;
     }
 
     //Editar o endereço
     if(!strcmp(option, "endereco", true) || !strcmp(option, "endereço", true)) {
+<<<<<<< HEAD
         if(!strlen(value))
             return SendErrorMessage(playerid, "Você precisa especificar um endereço para setar.");
 
@@ -149,6 +174,9 @@ CMD:editarcasa(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) setou o endereço da casa de ID %d como '%s'.", pNome(playerid), GetPlayerUserEx(playerid), id, value);
 	    logCreate(playerid, logString, 13);
+=======
+        SetAddressHouse(playerid, id, value);
+>>>>>>> development
         return 1;
     }
 
@@ -165,6 +193,7 @@ CMD:ircasa(playerid, params[]) {
     if(sscanf(params, "d", id))
         return SendSyntaxMessage(playerid, "/ircasa [id]");
 
+<<<<<<< HEAD
     if(!hInfo[id][hID])
         return SendErrorMessage(playerid, "Esse ID de casa não existe.");
 
@@ -174,18 +203,26 @@ CMD:ircasa(playerid, params[]) {
     SetPlayerFacingAngle(playerid, hInfo[id][hEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a casa de ID %d.", id);
+=======
+    TeleportHouse(playerid, id);
+>>>>>>> development
 
     return 1;
 }
 
 CMD:criarcasaentrada(playerid, params[]) {
+<<<<<<< HEAD
     new houseID, Float:pos[4];
+=======
+    new houseID;
+>>>>>>> development
 
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
 	if(sscanf(params, "d", houseID))
         return SendSyntaxMessage(playerid, "/criarcasaentrada [id da casa]");
 
+<<<<<<< HEAD
     if(!IsValidHouse(houseID))
         return SendErrorMessage(playerid, "Este ID de casa não existe.");
 
@@ -208,6 +245,9 @@ CMD:criarcasaentrada(playerid, params[]) {
 
     format(logString, sizeof(logString), "%s (%s) criou a entrada secundária de ID %d para a casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
 	logCreate(playerid, logString, 14);
+=======
+    CreateHouseSecondEntry(playerid, houseID);
+>>>>>>> development
 
     return 1;
 }
@@ -227,6 +267,7 @@ CMD:editarcasaentrada(playerid, params[]) {
 
     // Editar a entrada (localização)
     if(!strcmp(option, "entrada", true)) {
+<<<<<<< HEAD
         new Float:pos[4];
         GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
         GetPlayerFacingAngle(playerid, pos[3]);
@@ -244,11 +285,15 @@ CMD:editarcasaentrada(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) editou a entrada secundária de ID %d da casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
 	    logCreate(playerid, logString, 14);
+=======
+        SetSecondEntry(playerid, id);
+>>>>>>> development
         return 1;
     }
 
     // Editar o interior (lado de dentro)
     if(!strcmp(option, "interior", true)) {
+<<<<<<< HEAD
         new Float:pos[4];
         GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
         GetPlayerFacingAngle(playerid, pos[3]);
@@ -265,6 +310,9 @@ CMD:editarcasaentrada(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) editou o interior da entrada secundária de ID %d (casa de ID %d).", pNome(playerid), GetPlayerUserEx(playerid), id, sInfo[id][sHouseID]);
 	    logCreate(playerid, logString, 14);
+=======
+        SetInteriorSecondEntry(playerid, id);
+>>>>>>> development
         return 1;
     }
 
@@ -275,6 +323,7 @@ CMD:editarcasaentrada(playerid, params[]) {
         if(!houseID)
             return SendSyntaxMessage(playerid, "/editarentrada [id da entrada] [casa] [novo id da casa]");
 
+<<<<<<< HEAD
         if(!IsValidHouse(houseID))
             return SendErrorMessage(playerid, "Este ID de casa não existe.");
 
@@ -286,6 +335,9 @@ CMD:editarcasaentrada(playerid, params[]) {
 
         format(logString, sizeof(logString), "%s (%s) vinculou a entrada de ID %d à casa de ID %d.", pNome(playerid), GetPlayerUserEx(playerid), id, houseID);
 	    logCreate(playerid, logString, 14);
+=======
+        SetEntryNewHouse(playerid, id, houseID);
+>>>>>>> development
         return 1;
     }
 
@@ -314,7 +366,10 @@ CMD:deletarcasaentrada(playerid, params[]) {
 
     new dummyReset[E_SECOND_ENTRIES_DATA];
     sInfo[id] = dummyReset;
+<<<<<<< HEAD
 
+=======
+>>>>>>> development
     return 1;
 }
 
@@ -326,6 +381,7 @@ CMD:ircasaentrada(playerid, params[]) {
     if(sscanf(params, "d", id))
         return SendSyntaxMessage(playerid, "/ircasaentrada [id]");
 
+<<<<<<< HEAD
     if(!IsValidEntry(id))
         return SendErrorMessage(playerid, "Esse ID de entrada não existe.");
 
@@ -335,6 +391,9 @@ CMD:ircasaentrada(playerid, params[]) {
     SetPlayerFacingAngle(playerid, sInfo[id][sEntryPos][3]);
 
     SendServerMessage(playerid, "Você teleportou até a entrada de ID %d.", id);
+=======
+    TeleportSecondEntry(playerid, id);
+>>>>>>> development
 
     return 1;
 }
@@ -427,6 +486,7 @@ CMD:alugavel(playerid) {
     if(!houseID)
         return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
     
+<<<<<<< HEAD
     if(hInfo[houseID][hOwner] != pInfo[playerid][pID])
         return SendErrorMessage(playerid, "Essa casa não é sua.");
     
@@ -441,6 +501,9 @@ CMD:alugavel(playerid) {
         }
     }
 
+=======
+    SetRentableHouse(playerid, houseID);
+>>>>>>> development
     return 1;
 }
 
@@ -469,6 +532,25 @@ CMD:precoaluguel(playerid, params[]) {
     return 1;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:gamemodes/modules/core/player/systems/properties/houses/houses_cmd.pwn
+//Comando de campainha
+CMD:campainha(playerid, params[]) {
+    new 
+        houseID = GetNearestHouseEntry(playerid);
+
+	if(!houseID)
+        return SendErrorMessage(playerid, "Você não está próximo à nenhuma casa.");
+    
+    foreach (new i : Player) if (IsHouseInside(i) == houseID) {
+            SendClientMessage(i, COLOR_PURPLE, "** Você pode ouvir a campainha tocar.");
+            PlayerPlaySound(i, 20801, 0, 0, 0);
+    }
+	PlayerPlaySound(playerid, 20801, 0, 0, 0);
+    SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s toca a campainha da casa.", pNome(playerid));
+=======
+>>>>>>> development
 CMD:entrar(playerid) {
     new houseID = GetNearestHouseEntry(playerid), entryID = GetNearestHouseSecondEntry(playerid);
     
@@ -526,5 +608,9 @@ CMD:sair(playerid) {
         return 1;
     }
 
+<<<<<<< HEAD
+=======
+>>>>>>> main:gamemodes/modules/core/player/systems/houses/houses_cmd.pwn
+>>>>>>> development
     return 1;
 }

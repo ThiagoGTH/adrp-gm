@@ -877,7 +877,7 @@ Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
 	return true;
 }*/
 
-hook OnPlayerStateChange(playerid, newstate, oldstate) {
+hook OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
     if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
         new vehicleid = GetPlayerVehicleID(playerid);
         new id = VehicleGetID(vehicleid);
@@ -924,5 +924,19 @@ public OnVehicleDeath(vehicleid, killerid) {
 
     ResetVehicleObjects(vehicleid);
 
+    return true;
+}
+
+Vehicle_GetCount(playerid) {
+    new count = 0;
+	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
+    new Cache:result = mysql_query(DBConn, query);
+    count = cache_num_rows();
+    cache_delete(result);
+	return count;
+}
+
+hook OnGameModeInit(){
+    LoadVehicles();
     return true;
 }

@@ -172,7 +172,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
                 pInfo[playerid][pDead] = 1;
                 SendClientMessageToAll(-1, "[3] MORTO -> pDead = 1");
                 if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0);
-                else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+                else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
             }
         } else {
             if(armour > 0.0 && armourhit){
@@ -248,8 +248,8 @@ hook OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
                         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
                         
                         ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, 0, 1, 1, 1, 0, 1);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, 0, 1, 1, 1, 0, 1);
-                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, 0, 1, 1, 1, 0, 1);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
+                        ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
 
                         pInfo[playerid][pTackleTimer] = gettime() + 10;
 
@@ -275,7 +275,7 @@ hook OnPlayerDeath(playerid, killerid, reason){
         pInfo[playerid][pInjured] = true;
 
         if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0);
-        else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+        else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
 
         pInfo[playerid][pDeadTime] = 120;
         pInfo[playerid][pInjured] = 1;
@@ -297,7 +297,7 @@ hook OnPlayerDeath(playerid, killerid, reason){
         pInfo[playerid][pDeadTime] = 60;
 
         if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0, 1);
-		else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+		else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
     }
     return true;
 }
@@ -340,7 +340,14 @@ public SetPlayerSpawn(playerid)
 			if(pInfo[playerid][pArmour]) SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
 
 			
-            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA], -1, -1, -1, -1, -1, -1);
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             SendClientMessageToAll(-1, "[9] SET SPAWN");
@@ -385,7 +392,7 @@ public DeathTimer(){
                         pInfo[i][pDeadTime] = 60;
 
                         if(IsPlayerInAnyVehicle(i)) ApplyAnimation(i, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0, 1);
-                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+                        else ApplyAnimation(i, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
                     }
                     else if(pInfo[i][pDead]){
                         if(pInfo[i][pDeadTime] > 0) pInfo[i][pDeadTime]--;
@@ -434,7 +441,7 @@ MakePlayerSuffer(playerid){
         if(pInfo[playerid][pBrutallyWounded])
         {
             if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, 0, 0, 0, 1, 0, 1);
-            else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+            else ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
 
             SendClientMessageToAll(-1, "[14] BRUTALLY WOUNDED");
 
@@ -458,13 +465,13 @@ MakePlayerSuffer(playerid){
             new string[256];
             format(string, sizeof(string), "(( Ferido %d vezes, /ferimentos %d para mais informações ))", pInfo[playerid][pTotalDamages], playerid);
             SetPlayerChatBubble(playerid, string, COLOR_LIGHTRED, 15.0, 300*1000);
-            ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+            ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
 
             va_SendClientMessage(playerid, COLOR_LIGHTRED, "(( Você foi ferido %d vezes, /ferimentos %d para mais informações ))", pInfo[playerid][pTotalDamages], playerid);
             SendClientMessageToAll(-1, "[15] FERIMENTOS");
         }else{
             pInfo[playerid][pPassedOut] = true;
-            ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, 0, 0, 0, 1, 0, 1);
+            ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, false, false, true, 0);
             SendClientMessageToAll(-1, "[15] DESMAIOU");
             new string[256];
             format(string, sizeof(string), "(( Ferido %d vezes, /levantar %d para ajuda-lo ))", pInfo[playerid][pTotalDamages], playerid);
@@ -648,7 +655,7 @@ CMD:reviver(playerid, params[]){
     SetCameraBehindPlayer(userid);
     TogglePlayerControllable(userid, true);
     SetPlayerChatBubble(userid, " ", COLOR_LIGHTRED, 15.0, 1);
-    ApplyAnimation(userid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
+    ApplyAnimation(userid, "CARRY", "crry_prtial", 2.0, false, false, false, false, 0);
     ClearDamages(playerid);
 
     SendServerMessage(playerid, "Você reviveu %s.", pNome(userid));

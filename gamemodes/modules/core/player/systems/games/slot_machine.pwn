@@ -62,12 +62,12 @@ PlayerText:CreatePlayerGamblingSprite(playerid, Float:x, Float:y, const td_name[
 
 	new PlayerText:RetSprite = CreatePlayerTextDraw(playerid, x, y, td_name);
 	PlayerTextDrawTextSize(playerid, RetSprite, 48.000000, 129.000000);
-	PlayerTextDrawAlignment(playerid, RetSprite, 1);
-	PlayerTextDrawColor(playerid, RetSprite, 0xFFFFFFFF);
+	PlayerTextDrawAlignment(playerid, RetSprite, TEXT_DRAW_ALIGN:1);
+	PlayerTextDrawColour(playerid, RetSprite, 0xFFFFFFFF);
 	PlayerTextDrawSetShadow(playerid, RetSprite, 0);
-	PlayerTextDrawBackgroundColor(playerid, RetSprite, 255);
-	PlayerTextDrawFont(playerid, RetSprite, 4);
-	PlayerTextDrawSetProportional(playerid, RetSprite, 0);
+	PlayerTextDrawBackgroundColour(playerid, RetSprite, 255);
+	PlayerTextDrawFont(playerid, RetSprite, TEXT_DRAW_FONT_SPRITE_DRAW);
+	PlayerTextDrawSetProportional(playerid, RetSprite, false);
 
 	return RetSprite;
 }
@@ -137,30 +137,30 @@ hook OnPlayerConnect(playerid) {
 
 	slot_Machine[playerid] = CreatePlayerTextDraw(playerid, 202.411804, 124.666641, "mdl-9003:machine");
 	PlayerTextDrawTextSize(playerid, slot_Machine[playerid], 236.000000, 210.000000);
-	PlayerTextDrawAlignment(playerid, slot_Machine[playerid], 1);
-	PlayerTextDrawColor(playerid, slot_Machine[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, slot_Machine[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_Machine[playerid], 255);
-	PlayerTextDrawFont(playerid, slot_Machine[playerid], 4);
-	PlayerTextDrawSetProportional(playerid, slot_Machine[playerid], 0);
+	PlayerTextDrawAlignment(playerid, slot_Machine[playerid], TEXT_DRAW_ALIGN:1);
+	PlayerTextDrawColour(playerid, slot_Machine[playerid], -1);
+	PlayerTextDrawSetShadow(playerid, slot_Machine[playerid], false);
+	PlayerTextDrawBackgroundColour(playerid, slot_Machine[playerid], 255);
+	PlayerTextDrawFont(playerid, slot_Machine[playerid], TEXT_DRAW_FONT_SPRITE_DRAW);
+	PlayerTextDrawSetProportional(playerid, slot_Machine[playerid], false);
 
 	slot_BetTD[playerid][0] = CreatePlayerTextDraw(playerid, 361.129486, 281.583404, "200");
 	PlayerTextDrawLetterSize(playerid, slot_BetTD[playerid][0], 0.200000, 1.500000);
-	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][0], 2);
-	PlayerTextDrawColor(playerid, slot_BetTD[playerid][0], -16776961);
+	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][0], TEXT_DRAW_ALIGN:2);
+	PlayerTextDrawColour(playerid, slot_BetTD[playerid][0], -16776961);
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][0], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_BetTD[playerid][0], 255);
-	PlayerTextDrawFont(playerid, slot_BetTD[playerid][0], 2);
-	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][0], 1);
+	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][0], 255);
+	PlayerTextDrawFont(playerid, slot_BetTD[playerid][0], TEXT_DRAW_FONT_2);
+	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][0], true);
 
 	slot_BetTD[playerid][1] = CreatePlayerTextDraw(playerid, 307.426208, 281.583404, "US$ 1.000.000");
 	PlayerTextDrawLetterSize(playerid, slot_BetTD[playerid][1], 0.200000, 1.500000);
-	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][1], 3);
-	PlayerTextDrawColor(playerid, slot_BetTD[playerid][1], -16776961);
+	PlayerTextDrawAlignment(playerid, slot_BetTD[playerid][1], TEXT_DRAW_ALIGN:3);
+	PlayerTextDrawColour(playerid, slot_BetTD[playerid][1], -16776961);
 	PlayerTextDrawSetShadow(playerid, slot_BetTD[playerid][1], 0);
-	PlayerTextDrawBackgroundColor(playerid, slot_BetTD[playerid][1], 255);
-	PlayerTextDrawFont(playerid, slot_BetTD[playerid][1], 2);
-	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][1], 1);
+	PlayerTextDrawBackgroundColour(playerid, slot_BetTD[playerid][1], 255);
+	PlayerTextDrawFont(playerid, slot_BetTD[playerid][1], TEXT_DRAW_FONT_2);
+	PlayerTextDrawSetProportional(playerid, slot_BetTD[playerid][1], true);
 }
 
 hook OnPlayerDisconnect(playerid, reason) {
@@ -255,8 +255,8 @@ SlotMachine_Exit(playerid) {
 timer PlayerPlaySlotAgain[DISPLAY_TIME](playerid) {
 	PlayerGamblingState[playerid] = G_STATE_READY;
 
-	new keys,lr,ud;
-	GetPlayerKeys(playerid,keys,ud,lr);
+	new KEY:keys, KEY:lr, KEY:ud;
+	GetPlayerKeys(playerid, keys, ud, lr);
 	if(keys & KEY_SPRINT) {
 		CallLocalFunction("OnPlayerKeyStateChange", "ii", KEY_SPRINT, 0);
 	}
@@ -367,7 +367,7 @@ Updateslot_BetTD(playerid) {
 	PlayerTextDrawSetString(playerid, slot_BetTD[playerid][1], str);
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys) {
 	if(PRESSED(KEY_YES)) {
 		new
 			bool:isNearSlot = false;

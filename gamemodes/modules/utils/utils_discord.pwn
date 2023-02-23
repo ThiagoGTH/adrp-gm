@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-new DCC_Channel:logChannels[23];
+new DCC_Channel:logChannels[26];
 forward Discord_StartChannels();
 public Discord_StartChannels() {
     logChannels[0] = DCC_FindChannelById("989303818896441345");     // Admin                (1)
@@ -26,7 +26,9 @@ public Discord_StartChannels() {
     logChannels[20] = DCC_FindChannelById("1015475821177208852");   // Anitcheat            (21)
     logChannels[21] = DCC_FindChannelById("1018290520914673675");   // Factions             (22)
     logChannels[22] = DCC_FindChannelById("1021893920923332719");   // Grafite              (23)
-    
+    logChannels[23] = DCC_FindChannelById("1046135945436610650");   // Business             (24)
+    logChannels[24] = DCC_FindChannelById("1046121172540063825");   // Garages              (25)
+    logChannels[25] = DCC_FindChannelById("1069691701230317568");   // Banco                (26)
     return true;
 }
 
@@ -48,7 +50,7 @@ hook OnGameModeInit() {
 forward DiscordStatus();
 public DiscordStatus() {
     new string[32];
-    format(string, sizeof string, "Closed Alpha: %d/%d", Iter_Count(Player), GetMaxPlayers());
+    format(string, sizeof string, "Closed Beta: %d/%d", Iter_Count(Player), GetMaxPlayers());
     DCC_SetBotActivity(string);
     return true;
 }

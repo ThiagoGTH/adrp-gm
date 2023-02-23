@@ -1,0 +1,415 @@
+#include <open.mp>
+
+/*
+     ___      _
+    / __| ___| |_ _  _ _ __
+    \__ \/ -_)  _| || | '_ \
+    |___/\___|\__|\_,_| .__/
+                      |_|
+*/
+
+main()
+{
+	printf(" ");
+	printf("  -------------------------------");
+	printf("  |  My first open.mp gamemode! |");
+	printf("  -------------------------------");
+	printf(" ");
+}
+
+public OnGameModeInit()
+{
+	SetGameModeText("My first open.mp gamemode!");
+	AddPlayerClass(0, 2495.3547, -1688.2319, 13.6774, 351.1646, WEAPON_M4, 500, WEAPON_KNIFE, 1, WEAPON_COLT45, 100);
+	AddStaticVehicle(522, 2493.7583, -1683.6482, 12.9099, 270.8069, -1, -1);
+	return true;
+}
+
+public OnGameModeExit()
+{
+	return true;
+}
+
+/*
+      ___
+     / __|___ _ __  _ __  ___ _ _
+    | (__/ _ \ '  \| '  \/ _ \ ' \
+     \___\___/_|_|_|_|_|_\___/_||_|
+
+*/
+
+public OnPlayerConnect(playerid)
+{
+	return true;
+}
+
+public OnPlayerDisconnect(playerid, reason)
+{
+	return true;
+}
+
+public OnPlayerRequestClass(playerid, classid)
+{
+	SetPlayerPos(playerid, 217.8511, -98.4865, 1005.2578);
+	SetPlayerFacingAngle(playerid, 113.8861);
+	SetPlayerInterior(playerid, 15);
+	SetPlayerCameraPos(playerid, 215.2182, -99.5546, 1006.4);
+	SetPlayerCameraLookAt(playerid, 217.8511, -98.4865, 1005.2578);
+	ApplyAnimation(playerid, "benchpress", "gym_bp_celebrate", 4.1, true, false, false, false, 0, SYNC_NONE);
+	return true;
+}
+
+public OnPlayerSpawn(playerid)
+{
+	SetPlayerInterior(playerid, 0);
+	return true;
+}
+
+public OnPlayerDeath(playerid, killerid, reason)
+{
+	return true;
+}
+
+public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+	return true;
+}
+
+public OnPlayerExitVehicle(playerid, vehicleid)
+{
+	return true;
+}
+
+public OnVehicleSpawn(vehicleid)
+{
+	return true;
+}
+
+public OnVehicleDeath(vehicleid, killerid)
+{
+	return true;
+}
+
+/*
+     ___              _      _ _    _
+    / __|_ __  ___ __(_)__ _| (_)__| |_
+    \__ \ '_ \/ -_) _| / _` | | (_-<  _|
+    |___/ .__/\___\__|_\__,_|_|_/__/\__|
+        |_|
+*/
+
+public OnFilterScriptInit()
+{
+	printf(" ");
+	printf("  -----------------------------------------");
+	printf("  |  Error: Script was loaded incorrectly |");
+	printf("  -----------------------------------------");
+	printf(" ");
+	return true;
+}
+
+public OnFilterScriptExit()
+{
+	return true;
+}
+
+public OnPlayerRequestSpawn(playerid)
+{
+	return true;
+}
+
+public OnPlayerCommandText(playerid, cmdtext[])
+{
+	return 0;
+}
+
+public OnPlayerText(playerid, text[])
+{
+	return true;
+}
+
+public OnPlayerUpdate(playerid)
+{
+	return true;
+}
+
+public OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys)
+{
+	return true;
+}
+
+public OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate)
+{
+	return true;
+}
+
+public OnPlayerEnterCheckpoint(playerid)
+{
+	return true;
+}
+
+public OnPlayerLeaveCheckpoint(playerid)
+{
+	return true;
+}
+
+public OnPlayerEnterRaceCheckpoint(playerid)
+{
+	return true;
+}
+
+public OnPlayerLeaveRaceCheckpoint(playerid)
+{
+	return true;
+}
+
+public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid, bodypart)
+{
+	return true;
+}
+
+public OnActorStreamIn(actorid, forplayerid)
+{
+	return true;
+}
+
+public OnActorStreamOut(actorid, forplayerid)
+{
+	return true;
+}
+
+public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
+{
+	return true;
+}
+
+public OnPlayerEnterGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerLeaveGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerEnterPlayerGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerLeavePlayerGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerClickGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerClickPlayerGangZone(playerid, zoneid)
+{
+	return true;
+}
+
+public OnPlayerSelectedMenuRow(playerid, row)
+{
+	return true;
+}
+
+public OnPlayerExitedMenu(playerid)
+{
+	return true;
+}
+
+public OnClientCheckResponse(playerid, actionid, memaddr, retndata)
+{
+	return true;
+}
+
+public OnRconLoginAttempt(ip[], password[], success)
+{
+	return true;
+}
+
+public OnPlayerFinishedDownloading(playerid, virtualworld)
+{
+	return true;
+}
+
+public OnPlayerRequestDownload(playerid, DOWNLOAD_REQUEST:type, crc)
+{
+	return true;
+}
+
+public OnRconCommand(cmd[])
+{
+	return 0;
+}
+
+public OnPlayerSelectObject(playerid, SELECT_OBJECT:type, objectid, modelid, Float:fX, Float:fY, Float:fZ)
+{
+	return true;
+}
+
+public OnPlayerEditObject(playerid, playerobject, objectid, EDIT_RESPONSE:response, Float:fX, Float:fY, Float:fZ, Float:rotationX, Float:rotationY, Float:rotationZ)
+{
+	return true;
+}
+
+public OnPlayerEditAttachedObject(playerid, EDIT_RESPONSE:response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:rotationX, Float:rotationY, Float:rotationZ, Float:scaleX, Float:scaleY, Float:scaleZ)
+{
+	return true;
+}
+
+public OnObjectMoved(objectid)
+{
+	return true;
+}
+
+public OnPlayerObjectMoved(playerid, objectid)
+{
+	return true;
+}
+
+public OnPlayerPickUpPickup(playerid, pickupid)
+{
+	return true;
+}
+
+public OnPlayerPickUpPlayerPickup(playerid, pickupid)
+{
+	return true;
+}
+
+public OnPickupStreamIn(pickupid, playerid)
+{
+	return true;
+}
+
+public OnPickupStreamOut(pickupid, playerid)
+{
+	return true;
+}
+
+public OnPlayerPickupStreamIn(pickupid, playerid)
+{
+	return true;
+}
+
+public OnPlayerPickupStreamOut(pickupid, playerid)
+{
+	return true;
+}
+
+public OnPlayerStreamIn(playerid, forplayerid)
+{
+	return true;
+}
+
+public OnPlayerStreamOut(playerid, forplayerid)
+{
+	return true;
+}
+
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
+{
+	return true;
+}
+
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
+{
+	return true;
+}
+
+public OnPlayerClickPlayer(playerid, clickedplayerid, CLICK_SOURCE:source)
+{
+	return true;
+}
+
+public OnPlayerWeaponShot(playerid, weaponid, BULLET_HIT_TYPE:hittype, hitid, Float:fX, Float:fY, Float:fZ)
+{
+	return true;
+}
+
+public OnScriptCash(playerid, amount, source)
+{
+	return true;
+}
+
+public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
+{
+	return true;
+}
+
+public OnIncomingConnection(playerid, ip_address[], port)
+{
+	return true;
+}
+
+public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
+{
+	return true;
+}
+
+public OnPlayerClickTextDraw(playerid, Text:clickedid)
+{
+	return true;
+}
+
+public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
+{
+	return true;
+}
+
+public OnTrailerUpdate(playerid, vehicleid)
+{
+	return true;
+}
+
+public OnVehicleSirenStateChange(playerid, vehicleid, newstate)
+{
+	return true;
+}
+
+public OnVehicleStreamIn(vehicleid, forplayerid)
+{
+	return true;
+}
+
+public OnVehicleStreamOut(vehicleid, forplayerid)
+{
+	return true;
+}
+
+public OnVehicleMod(playerid, vehicleid, component)
+{
+	return true;
+}
+
+public OnEnterExitModShop(playerid, enterexit, interiorid)
+{
+	return true;
+}
+
+public OnVehiclePaintjob(playerid, vehicleid, paintjob)
+{
+	return true;
+}
+
+public OnVehicleRespray(playerid, vehicleid, colour1, colour2)
+{
+	return true;
+}
+
+public OnVehicleDamageStatusUpdate(vehicleid, playerid)
+{
+	return true;
+}
+
+public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z)
+{
+	return true;
+}
+

@@ -1,6 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
-public OnPlayerRequestDownload(playerid, type, crc) {
+#if !defined DOWNLOAD_REQUEST
+	#define DOWNLOAD_REQUEST: _:
+#endif
+
+public OnPlayerRequestDownload(playerid, DOWNLOAD_REQUEST:type, crc) {
 	if(!IsPlayerConnected(playerid))
 		return false;
 
@@ -75,4 +79,6 @@ LoadInterfaces(){ // -9000 +
 	AddSimpleModelEx(0, -9001, "interface/interface.dff", "interface/notify.txd");
 	AddSimpleModelEx(0, -9002, "interface/interface.dff", "interface/news.txd");
 	AddSimpleModelEx(0, -9003, "interface/interface.dff", "interface/slot_machine.txd");
+	AddSimpleModelEx(0, -9004, "interface/interface.dff", "interface/speedo.txd");
+	AddSimpleModelEx(0, -9005, "interface/interface.dff", "interface/icons.txd");
 }

@@ -101,7 +101,7 @@ stock CreateTD(playerid, text[], color, slot, Float:x_pos, Float:y_pos)
 		return false;
 	PlayerTextDrawFont(playerid,			TD_Circle_Data[playerid][cTextDraw][slot],			1);
 	PlayerTextDrawLetterSize(playerid,		TD_Circle_Data[playerid][cTextDraw][slot],	 0.5, 1.0);
-	PlayerTextDrawColor(playerid,			TD_Circle_Data[playerid][cTextDraw][slot],		color);
+	PlayerTextDrawColour(playerid,			TD_Circle_Data[playerid][cTextDraw][slot],		color);
 	PlayerTextDrawSetOutline(playerid,		TD_Circle_Data[playerid][cTextDraw][slot],			0);
 	PlayerTextDrawSetProportional(playerid,	TD_Circle_Data[playerid][cTextDraw][slot],			1);
 	PlayerTextDrawSetShadow(playerid,		TD_Circle_Data[playerid][cTextDraw][slot],			0);
@@ -218,7 +218,7 @@ stock TD_PauseCircle(playerid)
 
 stock TD_SetCircleSlotColor(playerid, slot, color)
 {
-	PlayerTextDrawColor(
+	PlayerTextDrawColour(
 		playerid,
 		TD_Circle_Data[playerid][cTextDraw][slot],
 		color

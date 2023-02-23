@@ -1,7 +1,6 @@
 /*
  
 Esse módulo é dedicado integralmente a lidar com conexões e integrações com o MySQL. Mas isso não implica que outros módulos não possam extrair, salvar ou inserir informações no mesmo banco de dados de maneira segura, estando ordenadas e documentadas.
-
 */
 
 #include <YSI_Coding\y_hooks>
@@ -45,7 +44,7 @@ hook OnGameModeInit() {
         
         SendRconCommand("exit");
     } else {
-        print("\n[DATABASE] A conexão com o MySQL foi feita com sucesso");
+        print("[DATABASE] A conexão com o MySQL foi feita com sucesso");
         print("[DATABASE] Verificando criação de tabelas...");
         mysql_set_charset("latin1");
         CheckTables();
@@ -61,14 +60,34 @@ void:CheckTables() {
     CheckItemsTable();
     CheckBanTable();
     CheckFurnitureInfoTable();
-    CheckInteriorsInfoTable();
     CheckAdsTable();
     CheckVehiclesTable();
     CheckPoolTable();
     CheckHousesTable();
+<<<<<<< HEAD
     CheckTradingTable();
     CheckFactionsTable();
     CheckGraffitisTable();
+=======
+<<<<<<< HEAD
+    CheckBusinesssTable();
+    CheckInteriorsTable();
+    CheckPHONESTable();
+    CheckTradingTable();
+    CheckFactionsTable();
+    CheckGraffitisTable();
+    CheckBankTable();
+    CheckStorageBusinessTable();
+    CheckGaragesTable();
+    //CheckSignalTower();
+    CheckPhoneSms();
+    CheckPhoneContacts();
+=======
+    CheckTradingTable();
+    CheckFactionsTable();
+    CheckGraffitisTable();
+>>>>>>> main
+>>>>>>> development
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -83,9 +102,12 @@ void:CheckUserTable() {
     `discord_id` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `forum_username` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `registration_ip` varchar(16) NOT NULL DEFAULT 'Nenhum',\
+    `registration_ip2` varchar(200) NOT NULL DEFAULT 'Nenhum',\
+    `registration_fingerprint` varchar(200) NOT NULL DEFAULT 'Nenhum',\
     `registration_date` int NOT NULL DEFAULT '0',\
     `last_login` int NOT NULL DEFAULT '0',\
     `admin` int NOT NULL DEFAULT 0,\
+    `hours` int NOT NULL DEFAULT 0,\
     `dutytime` int NOT NULL DEFAULT 0,\
     `SOSAns` int NOT NULL DEFAULT 0,\
     `APPAns` int NOT NULL DEFAULT 0,\
@@ -100,18 +122,23 @@ void:CheckUserTable() {
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_premium` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
-    `user_id` int NOT NULL DEFAULT 0,\
-    `points` int NOT NULL DEFAULT 0,\
-    `name_changes` int NOT NULL DEFAULT 0,\
-    `number_changes` int NOT NULL DEFAULT 0,\
-    `fight_changes` int NOT NULL DEFAULT 0,\
-    `plate_changes` int NOT NULL DEFAULT 0,\
-    `chars_slots` int NOT NULL DEFAULT 5,\
-    PRIMARY KEY (ID));");
+    `user_id` int NOT NULL DEFAULT '0',\
+    `points` int NOT NULL DEFAULT '0',\
+    `name_changes` int NOT NULL DEFAULT '0',\
+    `number_changes` int NOT NULL DEFAULT '0',\
+    `fight_changes` int NOT NULL DEFAULT '0',\
+    `plate_changes` int NOT NULL DEFAULT '0',\
+    `chars_slots` int NOT NULL DEFAULT '5',\
+    `custom_walks` int NOT NULL DEFAULT '0',\
+    `vehicle_namechanges` int NOT NULL DEFAULT '0',\
+    `custom_skins` int NOT NULL DEFAULT '0',\
+    `pets` int NOT NULL DEFAULT '0',\
+    `character_permanent_slots` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));"); 
 
     print("[DATABASE] Tabela users_premium checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_premium checada com sucesso");
-    logCreate(99998, logString, 5);
+    logCreate(99998, logString, 5); 
 
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_teams` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -125,8 +152,9 @@ void:CheckUserTable() {
     `event_team` int NOT NULL DEFAULT 0,\
     `ck_team` int NOT NULL DEFAULT 0,\
     `log_team` int NOT NULL DEFAULT 0,\
-    `ucp_admin_announcements` int NOT NULL DEFAULT 0,\
-    `ucp_posts` int NOT NULL DEFAULT 0,\
+    `announcement_team` int NOT NULL DEFAULT 0,\
+    `post_team` int NOT NULL DEFAULT 0,\
+    `ad_points` int NOT NULL DEFAULT 0,\
     PRIMARY KEY (ID));");
 
     print("[DATABASE] Tabela users_teams checada com sucesso");
@@ -152,8 +180,8 @@ void:CheckPlayerTable() {
     `hours` int NOT NULL DEFAULT '0',\
     `origin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `money` int NOT NULL DEFAULT '0',\
-    `bank` int NOT NULL DEFAULT '0',\
-    `savings` int NOT NULL DEFAULT '0',\
+    `payment` int NOT NULL DEFAULT '0',\
+    `taxes` int NOT NULL DEFAULT '0',\
     `skin` int NOT NULL DEFAULT '23',\
     `health` float NOT NULL DEFAULT '100',\
     `armour` float NOT NULL DEFAULT '0',\
@@ -379,10 +407,38 @@ void:CheckPlayerTable() {
     `admin_chat` int NOT NULL DEFAULT '0',\
     `nametag` int NOT NULL DEFAULT '0',\
     `objects` int NOT NULL DEFAULT '0',\
+    `speedo` int NOT NULL DEFAULT '1',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_config checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `players_status` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int NOT NULL,\
+    `hunger` int NOT NULL DEFAULT '100',\
+    `thirst` int NOT NULL DEFAULT '100',\
+    `stamina` int NOT NULL DEFAULT '1500',\
+    `max_stamina` int NOT NULL DEFAULT '1500',\
+    `addiction` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela players_config checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_config checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `players_taxes` (\
+	  	`ID` int(11) NOT NULL auto_increment,\
+	  	`character_id` int(11) NOT NULL,\
+	  	`type` smallint(1) NOT NULL,\
+	  	`amount` int(11) NOT NULL,\
+	  	`date` int(11) NOT NULL,\
+	    PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela players_taxes checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela players_taxes checada com sucesso");
     logCreate(99998, logString, 5);
 }
 
@@ -395,6 +451,7 @@ void:CheckItemsTable() {
     `item_legality` int NOT NULL DEFAULT '0',\
     `item_model` int NOT NULL DEFAULT '0',\
     `item_category` int NOT NULL DEFAULT '0',\
+    `item_price` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela items checada com sucesso");
@@ -470,23 +527,6 @@ void:CheckFurnitureInfoTable(){
 
     print("[DATABASE] Tabela furniture_info checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela furniture_info checada com sucesso");
-    logCreate(99998, logString, 5);
-}
-
-void:CheckInteriorsInfoTable(){
-    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors_info` (\
-    `ID` int NOT NULL AUTO_INCREMENT,\
-    `name` varchar(64) NOT NULL DEFAULT 'Nenhum',\
-    `virtual_world` int NOT NULL DEFAULT '0',\
-    `interior` int NOT NULL DEFAULT '0',\
-    `positionX` float NOT NULL DEFAULT '0',\
-    `positionY` float NOT NULL DEFAULT '0',\
-    `positionZ` float NOT NULL DEFAULT '0',\
-    `positionA` float NOT NULL DEFAULT '0',\
-    PRIMARY KEY (`ID`));");
-
-    print("[DATABASE] Tabela interiors checada com sucesso");
-    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
     logCreate(99998, logString, 5);
 }
 
@@ -782,6 +822,7 @@ void:CheckHousesTable() {
     `id` int NOT NULL AUTO_INCREMENT,\
     `character_id` int DEFAULT '0',\
     `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `garage_id` int DEFAULT '0',\
     `locked` int DEFAULT '0',\
     `price` int DEFAULT '0',\
     `rentable` int DEFAULT '0',\
@@ -827,6 +868,79 @@ void:CheckHousesTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso");
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+void:CheckBusinesssTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int DEFAULT '0',\
+    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `locked` int DEFAULT '0',\
+    `name` varchar(256) DEFAULT 'Empresa desconhecida',\
+    `type` int DEFAULT '0',\
+    `inventory` int DEFAULT '0',\
+    `storage_money` int DEFAULT '0',\
+    `price` int DEFAULT '0',\
+    `entry_x` float DEFAULT '0',\
+    `entry_y` float DEFAULT '0',\
+    `entry_z` float DEFAULT '0',\
+    `entry_a` float DEFAULT '0',\
+    `vw_entry` int DEFAULT '0',\
+    `interior_entry` int DEFAULT '0',\
+    `exit_x` float DEFAULT '0',\
+    `exit_y` float DEFAULT '0',\
+    `exit_z` float DEFAULT '0',\
+    `exit_a` float DEFAULT '0',\
+    `vw_exit` int DEFAULT '0',\
+    `interior_exit` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela business checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckInteriorsTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `interiors` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(256) DEFAULT 'Indefinido',\
+    `status` int DEFAULT '0',\
+    `type` int DEFAULT '0',\
+    `interior` int DEFAULT '0',\
+    `world` int DEFAULT '0',\
+    `int_x` float DEFAULT '0',\
+    `int_y` float DEFAULT '0',\
+    `int_z` float DEFAULT '0',\
+    `int_a` float DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela interiors checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela interiors checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckPHONESTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `payphone` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `object` int,\
+    `position_x` float DEFAULT '0',\
+    `position_y` float DEFAULT '0',\
+    `position_z` float DEFAULT '0',\
+    `position_a` float DEFAULT '0',\
+    `interior` int DEFAULT '0',\
+    `world` int DEFAULT '0',\
+    `status` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela payphone checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela payphone checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+=======
+>>>>>>> main
+>>>>>>> development
 void:CheckTradingTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -868,7 +982,7 @@ void:CheckUCPTable() {
     `user_id` int NOT NULL,\
     `fullname` varchar(128) NOT NULL,\
     `origin` varchar(128) NOT NULL,\
-    `birthdate` varchar(11) NOT NULL,\
+    `birthdate` int NOT NULL DEFAULT '0',\
     `gender` int NOT NULL DEFAULT '0',\
     `ethnicity` int NOT NULL DEFAULT '0',\
     `build` int NOT NULL DEFAULT '0',\
@@ -876,16 +990,18 @@ void:CheckUCPTable() {
     `color_hair` int NOT NULL DEFAULT '0',\
     `height` int NOT NULL DEFAULT '0',\
     `weigth` float NOT NULL DEFAULT '0',\
+    `default_skin` int NOT NULL DEFAULT '2',\
     `description_apparence` varchar(128) NOT NULL DEFAULT 'Nenhum',\
     `history` text,\
     `question1` text,\
     `question2` text,\
     `answer1` text,\
     `answer2` text,\
-    `ip` varchar(128) NOT NULL,\
-    `send_date` int NOT NULL,\
+    `ip` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `send_date` int NOT NULL DEFAULT '0',\
     `status` varchar(128) NOT NULL DEFAULT '0',\
     `admin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `correction_admin` int NOT NULL DEFAULT '0',\
     `reason` text,\
     `valuation_date` int(11) NOT NULL DEFAULT '0',\
     PRIMARY KEY (`id`));");
@@ -944,6 +1060,137 @@ void:CheckUCPTable() {
     print("[DATABASE] Tabela ucp_questions checada com sucesso");
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_questions checada com sucesso");
     logCreate(99998, logString, 5);
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_announcements` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `title` text,\
+    `body` text,\
+    `type` int NOT NULL DEFAULT '0',\
+    `target` int NOT NULL DEFAULT '0',\
+    `showing` int NOT NULL DEFAULT '0',\
+    `send_date` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_announcements checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_announcements checada com sucesso");
+    logCreate(99998, logString, 5);    
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_apps_customskins` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `default_ped_id` int NOT NULL DEFAULT '0',\
+    `custom_ped_id` int NOT NULL DEFAULT '0',\
+    `dff_archive` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `txd_archive` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `img_preview_skin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `ip_send` varchar(120) NOT NULL DEFAULT 'Nenhum',\
+    `send_date` int(11) NOT NULL DEFAULT '0',\
+    `status` int(11) NOT NULL DEFAULT '0',\
+    `admin` varchar(120) NOT NULL DEFAULT 'Nenhum',\
+    `reason` text,\
+    `valuation_date` int(11) NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela ucp_apps_customskins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_apps_customskins checada com sucesso");
+    logCreate(99998, logString, 5);    
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_events` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `event_title` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `event_desc` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `event_img` text,\
+    `event_postat` int NOT NULL DEFAULT '0',\
+    `event_startat` int NOT NULL DEFAULT '0',\
+    `event_endat` int NOT NULL DEFAULT '0',\
+    `event_location` text,\
+    `event_status` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_events checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_events checada com sucesso");
+    logCreate(99998, logString, 5);     
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_logs` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `character` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `user` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `ip` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `timestamp` int NOT NULL DEFAULT '0',\
+    `log` text,\
+    `type` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela ucp_logs checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_logs checada com sucesso");
+    logCreate(99998, logString, 5);       
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_transactions` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `email` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `product` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `price` int NOT NULL DEFAULT '0',\
+    `external_reference` bigint NOT NULL DEFAULT '0',\
+    `payment_id` int NOT NULL DEFAULT '0',\
+    `purchase_date` int NOT NULL DEFAULT '0',\
+    `update_date` int NOT NULL DEFAULT '0',\
+    `status` int NOT NULL DEFAULT '0',\
+    `payment_type` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    PRIMARY KEY (`id`));");
+
+    print("[DATABASE] Tabela ucp_transactions checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_transactions checada com sucesso");
+    logCreate(99998, logString, 5);     
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `users_teams_permissions` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `team` text,\
+    `head_team` int NOT NULL DEFAULT '0',\
+    `allow_create` int NOT NULL DEFAULT '0',\
+    `allow_edit` int NOT NULL DEFAULT '0',\
+    `allow_delete` int NOT NULL DEFAULT '0',\
+    `allow_manage` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));");
+
+    print("[DATABASE] Tabela users_teams_permissions checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela users_teams_permissions checada com sucesso");
+    logCreate(99998, logString, 5);
+    
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `ucp_request_premium` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `old_ucp` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `old_character` varchar(255) NOT NULL DEFAULT 'Nenhum',\
+    `old_premium` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `evidences` text,\
+    `ip` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `status` int NOT NULL DEFAULT '0',\
+    `admin` varchar(128) NOT NULL DEFAULT 'Nenhum',\
+    `reason` text,\
+    `sendat` int NOT NULL DEFAULT '0',\
+    `updatedat` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`id`));"); 
+
+    print("[DATABASE] Tabela ucp_request_premium checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela ucp_request_premium checada com sucesso");
+    logCreate(99998, logString, 5); 
+
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `custom_skins` (\
+    `ID` int NOT NULL AUTO_INCREMENT,\
+    `user_id` int NOT NULL DEFAULT '0',\
+    `character_id` int NOT NULL DEFAULT '0',\
+    `skin_id` int NOT NULL DEFAULT '0',\
+    `skin_time` int NOT NULL DEFAULT '0',\
+    PRIMARY KEY (`ID`));"); 
+
+    print("[DATABASE] Tabela custom_skins checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela custom_skins checada com sucesso");
+    logCreate(99998, logString, 5); 
 }
 
 void:CheckFactionsTable() {
@@ -1167,4 +1414,180 @@ void:CheckGraffitisTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
     logCreate(99998, logString, 5);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+}
+
+void:CheckGaragesTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `garages` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `character_id` int DEFAULT '0',\
+    `house_id` int DEFAULT '0',\
+    `address` varchar(256) DEFAULT 'Endereço desconhecido',\
+    `locked` int DEFAULT '0',\
+    `garage_inv` int DEFAULT '0',\
+    `price` int DEFAULT '0',\
+    `storage_money` int DEFAULT '0',\
+    `storage_item1` int DEFAULT '0',\
+    `storage_amount1` int DEFAULT '0',\
+    `storage_item2` int DEFAULT '0',\
+    `storage_amount2` int DEFAULT '0',\
+    `storage_item3` int DEFAULT '0',\
+    `storage_amount3` int DEFAULT '0',\
+    `storage_item4` int DEFAULT '0',\
+    `storage_amount4` int DEFAULT '0',\
+    `storage_item5` int DEFAULT '0',\
+    `storage_amount5` int DEFAULT '0',\
+    `storage_item6` int DEFAULT '0',\
+    `storage_amount6` int DEFAULT '0',\
+    `entry_x` float DEFAULT '0',\
+    `entry_y` float DEFAULT '0',\
+    `entry_z` float DEFAULT '0',\
+    `entry_a` float DEFAULT '0',\
+    `vw_entry` int DEFAULT '0',\
+    `interior_entry` int DEFAULT '0',\
+    `exit_x` float DEFAULT '0',\
+    `exit_y` float DEFAULT '0',\
+    `exit_z` float DEFAULT '0',\
+    `exit_a` float DEFAULT '0',\
+    `vw_exit` int DEFAULT '0',\
+    `interior_exit` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela garages checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela garages checada com sucesso");
+    logCreate(99998, logString, 5);
+
+}
+
+void:CheckBankTable() {
+	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bankers` (\
+	  `ID` int(11) NOT NULL,\
+	  `Skin` smallint(3) NOT NULL,\
+	  `PosX` float NOT NULL,\
+	  `PosY` float NOT NULL,\
+	  `PosZ` float NOT NULL,\
+	  `PosA` float NOT NULL,\
+      `Interior` int(11) NOT NULL,\
+      `VirtualWorld` int(11) NOT NULL,\
+	  PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bankers checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bankers checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_atms` (\
+	  `ID` int(11) NOT NULL,\
+	  `PosX` float NOT NULL,\
+	  `PosY` float NOT NULL,\
+	  `PosZ` float NOT NULL,\
+	  `RotX` float NOT NULL,\
+	  `RotY` float NOT NULL,\
+	  `RotZ` float NOT NULL,\
+	  PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bank_atms checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_atms checada com sucesso");
+    logCreate(99998, logString, 5);
+
+	mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_accounts` (\
+	  `ID` int(11) NOT NULL auto_increment,\
+	  `Character_ID` int(11) NOT NULL,\
+	  `Password` varchar(32) NOT NULL,\
+	  `Balance` int(11) NOT NULL,\
+	  `CreatedOn` int(11) NOT NULL,\
+	  `LastAccess` int(11) NOT NULL,\
+	  PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bank_accounts checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_accounts checada com sucesso");
+    logCreate(99998, logString, 5);
+
+    mysql_tquery(DBConn, "CREATE TABLE IF NOT EXISTS `bank_logs` (\
+	  	`ID` int(11) NOT NULL auto_increment,\
+	  	`AccountID` int(11) NOT NULL,\
+	  	`ToAccountID` int(11) NOT NULL default '-1',\
+	  	`Type` smallint(1) NOT NULL,\
+	  	`Player` varchar(24) NOT NULL,\
+	  	`Amount` int(11) NOT NULL,\
+	  	`Date` int(11) NOT NULL,\
+	    PRIMARY KEY  (`ID`)\
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    print("[DATABASE] Tabela bank_logs checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela bank_logs checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+void:CheckStorageBusinessTable() {
+    mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business_storage` (\
+    `id` int NOT NULL AUTO_INCREMENT,\
+    `name` varchar(64) DEFAULT 'Produto sem nome.' ,\
+    `model` int DEFAULT '0',\
+    `price` int DEFAULT '120',\
+    `owner` int DEFAULT '0',\
+    `quantity` int DEFAULT '0',\
+    `category` int DEFAULT '0',\
+    `status` int DEFAULT '0',\
+    PRIMARY KEY (`id`));");
+    
+    print("[DATABASE] Tabela business_storage checada com sucesso");
+    format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela business_storage checada com sucesso");
+    logCreate(99998, logString, 5);
+}
+
+/*void:CheckSignalTower() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `signal_tower` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `object` int DEFAULT '0',\
+  `position_x` DEFAULT '0',\
+  `position_y` DEFAULT '0',\
+  `position_z` DEFAULT '0',\
+  `position_a` DEFAULT '0',\
+  `radius` DEFAULT '0',\
+  `name` varchar(64) NOT NULL,\
+  `interior` int DEFAULT '0',\
+  `world` int DEFAULT '0',\
+   PRIMARY KEY (`id`));");
+
+   print("[DATABASE] Tabela signal_tower checada com sucesso");
+   format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela signal_tower checada com sucesso");
+   logCreate(99998, logString, 5);
+}*/
+
+void:CheckPhoneSms() {
+   mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `phone_sms` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `PhoneOwner` int(11) NOT NULL,\
+  `PhoneReceive` int(11) NOT NULL,\
+  `PhoneSMS` varchar(128) NOT NULL,\
+  `ReadSMS` int(11) NOT NULL DEFAULT 0,\
+  `Archive` int(11) NOT NULL DEFAULT 0,\
+  `Date` varchar(36) NOT NULL,\
+   PRIMARY KEY (`id`));");
+
+   print("[DATABASE] Tabela phone_sms checada com sucesso");
+   format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela phone_sms checada com sucesso");
+   logCreate(99998, logString, 5);
+}
+
+void:CheckPhoneContacts() {
+  mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `phone_contacts` (\
+  `id` int NOT NULL AUTO_INCREMENT,\
+  `contactID` int(11) NOT NULL,\
+  `contactAdded` int(11) NOT NULL,\
+  `contactAddee` int(11) NOT NULL,\
+  `contactName` varchar(24) NOT NULL,\
+  PRIMARY KEY (`id`));"); 
+
+  print("[DATABASE] Tabela phone_contacts checada com sucesso");
+  format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela phone_contacts checada com sucesso");
+  logCreate(99998, logString, 5);
+=======
+>>>>>>> main
+>>>>>>> development
 }

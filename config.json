@@ -2,7 +2,7 @@
     "announce": true,
     "artwork": {
         "cdn": "http://127.0.0.1/models/",
-        "enable": false, 
+        "enable": true, 
         "models_path": "models"
     },
     "chat_input_filter": true,
@@ -14,7 +14,7 @@
         "gravity": 0.00800000037997961,
         "lag_compensation_mode": 1,
         "map": "",
-        "mode": "",
+        "mode": "", 
         "nametag_draw_radius": 70.0,
         "player_marker_draw_radius": 250.0,
         "player_marker_mode": 1,
@@ -74,6 +74,9 @@
         "use_lan_mode": false
     },
     "password": "",
+    "discord": {
+        "bot_token": "SAMP_DISCORD_BOT_TOKEN"
+    },
     "pawn": {
         "legacy_plugins": [],
         "main_scripts": [

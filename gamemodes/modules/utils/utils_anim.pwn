@@ -1757,11 +1757,11 @@ stock const AnimLibraries[][] = {
 
 PreloadAnimations(playerid) {
     for (new i = 0; i != sizeof(AnimLibraries); i++) {
-        ApplyAnimation(playerid, AnimLibraries[i], "null", 4.1, 0, 0, 0, 0, 0, 1);
+        ApplyAnimation(playerid, AnimLibraries[i], "null", 4.1, false, false, false, false, 0);
     }
 }
 
-ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, loop, x, y, freeze, time, forceSync = 1) {
+ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, bool:loop, bool:x, bool:y, bool:freeze, time, forceSync = 1) {
     new
     	animLib[32],
         animName[32]
@@ -1769,7 +1769,7 @@ ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, loop, x, y, freeze, 
 
     if (GetAnimationName(_:animId, animLib, sizeof(animLib), animName, sizeof(animName)) == 1) 
 	{
-        return ApplyAnimation(playerid, animLib, animName, fDelta, loop, x, y, freeze, time, forceSync);
+        return ApplyAnimation(playerid, animLib, animName, fDelta, loop, x, y, freeze, time, t_FORCE_SYNC:forceSync);
     }
     return false;
 }

@@ -130,13 +130,13 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 	PlayerTextDrawHide(playerid, MDC_PenalCode[playerid][37]);
 	PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][36]);
 	PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][16]);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][37], -1802201857);
-	PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][37], -1);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][37], -1802201857);
+	PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][37], -1);
 
 	new searchbox[128];
 
-	PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][37], 0xFFFFFFFF);
-	PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][37], 0x232323FF);
+	PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][37], 0xFFFFFFFF);
+	PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][37], 0x232323FF);
 
 	format(searchbox, sizeof(searchbox), "%s", inputtext);
 	PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][37], AdjustTextDrawString(searchbox));
@@ -175,8 +175,8 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 
 
 					PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][strtext], 0);
-					PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][strtext], -1);
-					PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][strtext], 0x333333FF);
+					PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][strtext], -1);
+					PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][strtext], 0x333333FF);
 					PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][strtext], AdjustTextDrawString(category_name));
 					PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][strtext]);
 					strtext+=1;
@@ -189,8 +189,8 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 				}
 
 				PlayerTextDrawSetSelectable(playerid, MDC_PenalCode[playerid][strtext], 1);
-				PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][strtext], -1802201857);
-				PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][strtext], -1);
+				PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][strtext], -1802201857);
+				PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][strtext], -1);
 				PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][strtext], AdjustTextDrawString(penal));
 				PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][strtext]);
 				penalid+=1;
@@ -208,8 +208,8 @@ Dialog:MDC_PenalCode_Filter(playerid, response, listitem, inputtext[])
 
 			PlayerTextDrawHide(playerid, MDC_PenalCode[playerid][37]);
 			PlayerTextDrawSetString(playerid, MDC_PenalCode[playerid][37], searchbox);
-			PlayerTextDrawBoxColor(playerid, MDC_PenalCode[playerid][37], 0x9E1729FF);
-			PlayerTextDrawColor(playerid, MDC_PenalCode[playerid][37], 0xFFFFFFFF);
+			PlayerTextDrawBoxColour(playerid, MDC_PenalCode[playerid][37], 0x9E1729FF);
+			PlayerTextDrawColour(playerid, MDC_PenalCode[playerid][37], 0xFFFFFFFF);
 			PlayerTextDrawShow(playerid, MDC_PenalCode[playerid][37]);
 			return 1;
 	}

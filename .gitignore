@@ -9,6 +9,8 @@
 
 # Vendor directory for dependencies
 dependencies/
+models/
+qawno/
 
 # Dependency versions lockfile
 pawn.lock
@@ -31,6 +33,8 @@ models/
 # but make sure the `rcon_password` field is set externally
 # you can use the environment variable `SAMP_RCON_PASSWORD` to do this.
 server.cfg
+config.json
+pawn.json
 
 # Plugins directory
 plugins/

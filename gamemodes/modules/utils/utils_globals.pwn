@@ -23,6 +23,7 @@ enum User_Data {
     uName[24],
     uPass[16],
     uAdmin,
+    uHours,
     // Teams
     uHeadFTeam, // Faction 
     uHeadPTeam, // Property
@@ -68,8 +69,8 @@ enum Player_Data {
 
     pMoney,
     pOldMoney,
-    pBank,
-    pSavings,
+    pPayment,
+    pTaxes,
     pSkin,
     pScore,
     pPlayingMinutes,
@@ -82,6 +83,16 @@ enum Player_Data {
     pVirtualWorld,
     pInterior,
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    // OFFERS
+    pGreetingOffer,
+    pGreetingType,
+
+=======
+>>>>>>> main
+>>>>>>> development
     // INFOS
     pGender,
     pEthnicity,
@@ -91,9 +102,6 @@ enum Player_Data {
     Float:pWeight,
     pBuild,
     pDescription[128],
-
-    pPhoneNumber,
-    pPhoneType,
 
     pEditandoBareira,
 
@@ -125,7 +133,17 @@ enum Player_Data {
     pTogAdmin,
     pNametagType,
     pRenderObjects,
+    pHudSpeedo,
     
+    // PLAYERS STATUS
+    pHunger,
+    pHungerTime,
+    pThirst,
+    pThirstTime,
+    pStamina,
+    pMaxStamina,
+    pAddiction,
+
     pAllowRespawn,
     pLastKnockout,
     pTotalDamages,
@@ -194,6 +212,8 @@ enum Player_Data {
     pCharacterActor,
     pCharacterFinalizing,
 
+    PlayerText:pTextdraws[10],
+
     pSpectating,
 
     pEditingVeh,
@@ -236,6 +256,34 @@ enum Player_Data {
     pInventoryItem,
     pEditDropped,
     pGiveItem,
+
+
+    // Phone (system)
+    pIncomingCall,
+    pPhoneNumber, // pPnumber, Trocar
+    pPhoneType,
+    pPhoneModel,
+	pContractTime,
+    pCallConnect,
+	pCallLine,
+	pCellTime,
+	pCallCost,
+	pCallNumb,
+
+    // Variável temporária
+    LoadTemp,
+    sTempItem, 
+    sTempPrice,
+    sTempTotal,
+    sTempQuantity,
+
+    //Localizações
+    pLocal,
+    // Edit Object (todos sistema de edição de objeto deve-se ter seu prefixo (o))
+    //oEditType, // Tipo de edição.
+    oEditATM, // Guarda o (ID) da ATM que está sendo editado.
+    oEditTower,// Guarda o (ID) da TORRE que está sendo editado.
+    oEditPhone, // Guarda o (ID) do telefone que está sendo editado.
 };
 new pInfo[MAX_PLAYERS][Player_Data];
 
@@ -250,6 +298,7 @@ void:ResetUserData(playerid) {
 
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
+    uInfo        [playerid][uHours]       = 
     // Teams
     uInfo        [playerid][uHeadFTeam]   = 
     uInfo        [playerid][uHeadPTeam]   = 
@@ -298,8 +347,8 @@ void:ResetCharacterData(playerid) {
     pInfo   [playerid][pArmour]         = 0.00;
     pInfo   [playerid][pMoney]          =
     pInfo   [playerid][pOldMoney]       =
-    pInfo   [playerid][pBank]           =
-    pInfo   [playerid][pSavings]        =
+    pInfo   [playerid][pPayment]           =
+    pInfo   [playerid][pTaxes]        =
     pInfo   [playerid][pSkin]           =
     pInfo   [playerid][pScore]          = 0;
     pInfo   [playerid][pPositionX]      =
@@ -357,7 +406,16 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pTogFaction] =
     pInfo[playerid][pTogAdmin] =
     pInfo[playerid][pNametagType] =
-    pInfo[playerid][pRenderObjects] = 0;
+    pInfo[playerid][pRenderObjects] =
+    pInfo[playerid][pHudSpeedo] = 0;
+
+    pInfo[playerid][pHunger] =
+    pInfo[playerid][pHungerTime] =
+    pInfo[playerid][pThirst] =
+    pInfo[playerid][pThirstTime] =
+    pInfo[playerid][pStamina] =
+    pInfo[playerid][pMaxStamina] =
+    pInfo[playerid][pAddiction] = 0;
 
     pInfo[playerid][pTackleMode] = false;
     pInfo[playerid][pTackleTimer] = 0;

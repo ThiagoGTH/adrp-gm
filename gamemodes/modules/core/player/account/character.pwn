@@ -26,8 +26,8 @@ LoadCharacterInfoID(playerid, id) {
     cache_get_value_name_int(0, "hours", pInfo[playerid][pPlayingHours]);
 
     cache_get_value_name_int(0, "money", pInfo[playerid][pMoney]);
-    cache_get_value_name_int(0, "bank", pInfo[playerid][pBank]);
-    cache_get_value_name_int(0, "savings", pInfo[playerid][pSavings]);
+    cache_get_value_name_int(0, "payment", pInfo[playerid][pPayment]);
+    cache_get_value_name_int(0, "taxes", pInfo[playerid][pTaxes]);
 
     cache_get_value_name_int(0, "skin", pInfo[playerid][pSkin]);
     cache_get_value_name_int(0, "score", pInfo[playerid][pScore]);
@@ -74,6 +74,9 @@ LoadCharacterInfoID(playerid, id) {
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_config (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
 
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO players_status (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
+        mysql_query(DBConn, query);
+
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
     }
@@ -90,6 +93,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerInventory(playerid);
     LoadPlayerPet(playerid);
     LoadPlayerConfig(playerid);
+    LoadPlayerStatus(playerid);
     LoadPlayerFaction(playerid);
     SpawnSelectedCharacter(playerid);
 }
@@ -188,8 +192,24 @@ LoadPlayerConfig(playerid){
     cache_get_value_name_int(0, "admin_chat", pInfo[playerid][pTogAdmin]);
     cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
     cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
+    cache_get_value_name_int(0, "speedo", pInfo[playerid][pHudSpeedo]);
+    
     cache_delete(result);
     return true;
+}
+
+LoadPlayerStatus(playerid){
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players_status WHERE `character_id` = '%d'", pInfo[playerid][pID]);
+    new Cache:result = mysql_query(DBConn, query);
+    cache_get_value_name_int(0, "hunger", pInfo[playerid][pHunger]);
+    cache_get_value_name_int(0, "thirst", pInfo[playerid][pThirst]);
+    cache_get_value_name_int(0, "stamina", pInfo[playerid][pStamina]);
+    cache_get_value_name_int(0, "max_stamina", pInfo[playerid][pMaxStamina]);
+    cache_get_value_name_int(0, "addiction", pInfo[playerid][pAddiction]);
+
+    SetPlayerMaxStamina(playerid, pInfo[playerid][pMaxStamina]);
+    SetPlayerStamina(playerid, GetPlayerMaxStamina(playerid));
+    cache_delete(result);
 }
 
 LoadPlayerFaction(playerid){
@@ -201,6 +221,27 @@ LoadPlayerFaction(playerid){
     return true;
 }
 
+//Congela (por determinado tempo) - dando chance do interior carregar.
+PlayerLoadObjects(playerid) {
+    TogglePlayerControllable(playerid, false);
+    pInfo[playerid][LoadTemp] = SetTimerEx("PlayerLoadedObjects", 6000, false, "i", playerid);
+}
+
+//Responde o player Load
+hook PlayerLoadedObjects(playerid) {
+    DesbugInteriorAndWorld(playerid);
+    TogglePlayerControllable(playerid, true);
+    KillTimer(pInfo[playerid][LoadTemp]);
+    printf("Playerid: %d - Interior: %d", playerid, pInfo[playerid][pInterior]);
+} 
+
+//Seta no interior (desbuga - sem if se não dá erro.)
+DesbugInteriorAndWorld(playerid) {
+    SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
+    SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
+    return 1;
+}
+
 SpawnSelectedCharacter(playerid) {
     pInfo[playerid][pLogged] = false;
     TogglePlayerSpectating(playerid, false);
@@ -209,20 +250,23 @@ SpawnSelectedCharacter(playerid) {
     SetPlayerHealth(playerid, pInfo[playerid][pHealth]);
     SetPlayerArmour(playerid, pInfo[playerid][pArmour]);
     SetPlayerScore(playerid, pInfo[playerid][pScore]);
-    SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-    SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 
     SetPlayerName(playerid, pInfo[playerid][pName]);
-
-    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ], pInfo[playerid][pPositionA],
-        0, 0, 0, 0, 0, 0);
-
-    if (GetPlayerSkin(playerid) < 1)
-        SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
+    //Setar o mundo, interior do player aqui (não funciona) - ele buga.
+    SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+        pInfo[playerid][pPositionX], 
+        pInfo[playerid][pPositionY], 
+        pInfo[playerid][pPositionZ],
+        pInfo[playerid][pPositionA],
+        WEAPON_FIST, 0, 
+        WEAPON_FIST, 0, 
+        WEAPON_FIST, 0);
 
     SpawnPlayer(playerid);
+
+    SetPlayerSkin(playerid, pInfo[playerid][pSkin]);
     PreloadAnimations(playerid);
+    PlayerLoadObjects(playerid);
     SetWeapons(playerid);
     pInfo[playerid][pHealthMax] = 150.0;
     pInfo[playerid][pSpectating] = INVALID_PLAYER_ID;
@@ -252,7 +296,6 @@ SpawnSelectedCharacter(playerid) {
 	pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
 
-
     if (pInfo[playerid][pFactionID] != -1) {
 	    pInfo[playerid][pFaction] = GetFactionByID(pInfo[playerid][pFactionID]);
 
@@ -264,7 +307,7 @@ SpawnSelectedCharacter(playerid) {
     TogglePlayerSpectating(playerid, false);
     SetCameraBehindPlayer(playerid);
     SetWeapons(playerid);
-    SetPlayerArmedWeapon(playerid, 0);
+    SetPlayerArmedWeapon(playerid, WEAPON:0);
     return true;
 }
 
@@ -291,8 +334,8 @@ SaveCharacterInfo(playerid) {
     `minutes` = '%d',\
     `hours` = '%d', \
     `money` = '%d', \
-    `bank` = '%d', \
-    `savings` = '%d', \
+    `payment` = '%d', \
+    `taxes` = '%d', \
     `skin` = '%d', \
     `health` = '%f', \
     `armour` = '%f',\
@@ -311,8 +354,8 @@ SaveCharacterInfo(playerid) {
     pInfo[playerid][pPlayingMinutes],
     pInfo[playerid][pPlayingHours],
     pInfo[playerid][pMoney], 
-    pInfo[playerid][pBank],
-    pInfo[playerid][pSavings],
+    pInfo[playerid][pPayment],
+    pInfo[playerid][pTaxes],
     pInfo[playerid][pSkin], 
     pInfo[playerid][pHealth], 
     pInfo[playerid][pArmour], 
@@ -336,6 +379,7 @@ SaveCharacterInfo(playerid) {
     SavePlayerInventory(playerid);
     SavePlayerPet(playerid);
     SavePlayerConfig(playerid);
+    SavePlayerStatus(playerid);
     SavePlayerFaction(playerid);
     return true;
 }
@@ -511,13 +555,33 @@ SavePlayerConfig(playerid) {
     `faction_chat` = '%d', \
     `admin_chat` = '%d', \
     `nametag` = '%d', \
-    `objects` = '%d'    \
+    `objects` = '%d',    \
+    `speedo` = '%d'       \
     WHERE character_id = '%d';", 
     pInfo[playerid][pTogNewbie],
     pInfo[playerid][pTogFaction],
     pInfo[playerid][pTogAdmin],
     pInfo[playerid][pNametagType],
     pInfo[playerid][pRenderObjects],
+    pInfo[playerid][pHudSpeedo],
+    pInfo[playerid][pID]);
+    mysql_query(DBConn, query);
+    return true;
+}
+
+SavePlayerStatus(playerid) {
+    mysql_format(DBConn, query, sizeof query, "UPDATE players_status SET \
+    `hunger` = '%d', \
+    `thirst` = '%d', \
+    `stamina` = '%d', \
+    `max_stamina` = '%d', \
+    `addiction` = '%d'    \
+    WHERE character_id = '%d';", 
+    pInfo[playerid][pHunger],
+    pInfo[playerid][pThirst],
+    pInfo[playerid][pStamina],
+    pInfo[playerid][pMaxStamina],
+    pInfo[playerid][pAddiction],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
     return true;

@@ -83,7 +83,7 @@ InvestmentBuy(playerid, quantity) {
     mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `capital` = `capital` + '%f' WHERE `ID` = '%d'", bought_price*quantity, pInfo[playerid][pInvestment]);
     mysql_query(DBConn, query);
 
-    GiveBankMoney(playerid, -final_value);
+    GiveMoney(playerid, -final_value);
     SendServerMessage(playerid, "Você comprou %d investimentos de %s e pagou US$ %s.", quantity, name, FormatNumber(final_value));
     format(logString, sizeof(logString), "%s (%s) comprou %d investimentos de %s [ID: %d] e pagou US$ %s.", pNome(playerid), GetPlayerUserEx(playerid), quantity, name, trading_id, FormatNumber(final_value));
 	logCreate(playerid, logString, 15);
@@ -111,7 +111,7 @@ InvestmentSell(playerid, quantity, sell_value) {
     mysql_format(DBConn, query, sizeof query, "UPDATE tradings SET `capital` = `capital` - '%f' WHERE `ID` = '%d'", final_value, pInfo[playerid][pInvestment]);
     mysql_query(DBConn, query);
     
-    GiveBankMoney(playerid, final_value);
+    GiveMoney(playerid, final_value);
     SendServerMessage(playerid, "Você vendeu %d investimentos de %s e recebeu US$ %s.", quantity, name, FormatNumber(final_value));
 
     format(logString, sizeof(logString), "%s (%s) vendeu %d investimentos de %s [ID: %d] e recebeu US$ %s.", pNome(playerid), GetPlayerUserEx(playerid), quantity, name, pInfo[playerid][pInvestment], FormatNumber(final_value));
@@ -410,7 +410,7 @@ Dialog:buyStock(playerid, response, listitem, inputtext[]){
 
         new quantity = strval(inputtext);
         new final_value = floatround(buy_value)*quantity;
-        if(GetBankMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em sua conta bancária.", FormatNumber(final_value));
+        if(GetMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em mãos.", FormatNumber(final_value));
         InvestmentBuy(playerid, quantity);
         return true;
     } else {
@@ -555,7 +555,7 @@ Dialog:buyCripto(playerid, response, listitem, inputtext[]){
 
         new quantity = strval(inputtext);
         new final_value = floatround(buy_value)*quantity;
-        if(GetBankMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em sua conta bancária.", FormatNumber(final_value));
+        if(GetMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em mãos.", FormatNumber(final_value));
         InvestmentBuy(playerid, quantity);
         return true;
     } else {
@@ -694,7 +694,7 @@ Dialog:buyCommo(playerid, response, listitem, inputtext[]){
 
         new quantity = strval(inputtext);
         new final_value = floatround(buy_value)*quantity;
-        if(GetBankMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em sua conta bancária.", FormatNumber(final_value));
+        if(GetMoney(playerid) < final_value) return SendErrorMessage(playerid, "Você não possui US$ %s em mãos.", FormatNumber(final_value));
         InvestmentBuy(playerid, quantity);
         return true;
     } else {

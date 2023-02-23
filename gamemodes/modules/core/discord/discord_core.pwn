@@ -188,12 +188,12 @@ public SendInfoClosedAlpha(){
     channel = DCC_FindChannelById("1000930434747740271");
     
     // DISCORD
-    format(title, 32, "Informações — Closed Alpha");
+    format(title, 32, "Informações — Closed Beta");
     utf8encode(title, title);
     new DCC_Embed:embed = DCC_CreateEmbed(title);
     DCC_SetEmbedColor(embed, 0x5964F4);
         
-    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Alpha:**\n\n\
+    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Beta:**\n\n\
     > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
     > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
     > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
@@ -205,7 +205,7 @@ public SendInfoClosedAlpha(){
     utf8encode(text, text);
     DCC_SetEmbedDescription(embed, text);
 
-    format(footer, 128, "© 2022 Advanced Roleplay — Closed Alpha");
+    format(footer, 128, "© 2023 Advanced Roleplay — Closed Beta");
     utf8encode(footer, footer);
 
     DCC_SetEmbedImage(embed, "https://advanced-roleplay.com.br/archives/logo.png");
@@ -224,7 +224,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     DCC_GetMessageAuthor(message, author);
     DCC_GetUserName(author, user_name);
     DCC_GetUserDiscriminator(author, discriminator);
-    new string[128];
+    new string[1024];
     DCC_GetMessageContent(message, string);
     new DCC_Guild:guild = DCC_FindGuildById("277264357824528397");
     new DCC_Guild:guildCA = DCC_FindGuildById("1000929204164112386");
@@ -363,8 +363,8 @@ public DCC_OnMessageCreate(DCC_Message:message) {
 
                 bcrypt_hash(password, BCRYPT_COST, "OnPasswordHashed", "s[128]s[128]", authorid, parameters);
                 DCC_CreatePrivateChannel(author, "PrivateMessageRegister", "ss", parameters, password);
-                new DCC_Role:role1 = DCC_FindRoleById("1013523617985867776");
-                new DCC_Role:role2 = DCC_FindRoleById("1014711599325511880");
+                new DCC_Role:role1 = DCC_FindRoleById("1070220594479640586");
+                new DCC_Role:role2 = DCC_FindRoleById("1070390636060098692");
                 DCC_AddGuildMemberRole(guildCA, author, role1);
                 DCC_AddGuildMemberRole(guild, author, role2);
 
@@ -462,7 +462,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 DCC_SendChannelEmbedMessage(channel, embed);
                 cache_delete(result);       
                 return true;
-            } else if(!strcmp(command, "!deletarconta", true)){
+            } else if(!strcmp(command, "!deletarconta", true)) {
                 new text[256], footer[128], title[64], user_id, username[24], Cache:result;
 
                 cache_delete(result);
@@ -529,7 +529,7 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     }
 
     if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013483397903024228")){
-        DCC_SendChannelMessage(DCC_FindChannelById("1000929205141393410"), string);
+        DCC_SendChannelMessage(DCC_FindChannelById("1070218860202045442"), string);
         return true;
     }
 
@@ -565,8 +565,13 @@ public DCC_OnMessageCreate(DCC_Message:message) {
         return true;
     }
 
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("989306578199003197")){
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1066434521395892315")){
         DCC_SendChannelMessage(DCC_FindChannelById("989305002952622110"), string);
+        return true;
+    }
+
+    if(!strcmp(channel_name, "bot-talk-staff", true) && channel == DCC_FindChannelById("1070712406470299648")){
+        DCC_SendChannelMessage(DCC_FindChannelById("992260559984672768"), string);
         return true;
     }
 
@@ -1159,8 +1164,8 @@ public DCC_OnMessageCreate(DCC_Message:message) {
     }
     ////////////////////////////////////////////////////////////////////////
     // DISCORD PÚBLICO
-    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1013952540393619557")){
-        DCC_SendChannelMessage(DCC_FindChannelById("277264357824528397"), string);
+    if(!strcmp(channel_name, "bot-talk", true) && channel == DCC_FindChannelById("1070070693724700763")){
+        DCC_SendChannelMessage(DCC_FindChannelById("1065815145151995966"), string);
         return true;
     }
     return true;

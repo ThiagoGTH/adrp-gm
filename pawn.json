@@ -4,19 +4,20 @@
 	"entry": "gamemodes/main.pwn",
 	"output": "gamemodes/main.amx",
 	"dependencies": [
-		"sampctl/samp-stdlib",
-		"pawn-lang/sa-mp-fixes",
+		"openmultiplayer/omp-stdlib",
+		"pawn-lang/samp-stdlib@open.mp",
+		"pawn-lang/pawn-stdlib@open.mp",
 		"NexiusTailer/Nex-AC",
-		"Zeex/samp-plugin-crashdetect",
+		"Zeex/samp-plugin-crashdetect:v4.20",
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",
 		"Southclaws/pawn-chrono",
 		"BigETI/pawn-memory",
-		"Y-Less/sscanf",
+		"Y-Less/sscanf:v2.13.8",
 		"Y-Less/indirection",
-		"samp-incognito/samp-streamer-plugin",
+		"samp-incognito/samp-streamer-plugin:v2.9.6",
 		"Awsomedude/easyDialog",
-		"maddinat0r/samp-discord-connector",
+		"maddinat0r/samp-discord-connector:v0.3.5",
 		"oscar-broman/strlib",
 		"lassir/bcrypt-samp",
 		"samp-incognito/samp-streamer-plugin",
@@ -24,8 +25,9 @@
 		"Southclaws/progress2",
 		"Awsomedude/easyDialog",
 		"philip1337/samp-plugin-mapandreas:v1.2.1",
-		"katursis/Pawn.CMD:3.3.6",
-		"dakyskye/pawn-env:1.1.1"
+		"katursis/Pawn.CMD",
+		"dakyskye/pawn-env:1.1.1",
+		"katursis/Pawn.Regex:1.2.3"
 	],
 	"local": true,
 	"runtime": {
@@ -66,7 +68,7 @@
 		"cookielogging": false,
 		"output": true,
 		"extra": {
-			"discord_bot_token": "OTMzMzI0ODI2Njc5MDcwNzcw.Gl77yw.Lu3j0Njb93jFL1WYzYswV6Z6-mZPLt4eh-M7GQ"
+			"discord_bot_token": "SAMP_DISCORD_BOT_TOKEN"
 		}
 	},
 	"builds": [

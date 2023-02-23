@@ -15,8 +15,8 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 	return true;
 }
 
-hook OnPlayerStateChange(playerid, newstate, oldstate) {
-	DMV_StateChange(playerid, newstate, oldstate);
+hook OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
+	DMV_StateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate);
 	return true;
 }
 
@@ -28,7 +28,7 @@ StartTestingLicense(playerid) {
 	    SetCameraBehindPlayer(playerid);
 
 	    vehicleDMV[playerid] = CreateVehicle(DMV_VEHICLE, 1791.1338, -1933.0410, 13.0918, 1.000, random(127), random(127), -1);
-	    SetVehicleVirtualWorld(vehicleDMV[playerid], 0);
+	    SetVehicleVirtualWorld(vehicleDMV[playerid], false);
 
         new string[64];
         format(string, sizeof(string), "DMV #%3d", playerid);
@@ -113,11 +113,19 @@ DMVUpdate(playerid) {
 	return true;
 }
 
-DMV_StateChange(playerid, newstate, oldstate) {
+DMV_StateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
   		if(!InDMV[playerid]) return true;
-  		new engine, lights, alarm, doors, bonnet, boot, objective,
-  			vehicleid = GetPlayerVehicleID(playerid);
+  		static 
+			bool:engine, 
+			bool:lights, 
+			bool:alarm, 
+			bool:doors, 
+			bool:bonnet, 
+			bool:boot, 
+			bool:objective;
+			
+  		new vehicleid = GetPlayerVehicleID(playerid);
   		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 		if(!(vehicleid == vehicleDMV[playerid])) return va_SendClientMessage(playerid, COLOR_GREEN, "Você precisa entrar no veículo.");
 		SendServerMessage(playerid, "Você iniciou o exame. Siga os checkpoints e não danifique o veículo.");

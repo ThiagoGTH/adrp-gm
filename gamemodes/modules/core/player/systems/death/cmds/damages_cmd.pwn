@@ -19,6 +19,7 @@ CMD:investida(playerid, params[]){
 	}else{
 		SendServerMessage(playerid, "Você desativou o modo investida.");
 		pInfo[playerid][pTackleMode] = false;
+		TextDrawHideForPlayer(playerid, TEXTDRAW_TACKLE);
 	}
 	return true;
 }

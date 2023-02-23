@@ -32,7 +32,7 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
                 case 0: {
                         SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s falhou em tentar derrubar %s.", pNome(playerid), pNome(damagedid));
 
-                        ApplyAnimation(playerid,"ped", "EV_dive", 4.0, false, true, true, false, 0, true);
+                        ApplyAnimation(playerid,"ped", "EV_dive", 4.0, false, true, true, false, 0);
                         pInfo[playerid][pTackleTimer] = gettime() + 10;
 
                         format(logString, sizeof(logString), "%s (%s) falhou em derrubar %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
@@ -41,9 +41,9 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
                 case 1: {
                     SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
                         
-                    ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, false, true, true, true, 0, true);
-                    ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
-                    ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0, true);
+                    ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 4.0, false, true, true, true, 0);
+                    ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
+                    ApplyAnimation(damagedid, "PED", "BIKE_fall_off", 4.1, false, true, true, true, 0);
 
                     pInfo[playerid][pTackleTimer] = gettime() + 10;
 
@@ -155,11 +155,11 @@ OnPlayerGetBrutallyWounded(playerid, issuerid, weaponid) {
 
 	if(IsPlayerInAnyVehicle(playerid)) {
 		TogglePlayerControllable(playerid, false);
-		ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0, true);
+		ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
 	} else {
 		TogglePlayerControllable(playerid, true);
-        ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, 0, 1, 1, 1, 0);
-		//ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0, true);
+        ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, false, true, true, true, 0);
+		//ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
 	}
 
 	if(issuerid != 999 && weaponid != 999){
@@ -216,8 +216,8 @@ OnPlayerGetDeath(playerid, issuerid, weaponid) {
 		UpdateDynamic3DTextLabelText(pInfo[playerid][pBrutallyTag], COLOR_LIGHTRED, textstring);
 	}
 
-	if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0, true);
-	else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0, true);
+	if(IsPlayerInAnyVehicle(playerid)) ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, false, true, true, true, 0);
+	else ApplyAnimation(playerid, "PED", "FLOOR_hit_f", 25.0, false, true, true, true, 0);
 
 	if(issuerid != 999 && weaponid != 999){
 		format(logString, sizeof(logString), "%s (%s) [%s] deixou %s com o status de morto com um(a) %s.", pNome(issuerid), GetPlayerUserEx(issuerid), GetPlayerIP(issuerid), pNome(playerid), ReturnWeaponName(weaponid));
@@ -259,28 +259,32 @@ forward DeathTimer(); public DeathTimer() {
     return true;
 }
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys){
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys){
 	if(pInfo[playerid][pDead]) return false;
 
     if(pInfo[playerid][pLimping] && pInfo[playerid][pLimping] < gettime()){
 	    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
 			if(newkeys & KEY_JUMP) {
-				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.0, 0, 1, 1, 0, 0, 1);
+				ApplyAnimation(playerid, "GYMNASIUM", "gym_jog_falloff", 4.0, false, true, true, false, 0);
 			}
 		}
 	 	if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT){
 			if(newkeys & KEY_SPRINT) {
-				ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
-				ClearAnimations(playerid, 1);
+				ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, false, false, false, false, 0);
+				ClearAnimations(playerid);
 
-				ApplyAnimation(playerid, "Ped", "FALL_collapse", 3.0, 0, 1, 1, 0, 0, 1);
+				ApplyAnimation(playerid, "Ped", "FALL_collapse", 3.0, false, true, true, false, 0);
 			}
 		}
 	}
     return true;
 }
 
-public OnPlayerStateChange(playerid, newstate, oldstate) {
+#if !defined PLAYER_STATE
+	#define PLAYER_STATE: _:
+#endif
+
+public OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
 	if (newstate == PLAYER_STATE_WASTED)
 	{
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 

@@ -1,7 +1,7 @@
-#define MAX_WEAPONS     		(57)
+#define MAX_WEAPONS_QTD     	(57)
 #define MAX_WEAPON_NAME 		(32)
 
-static const g_WeaponName[MAX_WEAPONS][MAX_WEAPON_NAME] = 
+static const g_WeaponName[MAX_WEAPONS_QTD][MAX_WEAPON_NAME] = 
 {
 	{"Punho"            	}, {"Soco-inglês"		}, {"Taco de golf"          },
 	{"Cassetete"       		}, {"Faca"         		}, {"Taco de baseball"      },
@@ -24,7 +24,7 @@ static const g_WeaponName[MAX_WEAPONS][MAX_WEAPON_NAME] =
 	{"Colisão"        		}, {"Queda"         	}, {"Desconhecido"          }
 };
 
-static Float:s_WeaponDamage[MAX_WEAPONS] = 
+static Float:s_WeaponDamage[MAX_WEAPONS_QTD] = 
 {
 	1.0, // 0 - Fist
 	5.0, // 1 - Brass knuckles
@@ -124,21 +124,21 @@ ReturnWeaponName(weaponid) {
 SetPlayerWeaponSkill(playerid, skill) {
 	switch(skill) {
 	    case MINIMUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 200);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 200);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 0);
 	    }
 	    case MEDIUM_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 500);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 500);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 0);
 	    }
 	    case FULL_SKILL: {
-            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, i, 999);
+            for(new i = 0; i != 11;++i) SetPlayerSkillLevel(playerid, WEAPONSKILL:i, 999);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 0);
 			SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 0);

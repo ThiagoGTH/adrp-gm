@@ -138,10 +138,10 @@ CMD:janela(playerid, params[]) {
         windowOption[20],
         vehicleid = GetPlayerVehicleID(playerid),
         seat = GetPlayerVehicleSeat(playerid),
-        driver,
-        passenger,
-        backleft,
-        backright;
+        bool:driver,
+        bool:passenger,
+        bool:backleft,
+        bool:backright;
 
     if(sscanf(params, "S(mine)[20]", windowOption)){
         return 1;
@@ -152,8 +152,8 @@ CMD:janela(playerid, params[]) {
     if(!strcmp(windowOption, "mine", true)){
         switch(seat){
             case 0:{ //Motorista
-                if(driver != 0){
-                    SetVehicleParamsCarWindows(vehicleid, 0, passenger, backleft, backright);
+                if(driver != false){
+                    SetVehicleParamsCarWindows(vehicleid, false, passenger, backleft, backright);
                     vInfo[vehicleid][vWindowsDown] = true;
                     PC_EmulateCommand(playerid, "/ame abaixa a sua janela.");
 
@@ -163,40 +163,40 @@ CMD:janela(playerid, params[]) {
                     SendClientMessage(playerid, COLOR_BEGE, "* O motorista do veículo pode utilizar parâmetros extras para controlar todas as janelas do veículo.");
                     SendClientMessage(playerid, COLOR_BEGE, "_____________________________________________");
 		        } else {
-                    SetVehicleParamsCarWindows(vehicleid, 1, passenger, backleft, backright);
+                    SetVehicleParamsCarWindows(vehicleid, true, passenger, backleft, backright);
 					vInfo[vehicleid][vWindowsDown] = false;
                     PC_EmulateCommand(playerid, "/ame levanta a sua janela.");
                 }
             }
             case 1:{ //Passageiro
-                if(passenger != 0){
-                    SetVehicleParamsCarWindows(vehicleid, driver, 0, backleft, backright);
+                if(passenger != false){
+                    SetVehicleParamsCarWindows(vehicleid, driver, false, backleft, backright);
                     vInfo[vehicleid][vWindowsDown] = true;
                     PC_EmulateCommand(playerid, "/ame abaixa a sua janela.");
                 } else {
-                    SetVehicleParamsCarWindows(vehicleid, driver, 1, backleft, backright);
+                    SetVehicleParamsCarWindows(vehicleid, driver, true, backleft, backright);
                     vInfo[vehicleid][vWindowsDown] = false;
                     PC_EmulateCommand(playerid, "/ame levanta a sua janela.");
                 }
             }
             case 2:{ //Traseiro Esquerdo
-                if(backleft != 0){
-                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, 0, backright);
+                if(backleft != false){
+                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, false, backright);
                     vInfo[vehicleid][vWindowsDown] = true;
                     PC_EmulateCommand(playerid, "/ame abaixa a sua janela.");
                 } else {
-                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, 1, backright);
+                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, true, backright);
                     vInfo[vehicleid][vWindowsDown] = false;
                     PC_EmulateCommand(playerid, "/ame levanta a sua janela.");
                 }
             }
             case 3:{ //Traseiro Direito
-                if(backright != 0){
-                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, 0);
+                if(backright != false){
+                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, false);
                     vInfo[vehicleid][vWindowsDown] = true;
                     PC_EmulateCommand(playerid, "/ame abaixa a sua janela.");
                 } else {
-                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, 1);
+                    SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, true);
 					vInfo[vehicleid][vWindowsDown] = false;
                     PC_EmulateCommand(playerid, "/ame levanta a sua janela.");
                 }
@@ -209,12 +209,12 @@ CMD:janela(playerid, params[]) {
         if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return SendErrorMessage(playerid, "Apenas o motorista pode utilizar parâmetros adicionais.");
 
-        if(driver != 0){
-            SetVehicleParamsCarWindows(vehicleid, 0, passenger, backleft, backright);
+        if(driver != false){
+            SetVehicleParamsCarWindows(vehicleid, false, passenger, backleft, backright);
             vInfo[vehicleid][vWindowsDown] = true;
             PC_EmulateCommand(playerid, "/ame abaixa a janela dianteira esquerda.");
         } else {
-            SetVehicleParamsCarWindows(vehicleid, 1, passenger, backleft, backright);
+            SetVehicleParamsCarWindows(vehicleid, true, passenger, backleft, backright);
 			vInfo[vehicleid][vWindowsDown] = false;
             PC_EmulateCommand(playerid, "/ame levanta a janela dianteira esquerda.");
         }
@@ -222,12 +222,12 @@ CMD:janela(playerid, params[]) {
         if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return SendErrorMessage(playerid, "Apenas o motorista pode utilizar parâmetros adicionais.");
 
-        if(passenger != 0){
-            SetVehicleParamsCarWindows(vehicleid, driver, 0, backleft, backright);
+        if(passenger != false){
+            SetVehicleParamsCarWindows(vehicleid, driver, false, backleft, backright);
             vInfo[vehicleid][vWindowsDown] = true;
             PC_EmulateCommand(playerid, "/ame abaixa a janela dianteira direita.");
         } else {
-            SetVehicleParamsCarWindows(vehicleid, driver, 1, backleft, backright);
+            SetVehicleParamsCarWindows(vehicleid, driver, true, backleft, backright);
 			vInfo[vehicleid][vWindowsDown] = false;
             PC_EmulateCommand(playerid, "/ame levanta a janela dianteira direita.");
         }
@@ -235,12 +235,12 @@ CMD:janela(playerid, params[]) {
         if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return SendErrorMessage(playerid, "Apenas o motorista pode utilizar parâmetros adicionais.");
 
-        if(backleft != 0){
-            SetVehicleParamsCarWindows(vehicleid, driver, passenger, 0, backright);
+        if(backleft != false){
+            SetVehicleParamsCarWindows(vehicleid, driver, passenger, false, backright);
             vInfo[vehicleid][vWindowsDown] = true;
             PC_EmulateCommand(playerid, "/ame abaixa a janela traseira esquerda.");
         } else {
-            SetVehicleParamsCarWindows(vehicleid, driver, passenger, 1, backright);
+            SetVehicleParamsCarWindows(vehicleid, driver, passenger, true, backright);
             vInfo[vehicleid][vWindowsDown] = false;
             PC_EmulateCommand(playerid, "/ame levanta a janela traseira esquerda.");
         }
@@ -248,12 +248,12 @@ CMD:janela(playerid, params[]) {
         if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return SendErrorMessage(playerid, "Apenas o motorista pode utilizar parâmetros adicionais.");
 
-        if(backright != 0){
-            SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, 0);
+        if(backright != false){
+            SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, false);
             vInfo[vehicleid][vWindowsDown] = true;
             PC_EmulateCommand(playerid, "/ame abaixa a janela traseira direita.");
         } else {
-            SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, 1);
+            SetVehicleParamsCarWindows(vehicleid, driver, passenger, backleft, true);
             vInfo[vehicleid][vWindowsDown] = false;
             PC_EmulateCommand(playerid, "/ame levanta a janela traseira direita.");
         }
@@ -261,12 +261,12 @@ CMD:janela(playerid, params[]) {
         if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
             return SendErrorMessage(playerid, "Apenas o motorista pode utilizar parâmetros adicionais.");
 
-        if(driver != 0 || passenger != 0 || backleft != 0 || backright != 0){
-            SetVehicleParamsCarWindows(vehicleid, 0, 0, 0, 0);
+        if(driver != false || passenger != false || backleft != false || backright != false){
+            SetVehicleParamsCarWindows(vehicleid, false, false, false, false);
             vInfo[vehicleid][vWindowsDown] = true;
             PC_EmulateCommand(playerid, "/ame abaixa todas as janelas.");
         } else {
-            SetVehicleParamsCarWindows(vehicleid, 1, 1, 1, 1);
+            SetVehicleParamsCarWindows(vehicleid, true, true, true, true);
 			vInfo[vehicleid][vWindowsDown] = false;
             PC_EmulateCommand(playerid, "/ame levanta todas as janelas.");
         }

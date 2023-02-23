@@ -405,7 +405,7 @@ SetCarInside(playerid, model, price, cam) {
 			else
 	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model,552.0631, -1269.3943, 17.3316, 320.8407, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
-			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+			ChangeVehicleColours(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+1000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+1000);
@@ -418,7 +418,7 @@ SetCarInside(playerid, model, price, cam) {
 			else
 	    		pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 2123.6782, -1125.8719, 25.5539, 340.7095, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
 
-			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+			ChangeVehicleColours(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+2000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+2000);
@@ -428,7 +428,7 @@ SetCarInside(playerid, model, price, cam) {
 	    SetPlayerPos(playerid, 1932.2606,-2251.5281,13.5469);
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle])) {
 	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 1907.4602, -2292.1763, 14.7098, 273.5805, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
-			ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+			ChangeVehicleColours(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+5000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+5000);
@@ -441,7 +441,7 @@ SetCarInside(playerid, model, price, cam) {
 		if(!IsValidVehicle(pInfo[playerid][dBuyVehicle]))
 		{
 	    	pInfo[playerid][dBuyVehicle] = CreateVehicle(model, 723.2198, -1698.6869, -0.0064, 0.0000, pInfo[playerid][dColor1], pInfo[playerid][dColor2], -1);
-	    	ChangeVehicleColor(pInfo[playerid][dBuyVehicle],  pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+	    	ChangeVehicleColours(pInfo[playerid][dBuyVehicle],  pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
 		}
 		SetPlayerVirtualWorld(playerid, playerid+6000);
 		SetVehicleVirtualWorld(pInfo[playerid][dBuyVehicle], playerid+6000);
@@ -648,7 +648,7 @@ Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
                 case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
             }
             pInfo[playerid][dColor1] = listitem;
-            ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+            ChangeVehicleColours(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
             Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
         }
         else if(pInfo[playerid][dBuyingEditMenu] == 6) {
@@ -660,7 +660,7 @@ Dialog:SelectEditOptions(playerid, response, listitem, inputtext[]) {
                 case 4: format(string, sizeof(string), "Preto\nBranco\nAzul\nVermelho\n{BBBBBB}>>> {FFFFFF}Cinza");
             }
             pInfo[playerid][dColor2] = listitem;
-            ChangeVehicleColor(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
+            ChangeVehicleColours(pInfo[playerid][dBuyVehicle], pInfo[playerid][dColor1], pInfo[playerid][dColor2]);
             Dialog_Show(playerid, SelectEditOptions, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
         }
     } else Dialog_Show(playerid, SelectEdit, DIALOG_STYLE_LIST, title, "Alarme\nSeguro\nLegalidade\nSun Pass\nCor 1\nCor 2", "Selecionar", "<<");
@@ -674,12 +674,14 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             ResetDealershipVars(playerid);
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-            pInfo[playerid][pPositionX], 
-            pInfo[playerid][pPositionY], 
-            pInfo[playerid][pPositionZ],
-            pInfo[playerid][pPositionA],
-            0, 0, 0, 0, 0, 0);
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             return true;
@@ -714,12 +716,14 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
             TogglePlayerControllable(playerid, false);
             SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
             SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-            SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-            pInfo[playerid][pPositionX], 
-            pInfo[playerid][pPositionY], 
-            pInfo[playerid][pPositionZ],
-            pInfo[playerid][pPositionA],
-            0, 0, 0, 0, 0, 0);
+            SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+                pInfo[playerid][pPositionX], 
+                pInfo[playerid][pPositionY], 
+                pInfo[playerid][pPositionZ],
+                pInfo[playerid][pPositionA],
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0, 
+                WEAPON_FIST, 0);
             SpawnPlayer(playerid);
             SetWeapons(playerid);
             ResetDealershipVars(playerid);
@@ -737,12 +741,14 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         TogglePlayerControllable(playerid, false);
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
         SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-        SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], 
-        pInfo[playerid][pPositionY], 
-        pInfo[playerid][pPositionZ],
-        pInfo[playerid][pPositionA],
-        0, 0, 0, 0, 0, 0);
+        SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0);
         SpawnPlayer(playerid);
         SetWeapons(playerid);
         ResetDealershipVars(playerid);
@@ -751,12 +757,14 @@ Dialog:EditorCheckOutResponse(playerid, response, listitem, inputtext[]) {
         ResetDealershipVars(playerid);
         SetPlayerVirtualWorld(playerid, pInfo[playerid][pVirtualWorld]);
 		SetPlayerInterior(playerid, pInfo[playerid][pInterior]);
-	    SetSpawnInfo(playerid, 0, pInfo[playerid][pSkin], 
-        pInfo[playerid][pPositionX], 
-        pInfo[playerid][pPositionY], 
-        pInfo[playerid][pPositionZ],
-        pInfo[playerid][pPositionA],
-        0, 0, 0, 0, 0, 0);
+	    SetSpawnInfo(playerid, false, pInfo[playerid][pSkin], 
+            pInfo[playerid][pPositionX], 
+            pInfo[playerid][pPositionY], 
+            pInfo[playerid][pPositionZ],
+            pInfo[playerid][pPositionA],
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0, 
+            WEAPON_FIST, 0);
         SpawnPlayer(playerid);
         SetWeapons(playerid);
     }

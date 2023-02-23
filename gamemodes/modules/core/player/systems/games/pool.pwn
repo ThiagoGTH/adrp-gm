@@ -1,9 +1,17 @@
 #include <YSI_Coding\y_hooks>
 
 /* ================================ DEFINIÇÕES ================================ */
-#define HOLDING(%0)             	((newkeys & (%0)) == (%0))
-#define PRESSED(%0)					(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
-#define RELEASED(%0) 				(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
+#define HOLDING(%0) \
+    ((newkeys & (%0)) == (%0))
+
+#define PRESSED(%0) \
+    (((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
+
+#define PRESSING(%0,%1) \
+    (%0 & (%1))
+	
+#define RELEASED(%0) \
+    (((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
@@ -119,20 +127,19 @@ hook OnScriptInit() {
     AdjustTextDrawString(powerStr);
 
 	g_PoolTextdraw = TextDrawCreate(529.000000, 218.000000, powerStr);
-	TextDrawBackgroundColor(g_PoolTextdraw, 255);
-	TextDrawFont(g_PoolTextdraw, 1);
+	TextDrawBackgroundColour(g_PoolTextdraw, 255);
+	TextDrawFont(g_PoolTextdraw, TEXT_DRAW_FONT_2);
 	TextDrawLetterSize(g_PoolTextdraw, 0.300000, 1.299998);
-	TextDrawColor(g_PoolTextdraw, -1);
+	TextDrawColour(g_PoolTextdraw, -1);
 	TextDrawSetOutline(g_PoolTextdraw, 1);
-	TextDrawSetProportional(g_PoolTextdraw, 1);
-	TextDrawSetSelectable(g_PoolTextdraw, 0);
+	TextDrawSetProportional(g_PoolTextdraw, true);
+	TextDrawSetSelectable(g_PoolTextdraw, false);
 
 	return true;
 }
 
 hook OnGameModeInit() {
-	mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `pool_tables` WHERE (`ID` >= '0')");
-	mysql_tquery(DBConn, query, "Pool_Load");
+	LoadPools();
 	printf("[MESAS DE SINUCA]: %d mesas de sinuca foram criadas.", Iter_Count(pooltables));
 	return true;
 }
@@ -152,15 +159,15 @@ hook OnPlayerConnect(playerid) {
 	RemoveBuildingForPlayer(playerid, 2964, 510.1016, -84.8359, 997.9375, 9999.9);
 
 	p_HelpBoxTD[playerid] = CreatePlayerTextDraw(playerid, 30.000000, 161.000000, "Carregando...");
-	PlayerTextDrawBackgroundColor(playerid, p_HelpBoxTD[playerid], 255);
-	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawBackgroundColour(playerid, p_HelpBoxTD[playerid], 255);
+	PlayerTextDrawFont(playerid, p_HelpBoxTD[playerid], TEXT_DRAW_FONT_2);
 	PlayerTextDrawLetterSize(playerid, p_HelpBoxTD[playerid], 0.219999, 1.200000);
-	PlayerTextDrawColor(playerid, p_HelpBoxTD[playerid], -1);
-	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], 0);
-	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], 1);
+	PlayerTextDrawColour(playerid, p_HelpBoxTD[playerid], -1);
+	PlayerTextDrawSetOutline(playerid, p_HelpBoxTD[playerid], false);
+	PlayerTextDrawSetProportional(playerid, p_HelpBoxTD[playerid], true);
 	PlayerTextDrawSetShadow(playerid, p_HelpBoxTD[playerid], 1);
-	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], 1);
-	PlayerTextDrawBoxColor(playerid, p_HelpBoxTD[playerid], 117);
+	PlayerTextDrawUseBox(playerid, p_HelpBoxTD[playerid], true);
+	PlayerTextDrawBoxColour(playerid, p_HelpBoxTD[playerid], 117);
 	PlayerTextDrawTextSize(playerid, p_HelpBoxTD[playerid], 170.000000, 0.000000);
 	return true;
 }
@@ -202,7 +209,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if (poolid != -1 && pooltable_distance < 2.5) {
 		if (g_poolTableData[poolid][E_STARTED]) {
 			// quit table
-			if (HOLDING(KEY_SECONDARY_ATTACK) && IsPlayerPlayingPool(playerid)) {
+			if (HOLDING(16) && IsPlayerPlayingPool(playerid)) {
 				HidePlayerHelpDialog(playerid);
 				Pool_SendTableMessage(poolid, COLOR_GREEN, "SINUCA: %s deixou a partida de sinuca.", pNome(playerid));
 				return Pool_RemovePlayer(playerid);
@@ -228,14 +235,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 			// begin gameplay stuff
 			if (IsPlayerPlayingPool(playerid) && p_PoolID[playerid] == poolid) {
-				if (RELEASED(KEY_JUMP)) {
+				if (RELEASED(32)) {
 					if (g_poolTableData[poolid][E_AIMER] == playerid) {
 						p_PoolCameraBirdsEye[playerid] = ! p_PoolCameraBirdsEye[playerid];
 						Pool_UpdatePlayerCamera(playerid, poolid);
 					}
 				}
 
-				if (RELEASED(KEY_HANDBRAKE)) {
+				if (RELEASED(128)) {
 					if (Pool_AreBallsStopped(poolid)) {
 						if (g_poolTableData[poolid][E_AIMER] != playerid) {
 							if (g_poolTableData[poolid][E_NEXT_SHOOTER] != playerid) return SendErrorMessage(playerid, "Não é a sua vez. Por favor, espere.");
@@ -266,7 +273,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	                            	p_PoolAngle[playerid][0] = poolrot;
 	                            	p_PoolAngle[playerid][1] = poolrot;
 
-									SetPlayerArmedWeapon(playerid, 0);
+									SetPlayerArmedWeapon(playerid, WEAPON_FIST);
 									Pool_GetXYInFrontOfPos(Xa, Ya, poolrot + 180, x, y, 0.085);
 									g_poolTableData[poolid][E_AIMER_OBJECT] = CreateDynamicObject(3004, x, y, Za, 7.0, 0, poolrot + 180, .worldid = g_poolTableData[poolid][E_WORLD]);
 
@@ -279,9 +286,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	                				SetPlayerFacingAngle(playerid, poolrot);
 
 									if (distance_to_ball > 1.5) {
-										ApplyAnimation(playerid, "POOL", "POOL_XLong_Start", 4.1, 0, 1, 1, 1, 1, 1);
+										ApplyAnimation(playerid, "POOL", "POOL_XLong_Start", 4.1, false, true, true, true, 1);
 									} else {
-										ApplyAnimation(playerid, "POOL", "POOL_Long_Start", 4.1, 0, 1, 1, 1, 1, 1);
+										ApplyAnimation(playerid, "POOL", "POOL_Long_Start", 4.1, false, true, true, true, 1);
 									}
 
 									g_poolTableData[poolid][E_AIMER] = playerid;
@@ -297,11 +304,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 							}
 						} else {
 							TogglePlayerControllable(playerid, true);
-							GivePlayerWeapon(playerid, 7, 1);
+							GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 
 							ClearAnimations(playerid);
 	            			SetCameraBehindPlayer(playerid);
-							ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+							ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 
 							TextDrawHideForPlayer(playerid, g_PoolTextdraw);
 							HidePlayerProgressBar(playerid, g_PoolPowerBar[playerid]);
@@ -313,7 +320,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					}
 				}
 
-				if (RELEASED(KEY_FIRE)) {
+				if (RELEASED(4)) {
 					if (g_poolTableData[poolid][E_AIMER] == playerid) {
 						new Float: ball_x, Float: ball_y, Float: ball_z;
 
@@ -325,9 +332,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 						new Float: distance_to_ball = GetPlayerDistanceFromPoint(playerid, ball_x, ball_y, ball_z);
 
 						if (distance_to_ball > 1.5) {
-							ApplyAnimation(playerid, "POOL", "POOL_XLong_Shot", 4.1, 0, 1, 1, 0, 0, 1);
+							ApplyAnimation(playerid, "POOL", "POOL_XLong_Shot", 4.1, false, true, true, false, 0);
 						} else {
-							ApplyAnimation(playerid, "POOL", "POOL_Long_Shot", 4.1, 0, 1, 1, 0, 0, 1);
+							ApplyAnimation(playerid, "POOL", "POOL_Long_Shot", 4.1, false, true, true, false, 0);
 						}
 
 						new Float: speed = 0.4 + (g_poolTableData[poolid][E_POWER] * 2.0) / 100.0;
@@ -341,13 +348,13 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 						DestroyDynamicObject(g_poolTableData[poolid][E_AIMER_OBJECT]);
 						g_poolTableData[poolid][E_AIMER_OBJECT] = -1;
 
-						GivePlayerWeapon(playerid, 7, 1);
+						GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 					}
 					else ClearAnimations(playerid);
 				}
 			}
 		} else {
-			if (PRESSED(KEY_SECONDARY_ATTACK))
+			if (PRESSED(16))
 			{
 				if (IsPlayerPlayingPool(playerid) && Iter_Contains(poolplayers<poolid>, playerid)) {
 					HidePlayerHelpDialog(playerid);
@@ -381,7 +388,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					    foreach (new i : poolplayers< poolid >) {
 							p_PoolScore[i] = 0;
 							PlayerPlaySound(i, 1085, 0.0, 0.0, 0.0);
-							GivePlayerWeapon(i, 7, 1);
+							GivePlayerWeapon(i, WEAPON_POOLSTICK, 1);
 					   }
 
 						g_poolTableData[poolid][E_STARTED] = true;
@@ -590,7 +597,7 @@ Pool_GetClosestTable(playerid, &Float: dis = 35.00) {
 Pool_RespawnBalls(poolid) {
 	if (g_poolTableData[poolid][E_AIMER] != -1)
 	{
-		TogglePlayerControllable(g_poolTableData[poolid][E_AIMER], 1);
+		TogglePlayerControllable(g_poolTableData[poolid][E_AIMER], true);
 		//ClearAnimations(g_poolTableData[poolid][E_AIMER]);
 
 		//ApplyAnimation(g_poolTableData[poolid][E_AIMER], "CARRY", "crry_prtial", 1.0, 0, 0, 0, 0, 0);
@@ -797,7 +804,7 @@ public OnPoolUpdate(poolid) {
 
 	new Float: Xa, Float: Ya, Float: Za;
 	new Float: X, Float: Y, Float: Z;
-	new keys, ud, lr;
+	new KEY:keys, KEY:ud, KEY:lr;
 
 	if (g_poolTableData[poolid][E_CUE_POCKETED]) {
 		new playerid = g_poolTableData[poolid][E_NEXT_SHOOTER];
@@ -850,7 +857,7 @@ public OnPoolUpdate(poolid) {
 				SetCameraBehindPlayer(playerid);
 				TogglePlayerControllable(playerid, true);
 				g_poolTableData[poolid][E_CUE_POCKETED] = false;
-				ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+				ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 				SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "* %s colocou a bola branca no lugar.", pNome(playerid));
 			}
 		}
@@ -870,7 +877,7 @@ public OnPoolUpdate(poolid) {
 
 				GetPlayerPos(playerid, X, Y ,Z);
 				GetDynamicObjectPos(PHY_GetHandleObject(g_poolBallData[poolid][E_BALL_PHY_HANDLE][0]), Xa, Ya, Za);
-				newrot = p_PoolAngle[playerid][0] + (lr > 0 ? 0.9 : -0.9);
+				newrot = p_PoolAngle[playerid][0] + (lr > KEY:0 ? 0.9 : -0.9);
 				dist = GetDistanceBetweenPoints(X, Y, 0.0, Xa, Ya, 0.0);
 
 				// keep the head out of the point of view
@@ -921,7 +928,7 @@ public OnPoolUpdate(poolid) {
 
 	if ((!g_poolTableData[poolid][E_SHOTS_LEFT] || g_poolTableData[poolid][E_FOULS] || g_poolTableData[poolid][E_EXTRA_SHOT]) && Pool_AreBallsStopped(poolid)) {
 		Pool_QueueNextPlayer(poolid, current_player);
-		SetTimerEx("RestoreCamera", 800, 0, "d", current_player);
+		SetTimerEx("RestoreCamera", 800, false, "d", current_player);
 	}
 	return true;
 }
@@ -929,8 +936,8 @@ public OnPoolUpdate(poolid) {
 public RestoreCamera(playerid) {
 	TextDrawHideForPlayer(playerid, g_PoolTextdraw);
 	HidePlayerProgressBar(playerid, g_PoolPowerBar[playerid]);
-	TogglePlayerControllable(playerid, 1);
-	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, 0, 1, 1, 0, 0);
+	TogglePlayerControllable(playerid, true);
+	ApplyAnimation(playerid, "CARRY", "crry_prtial", 4.0, false, true, true, false, 0);
 	return SetCameraBehindPlayer(playerid);
 }
 
@@ -947,7 +954,7 @@ public deleteBall(poolid, ballid) {
 public RestoreWeapon(playerid) {
 	RemovePlayerAttachedObject(playerid, 0);
 	p_PoolChalking[playerid] = false;
-	GivePlayerWeapon(playerid, 7, 1);
+	GivePlayerWeapon(playerid, WEAPON_POOLSTICK, 1);
 	ClearAnimations(playerid);
 	return true;
 }
@@ -959,10 +966,9 @@ GetPoolBallIndexFromModel(modelid) {
 	return -1;
 }
 
-forward Pool_Load();
-public Pool_Load() {
+LoadPools() {
 	new Float:X, Float:Y, Float:Z, Float:A, skin, interior, world;
-
+	mysql_query(DBConn, "SELECT * FROM `pool_tables`;");
 	for (new i = 0; i < cache_num_rows(); i ++) {
 		if (!g_poolTableData[i][E_EXISTS]) {
 			g_poolTableData[i][E_EXISTS] = true;
@@ -1249,7 +1255,7 @@ Pool_RespawnCueBall(poolid) {
 		new next_shooter = g_poolTableData[poolid][E_NEXT_SHOOTER];
 		SetPlayerCameraPos(next_shooter, g_poolTableData[poolid][E_X], g_poolTableData[poolid][E_Y], g_poolTableData[poolid][E_Z] + 2.0);
 		SetPlayerCameraLookAt(next_shooter, g_poolTableData[poolid][E_X], g_poolTableData[poolid][E_Y], g_poolTableData[poolid][E_Z]);
-		ApplyAnimation(next_shooter, "POOL", "POOL_Idle_Stance", 3.0, 0, 1, 1, 0, 0, 1);
+		ApplyAnimation(next_shooter, "POOL", "POOL_Idle_Stance", 3.0, false, true, true, false, 0);
 		TogglePlayerControllable(next_shooter, false);
 	}
 }

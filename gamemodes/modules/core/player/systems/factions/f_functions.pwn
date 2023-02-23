@@ -213,7 +213,7 @@ FactionConfigLocker(playerid, factionid) {
 }
 
 // OTHERS
-stock IsACruiser(vehicleid) {
+IsACruiser(vehicleid) {
 	switch (GetVehicleModel(vehicleid)) {
 	    case 407, 544, 426, 523, 415, 541, 560, 427, 490, 482, 528, 596..599, 601: {
 			new id = VehicleGetID(vehicleid);
@@ -317,7 +317,7 @@ RemoveAlpha(color) {
     return (color & ~0xFF);
 }  
 
-stock SendFactionMessageEx(type, color, const str[], {Float,_}:...) {
+SendFactionMessageEx(type, color, const str[], {Float,_}:...) {
 	static
 	    args,
 	    start,

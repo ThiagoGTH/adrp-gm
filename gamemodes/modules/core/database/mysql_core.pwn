@@ -64,6 +64,7 @@ void:CheckTables() {
     CheckVehiclesTable();
     CheckPoolTable();
     CheckHousesTable();
+<<<<<<< HEAD
     CheckBusinesssTable();
     CheckInteriorsTable();
     CheckPHONESTable();
@@ -76,6 +77,11 @@ void:CheckTables() {
     //CheckSignalTower();
     CheckPhoneSms();
     CheckPhoneContacts();
+=======
+    CheckTradingTable();
+    CheckFactionsTable();
+    CheckGraffitisTable();
+>>>>>>> main
     print("[DATABASE] Todas tabelas foram carregadas com sucesso");
     print("* Note que se alguma tabela faltar, funções não funcionarão de modo correto.\n");
 }
@@ -856,6 +862,7 @@ void:CheckHousesTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela houses_other_entries checada com sucesso");
 }
 
+<<<<<<< HEAD
 void:CheckBusinesssTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `business` (\
     `id` int NOT NULL AUTO_INCREMENT,\
@@ -923,6 +930,8 @@ void:CheckPHONESTable() {
     logCreate(99998, logString, 5);
 }
 
+=======
+>>>>>>> main
 void:CheckTradingTable() {
     mysql_query(DBConn, "CREATE TABLE IF NOT EXISTS `tradings` (\
     `ID` int NOT NULL AUTO_INCREMENT,\
@@ -1396,6 +1405,7 @@ void:CheckGraffitisTable() {
     format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela graffits checada com sucesso");
     logCreate(99998, logString, 5);
 
+<<<<<<< HEAD
 }
 
 void:CheckGaragesTable() {
@@ -1566,4 +1576,6 @@ void:CheckPhoneContacts() {
   print("[DATABASE] Tabela phone_contacts checada com sucesso");
   format(logString, sizeof(logString), "SYSTEM: [DATABASE] Tabela phone_contacts checada com sucesso");
   logCreate(99998, logString, 5);
+=======
+>>>>>>> main
 }

@@ -32,7 +32,7 @@ StartTestingLicense(playerid) {
 
         new string[64];
         format(string, sizeof(string), "DMV #%3d", playerid);
-        DMV3dTEXT[playerid] = Create3DTextLabel(string, COLOR_WHITE, 0.0, 0.0, -1000.0, 15.0, -1, false);
+        DMV3dTEXT[playerid] = Create3DTextLabel(string, COLOR_WHITE, 0.0, 0.0, -1000.0, 15.0, -1, 0);
 		Attach3DTextLabelToVehicle(DMV3dTEXT[playerid], vehicleDMV[playerid], -1.0, -1.0, 0.0);
 
         SetVehicleNumberPlate(vehicleDMV[playerid], "{FF0000}DMV");

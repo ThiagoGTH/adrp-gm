@@ -496,8 +496,21 @@ GetHouseAddress(id) {
     return address;
 }
 
+<<<<<<< HEAD:gamemodes/modules/core/player/systems/properties/houses/houses_core.pwn
 // ============================================================================================================================================
 //Seta se a casa está "alugando" ou não.
+=======
+BuyHouse(id, playerid) {
+    hInfo[id][hOwner] = pInfo[playerid][pID];
+    SaveHouse(id);
+
+    format(logString, sizeof(logString), "%s (%s) comprou a casa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), id, FormatNumber(hInfo[id][hPrice]));
+	logCreate(playerid, logString, 13);
+
+    return 1;
+}
+
+>>>>>>> main:gamemodes/modules/core/player/systems/houses/houses_core.pwn
 RentableHouse(id, playerid, rentable) {
     if(rentable != 1)
         rentable = 0;

@@ -101,7 +101,7 @@ Dialog:PLAYER_CONFIG_OPTIONS(playerid, response, listitem, inputtext[]){
             Dialog_Show(playerid, PLAYER_CONFIG_OPTIONS, DIALOG_STYLE_LIST, title, string, "Selecionar", "<<");
         }
         else if (pInfo[playerid][pSetting] == 4) {
-            format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Nametag");
+            format(title, sizeof(title), "{FFFFFF}Gerenciamento do Usuário - Renderização");
             switch(listitem){
                 case 0: format(string, sizeof(string), "{BBBBBB}>>> {FFFFFF}Baixa (0.5)\nPadrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");
                 case 1: format(string, sizeof(string), "Baixa (0.5)\n{BBBBBB}>>> {FFFFFF}Padrão (1.0)\nMédia (1.5)\nAlta (3.0)\nUltra (5.0)");

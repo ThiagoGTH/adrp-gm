@@ -209,3 +209,26 @@ Dialog:Dg_ShowItemDescription(playerid, response, listitem, inputtext[]) {
     else pInfo[playerid][pInventoryItem] = -1;
     return true;
 }
+
+IsDrugItemByID(itemid) {
+	if(itemid == -1)
+		return false;
+	else if(diInfo[itemid][diCategory] == 8)
+		return true;
+	else
+		return false;
+}
+
+Float:Inventory_Drug_Count(playerid, item[]) {
+	new Float:count=0;
+	new itemid = GetItemID(item);
+
+	if(IsDrugItemByID(itemid)) {
+		if(itemid != -1) {
+			for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+                count = pInfo[playerid][iAmount][i];
+            }
+		}
+	}
+	return count;
+}

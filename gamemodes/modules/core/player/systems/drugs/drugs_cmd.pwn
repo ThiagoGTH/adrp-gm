@@ -18,7 +18,7 @@ CMD:usardroga(playerid, params[]) {
 	PlayerDrugData[playerid][Drugs] -= amount;
 	PlayerDrugData[playerid][TotalUsed] += amount;
 
-    Inventory_Remove(playerid, slotid, amount);
+    //Inventory_Remove(playerid, slotid, amount);
 
 	SetPlayerWeather(playerid, 234);
 	RegenTimer[playerid] = SetTimerEx("RegenHealth", 500, false, "ii", playerid, (3 * amount));

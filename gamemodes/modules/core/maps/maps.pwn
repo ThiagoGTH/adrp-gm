@@ -5,6 +5,7 @@
 #include "modules\core\maps\exterior\streets.pwn"
 #include "modules\core\maps\exterior\cityhall.pwn"
 #include "modules\core\maps\exterior\tolls.pwn"
+#include "modules\core\maps\exterior\twintowers.pwn"
 
 #include "modules\core\maps\exterior\factions\LSFD.pwn"
 #include "modules\core\maps\exterior\factions\SAN1.pwn" 
@@ -22,10 +23,16 @@
 #include "modules\core\maps\exterior\env\jefferson_motel.pwn"
 #include "modules\core\maps\exterior\env\ls_freeway.pwn"
 #include "modules\core\maps\exterior\env\eastls_church.pwn"
-#include "modules\core\maps\exterior\env\ocean_docks.pwn"
-#include "modules\core\maps\exterior\env\willowfield.pwn"
+#include "modules\core\maps\exterior\env\eastls_carwash.pwn"
+//#include "modules\core\maps\exterior\env\willowfield.pwn"
 #include "modules\core\maps\exterior\env\el_corona.pwn"
+
+#include "modules\core\maps\exterior\env\ocean_willow.pwn"
 #include "modules\core\maps\exterior\env\sp_apartments.pwn"
+#include "modules\core\maps\exterior\env\vinewood_sign.pwn"
+#include "modules\core\maps\exterior\env\skatepark.pwn"
+#include "modules\core\maps\exterior\env\jefferson_hs.pwn"
+#include "modules\core\maps\exterior\env\ganton.pwn"
 
 #include "modules\core\maps\exterior\business\petshop.pwn"
 //#include "modules\core\maps\exterior\business\stacked.pwn"

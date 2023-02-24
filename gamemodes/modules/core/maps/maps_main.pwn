@@ -13,6 +13,7 @@ hook OnPlayerConnect(playerid) {
     // Gas pump
     RemoveBuildingForPlayer(playerid, 1686, 0.0, 0.0, 0.0, 6000.0);
     RemoveBuildingForPlayer(playerid, 3465, 0.0, 0.0, 0.0, 6000.0);
-    RemoveBuildingForPlayer(playerid, 1676, 0.0, 0.0, 0.0, 6000.0);RemoveBuildingForPlayer(playerid, 1244, 0.0, 0.0, 0.0, 6000.0);
+    RemoveBuildingForPlayer(playerid, 1676, 0.0, 0.0, 0.0, 6000.0);
+    RemoveBuildingForPlayer(playerid, 1244, 0.0, 0.0, 0.0, 6000.0);
     return true;
 }

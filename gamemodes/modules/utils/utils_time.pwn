@@ -4,6 +4,7 @@
 
 #define FULL_DATETIME           "%d/%m/%Y às %H:%M:%S"
 #define FULL_SHORT_DATETIME     "%d/%m/%Y - %H:%M:%S"
+#define FULL_DATEONLY           "%d/%m/%Y"
 
 new // Fix Time
 	ghour = 0,
@@ -17,7 +18,11 @@ GetFullDate(timestamp, style = 0) {
     new convertedTimeZoned = timestamp - 10800;
     new  Timestamp:ts = Timestamp:convertedTimeZoned, returnDate[256];
     
-    TimeFormat(ts, style > 0 ? (FULL_SHORT_DATETIME) : (FULL_DATETIME), returnDate);
+    switch(style){
+        case 0: TimeFormat(ts, FULL_SHORT_DATETIME, returnDate);
+        case 1: TimeFormat(ts, FULL_DATETIME, returnDate);
+        case 2: TimeFormat(ts, FULL_DATEONLY, returnDate);
+    }
 
     return timestamp > 0 ? (returnDate) : ("N/A");
 }

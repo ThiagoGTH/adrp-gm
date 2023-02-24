@@ -46,7 +46,7 @@ LoadCharacterInfoID(playerid, id) {
     cache_get_value_name_int(0, "first_login", first_login);
     cache_delete(result);
 
-    if(first_login == 0) {
+    /*if(first_login == 0) {
         mysql_format(DBConn, query, sizeof query, "UPDATE players SET `first_login` = '%d' WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
         mysql_query(DBConn, query);
 
@@ -79,7 +79,7 @@ LoadCharacterInfoID(playerid, id) {
 
         mysql_format(DBConn, query, sizeof query, "INSERT INTO players_faction (`character_id`) VALUES ('%d');", pInfo[playerid][pID]);
         mysql_query(DBConn, query);
-    }
+    }*/
 
     mysql_format(DBConn, query, sizeof query, "UPDATE players SET `last_login` = %d WHERE `name` = '%s';", _:Now(), pInfo[playerid][pName]);
     mysql_query(DBConn, query);

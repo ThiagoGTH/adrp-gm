@@ -20,14 +20,14 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Nenhum problema ou ocorrência recente.\n\n\
-        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
-        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
-        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
-        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
-        <:arrow:931570978163687454> Endereço de IP: %s\n\
-        <:arrow:931570978163687454> User Control Panel: %s\n\
-        <:arrow:931570978163687454> Fórum: %s\n\n\
+        format(text, 1024, "<:announce:1066021926486679692> Nenhum problema ou ocorrência recente.\n\n\
+        > <:point:1066021935185657876> **Serviço Open.MP:** Operante\n\
+        > <:point:1066021935185657876> **User Control Panel:** Operante\n\
+        > <:point:1066021935185657876> **Fórum:** Operante\n\n\
+        **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
+        <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> User Control Panel: %s\n\
+        <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
@@ -54,14 +54,14 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso fórum nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
-        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
-        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
-        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
-        <:arrow:931570978163687454> Endereço de IP: %s\n\
-        <:arrow:931570978163687454> User Control Panel: %s\n\
-        <:arrow:931570978163687454> Fórum: %s\n\n\
+        format(text, 1024, "<:announce:1066021926486679692> Foi detectado um problema em nosso fórum nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:point:1066021935185657876> **Serviço Open.MP:** Operante\n\
+        > <:point:1066021935185657876> **User Control Panel:** Operante\n\
+        > <:point:1066021935185657876> **Fórum:** __Inoperante__\n\n\
+        **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
+        <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> User Control Panel: %s\n\
+        <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
@@ -89,14 +89,14 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso User Control Panel nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço Open.MP:** Operante\n\
-        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
-        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
-        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
-        <:arrow:931570978163687454> Endereço de IP: %s\n\
-        <:arrow:931570978163687454> User Control Panel: %s\n\
-        <:arrow:931570978163687454> Fórum: %s\n\n\
+        format(text, 1024, "<:announce:1066021926486679692> Foi detectado um problema em nosso User Control Panel nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:point:1066021935185657876> **Serviço Open.MP:** Operante\n\
+        > <:point:1066021935185657876> **User Control Panel:** __Inoperante__\n\
+        > <:point:1066021935185657876> **Fórum:** Operante\n\n\
+        **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
+        <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> User Control Panel: %s\n\
+        <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
@@ -122,14 +122,14 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em nosso Serviço Open.MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
-        > <:arrow:931570978163687454> **User Control Panel:** Operante\n\
-        > <:arrow:931570978163687454> **Fórum:** Operante\n\n\
-        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
-        <:arrow:931570978163687454> Endereço de IP: %s\n\
-        <:arrow:931570978163687454> User Control Panel: %s\n\
-        <:arrow:931570978163687454> Fórum: %s\n\n\
+        format(text, 1024, "<:announce:1066021926486679692> Foi detectado um problema em nosso Serviço Open.MP nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:point:1066021935185657876> **Serviço Open.MP:** __Inoperante__\n\
+        > <:point:1066021935185657876> **User Control Panel:** Operante\n\
+        > <:point:1066021935185657876> **Fórum:** Operante\n\n\
+        **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
+        <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> User Control Panel: %s\n\
+        <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
@@ -155,14 +155,14 @@ public ServerStatus(type){
         new DCC_Embed:embed = DCC_CreateEmbed(title);
         DCC_SetEmbedColor(embed, 0x5964F4);
         
-        format(text, 1024, "<:annou:931570978180431912> Foi detectado um problema em todas as nossas plataformas nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
-        > <:arrow:931570978163687454> **Serviço Open.MP:** __Inoperante__\n\
-        > <:arrow:931570978163687454> **User Control Panel:** __Inoperante__\n\
-        > <:arrow:931570978163687454> **Fórum:** __Inoperante__\n\n\
-        **<:partner:931570978595700806> INFORMAÇÕES ÚTEIS:**\n\
-        <:arrow:931570978163687454> Endereço de IP: %s\n\
-        <:arrow:931570978163687454> User Control Panel: %s\n\
-        <:arrow:931570978163687454> Fórum: %s\n\n\
+        format(text, 1024, "<:announce:1066021926486679692> Foi detectado um problema em todas as nossas plataformas nas últimas horas. Nossa equipe de suporte está trabalhando para resolvê-lo o quanto antes.\n\n\
+        > <:point:1066021935185657876> **Serviço Open.MP:** __Inoperante__\n\
+        > <:point:1066021935185657876> **User Control Panel:** __Inoperante__\n\
+        > <:point:1066021935185657876> **Fórum:** __Inoperante__\n\n\
+        **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
+        <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> User Control Panel: %s\n\
+        <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);
         utf8encode(text, text);
         DCC_SetEmbedDescription(embed, text);
@@ -193,15 +193,15 @@ public SendInfoClosedAlpha(){
     new DCC_Embed:embed = DCC_CreateEmbed(title);
     DCC_SetEmbedColor(embed, 0x5964F4);
         
-    format(text, 2048, "<:annou:931570978180431912> **Informações pertinentes sobre o Closed Beta:**\n\n\
-    > <:arrow:931570978163687454> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
-    > <:arrow:931570978163687454> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
-    > <:arrow:931570978163687454> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
-    > <:arrow:931570978163687454> O endereço de IP e a senha do servidor só serão liberados no dia em que ele for aberto para os testes, o que provavelmente ocorrerá na segunda semana de setembro;\n\
-    > <:arrow:931570978163687454> O compartilhamento do endereço de IP, senha ou qualquer informação que permita algum jogador não autorizado a entrar no servidor acarretará em banimento permanente de todas as versões de teste do servidor, podendo retomar, apenas, na versão de lançamento;\n\
-    > <:arrow:931570978163687454> O servidor não é para fazer roleplay, apenas testar os sistemas feitos até então;\n\
-    > <:arrow:931570978163687454> Para pegar administrador no servidor, utilize o comando `/pegaradmin` e, para pegar premium ouro, `/pegarpremium`;\n\
-    > <:arrow:931570978163687454> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback. Você também receberá um cargo de **registrado** no Discord público do Advanced Rolelay. Esse cargo não será setado novamente caso você saia do servidor.\n");
+    format(text, 2048, "<:announce:1066021926486679692> **Informações pertinentes sobre o Closed Beta:**\n\n\
+    > <:point:1066021935185657876> A criação das contas serão realizadas através do canal #registro e cada conta no Discord terá direito a apenas um usuário;\n\
+    > <:point:1066021935185657876> Nenhum dado de jogador será salvo durante todo o período de testes;\n\
+    > <:point:1066021935185657876> O servidor ficará on-line 24/7, ou seja, não haverá problemas com horários e coisas do gênero, sintam-se livres para logarem no momento em que sentirem vontade;\n\
+    > <:point:1066021935185657876> O endereço de IP e a senha do servidor só serão liberados no dia em que ele for aberto para os testes, o que provavelmente ocorrerá na segunda semana de setembro;\n\
+    > <:point:1066021935185657876> O compartilhamento do endereço de IP, senha ou qualquer informação que permita algum jogador não autorizado a entrar no servidor acarretará em banimento permanente de todas as versões de teste do servidor, podendo retomar, apenas, na versão de lançamento;\n\
+    > <:point:1066021935185657876> O servidor não é para fazer roleplay, apenas testar os sistemas feitos até então;\n\
+    > <:point:1066021935185657876> Para pegar administrador no servidor, utilize o comando `/pegaradmin` e, para pegar premium ouro, `/pegarpremium`;\n\
+    > <:point:1066021935185657876> Quando você se registrar, receberá uma série de canais onde poderá reportar bugs, lags, deixar sugestões e dar seu feedback. Você também receberá um cargo de **registrado** no Discord público do Advanced Rolelay. Esse cargo não será setado novamente caso você saia do servidor.\n");
     utf8encode(text, text);
     DCC_SetEmbedDescription(embed, text);
 

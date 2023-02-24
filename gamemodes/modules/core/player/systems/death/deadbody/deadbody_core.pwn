@@ -1,5 +1,6 @@
 #include <YSI_Coding\y_hooks>
 new DraggingCorpse[MAX_PLAYERS];
+new CorpseID[MAX_PLAYERS];
 new CarryingCorpse[MAX_PLAYERS][24];
 new Timer:CorpseTimer[MAX_PLAYERS];
 new Float:LastX[MAX_PLAYERS];
@@ -83,6 +84,7 @@ GetClosestDeadBody(playerid, &Float: dis = 5.00) {
 hook OnPlayerDisconnect(playerid, reason) {
     DeleteDeadBody(playerid);
     DraggingCorpse[playerid] = INVALID_ACTOR_ID;
+    CorpseID[playerid] = -1;
     return true;
 }
 

@@ -288,6 +288,29 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 DCC_SendChannelEmbedMessage(channel, embed);
                 return true;
             }
+            else if(!strcmp(command, "!pegar", true)){
+                new text[256], footer[128], title[64];
+                new DCC_Role:role1 = DCC_FindRoleById("1070220594479640586");
+                new DCC_Role:role2 = DCC_FindRoleById("1070390636060098692");
+                DCC_AddGuildMemberRole(guildCA, author, role1);
+                DCC_AddGuildMemberRole(guild, author, role2);
+
+                format(title, 64, "Você pegou seu cargo!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, você adquiriu seu cargo de beta tester no Discord do Advanced Roleplay!\n", user_name);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);               
+                return true;
+            } 
             else if(!strcmp(command, "!registrar", true)){
                 new text[256], footer[128], title[64], Cache:result;
                 if(isnull(parameters)){
@@ -508,6 +531,105 @@ public DCC_OnMessageCreate(DCC_Message:message) {
                 return true;
             }
             else {
+                new title[32];
+                format(title, 32, "Comando inválido");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title); 
+                new text[512];
+                format(text, 512, "Digite **!ajuda** para obter a lista de comandos completa.");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+                DCC_SetEmbedThumbnail(embed, "https://i.imgur.com/6oHUEpk.png");
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                new footer[128];
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+            }
+        }
+        return true;
+    }
+
+    if(!strcmp(channel_name, "comandos", true) && channel == DCC_FindChannelById("1070707243856699393")){
+        if(strfind(string, "!", true) == 0)//Comando identificado
+        {
+            new authorid[DCC_ID_SIZE];
+            DCC_GetUserId(author, authorid, sizeof(authorid));
+
+            new command[32];
+            new parameters[64];
+            sscanf(string, "s[32]S()[64]", command, parameters);
+
+            if(!strcmp(command, "!ajuda", true)){
+                new text[1024],
+                    title[32],
+                    footer[128],
+                    title_field[128], 
+                    text_field[1024];
+
+                format(title, 32, "Comandos disponíveis");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 1024, "Bip-bip-bop-bip-bop-bip. Eis o que posso fazer:\n");
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(title_field, 128, "!registrar [desativado]");
+                format(text_field, 1024, "Registrar um usuário no banco de dados do Advanced Roleplay. Uma senha será enviada em seu privado.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!criarpersonagem [desativado]");
+                format(text_field, 1024, "Cria um personagem no seu usuário.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!deletarconta [desativado]");
+                format(text_field, 1024, "Deleta seu usuário permanentemente.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                format(title_field, 128, "!pegar");
+                format(text_field, 1024, "Pega o cargo de Beta Tester no Discord Público do Advanced Roleplay.");
+                utf8encode(title_field, title_field);
+                utf8encode(text_field, text_field);
+                DCC_AddEmbedField(embed, title_field, text_field, true);
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+                DCC_SendChannelEmbedMessage(channel, embed);
+                return true;
+            }
+            else if(!strcmp(command, "!pegar", true)){
+                new text[256], footer[128], title[64];
+                new DCC_Role:role1 = DCC_FindRoleById("1070220594479640586");
+                new DCC_Role:role2 = DCC_FindRoleById("1070390636060098692");
+                DCC_AddGuildMemberRole(guildCA, author, role1);
+                DCC_AddGuildMemberRole(guild, author, role2);
+
+                format(title, 64, "Você pegou seu cargo!");
+                utf8encode(title, title);
+                new DCC_Embed:embed = DCC_CreateEmbed(title);
+
+                format(text, 256, "Bip-bip-bop-bip-bop-bip.\n%s, você adquiriu seu cargo de beta tester no Discord do Advanced Roleplay!\n", user_name);
+                utf8encode(text, text);
+                DCC_SetEmbedDescription(embed, text);
+
+                format(footer, 128, "Ação realizada por %s#%s em %s no #%s.", user_name, discriminator, GetFullDate(gettime()), channel_name);
+                utf8encode(footer, footer);
+                DCC_SetEmbedFooter(embed, footer, "https://i.imgur.com/Ijeje8z.png");
+
+                DCC_SetEmbedColor(embed, 0x5964F4);
+                DCC_SendChannelEmbedMessage(channel, embed);               
+                return true;
+            } else {
                 new title[32];
                 format(title, 32, "Comando inválido");
                 utf8encode(title, title);

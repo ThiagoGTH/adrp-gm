@@ -23,10 +23,10 @@ hook OnGameModeInit() {
 }
 
 SanPedro() {
-    AddSimpleModelEx(1923, -20073, "maps/sanpedro/-1071.dff", "maps/sanpedro/-1071.txd");
-    AddSimpleModelEx(17863, -20074, "maps/sanpedro/-1072.dff", "maps/sanpedro/-1072.txd");
-    AddSimpleModelEx(1923, -20075, "maps/sanpedro/-1073.dff", "maps/sanpedro/-1073.txd");
-    AddSimpleModelEx(1923, -20076, "maps/sanpedro/-1074.dff", "maps/sanpedro/-1074.txd");
+    AddSimpleModelEx(1923, -20073, "maps/env/sanpedro/-1071.dff", "maps/env/sanpedro/-1071.txd");
+    AddSimpleModelEx(17863, -20074, "maps/env/sanpedro/-1072.dff", "maps/env/sanpedro/-1072.txd");
+    AddSimpleModelEx(1923, -20075, "maps/env/sanpedro/-1073.dff", "maps/env/sanpedro/-1073.txd");
+    AddSimpleModelEx(1923, -20076, "maps/env/sanpedro/-1074.dff", "maps/env/sanpedro/-1074.txd");
 
     CreateModelObject(MODEL_TYPE_LANDMASSES, -20073, 2490.906250, -1504.328125, 22.921899, 0.000000, 0.000000, 0.000000);
 	CreateModelObject(MODEL_TYPE_VEGETATION, -20074, 2467.460937, -1538.250000, 27.601600, 0.000000, 0.000000, 0.000000);

@@ -73,13 +73,13 @@ GetInventorySlots(playerid){
 ItemCategory(type) {
 	new category[128];
 	switch(type) {
-        case 0: format(category, sizeof(category), "Inválido");
+        case 0: format(category, sizeof(category), "Invï¿½lido");
 		case 1: format(category, sizeof(category), "Itens gerais");
-		case 2: format(category, sizeof(category), "Itens comestíveis");
-		case 3: format(category, sizeof(category), "Itens bebíveis");
+		case 2: format(category, sizeof(category), "Itens comestï¿½veis");
+		case 3: format(category, sizeof(category), "Itens bebï¿½veis");
 		case 4: format(category, sizeof(category), "Itens gerais");
 		case 5: format(category, sizeof(category), "Itens de evento");
-        case 6: format(category, sizeof(category), "Itens de facções");
+        case 6: format(category, sizeof(category), "Itens de facï¿½ï¿½es");
 		case 7: format(category, sizeof(category), "Coletes");
 		case 8: format(category, sizeof(category), "Drogas");
 		case 9: format(category, sizeof(category), "Armas");
@@ -158,7 +158,7 @@ Inventory_Add(playerid, item, quantity = 1){
     return -1;
 }
 
-Inventory_HasItem(playerid, const item[]) {
+stock Inventory_HasItem(playerid, const item[]) {
 	new exists = false;
 	for (new i = 0; i < GetInventorySlots(playerid); i ++) {
 		if(!strcmp(diInfo[pInfo[playerid][iItem][i]][diName], item)){

@@ -2,7 +2,7 @@ CMD:entrar(playerid) {
     new bool:isGarage, vw, interior, Float:exitPos0, Float:exitPos1, Float:exitPos2, Float:exitPos3;
 
     new houseID = GetNearestHouseEntry(playerid);
-    new businessID = GetNearestBusinessEntry(playerid);
+    new businessID = NearestBusinessEnter(playerid);
     new garageID = GetNearestGarageEntry(playerid);
 
     if(!houseID && !businessID && !garageID)
@@ -27,19 +27,17 @@ CMD:entrar(playerid) {
     }
 
     if (businessID > 0) {
-        if(bInfo[businessID][bLocked])
+        if(BizData[businessID][bLocked])
             return SendErrorMessage(playerid, "Essa empresa está trancada.");
         
-        vw = bInfo[businessID][vwExit];
-        interior = bInfo[businessID][interiorExit];
-        exitPos0 = bInfo[businessID][bExitPos][0];
-        exitPos1 = bInfo[businessID][bExitPos][1];
-        exitPos2 = bInfo[businessID][bExitPos][2];
-        exitPos3 = bInfo[businessID][bExitPos][3];
+        exitPos0 = BizData[businessID][bExit][0];
+        exitPos1 = BizData[businessID][bExit][1];
+        exitPos2 = BizData[businessID][bExit][2];
+        exitPos3 = BizData[businessID][bExit][3];
 
         isGarage = false;
 
-        EnterProperty(playerid, vw, interior, exitPos0, exitPos1, exitPos2, exitPos3, isGarage);
+        EnterProperty(playerid, floatround(BizData[businessID][bExit][4], floatround_round), floatround(BizData[businessID][bExit][5], floatround_round), exitPos0, exitPos1, exitPos2, exitPos3, isGarage);
 
         return 1;
     }
@@ -61,7 +59,7 @@ CMD:sair(playerid) {
     new bool:isGarage, vw, interior, Float:entryPos0, Float:entryPos1, Float:entryPos2, Float:entryPos3;
 
     new houseID = GetNearestHouseExit(playerid);
-    new businessID = GetNearestBusinessExit(playerid);
+    new businessID = NearestBusinessExit(playerid);
     new garageID = GetNearestGarageExit(playerid);
 
     if(!houseID && !businessID && !garageID)
@@ -86,19 +84,17 @@ CMD:sair(playerid) {
     }
 
     if (businessID > 0) {
-        if(bInfo[businessID][bLocked])
+        if(BizData[businessID][bLocked])
             return SendErrorMessage(playerid, "Essa empresa está trancada.");
         
-        vw = bInfo[businessID][vwEntry];
-        interior = bInfo[businessID][interiorEntry];
-        entryPos0 = bInfo[businessID][bEntryPos][0];
-        entryPos1 = bInfo[businessID][bEntryPos][1];
-        entryPos2 = bInfo[businessID][bEntryPos][2];
-        entryPos3 = bInfo[businessID][bEntryPos][3];
+        entryPos0 = BizData[businessID][bEnter][0];
+        entryPos1 = BizData[businessID][bEnter][1];
+        entryPos2 = BizData[businessID][bEnter][2];
+        entryPos3 = BizData[businessID][bEnter][3];
         
         isGarage = false;
 
-        ExitProperty(playerid, vw, interior, entryPos0, entryPos1, entryPos2, entryPos3, isGarage);
+        ExitProperty(playerid, floatround(BizData[businessID][bEnter][4], floatround_round), floatround(BizData[businessID][bEnter][5], floatround_round), entryPos0, entryPos1, entryPos2, entryPos3, isGarage);
 
         return 1;
     }
@@ -122,7 +118,7 @@ CMD:comprar(playerid) {
     new propertyType;
 
     new houseID = GetNearestHouseEntry(playerid);
-    new businessID = GetNearestBusinessEntry(playerid);
+    new businessID = NearestBusinessEnter(playerid);
     new businessInsideID = IsBusinessInside(playerid);
     new garageID = GetNearestGarageEntry(playerid);
 
@@ -145,14 +141,14 @@ CMD:comprar(playerid) {
     }
 
     if(businessID != -1) {
-        if(BusinessHasOwner(businessID))
+        if(HasBusinessOwner(businessID))
             return SendErrorMessage(playerid, "Esta propriedade já possui um dono.");
-        if(GetMoney(playerid) < bInfo[businessID][bPrice])
+        if(GetMoney(playerid) < BizData[businessID][bPrice])
             return SendErrorMessage(playerid, "Você não possui dinheiro o suficiente para comprar esta propriedade.") ;
         
         propertyType = 2;
 
-        GiveMoney(playerid, -bInfo[businessID][bPrice]);
+        GiveMoney(playerid, -BizData[businessID][bPrice]);
         BuyProperty(playerid, businessID, propertyType);
 
         return 1;
@@ -178,9 +174,9 @@ CMD:comprar(playerid) {
         return 1;
     }
 
-    if(businessInsideID != -1) {
+    /*if(businessInsideID != -1) {
         BuyInTheBusiness(playerid);
-    }
+    }*/
 
     return SendErrorMessage(playerid, "Você não está próximo de nenhuma propriedade");
 }
@@ -191,7 +187,7 @@ CMD:avender(playerid) {
     if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
     new houseID = GetNearestHouseEntry(playerid);
-    new businessID = GetNearestBusinessEntry(playerid);
+    new businessID = NearestBusinessEnter(playerid);
     new garageID = GetNearestGarageEntry(playerid);
 
     if(!houseID && !businessID && !garageID)
@@ -227,14 +223,14 @@ CMD:avender(playerid) {
 CMD:trancar(playerid, params[]) {
     new propertyType;
     new houseID = GetNearestHouseEntry(playerid);
-    new businessID = GetNearestBusinessEntry(playerid);
+    new businessID = NearestBusinessEnter(playerid);
     new garageID = GetNearestGarageEntry(playerid);
 
     if(!houseID)
         houseID = GetNearestHouseExit(playerid);
 
     if(!businessID)
-        businessID = GetNearestBusinessExit(playerid);
+        businessID = NearestBusinessExit(playerid);
 
     if(!garageID)
         garageID = GetNearestGarageExit(playerid);
@@ -253,7 +249,7 @@ CMD:trancar(playerid, params[]) {
     }
 
     if(businessID != -1) {
-        if(bInfo[businessID][bOwner] != pInfo[playerid][pID])
+        if(BizData[businessID][bOwner] != pInfo[playerid][pID])
             return SendErrorMessage(playerid, "Essa propriedade não é sua.");
         
         propertyType = 2;

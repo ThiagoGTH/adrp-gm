@@ -384,11 +384,11 @@ BuyProperty(playerid, propertyId, propertyType) {
     }
 
     if(propertyType == 2) {
-        bInfo[propertyId][bOwner] = pInfo[playerid][pID];
+        BizData[propertyId][bOwner] = pInfo[playerid][pID];
         SaveBusiness(propertyId);
-        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a empresa no endereço %s.", GetBusinessAddress(propertyId));
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a empresa %s.", GetBusinessName(propertyId));
 
-        format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
+        format(logString, sizeof(logString), "%s (%s) comprou a empresa ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(BizData[propertyId][bPrice]));
         logCreate(playerid, logString, 24);
 
         return 1;
@@ -400,7 +400,7 @@ BuyProperty(playerid, propertyId, propertyType) {
         va_SendClientMessage(playerid, COLOR_YELLOW, "Você comprou a garagem no endereço %s.", GetGarageAddress(propertyId));
 
 
-        format(logString, sizeof(logString), "%s (%s) comprou a gargem ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
+        format(logString, sizeof(logString), "%s (%s) comprou a gargem ID %d por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(BizData[propertyId][bPrice]));
         logCreate(playerid, logString, 25);
 
         return 1;
@@ -464,14 +464,14 @@ AdminSellProperty(playerid, propertyId, propertyType) {
     }
 
     if(propertyType == 2) {
-        if(bInfo[propertyId][bOwner] == 0)
+        if(BizData[propertyId][bOwner] == 0)
             return SendErrorMessage(playerid, "Essa propriedade já está à venda. (/propinfo)");
 
-        bInfo[propertyId][bOwner] = 0;
+        BizData[propertyId][bOwner] = 0;
         SaveBusiness(propertyId);
-        va_SendClientMessage(playerid, COLOR_YELLOW, "Você colocou a empresa no endereço %s a venda.", GetBusinessAddress(propertyId));
+        va_SendClientMessage(playerid, COLOR_YELLOW, "Você colocou a empresa no endereço %s a venda.", GetBusinessName(propertyId));
 
-        format(logString, sizeof(logString), "%s (%s) colocou a empresa ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
+        format(logString, sizeof(logString), "%s (%s) colocou a empresa ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(BizData[propertyId][bPrice]));
         logCreate(playerid, logString, 24);
 
         return 1;
@@ -485,7 +485,7 @@ AdminSellProperty(playerid, propertyId, propertyType) {
         SaveGarage(propertyId);
         va_SendClientMessage(playerid, COLOR_YELLOW, "Você colocou a garagem no endereço %s a venda.", GetGarageAddress(propertyId));
 
-        format(logString, sizeof(logString), "%s (%s) colocou a garagem ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(bInfo[propertyId][bPrice]));
+        format(logString, sizeof(logString), "%s (%s) colocou a garagem ID %d a venda por $%s.", pNome(playerid), GetPlayerUserEx(playerid), propertyId, FormatNumber(BizData[propertyId][bPrice]));
         logCreate(playerid, logString, 25);
 
         return 1;
@@ -509,11 +509,11 @@ LockProperty(playerid, propertyId, propertyType) {
 
     // business
     if(propertyType == 2) {
-        bInfo[propertyId][bLocked] = !bInfo[propertyId][bLocked];
+        BizData[propertyId][bLocked] = !BizData[propertyId][bLocked];
         SaveBusiness(propertyId);
 
         PlayerPlaySound(playerid, 1145, 0.0, 0.0, 0.0);
-        GameTextForPlayer(playerid, bInfo[propertyId][bLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
+        GameTextForPlayer(playerid, BizData[propertyId][bLocked] ? "~r~PROPRIEDADE TRANCADA" : "~g~~h~PROPRIEDADE DESTRANCADA", 2500, 4);
     
         return 1;
     }
@@ -538,7 +538,7 @@ NearbyProperty(playerid) {
 
     if ((id = GetNearestHouseEntry(playerid)) != -1)
         return SendServerMessage(playerid, "[House Near] a mais próxima é ID: %d.", id);
-    if ((id = GetNearestBusinessEntry(playerid)) != -1)
+    if ((id = NearestBusinessEnter(playerid)) != -1)
         return SendServerMessage(playerid, "[Business Near] a mais próxima é ID: %d.", id);
     if ((id = GetNearestGarageEntry(playerid)) != -1)
         return SendServerMessage(playerid, "[Garage Near] a mais próxima é ID: %d.", id);

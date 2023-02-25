@@ -3,14 +3,14 @@ ItemCreate(model, price) {
         if (!diInfo[i][diExists]) {
             new Cache:result;
             diInfo[i][diExists] = true;
-            format(diInfo[i][diName], 64, "Invï¿½lido");
+            format(diInfo[i][diName], 64, "Inválido");
             format(diInfo[i][diDescription], 256, "N/A");
             diInfo[i][diModel] = model;
             diInfo[i][diCategory] = 0;
             diInfo[i][diUseful] = false;
             diInfo[i][diLegality] = true;
 
-            mysql_format(DBConn, query, sizeof query, "INSERT INTO `items` (`item_name`, `item_desc`, `item_model`, `item_category`, `item_useful`, `item_legality`, `item_price`) VALUES ('Invï¿½lido', 'N/A', '%d', '0', '0', '1', '%d')", model, price);
+            mysql_format(DBConn, query, sizeof query, "INSERT INTO `items` (`item_name`, `item_desc`, `item_model`, `item_category`, `item_useful`, `item_legality`, `item_price`) VALUES ('Inválido', 'N/A', '%d', '0', '0', '1', '%d')", model, price);
             result = mysql_query(DBConn, query);
             diInfo[i][diID] = cache_insert_id();
             cache_delete(result);
@@ -42,7 +42,7 @@ LoadItems() {
 
         loadeditems++;
     }
-    printf("[ITENS DINï¿½MICOS]: %d itens dinï¿½micos carregados com sucesso.", loadeditems);
+    printf("[ITENS DINÂMICOS]: %d itens dinâmicos carregados com sucesso.", loadeditems);
     return true;
 }
 
@@ -138,7 +138,7 @@ ShowPlayerInventory(playerid){
             diInfo[pInfo[playerid][iItem][i]][diModel], diInfo[pInfo[playerid][iItem][i]][diName], pInfo[playerid][iAmount][i], i);
         }
     }
-	format(title, sizeof(title), "Inventï¿½rio de %s (%d/%d)", pNome(playerid), Inventory_Quantity(playerid), GetInventorySlots(playerid));
+	format(title, sizeof(title), "Inventário de %s (%d/%d)", pNome(playerid), Inventory_Quantity(playerid), GetInventorySlots(playerid));
 	AdjustTextDrawString(title);
 
     AdjustTextDrawString(string);
@@ -151,17 +151,17 @@ Dialog:PlayerInventory(playerid, response, listitem, inputtext[]) {
         new model_id = strval(inputtext), slotid = listitem-1, title[128], string[256], money = GetMoney(playerid);
 
         if (model_id == -6000){
-            if(GetMoney(playerid) < 1) return SendErrorMessage(playerid, "Vocï¿½ nï¿½o possui dinheiro em mï¿½os.");
+            if(GetMoney(playerid) < 1) return SendErrorMessage(playerid, "Você não possui dinheiro em mãos.");
 
             format(title, sizeof(title), "Dinheiro (US$ %s)", FormatNumber(money));
-            format(string, sizeof(string), "Dar\nDropar\nDropar com ediï¿½ï¿½o\nJogar no lixo");
+            format(string, sizeof(string), "Dar\nDropar\nDropar com edição\nJogar no lixo");
             Dialog_Show(playerid, PlayerInventorySelected, DIALOG_STYLE_LIST, title, string, "Selecionar", "Voltar");
             pInfo[playerid][pInventoryItem] = 999;
             return true;
         }
 
-        if (diInfo[pInfo[playerid][iItem][slotid]][diUseful] == true) format(string, sizeof(string), "Usar\nDar\nDropar\nDropar com ediï¿½ï¿½o\nJogar no lixo\nDescriï¿½ï¿½o");
-        else format(string, sizeof(string), "Dar\nDropar\nDropar com ediï¿½ï¿½o\nJogar no lixo\nDescriï¿½ï¿½o");
+        if (diInfo[pInfo[playerid][iItem][slotid]][diUseful] == true) format(string, sizeof(string), "Usar\nDar\nDropar\nDropar com edição\nJogar no lixo\nDescrição");
+        else format(string, sizeof(string), "Dar\nDropar\nDropar com edição\nJogar no lixo\nDescrição");
 
         pInfo[playerid][pInventoryItem] = slotid;
 
@@ -176,16 +176,16 @@ Dialog:PlayerInventorySelected(playerid, response, listitem, inputtext[]) {
         new slotid = pInfo[playerid][pInventoryItem];
         
         if (!strcmp(inputtext, "Usar", true))
-			return SendServerMessage(playerid, "Indisponï¿½vel no momento.");  
+			return SendServerMessage(playerid, "Indisponível no momento.");  
         if (!strcmp(inputtext, "Dar", true))
 			return PlayerGiveItem(playerid, slotid);
         if (!strcmp(inputtext, "Dropar", true))
             return PlayerDropItem(playerid, slotid);
-        if (!strcmp(inputtext, "Dropar com ediï¿½ï¿½o", true))
+        if (!strcmp(inputtext, "Dropar com edição", true))
             return PlayerDropItemWithEdit(playerid, slotid); 
         if (!strcmp(inputtext, "Jogar no lixo", true))
-			return SendServerMessage(playerid, "Indisponï¿½vel no momento."); 
-        if (!strcmp(inputtext, "Descriï¿½ï¿½o", true))
+			return SendServerMessage(playerid, "Indisponível no momento."); 
+        if (!strcmp(inputtext, "Descrição", true))
             return ShowItemDescription(playerid, slotid);
             
     } else ShowPlayerInventory(playerid);

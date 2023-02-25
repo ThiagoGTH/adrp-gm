@@ -1,5 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
+#include "modules\core\admin\admin_cmds.pwn"
 #include "modules\core\admin\ban.pwn"
 #include "modules\core\admin\fly.pwn"
 #include "modules\core\admin\config.pwn"

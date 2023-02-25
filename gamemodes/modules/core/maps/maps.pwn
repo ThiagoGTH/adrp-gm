@@ -8,6 +8,7 @@
 #include "modules\core\maps\exterior\twintowers.pwn"
 
 #include "modules\core\maps\exterior\factions\LSFD.pwn"
+#include "modules\core\maps\exterior\factions\newton.pwn"
 #include "modules\core\maps\exterior\factions\SAN1.pwn" 
 #include "modules\core\maps\exterior\factions\SEB.pwn" 
 

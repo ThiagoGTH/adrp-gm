@@ -71,6 +71,10 @@ hook OnPlayerConnect(playerid){
     RemoveBuildingForPlayer(playerid, 3627, 2396.937, -2085.312, 16.046, 0.250);
     RemoveBuildingForPlayer(playerid, 5370, 2390.171, -2033.820, 23.828, 0.250);
     RemoveBuildingForPlayer(playerid, 5289, 2293.804, -2172.773, 11.710, 0.250);
+    RemoveBuildingForPlayer(playerid, 1373, 2259.8906, -2111.3359, 15.3125, 0.25);
+    RemoveBuildingForPlayer(playerid, 1374, 2261.4766, -2112.0000, 14.1016, 0.25);
+    RemoveBuildingForPlayer(playerid, 1373, 2262.0000, -2095.0234, 15.3125, 0.25);
+    RemoveBuildingForPlayer(playerid, 1374, 2260.4063, -2094.3594, 14.1016, 0.25);
     RemoveBuildingForPlayer(playerid, 3295, 2290.421, -2145.765, 17.203, 0.250);
     RemoveBuildingForPlayer(playerid, 3744, 2241.296, -2183.976, 15.101, 0.250);
     RemoveBuildingForPlayer(playerid, 3744, 2226.320, -2168.992, 15.101, 0.250);
@@ -524,7 +528,6 @@ hook OnPlayerConnect(playerid){
 }
 
 hook OnGameModeInit() {
-
     AddSimpleModel(-1, 2262, -8001, "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne1.dff", "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne1.txd");
     AddSimpleModel(-1, 2262, -8002, "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne2.dff", "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne2.txd");
     AddSimpleModel(-1, 2262, -8003, "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne3.dff", "maps/env/ocean_willow/Willowfield/WillowfieldHoodOne3.txd");

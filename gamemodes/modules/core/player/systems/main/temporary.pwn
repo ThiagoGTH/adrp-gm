@@ -1,5 +1,5 @@
 CMD:pegaradmin(playerid, params[]) {	
-  	uInfo[playerid][uAdmin] = 1335;
+  	uInfo[playerid][uAdmin] = 1337;
 
 	uInfo[playerid][uFactionTeam] = 1;
 	uInfo[playerid][uPropertyTeam] = 1;

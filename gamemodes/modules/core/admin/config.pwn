@@ -31,17 +31,35 @@ Dialog:configSys(playerid, response, listitem, inputtext[]){
             Dialog_Show(playerid, showInfoFurniture, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciar > Mobílias", string, "Selecionar", "<<");
             return true;
         }
-
         else if(listitem == 1){ // ITENS
             ItemsConfigMain(playerid);
             return true;
         }
-        else if(listitem == 2){ // Concessionária
+        else if(listitem == 2){ // INTERIORES [OK]
+            if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+
+            mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `ID` >= 0");
+            new Cache:result = mysql_query(DBConn, query);
+
+            new string[1024], intName[64], intID;
+            format(string, sizeof(string), "Nome\tID\n");
+            format(string, sizeof(string), "%s{BBBBBB}Adicionar interior\n", string);
+            for(new i; i < cache_num_rows(); i++){
+                cache_get_value_name_int(i, "ID", intID);
+                cache_get_value_name(i, "name", intName);
+
+                format(string, sizeof(string), "%s%s\t%d\n", string, intName, intID);
+            }
+            cache_delete(result);
+
+            Dialog_Show(playerid, showInfoInt, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciar > Interiores", string, "Selecionar", "<<");
+            return true;
+        }
+        else if(listitem == 3){ // Concessionária
             DealershipConfigMain(playerid);
             return true;
         }
-
-        else if(listitem == 3){ // ADMINISTRADORES [OK]
+        else if(listitem == 4){ // ADMINISTRADORES [OK]
             if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
 
             mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `admin` > 0 ORDER BY `admin` ASC");
@@ -197,6 +215,104 @@ Dialog:addInfoFurniture3(playerid, response, listitem, inputtext[]){
         pInfo[playerid][tempChar2][0] = EOS;
 
         Dialog_Show(playerid, addInfoFurniture2, DIALOG_STYLE_INPUT, "Gerenciar > Mobílias > Adicionar mobília", "Digite o nome da categoria para a mobília criada:", "Adicionar", "<<");
+    }
+    return true;
+}
+
+// INTERIORES
+Dialog:showInfoInt(playerid, response, listitem, inputtext[]){
+    if(response){
+        new string[256];
+        if(!strcmp(inputtext, "Adicionar interior", true)){ // Adicionar
+            Dialog_Show(playerid, addInfoInt, DIALOG_STYLE_INPUT, "Gerenciar > Interiores > Adicionar", "Digite o nome do interior a ser criado:\nOBSERVAÇÃO: Esse será o nome que aparecerá para o usuário no '/ir interior'.\nAs coordenadas, o virtual world e o interior serão setados de acordo com a posição do seu personagem.", "Adicionar", "<<");
+        } else { // Remover
+            format(pInfo[playerid][tempChar], 64, "%s", inputtext);
+            format(string, 256, "Você realmente deseja deletar o interior '%s'? Essa ação é irreversível.", inputtext);
+
+            Dialog_Show(playerid, confirmInfoInt, DIALOG_STYLE_MSGBOX, "Gerenciar > Interiores > Remover", string, "Deletar", "Cancelar");
+        }
+    } else {  // Voltar
+        if(GetPlayerAdmin(playerid) > 5) Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nConcessionária\nAdministradores", "Selecionar", "Fechar");
+        else Dialog_Show(playerid, configSys, DIALOG_STYLE_LIST, "Gerenciamento do Servidor", "Mobílias\nItens\nInteriores\nConcessionária", "Selecionar", "Fechar");
+    }
+    return true;
+} 
+
+Dialog:addInfoInt(playerid, response, listitem, inputtext[]){
+    if(response){
+        if(isnull(inputtext)) return Dialog_Show(playerid, addInfoInt, DIALOG_STYLE_INPUT, "Gerenciar > Interiores > Adicionar", "ERRO: Você não especificou um nome.\nDigite o nome do interior a ser criado:", "Adicionar", "<<");
+
+        if(strlen(inputtext) > 64) return Dialog_Show(playerid, addInfoInt, DIALOG_STYLE_INPUT, "Gerenciar > Interiores > Adicionar", "ERRO: Você especificou um nome grande demais, o máximo é de 64 caracteres.\nDigite o nome do interior a ser criado:", "Adicionar", "<<");
+
+        new Float:pos[4], vw, int;
+        format(pInfo[playerid][tempChar], 64, "%s", inputtext);
+
+        GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+        GetPlayerFacingAngle(playerid, pos[3]);
+        int = GetPlayerInterior(playerid);
+        vw = GetPlayerVirtualWorld(playerid);
+
+        mysql_format(DBConn, query, sizeof query, "INSERT INTO interiors_info (`name`, `virtual_world`, `interior`, `positionX`, `positionY`, `positionZ`, `positionA`) VALUES ('%s', '%d', '%d', '%f', '%f', '%f', '%f');", pInfo[playerid][tempChar], vw, int, pos[0], pos[1], pos[2], pos[3]);
+        new Cache:result = mysql_query(DBConn, query);
+
+        format(logString, sizeof(logString), "%s (%s) criou o interior %s (%f, %f, %f, %f - VW: %d INT: %d).", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar], pos[0], pos[1], pos[2], pos[3], vw, int);
+		logCreate(playerid, logString, 8);
+
+        SendServerMessage(playerid, "Você criou o interior %s de acordo com as suas coordenadas.", pInfo[playerid][tempChar]);
+        pInfo[playerid][tempChar][0] =  EOS;
+        cache_delete(result);
+    } else {
+        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `ID` >= 0");
+        new Cache:result = mysql_query(DBConn, query);
+
+        new string[1024], intName[64], intID;
+        format(string, sizeof(string), "Nome\tID\n");
+        format(string, sizeof(string), "%s{BBBBBB}Adicionar interior\n", string);
+        for(new i; i < cache_num_rows(); i++){
+            cache_get_value_name_int(i, "ID", intID);
+            cache_get_value_name(i, "name", intName);
+
+            format(string, sizeof(string), "%s%s\t%d\n", string, intName, intID);
+        }
+        cache_delete(result);
+
+        Dialog_Show(playerid, showInfoInt, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciar > Interiores", string, "Selecionar", "<<");
+    }
+    return true;
+}
+
+Dialog:confirmInfoInt(playerid, response, listitem, inputtext[]){
+    if(response){ // Confirmar
+        mysql_format(DBConn, query, sizeof query, "DELETE FROM interiors_info WHERE `name` = '%s';", pInfo[playerid][tempChar]);
+        new Cache:result = mysql_query(DBConn, query);
+
+        format(logString, sizeof(logString), "%s (%s) deletou o interior %s.", pNome(playerid), GetPlayerUserEx(playerid), pInfo[playerid][tempChar]);
+		logCreate(playerid, logString, 8);
+
+        SendServerMessage(playerid, "Você deletou o interior '%s' com sucesso. A ação é irreversível.", pInfo[playerid][tempChar]);
+        
+        pInfo[playerid][tempChar][0] = EOS;
+        cache_delete(result);
+    } else { // Cancelar
+        if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+
+        mysql_format(DBConn, query, sizeof query, "SELECT * FROM interiors_info WHERE `ID` >= 0");
+        new Cache:result = mysql_query(DBConn, query);
+
+        new string[1024], intName[64], intID;
+        format(string, sizeof(string), "Nome\tID\n");
+        format(string, sizeof(string), "%s{BBBBBB}Adicionar interior\n", string);
+        for(new i; i < cache_num_rows(); i++){
+            cache_get_value_name_int(i, "ID", intID);
+            cache_get_value_name(i, "name", intName);
+
+            format(string, sizeof(string), "%s%s\t%d\n", string, intName, intID);
+        }
+        cache_delete(result);
+
+        Dialog_Show(playerid, showInfoInt, DIALOG_STYLE_TABLIST_HEADERS, "Gerenciar > Interiores", string, "Selecionar", "<<");
     }
     return true;
 }

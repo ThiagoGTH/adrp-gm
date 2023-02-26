@@ -59,7 +59,7 @@ CMD:licencamotorista(playerid, params[]) {
 	SendClientMessage(userid, COLOR_GREEN, "|_________ San Andreas Driver License _________|");
 	va_SendClientMessage(userid, COLOR_WHITE, "SSN: %d | STATUS: %s", pLicenses[playerid][license_number], status);
 	va_SendClientMessage(userid, COLOR_WHITE, "Nome: %s | Sexo: %s", pNome(playerid), gender);
-	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", GetFullDate(pInfo[playerid][pDateOfBirth], 2));
+	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", FormatDate(pInfo[playerid][pDateOfBirth], 4));
 	va_SendClientMessage(userid, COLOR_WHITE, "Etnia: %s | Cabelo: %s | Olhos: %s", ethnicity, color_hair, color_eyes);
     va_SendClientMessage(userid, COLOR_WHITE, "Peso: %.1fkg | Altura: %dcm", pInfo[playerid][pWeight], pInfo[playerid][pHeight]);
 
@@ -94,7 +94,7 @@ CMD:licencamedica(playerid, params[]) {
 	SendClientMessage(userid, COLOR_GREEN, "|_________ THE MEDICAL BOARD OF SAN ANDREAS _________|");
 	va_SendClientMessage(userid, COLOR_WHITE, "SSN: %d", pLicenses[playerid][license_number]);
 	va_SendClientMessage(userid, COLOR_WHITE, "Nome: %s | Sexo: %s", pNome(playerid), gender);
-	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", GetFullDate(pInfo[playerid][pDateOfBirth], 2));
+	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", FormatDate(pInfo[playerid][pDateOfBirth], 4));
 
 	if(userid == playerid)
 		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s observa sua própria licença de prática médica.", pNome(playerid));
@@ -165,7 +165,7 @@ CMD:licencavoo(playerid, params[]) {
 	SendClientMessage(userid, COLOR_GREEN, "|_________ San Andreas Fly License _________|");
 	va_SendClientMessage(userid, COLOR_WHITE, "SSN: %d | STATUS: %s", pLicenses[playerid][license_number], status);
 	va_SendClientMessage(userid, COLOR_WHITE, "Nome: %s | Sexo: %s", pNome(playerid), gender);
-	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", GetFullDate(pInfo[playerid][pDateOfBirth], 2));
+	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", FormatDate(pInfo[playerid][pDateOfBirth], 4));
 	va_SendClientMessage(userid, COLOR_WHITE, "Etnia: %s | Cabelo: %s | Olhos: %s", ethnicity, color_hair, color_eyes);
     va_SendClientMessage(userid, COLOR_WHITE, "Peso: %.1fkg | Altura: %dcm", pInfo[playerid][pWeight], pInfo[playerid][pHeight]);
 
@@ -230,19 +230,19 @@ CMD:licencaarmas(playerid, params[]) {
 		default: format(color_hair, sizeof(color_hair), "Inválido");
 	}
 
-	SendClientMessage(userid, COLOR_GREEN, "|_________ San Andreas Fly License _________|");
+	SendClientMessage(userid, COLOR_GREEN, "|_________ San Andreas Gun License _________|");
 	va_SendClientMessage(userid, COLOR_WHITE, "SSN: %d", pLicenses[playerid][license_number]);
 	va_SendClientMessage(userid, COLOR_WHITE, "Nome: %s | Sexo: %s", pNome(playerid), gender);
-	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", GetFullDate(pInfo[playerid][pDateOfBirth], 2));
+	va_SendClientMessage(userid, COLOR_WHITE, "Data de Nascimento: %s", FormatDate(pInfo[playerid][pDateOfBirth], 4));
 	va_SendClientMessage(userid, COLOR_WHITE, "Etnia: %s | Cabelo: %s | Olhos: %s", ethnicity, color_hair, color_eyes);
     va_SendClientMessage(userid, COLOR_WHITE, "Peso: %.1fkg | Altura: %dcm", pInfo[playerid][pWeight], pInfo[playerid][pHeight]);
 	va_SendClientMessage(userid, COLOR_GREEN, "* Licença para porte de pistola, revólver ou outra arma de fogo oculta.");
 
 
 	if(userid == playerid)
-		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s observa sua própria licença de voo.", pNome(playerid));
+		SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s observa sua própria licença de armas.", pNome(playerid));
 	else
-	    SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s mostra a sua licença de voo para %s.", pNome(playerid), pNome(userid));
+	    SendNearbyMessage(playerid, 15.0, COLOR_PURPLE, "* %s mostra a sua licença de armas para %s.", pNome(playerid), pNome(userid));
 	
 	return true;
 }

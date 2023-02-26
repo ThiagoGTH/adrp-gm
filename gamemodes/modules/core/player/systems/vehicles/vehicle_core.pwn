@@ -954,7 +954,6 @@ public OnVehicleDeath(vehicleid, killerid) {
     id = VehicleGetID(vehicleid);
 
     if(id != -1) {
-        printf("entrou!");
         if (vInfo[id][vFaction] != 0 || vInfo[id][vBusiness] != 0 || vInfo[id][vJob] != 0){
             RepairVehicle(vInfo[id][vVehicle]);
             SaveVehicle(id);
@@ -965,13 +964,16 @@ public OnVehicleDeath(vehicleid, killerid) {
         }
 
         if(vInfo[id][vInsurance] < 3) {
+            vInfo[id][vHealth] = 300.00;
+            vInfo[id][vHealthRepair] = 300.00;
+
             for (new i = 0; i < 17; i ++) {
                 if (vInfo[id][vMods][i] > 0) 
                     RemoveVehicleComponent(vehicleid, vInfo[id][vMods][i]);
             }
         }
 
-        GetVehiclePos(vInfo[id][vVehicle], vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]);
+        //GetVehiclePos(vInfo[id][vVehicle], vInfo[id][vPos][0], vInfo[id][vPos][1], vInfo[id][vPos][2]);
 
         SaveVehicle(id);
         ResetVehicleObjects(id);
@@ -981,7 +983,6 @@ public OnVehicleDeath(vehicleid, killerid) {
     }
 
     ResetVehicleObjects(vehicleid);
-
     return true;
 }
 

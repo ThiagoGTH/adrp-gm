@@ -128,7 +128,7 @@ public aJailMinuteCheck() {
         if (!pInfo[i][pLogged]) return true;
         if (pInfo[i][pAFKCount] < 31 && uInfo[i][uJailed] > 0) {
             uInfo[i][uJailed] --;
-            SetPlayerHealthEx(playerid, pInfo[playerid][pHealthMax]);
+            SetPlayerHealthEx(i, pInfo[i][pHealthMax]);
         } 
         if (uInfo[i][uJailed] == 0) freeAjail(i);
     } return true;

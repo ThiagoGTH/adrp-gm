@@ -176,8 +176,8 @@ OnPlayerGetDeath(playerid, issuerid, weaponid) {
     pInfo[playerid][pBrutallyWounded] = false;
 	pInfo[playerid][pDead] = true;
 	pInfo[playerid][pDeadTime] = 60;
-	if(weaponid != 999) format(pInfo[playerid][pDeadBy], 128, "Ferimentos de %s", ReturnWeaponName(weaponid));
-	else format(pInfo[playerid][pDeadBy], 128, "Morte desconhecida");
+	if(weaponid != 999) format(pInfo[playerid][pDeadBy], 128, "Aparenta feridas de %s", ReturnWeaponName(weaponid));
+	else format(pInfo[playerid][pDeadBy], 128, "Ferimentos desconhecidos");
 
 	pInfo[playerid][pInterior] = GetPlayerInterior(playerid);
 	pInfo[playerid][pVirtualWorld] = GetPlayerVirtualWorld(playerid);

@@ -210,7 +210,7 @@ DeleteBusiness(playerid, id)  {
 }
 
 CreateBusinessPickup(id)  {
-    BizData[id][bPickup] = CreateDynamicPickup(1239, 2, BizData[id][bEnter][0], BizData[id][bEnter][1], BizData[id][bEnter][2], floatround(BizData[id][bEnter][4], floatround_round), floatround(BizData[id][bEnter][5], floatround_round), -1, 20.0);
+    BizData[id][bDynamicPickup] = CreateDynamicPickup(BizData[id][bPickup], 1272, BizData[id][bEnter][0], BizData[id][bEnter][1], BizData[id][bEnter][2], floatround(BizData[id][bEnter][4], floatround_round), floatround(BizData[id][bEnter][5], floatround_round));
 
     return 1;
 }
@@ -218,8 +218,8 @@ CreateBusinessPickup(id)  {
 RefreshBusinessPickup(id) {
 	if (HasBusiness(id))
 	{
-		if (IsValidObject(BizData[id][bPickup]))
-		    DestroyDynamicPickup(BizData[id][bPickup]);
+		if (IsValidDynamicPickup(BizData[id][bDynamicPickup]))
+		    DestroyDynamicPickup(BizData[id][bDynamicPickup]);
 
         CreateBusinessPickup(id);
 	}
@@ -243,6 +243,13 @@ HasBusiness(id) { //Verifica se a empresa existe
 
 HasBusinessOwner(id) { //Verifica se a empresa possui dono
     return HasBusiness(id) && (BizData[id][bOwner]);
+}
+
+PlayerHasBusiness(playerid, businessID) { //Verifica se o player é dono da empresa
+    if(BizData[businessID][bOwner] != pInfo[playerid][pID])
+        return 0;
+
+    return 1;
 }
 
 NearestBusinessEnter(playerid, Float:distance = 1.5) { //Verifica se existe alguma entrada de empresa próxima

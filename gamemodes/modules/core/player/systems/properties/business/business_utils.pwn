@@ -23,6 +23,7 @@ enum E_BUSINESS_DATA {
     bSecurity,           //Levels de segurança da emppresa
     bBlip,               //Icone para aparecer no mapa
     bPickup,             //Pickup visual da empresa (Icone na entrada)
+    bDynamicPickup,      //Cria o item pickup
 };
 
 new BizData[MAX_BUSINESS][E_BUSINESS_DATA];
@@ -34,5 +35,19 @@ hook OnGameModeInit() {
 
 hook OnGamemodeExit() {
     SaveAllBusiness();
+    return 1;
+}
+
+public OnPlayerPickUpDynamicPickup(playerid, pickupid)
+{
+    new str[256];
+
+    for(new i; i < MAX_BUSINESS; i++) {
+        if(BizData[i][bDynamicPickup] == pickupid)
+        {
+            va_SendClientMessage(playerid, COLOR_GREEN,"Você está na porta da empresa %s.", GetBusinessName(i));
+        }
+    }
+
     return 1;
 }

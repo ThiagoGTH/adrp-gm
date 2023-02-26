@@ -51,11 +51,11 @@ CMD:editaratm(playerid, params[]) {
 	return true;
 }
 
-CMD:removeratm(playerid, params[]) {
+CMD:deletaratm(playerid, params[]) {
     if(GetPlayerAdmin(playerid) < 3 || !GetUserTeam(playerid, 2)) return SendPermissionMessage(playerid);
 
     new id;
-	if(sscanf(params, "i", id)) return SendSyntaxMessage(playerid, "/removeratm [ATM ID]");
+	if(sscanf(params, "i", id)) return SendSyntaxMessage(playerid, "/deletaratm [ATM ID]");
 	if(!Iter_Contains(ATMs, id)) return SendErrorMessage(playerid, "Você específicou o ID de um ATM inválido.");
 
 	if(IsValidDynamicObject(ATMData[id][atmObjID])) DestroyDynamicObject(ATMData[id][atmObjID]);

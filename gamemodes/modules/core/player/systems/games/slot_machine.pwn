@@ -92,9 +92,9 @@ hook OnGameModeInit() {
 		int = SlotMachinePositions[i][E_SLOT_MACHINE_INTERIOR];
 		vw = SlotMachinePositions[i][E_SLOT_MACHINE_WORLD];
 
-		SlotMachineArea[i] = CreateDynamicSphere(x, y, z, 1.5);
+		SlotMachineArea[i] = CreateDynamicSphere(x, y, z+1.5, 2.0);
 
-		CreateDynamic3DTextLabel("Pressione ~k~~CONVERSATION_YES~ para jogar", COLOR_WHITE, x, y, z, 1.0, .testlos = false, .worldid = vw, .interiorid = int);
+		CreateDynamic3DTextLabel("Pressione ~k~~CONVERSATION_YES~ para jogar", COLOR_WHITE, x, y, z+1.5, 2.0, .testlos = false, .worldid = vw, .interiorid = int);
 		
 		CreateDynamicObject(-6002, x, y, z, rx, ry, rz, vw, int, -1, STREAMER_OBJECT_SD, STREAMER_OBJECT_DD);
 	}

@@ -79,7 +79,7 @@ CMD:pegarpaycheck(playerid, params[]){
 }
 
 CMD:setarhoras(playerid, params[]){
-    if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
+    if(GetPlayerAdmin(playerid) < 1337) return SendPermissionMessage(playerid);
 
     pInfo[playerid][pPlayingMinutes] = 59;
     va_SendClientMessage(playerid, -1, "%d.", pInfo[playerid][pPlayingMinutes]);

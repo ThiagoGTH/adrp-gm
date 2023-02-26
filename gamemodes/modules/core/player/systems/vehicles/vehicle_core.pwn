@@ -380,6 +380,12 @@ LoadVehicles() {
 LoadVehicle(vehicleid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM `vehicles` WHERE `ID` = '%d';", vehicleid);
     mysql_query(DBConn, query);
+    
+    /*for (new i = 0; i < MAX_DYNAMIC_CARS; i++){
+        if(!vInfo[i][vExists]) {
+
+        }
+    }*/
     if (vInfo[vehicleid][vExists]) return false;
 
     vInfo[vehicleid][vExists] = true;

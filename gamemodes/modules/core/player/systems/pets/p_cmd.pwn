@@ -5,7 +5,7 @@ CMD:darpet(playerid, params[]) {
 
     if(sscanf(params, "ud", targetid, petmodel)) return SendSyntaxMessage(playerid, "/darpet [playerid] [modelo]");
     if(!IsPlayerConnected(targetid)) return SendNotConnectedMessage(playerid);
-    if(!IsValidPetModel(petmodel)) return SendErrorMessage(playerid, "Modelo inválido!");   
+    if(!IsValidPetModel(petmodel)) return SendErrorMessage(playerid, "Modelo inválido. Modelos válidos: 29900 ~ 29919.");   
 
     PetData[targetid][petModelID] = petmodel;
     format(PetData[targetid][petName], 128, "Jack");

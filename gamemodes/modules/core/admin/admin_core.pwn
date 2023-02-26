@@ -14,8 +14,8 @@ AdminRankName(playerid) {
 		case 3: format(rank, sizeof(rank), "Game Admin 2");
 		case 4: format(rank, sizeof(rank), "Game Admin 3");
 		case 5: format(rank, sizeof(rank), "Lead Admin");
-        case 1337: format(rank, sizeof(rank), "Management");
-		case 1338: format(rank, sizeof(rank), "Management");
+        case 1337: format(rank, sizeof(rank), "Manager");
+		case 1338: format(rank, sizeof(rank), "Developer Manager");
 		default: format(rank, sizeof(rank), "Inválido");
 	}
 	return rank;
@@ -206,7 +206,7 @@ CMD:infoplayer(playerid, params[]) {
 	if(userid != INVALID_PLAYER_ID){
 
 		va_SendClientMessage(playerid, COLOR_GREEN, "|________[ EXIBINDO INFORMAÇÕES ]________|");
-		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Nome: {FFFFFF}%s (%s)", pNome(userid), GetPlayerUserEx(playerid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Nome: {FFFFFF}%s (%s)", pNome(userid), GetPlayerUserEx(userid));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Interior: {FFFFFF}%d", GetPlayerInterior(userid));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Virtual World: {FFFFFF}%d", GetPlayerVirtualWorld(userid));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Ping: {FFFFFF}%d", GetPlayerPing(userid));
@@ -735,7 +735,6 @@ CMD:kick(playerid, params[]) {
 	if (sscanf(params, "us[128]", userid, reason)) return SendSyntaxMessage(playerid, "/kick [playerid/nome] [motivo]");
 	if (userid == INVALID_PLAYER_ID) return SendNotConnectedMessage(playerid);
 
-	
 	va_SendClientMessageToAll(COLOR_LIGHTRED,"AdmCmd: %s kickou %s por: %s.", GetPlayerUserEx(playerid), pNome(userid), reason);
 	KickEx(userid);
 
@@ -745,13 +744,12 @@ CMD:kick(playerid, params[]) {
 
 	// Cria o histórico do jogador
 	format(logString, sizeof(logString), "%s (%s) foi kickado por %s (motivo: %s)", pNome(userid), GetPlayerUserEx(userid), GetPlayerUserEx(playerid), reason);
-	logCreate(playerid, logString, 11);
+	logCreate(userid, logString, 11);
 
 	return true;
 }
 
 CMD:historico(playerid, params[]) {
-	
 	if(GetPlayerAdmin(playerid) < 2) return SendPermissionMessage(playerid);
 	new userid;
 	if (sscanf(params, "u", userid)) return SendSyntaxMessage(playerid, "/historico [playerid/nome]");

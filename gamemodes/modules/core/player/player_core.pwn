@@ -4,12 +4,12 @@ CMD:ajuda(playerid, params[]) {
   	new type[128];
    	if (sscanf(params, "s[128]", type)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
-		SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
-		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs");
+		//SendClientMessage(playerid, COLOR_CYAN1, "[CONTA] ");
+		SendClientMessage(playerid, COLOR_CYAN2, "[GERAL] /admins, /sos, /report, /cs, /tackle");
 		SendClientMessage(playerid, COLOR_CYAN1, "[CHAT] (/g)ritar, /baixo, /me, /do, /ame, /ado, (/s)ussurrar, /b, /limparmeuchat");
-		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos");
-		SendClientMessage(playerid, COLOR_CYAN1, "[OUTROS] /config, /tela");
-		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca, /ajuda tela");
+		SendClientMessage(playerid, COLOR_CYAN2, "[DINHEIRO] /pagar, /investimentos, /taxas");
+		SendClientMessage(playerid, COLOR_CYAN1, "[OUTROS] /config, /tela, /largarcorpo, /pegarcorpo, /respawnar");
+		SendClientMessage(playerid, COLOR_CYAN2, "[OUTROS] /ajuda empresa, /ajuda casa, /ajuda cassino, /ajuda sinuca, /ajuda tela, /ajuda veiculo");
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "Se tiver dúvida na utilização de algum comando envie um /sos e fale com um administrador.");
 		return true;
@@ -44,6 +44,14 @@ CMD:ajuda(playerid, params[]) {
         SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'Y' próximo de uma mesa inicia/deixa o jogo");
 		SendClientMessage(playerid, COLOR_CYAN2, "[SINUCA] 'botão de mirar' mira na bola");
 		SendClientMessage(playerid, COLOR_CYAN1, "[SINUCA] 'botão de atirar' define a força da tacada");
+        SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
+		return true;
+	}
+	else if (!strcmp(type, "veiculo", true)){
+		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
+        SendClientMessage(playerid, COLOR_CYAN1, "[VEÍCULOS] /v, /vobjeto, /placa, /motor, /luzes, /capo, /janela");
+		SendClientMessage(playerid, COLOR_CYAN2, "[VEÍCULOS] /trailer [temporário], /trailerex [temporário], /quebrartrava, /vobjeto");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
 		return true;

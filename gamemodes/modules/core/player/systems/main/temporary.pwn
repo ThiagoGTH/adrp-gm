@@ -8,7 +8,7 @@ CMD:pegaradmin(playerid, params[]) {
 	uInfo[playerid][uLogTeam] = 1;
 			
 	SaveUserInfo(playerid);
-	SendServerMessage(playerid, "Você pegou administrador nível 1335 com todas as equipes.");
+	SendServerMessage(playerid, "Você pegou administrador nível 1337 com todas as equipes.");
 	return true;
 }
 

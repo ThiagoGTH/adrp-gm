@@ -13,7 +13,6 @@ public ServerStatus(type){
     channel = DCC_FindChannelById("1018291621722341447");
     
     if(type == 1){ // TUDO FUNCIONANDO
-
         // DISCORD
         format(title, 32, "Status do Servidor");
         utf8encode(title, title);
@@ -26,6 +25,7 @@ public ServerStatus(type){
         > <:point:1066021935185657876> **Fórum:** Operante\n\n\
         **<:all:1066021931842805941> INFORMAÇÕES ÚTEIS:**\n\
         <:point:1066021935185657876> Endereço de IP: %s\n\
+        <:point:1066021935185657876> Senha de acesso: closedbeta023\n\
         <:point:1066021935185657876> User Control Panel: %s\n\
         <:point:1066021935185657876> Fórum: %s\n\n\
         ", SERVERIP, SERVERUCP, SERVERFORUM);

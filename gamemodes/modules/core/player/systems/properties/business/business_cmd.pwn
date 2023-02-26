@@ -1,7 +1,4 @@
 #include <YSI_Coding\y_hooks>
-
-// ============================================================================================================================================
-
 //Comando para criar empresa.
 CMD:criarempresa(playerid, params[]) {
     new 

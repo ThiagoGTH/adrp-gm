@@ -6,6 +6,16 @@ hook OnGameModeInit(){
 }
 
 public OnPlayerDeath(playerid, killerid, reason) {
+	if (uInfo[damagedid][uJailed] > 0) {
+		SetPlayerPos(playerid, 197.6346, 175.3765, 1003.0234);
+        SetPlayerInterior(playerid, 3);
+        SetPlayerVirtualWorld(playerid, (playerid + 100));
+        SetPlayerFacingAngle(playerid, 0.0);
+        SetCameraBehindPlayer(playerid);
+
+        SetPlayerHealthEx(playerid, pInfo[playerid][pHealthMax]);
+	}
+	
 	if (killerid != INVALID_PLAYER_ID) {
 		if (reason == 50 && killerid != INVALID_PLAYER_ID)
 		    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s matou %s com heli-kill.", pNome(killerid), pNome(playerid));
@@ -20,6 +30,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
 	if(pInfo[damagedid][pDead]) return false;
+	if(uInfo[damagedid][uJailed] > 0) return false;
 
 	if(weaponid == 0) {
 		if(pInfo[damagedid][pBrutallyWounded] && pInfo[damagedid][pDead]) return false;

@@ -44,7 +44,7 @@ CMD:ajail(playerid, params[]) {
 	ClearAnimations(userid);
     SetPlayerPos(userid, 197.6346, 175.3765, 1003.0234);
     SetPlayerInterior(userid, 3);
-	SetPlayerVirtualWorld(userid, (playerid + 100));
+	SetPlayerVirtualWorld(userid, (userid + 100));
  	SetPlayerFacingAngle(userid, 0.0);
 	SetCameraBehindPlayer(userid);
 	ResetWeapons(userid);
@@ -126,7 +126,10 @@ forward aJailMinuteCheck();
 public aJailMinuteCheck() {
     foreach (new i : Player){
         if (!pInfo[i][pLogged]) return true;
-        if (pInfo[i][pAFKCount] < 31 && uInfo[i][uJailed] > 0) uInfo[i][uJailed] --;
+        if (pInfo[i][pAFKCount] < 31 && uInfo[i][uJailed] > 0) {
+            uInfo[i][uJailed] --;
+            SetPlayerHealthEx(playerid, pInfo[playerid][pHealthMax]);
+        } 
         if (uInfo[i][uJailed] == 0) freeAjail(i);
     } return true;
 }

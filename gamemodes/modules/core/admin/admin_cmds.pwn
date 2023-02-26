@@ -15,7 +15,8 @@ ShowAdminCmds(playerid){
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ban, /banoff, /bantemp, /bantempoff, /desban, /checarban, /spec");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /ajail, /ajailoff, /kick, /historico, /ircasa, /irentrada, /atrancar");
 		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /listaentradas, /irveiculo, /trazerveiculo, /respawnarveiculo, /rtc");
-		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /aremovercallsign, /checarveiculos, /novato, /ferimentos (em modo trabalho), /recuperar");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /aremovercallsign, /checarveiculos, /novato, /ferimentos (em modo trabalho)");
+		va_SendClientMessage(playerid, -1, "{33AA33}[GAME ADMIN 1]{FFFFFF} /recuperar, /deletarcorpo");
 	} 
 	if(GetPlayerAdmin(playerid) >= 3) // GAME ADMIN 2
 	{

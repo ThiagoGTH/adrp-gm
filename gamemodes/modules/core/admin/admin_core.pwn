@@ -648,8 +648,7 @@ public GMXA() {
 
 forward GMXF();
 public GMXF() {
-	foreach(new i : Player)
-	{
+	foreach(new i : Player) {
 		SendRconCommand("gmx");
 	}
 }
@@ -688,11 +687,13 @@ SendAdminAlert(color, const str[], {Float,_}:...) {
 
 	
         foreach (new i : Player) {
+			if(pInfo[i][pLogged] == false) return false;
 			if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);
 		}
 		return true;
 	}
 	foreach (new i : Player) {
+		if(pInfo[i][pLogged] == false) return false;
 		if (uInfo[i][uAdmin] > 0) SendClientMessage(i, color, string);
 	}
 	return true;

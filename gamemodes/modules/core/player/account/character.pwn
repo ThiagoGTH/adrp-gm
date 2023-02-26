@@ -619,8 +619,10 @@ hook OnPlayerDisconnect(playerid, reason) {
 	logCreate(playerid, logString, 2);
     printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
 
+    SaveUserInfo(playerid);
     SaveCharacterInfo(playerid);
     PetDespawn(playerid);
+    ResetUserData(playerid);
     ResetCharacterData(playerid);
     ResetCharacterSelection(playerid);
     SOS_Clear(playerid);

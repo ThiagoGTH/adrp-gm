@@ -10,7 +10,7 @@ forward OnPasswordChecked(playerid);
     format(name, sizeof(name), "%s", uInfo[playerid][uName]);
     return name;
 }*/
-
+ 
 GetPlayerUserEx(playerid) {
     new name[24];
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%i' LIMIT 1", uInfo[playerid][uID]);

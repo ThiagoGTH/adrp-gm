@@ -12,17 +12,17 @@ public OnPlayerDeath(playerid, killerid, reason) {
 
         if (reason == 29 && killerid != INVALID_PLAYER_ID && GetPlayerState(killerid) == PLAYER_STATE_DRIVER)
 		    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s matou %s com driver-by shooting.", pNome(killerid), pNome(playerid));
-
-        OnPlayerGetDeath(playerid, killerid, reason);
 	}
+
+	OnPlayerGetBrutallyWounded(playerid, killerid, reason);
 	return true;
 }
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
 	if(pInfo[damagedid][pDead]) return false;
 
-	if(weaponid == 0){
-		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]) return false;
+	if(weaponid == 0) {
+		if(pInfo[damagedid][pBrutallyWounded] && pInfo[damagedid][pDead]) return false;
 	}
 
     if(weaponid == 0 && pInfo[playerid][pTackleMode]) {
@@ -30,13 +30,13 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
             new chance = random(2);
             switch(chance){
                 case 0: {
-                        SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s falhou em tentar derrubar %s.", pNome(playerid), pNome(damagedid));
+                    SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s falhou em tentar derrubar %s.", pNome(playerid), pNome(damagedid));
 
-                        ApplyAnimation(playerid,"ped", "EV_dive", 4.0, false, true, true, false, 0);
-                        pInfo[playerid][pTackleTimer] = gettime() + 10;
+                    ApplyAnimation(playerid,"ped", "EV_dive", 4.0, false, true, true, false, 0);
+                    pInfo[playerid][pTackleTimer] = gettime() + 10;
 
-                        format(logString, sizeof(logString), "%s (%s) falhou em derrubar %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
-	                    logCreate(playerid, logString, 7);
+                    format(logString, sizeof(logString), "%s (%s) falhou em derrubar %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(damagedid));
+	                logCreate(playerid, logString, 7);
                 }
                 case 1: {
                     SendNearbyMessage(playerid, 30.0, COLOR_PURPLE, "** %s derrubou %s no chão.", pNome(playerid), pNome(damagedid));
@@ -285,8 +285,7 @@ hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys){
 #endif
 
 public OnPlayerStateChange(playerid, PLAYER_STATE:newstate, PLAYER_STATE:oldstate) {
-	if (newstate == PLAYER_STATE_WASTED)
-	{
+	if (newstate == PLAYER_STATE_WASTED) {
 		if(!pInfo[playerid][pBrutallyWounded] && !pInfo[playerid][pDead]){ // BRUTALMENTE FERIDO 
 			OnPlayerGetBrutallyWounded(playerid, 999, 999);
 		} else if(pInfo[playerid][pBrutallyWounded]) { // MORTO 

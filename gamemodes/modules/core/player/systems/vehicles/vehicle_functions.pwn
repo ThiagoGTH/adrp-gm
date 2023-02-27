@@ -462,7 +462,7 @@ SendVehicleMessage(vehicleid, color, const str[], {Float,_}:...) {
 	    start,
 	    end;
 
-	static string[144];
+	static string[256];
 	
 	string[0] = '\0';
 

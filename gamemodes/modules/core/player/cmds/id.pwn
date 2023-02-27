@@ -3,9 +3,6 @@ CMD:id(playerid, params[])
     if (isnull(params))
         return SendSyntaxMessage(playerid, "/id [id/nome]");
 
-    if (strlen(params) < 3)
-        return SendErrorMessage(playerid, "Você deve especificar ao menos 3 caracteres.");
-
     if(IsNumeric(params)){
         new userid = strval(params);
 

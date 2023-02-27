@@ -171,7 +171,7 @@ Dialog:PETMENU(playerid, response, listitem, inputtext[]) {
         if (!strcmp(inputtext, "Ação: Fica", true))
             return PetStay(playerid);
         if (!strcmp(inputtext, "Ação: Segue", true))
-            return Dialog_Show(playerid, PET_MENU_FOLLOW, DIALOG_STYLE_INPUT, "Ação: Segue", "Digite o ID do jogador que você quer que seu animal siga.\nDeixe em branco se quer que ele siga você.", "Seguir", "Cancelarar");
+            return Dialog_Show(playerid, PET_MENU_FOLLOW, DIALOG_STYLE_INPUT, "Ação: Segue", "Digite o ID do jogador que você quer que seu animal siga.\nDeixe em branco se quer que ele siga você.", "Seguir", "Cancelar");
         if (!strcmp(inputtext, "Ação: Senta", true))
             return PetSit(playerid);
         if (!strcmp(inputtext, "Ação: Deita", true))

@@ -1,5 +1,4 @@
-CMD:pagar(playerid, params[])
-{
+CMD:pagar(playerid, params[]) {
 	new userid, amount;
 
 	if(sscanf(params, "ui", userid, amount))
@@ -23,5 +22,5 @@ CMD:pagar(playerid, params[])
 		return SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s (%d) tentou pagar %s (%d) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid), format(logString, sizeof(logString), "%s (%d) tentou pagar %s (%d) com o mesmo IP.", pNome(playerid), playerid, pNome(userid), userid), logCreate(playerid, logString, 1);
 		
     PayPlayer(playerid, userid, amount);
-	return 1;
+	return true;
 }

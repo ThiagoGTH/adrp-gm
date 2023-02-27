@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 hook OnGameModeInit() {
-    SetTimer("HungryThistyCheck", 1000, true);//1s
+    SetTimer("HungryThistyCheck", 5000, true);//1s
 	return true;
 }
 

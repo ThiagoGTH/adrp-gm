@@ -48,7 +48,7 @@ ShowAdminCmds(playerid){
 	{
 		va_SendClientMessage(playerid, -1, "{33AA33}[PROPERTY TEAM]{FFFFFF} /criarcasa, /deletarcasa, /editarcasa, /ircasa, /criarcasaentrada, /editarcasaentrada, /deletarcasaentrada");
 		va_SendClientMessage(playerid, -1, "{33AA33}[PROPERTY TEAM]{FFFFFF} /ircasaentrada, /listacasaentradas, /atrancar, /criarinvestimento, /editarinvestimento, /deletarinvestimento");
-		va_SendClientMessage(playerid, -1, "{33AA33}[PROPERTY TEAM]{FFFFFF} /criarbancario, /deletarbancario, /criaratm, /editaratm, /deletaradm");
+		va_SendClientMessage(playerid, -1, "{33AA33}[PROPERTY TEAM]{FFFFFF} /criarbancario, /deletarbancario, /criaratm, /editaratm, /deletaratm");
 	}
 	if(GetUserTeam(playerid, 3)) // Event Team
 	{

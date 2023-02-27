@@ -51,7 +51,7 @@ CMD:ajuda(playerid, params[]) {
 	else if (!strcmp(type, "veiculo", true)){
 		SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
         SendClientMessage(playerid, COLOR_CYAN1, "[VEÍCULOS] /v, /vobjeto, /placa, /motor, /luzes, /capo, /janela");
-		SendClientMessage(playerid, COLOR_CYAN2, "[VEÍCULOS] /trailer [temporário], /trailerex [temporário], /quebrartrava, /vobjeto");
+		SendClientMessage(playerid, COLOR_CYAN2, "[VEÍCULOS] /trailer [temporário], /trailerex [temporário], /quebrartrava");
         SendClientMessage(playerid, COLOR_GREEN, "____________________________________________________");
 		SendClientMessage(playerid, COLOR_CYAN1, "Você pode conferir um guia completo sobre o sistema em nosso fórum.");
 		return true;

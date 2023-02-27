@@ -105,14 +105,14 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 	}
 	if(armour > 0.0 && armourhit) {
         armour -= amount;
-        if(armour < 0.0){
+        if(armour <= 0.0){
          	SetPlayerArmour(damagedid, 0.0);
             pInfo[damagedid][pArmour] = 0.0;
-            health += armour;
         } else SetPlayerArmour(damagedid, armour);
     } else health -= amount;
 	CallbackDamages(damagedid, playerid, bodypart, weaponid, amount);
 
+	SetPlayerArmour(damagedid, armour);
 	SetPlayerHealthEx(damagedid, health);
 	if(health > 10.00 && health < 30.00){
 		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){
@@ -172,8 +172,8 @@ OnPlayerGetBrutallyWounded(playerid, issuerid, weaponid) {
 		ApplyAnimation(playerid, "ped", "CAR_dead_LHS", 4.0, false, true, true, true, 0);
 	} else {
 		TogglePlayerControllable(playerid, true);
-        ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, false, true, true, true, 0);
-		//ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
+        //ApplyAnimationById(playerid, SWEET_LAFIN_SWEET, 4.1, false, true, true, true, 0);
+		ApplyAnimation(playerid, "WUZI", "CS_Dead_Guy", 4.1, false, true, true, true, 0);
 	}
 
 	if(issuerid != 999 && weaponid != 999){

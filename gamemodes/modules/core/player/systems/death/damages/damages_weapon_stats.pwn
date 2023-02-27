@@ -26,14 +26,14 @@ static const g_WeaponName[MAX_WEAPONS_QTD][MAX_WEAPON_NAME] =
 
 static Float:s_WeaponDamage[MAX_WEAPONS_QTD] = 
 {
-	1.0, // 0 - Fist
+	3.0, // 0 - Fist
 	5.0, // 1 - Brass knuckles
 	5.0, // 2 - Golf club
 	5.0, // 3 - Nitestick
 	10.0, // 4 - Knife
 	5.0, // 5 - Bat
 	5.0, // 6 - Shovel
-	5.0, // 7 - Pool cue
+	0.0, // 7 - Pool cue
 	15.0, // 8 - Katana
 	0.0, // 9 - Chainsaw
 	1.0, // 10 - Dildo

@@ -83,7 +83,7 @@ public Fly(playerid) {
 		if(GetPlayerAnimationIndex(playerid) != 959)
 		ApplyAnimation(playerid,"PARACHUTE", "FALL_SkyDive_Accel", 6.1, true, true, true, true, 0);
 	} if(OnFly[playerid])
-		SetTimerEx("Fly", 100, false, "i", playerid);
+		SetTimerEx("Fly", 200, false, "i", playerid);
 	return true;
 }
 

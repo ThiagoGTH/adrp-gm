@@ -33,8 +33,8 @@ hook OnGameModeInit() {
     CreateHUDTextdraws();
 
     // TIMERS
-    SetTimer("SpeedoCheck", 100, true);
-    SetTimer("HUDCheck", 1000, true);
+    SetTimer("SpeedoCheck", 300, true);
+    SetTimer("HUDCheck", 1250, true);
     return true;
 }
 
@@ -141,6 +141,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
             
             CancelSelectTextDraw(playerid);
             ResetCharacterData(playerid);
+            
             LoadCharacterInfoID(playerid, pInfo[playerid][pCharacterChoosed]);
             SpawnSelectedCharacter(playerid);
             HideCharacterTextdraws(playerid);
@@ -149,7 +150,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid) {
             ResetCharacterSelection(playerid);
 
             ShowPlayerFooter(playerid, "BEM-VINDO(A)!", 2);
-            pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 3000, false, "dd", playerid, 888);
+            pInfo[playerid][pInterfaceTimer] = SetTimerEx("SetPlayerInterface", 2000, false, "dd", playerid, 888);
             return true;
         }
 

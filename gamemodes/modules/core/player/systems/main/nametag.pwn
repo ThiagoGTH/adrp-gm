@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
  
-#define NT_DISTANCE 8.0
+#define NT_DISTANCE 15.0
   
 hook OnGameModeInit(){
     ShowNameTags(false);

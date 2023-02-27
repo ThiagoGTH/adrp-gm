@@ -1761,7 +1761,7 @@ PreloadAnimations(playerid) {
     }
 }
 
-ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, bool:loop, bool:x, bool:y, bool:freeze, time, forceSync = 1) {
+stock ApplyAnimationById(playerid, ANIM_IDX:animId, Float:fDelta, bool:loop, bool:x, bool:y, bool:freeze, time, forceSync = 1) {
     new
     	animLib[32],
         animName[32]

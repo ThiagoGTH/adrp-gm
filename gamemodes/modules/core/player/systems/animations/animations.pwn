@@ -14,3 +14,4 @@
 #include "modules\core\player\systems\animations\position_anims.pwn"
 #include "modules\core\player\systems\animations\signaling_anims.pwn"
 #include "modules\core\player\systems\animations\vehicle_anims.pwn"
+//#include "modules\core\player\systems\animations\anim_browser.pwn"

@@ -5,13 +5,13 @@
 forward OnPasswordHashed(author[], user[]);
 forward OnPasswordChecked(playerid);
 
-/*GetPlayerUser(playerid) {
+GetPlayerUserEx(playerid) {
     new name[32];
     format(name, sizeof(name), "%s", uInfo[playerid][uName]);
     return name;
-}*/
+}
  
-GetPlayerUserEx(playerid) {
+/*GetPlayerUserEx(playerid) {
     new name[24];
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%i' LIMIT 1", uInfo[playerid][uID]);
     new Cache:cache = mysql_query(DBConn, query);
@@ -19,7 +19,7 @@ GetPlayerUserEx(playerid) {
     else cache_get_value_name(0, "username", name);
     cache_delete(cache);
     return name;
-}
+}*/
 
 GetPlayerSQLID(playerid){
     new SQLID;
@@ -52,7 +52,6 @@ hook OnPlayerRequestClass(playerid, classid) {
     //format(uInfo[playerid][uName], 24, "%s", GetPlayerNameEx(playerid));
     CheckCharactersName(playerid);
     CheckUserConditions(playerid);
-
     return true;
 }
 
@@ -301,8 +300,8 @@ CheckCharactersName(playerid) {
     SendServerMessage(playerid, "Por precaução e segurança, não podemos deixar que você se autentique assim.");
     SendServerMessage(playerid, "Mas não se preocupe. Estamos redirecionando a sua conexão ao usuário %s.", realUserName);
         
-    //format(uInfo[playerid][uName], 24, "%s", realUserName);
-    SetPlayerName(playerid, realUserName);
+    format(uInfo[playerid][uName], 24, "%s", realUserName);
+    SetPlayerName(playerid, uInfo[playerid][uName]);
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", realUserName);
     return true;

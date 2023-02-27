@@ -6,6 +6,9 @@ hook OnGameModeInit(){
 }
 
 public OnPlayerDeath(playerid, killerid, reason) {
+	GetPlayerPos(playerid, pInfo[playerid][pPositionX], pInfo[playerid][pPositionY], pInfo[playerid][pPositionZ]);
+	GetPlayerFacingAngle(playerid, pInfo[playerid][pPositionA]);
+	
 	if (uInfo[playerid][uJailed] > 0) {
 		SetPlayerPos(playerid, 197.6346, 175.3765, 1003.0234);
         SetPlayerInterior(playerid, 3);
@@ -22,9 +25,9 @@ public OnPlayerDeath(playerid, killerid, reason) {
 
         if (reason == 29 && killerid != INVALID_PLAYER_ID && GetPlayerState(killerid) == PLAYER_STATE_DRIVER)
 		    SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s matou %s com driver-by shooting.", pNome(killerid), pNome(playerid));
-	}
 
-	OnPlayerGetBrutallyWounded(playerid, killerid, reason);
+		OnPlayerGetBrutallyWounded(playerid, killerid, reason);
+	}
 	return true;
 }
 

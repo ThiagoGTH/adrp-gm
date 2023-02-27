@@ -189,7 +189,8 @@ RemoveChars(tID){
 }
 
 CMD:checarip(playerid, params[]){
-	if(uInfo[playerid][uAdmin] < 1338) return SendPermissionMessage(playerid);
+	if(uInfo[playerid][uAdmin] < 3) return SendPermissionMessage(playerid);
+	if(uInfo[playerid][uAdmin] == 5000) return SendErrorMessage(playerid, "Desativado para beta-testers.");
 
 	new targetid;
 	if(sscanf(params, "u", targetid)) return SendSyntaxMessage(playerid, "/checarip [playerid/nome]");

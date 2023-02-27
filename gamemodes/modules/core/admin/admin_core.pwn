@@ -16,6 +16,7 @@ AdminRankName(playerid) {
 		case 5: format(rank, sizeof(rank), "Lead Admin");
         case 1337: format(rank, sizeof(rank), "Manager");
 		case 1338: format(rank, sizeof(rank), "Developer Manager");
+		case 5000: format(rank, sizeof(rank), "Beta Tester");
 		default: format(rank, sizeof(rank), "Inválido");
 	}
 	return rank;

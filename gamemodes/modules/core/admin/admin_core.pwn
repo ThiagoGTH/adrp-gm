@@ -338,9 +338,9 @@ CMD:dardinheiro(playerid, params[]){
 }
 
 CMD:setaradmin(playerid, params[]) {
-    
     if(GetPlayerAdmin(playerid) < 5) return SendPermissionMessage(playerid);
-
+	if(uInfo[playerid][uAdmin] == 5000) return SendErrorMessage(playerid, "Desativado para beta-testers.");
+	
     new userid, admin;
     if(sscanf(params, "ud", userid, admin)) return SendSyntaxMessage(playerid,"/setaradmin [playerID/Nome] [admin level]");
     if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);

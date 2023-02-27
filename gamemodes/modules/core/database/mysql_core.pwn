@@ -396,6 +396,7 @@ void:CheckPlayerTable() {
     `nametag` int NOT NULL DEFAULT '0',\
     `objects` int NOT NULL DEFAULT '0',\
     `speedo` int NOT NULL DEFAULT '1',\
+    `hud` int NOT NULL DEFAULT '0',\
     PRIMARY KEY (`ID`));");
 
     print("[DATABASE] Tabela players_config checada com sucesso");

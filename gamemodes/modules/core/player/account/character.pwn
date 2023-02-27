@@ -193,6 +193,7 @@ LoadPlayerConfig(playerid){
     cache_get_value_name_int(0, "nametag", pInfo[playerid][pNametagType]);
     cache_get_value_name_int(0, "objects", pInfo[playerid][pRenderObjects]);
     cache_get_value_name_int(0, "speedo", pInfo[playerid][pHudSpeedo]);
+    cache_get_value_name_int(0, "hud", pInfo[playerid][pHudStyle]);
     
     cache_delete(result);
     return true;
@@ -556,7 +557,8 @@ SavePlayerConfig(playerid) {
     `admin_chat` = '%d', \
     `nametag` = '%d', \
     `objects` = '%d',    \
-    `speedo` = '%d'       \
+    `speedo` = '%d',       \
+    `hud` = '%d' \
     WHERE character_id = '%d';", 
     pInfo[playerid][pTogNewbie],
     pInfo[playerid][pTogFaction],
@@ -564,6 +566,7 @@ SavePlayerConfig(playerid) {
     pInfo[playerid][pNametagType],
     pInfo[playerid][pRenderObjects],
     pInfo[playerid][pHudSpeedo],
+    pInfo[playerid][pHudStyle],
     pInfo[playerid][pID]);
     mysql_query(DBConn, query);
     return true;

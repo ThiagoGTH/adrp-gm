@@ -54,29 +54,29 @@ ClosePlayerHUD(playerid) {
 }
 
 HungerThristHUD(playerid) {
-    //if(pInfo[playerid][pHUD] == 1) {
-    new string[128];
-    // FOME
-    format(string, sizeof(string), "%d", pInfo[playerid][pHunger]);
-    PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][3]);
-    PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][3], string);
-    TextDrawShowForPlayer(playerid, TEXTDRAW_FOOD);
-    // SEDE
-    format(string, sizeof(string), "%d", pInfo[playerid][pThirst]);
-    PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][4]);
-    PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][4], string);
-    TextDrawShowForPlayer(playerid, TEXTDRAW_THIRST);
-    // ESTAMINA
-    new stamina = (GetPlayerStamina(playerid) * 100) / GetPlayerMaxStamina(playerid);
-    format(string, sizeof(string), "%d%%", stamina);
-    PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][5]);
-    PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][5], string);
-    TextDrawShowForPlayer(playerid, TEXTDRAW_BREATH);
+    if(pInfo[playerid][pHudStyle] == 0) {
+        new string[128];
+        // FOME
+        format(string, sizeof(string), "%d", pInfo[playerid][pHunger]);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][3]);
+        PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][3], string);
+        TextDrawShowForPlayer(playerid, TEXTDRAW_FOOD);
+        // SEDE
+        format(string, sizeof(string), "%d", pInfo[playerid][pThirst]);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][4]);
+        PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][4], string);
+        TextDrawShowForPlayer(playerid, TEXTDRAW_THIRST);
+        // ESTAMINA
+        new stamina = (GetPlayerStamina(playerid) * 100) / GetPlayerMaxStamina(playerid);
+        format(string, sizeof(string), "%d%%", stamina);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][5]);
+        PlayerTextDrawSetString(playerid, pInfo[playerid][pTextdraws][5], string);
+        TextDrawShowForPlayer(playerid, TEXTDRAW_BREATH);
         // TACKLE
         /*if(pInfo[playerid][pTackleMode]) {
             
         }*/
-    //} else ClosePlayerHUD(playerid);
+    } else ClosePlayerHUD(playerid);
 
     return true;
 }

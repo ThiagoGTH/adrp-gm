@@ -4,17 +4,21 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#define CGEN_MEMORY 30000
+#define CGEN_MEMORY 20000
 
 #include <crashdetect>
 #include <streamer>
 
 #include <a_mysql>
+
 // YSI
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
 #include <YSI_Data\y_iterate>
 #include <YSI_Data\y_bit>
+#include <YSI_Coding\y_timers>
+
+// YSI
 
 #include <Pawn.CMD>
 #include <memory>
@@ -37,16 +41,17 @@
 #define YSI_NO_OPTIMISATION_MESSAGE
 #define YSI_NO_VERSION_CHECK
 #define YSI_NO_HEAP_MALLOC
+#include <YSI_Coding\y_malloc>
 
-/*#pragma warning disable 214
+#pragma warning disable 214
+#pragma warning disable 213
 #pragma warning disable 239
-//#include <nex-ac_pt.lang>
 #include <nex-ac>
 #pragma warning enable 214
-#pragma warning enable 239*/
+#pragma warning enable 213
+#pragma warning enable 239
 
 /* ==============================[modules]============================== */
-#include <YSI_Coding\y_timers>
 
 #include "modules\utils\utils.pwn"
 #include "modules\core\anticheat\anticheat.pwn"
@@ -91,3 +96,4 @@
 main() {
     DisableCrashDetectLongCall();
 }
+

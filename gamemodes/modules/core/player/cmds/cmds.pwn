@@ -11,3 +11,4 @@
 #include "modules\core\player\cmds\radio.pwn"
 #include "modules\core\player\cmds\blowjob.pwn"
 #include "modules\core\player\cmds\id.pwn"
+#include "modules\core\player\cmds\pm.pwn"

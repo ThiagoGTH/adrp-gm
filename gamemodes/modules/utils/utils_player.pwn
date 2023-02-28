@@ -948,3 +948,7 @@ stock bool:IsPlayerWatchingPlayerCamera(playerid, cameraman){
 	if(pInfo[playerid][pWatchingPlayer] == cameraman) return true;
 	return false;
 }
+
+IsPlayerMinimized(playerid, ms = 5000){
+    return pInfo[playerid][pESC] != 0 && GetTickCount() > (pInfo[playerid][pESC] + ms);
+}

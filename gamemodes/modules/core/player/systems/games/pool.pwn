@@ -1,18 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-/* ================================ DEFINIÇÕES ================================ */
-#define HOLDING(%0) \
-    ((newkeys & (%0)) == (%0))
-
-#define PRESSED(%0) \
-    (((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
-
-#define PRESSING(%0,%1) \
-    (%0 & (%1))
-	
-#define RELEASED(%0) \
-    (((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
-
 #define POCKET_RADIUS 				(0.09)
 #define POOL_TIMER_SPEED 			(25)
 #define DEFAULT_AIM 				(0.38)

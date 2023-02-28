@@ -81,7 +81,7 @@ Bank_ShowMenu(playerid) {
 	new string[256], using_atm = GetPVarInt(playerid, "usingATM");
 	if(CurrentAccountID[playerid] == -1) {
 		format(string, sizeof(string), "{%06x}Criar conta bancária\t{2ECC71}%s\nMinhas contas\t{F1C40F}%d\nAcessar conta", (using_atm ? 0xE74C3CFF >>> 8 : 0xFFFFFFFF >>> 8), (using_atm ? ("") : formatInt(ACCOUNT_PRICE)), Bank_AccountCount(playerid));
-		ShowPlayerDialog(playerid, DIALOG_BANK_MENU_NOLOGIN, DIALOG_STYLE_TABLIST, "{F1C40F}Banco: {FFFFFF}Menu", string, "Selecionar", "Fechar");
+		Dialog_Show(playerid, DIALOG_BANK_MENU_NOLOGIN, DIALOG_STYLE_TABLIST, "{F1C40F}Banco: {FFFFFF}Menu", string, "Selecionar", "Fechar");
 	}else{
 	    new balance = Bank_GetBalance(CurrentAccountID[playerid]), menu_title[64];
 		format(menu_title, sizeof(menu_title), "{F1C40F}Banco: {FFFFFF}Menu (ID: {F1C40F}%d{FFFFFF})", CurrentAccountID[playerid]);
@@ -101,7 +101,7 @@ Bank_ShowMenu(playerid) {
 			(using_atm ? 0xE74C3CFF >>> 8 : 0xFFFFFFFF >>> 8)
 		);
 
-		ShowPlayerDialog(playerid, DIALOG_BANK_MENU, DIALOG_STYLE_TABLIST, menu_title, string, "Selecionar", "Fechar");
+		Dialog_Show(playerid, DIALOG_BANK_MENU, DIALOG_STYLE_TABLIST, menu_title, string, "Selecionar", "Fechar");
 	}
 
 	DeletePVar(playerid, "bankLoginAccount");
@@ -112,7 +112,7 @@ Bank_ShowMenu(playerid) {
 Bank_ShowLogMenu(playerid) {
 	LogListType[playerid] = TYPE_NONE;
 	LogListPage[playerid] = 0;
-	ShowPlayerDialog(playerid, DIALOG_BANK_LOGS, DIALOG_STYLE_LIST, "{F1C40F}Banco: {FFFFFF}Extrato", "Dinheiro depositado\nDinheiro sacado\nTransferências\nAcessos\nMudanças de senha", "Visualizar", "Voltar");
+	Dialog_Show(playerid, DIALOG_BANK_LOGS, DIALOG_STYLE_LIST, "{F1C40F}Banco: {FFFFFF}Extrato", "Dinheiro depositado\nDinheiro sacado\nTransferências\nAcessos\nMudanças de senha", "Visualizar", "Voltar");
 	return true;
 }
 
@@ -168,7 +168,7 @@ Bank_ListAccounts(playerid) {
 	        format(string, sizeof(string), "%s{FFFFFF}%d\t{2ECC71}%s\t{FFFFFF}%s\t%s\n", string, acc_id, formatInt(balance), cdate, (last_access == 0) ? ("Nunca") : ldate);
 	    }
 
-		ShowPlayerDialog(playerid, DIALOG_BANK_ACCOUNTS, DIALOG_STYLE_TABLIST_HEADERS, "{F1C40F}Banco: {FFFFFF}Minhas contas", string, "Entrar", "Sair");
+		Dialog_Show(playerid, DIALOG_BANK_ACCOUNTS, DIALOG_STYLE_TABLIST_HEADERS, "{F1C40F}Banco: {FFFFFF}Minhas contas", string, "Entrar", "Sair");
 	}else{
 		SendErrorMessage(playerid, "Você não possui nenhuma conta bancária.");
 		Bank_ShowMenu(playerid);
@@ -246,7 +246,7 @@ Bank_ShowLogs(playerid) {
 			}
 	    }
 
-		ShowPlayerDialog(playerid, DIALOG_BANK_LOG_PAGE, DIALOG_STYLE_TABLIST_HEADERS, title, list, "Próximo", "Anterior");
+		Dialog_Show(playerid, DIALOG_BANK_LOG_PAGE, DIALOG_STYLE_TABLIST_HEADERS, title, list, "Próximo", "Anterior");
 	} else {
 		SendErrorMessage(playerid, "Não foi possível encontrar mais dados.");
 		Bank_ShowLogMenu(playerid);

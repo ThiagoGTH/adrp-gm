@@ -404,7 +404,8 @@ CMD:a(playerid, result[]) {
 CMD:gmx(playerid, params[]) {
     
     if(GetPlayerAdmin(playerid) < 1338) return SendPermissionMessage(playerid);
-
+	if(uInfo[playerid][uAdmin] == 5000) return SendErrorMessage(playerid, "Desativado para beta-testers.");
+	
     GiveGMX();
 	
 	format(logString, sizeof(logString), "%s (%s) forçou um GMX no servidor.", pNome(playerid), GetPlayerUserEx(playerid));

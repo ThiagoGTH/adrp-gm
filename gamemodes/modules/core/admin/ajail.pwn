@@ -53,7 +53,6 @@ CMD:ajail(playerid, params[]) {
 	
 	SaveUserInfo(userid);
     SaveCharacterInfo(userid);
-    ForceSwitchPhone(userid, true);
     
 	va_SendClientMessageToAll(COLOR_LIGHTRED, "AdmCmd: %s prendeu %s na prisão administrativa por %d minutos pelo motivo: %s.", GetPlayerUserEx(playerid), pNome(userid), minutes, reason);
     SendServerMessage(playerid, "Você prendeu %s por %d minutos (%s).", pNome(userid), minutes, reason);

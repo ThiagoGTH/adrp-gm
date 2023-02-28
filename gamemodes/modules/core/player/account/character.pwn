@@ -603,7 +603,7 @@ SavePlayerFaction(playerid) {
     return true;
 }
 
-hook OnPlayerDisconnect(playerid, reason) {
+public OnPlayerDisconnect(playerid, reason) {
     if(pInfo[playerid][pLogged] == false) return false;
     
     new string[256];
@@ -620,14 +620,17 @@ hook OnPlayerDisconnect(playerid, reason) {
     pInfo[playerid][pLogged] = false;
     format(logString, sizeof(logString), "%s desconectou-se do servidor. ARMAS: ([%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d] [%d %d])", pNome(playerid), pInfo[playerid][pGuns][0], pInfo[playerid][pAmmo][0], pInfo[playerid][pGuns][1], pInfo[playerid][pAmmo][1], pInfo[playerid][pGuns][2], pInfo[playerid][pAmmo][2], pInfo[playerid][pGuns][3], pInfo[playerid][pAmmo][3], pInfo[playerid][pGuns][4], pInfo[playerid][pAmmo][4], pInfo[playerid][pGuns][5], pInfo[playerid][pAmmo][5], pInfo[playerid][pGuns][6], pInfo[playerid][pAmmo][6], pInfo[playerid][pGuns][7], pInfo[playerid][pAmmo][7], pInfo[playerid][pGuns][8], pInfo[playerid][pAmmo][8], pInfo[playerid][pGuns][9], pInfo[playerid][pAmmo][9], pInfo[playerid][pGuns][10], pInfo[playerid][pAmmo][10], pInfo[playerid][pGuns][11], pInfo[playerid][pAmmo][11], pInfo[playerid][pGuns][12], pInfo[playerid][pAmmo][12]);
 	logCreate(playerid, logString, 2);
-    printf("[DATABASE] %s desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid));
+
+    printf("[DATABASE] %s [%d] (%s [%d]) desconectado do servidor e salvo na database.", GetPlayerNameEx(playerid), GetPlayerSQLID(playerid), GetPlayerUserEx(playerid), uInfo[playerid][uID]);
 
     SaveUserInfo(playerid);
     SaveCharacterInfo(playerid);
     PetDespawn(playerid);
+
     ResetUserData(playerid);
     ResetCharacterData(playerid);
     ResetCharacterSelection(playerid);
+
     SOS_Clear(playerid);
     Report_Clear(playerid);
     return true;

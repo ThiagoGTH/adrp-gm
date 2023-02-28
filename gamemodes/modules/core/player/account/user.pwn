@@ -5,13 +5,13 @@
 forward OnPasswordHashed(author[], user[]);
 forward OnPasswordChecked(playerid);
 
-GetPlayerUserEx(playerid) {
+/*GetPlayerUserEx(playerid) {
     new name[32];
     format(name, sizeof(name), "%s", uInfo[playerid][uName]);
     return name;
-}
+}*/
  
-/*GetPlayerUserEx(playerid) {
+GetPlayerUserEx(playerid) {
     new name[24];
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%i' LIMIT 1", uInfo[playerid][uID]);
     new Cache:cache = mysql_query(DBConn, query);
@@ -19,7 +19,7 @@ GetPlayerUserEx(playerid) {
     else cache_get_value_name(0, "username", name);
     cache_delete(cache);
     return name;
-}*/
+}
 
 GetPlayerSQLID(playerid){
     new SQLID;
@@ -164,6 +164,8 @@ LoadUserInfo(playerid) {
 
     LoadUserPremium(playerid);
     LoadUserTeams(playerid);
+
+    CheckUserBan(playerid);
     return true;
 }
 
@@ -223,7 +225,6 @@ SaveUserInfo(playerid) {
     mysql_query(DBConn, query);
     SaveUserPremium(playerid);
     SaveUserTeams(playerid);
-    printf("Usuário '%s' salvo com sucesso.", GetPlayerUserEx(playerid));
     return true;
 }
 

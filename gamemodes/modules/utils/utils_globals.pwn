@@ -288,8 +288,10 @@ new const g_aWeaponSlots[] = {
 	0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 10, 10, 10, 10, 10, 10, 8, 8, 8, 0, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 4, 6, 6, 7, 7, 7, 7, 8, 12, 9, 9, 9, 11, 11, 11
 };
 
-void:ResetUserData(playerid) {
+ResetUserData(playerid) {
     uInfo[playerid][uName][0] = EOS;
+
+    uInfo        [playerid][uID]          = -1;
 
     loginAttempts[playerid]               = 
     uInfo        [playerid][uAdmin]       = 
@@ -304,8 +306,7 @@ void:ResetUserData(playerid) {
     uInfo        [playerid][uEventTeam]   = 
     uInfo        [playerid][uCKTeam]      = 
     uInfo        [playerid][uLogTeam]     = 
-
-    uInfo        [playerid][uID]          = 
+ 
     // Stats
     uInfo        [playerid][uRedFlag]     =
     uInfo        [playerid][uNewbie]      = 
@@ -323,7 +324,7 @@ void:ResetUserData(playerid) {
     uInfo        [playerid][uJailed]      = -1;
 }
 
-void:ResetCharacterData(playerid) {
+ResetCharacterData(playerid) {
     pInfo   [playerid][pID]             = 
     pInfo   [playerid][pUser]           = 0;
     pInfo   [playerid][pName][0]        =
@@ -520,7 +521,7 @@ void:ResetCharacterData(playerid) {
 	}
 }
 
-void:ResetCharacterSelection(playerid){
+ResetCharacterSelection(playerid){
     pInfo[playerid][pShowFooter] = 0;
     pInfo[playerid][pChoosingCharacter] = 0;
     pInfo[playerid][pCharacterChoosed] = 0;

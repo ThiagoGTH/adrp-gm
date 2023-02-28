@@ -4,18 +4,20 @@
 #define previewmodel_dialog_included
 
 /**************************************/
-// PreviewModelDialog.inc - v4.7.2 - Last Updated: 2 Oct, 2018 - By Gammix
+// PreviewModelDialog.inc <Plugin-Free-Version> - v4.7.2 - Last Updated: 14 Oct, 2019 - By Gammix
 /***************************************/
 
-#include <memory.inc> // by BigETI
-
 // definitions
-#if !defined MAX_DIALOG_PREVIEW_TEXTSIZE
-	#define MAX_DIALOG_PREVIEW_TEXTSIZE 128
-#endif
-
 #if !defined DEFAULT_DIALOG_INCREMENT_SIZE
 	#define DEFAULT_DIALOG_INCREMENT_SIZE 100
+#endif
+
+#if !defined MAX_DIALOG_PREVIEW_MODELS
+	#define MAX_DIALOG_PREVIEW_MODELS 350
+#endif
+
+#if !defined MAX_DIALOG_PREVIEW_TEXTSIZE
+	#define MAX_DIALOG_PREVIEW_TEXTSIZE 128
 #endif
 
 #define DIALOG_STYLE_PREVIEW_MODEL 6 // new dialog id definition
@@ -27,8 +29,8 @@
 #define DIALOG_PREVIEW_HORIZONTAL_GAP 56.5
 #define DIALOG_PREVIEW_VERTICAL_GAP 63.5
 
-#define DIALOG_PREVIEW_SELECT_COLOR 0xFF0000FF
-#define DIALOG_PREVIEW_UNSELECT_COLOR 0x464646FF
+#define DIALOG_PREVIEW_SELECT_Colour 0xFF0000FF
+#define DIALOG_PREVIEW_UNSELECT_Colour 0x464646FF
 
 #define SCROLL_BAR_UP_TEXTDRAW Prev@FrameTD[4]
 #define SCROLL_BAR_DOWN_TEXTDRAW Prev@FrameTD[6]
@@ -42,6 +44,17 @@
 #define LISTITEM_ROTATE_RIGHT_TEXTDRAW<%0> Prev@ModelTD[%0][3]
 #define LISTITEM_ZOOM_IN_TEXTDRAW<%0> Prev@ModelTD[%0][4]
 #define LISTITEM_ZOOM_OUT_TEXTDRAW<%0> Prev@ModelTD[%0][5]
+
+// enumerators
+enum E_DIALOG_MODEL_DATA {
+	DIALOG_MODEL_ID,
+	Float:DIALOG_MODEL_RX,
+	Float:DIALOG_MODEL_RY,
+	Float:DIALOG_MODEL_RZ,
+	Float:DIALOG_MODEL_ZOOM,
+	DIALOG_MODEL_Colour1,
+	DIALOG_MODEL_Colour2
+};
 
 // variables
 static Text:Prev@FrameTD[8];
@@ -66,7 +79,8 @@ static Prev@PlayerDialogNumListitems[MAX_PLAYERS];
 static Prev@PlayerDialogPage[MAX_PLAYERS];
 static Prev@PlayerDialogTickCount[MAX_PLAYERS];
 
-static Pointer:Prev@PlayerListitemPointer[MAX_PLAYERS];
+static Prev@PlayerDialogModels[MAX_PLAYERS][MAX_DIALOG_PREVIEW_MODELS][E_DIALOG_MODEL_DATA];
+static Prev@PlayerDialogTexts[MAX_PLAYERS][MAX_DIALOG_PREVIEW_MODELS][MAX_DIALOG_PREVIEW_TEXTSIZE];
 
 // internal functions
 static Prev_GetNumPages(playerid) {
@@ -404,7 +418,7 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 	PlayerTextDrawSetOutline(playerid, Prev@HeaderPTD[playerid], 0);
 	PlayerTextDrawBackgroundColour(playerid, Prev@HeaderPTD[playerid], 255);
 	PlayerTextDrawSetProportional(playerid, Prev@HeaderPTD[playerid], true);
-	PlayerTextDrawBoxColour(playerid, Prev@HeaderPTD[playerid], 1);
+	PlayerTextDrawUseBox(playerid, Prev@HeaderPTD[playerid], true);
 	PlayerTextDrawBoxColour(playerid, Prev@HeaderPTD[playerid], 255);
 	PlayerTextDrawTextSize(playerid, Prev@HeaderPTD[playerid], 501.0000, 0.0000);
 
@@ -504,7 +518,7 @@ static Prev_CreatePlayerTextDraws(playerid, const header[], const button1[], con
 			PlayerTextDrawSetOutline(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
 			PlayerTextDrawBackgroundColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 255);
 			PlayerTextDrawSetProportional(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], true);
-			PlayerTextDrawBoxColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 1);
+			PlayerTextDrawUseBox(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], true);
 			PlayerTextDrawBoxColour(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], 0);
 			PlayerTextDrawTextSize(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], (201.5000 + (b * DIALOG_PREVIEW_HORIZONTAL_GAP)), 0.0000);
 
@@ -595,7 +609,7 @@ static Prev_UpdateScrollBar(playerid, page, totalPages) {
 	PlayerTextDrawSetOutline(playerid, Prev@ScrollBarPTD[playerid], 0);
 	PlayerTextDrawBackgroundColour(playerid, Prev@ScrollBarPTD[playerid], 255);
 	PlayerTextDrawSetProportional(playerid, Prev@ScrollBarPTD[playerid], true);
-	PlayerTextDrawBoxColour(playerid, Prev@ScrollBarPTD[playerid], 1);
+	PlayerTextDrawUseBox(playerid, Prev@ScrollBarPTD[playerid], true);
 	PlayerTextDrawBoxColour(playerid, Prev@ScrollBarPTD[playerid], 150);
 	PlayerTextDrawTextSize(playerid, Prev@ScrollBarPTD[playerid], 7.5000, height);
 
@@ -605,9 +619,6 @@ static Prev_UpdateScrollBar(playerid, page, totalPages) {
 static Prev_UpdateListitems(playerid, page, selected, totalItems) {
     new textdrawid;
     new listitemid;
-	new Pointer:listitemPointer;
-	new Pointer:listitemTextPointer;
-	new modelid, text[MAX_DIALOG_PREVIEW_TEXTSIZE], Float:rx, Float:ry, Float:rz, Float:zoom, color1, color2;
 
 	for (new a = 0; a < MAX_DIALOG_PREVIEW_ROWS; a++) {
 		for (new b = 0; b < MAX_DIALOG_PREVIEW_COLUMNS; b++) {
@@ -629,24 +640,17 @@ static Prev_UpdateListitems(playerid, page, selected, totalItems) {
 				continue;
 			}
 
-			listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitemid);
-
-			modelid = MEM_get_val(listitemPointer, 0);
-			listitemTextPointer = Pointer:MEM_get_val(listitemPointer, 1);
-			rx = Float:MEM_get_val(listitemPointer, 2);
-			ry = Float:MEM_get_val(listitemPointer, 3);
-			rz = Float:MEM_get_val(listitemPointer, 4);
-			zoom = Float:MEM_get_val(listitemPointer, 5);
-			color1 = MEM_get_val(listitemPointer, 6);
-			color2 = MEM_get_val(listitemPointer, 7);
-
-			TextDrawSetPreviewModel(Prev@ModelTD[textdrawid][1], modelid);
-			TextDrawSetPreviewRot(Prev@ModelTD[textdrawid][1], rx, ry, rz, zoom);
-			TextDrawSetPreviewVehCol(Prev@ModelTD[textdrawid][1], color1, color2);
+			TextDrawSetPreviewModel(Prev@ModelTD[textdrawid][1], Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_ID]);
+			TextDrawSetPreviewRot(Prev@ModelTD[textdrawid][1],
+								  Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_RX],
+								  Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_RY],
+								  Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_RZ],
+								  Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_ZOOM]);
+			TextDrawSetPreviewVehCol(Prev@ModelTD[textdrawid][1], Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_Colour1], Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_Colour2]);
 			TextDrawShowForPlayer(playerid, Prev@ModelTD[textdrawid][1]);
 
 			if (textdrawid == selected) {
-				TextDrawColour(Prev@ModelTD[textdrawid][0], DIALOG_PREVIEW_SELECT_COLOR);
+				TextDrawColour(Prev@ModelTD[textdrawid][0], DIALOG_PREVIEW_SELECT_Colour);
 				TextDrawShowForPlayer(playerid, Prev@ModelTD[textdrawid][0]);
 
 			    TextDrawShowForPlayer(playerid, Prev@ModelTD[textdrawid][2]);
@@ -656,15 +660,15 @@ static Prev_UpdateListitems(playerid, page, selected, totalItems) {
 			    TextDrawShowForPlayer(playerid, Prev@ModelTD[textdrawid][5]);
 
 			    new string[16];
-			    format(string, sizeof string, "%0.1f", rz);
+			    format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_RZ]);
 			    PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][textdrawid][1], string);
 			    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][textdrawid][1]);
 
-			    format(string, sizeof string, "%0.1f", zoom);
+			    format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitemid][DIALOG_MODEL_ZOOM]);
 			    PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][textdrawid][2], string);
 			    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][textdrawid][2]);
 			} else {
-				TextDrawColour(Prev@ModelTD[textdrawid][0], DIALOG_PREVIEW_UNSELECT_COLOR);
+				TextDrawColour(Prev@ModelTD[textdrawid][0], DIALOG_PREVIEW_UNSELECT_Colour);
 				TextDrawShowForPlayer(playerid, Prev@ModelTD[textdrawid][0]);
 
 			    TextDrawHideForPlayer(playerid, Prev@ModelTD[textdrawid][2]);
@@ -677,9 +681,8 @@ static Prev_UpdateListitems(playerid, page, selected, totalItems) {
 			    PlayerTextDrawHide(playerid, Prev@ModelTextPTD[playerid][textdrawid][2]);
 			}
 
-			if (listitemTextPointer != MEM_NULLPTR) {
-				MEM_get_arr(listitemTextPointer, 0, text, MEM_get_size(listitemTextPointer));
-				PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], text);
+			if (Prev@PlayerDialogTexts[playerid][listitemid][0] != EOS) {
+				PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][textdrawid][0], Prev@PlayerDialogTexts[playerid][listitemid]);
 				PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][textdrawid][0]);
 			} else {
 				PlayerTextDrawHide(playerid, Prev@ModelTextPTD[playerid][textdrawid][0]);
@@ -690,26 +693,6 @@ static Prev_UpdateListitems(playerid, page, selected, totalItems) {
 	new string[16];
  	format(string, sizeof string, "PAGE: %i/%i", (page + 1), Prev_GetNumPages(playerid));
 	PlayerTextDrawSetString(playerid, Prev@PageNumberPTD[playerid], string);
-}
-
-static Prev_DeletePointers(playerid) {
-    new Pointer:listitemPointer;
-	new Pointer:listitemTextPointer;
-
-	for (new i = 0; i < Prev@PlayerDialogNumListitems[playerid]; i++) {
-	    listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], i);
-
-	    listitemTextPointer = Pointer:MEM_get_val(listitemPointer, 1);
-		if (listitemTextPointer != MEM_NULLPTR) {
-			MEM_delete(listitemTextPointer);
-		}
-
-		MEM_delete(listitemPointer);
-	}
-
-	MEM_delete(Prev@PlayerListitemPointer[playerid]);
-
-	Prev@PlayerListitemPointer[playerid] = MEM_NULLPTR;
 }
 
 static Prev_HidePlayerDialog(playerid) {
@@ -755,20 +738,18 @@ static Prev_HidePlayerDialog(playerid) {
 	*/
 	Prev_DestroyPlayerTextDraws(playerid);
 
-    Prev_DeletePointers(playerid);
-
 	Prev@PlayerDialogID[playerid] = -1;
 
 	return Prev_CancelSelectTextDraw(playerid);
 }
 
-static Prev_FetchListitemData(const listitem[], &modelid, text[], &Float:rx, &Float:ry, &Float:rz, &Float:zoom, &color1, &color2, text_size = sizeof(text)) {
+static Prev_FetchListitemData(const listitem[], &modelid, text[], &Float:rx, &Float:ry, &Float:rz, &Float:zoom, &Colour1, &Colour2, text_size = sizeof(text)) {
 	rx = 0.0;
 	ry = 0.0;
 	rz = -45.0;
 	zoom = 1.0;
-	color1 = -1;
-	color2 = -1;
+	Colour1 = -1;
+	Colour2 = -1;
 
 	new pos, next, count;
 	new valuestr[16];
@@ -813,8 +794,8 @@ static Prev_FetchListitemData(const listitem[], &modelid, text[], &Float:rx, &Fl
 			case 1: ry = floatstr(valuestr);
 			case 2: rz = floatstr(valuestr);
 			case 3: zoom = floatstr(valuestr);
-			case 4: color1 = strval(valuestr);
-			case 5: color2 = strval(valuestr);
+			case 4: Colour1 = strval(valuestr);
+			case 5: Colour2 = strval(valuestr);
 		}
 		++count;
 
@@ -903,7 +884,6 @@ public OnFilterScriptExit() {
 public OnPlayerConnect(playerid) {
     Prev@CancelSelection[playerid] = false;
 	Prev@PlayerDialogID[playerid] = -1;
-	Prev@PlayerListitemPointer[playerid] = MEM_NULLPTR;
 
 	#if defined PDialog_OnPlayerConnect
 		return PDialog_OnPlayerConnect(playerid);
@@ -922,9 +902,9 @@ public OnPlayerConnect(playerid) {
 #endif
 
 public OnPlayerDisconnect(playerid, reason) {
-    if (Prev@PlayerListitemPointer[playerid] != MEM_NULLPTR) {
-		Prev_DeletePointers(playerid);
-	}
+	if (Prev@PlayerDialogID[playerid] != -1) {
+		Prev_HidePlayerDialog(playerid);
+  	}
 
 	#if defined PDialog_OnPlayerDisconnect
 		return PDialog_OnPlayerDisconnect(playerid, reason);
@@ -958,7 +938,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 		    new dialogid = Prev@PlayerDialogID[playerid];
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
     		new inputtext[16];
-		    valstr(inputtext, MEM_get_val(Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem), 0));
+		    valstr(inputtext, Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ID]);
 
 			Prev_HidePlayerDialog(playerid);
 
@@ -984,7 +964,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 		    new dialogid = Prev@PlayerDialogID[playerid];
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 		    new inputtext[16];
-		    valstr(inputtext, MEM_get_val(Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem), 0));
+		    valstr(inputtext, Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ID]);
 
 			Prev_HidePlayerDialog(playerid);
 
@@ -993,72 +973,58 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 		} else if (clickedid == LISTITEM_ROTATE_LEFT_TEXTDRAW<Prev@PlayerDialogListitem[playerid]>) {
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 
-    		new Pointer:listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem);
-			new Float:rx, Float:ry, Float:rz, Float:zoom;
-			rx = Float:MEM_get_val(listitemPointer, 2);
-			ry = Float:MEM_get_val(listitemPointer, 3);
-			rz = Float:MEM_get_val(listitemPointer, 4);
-			zoom = Float:MEM_get_val(listitemPointer, 5);
-
-			rz -= 10.0;
-			if (rz < -360.0) {
-			    rz = 0.0;
+			Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] -= 10.0;
+			if (Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] < -360.0) {
+			    Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] = 0.0;
 			}
 
-			MEM_set_val(listitemPointer, 4, _:rz);
-
-		    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1], rx, ry, rz, zoom);
+		    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RX],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RY],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 			TextDrawShowForPlayer(playerid, Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1]);
 
             new string[16];
-  			format(string, sizeof string, "%0.1f", rz);
+  			format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ]);
 	    	PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][1], string);
 		    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][1]);
 
 		} else if (clickedid == LISTITEM_ROTATE_RIGHT_TEXTDRAW<Prev@PlayerDialogListitem[playerid]>) {
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 
-    		new Pointer:listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem);
-			new Float:rx, Float:ry, Float:rz, Float:zoom;
-			rx = Float:MEM_get_val(listitemPointer, 2);
-			ry = Float:MEM_get_val(listitemPointer, 3);
-			rz = Float:MEM_get_val(listitemPointer, 4);
-			zoom = Float:MEM_get_val(listitemPointer, 5);
-
-			rz += 10.0;
-			if (rz > 360.0) {
-			    rz = 0.0;
+			Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] += 10.0;
+			if (Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] > 360.0) {
+			    Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ] = 0.0;
 			}
 
-			MEM_set_val(listitemPointer, 4, _:rz);
-
-		    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1], rx, ry, rz, zoom);
+		    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RX],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RY],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ],
+								  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 			TextDrawShowForPlayer(playerid, Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1]);
 
             new string[16];
-  			format(string, sizeof string, "%0.1f", rz);
+  			format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ]);
 	    	PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][1], string);
 		    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][1]);
 
 		} else if (clickedid == LISTITEM_ZOOM_IN_TEXTDRAW<Prev@PlayerDialogListitem[playerid]>) {
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 
-    		new Pointer:listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem);
-			new Float:rx, Float:ry, Float:rz, Float:zoom;
-			rx = Float:MEM_get_val(listitemPointer, 2);
-			ry = Float:MEM_get_val(listitemPointer, 3);
-			rz = Float:MEM_get_val(listitemPointer, 4);
-			zoom = Float:MEM_get_val(listitemPointer, 5);
+			if (Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM] > -5.0) {
+			    Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM] -= 0.1;
 
-			if (zoom > -5.0) {
-				zoom -= 0.1;
-				MEM_set_val(listitemPointer, 5, _:zoom);
-
-			    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1], rx, ry, rz, zoom);
+			    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RX],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RY],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 				TextDrawShowForPlayer(playerid, Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1]);
 
 	            new string[16];
-	  			format(string, sizeof string, "%0.1f", zoom);
+	  			format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 		    	PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][2], string);
 			    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][2]);
 			}
@@ -1066,22 +1032,18 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 		} else if (clickedid == LISTITEM_ZOOM_OUT_TEXTDRAW<Prev@PlayerDialogListitem[playerid]>) {
 		    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 
-    		new Pointer:listitemPointer = Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem);
-			new Float:rx, Float:ry, Float:rz, Float:zoom;
-			rx = Float:MEM_get_val(listitemPointer, 2);
-			ry = Float:MEM_get_val(listitemPointer, 3);
-			rz = Float:MEM_get_val(listitemPointer, 4);
-			zoom = Float:MEM_get_val(listitemPointer, 5);
+			if (Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM] < 5.0) {
+			    Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM] += 0.1;
 
-			if (zoom < 5.0) {
-				zoom += 0.1;
-				MEM_set_val(listitemPointer, 5, _:zoom);
-
-			    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1], rx, ry, rz, zoom);
+			    TextDrawSetPreviewRot(Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RX],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RY],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ],
+									  Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 				TextDrawShowForPlayer(playerid, Prev@ModelTD[Prev@PlayerDialogListitem[playerid]][1]);
 
 	            new string[16];
-	  			format(string, sizeof string, "%0.1f", zoom);
+	  			format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 		    	PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][2], string);
 			    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][Prev@PlayerDialogListitem[playerid]][2]);
 			}
@@ -1094,7 +1056,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 	                    new dialogid = Prev@PlayerDialogID[playerid];
 		    			new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + Prev@PlayerDialogListitem[playerid]);
 					    new inputtext[16];
-		    			valstr(inputtext, MEM_get_val(Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem), 0));
+		    			valstr(inputtext, Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ID]);
 
 						Prev_HidePlayerDialog(playerid);
 
@@ -1104,7 +1066,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 						// reset previous listitem
 						new previous = Prev@PlayerDialogListitem[playerid];
 
-					 	TextDrawColour(Prev@ModelTD[previous][0], DIALOG_PREVIEW_UNSELECT_COLOR);
+					 	TextDrawColour(Prev@ModelTD[previous][0], DIALOG_PREVIEW_UNSELECT_Colour);
 						TextDrawShowForPlayer(playerid, Prev@ModelTD[previous][0]);
 
 					    TextDrawHideForPlayer(playerid, Prev@ModelTD[previous][2]);
@@ -1117,7 +1079,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 					    PlayerTextDrawHide(playerid, Prev@ModelTextPTD[playerid][previous][2]);
 
 					    // update new selected listitem
-					    TextDrawColour(Prev@ModelTD[i][0], DIALOG_PREVIEW_SELECT_COLOR);
+					    TextDrawColour(Prev@ModelTD[i][0], DIALOG_PREVIEW_SELECT_Colour);
 						TextDrawShowForPlayer(playerid, Prev@ModelTD[i][0]);
 
 					    TextDrawShowForPlayer(playerid, Prev@ModelTD[i][2]);
@@ -1128,11 +1090,11 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid) {
 
 					    new string[16];
 					    new listitem = ((Prev@PlayerDialogPage[playerid] * (MAX_DIALOG_PREVIEW_ROWS * MAX_DIALOG_PREVIEW_COLUMNS)) + i);
-					    format(string, sizeof string, "%0.1f", Float:MEM_get_val(Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem), 4));
+					    format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_RZ]);
 					    PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][i][1], string);
 					    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][i][1]);
 
-					    format(string, sizeof string, "%0.1f", Float:MEM_get_val(Pointer:MEM_get_val(Prev@PlayerListitemPointer[playerid], listitem), 5));
+					    format(string, sizeof string, "%0.1f", Prev@PlayerDialogModels[playerid][listitem][DIALOG_MODEL_ZOOM]);
 					    PlayerTextDrawSetString(playerid, Prev@ModelTextPTD[playerid][i][2], string);
 					    PlayerTextDrawShow(playerid, Prev@ModelTextPTD[playerid][i][2]);
 
@@ -1187,14 +1149,9 @@ stock Prev_ShowPlayerDialog(playerid, dialogid, style, const caption[], const in
 		return 0;
 	}
 
-	Prev@PlayerListitemPointer[playerid] = MEM_new(DEFAULT_DIALOG_INCREMENT_SIZE);
-
 	new pos, next, count;
 
 	new listitem[MAX_DIALOG_PREVIEW_TEXTSIZE + 64];
-	new modelid, text[MAX_DIALOG_PREVIEW_TEXTSIZE], Float:rx, Float:ry, Float:rz, Float:zoom, color1, color2;
-
-	new Pointer:listitemPointer, Pointer:listitemTextPointer;
 
 	do {
 	    next = strfind(info, "\n", false, pos);
@@ -1203,32 +1160,24 @@ stock Prev_ShowPlayerDialog(playerid, dialogid, style, const caption[], const in
 
   		pos = (next == -1) ? -1 : (next + 1);
 
-	    if (Prev_FetchListitemData(listitem, modelid, text, rx,  ry, rz, zoom, color1, color2) == 0) {
+		if (count == MAX_DIALOG_PREVIEW_MODELS) {
+			break;
+		}
+
+	    if (Prev_FetchListitemData(listitem,
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_ID],
+								   Prev@PlayerDialogTexts[playerid][count],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_RX],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_RY],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_RZ],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_ZOOM],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_Colour1],
+								   Prev@PlayerDialogModels[playerid][count][DIALOG_MODEL_Colour2]) == 0) {
 			continue;
 		}
 
-		listitemPointer = MEM_new(8);
-		listitemTextPointer = (text[0] != EOS) ? MEM_new_arr(text, (strlen(text) + 1)) : MEM_NULLPTR;
+	    ++count;
 
-		MEM_set_val(listitemPointer, 0, modelid);
-		MEM_set_val(listitemPointer, 1, _:listitemTextPointer);
-		MEM_set_val(listitemPointer, 2, _:rx);
-		MEM_set_val(listitemPointer, 3, _:ry);
-		MEM_set_val(listitemPointer, 4, _:rz);
-		MEM_set_val(listitemPointer, 5, _:zoom);
-		MEM_set_val(listitemPointer, 6, color1);
-		MEM_set_val(listitemPointer, 7, color2);
-
-		if (count == MEM_get_size(Prev@PlayerListitemPointer[playerid])) {
-			new Pointer:tmpPointer = MEM_new(count + DEFAULT_DIALOG_INCREMENT_SIZE);
-			MEM_copy(tmpPointer, Prev@PlayerListitemPointer[playerid], count);
-
-			MEM_delete(Prev@PlayerListitemPointer[playerid]);
-			
-			Prev@PlayerListitemPointer[playerid] = tmpPointer;
-		}
-
-		MEM_set_val(Prev@PlayerListitemPointer[playerid], count++, _:listitemPointer);
 	} while (pos != -1);
 
 	// set player data
@@ -1298,11 +1247,11 @@ stock Prev_ShowPlayerDialog(playerid, dialogid, style, const caption[], const in
 	*/
 	Prev_UpdateListitems(playerid, 0, 0, Prev@PlayerDialogNumListitems[playerid]);
 
-	return SelectTextDraw(playerid, DIALOG_PREVIEW_SELECT_COLOR);
+	return SelectTextDraw(playerid, DIALOG_PREVIEW_SELECT_Colour);
 }
 #if defined _ALS_ShowPlayerDialog
     #undef ShowPlayerDialog
 #else
     #define _ALS_ShowPlayerDialog
 #endif
-#define ShowPlayerDialog Prev_ShowPlayerDialog
+#define ShowPlayerDialog( Prev_ShowPlayerDialog(

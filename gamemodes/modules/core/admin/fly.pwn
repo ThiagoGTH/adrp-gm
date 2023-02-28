@@ -97,6 +97,11 @@ bool:StopFly(playerid) {
 	return true;
 }
 
+hook OnPlayerDisconnect(playerid){
+	OnFly[playerid] = false;
+	return true;
+}
+
 SetPlayerLookAt(playerid, Float:X, Float:Y) { // credits to someone in samp forums I can not remember
 	new Float:Px, Float:Py, Float: Pa;
 	GetPlayerPos(playerid, Px, Py, Pa);

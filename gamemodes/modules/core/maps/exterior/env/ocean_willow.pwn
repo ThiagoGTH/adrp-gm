@@ -1,6 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
 hook OnPlayerConnect(playerid){
+    RemoveBuildingForPlayer(playerid, 1226, 2216.8672, -2153.1719, 16.3281, 0.25);
+    RemoveBuildingForPlayer(playerid, 1226, 2250.9766, -2119.0547, 16.3516, 0.25);
     RemoveBuildingForPlayer(playerid, 1226, 2209.5859, -1977.5234, 16.4844, 0.25);
     RemoveBuildingForPlayer(playerid, 3291, 2371.492, -2114.976, 13.492, 0.250);
     RemoveBuildingForPlayer(playerid, 3291, 2371.750, -2135.554, 13.492, 0.250);

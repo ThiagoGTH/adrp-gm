@@ -63,7 +63,7 @@ CMD:do(playerid, params[]){
 
 CMD:gritar(playerid,params[]) {
     new string[128];
-    if(isnull(params)) return va_SendClientMessage(playerid, COLOR_YELLOW,"{FF4A4A}USE:{FFFFFF} /gritar [texto].");
+    if(isnull(params)) return SendSyntaxMessage(playerid, "/gritar [texto].");
     format(string, sizeof(string), "%s grita: %s!", pNome(playerid), params);
     ProxDetector(30.0, playerid, string,COLOR_WHITE,COLOR_WHITE,COLOR_WHITE,COLOR_FADE1,COLOR_FADE2);
     return true;

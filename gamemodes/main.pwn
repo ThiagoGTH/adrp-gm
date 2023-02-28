@@ -10,9 +10,12 @@
 #include <streamer>
 
 #include <a_mysql>
+// YSI
 #include <YSI_Coding\y_va>
 #include <YSI_Data\y_foreach>
 #include <YSI_Data\y_iterate>
+#include <YSI_Data\y_bit>
+
 #include <Pawn.CMD>
 #include <memory>
 #include <sscanf2>
@@ -46,8 +49,7 @@
 #include <YSI_Coding\y_timers>
 
 #include "modules\utils\utils.pwn"
-//#include "modules\core\anticheat\nex-ac.pwn"
-#include "modules\core\anticheat\money-ac.pwn"
+#include "modules\core\anticheat\anticheat.pwn"
 #include "modules\core\maps\maps.pwn"
 #include "modules\core\database\mysql_core.pwn"
 #include "modules\core\player\account\account.pwn"
@@ -77,8 +79,8 @@
 
 // Phone System more Towers System
 //#include "modules\core\player\systems\phone\towers\towers.pwn" (in beta - desativado)
-#include "modules\core\player\systems\phone\smartphone\smartphone.pwn"
-#include "modules\core\player\systems\phone\payphone\payphone.pwn"
+//#include "modules\core\player\systems\phone\smartphone\smartphone.pwn"
+//#include "modules\core\player\systems\phone\payphone\payphone.pwn"
 
 // OUTROS
 #include "modules\core\discord\discord_core.pwn"

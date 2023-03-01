@@ -15,7 +15,7 @@ CMD:fly(playerid) {
 		SetPlayerHealth(playerid, 99999.0);
 		SetPlayerAttachedObject(playerid, 8, 2992, 2, 0.306000, -0.012000, 0.009000, 0.000000, -95.299942, -1.399999, 1.000000, 1.000000, 1.000000);
 		SetPlayerAttachedObject(playerid, 7, 2992, 2, 0.313000, -0.007000, 0.032999, -0.299999, 83.700019, 0.000000, 1.000000, 1.000000, 1.000000);
-		SendServerMessage(playerid, "Digite /ajudafly para aprender a voar.");
+		SendServerMessage(playerid, "Digite /ajuda fly para aprender a voar.");
 		StartFly(playerid);
 		pInfo[playerid][pFlying] = 1;
 	} else if (pInfo[playerid][pFlying] == 1) {

@@ -318,60 +318,60 @@ LoadVehicles() {
         new id;
         cache_get_value_name_int(i, "ID", id);
 
-        if (vInfo[i][vExists]) return false;
+        if (vInfo[id][vExists]) return false;
 
-        vInfo[i][vID] = id;
-        vInfo[i][vExists] = true;
-        cache_get_value_name_int(i, "model", vInfo[i][vModel]);
-        cache_get_value_name_int(i, "character_id", vInfo[i][vOwner]);
+        vInfo[id][vID] = id;
+        vInfo[id][vExists] = true;
+        cache_get_value_name_int(i, "model", vInfo[id][vModel]);
+        cache_get_value_name_int(i, "character_id", vInfo[id][vOwner]);
 
-        cache_get_value_name_int(i, "faction", vInfo[i][vFaction]);
-        cache_get_value_name_int(i, "business", vInfo[i][vBusiness]);
-        cache_get_value_name_int(i, "job", vInfo[i][vJob]);
+        cache_get_value_name_int(i, "faction", vInfo[id][vFaction]);
+        cache_get_value_name_int(i, "business", vInfo[id][vBusiness]);
+        cache_get_value_name_int(i, "job", vInfo[id][vJob]);
 
-        cache_get_value_name(i, "name", vInfo[i][vName]);
-        cache_get_value_name_int(i, "personalized_name", vInfo[i][vNamePersonalized]);
+        cache_get_value_name(i, "name", vInfo[id][vName]);
+        cache_get_value_name_int(i, "personalized_name", vInfo[id][vNamePersonalized]);
 
-        cache_get_value_name_int(i, "legalized", vInfo[i][vLegal]);
+        cache_get_value_name_int(i, "legalized", vInfo[id][vLegal]);
 
-        cache_get_value_name(i, "plate", vInfo[i][vPlate]);
-        cache_get_value_name_int(i, "personalized_plate", vInfo[i][vPlatePersonalized]);
+        cache_get_value_name(i, "plate", vInfo[id][vPlate]);
+        cache_get_value_name_int(i, "personalized_plate", vInfo[id][vPlatePersonalized]);
 
-        cache_get_value_name_int(i, "caravan", vInfo[i][vCaravan]);
+        cache_get_value_name_int(i, "caravan", vInfo[id][vCaravan]);
 
-        cache_get_value_name_int(i, "locked", vInfo[i][vLocked]);
+        cache_get_value_name_int(i, "locked", vInfo[id][vLocked]);
 
-        cache_get_value_name_int(i, "color1", vInfo[i][vColor1]);
-        cache_get_value_name_int(i, "color2", vInfo[i][vColor2]);
-        cache_get_value_name_int(i, "paintjob", vInfo[i][vPaintjob]);
+        cache_get_value_name_int(i, "color1", vInfo[id][vColor1]);
+        cache_get_value_name_int(i, "color2", vInfo[id][vColor2]);
+        cache_get_value_name_int(i, "paintjob", vInfo[id][vPaintjob]);
 
-        cache_get_value_name_float(i, "position_X", vInfo[i][vPos][0]);
-        cache_get_value_name_float(i, "position_Y", vInfo[i][vPos][1]);
-        cache_get_value_name_float(i, "position_Z", vInfo[i][vPos][2]);
-        cache_get_value_name_float(i, "position_A", vInfo[i][vPos][3]);
+        cache_get_value_name_float(i, "position_X", vInfo[id][vPos][0]);
+        cache_get_value_name_float(i, "position_Y", vInfo[id][vPos][1]);
+        cache_get_value_name_float(i, "position_Z", vInfo[id][vPos][2]);
+        cache_get_value_name_float(i, "position_A", vInfo[id][vPos][3]);
 
-        cache_get_value_name_int(i, "virtual_world", vInfo[i][vVW]);
-        cache_get_value_name_int(i, "interior", vInfo[i][vInterior]);
+        cache_get_value_name_int(i, "virtual_world", vInfo[id][vVW]);
+        cache_get_value_name_int(i, "interior", vInfo[id][vInterior]);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_stats` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleStats", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleStats", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_damages` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleDamages", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleDamages", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_caravan` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleCaravan", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleCaravan", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_objects` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleObjects", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleObjects", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_tunings` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleTuning", "d", id);
 
         mysql_format(DBConn, query, sizeof(query), "SELECT * FROM `vehicles_weapons` WHERE `vehicle_id` = '%d'", id);
-		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", i);
+		mysql_tquery(DBConn, query, "LoadVehicleWeapons", "d", id);
 
-        SpawnVehicle(i);
+        SpawnVehicle(id);
         loadedVehicles++;
     }
     printf("[VEÍCULOS]: %d veículos carregados com sucesso.", loadedVehicles);
@@ -801,91 +801,6 @@ hook OnPlayerEnterCheckpoint(playerid) {
     if(!InDMV[playerid]) {
         DisablePlayerCheckpoint(playerid);
     }
-    return true;
-}
-
-ShowPlayerVehicles(playerid) {
-	mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
-    new Cache:result = mysql_query(DBConn, query);
-            
-    new string[2048], veh_id, veh_model, veh_color1, veh_color2, veh_pname, veh_name[64], veh_impounded;
-    new caravan, caravan_model, caravan_model_name[64];
-
-    if(!cache_num_rows()) return SendErrorMessage(playerid, "Você não possui nenhum veículo.");
-
-    for(new i; i < cache_num_rows(); i++){
-        cache_get_value_name_int(i, "ID", veh_id);
-		cache_get_value_name_int(i, "model", veh_model);
-		cache_get_value_name_int(i, "color1", veh_color1);
-		cache_get_value_name_int(i, "color2", veh_color2);
-		cache_get_value_name_int(i, "personalized_name", veh_pname);
-		cache_get_value_name(i, "name", veh_name);
-        cache_get_value_name_int(i, "impounded", veh_impounded);
-        cache_get_value_name_int(i, "caravan", caravan);
-
-        if(caravan != 0){
-            mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles_caravan WHERE `vehicle_id` = '%d'", veh_id);
-            new Cache:result2 = mysql_query(DBConn, query);
-            cache_get_value_name_int(0, "caravan_model_id", caravan_model);
-            cache_get_value_name(0, "caravan_model_name", caravan_model_name);
-            cache_delete(result2);
-        }
-        mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
-        result = mysql_query(DBConn, query);
-        
-        if(!vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, caravan_model, caravan_model_name, veh_id);
-        else if(vInfo[veh_id][vVehicle] && caravan != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, 0, 0)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, caravan_model, caravan_model_name, vInfo[veh_id][vVehicle]);
-        else if(!vInfo[veh_id][vVehicle] && veh_pname != 0 && veh_impounded != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~r~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
-        else if(vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, vInfo[veh_id][vVehicle]);
-        else if(!vInfo[veh_id][vVehicle] && veh_pname != 0) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, veh_name, veh_id);
-        else if(vInfo[veh_id][vVehicle]) format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~g~%s~n~~n~~n~~n~ID Real~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), vInfo[veh_id][vVehicle]);
-        else format(string, sizeof(string), "%s%d(0.0, 0.0, 50.0, 0.95, %d, %d)\t~w~%s~n~~n~~n~~n~ID Registro~n~~w~%d\n", string, veh_model, veh_color1, veh_color2, ReturnVehicleModelName(veh_model), veh_id);
-    }
-    cache_delete(result);
-
-	new title[128];
-	format(title, 128, "Veículos_de_%s", pNome(playerid));
-	AdjustTextDrawString(title);
-    Dialog_Show(playerid, ShowVehicles, DIALOG_STYLE_PREVIEW_MODEL, title, string, "Spawnar", "Fechar");
-	return true;
-}
-
-Dialog:ShowVehicles(playerid, response, listitem, inputtext[]) {
-    if(response){
-		new count = 0, veh_id, veh_model, veh_pname, veh_name[64], veh_impounded;
-
-		mysql_format(DBConn, query, sizeof query, "SELECT * FROM vehicles WHERE `character_id` = '%d'", GetPlayerSQLID(playerid));
-    	new Cache:result = mysql_query(DBConn, query);
-
-		for(new i; i < cache_num_rows(); i++) {
-        	cache_get_value_name_int(i, "ID", veh_id);
-			cache_get_value_name_int(i, "model", veh_model);
-			cache_get_value_name_int(i, "personalized_name", veh_pname);
-			cache_get_value_name(i, "name", veh_name);
-            cache_get_value_name_int(i, "impounded", veh_impounded);
-
-			if(count == listitem) {
-				if(vInfo[veh_id][vVehicle]) {
-					SendErrorMessage(playerid, "Este veículo já está spawnado.");
-					break;
-				}
-                if(veh_impounded) {
-                    SendErrorMessage(playerid, "Este veículo está apreendido e não pode ser spawnado.");
-                    break;
-                }
-
-				LoadVehicle(veh_id);
-				if(veh_pname != 0) SendServerMessage(playerid, "Seu veículo %s foi spawnado.", veh_name);
-				else SendServerMessage(playerid, "Seu veículo %s foi spawnado.", ReturnVehicleModelName(veh_model));
-
-				if(vInfo[i][vVW] == 0) {
-					va_SendClientMessage(playerid, 0xFF00FFFF, "INFO: Você pode usar a marca vermelha no mapa para achar seu veiculo.");
-					SetPlayerCheckpoint(playerid, vInfo[veh_id][vPos][0], vInfo[veh_id][vPos][1], vInfo[veh_id][vPos][2], 3.0);
-				}
-			} else count ++;
-		}
-		cache_delete(result);
-	}
     return true;
 }
 

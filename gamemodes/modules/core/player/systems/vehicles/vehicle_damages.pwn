@@ -10,7 +10,7 @@ CMD:danos(playerid, params[]) {
     for (new i = 0; i != MAX_VEHICLES+1; i ++) if (IsValidVehicle(vehicleid)) {
 		GetVehiclePos(vehicleid, fX, fY, fZ);
 
-		if (IsPlayerInRangeOfPoint(playerid, 5.0, fX, fY, fZ) && GetPlayerVirtualWorld(playerid) == GetVehicleVirtualWorld(vInfo[i][vVehicle])) {
+		if (IsPlayerInRangeOfPoint(playerid, 5.0, fX, fY, fZ)) {
 		    vehiclenear = true;
 		}
 	}

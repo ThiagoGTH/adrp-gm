@@ -1,9 +1,3 @@
-/*
-
-Este módulo é dedicado aos administradores
-
-*/
- 
 #include <YSI_Coding\y_hooks>
 
 AdminRankName(playerid) {
@@ -213,6 +207,7 @@ CMD:infoplayer(playerid, params[]) {
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Ping: {FFFFFF}%d", GetPlayerPing(userid));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Colete: {FFFFFF}%.1f", GetPlayerArmourEx(userid));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Vida: {FFFFFF}%.1f", GetPlayerHealthEx(userid));
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Stamina: {FFFFFF}%d%%", (GetPlayerStamina(userid) * 100) / GetPlayerMaxStamina(userid));
         va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Arma: {FFFFFF}%s", ReturnWeaponName(GetPlayerWeapon(userid)));
 		va_SendClientMessage(playerid, COLOR_LIGHTRED, "{FF6347}Munição: {FFFFFF}%d", GetPlayerAmmo(userid));
 		if(GetPlayerAmmo(userid) == 40 || GetPlayerAmmo(userid) == 36 || GetPlayerAmmo(userid) == 18 || GetPlayerAmmo(userid) == 28 || GetPlayerAmmo(userid) == 37) SendServerMessage(playerid, "Atenção neste jogador, é possível que ele esteja utilizando algum cheater de armas. Investigue com cautela.");
@@ -333,6 +328,28 @@ CMD:dardinheiro(playerid, params[]){
 	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s deu $%s para %s.", GetPlayerUserEx(playerid), FormatNumber(amount), pNome(userid));
 	
 	format(logString, sizeof(logString), "%s (%s) deu $%s para %s.", pNome(playerid), GetPlayerUserEx(playerid), FormatNumber(amount), pNome(userid));
+	logCreate(playerid, logString, 1);
+	return true;
+}
+
+CMD:resetardinheiro(playerid, params[]){
+	static
+		userid;
+
+    if(GetPlayerAdmin(playerid) < 1335) return SendPermissionMessage(playerid);
+
+	if (sscanf(params, "u", userid))
+		return  SendSyntaxMessage(playerid, "/resetardinheiro [playerid/nome]");
+
+	if (userid == INVALID_PLAYER_ID)
+	    return SendErrorMessage(playerid, "Você específicou um jogador inválido.");
+
+	new amount = GetMoney(userid);
+	GiveMoney(userid, -amount);
+	
+	SendAdminAlert(COLOR_LIGHTRED, "AdmCmd: %s resetou o dinheiro de %s.", GetPlayerUserEx(playerid), pNome(userid));
+	
+	format(logString, sizeof(logString), "%s (%s) resetou o dinheiro de  %s.", pNome(playerid), GetPlayerUserEx(playerid), pNome(userid));
 	logCreate(playerid, logString, 1);
 	return true;
 }

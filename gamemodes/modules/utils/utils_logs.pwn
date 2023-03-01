@@ -4,15 +4,17 @@ logCreate(playerid, log[], type){
 	if(type <= 100)
 		Discord_PublishLog(log, type);
 
-    /*if(playerid == 99998){
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('SYSTEM', 'SYSTEM', '%s', '%d', '%e', '%d')", 
+    new logQuery[512];
+
+    if(playerid == 99998){
+        mysql_format(DBConn, logQuery, sizeof(logQuery), "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('SYSTEM', 'SYSTEM', '%s', '%d', '%e', '%d')", 
             GetPlayerIP(playerid), gettime(), log, type);
-        mysql_query(DBConn, query);
+        mysql_query(DBConn, logQuery, false);
     } else {
-        mysql_format(DBConn, query, sizeof query, "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('%s', '%s', '%s', '%d', '%e', '%d')", 
+        mysql_format(DBConn, logQuery, sizeof(logQuery), "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('%s', '%s', '%s', '%d', '%e', '%d')", 
             GetPlayerNameEx(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), gettime(), log, type);
-        mysql_query(DBConn, query);
-    }*/
+        mysql_query(DBConn, logQuery, false);
+    }
 
     //printf("[LOG] %s [%d (SQL: %d)] - %s / %s | %s [TYPE: %d]", pNome(playerid), playerid, uInfo[playerid][uID], uInfo[playerid][uName], GetPlayerUserEx(playerid), log, type);
 

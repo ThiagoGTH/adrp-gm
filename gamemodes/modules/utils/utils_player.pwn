@@ -1,7 +1,7 @@
 #include <a_samp>
 
-#define Kick(%0)    SetTimerEx("kickfix", 40, false, "d", %0)
-#define Ban(%0)     SetTimerEx("banfix", 50, false, "d", %0)
+#define Kick(%0)    			SetTimerEx("kickfix", 40, false, "d", %0)
+#define Ban(%0)     			SetTimerEx("banfix", 50, false, "d", %0)
 
 enum e_InteriorData {
 	e_InteriorName[32],

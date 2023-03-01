@@ -38,7 +38,6 @@ hook OnPlayerConnect(playerid) {
     for (new i = 0; i < 70; i ++) {
 		SendClientMessage(playerid, -1, "");
 	}
-    
     return true;
 }
 

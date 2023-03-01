@@ -6,7 +6,7 @@ CMD:pagar(playerid, params[]) {
 
 	if (!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 
-	if (!IsPlayerNearPlayer(playerid, userid, 5.0))
+	if (!IsPlayerNearPlayer(playerid, userid, 2.0))
 		return SendErrorMessage(playerid, "Você não está próximo desse jogador.");
 
     if (playerid == userid)

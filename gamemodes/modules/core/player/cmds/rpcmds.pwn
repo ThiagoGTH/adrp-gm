@@ -103,7 +103,7 @@ CMD:s(playerid, params[]) {
 	if(userid == playerid)
 	    return va_SendClientMessage(playerid, COLOR_YELLOW, "Esse é o seu ID.");
 
-	if(!IsPlayerNearPlayer(playerid, userid, 5.0))
+	if(!IsPlayerNearPlayer(playerid, userid, 2.0))
 	    return SendErrorMessage(playerid, "Você não está perto desse jogador.");
 
     if(strlen(text) > 80) {

@@ -28,7 +28,7 @@ Dialog:GiveItem(playerid, response, listitem, inputtext[]) {
             if (userid == INVALID_PLAYER_ID)
                 return Dialog_Show(playerid, GiveItem, DIALOG_STYLE_INPUT, "Dar Dinheiro", "ERRO: O jogador especificado é inválido.\n\nDinheiro em mãos: US$ %s\n\nPor favor, especifique o jogador:", "Confirmar", "Cancelar", FormatNumber(money));
 
-            if (!IsPlayerNearPlayer(playerid, userid, 5.0))
+            if (!IsPlayerNearPlayer(playerid, userid, 2.0))
                 return Dialog_Show(playerid, GiveItem, DIALOG_STYLE_INPUT, "Dar Dinheiro", "ERRO: Você não está próximo deste jogador.\n\nDinheiro em mãos: US$ %s\n\nPor favor, especifique o jogador:", "Confirmar", "Cancelar", FormatNumber(money));
                 
             if (userid == playerid)
@@ -54,7 +54,7 @@ Dialog:GiveItem(playerid, response, listitem, inputtext[]) {
             if (userid == INVALID_PLAYER_ID)
                 return Dialog_Show(playerid, GiveItem, DIALOG_STYLE_INPUT, "Dar Item", "ERRO: O jogador especificado é inválido.\n\nPor favor, especifique o jogador:", "Confirmar", "Cancelar");
 
-            if (!IsPlayerNearPlayer(playerid, userid, 5.0))
+            if (!IsPlayerNearPlayer(playerid, userid, 2.0))
                 return Dialog_Show(playerid, GiveItem, DIALOG_STYLE_INPUT, "Dar Item", "ERRO: Você não está próximo deste jogador.\n\nPor favor, especifique o jogador:", "Confirmar", "Cancelar");
 
             if (userid == playerid)

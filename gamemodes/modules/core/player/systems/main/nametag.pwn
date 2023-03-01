@@ -1,14 +1,14 @@
 #include <YSI_Coding\y_hooks>
  
-//#define NT_DISTANCE 15.0
+#define NT_DISTANCE 15.0
   
 hook OnGameModeInit(){
-    ShowNameTags(true);
-    SetNameTagDrawDistance(15.0);
-    //SetTimer("UpdateNametag", 1000, true);
+    ShowNameTags(false);
+    //SetNameTagDrawDistance(15.0);
+    SetTimer("UpdateNametag", 1000, true);
     return true;
 }
-/*
+
 static GetHealthDots(playerid){
     new
         dots[64], Float: HP;
@@ -119,4 +119,3 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart){
     }
     return true;
 }
-*/

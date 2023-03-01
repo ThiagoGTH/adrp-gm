@@ -13,7 +13,7 @@ forward OnPasswordChecked(playerid);
  
 GetPlayerUserEx(playerid) {
     new name[24];
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%i' LIMIT 1", uInfo[playerid][uID]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `ID` = '%d' LIMIT 1", uInfo[playerid][uID]);
     new Cache:cache = mysql_query(DBConn, query);
     if(!cache_num_rows()) name = "Inválido";
     else cache_get_value_name(0, "username", name);
@@ -84,7 +84,6 @@ public OnPasswordChecked(playerid) {
         SetPlayerInterface(playerid, 2);
 	} else return SetPlayerInterface(playerid, 1);
 	return true;
-
 }
 
 NotifyWrongAttempt(playerid) {
@@ -129,7 +128,7 @@ void:CreateUser(author[], userName[], password[]) {
     mysql_query(DBConn, query);
 }
 
-void:CheckUserConditions(playerid) {
+CheckUserConditions(playerid) {
     KillTimer(pInfo[playerid][pInterfaceTimer]);
     ShowLoginTextdraws(playerid);
     if(IsUserRegistered(GetPlayerNameEx(playerid))){
@@ -139,16 +138,16 @@ void:CheckUserConditions(playerid) {
         \n           Digite sua senha:", "Autenticar", "Cancelar");
     } else {
         ShowLoginTextdraws(playerid);
-        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}SERVER: Você não possui uma conta no servidor.\n\nINFO: Nosso UCP é o www.advanced-roleplay.com.br\nAcesse-o para mais informaçõessobre como criar sua conta.\n", "Entendi", "");
+        Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}Você não possui uma conta no servidor.\n\nINFO: Nosso UCP é o www.ucp.advanced-roleplay.com.br\nAcesse-o para mais informações\nsobre como criar sua conta.\n", "Entendi", "");
         KickEx(playerid);
     }
 }
 
 LoadUserInfo(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users WHERE `username` = '%s'", GetPlayerNameEx(playerid));
-    mysql_query(DBConn, query);
+    new Cache:cache = mysql_query(DBConn, query);
 
-    if(!cache_num_rows()) 
+    if(!cache || !cache_num_rows()) 
         return false;
 
     cache_get_value_name_int(0, "ID", uInfo[playerid][uID]);
@@ -166,12 +165,13 @@ LoadUserInfo(playerid) {
     LoadUserTeams(playerid);
 
     CheckUserBan(playerid);
+    cache_delete(cache);
     return true;
 }
 
 LoadUserPremium(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users_premium WHERE `user_id` = '%d'", uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
+    new Cache:cache = mysql_query(DBConn, query);
 
     if(!cache_num_rows()) 
         return false;
@@ -182,12 +182,13 @@ LoadUserPremium(playerid) {
     cache_get_value_name_int(0, "fight_changes", uInfo[playerid][uFightChanges]); 
     cache_get_value_name_int(0, "plate_changes", uInfo[playerid][uPlateChanges]); 
     cache_get_value_name_int(0, "chars_slots", uInfo[playerid][uCharSlots]);
+    cache_delete(cache);
     return true;
 }
 
 LoadUserTeams(playerid) {
     mysql_format(DBConn, query, sizeof query, "SELECT * FROM users_teams WHERE `user_id` = '%d'", uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
+    new Cache:cache = mysql_query(DBConn, query);
 
     if(!cache_num_rows()) 
         return false;
@@ -201,6 +202,7 @@ LoadUserTeams(playerid) {
     cache_get_value_name_int(0, "event_team", uInfo[playerid][uEventTeam]);
     cache_get_value_name_int(0, "ck_team", uInfo[playerid][uCKTeam]);
     cache_get_value_name_int(0, "log_team", uInfo[playerid][uLogTeam]);
+    cache_delete(cache);
     return true;
 }
 
@@ -222,9 +224,10 @@ SaveUserInfo(playerid) {
         uInfo[playerid][uSOSAns],
         uInfo[playerid][uNewbie],
         uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
+    new Cache:cache = mysql_query(DBConn, query);
     SaveUserPremium(playerid);
     SaveUserTeams(playerid);
+    cache_delete(cache);
     return true;
 }
 
@@ -244,7 +247,8 @@ SaveUserPremium(playerid) {
         uInfo[playerid][uPlateChanges],
         uInfo[playerid][uCharSlots],
         uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
+    new Cache:cache = mysql_query(DBConn, query);
+    cache_delete(cache);
     return true;
 }
 
@@ -270,15 +274,8 @@ SaveUserTeams(playerid) {
         uInfo[playerid][uCKTeam],
         uInfo[playerid][uLogTeam],
         uInfo[playerid][uID]);
-    mysql_query(DBConn, query);
-    return true;
-}
-
-hook OnPlayerDisconnect(playerid, reason) {
-    if(pInfo[playerid][pLogged] == false) return false;
-
-    SaveUserInfo(playerid);
-    ResetUserData(playerid);
+    new Cache:cache = mysql_query(DBConn, query);
+    cache_delete(cache);
     return true;
 }
 
@@ -301,7 +298,7 @@ CheckCharactersName(playerid) {
     SendServerMessage(playerid, "Por precaução e segurança, não podemos deixar que você se autentique assim.");
     SendServerMessage(playerid, "Mas não se preocupe. Estamos redirecionando a sua conexão ao usuário %s.", realUserName);
         
-    format(uInfo[playerid][uName], 24, "%s", realUserName);
+    format(uInfo[playerid][uName], 128, "%s", realUserName);
     SetPlayerName(playerid, uInfo[playerid][uName]);
 
     va_SendClientMessage(playerid, COLOR_GREEN, "Redirecionado como '%s' com sucesso.", realUserName);
@@ -309,11 +306,11 @@ CheckCharactersName(playerid) {
 }
 
 CheckCharactersExist(playerid) {
-    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", pInfo[playerid][pID]);
+    mysql_format(DBConn, query, sizeof query, "SELECT * FROM players WHERE `user_id` = '%d'", uInfo[playerid][uID]);
     mysql_query(DBConn, query);
 
     if(!cache_num_rows())
-        return va_SendClientMessage(playerid, COLOR_GREY, " Este usuário não tem nenhum personagem ainda.");
+        return Dialog_Show(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, " ", "{FFFFFF}Seu usuário não possui nenhum personagem ainda.\n\nINFO: Nosso UCP é o www.ucp.advanced-roleplay.com.br\nAcesse-o para mais informações\nsobre como criar seu personagem.\n", "Entendi", ""), KickEx(playerid);
     return true;
 }
 

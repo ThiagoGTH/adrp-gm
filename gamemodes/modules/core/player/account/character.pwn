@@ -95,6 +95,7 @@ LoadCharacterInfoID(playerid, id) {
     LoadPlayerConfig(playerid);
     LoadPlayerStatus(playerid);
     LoadPlayerFaction(playerid);
+    
     SpawnSelectedCharacter(playerid);
 }
 
@@ -500,14 +501,14 @@ SavePlayerPremium(playerid) {
 
 SavePlayerRadio(playerid) {
     mysql_format(DBConn, query, sizeof(query), "UPDATE `players_radio` SET \
-    `rRadioState`='%i', \
-    `rRadioSlot1`='%i', \
-    `rRadioSlot2`='%i', \
-    `rRadioSlot3`='%i', \
-    `rRadioSlot4`='%i', \
-    `rRadioSlot5`='%i', \
-    `rRadioSlot6`='%i', \
-    `rRadioSlot7`='%i', \
+    `rRadioState`='%d', \
+    `rRadioSlot1`='%d', \
+    `rRadioSlot2`='%d', \
+    `rRadioSlot3`='%d', \
+    `rRadioSlot4`='%d', \
+    `rRadioSlot5`='%d', \
+    `rRadioSlot6`='%d', \
+    `rRadioSlot7`='%d', \
     `rRadioName1`='%s', \
     `rRadioName2`='%s', \
     `rRadioName3`='%s', \
@@ -515,7 +516,7 @@ SavePlayerRadio(playerid) {
     `rRadioName5`='%s', \
     `rRadioName6`='%s', \
     `rRadioName7`='%s', \
-    `pRadioNvl`='%i' WHERE `character_id` = '%d'", 
+    `pRadioNvl`='%d' WHERE `character_id` = '%d'", 
     pInfo[playerid][rRadioState],
     pInfo[playerid][rRadioSlot][0],
     pInfo[playerid][rRadioSlot][1],

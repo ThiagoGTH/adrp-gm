@@ -39,7 +39,7 @@ CMD:aceitarmorte(playerid, params[]){
 CMD:respawnar(playerid, params[]){
 	if (pInfo[playerid][pBrutallyWounded]) return SendErrorMessage(playerid, "Você está brutalmente ferido, digite /aceitarmorte.");
 	if (!pInfo[playerid][pDead]) return SendErrorMessage(playerid, "Você não está morto.");
-	if (pInfo[playerid][pDeadTime] > 60) return SendErrorMessage(playerid, "Você deve aguardar mais %d segundos para respawnar.", pInfo[playerid][pDeadTime]-30);
+	if (pInfo[playerid][pDeadTime] > 0) return SendErrorMessage(playerid, "Você deve aguardar mais %d segundos para respawnar.", pInfo[playerid][pDeadTime]-60);
 
 	CreateDeadBody(playerid);
 	OnPlayerRevive(playerid);

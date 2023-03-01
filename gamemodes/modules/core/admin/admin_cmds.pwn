@@ -38,7 +38,7 @@ ShowAdminCmds(playerid){
 	}
 	if(GetPlayerAdmin(playerid) >= 1337) // MANAGEMENT
 	{
-		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly, /pegarpaycheck, /atualizarinvestimentos, /gravidade");
+		va_SendClientMessage(playerid, -1, "{33AA33}[MANAGEMENT]{FFFFFF} /dardinheiro, /gmx, /trancarserver, /fly, /pegarpaycheck, /atualizarinvestimentos, /gravidade, /resetardinheiro");
 	}
 	if(GetUserTeam(playerid, 1)) // Faction Team
 	{

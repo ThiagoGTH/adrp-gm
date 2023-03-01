@@ -35,7 +35,7 @@ CityHall() {
     AddSimpleModelEx(19379, -5319, "maps/cityhall/-5319.dff", "maps/cityhall/-5319.txd");
     AddSimpleModelEx(19379, -5320, "maps/cityhall/-5320.dff", "maps/cityhall/-5320.txd");
     AddSimpleModelEx(19379, -5322, "maps/cityhall/-5322.dff", "maps/cityhall/-5322.txd");
-    AddSimpleModelEx(19379, -5324, "maps/cityhall/-5324.dff", "maps/cityhall/-5324.txd");
+    //AddSimpleModelEx(19379, -5324, "maps/cityhall/-5324.dff", "maps/cityhall/-5324.txd"); // Cortina
     AddSimpleModelEx(19379, -5325, "maps/cityhall/-5325.dff", "maps/cityhall/-5325.txd");
     AddSimpleModelEx(19379, -5326, "maps/cityhall/-5326.dff", "maps/cityhall/-5326.txd");
     AddSimpleModelEx(19379, -5328, "maps/cityhall/-5328.dff", "maps/cityhall/-5328.txd");
@@ -89,7 +89,7 @@ CityHall() {
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5319, 1528.669433, -1795.796508, 18.177900, 0.000000, 0.000000, 270.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5320, 1468.366455, -1781.196044, 18.217300, 0.000000, 0.000000, 270.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5322, 1528.689453, -1781.068725, 18.884300, 0.000000, 0.000000, 270.000000); 
-	CreateModelObject(MODEL_TYPE_OBJECTS, -5324, 1549.899047, -1788.787963, 19.704999, 0.000000, 0.000000, 0.000000); 
+	//CreateModelObject(MODEL_TYPE_OBJECTS, -5324, 1549.899047, -1788.787963, 19.704999, 0.000000, 0.000000, 0.000000); // Cortina
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5325, 1522.364990, -1786.061035, 19.045000, 0.000000, 0.000000, 180.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5326, 1522.189941, -1787.057983, 19.204999, 0.000000, 0.000000, 0.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5328, 1483.491943, -1812.695800, 57.746601, 0.000000, 0.000000, 0.000000); 
@@ -138,7 +138,7 @@ CityHall() {
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5351, 1532.240722, -1774.752319, 17.733800, 0.000000, 0.000000, 0.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5352, 1537.082885, -1765.996337, 19.733800, 0.000000, 0.000000, 0.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5351, 1541.351928, -1803.650268, 17.733600, 0.000000, 0.000000, 180.000000); 
-	CreateModelObject(MODEL_TYPE_OBJECTS, -5324, 1412.478149, -1789.708740, 19.704999, 0.000000, 0.000000, 180.000000); 
+	//CreateModelObject(MODEL_TYPE_OBJECTS, -5324, 1412.478149, -1789.708740, 19.704999, 0.000000, 0.000000, 180.000000); // Cortina
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5345, 1509.066528, -1805.082031, 57.740001, 0.000000, 0.000000, 180.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5345, 1508.419677, -1808.005004, 57.740001, 0.000000, 0.000000, 0.000000); 
 	CreateModelObject(MODEL_TYPE_OBJECTS, -5345, 1513.460083, -1791.458007, 57.740001, 0.000000, 0.000000, 180.000000); 

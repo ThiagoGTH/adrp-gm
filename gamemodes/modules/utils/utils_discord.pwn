@@ -32,8 +32,8 @@ public Discord_StartChannels() {
     return true;
 }
 
-forward Discord_PublishLog(playerid, log[], type);
-public Discord_PublishLog(playerid, log[], type) {
+forward Discord_PublishLog(log[], type);
+public Discord_PublishLog(log[], type) {
     new convertedType = type-1;
     new string[512];
     format(string, 512, "```[%s] %s```", GetFullDate(gettime()), log);

@@ -8,7 +8,7 @@
 		"pawn-lang/samp-stdlib@open.mp",
 		"pawn-lang/pawn-stdlib@open.mp",
 		"NexiusTailer/Nex-AC",
-		"Zeex/samp-plugin-crashdetect:v4.20",
+		"Zeex/samp-plugin-crashdetect",
 		"pawn-lang/YSI-Includes",
 		"pBlueG/SA-MP-MySQL",
 		"Southclaws/pawn-chrono",

@@ -1,10 +1,11 @@
+//long_call_time 0
 #include <open.mp>
 #include <a_http>
 
 #undef MAX_PLAYERS
 #define MAX_PLAYERS (50)
 
-#define CGEN_MEMORY 20000
+#define CGEN_MEMORY 60000
 
 #include <crashdetect>
 #include <streamer>
@@ -37,8 +38,8 @@
 #include <env>
 #include <Pawn.Regex>
 
-#define YSI_NO_CACHE_MESSAGE
-#define YSI_NO_OPTIMISATION_MESSAGE
+/*#define YSI_NO_CACHE_MESSAGE
+#define YSI_NO_OPTIMISATION_MESSAGE*/
 #define YSI_NO_VERSION_CHECK
 #define YSI_NO_HEAP_MALLOC
 #include <YSI_Coding\y_malloc>

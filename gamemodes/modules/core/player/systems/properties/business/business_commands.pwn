@@ -227,7 +227,7 @@ CMD:editarempresa(playerid, params[]) {
 CMD:irempresa(playerid, params[]) {
     new id;
 
-    if(GetPlayerAdmin(playerid) < 2)
+    if(GetPlayerAdmin(playerid) < 2 || !GetUserTeam(playerid, 2))
         return SendPermissionMessage(playerid);
 
     if(sscanf(params, "d", id))

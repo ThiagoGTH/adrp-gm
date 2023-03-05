@@ -1,3 +1,5 @@
+#include <YSI_Coding\y_hooks>
+
 #define MAX_INTERIORS          1000
 
 enum E_INTERIORS_DATA {
@@ -15,12 +17,12 @@ new intInfo[MAX_INTERIORS][E_INTERIORS_DATA];
 // ============================================================================================================================================
 hook OnGameModeInit() {
     LoadInteriors(); //Carrega todos interiores.
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveInteriors(); //Salva todos interiores.
-    return 1;
+    return true;
 }
 
 // ============================================================================================================================================

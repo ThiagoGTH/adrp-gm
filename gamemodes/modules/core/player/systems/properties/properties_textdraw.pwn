@@ -6,7 +6,6 @@
 
 new Text:TEXTDRAW_LSREA_PROPERTY_SELL;
 new Text:TEXTDRAW_BUSINESS;
-new Text:TEXTDRAW_BUSINESS_P;
 
 hook OnGameModeInit() {
     SetTimer("PropertyHUD", 600, true);//0,5s
@@ -25,21 +24,6 @@ hook OnGameModeInit() {
     TextDrawSetProportional(TEXTDRAW_BUSINESS, false);
     TextDrawSetShadow(TEXTDRAW_BUSINESS, 0);
     TextDrawSetSelectable(TEXTDRAW_BUSINESS, false);
-
-    TEXTDRAW_BUSINESS_P = TextDrawCreate(508.000000, 170.000000, BUSINESS_P_HUD);
-    TextDrawLetterSize(TEXTDRAW_BUSINESS_P, 0.401600, 0.526132);
-    TextDrawTextSize(TEXTDRAW_BUSINESS_P, 132.000000, 70.000000);
-    TextDrawColour(TEXTDRAW_BUSINESS_P, -1);
-    TextDrawFont(TEXTDRAW_BUSINESS_P, TEXT_DRAW_FONT_SPRITE_DRAW);
-    TextDrawAlignment(TEXTDRAW_BUSINESS_P, TEXT_DRAW_ALIGN:1);
-    TextDrawSetShadow(TEXTDRAW_BUSINESS_P, 0);
-    TextDrawUseBox(TEXTDRAW_BUSINESS_P, true);
-    TextDrawBoxColour(TEXTDRAW_BUSINESS_P, -1);
-    TextDrawSetOutline(TEXTDRAW_BUSINESS_P, 0);
-    TextDrawBackgroundColour(TEXTDRAW_BUSINESS_P, -1);
-    TextDrawSetProportional(TEXTDRAW_BUSINESS_P, false);
-    TextDrawSetShadow(TEXTDRAW_BUSINESS_P, 0);
-    TextDrawSetSelectable(TEXTDRAW_BUSINESS_P, false);
 
     TEXTDRAW_LSREA_PROPERTY_SELL = TextDrawCreate(508.000000, 77.000000, LSREA_PROPERTY_SELL_HUD);
     TextDrawLetterSize(TEXTDRAW_LSREA_PROPERTY_SELL, 0.401600, 0.526132);
@@ -89,34 +73,7 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
             PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
         }
 
-        if (BizData[bizid][bOwner] > 0 && BizData[bizid][bOwner] != 0)
-        {
-            TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS_P);
-
-            format(string, 128, "%s", FormatNumber(BizData[bizid][bTax]));
-
-            pInfo[playerid][pTextdraws][10] = CreatePlayerTextDraw(playerid,554.000000, 229.000000, string);
-            PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_ALIGN:3);
-            PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][10], 85);
-            PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_FONT_1);
-            PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][10], 0.15, 0.6);
-            
-            if(GetMoney(playerid) >= BizData[bizid][bTax])
-                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0x238C00FF);
-            else
-                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0xB20000FF);
-
-            PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][10], 1);
-            PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][10], true);
-            PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][10], false);
-            PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][10], -256);
-            PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][10], 640.000000, 70.000000);
-            PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][10], false);
-
-            PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
-        }
-        else
-            TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS);
+        TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS);
 
         format(string, 128, "%s", BizData[bizid][bName]);
         AdjustTextDrawString(string);
@@ -179,7 +136,6 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
 
 stock RemovePlayerPropertyInterface(playerid) {
     TextDrawHideForPlayer(playerid, TEXTDRAW_BUSINESS);
-    TextDrawHideForPlayer(playerid, TEXTDRAW_BUSINESS_P);
     TextDrawHideForPlayer(playerid, TEXTDRAW_LSREA_PROPERTY_SELL);
     
     PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][10]);

@@ -89,34 +89,34 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
             PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
         }
 
-        /*if (BizData[bizid][bOwner] > 0 && BizData[bizid][bOwner] != 0)
+        if (BizData[bizid][bOwner] > 0 && BizData[bizid][bOwner] != 0)
         {
             TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS_P);
 
-            format(string, 128, "%s", FormatNumber(BusinessData[bizid][bizTax]));
+            format(string, 128, "%s", FormatNumber(BizData[bizid][bTax]));
 
             pInfo[playerid][pTextdraws][10] = CreatePlayerTextDraw(playerid,554.000000, 229.000000, string);
-            PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][10], 3);
+            PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_ALIGN:3);
             PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][10], 85);
-            PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][10], 1);
+            PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_FONT_1);
             PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][10], 0.15, 0.6);
             
-            if(GetMoney(playerid) >= BusinessData[bizid][bizTax])
+            if(GetMoney(playerid) >= BizData[bizid][bTax])
                 PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0x238C00FF);
             else
                 PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0xB20000FF);
 
             PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][10], 1);
-            PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][10], 1);
-            PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][10], 0);
+            PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][10], true);
+            PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][10], false);
             PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][10], -256);
             PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][10], 640.000000, 70.000000);
-            PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][10], 0);
+            PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][10], false);
 
             PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
         }
         else
-            TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS);*/
+            TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS);
 
         format(string, 128, "%s", BizData[bizid][bName]);
         AdjustTextDrawString(string);

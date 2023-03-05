@@ -37,26 +37,3 @@ hook OnGamemodeExit() {
     SaveAllBusiness();
     return true;
 }
-
-public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
-    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
-    {
-        new bizid = NearestBusinessEnter(playerid);
-
-        if(bizid != -1) {
-            if(BizData[bizid][bDynamicPickup] == pickupid) {
-                TogglePlayerBusinessInterface(playerid, bizid, false);
-                return TogglePlayerBusinessInterface(playerid, bizid, true);
-            }
-        }
-
-        /*for(new i; i < MAX_BUSINESS; i++) {
-            if(BizData[i][bDynamicPickup] == pickupid)
-            {
-                TogglePlayerBusinessInterface(playerid, i, true);
-            }
-        }*/
-    }
-
-    return 1;
-}

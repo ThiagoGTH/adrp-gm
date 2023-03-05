@@ -26,31 +26,6 @@ static const FerrisWheel[][ferriswheel] = {
 	{389.87500, -2021.63281, 10.98438}
 };
 
-CreateFerrisWheel() {
-	for(new i = 0; i < 10; i++) {
-		FerrisWheelData[i][fseatobject] = CreateObject(18879, FerrisWheel[i][f_PosX], FerrisWheel[i][f_PosY], FerrisWheel[i][f_PosZ]+1.5, 360.0, 0.0000, 90.0);
-		FerrisWheelData[i][fposition] = i;
-	}
-	return true;
-}
-
-forward FerrisWheelCheck();
-public FerrisWheelCheck() {
-    for(new i = 0; i < 10; i++) {
-		if(IsValidObject(FerrisWheelData[i][fseatobject])) {
-			if(FerrisWheelData[i][fposition] == 9)
-				FerrisWheelData[i][fposition] = 0;
-			else
-				FerrisWheelData[i][fposition] += 1;
-
-			new seat_position = FerrisWheelData[i][fposition];
-
-			MoveObject(FerrisWheelData[i][fseatobject], FerrisWheel[seat_position][f_PosX], FerrisWheel[seat_position][f_PosY], FerrisWheel[seat_position][f_PosZ]+1.5, 2.5, 356.8584, 0.0000, 90.0);
-		}
-	}
-	return true;
-}
-
 hook OnPlayerConnect(playerid) {
 	RemoveBuildingForPlayer(playerid, 3751, 389.8750, -2028.5000, 32.2266, 0.250);
 	RemoveBuildingForPlayer(playerid, 3751, 389.8750, -2021.6406, 29.9297, 0.250);
@@ -80,3 +55,29 @@ hook OnGameModeInit() {
     SetTimer("FerrisWheelCheck", 15000, true);
     return true;
 }
+
+CreateFerrisWheel() {
+	for(new i = 0; i < 10; i++) {
+		FerrisWheelData[i][fseatobject] = CreateObject(18879, FerrisWheel[i][f_PosX], FerrisWheel[i][f_PosY], FerrisWheel[i][f_PosZ]+1.5, 360.0, 0.0000, 90.0);
+		FerrisWheelData[i][fposition] = i;
+	}
+	return true;
+}
+
+forward FerrisWheelCheck();
+public FerrisWheelCheck() {
+    for(new i = 0; i < 10; i++) {
+		if(IsValidObject(FerrisWheelData[i][fseatobject])) {
+			if(FerrisWheelData[i][fposition] == 9)
+				FerrisWheelData[i][fposition] = 0;
+			else
+				FerrisWheelData[i][fposition] += 1;
+
+			new seat_position = FerrisWheelData[i][fposition];
+
+			MoveObject(FerrisWheelData[i][fseatobject], FerrisWheel[seat_position][f_PosX], FerrisWheel[seat_position][f_PosY], FerrisWheel[seat_position][f_PosZ]+1.5, 2.5, 356.8584, 0.0000, 90.0);
+		}
+	}
+	return true;
+}
+

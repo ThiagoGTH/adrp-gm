@@ -6,6 +6,7 @@
 #include "modules\core\maps\exterior\cityhall.pwn"
 #include "modules\core\maps\exterior\tolls.pwn"
 #include "modules\core\maps\exterior\twintowers.pwn"
+//#include "modules\core\maps\exterior\ferriswheel.pwn"
 
 #include "modules\core\maps\exterior\factions\LSFD.pwn"
 #include "modules\core\maps\exterior\factions\newton.pwn"
@@ -27,7 +28,6 @@
 #include "modules\core\maps\exterior\env\eastls_carwash.pwn"
 //#include "modules\core\maps\exterior\env\willowfield.pwn"
 #include "modules\core\maps\exterior\env\el_corona.pwn"
-#include "modules\core\maps\exterior\env\feeriswheel.pwn"
 #include "modules\core\maps\exterior\env\ocean_willow.pwn"
 #include "modules\core\maps\exterior\env\sp_apartments.pwn"
 #include "modules\core\maps\exterior\env\vinewood_sign.pwn"

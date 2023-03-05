@@ -529,37 +529,35 @@ UpdateBusinessTax(businessID, newTax) {
 //=============================================================================================================================================================
 //===================================================================[INICIO FUNÇÕES TEXTDRAW]===================================================================
 //=============================================================================================================================================================
-TogglePlayerBusinessInterface(playerid, bizid, bool:toggle)
-{
+TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
     if(toggle && bizid != -1)//Exibir
     {
         new string[128];
 
-        if(BizData[bizid][bOwner] == 0)
-        {
+        if(BizData[bizid][bOwner] == 0) {
             TextDrawShowForPlayer(playerid, TEXTDRAW_LSREA_PROPERTY_SELL);
 
             format(string, 128, "%s", FormatNumber(BizData[bizid][bPrice]));
 
-            Biz_Texts[playerid][0] = CreatePlayerTextDraw(playerid,636.000000, 150.000000, string);
-            PlayerTextDrawAlignment(playerid,Biz_Texts[playerid][0], 3);
-            PlayerTextDrawBackgroundColor(playerid,Biz_Texts[playerid][0], 85);
-            PlayerTextDrawFont(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawLetterSize(playerid,Biz_Texts[playerid][0], 0.35, 1.40);
+            pInfo[playerid][pTextdraws][10] = CreatePlayerTextDraw(playerid,636.000000, 150.000000, string);
+            PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_ALIGN:3);
+            PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][10], 85);
+            PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][10], TEXT_DRAW_FONT_1);
+            PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][10], 0.35, 1.40);
 
             if(GetMoney(playerid) >= BizData[bizid][bPrice])
-                PlayerTextDrawColor(playerid,Biz_Texts[playerid][0], 0x238C00FF);
+                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0x238C00FF);
             else
-                PlayerTextDrawColor(playerid,Biz_Texts[playerid][0], 0xB20000FF);
+                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0xB20000FF);
 
-            PlayerTextDrawSetOutline(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawSetProportional(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawUseBox(playerid,Biz_Texts[playerid][0], 0);
-            PlayerTextDrawBoxColor(playerid,Biz_Texts[playerid][0], -256);
-            PlayerTextDrawTextSize(playerid,Biz_Texts[playerid][0], 640.000000, 70.000000);
-            PlayerTextDrawSetSelectable(playerid,Biz_Texts[playerid][0], 0);
+            PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][10], 1);
+            PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][10], true);
+            PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][10], false);
+            PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][10], -256);
+            PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][10], 640.000000, 70.000000);
+            PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][10], false);
 
-            PlayerTextDrawShow(playerid, Biz_Texts[playerid][0]);
+            PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
         }
 
         /*if (BizData[bizid][bOwner] > 0 && BizData[bizid][bOwner] != 0)
@@ -568,25 +566,25 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle)
 
             format(string, 128, "%s", FormatNumber(BusinessData[bizid][bizTax]));
 
-            Biz_Texts[playerid][0] = CreatePlayerTextDraw(playerid,554.000000, 229.000000, string);
-            PlayerTextDrawAlignment(playerid,Biz_Texts[playerid][0], 3);
-            PlayerTextDrawBackgroundColor(playerid,Biz_Texts[playerid][0], 85);
-            PlayerTextDrawFont(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawLetterSize(playerid,Biz_Texts[playerid][0], 0.15, 0.6);
+            pInfo[playerid][pTextdraws][10] = CreatePlayerTextDraw(playerid,554.000000, 229.000000, string);
+            PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][10], 3);
+            PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][10], 85);
+            PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][10], 1);
+            PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][10], 0.15, 0.6);
             
             if(GetMoney(playerid) >= BusinessData[bizid][bizTax])
-                PlayerTextDrawColor(playerid,Biz_Texts[playerid][0], 0x238C00FF);
+                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0x238C00FF);
             else
-                PlayerTextDrawColor(playerid,Biz_Texts[playerid][0], 0xB20000FF);
+                PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][10], 0xB20000FF);
 
-            PlayerTextDrawSetOutline(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawSetProportional(playerid,Biz_Texts[playerid][0], 1);
-            PlayerTextDrawUseBox(playerid,Biz_Texts[playerid][0], 0);
-            PlayerTextDrawBoxColor(playerid,Biz_Texts[playerid][0], -256);
-            PlayerTextDrawTextSize(playerid,Biz_Texts[playerid][0], 640.000000, 70.000000);
-            PlayerTextDrawSetSelectable(playerid,Biz_Texts[playerid][0], 0);
+            PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][10], 1);
+            PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][10], 1);
+            PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][10], 0);
+            PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][10], -256);
+            PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][10], 640.000000, 70.000000);
+            PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][10], 0);
 
-            PlayerTextDrawShow(playerid, Biz_Texts[playerid][0]);
+            PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][10]);
         }
         else
             TextDrawShowForPlayer(playerid, TEXTDRAW_BUSINESS);*/
@@ -594,17 +592,17 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle)
         format(string, 128, "%s", BizData[bizid][bName]);
         AdjustTextDrawString(string);
 
-        Biz_Texts[playerid][1] = CreatePlayerTextDraw(playerid,523.000000, 197.000000, string);
-        PlayerTextDrawBackgroundColor(playerid,Biz_Texts[playerid][1], 85);
-        PlayerTextDrawFont(playerid,Biz_Texts[playerid][1], 1);
-        PlayerTextDrawLetterSize(playerid,Biz_Texts[playerid][1], 0.230000, 0.699998);
-        PlayerTextDrawColor(playerid,Biz_Texts[playerid][1], -1);
-        PlayerTextDrawSetOutline(playerid,Biz_Texts[playerid][1], 1);
-        PlayerTextDrawSetProportional(playerid,Biz_Texts[playerid][1], 1);
-        PlayerTextDrawUseBox(playerid,Biz_Texts[playerid][1], 1);
-        PlayerTextDrawBoxColor(playerid,Biz_Texts[playerid][1], 0xFFFFFF00);
-        PlayerTextDrawTextSize(playerid,Biz_Texts[playerid][1], 640.000000, 70.000000);
-        PlayerTextDrawSetSelectable(playerid,Biz_Texts[playerid][1], 0);
+        pInfo[playerid][pTextdraws][11] = CreatePlayerTextDraw(playerid,523.000000, 197.000000, string);
+        PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][11], 85);
+        PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][11], TEXT_DRAW_FONT_1);
+        PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][11], 0.230000, 0.699998);
+        PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][11], -1);
+        PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][11], 1);
+        PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][11], true);
+        PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][11], true);
+        PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][11], 0xFFFFFF00);
+        PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][11], 640.000000, 70.000000);
+        PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][11], false);
 
         format(string, 128, "");
 
@@ -613,59 +611,56 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle)
         else
             format(string, 128, "");
 
-        Biz_Texts[playerid][2] = CreatePlayerTextDraw(playerid,560.000000, 228.000000, string);
-        PlayerTextDrawBackgroundColor(playerid,Biz_Texts[playerid][2], 85);
-        PlayerTextDrawFont(playerid,Biz_Texts[playerid][2], 1);
-        PlayerTextDrawLetterSize(playerid,Biz_Texts[playerid][2], 0.230000, 0.699998);
-        PlayerTextDrawColor(playerid,Biz_Texts[playerid][2], -1);
-        PlayerTextDrawSetOutline(playerid,Biz_Texts[playerid][2], 1);
-        PlayerTextDrawSetProportional(playerid,Biz_Texts[playerid][2], 1);
-        PlayerTextDrawUseBox(playerid,Biz_Texts[playerid][2], 1);
-        PlayerTextDrawBoxColor(playerid,Biz_Texts[playerid][2], 0xFFFFFF00);
-        PlayerTextDrawTextSize(playerid,Biz_Texts[playerid][2], 640.000000, 70.000000);
-        PlayerTextDrawSetSelectable(playerid,Biz_Texts[playerid][2], 0);
+        pInfo[playerid][pTextdraws][12] = CreatePlayerTextDraw(playerid,560.000000, 228.000000, string);
+        PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][12], 85);
+        PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][12], TEXT_DRAW_FONT_1);
+        PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][12], 0.230000, 0.699998);
+        PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][12], -1);
+        PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][12], 1);
+        PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][12], true);
+        PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][12], true);
+        PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][12], 0xFFFFFF00);
+        PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][12], 640.000000, 70.000000);
+        PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][12], false);
 
         format(string, 128, "%d", bizid);
 
-        Biz_Texts[playerid][3] = CreatePlayerTextDraw(playerid,638.000000, 215.000000, string);
-        PlayerTextDrawAlignment(playerid,Biz_Texts[playerid][3], 3);
-        PlayerTextDrawBackgroundColor(playerid,Biz_Texts[playerid][3], 85);
-        PlayerTextDrawFont(playerid,Biz_Texts[playerid][3], 1);
-        PlayerTextDrawLetterSize(playerid,Biz_Texts[playerid][3], 0.149999, 0.699999);
-        PlayerTextDrawColor(playerid,Biz_Texts[playerid][3], -1);
-        PlayerTextDrawSetOutline(playerid,Biz_Texts[playerid][3], 1);
-        PlayerTextDrawSetProportional(playerid,Biz_Texts[playerid][3], 1);
-        PlayerTextDrawUseBox(playerid,Biz_Texts[playerid][3], 0);
-        PlayerTextDrawBoxColor(playerid,Biz_Texts[playerid][3], -256);
-        PlayerTextDrawTextSize(playerid,Biz_Texts[playerid][3], 640.000000, 70.000000);
-        PlayerTextDrawSetSelectable(playerid,Biz_Texts[playerid][3], 0);
+        pInfo[playerid][pTextdraws][13] = CreatePlayerTextDraw(playerid,638.000000, 215.000000, string);
+        PlayerTextDrawAlignment(playerid,pInfo[playerid][pTextdraws][13], TEXT_DRAW_ALIGN:3);
+        PlayerTextDrawBackgroundColour(playerid,pInfo[playerid][pTextdraws][13], 85);
+        PlayerTextDrawFont(playerid,pInfo[playerid][pTextdraws][13], TEXT_DRAW_FONT_1);
+        PlayerTextDrawLetterSize(playerid,pInfo[playerid][pTextdraws][13], 0.149999, 0.699999);
+        PlayerTextDrawColour(playerid,pInfo[playerid][pTextdraws][13], -1);
+        PlayerTextDrawSetOutline(playerid,pInfo[playerid][pTextdraws][13], 1);
+        PlayerTextDrawSetProportional(playerid,pInfo[playerid][pTextdraws][13], true);
+        PlayerTextDrawUseBox(playerid,pInfo[playerid][pTextdraws][13], false);
+        PlayerTextDrawBoxColour(playerid,pInfo[playerid][pTextdraws][13], -256);
+        PlayerTextDrawTextSize(playerid,pInfo[playerid][pTextdraws][13], 640.000000, 70.000000);
+        PlayerTextDrawSetSelectable(playerid,pInfo[playerid][pTextdraws][13], false);
 
-        PlayerTextDrawShow(playerid, Biz_Texts[playerid][1]);
-        PlayerTextDrawShow(playerid, Biz_Texts[playerid][2]);
-        PlayerTextDrawShow(playerid, Biz_Texts[playerid][3]);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][11]);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][12]);
+        PlayerTextDrawShow(playerid, pInfo[playerid][pTextdraws][13]);
     }
-    else if(!toggle)
-    {
+    else if(!toggle) {
         RemovePlayerPropertyInterface(playerid);
     }
-    return 1;
+    return true;
 }
 
-stock RemovePlayerPropertyInterface(playerid)
-{
+stock RemovePlayerPropertyInterface(playerid) {
     TextDrawHideForPlayer(playerid, TEXTDRAW_BUSINESS);
     TextDrawHideForPlayer(playerid, TEXTDRAW_BUSINESS_P);
     TextDrawHideForPlayer(playerid, TEXTDRAW_LSREA_PROPERTY_SELL);
     
-    PlayerTextDrawHide(playerid, Biz_Texts[playerid][0]);
-    PlayerTextDrawHide(playerid, Biz_Texts[playerid][1]);
-    PlayerTextDrawHide(playerid, Biz_Texts[playerid][2]);
-    PlayerTextDrawHide(playerid, Biz_Texts[playerid][3]);
+    PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][10]);
+    PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][11]);
+    PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][12]);
+    PlayerTextDrawHide(playerid, pInfo[playerid][pTextdraws][13]);
 
-    PlayerTextDrawDestroy(playerid, Biz_Texts[playerid][0]);
-    PlayerTextDrawDestroy(playerid, Biz_Texts[playerid][1]);
-    PlayerTextDrawDestroy(playerid, Biz_Texts[playerid][2]);
-    PlayerTextDrawDestroy(playerid, Biz_Texts[playerid][3]);
-    
-    return 1;
+    PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][10]);
+    PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][11]);
+    PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][12]);
+    PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][13]);
+    return true;
 }

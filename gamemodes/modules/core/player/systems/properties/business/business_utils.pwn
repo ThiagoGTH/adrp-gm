@@ -4,8 +4,8 @@
 
 #define COP_ROBBERY           (4) //Mínimo de policiais online para roubar uma empresa
 
-#define BUSINESS_HUD "mdl-5003:empresa"
-#define BUSINESS_P_HUD "mdl-5003:empresap"
+#define BUSINESS_HUD "mdl-9006:empresa"
+#define BUSINESS_P_HUD "mdl-9006:empresap"
 
 new Text:TEXTDRAW_LSREA_PROPERTY_SELL;
 new Text:TEXTDRAW_BUSINESS;
@@ -42,14 +42,14 @@ hook OnGameModeInit() {
     TextDrawLetterSize(TEXTDRAW_BUSINESS, 0.401600, 0.526132);
     TextDrawTextSize(TEXTDRAW_BUSINESS, 132.000000, 70.000000);
     TextDrawColour(TEXTDRAW_BUSINESS, -1);
-    TextDrawFont(TEXTDRAW_BUSINESS, 4);
-    TextDrawAlignment(TEXTDRAW_BUSINESS, 1);
+    TextDrawFont(TEXTDRAW_BUSINESS, TEXT_DRAW_FONT_SPRITE_DRAW);
+    TextDrawAlignment(TEXTDRAW_BUSINESS, TEXT_DRAW_ALIGN:1);
     TextDrawSetShadow(TEXTDRAW_BUSINESS, 0);
-    TextDrawUseBox(TEXTDRAW_BUSINESS, 1);
-    TextDrawBoxColor(TEXTDRAW_BUSINESS, -1);
+    TextDrawUseBox(TEXTDRAW_BUSINESS, true);
+    TextDrawBoxColour(TEXTDRAW_BUSINESS, -1);
     TextDrawSetOutline(TEXTDRAW_BUSINESS, 0);
-    TextDrawBackgroundColor(TEXTDRAW_BUSINESS, -1);
-    TextDrawSetProportional(TEXTDRAW_BUSINESS, 0);
+    TextDrawBackgroundColour(TEXTDRAW_BUSINESS, -1);
+    TextDrawSetProportional(TEXTDRAW_BUSINESS, false);
     TextDrawSetShadow(TEXTDRAW_BUSINESS, 0);
     TextDrawSetSelectable(TEXTDRAW_BUSINESS, false);
 
@@ -57,37 +57,32 @@ hook OnGameModeInit() {
     TextDrawLetterSize(TEXTDRAW_BUSINESS_P, 0.401600, 0.526132);
     TextDrawTextSize(TEXTDRAW_BUSINESS_P, 132.000000, 70.000000);
     TextDrawColour(TEXTDRAW_BUSINESS_P, -1);
-    TextDrawFont(TEXTDRAW_BUSINESS_P, 4);
-    TextDrawAlignment(TEXTDRAW_BUSINESS_P, 1);
+    TextDrawFont(TEXTDRAW_BUSINESS_P, TEXT_DRAW_FONT_SPRITE_DRAW);
+    TextDrawAlignment(TEXTDRAW_BUSINESS_P, TEXT_DRAW_ALIGN:1);
     TextDrawSetShadow(TEXTDRAW_BUSINESS_P, 0);
-    TextDrawUseBox(TEXTDRAW_BUSINESS_P, 1);
-    TextDrawBoxColor(TEXTDRAW_BUSINESS_P, -1);
+    TextDrawUseBox(TEXTDRAW_BUSINESS_P, true);
+    TextDrawBoxColour(TEXTDRAW_BUSINESS_P, -1);
     TextDrawSetOutline(TEXTDRAW_BUSINESS_P, 0);
-    TextDrawBackgroundColor(TEXTDRAW_BUSINESS_P, -1);
-    TextDrawSetProportional(TEXTDRAW_BUSINESS_P, 0);
+    TextDrawBackgroundColour(TEXTDRAW_BUSINESS_P, -1);
+    TextDrawSetProportional(TEXTDRAW_BUSINESS_P, false);
     TextDrawSetShadow(TEXTDRAW_BUSINESS_P, 0);
     TextDrawSetSelectable(TEXTDRAW_BUSINESS_P, false);
 
-    return 1;
+    return true;
 }
 
 hook OnGamemodeExit() {
     SaveAllBusiness();
-    return 1;
+    return true;
 }
 
-public OnPlayerPickUpDynamicPickup(playerid, pickupid)
-{
-    new str[256];
-
+public OnPlayerPickUpDynamicPickup(playerid, pickupid) {
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         new bizid = NearestBusinessEnter(playerid);
 
-        if(bizid != -1)
-        {
-            if(BizData[bizid][bDynamicPickup] == pickupid)
-            {
+        if(bizid != -1) {
+            if(BizData[bizid][bDynamicPickup] == pickupid) {
                 TogglePlayerBusinessInterface(playerid, bizid, false);
                 return TogglePlayerBusinessInterface(playerid, bizid, true);
             }

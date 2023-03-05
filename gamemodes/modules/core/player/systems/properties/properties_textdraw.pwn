@@ -43,8 +43,8 @@ hook OnGameModeInit() {
 }
 
 TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
-    if(toggle && bizid != -1)//Exibir
-    {
+    if(toggle && !pInfo[playerid][pHUDShowing] && bizid != -1) {
+        pInfo[playerid][pHUDShowing] = 2;
         new string[128];
 
         if(BizData[bizid][bOwner] == 0) {
@@ -130,6 +130,7 @@ TogglePlayerBusinessInterface(playerid, bizid, bool:toggle) {
     }
     else if(!toggle) {
         RemovePlayerPropertyInterface(playerid);
+        pInfo[playerid][pHUDShowing] = 0;
     }
     return true;
 }

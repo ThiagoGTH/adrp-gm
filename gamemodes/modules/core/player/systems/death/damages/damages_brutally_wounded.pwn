@@ -112,7 +112,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
     } else health -= amount;
 	CallbackDamages(damagedid, playerid, bodypart, weaponid, amount);
 
-	SetPlayerArmour(damagedid, armour);
 	SetPlayerHealthEx(damagedid, health);
 	if(health > 10.00 && health < 30.00){
 		if(!pInfo[damagedid][pBrutallyWounded] && !pInfo[damagedid][pDead]){

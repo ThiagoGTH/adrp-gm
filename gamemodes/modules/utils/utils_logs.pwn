@@ -4,7 +4,7 @@ logCreate(playerid, log[], type){
 	if(type <= 100)
 		Discord_PublishLog(log, type);
 
-    new logQuery[512];
+    /*new logQuery[512];
 
     if(playerid == 99998){
         mysql_format(DBConn, logQuery, sizeof(logQuery), "INSERT INTO serverlogs (`character`, `user`, `ip`, `timestamp`, `log`, `type`) VALUES ('SYSTEM', 'SYSTEM', '%s', '%d', '%e', '%d')", 
@@ -15,8 +15,6 @@ logCreate(playerid, log[], type){
             GetPlayerNameEx(playerid), GetPlayerUserEx(playerid), GetPlayerIP(playerid), gettime(), log, type);
         mysql_query(DBConn, logQuery, false);
     }
-
-    //printf("[LOG] %s [%d (SQL: %d)] - %s / %s | %s [TYPE: %d]", pNome(playerid), playerid, uInfo[playerid][uID], uInfo[playerid][uName], GetPlayerUserEx(playerid), log, type);
-
+*/
 	return -1;
 }

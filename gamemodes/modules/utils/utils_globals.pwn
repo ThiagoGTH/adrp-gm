@@ -117,6 +117,9 @@ enum Player_Data {
     pGuns[13],
 	pAmmo[13],
 
+    pShootingDrive,
+	pOldDrunkLevel,
+
     pLastShot[64],
     pShotTime,
 
@@ -487,6 +490,10 @@ ResetCharacterData(playerid) {
 		pInfo[playerid][pGuns][i] = 0;
 		pInfo[playerid][pAmmo][i] = 0;
 	}
+
+    pInfo[playerid][pShootingDrive] = false;
+    pInfo[playerid][pOldDrunkLevel] = 0;
+
     format(pInfo[playerid][pLastShot], 64, "");
     pInfo[playerid][pShotTime] = 0;
 

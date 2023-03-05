@@ -128,6 +128,7 @@ enum Player_Data {
     pNametagType,
     pRenderObjects,
     pHudSpeedo,
+    pHUDShowing,
     
     // PLAYERS STATUS
     pHunger,
@@ -401,6 +402,7 @@ void:ResetCharacterData(playerid) {
     pInfo[playerid][pTogAdmin] =
     pInfo[playerid][pNametagType] =
     pInfo[playerid][pRenderObjects] =
+    pInfo[playerid][pHUDShowing] = 0;
     pInfo[playerid][pHudSpeedo] = 0;
 
     pInfo[playerid][pHunger] =

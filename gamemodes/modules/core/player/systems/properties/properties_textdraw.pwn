@@ -9,6 +9,8 @@ new Text:TEXTDRAW_BUSINESS;
 new Text:TEXTDRAW_BUSINESS_P;
 
 hook OnGameModeInit() {
+    SetTimer("PropertyHUD", 600, true);//0,5s
+
     TEXTDRAW_BUSINESS = TextDrawCreate(508.000000, 170.000000, BUSINESS_HUD);
     TextDrawLetterSize(TEXTDRAW_BUSINESS, 0.401600, 0.526132);
     TextDrawTextSize(TEXTDRAW_BUSINESS, 132.000000, 70.000000);
@@ -189,5 +191,92 @@ stock RemovePlayerPropertyInterface(playerid) {
     PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][11]);
     PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][12]);
     PlayerTextDrawDestroy(playerid, pInfo[playerid][pTextdraws][13]);
+    return true;
+}
+
+forward PropertyHUD();
+public PropertyHUD() {
+	foreach(new i : Player) {
+	    OnPlayerInterface(i); //HUD de propriedades
+	}
+	return true;
+}
+
+forward OnPlayerInterface(playerid);
+public OnPlayerInterface(playerid) {
+    if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
+        /*new houseid = House_Nearest(playerid, 2.0);
+
+        if(houseid != -1) {
+            TogglePlayerHouseInterface(playerid, houseid, false);
+            return TogglePlayerHouseInterface(playerid, houseid, true);
+        }*/
+    
+        new bizid = NearestBusinessEnter(playerid);
+
+        if(bizid != -1) {
+            TogglePlayerBusinessInterface(playerid, bizid, false);
+            return TogglePlayerBusinessInterface(playerid, bizid, true);
+        }
+
+        /*new entranceid = Entrance_Nearest(playerid);
+
+        if(entranceid != -1) {
+            TogglePlayerEntranceInterface(playerid, entranceid, false);
+            return TogglePlayerEntranceInterface(playerid, entranceid, true);
+        }
+
+        new atmid = ATM_Nearest(playerid);
+
+        if(atmid != -1) {
+            TogglePlayerATMInterface(playerid, atmid, false);
+            return TogglePlayerATMInterface(playerid, atmid, true);
+        }
+
+        new prisonid = Prison_Nearest(playerid);
+
+        if(prisonid != -1) {
+            TogglePlayerPrisonInterface(playerid, false);
+            return TogglePlayerPrisonInterface(playerid, true);
+        }
+
+        if(houseid == -1 && pInfo[playerid][pHUDShowing] == 1)
+            TogglePlayerHouseInterface(playerid, houseid, false);*/
+        
+        if(bizid == -1 && pInfo[playerid][pHUDShowing] == 2)
+            TogglePlayerBusinessInterface(playerid, bizid, false);
+
+        /*if(entranceid == -1 && pInfo[playerid][pHUDShowing] == 4)
+            TogglePlayerEntranceInterface(playerid, entranceid, false);
+
+        if(atmid != -1 && pInfo[playerid][pHUDShowing] == 5)
+            TogglePlayerATMInterface(playerid, atmid, false);
+
+        if(prisonid != -1 && pInfo[playerid][pHUDShowing] == 6)
+            TogglePlayerPrisonInterface(playerid, false);*/
+
+        //if(houseid == -1 && bizid == -1 && entranceid == -1 && atmid == -1 && prisonid == -1)
+        if(bizid == -1)
+            RemovePlayerPropertyInterface(playerid);
+    }
+    
+    /*if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT || GetPlayerState(playerid) == PLAYER_STATE_DRIVER || GetPlayerState(playerid) == PLAYER_STATE_PASSENGER)
+    {
+        new garageid = Garages_Nearest(playerid);
+
+        if(garageid != -1)
+        {
+            TogglePlayerGarageInterface(playerid, garageid, false);
+            return TogglePlayerGarageInterface(playerid, garageid, true);
+        }
+
+        //Não ta próximo de uma garagem, remove a HUD da tela:
+        if(garageid == -1 && pInfo[playerid][pHUDShowing] == 3)
+            TogglePlayerGarageInterface(playerid, garageid, false);
+
+        if(garageid == -1)
+            RemovePlayerPropertyInterface(playerid);
+    }*/
+
     return true;
 }

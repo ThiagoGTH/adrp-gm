@@ -74,7 +74,7 @@
 #include "modules\core\player\systems\status\status.pwn"
 #include "modules\core\player\systems\games\games.pwn"
 #include "modules\core\player\systems\animations\animations.pwn"
-#include "modules\core\player\systems\elevators\elevator.pwn"
+#include "modules\core\player\systems\elevators\elevators.pwn"
 #include "modules\core\player\systems\properties\business\business.pwn"
 #include "modules\core\player\systems\properties\houses\houses.pwn"
 #include "modules\core\player\systems\properties\garages\garages.pwn"

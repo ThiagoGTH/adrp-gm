@@ -171,6 +171,7 @@ CMD:admins(playerid, params[]) {
 	}
 	return true;
 }
+alias:admins("staff")
 
 CMD:atrabalho(playerid, params[]) {
 	
@@ -359,7 +360,7 @@ CMD:setaradmin(playerid, params[]) {
 	if(uInfo[playerid][uAdmin] == 5000) return SendErrorMessage(playerid, "Desativado para beta-testers.");
 	
     new userid, admin;
-    if(sscanf(params, "ud", userid, admin)) return SendSyntaxMessage(playerid,"/setaradmin [playerID/Nome] [admin level]");
+    if(sscanf(params, "ud", userid, admin)) return SendSyntaxMessage(playerid,"/setaradmin [playerid/nome] [admin level]");
     if(!IsPlayerConnected(userid)) return SendNotConnectedMessage(playerid);
 	if(admin > GetPlayerAdmin(playerid)) return SendErrorMessage(playerid, "Você não pode promover acima do seu nível.");
 	

@@ -285,7 +285,7 @@ SetDoorsStatus(vehicleid, bool:status) {
 	    bool:objective;
 
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	return SetVehicleParamsEx(vehicleid, engine, alarm, alarm, status, bonnet, boot, objective);
+	return SetVehicleParamsEx(vehicleid, engine, lights, alarm, alarm, status, bonnet, boot, objective);
 }
 
 GetVehicleFromBehind(vehicleid) {

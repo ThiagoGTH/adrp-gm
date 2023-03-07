@@ -24,7 +24,6 @@ CMD:usardroga(playerid, params[]) {
 	RegenTimer[playerid] = SetTimerEx("RegenHealth", 500, false, "ii", playerid, (3 * amount));
 	EffectTimer[playerid] = SetTimerEx("RemoveEffects", (2 * amount) * 1000, false, "i", playerid);
 	
-    va_SendClientMessage(playerid, COLOR_YELLOW, "DROGAS: Você usou %dg de %s", amount, drug);
-
+    va_SendClientMessage(playerid, COLOR_YELLOW, "DROGAS: Você usou %dg de %s.", amount, drug);
 	return true;
 }

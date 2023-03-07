@@ -4,7 +4,6 @@ new Elevator[4];
 1: Downtown Los Santos
 2: Beachside Los Santos
 3: Market Los Santos
-4: ZomboTech San Fierro
 */
 
 hook OnGameModeInit() {
@@ -91,14 +90,6 @@ hook OnGameModeInit() {
     AddFloorToElevator(Elevator[2], 70.911, "7º Andar");
     AddFloorToElevator(Elevator[2], 76.115, "8º Andar");
     AddFloorToElevator(Elevator[2], 81.319, "9º Andar");
-
-    // ZomboTech San Fierro
-    CreateDynamicObject(19593, -1951.687500, 660.023986, 89.507797, 0, 0, 0);
-    CreateDynamicObject(19594, -1951.687500, 660.023986, 29.507797, 0, 0, 0);
-
-    Elevator[3] = AddElevator(-1951.603027, 636.418334, 47.45149, 270.0, "Laboratório ZomboTech", 0, 0);
-    AddFloorToElevator(Elevator[3], 47.45149, "Recepção", true);
-    AddFloorToElevator(Elevator[3], 25.82348, "Laboratório");
     return true;
 }
 
@@ -162,7 +153,7 @@ public OnPlayerLeaveElevator(playerid, elevatorid) {
 
 ShowDialogElevator(playerid) {
     new eID = GetPVarInt(playerid, "elevator_id");
-    //if(!IsPlayerInElevator(playerid, eID)) return SendClientMessage(playerid, 0xFF0000FF, "* Você não está em um elevador.");
+    if(!IsPlayerInElevator(playerid, eID)) return SendErrorMessage(playerid, "Você não está em um elevador.");
     new Msg[400], Header[128], elevatorname[32];
     GetElevatorName(eID, elevatorname, sizeof elevatorname);
     format(Header, sizeof Header, "Elevador %s", elevatorname);
@@ -190,8 +181,4 @@ RemovesForPlayer(playerid) {
     RemoveBuildingForPlayer(playerid, 5766, 1160.96, -1180.58, 70.4141, 250.0); // Awning shadows
     RemoveBuildingForPlayer(playerid, 5767, 1160.96, -1180.58, 70.4141, 250.0); // Building
     RemoveBuildingForPlayer(playerid, 5964, 1160.96, -1180.58, 70.4141, 250.0); // LOD
-
-    // ZomboTech
-    RemoveBuildingForPlayer(playerid, 10027, -1951.687500, 660.023986, 89.507797, 250.0); // Building
-    RemoveBuildingForPlayer(playerid, 9939, -1951.687500, 660.023986, 89.507797, 250.0); // LOD
 }

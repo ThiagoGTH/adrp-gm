@@ -80,25 +80,13 @@ Dialog:ItemsAdd(playerid, response, listitem, inputtext[]) {
         new Cache:result = mysql_query(DBConn, query);
         if(cache_num_rows()) return SendErrorMessage(playerid, "Já existe um item com este objeto."), cache_delete(result);
 
-        Dialog_Show(playerid, ItemsAdd1, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Digite preço do item a ser criado:", "Adicionar", "<<");
+        ItemCreate(pInfo[playerid][iEditingModel]);
     } else { return ItemsConfigMain(playerid); }
-    return 1;
+    return true;
 }
 
-Dialog:ItemsAdd1(playerid, response, listitem, inputtext[]) {
-    if(response) {
-        if(isnull(inputtext)) 
-            return Dialog_Show(playerid, ItemsAdd1, DIALOG_STYLE_INPUT, "{FFFFFF}Adicionar item dinâmico", "Digite preço do item a ser criado:", "Adicionar", "<<");
-        
-        new price = strval(inputtext);
-        new model_id = pInfo[playerid][iEditingModel];
-        ItemsAdd2(playerid, model_id, price);
-    }
-    return 1;
-}
-
-ItemsAdd2(playerid, model, price){
-    new id = ItemCreate(model, price);
+ItemsAdd1(playerid, model, price){
+    new id = ItemCreate(model);
     if(id == -1) return SendErrorMessage(playerid, "O servidor atingiu o limite de itens dinâmicos. O item não foi criado."), ItemsConfigMain(playerid);
 
     SendServerMessage(playerid, "Você adicionou o objeto %d como item dinâmico. Agora edite-o no painel.", model);
@@ -107,7 +95,7 @@ ItemsAdd2(playerid, model, price){
 
     ItemsConfigMain(playerid);
     pInfo[playerid][iEditingModel] = 0;
-    return 1;
+    return true;
 } 
 
 Dialog:ItemsEdit(playerid, response, listitem, inputtext[]){

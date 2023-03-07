@@ -1,7 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
 #define BUSINESS_HUD "mdl-9006:empresa"
-#define BUSINESS_P_HUD "mdl-9006:empresap"
 #define LSREA_PROPERTY_SELL_HUD "mdl-9006:avenda"
 
 new Text:TEXTDRAW_LSREA_PROPERTY_SELL;

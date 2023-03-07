@@ -34,6 +34,7 @@ public OnPlayerDeath(playerid, killerid, reason) {
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart){
 	if(pInfo[damagedid][pDead]) return false;
 	if(uInfo[damagedid][uJailed] > 0) return false;
+	if(pInfo[playerid][pESC] > 0) return false;
 
 	if(weaponid == 0) {
 		if(pInfo[damagedid][pBrutallyWounded] && pInfo[damagedid][pDead]) return false;

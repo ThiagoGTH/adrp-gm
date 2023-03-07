@@ -5,7 +5,8 @@ CMD:usardroga(playerid, params[]) {
 	if(sscanf(params, "is[64]", amount, drug)) return SendSyntaxMessage(playerid, "/usardroga [gramas] [nome da droga]");
 
     new item_id = GetItemID(drug);
-
+	printf("item_id = %d", item_id);
+	printf("diInfo[itemid][diCategory] = %d", diInfo[item_id][diCategory]);
     if(!IsDrugItemByID(item_id))
 		return SendErrorMessage(playerid, "%s não é uma droga válida. Veja as drogas disponíveis no seu inventário. O nome da droga deve ser igual ao exibido no inventário, incluindo a acentuação.", drug);
 

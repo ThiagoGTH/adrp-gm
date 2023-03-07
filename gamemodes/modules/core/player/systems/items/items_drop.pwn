@@ -11,7 +11,7 @@ PlayerDropItem(playerid, slotid) {
 	else Dialog_Show(playerid, DropItem, DIALOG_STYLE_INPUT, "Dropar Item", "Item: %s - Quantidade: %d\n\nPor favor, especifique a quantidade que você deseja dropar deste item:", "Dropar", "Cancelar", diInfo[pInfo[playerid][iItem][slotid]][diName], pInfo[playerid][iAmount][slotid]);
 
     return true;
-}
+} 
 
 Dialog:DropItem(playerid, response, listitem, inputtext[]) {
 	new slotid = pInfo[playerid][pInventoryItem];

@@ -109,7 +109,7 @@ public GetItemID(item[]){
     for (new i = 0; i < MAX_DYNAMIC_ITEMS; i++){
 
         printf("strcmp: %s; %s", diInfo[i][diName], item);
-        if(!strcmp(diInfo[i][diName], item)) return diInfo[i][diID];
+        if(!strcmp(diInfo[i][diName], item, true)) return diInfo[i][diID];
     }
     return -1;
 }
@@ -212,22 +212,24 @@ Dialog:Dg_ShowItemDescription(playerid, response, listitem, inputtext[]) {
 stock IsDrugItemByID(itemid) {
 	if(itemid == -1)
 		return false;
-	else if(diInfo[itemid][diCategory] == 8)
+	else if(diInfo[itemid][diCategory] == 7){
+        printf("categoria 8!!");
 		return true;
+    }
 	else
 		return false;
 }
 
-stock Float:Inventory_Drug_Count(playerid, item[]) {
-	new Float:count=0;
+Inventory_Drug_Count(playerid, item[]) {
 	new itemid = GetItemID(item);
+	if(itemid != -1) return false;
 
 	if(IsDrugItemByID(itemid)) {
-		if(itemid != -1) {
-			for (new i = 0; i < GetInventorySlots(playerid); i ++) {
-                count = pInfo[playerid][iAmount][i];
+		for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+            if(pInfo[playerid][iItem][i] == itemid) {
+                return pInfo[playerid][iAmount][i];
             }
-		}
+        }
+        return false;
 	}
-	return count;
 }

@@ -187,6 +187,16 @@ OnPlayerGetBrutallyWounded(playerid, issuerid, weaponid) {
 }
 
 OnPlayerGetDeath(playerid, issuerid, weaponid) {
+	PlayerDrugData[playerid][DrugsCooldown] = 0;
+    if(RegenTimer[playerid] != -1) {
+	    KillTimer(RegenTimer[playerid]);
+	    RegenTimer[playerid] = -1;
+	}
+	if(EffectTimer[playerid] != -1) {
+	    KillTimer(EffectTimer[playerid]);
+	    EffectTimer[playerid] = -1;
+	}
+
     pInfo[playerid][pBrutallyWounded] = false;
 	pInfo[playerid][pDead] = true;
 	pInfo[playerid][pDeadTime] = 60;

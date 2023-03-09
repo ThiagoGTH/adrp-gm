@@ -65,7 +65,6 @@
 // SISTEMAS
 #include "modules\core\player\systems\licenses\licenses.pwn"
 #include "modules\core\player\systems\main\systems.pwn"
-#include "modules\core\player\systems\death\damages.pwn"
 #include "modules\core\player\systems\items\items.pwn"
 #include "modules\core\player\systems\vehicles\vehicles.pwn"
 #include "modules\core\player\systems\pets\pets.pwn"
@@ -82,6 +81,7 @@
 
 #include "modules\core\player\systems\financials\financial.pwn"
 #include "modules\core\player\systems\drugs\drugs.pwn"
+#include "modules\core\player\systems\death\damages.pwn"
 
 // Phone System more Towers System
 //#include "modules\core\player\systems\phone\towers\towers.pwn" (in beta - desativado)

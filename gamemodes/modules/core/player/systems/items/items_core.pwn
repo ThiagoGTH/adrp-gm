@@ -209,11 +209,10 @@ Dialog:Dg_ShowItemDescription(playerid, response, listitem, inputtext[]) {
     return true;
 }
 
-stock IsDrugItemByID(itemid) {
+IsDrugItemByID(itemid) {
 	if(itemid == -1)
 		return false;
 	else if(diInfo[itemid][diCategory] == 7){
-        printf("categoria 8!!");
 		return true;
     }
 	else
@@ -222,14 +221,30 @@ stock IsDrugItemByID(itemid) {
 
 Inventory_Drug_Count(playerid, item[]) {
 	new itemid = GetItemID(item);
-	if(itemid != -1) return false;
+	if(itemid == -1) return false;
 
 	if(IsDrugItemByID(itemid)) {
 		for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+            printf("pInfo[playerid][iItem][i] %d / itemid %d", pInfo[playerid][iItem][i], itemid);
+
             if(pInfo[playerid][iItem][i] == itemid) {
                 return pInfo[playerid][iAmount][i];
             }
         }
-        return false;
 	}
+    return false;
+}
+
+Inventory_Drug_Slot(playerid, item[]) {
+	new itemid = GetItemID(item);
+	if(itemid == -1) return false;
+
+	if(IsDrugItemByID(itemid)) {
+		for (new i = 0; i < GetInventorySlots(playerid); i ++) {
+            if(pInfo[playerid][iItem][i] == itemid) {
+                return i;
+            }
+        }
+	}
+    return false;
 }

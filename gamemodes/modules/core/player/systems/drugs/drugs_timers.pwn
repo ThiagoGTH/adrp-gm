@@ -2,10 +2,9 @@ forward RegenHealth(playerid, amount);
 public RegenHealth(playerid, amount) {
 	amount--;
 	
-	new Float: health;
-	GetPlayerHealth(playerid, health);
+	new Float: health = GetPlayerHealthEx(playerid);
 	
-	if(health + 2.5 < 95.0) SetPlayerHealth(playerid, health + 2.5);
+	if(health + 2.5 < 95.0) SetPlayerHealthEx(playerid, health + 2.5);
 	if(amount > 0) {
 	    SetPlayerDrunkLevel(playerid, 4999);
 		
@@ -25,7 +24,7 @@ public RegenHealth(playerid, amount) {
 forward RemoveEffects(playerid);
 public RemoveEffects(playerid) {
 	SetPlayerDrunkLevel(playerid, 0);
-	SetPlayerWeather(playerid, 10);
+	SetPlayerWeather(playerid, 14);
 	
 	if(EffectTimer[playerid] != -1) {
 	    KillTimer(EffectTimer[playerid]);

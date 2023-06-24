@@ -15,7 +15,7 @@ Você vai ter rodar o básico mesmo pra clonar o projeto, apenas.
 ## Setup do banco de dados
 Antes do setup do banco de dados em si, você precisa criar uma cópia do `example.env` e renomear para `.env` apenas. 
 
-O setup do banco de dados é simples. Tudo o que vocÃªs precisam fazer é iniciar um banco de dados MySQL vazio, e o `sampctl` aqui e o próprio plugin que utilizamos no [`mysql_core.pwn`](gamemodes/modules/core/database/mysql_core.pwn) vai criar as tabelas e iniciar o banco em si. Preencha os valores das variÃ¡veis no `.env` com os dados do banco que você criou.
+O setup do banco de dados é simples. Tudo o que vocês precisam fazer é iniciar um banco de dados MySQL vazio, e o `sampctl` aqui e o próprio plugin que utilizamos no [`mysql_core.pwn`](gamemodes/modules/core/database/mysql_core.pwn) vai criar as tabelas e iniciar o banco em si. Preencha os valores das variÃ¡veis no `.env` com os dados do banco que você criou.
 
 ## Setup de ferramentas e necessarios
 Por enquanto, a única ferramenta que utilizamos aqui é o `sampctl`. Vocês podem seguir o [guia de instalação dele aqui](docs/TOOLS.md), e também tem um mini guia de utilização dos comandos.
